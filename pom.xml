@@ -154,7 +154,7 @@
 			<plugin>
 				<groupId>org.metricshub.maven</groupId>
 				<artifactId>metricshub-connector-maven-plugin</artifactId>
-				<version>1.0.10</version>
+				<version>1.0.11</version>
 				<configuration>
 					<defaultPlatformIconFilename>default.png</defaultPlatformIconFilename>
 				</configuration>
