@@ -1,0 +1,162 @@
+---
+extends:
+- ../../semconv/Hardware
+connector:
+  displayName: SmartMon Tools
+  platforms: Linux
+  reliesOn: SmartMon Tools
+  information: This connector discovers and monitors S.M.A.R.T.-enabled physical disk information through the smartd/smartctl utility under Linux.
+  version: 1.1
+  detection:
+    connectionTypes:
+    - remote
+    - local
+    appliesTo:
+    - Linux
+    criteria:
+    - type: deviceType
+      keep:
+      - Linux
+    - type: commandLine
+      commandLine: /bin/ls /usr/sbin/smartd
+      expectedResult: ^/usr/sbin/smartd$
+      errorMessage: Unable to find the smartd program in /usr/sbin
+    - type: commandLine
+      commandLine: /bin/ls /usr/sbin/smartctl
+      expectedResult: ^/usr/sbin/smartctl$
+      errorMessage: Unable to find the smartctl program in /usr/sbin
+    - type: commandLine
+      commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -c;%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
+      expectedResult: "Device: .* opened"
+      errorMessage: Unable to run the smartd/smartctl utility (not enough privilege?)
+    - type: commandLine
+      commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -c;%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
+      expectedResult: "Device: .* is SMART capable"
+      errorMessage: No S.M.A.R.T-capable disk found.
+    tags: [ hardware, storage, linux ]
+sudoCommands:
+- /usr/sbin/smartctl
+- /bin/dd
+monitors:
+  physical_disk:
+    discovery:
+      sources:
+        source(1):
+          # Source(1) = output of smartd -c + smartctl reformatted by awk (see smartctlAll.sh)
+          # DeviceID;Vendor;SerialNumber
+          type: commandLine
+          commandLine: "sh ${file::smartctlAll.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
+          keep: ^MSHW;
+          separators: ;
+          selectColumns: "2,3,4,5"
+          computes:
+          # Exclude Disks Whose vendor is listed as "Virtual"
+          # This was added because IBM's drivers are badly written.
+          # DeviceID;Vendor;Size
+          - type: excludeMatchingLines
+            column: 2
+            regExp: "[Vv]irtual"
+      mapping:
+        # InstanceTable = Source(1)
+        source: "${source::monitors.physical_disk.discovery.sources.source(1)}"
+        attributes:
+          id: $1
+          serial_number: $3
+          vendor: $2
+          hw.parent.type: enclosure
+          name: "${awk::sprintf(\"%s (%s)\", $1, $2)}"
+          __device_type_option: $4
+    collect:
+      # Collect type is "one instance per instance
+      type: monoInstance
+      sources:
+        source(1):
+          # Source(1) = output of smartctl
+          type: commandLine
+          commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}"
+          computes:
+          # Process smartctl's output through awk physicalDiskSmartHealth.sh
+          # SMARTstatus
+          - type: awk
+            script: "${file::physicalDiskSmartHealth.sh}"
+            keep: ^MSHW;
+            separators: ;
+            selectColumns: 2
+            # Translate the SMARTstatus into a PredictedFailure value
+            # 1;PredictedFailure
+          - type: translate
+            column: 1
+            translationTable: "${translation::PhysicalDiskPredictedFailureTranslationTable}"
+        source(2):
+          # Source(2) = output of the shell script based on dd
+          # 1;Status;StatusInformation
+          type: commandLine
+          commandLine: "/bin/sh ${file::physicalDiskStatusInformation.sh} ${attribute::id}"
+          keep: ^MSHW;
+          separators: ;
+          selectColumns: "2,3,4"
+        source(3):
+          # Source(3) = Table joint of Source(1) and Source(2)
+          # 1;PredictedFailure;1;Status;StatusInformation
+          type: tableJoin
+          leftTable: "${source::monitors.physical_disk.collect.sources.source(1)}"
+          rightTable: "${source::monitors.physical_disk.collect.sources.source(2)}"
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+      mapping:
+        # ValueTable = Source(1)
+        source: "${source::monitors.physical_disk.collect.sources.source(3)}"
+        metrics:
+          hw.status{hw.type="physical_disk", state="predicted_failure"}: boolean($2)
+          hw.status{hw.type="physical_disk"}: $4
+        legacyTextParameters:
+          StatusInformation: $5
+  temperature:
+    discovery:
+      sources:
+        source(1):
+          # Source(1) = output of smartctlTempDisc.sh
+          # DeviceID;WarningThreshold
+          type: commandLine
+          commandLine: "sh ${file::smartctlTempDisc.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
+          keep: ^MSHW;
+          separators: ;
+          selectColumns: "2,3,4"
+      mapping:
+        # InstanceTable = Source(1)
+        source: "${source::monitors.temperature.discovery.sources.source(1)}"
+        attributes:
+          id: $1
+          sensor_location: Harddisk
+          hw.parent.type: enclosure
+          name: "${awk::sprintf(\"%s (%s)\", $1, \"Harddisk\")}"
+          __device_type_option: $3
+        metrics:
+          hw.temperature.limit{limit_type="high.degraded"}: $2
+    collect:
+      # Collect type is mono-instance (one instance per collect)
+      type: monoInstance
+      sources:
+        source(1):
+          # Source(1) = output of smartctl
+          type: commandLine
+          commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
+          computes:
+          # Process smartctl's output through awk smartctlTempColl.sh
+          # Temperature
+          - type: awk
+            script: "${file::smartctlTempColl.sh}"
+            keep: ^MSHW;
+            separators: ;
+            selectColumns: 2
+      mapping:
+        # ValueTable = Source(1)
+        source: "${source::monitors.temperature.collect.sources.source(1)}"
+        metrics:
+          hw.temperature: $1
+translations:
+  PhysicalDiskPredictedFailureTranslationTable:
+    Ok!: 1;false
+    OK: 1;false
+    Default: 1;true
+    PASSED: 1;false
