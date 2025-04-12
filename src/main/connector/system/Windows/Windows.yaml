@@ -234,7 +234,7 @@ monitors:
               PercentDiskTime,
               PercentDiskReadTime,
               PercentDiskWriteTime,
-              Frequency_PerfTime,
+              Frequency_PerfTime
             FROM Win32_PerfRawData_PerfDisk_PhysicalDisk WHERE NAME != '_Total'
           computes:
           # *DiskTime values in Win32_PerfRawData_PerfDisk_PhysicalDisk are expressed in fraction of seconds
