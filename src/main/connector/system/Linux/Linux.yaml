@@ -55,7 +55,7 @@ monitors:
       sources:
         memorySys:
           # memSystem
-          type: commandLine  
+          type: commandLine
           commandLine: /usr/bin/lsmem -b || /usr/bin/free -b
           computes:
           - type: awk
@@ -88,7 +88,7 @@ monitors:
           system.memory.utilization{system.memory.state="free"}: $7
           system.memory.utilization{system.memory.state="used"}: $8
           system.memory.utilization{system.memory.state="buffers"}: $9
-          system.memory.utilization{system.memory.state="cached"}: $10    
+          system.memory.utilization{system.memory.state="cached"}: $10
   network:
     simple:
       sources:
@@ -137,13 +137,14 @@ monitors:
           computes:
           - type: awk
             script: |
-              $3 ~ /^[shv]d[a-z]|dm-[0-9]+$/ {
-                print $3 ";" $6*512 ";" $10*512 ";" $4 ";" $8 ";" $5 ";" $9 ";" $7 ";" $11 ";" $13
+              $3 ~ /^(?:[shv]d[a-z]|nvme[0-9]+n[0-9]+)$/ {
+                print $3 ";" $6*512 ";" $10*512 ";" $4 ";" $8 ";" $5 ";" $9 ";" $7/1000 ";" $11/1000 ";" $13/1000
               }
       mapping:
         source: ${source::physicalDiskActivity}
         attributes:
           id: $1
+          system.device: $1
         metrics:
           system.disk.io{disk.io.direction="read"}: $2
           system.disk.io{disk.io.direction="write"}: $3
