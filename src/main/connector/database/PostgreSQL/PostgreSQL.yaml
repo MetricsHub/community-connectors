@@ -1,0 +1,266 @@
+extends:
+- ../../semconv/Database
+connector:
+  displayName: PostgreSQL
+  platforms: PostgreSQL
+  reliesOn: PostgreSQL Database
+  information: Monitors performance and operational metrics for a PostgreSQL database.
+  detection:
+    appliesTo:
+      - windows
+      - linux
+    criteria:
+      - type: sql
+        query: SELECT (LOWER(version()) LIKE '%postgresql%')::int AS is_postgresql;
+        expectedResult: 1
+        errorMessage: Not a PostgreSQL Server.
+    tags: [linux, windows, database]
+metrics:
+    db.server.postgresql.bgwriter.clean_stops:
+      description: Number of times the background writer stopped a cleaning scan because it had written too many buffers.
+      type: Counter
+      unit: "{stop_cleaning}"
+    db.server.postgresql.bgwriter.buffers:
+      description: Total size of buffers written by the background writer.
+      type: Counter
+      unit: By
+    db.server.postgresql.checkpointer.buffers:
+      description: Total size of buffers written during checkpoints and restartpoints.
+      type: Counter
+      unit: "{buffer}"
+    db.server.postgresql.checkpointer.operations:
+      description: Number of checkpoints performed, including scheduled (due to timeout) and requested.
+      type: Counter
+      unit: "{operation}"
+    db.server.postgresql.replication.status:
+      description: State of the replication.
+      type: 
+        stateSet:
+          - startup
+          - catchup
+          - streaming
+          - backup
+          - stopping
+    db.server.postgresql.index.row_operations:
+      description: Number of live rows fetched by index scans in the database
+      type: Counter
+      unit: "{row}"
+    db.server.postgresql.session_time:
+      description: Time spent by database sessions.
+      type: Counter
+      unit: s
+    db.server.postgresql.transaction_time:
+      description: Time spent by transaction.
+      type: Counter
+      unit: s
+    db.server.postgresql.checkpointer.write_time:
+      description: Time spent writing files to disk during checkpoints and restartpoints.
+      type: Counter
+      unit: s
+    db.server.postgresql.checkpointer.sync_time:
+      description: Time spent synchronizing files to disk during checkpoints and restartpoints.
+      type: Counter
+      unit: s
+    db.server.postgresql.wal.io:
+      description: Total amount of WAL data generated.
+      type: Counter
+      unit: By
+    db.server.postgresql.replication.write_lag.time:
+      description: Time elapsed between flushing WAL locally and receiving notification that the standby has written it.
+      type: Gauge
+      unit: s
+    db.server.postgresql.replication.flush_lag.time:
+      description: Time elapsed between flushing WAL locally and receiving notification that the standby has written and flushed it.
+      type: Gauge
+      unit: s
+    db.server.postgresql.replication.replay_lag.time:
+      description: Time elapsed between flushing WAL locally and receiving notification that the standby has written, flushed, and applied it.
+      type: Gauge
+      unit: s
+    db.server.postgresql.replication.lag:
+      description: Amount of WAL data, between WAL sent and replayed on the standby.
+      type: Gauge
+      unit: By
+
+monitors:
+  
+  #Database
+  postgressql_database:
+    keys:
+    - db.namespace
+    simple:
+      sources:
+        database:
+          type: sql
+          query: |
+            SELECT db.datname, -- $1
+                  psd.xact_commit, -- $2
+                  psd.xact_rollback, -- $3
+                  psd.deadlocks, -- $4
+                  psd.temp_files, -- $5
+                  psd.tup_updated, -- $6
+                  psd.tup_returned, -- $7
+                  psd.tup_fetched,  -- $8
+                  psd.tup_inserted, -- $9
+                  psd.tup_deleted, -- $10
+                  coalesce(psd.blks_hit, 0) * current_setting('block_size')::int AS blks_hit_bytes,-- $11
+                  coalesce(psd.blks_read, 0) * current_setting('block_size')::int AS blks_read_bytes -- $12
+                  pg_database_size(db.datname) AS db_size  -- $13
+                  psd.active_time / 1000.0 AS active_time_seconds -- $14
+                  psd.session_time / 1000.0 AS session_time_seconds  -- $15
+                  psd.idle_in_transaction_time / 1000.0 AS idle_in_tx_time_seconds --$16
+                  psd.sessions,                         -- $17
+                  psd.sessions_abandoned,              -- $18
+                  psd.sessions_fatal,                  -- $19
+                  psd.sessions_killed                  -- $20
+                  psd.numbackends                      --$21
+              FROM pg_stat_database psd
+              JOIN pg_database db ON db.oid = psd.datid
+              WHERE db.datistemplate = false    -- exclure toutes les bases marquées comme "template"
+                AND db.datname IS NOT NULL;     -- pour éviter le cas global (datname = NULL)
+      mapping:
+        source: ${source::postgressqlDatabase}
+        attributes:
+          db.namespace: $1
+          db.system: postgresql
+        metrics:
+          db.server.commits: $2
+          db.server.rollbacks: $3
+          db.server.errors{error.type="deadlocks"}: $4
+          db.server.row_operations{db.row_operation.type="update"}: $6
+          db.server.row_operations{db.row_operation.type="read"}: $7
+          db.server.postgresql.index.row_operations{db.row_operation.type="fetch"}: $8
+          db.server.row_operations{db.row_operation.type="insert"}: $9
+          db.server.row_operations{db.row_operation.type="delete"}: $10
+          db.server.cache.io{db.io.direction="read", db.cache.state="hit", db.postgresql.cache.type="shared_buffer"}: $11
+          db.server.cache.io{db.io.direction="read", db.cache.state="miss", db.postgresql.cache.type="shared_buffer"}: $12
+          db.server.size: $13
+          db.server.operation_time{db.operation.type="sql"}: $14
+          db.server.postgresql.session_time: $15
+          db.server.postgresql.transaction_time{db.transaction.state="idle"}: $16
+          db.server.sessions: $17
+          db.server.errors{error.type="session_abandoned"}: $18
+          db.server.errors{error.type="session_fatal_error"}: $19
+          db.server.errors{error.type="session_killed"}: $20
+          db.server.current_connections: $21
+
+  #Postgresql
+  postgresql:
+    simple:
+      sources:
+        postgresqlInfo:
+          type: sql
+          query: |
+            SELECT
+                current_database() AS db_namespace, -- $1
+                version() AS version, -- $2
+                current_setting('max_connections')::int AS max_connections, -- $3
+                EXTRACT(EPOCH FROM now() - pg_postmaster_start_time()) AS uptime_seconds, -- $4
+                a.total_connections, -- $5
+                a.active_connections, -- $6
+                a.idle_connections, -- $7
+                bg.buffers_alloc * bs.block_size AS buffers_allocated_bytes, -- $8
+                bg.buffers_clean * bs.block_size AS bg_writes_bytes, -- $9
+                bg.maxwritten_clean * bs.block_size AS maxwritten_count_bytes, -- $10
+                cp.buffers_written * bs.block_size AS buffers_checkpoints_bytes, -- $11
+                cp.num_requested AS checkpoint_req, -- $12
+                cp.num_timed AS checkpoint_scheduled, -- $13
+                cp.write_time / 1000.0 AS write_time_s, -- $14
+                cp.sync_time / 1000.0 AS sync_time_s, -- $15
+                wal.wal_buffers_full, -- $16
+                wal_bytes, -- $17,
+                current_setting('shared_buffers')::int AS shared_buffers_size_bytes --$18
+            FROM 
+                (SELECT COUNT(*) AS total_connections,
+                        COUNT(*) FILTER (WHERE state = 'active') AS active_connections,
+                        COUNT(*) FILTER (WHERE state = 'idle') AS idle_connections
+                FROM pg_stat_activity) a,
+                (SELECT COUNT(*) AS user_table_count FROM pg_stat_user_tables) t,
+                pg_stat_bgwriter bg,
+                pg_stat_checkpointer cp,
+                (SELECT wal_buffers_full FROM pg_stat_wal) wal; 
+                (SELECT current_setting('block_size')::int AS block_size) bs;
+      mapping:
+        source: ${source::postgresqlInfo}
+        attributes:
+          db.system: postgresql
+          id: $1
+          db.namespace: $1
+          db.version: $2
+        metrics:
+          db.server.current_connections.limit: $3
+          db.server.uptime: $4
+          db.server.connections: $5
+          db.server.current_connections{db.connection.state="active"}: $6
+          db.server.current_connections{db.connection.state="idle"}: $7
+          db.server.postgresql.bgwriter.buffers{db.buffer.state="allocated"}: $8
+          db.server.postgresql.bgwriter.buffers{db.buffer.state="clean"}: $9
+          db.server.postgresql.bgwriter.clean_stops: $10
+          db.server.postgresql.checkpointer.buffers: $11
+          db.server.postgresql.checkpointer.operations{db.operation.trigger_type="requested"}: $12
+          db.server.postgresql.checkpointer.operations{db.operation.trigger_type="scheduled"}: $13
+          db.server.postgresql.checkpointer.write_time: $14
+          db.server.postgresql.checkpointer.sync_time: $15
+          db.server.cache.operations{db.io.direction="write", db.cache.state="miss", db.postgresql.cache.type="wal_buffer"}: $16
+          db.server.postgresql.wal.io{db.io.direction="write"}: $17
+          db.server.cache.size{db.postgresql.cache.type="shared_buffer"}: $18
+
+  #Replication
+  replication:
+    keys: [ usename, application_name ]
+    simple:
+      sources:
+        replication:
+          type: sql
+          query: |
+            SELECT
+              usename,
+              application_name,
+              client_hostname,
+              client_addr,
+              EXTRACT(EPOCH FROM write_lag) AS write_lag_seconds,
+              EXTRACT(EPOCH FROM flush_lag) AS flush_lag_seconds,
+              EXTRACT(EPOCH FROM replay_lag) AS replay_lag_seconds,
+              pg_wal_lsn_diff(sent_lsn, replay_lsn) AS lag_bytes,
+              state
+            FROM pg_stat_replication;
+      mapping:
+        source: ${source::replication}
+        attributes:
+          db.system: postgresql
+          db.user.name: $1
+          db.server.application_name: $2
+          db.replication.host.name: $3
+          db.replication.host.id: $4
+        metrics:
+          db.server.postgresql.replication.write_lag.time: $5
+          db.server.postgresql.replication.flush_lag.time: $6
+          db.server.postgresql.replication.replay_lag.time: $7
+          db.server.postgresql.replication.lag: $8
+          db.server.postgresql.replication.status: $9
+
+  #Postgressql locks
+  postgressql_lock:
+    keys: [ db.name, relation, lock.type ]
+    simple:
+      sources:
+        postgresqlLocks:
+          type: sql
+          query: |
+            SELECT current_database() AS db_name,
+                  relname AS relation, 
+                  mode AS lock_type, 
+                  COUNT(pid) AS locks
+            FROM pg_locks 
+            JOIN pg_class ON pg_locks.relation = pg_class.oid
+            GROUP BY db_name, relname, mode
+      mapping:
+        source: ${source::postgresqlLock}
+        attributes:
+          db.system: postgresql
+          db.namespace: $1
+          db.server.lock.relation: $2
+          db.server.lock.type: $3
+        metrics:
+          db.server.locks: $4
+

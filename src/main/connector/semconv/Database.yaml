@@ -115,3 +115,29 @@ metrics:
     description: Total number of SQL queries currently stored in the cache
     type: Counter
     unit: "{query}"
+  db.server.sessions:
+    description: Total number of sessions established to the database.
+    type: Counter
+    unit: "{session}"
+  db.server.commits:
+    description: Total number of commits in the database.
+    type: Counter
+    unit: "{commit}"
+  db.server.rollbacks:
+    description: Total number of rollbacks in the database.
+    type: Counter
+    unit: "{rollback}"
+  db.server.current_connections.limit:
+    description: The maximum number of client connections allowed to the database.
+    type: Gauge
+    unit: "{connection}"
+  db.server.cache.size:
+    description: The size of the database cache.
+    type: Gauge
+    unit: By
+  db.server.locks:
+    description: Number of locks
+    type: Gauge
+    unit: "{lock}"
+  
+  
