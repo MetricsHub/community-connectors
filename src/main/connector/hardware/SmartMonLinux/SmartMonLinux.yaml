@@ -64,7 +64,6 @@ monitors:
           serial_number: $3
           vendor: $2
           hw.parent.type: enclosure
-          name: "${awk::sprintf(\"%s (%s)\", $1, $2)}"
           __device_type_option: $4
     collect:
       # Collect type is "one instance per instance
