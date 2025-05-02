@@ -1,23 +1,35 @@
+# ██╗     ██╗███╗   ██╗██╗   ██╗██╗  ██╗
+# ██║     ██║████╗  ██║██║   ██║╚██╗██╔╝
+# ██║     ██║██╔██╗ ██║██║   ██║ ╚███╔╝
+# ██║     ██║██║╚██╗██║██║   ██║ ██╔██╗
+# ███████╗██║██║ ╚████║╚██████╔╝██╔╝ ██╗
+# ╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝
+# https://manytools.org/hacker-tools/ascii-banner/ (ANSI Shadow)
+
+# We're implementing the OpenTelemetry semantic conventions for system metrics.
 extends:
 - ../../semconv/System
+
+# Connector properties
 connector:
-  displayName: LinuxOS
+  displayName: Linux System
   platforms: Linux
-  reliesOn: Linux OsCommands
-  information: Gives OS specific information and metrics
+  reliesOn: Linux commands and /proc
+  information: Collects system metrics from Linux hosts using the /proc filesystem and various Linux commands. Implements the OpenTelemetry semantic conventions for system metrics.
   detection:
-    connectionTypes:
-    - remote
-    - local
     appliesTo:
     - linux
     criteria:
     - type: commandLine
       commandLine: /usr/bin/uname -o || /bin/uname -o
       expectedResult: GNU/Linux
-      errorMessage: Not a valid Linux host.
+      errorMessage: Not a Linux host.
     tags: [ system, linux ]
+
+# Linux monitors
 monitors:
+
+  # CPUs
   cpu:
     simple:
       type: multiInstance
@@ -50,6 +62,8 @@ monitors:
           system.cpu.time{system.cpu.state="system"}: $4
           system.cpu.time{system.cpu.state="idle"}: $5
           system.cpu.time{system.cpu.state="io_wait"}: $6
+
+  # Memory
   memory:
     simple:
       sources:
@@ -74,6 +88,54 @@ monitors:
           system.memory.utilization{system.memory.state="used"}: $7
           system.memory.utilization{system.memory.state="buffers"}: $8
           system.memory.utilization{system.memory.state="cached"}: $9
+
+  # Swap (paging)
+  paging:
+    keys: [system.device]
+    simple:
+      sources:
+        # Get swap usage from /proc/swaps
+        swaps:
+          type: commandLine
+          commandLine: cat /proc/swaps
+          computes:
+          # Output: Path;Free;Used;%Free;%Used
+          - type: awk
+            script: ${file::swap.awk}
+      mapping:
+        source: ${source::swaps}
+        attributes:
+          id: $1
+          system.device: $1
+        metrics:
+          system.paging.usage{system.paging.state="free"}: $2
+          system.paging.usage{system.paging.state="used"}: $3
+          system.paging.utilization{system.paging.state="free"}: $4
+          system.paging.utilization{system.paging.state="used"}: $5
+
+  # More swap (activity)
+  paging_activity:
+    simple:
+      sources:
+        # Get swap activity from /proc/vmstat
+        swapActivity:
+          type: commandLine
+          commandLine: cat /proc/vmstat
+          computes:
+          # Output: pgfault;pgmajfault;pswpin;pswpout
+          - type: awk
+            script: ${file::swap-activity.awk}
+      mapping:
+        source: ${source::swapActivity}
+        attributes:
+          id: swap
+        metrics:
+          system.paging.faults{system.paging.type="minor"}: $1
+          system.paging.faults{system.paging.type="major"}: $2
+          system.paging.operations{system.paging.type="in"}: $3
+          system.paging.operations{system.paging.type="out"}: $4
+
+  # Network
   network:
     simple:
       sources:
@@ -111,6 +173,8 @@ monitors:
           system.network.errors{network.io.direction="receive"}: $6
           system.network.io{network.io.direction="transmit"}: $10
           system.network.io{network.io.direction="receive"}: $4
+
+  # Physical disks
   physical_disk:
     simple:
       type: multiInstance
@@ -140,6 +204,8 @@ monitors:
           system.disk.operation_time{disk.io.direction="read"}: $8
           system.disk.operation_time{disk.io.direction="write"}: $9
           system.disk.io_time: $10
+
+  # Filesystems
   file_system:
     simple:
       type: multiInstance
@@ -165,6 +231,8 @@ monitors:
           system.filesystem.utilization{system.filesystem.state="used"}: $6
           system.filesystem.utilization{system.filesystem.state="free"}: $7
           system.filesystem.utilization{system.filesystem.state="reserved"}: $9
+
+  # Some system information, including uptime
   system:
     simple:
       sources:
@@ -183,10 +251,3 @@ monitors:
           os_version: $3
         metrics:
           system.uptime: $4
-translations:
-  serviceLoadedTranslationTable:
-    not-found: "0"
-    loaded: "1"
-  serviceActiveTranslationTable:
-    inactive: "0"
-    active: "1"
