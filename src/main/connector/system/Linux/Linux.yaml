@@ -67,42 +67,27 @@ monitors:
   memory:
     simple:
       sources:
-        memorySys:
+        memoryInfo:
           # memSystem
           type: commandLine
-          commandLine: /usr/bin/lsmem -b || /usr/bin/free -b
-          computes:
-          - type: awk
-            script: |
-              /^Mem:/ { print $2 }
-              /^Total online memory:/ { print $4 }
-        memoryInfo:
-          # memTotal;memFree;memUsed;memBuffers;memCached;memFreeUtilization;memUsedUtilization;memBuffersUtilization;memCachedUtilization
-          type: commandLine
-          commandLine: cat /proc/meminfo
+          commandLine: /usr/bin/lsmem -b ; cat /proc/meminfo
           computes:
           - type: awk
             script: ${file::memory.awk}
-          - type: prepend
-            column: 1
-            value: ;
-          - type: append
-            column: 1
-            value: ${source::memorySys}
       mapping:
         source: ${source::memoryInfo}
         attributes:
           id: memory_usage
         metrics:
           system.memory.limit: $1
-          system.memory.usage{system.memory.state="free"}: $3
-          system.memory.usage{system.memory.state="used"}: $4
-          system.memory.usage{system.memory.state="buffers"}: $5
-          system.memory.usage{system.memory.state="cached"}: $6
-          system.memory.utilization{system.memory.state="free"}: $7
-          system.memory.utilization{system.memory.state="used"}: $8
-          system.memory.utilization{system.memory.state="buffers"}: $9
-          system.memory.utilization{system.memory.state="cached"}: $10
+          system.memory.usage{system.memory.state="free"}: $2
+          system.memory.usage{system.memory.state="used"}: $3
+          system.memory.usage{system.memory.state="buffers"}: $4
+          system.memory.usage{system.memory.state="cached"}: $5
+          system.memory.utilization{system.memory.state="free"}: $6
+          system.memory.utilization{system.memory.state="used"}: $7
+          system.memory.utilization{system.memory.state="buffers"}: $8
+          system.memory.utilization{system.memory.state="cached"}: $9
 
   # Swap (paging)
   paging:
@@ -216,8 +201,8 @@ monitors:
           system.disk.operations{disk.io.direction="write"}: $5
           system.disk.merged{disk.io.direction="read"}: $6
           system.disk.merged{disk.io.direction="write"}: $7
-          system.disk.operation.time{disk.io.direction="read"}: $8
-          system.disk.operation.time{disk.io.direction="write"}: $9
+          system.disk.operation_time{disk.io.direction="read"}: $8
+          system.disk.operation_time{disk.io.direction="write"}: $9
           system.disk.io_time: $10
 
   # Filesystems
