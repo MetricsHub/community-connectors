@@ -137,8 +137,8 @@ monitors:
           system.disk.operations{disk.io.direction="write"}: $5
           system.disk.merged{disk.io.direction="read"}: $6
           system.disk.merged{disk.io.direction="write"}: $7
-          system.disk.operation.time{disk.io.direction="read"}: $8
-          system.disk.operation.time{disk.io.direction="write"}: $9
+          system.disk.operation_time{disk.io.direction="read"}: $8
+          system.disk.operation_time{disk.io.direction="write"}: $9
           system.disk.io_time: $10
   file_system:
     simple:
