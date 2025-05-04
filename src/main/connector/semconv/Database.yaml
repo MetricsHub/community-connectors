@@ -47,12 +47,16 @@ metrics:
     description: The number of logical read or write requests made to the database cache by the storage engine.
     type: Counter
     unit: "{operation}"
-  db.server.operations:
-    description: The total number of data read or write operations in the database cache.
+  db.server.storage.operations:
+    description: The total number of read or write operations performed at the storage layer.
     type: Counter
     unit: "{operation}"
   db.server.io:
     description: The amount of data read or written by the database.
+    type: Counter
+    unit: By
+  db.server.storage.io:
+    description: The amount of data read from or written to the storage layer.
     type: Counter
     unit: By
   db.server.pending_operations:
