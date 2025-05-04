@@ -63,7 +63,7 @@ metrics:
     description: The Current number of pending read or write operations in the database engine.
     type: UpDownCounter
     unit: "{operation}"
-  db.server.files:
+  db.server.storage.files:
     description: The current number of files that the database engine holds open.
     type: Gauge
     unit: "{file}"
@@ -95,7 +95,7 @@ metrics:
     description: The total time spent executing operations.
     type: Counter
     unit: s
-  db.server.size:
+  db.server.storage.size:
     description: The total size of the database on disk.
     type: Gauge
     unit: By
