@@ -1,14 +1,21 @@
+#  _       ___           __
+# | |     / (_)___  ____/ /___ _      _______
+# | | /| / / / __ \/ __  / __ \ | /| / / ___/
+# | |/ |/ / / / / / /_/ / /_/ / |/ |/ (__  )
+# |__/|__/_/_/ /_/\__,_/\____/|__/|__/____/
+# https://manytools.org/hacker-tools/ascii-banner/ (Slant)
+
+# Implements OpenTelemetry System metrics for Windows OS
 extends:
 - ../../semconv/System
+
+# Connector properties
 connector:
-  displayName: WindowsOS
+  displayName: Windows System
   platforms: Microsoft Windows
   reliesOn: WMI
   information: Gives OS specific information and metrics
   detection:
-    connectionTypes:
-    - remote
-    - local
     appliesTo:
     - nt
     criteria:
@@ -16,7 +23,11 @@ connector:
       namespace: root\CIMv2
       query: SELECT * FROM Win32_OperatingSystem
     tags: [ system, windows ]
+
+# Monitors for Windows
 monitors:
+
+  # CPU metrics
   cpu:
     simple:
       sources:
@@ -56,6 +67,8 @@ monitors:
           system.cpu.time{system.cpu.state="user"}: $2
           system.cpu.time{system.cpu.state="system"}: $3
           system.cpu.time{system.cpu.state="idle"}: $4
+
+  # Memory metrics
   memory:
     simple:
       sources:
@@ -108,6 +121,8 @@ monitors:
           system.memory.utilization{system.memory.state="free"}: $2
           system.memory.utilization{system.memory.state="used"}: $6
           system.memory.utilization{system.memory.state="cached"}: $4
+
+  # File system metrics
   file_system:
     simple:
       sources:
@@ -140,52 +155,95 @@ monitors:
           system.filesystem.usage{system.filesystem.state="used"}: $4
           system.filesystem.utilization{system.filesystem.state="free"}: $3
           system.filesystem.utilization{system.filesystem.state="used"}: $5
+
+  # Pagefile metrics
   paging:
+    keys: [system.device]
     simple:
       sources:
-        # BytesUsed;BytesFree;UtilizationUsed;UtilizationFree;TotalBytes
-        pagingUsageInformation:
+        # PageFileName;AllocatedBaseSizeMB;UsedMB
+        Win32_PageFileUsage:
           type: wmi
           namespace: root\CIMv2
-          query: SELECT PercentUsage,PercentUsage_Base,PercentUsage,PercentUsage_Base FROM Win32_PerfRawData_PerfOS_PagingFile WHERE Name = '_Total'
+          query: SELECT Name,AllocatedBaseSize,CurrentUsage FROM Win32_PageFileUsage
           computes:
-          - type: subtract
+
+          # Duplicate AllocatedBaseSize to calculate free space
+          # PageFileName;AllocatedBaseSizeMB;AllocatedBaseSizeMB;UsedMB
+          - type: duplicateColumn
             column: 2
-            value: $1
-          - type: divide
+
+          # Subtracting current usage from allocated base size to get free space
+          # PageFileName;AllocatedBaseSizeMB;FreeMB;UsedMB
+          - type: subtract
             column: 3
             value: $4
-          - type: append
+
+          # Duplicate Free and Used columns for utilization calculations
+          # PageFileName;AllocatedBaseSizeMB;FreeMB;FreeMB;UsedMB;UsedMB
+          - type: duplicateColumn
             column: 3
-            value: ;1
-          - type: subtract
+          - type: duplicateColumn
+            column: 5
+
+          # Calculate utilization by dividing free and used space by allocated base size
+          # PageFileName;AllocatedBaseSizeMB;FreeMB;FreeUtilization;UsedMB;UsedUtilization
+          - type: divide
             column: 4
-            value: $3
-        # BytesUsed;BytesFree;UtilizationUsed;UtilizationFree;TotalBytes;PageOutputPersec;PageInputPersec;PageFaultsPersec;WriteCopiesPersec
-        pagingCombinedInformation:
+            value: $2
+          - type: divide
+            column: 6
+            value: $2
+
+          # Convert MB values to bytes
+          # PageFileName;AllocatedBaseSize;Free;FreeUtilization;Used;UsedUtilization
+          - type: multiply
+            column: 2
+            value: 1048576
+          - type: multiply
+            column: 3
+            value: 1048576
+          - type: multiply
+            column: 5
+            value: 1048576
+
+      mapping:
+        source: ${source::Win32_PageFileUsage}
+        attributes:
+          id: $1
+          system.device: $1
+        metrics:
+          system.paging.usage{system.paging.state="free"}: $3
+          system.paging.utilization{system.paging.state="free"}: $4
+          system.paging.usage{system.paging.state="used"}: $5
+          system.paging.utilization{system.paging.state="used"}: $6
+
+  # Pagefile (swap) activity metrics
+  paging_activity:
+    simple:
+      sources:
+        # PagesInput;PagesOutput;totalPageFaults(soft+hard),PageReads(hard)
+        pagingActivity:
           type: wmi
           namespace: root\CIMv2
-          query: SELECT PageWritesPersec,PageReadsPersec,PageFaultsPersec,WriteCopiesPersec FROM Win32_PerfRawData_PerfOS_Memory
+          query: SELECT PagesInputPersec,PagesOutputPersec,PageFaultsPersec,PageReadsPersec FROM Win32_PerfRawData_PerfOS_Memory
           computes:
+          # Subtracting PageReads from totalPageFaults to get soft page faults
           - type: subtract
             column: 3
             value: $4
-          - type: prepend
-            column: 1
-            value: ${source::pagingUsageInformation}
+
       mapping:
-        source: ${source::pagingCombinedInformation}
+        source: ${source::pagingActivity}
         attributes:
-          id: paging
+          id: paging_activity
         metrics:
-          system.paging.usage{system.paging.state="used"}: $1
-          system.paging.usage{system.paging.state="free"}: $2
-          system.paging.utilization{system.paging.state="used"}: $3
-          system.paging.utilization{system.paging.state="free"}: $4
-          system.paging.operations{system.paging.direction="out"}: $6
-          system.paging.operations{system.paging.direction="in"}: $7
-          system.paging.faults{system.paging.type="soft"}: $8
-          system.paging.faults{system.paging.type="hard"}: $9
+          system.paging.operations{system.paging.direction="in"}: $1
+          system.paging.operations{system.paging.direction="out"}: $2
+          system.paging.faults{system.paging.type="soft"}: $3
+          system.paging.faults{system.paging.type="hard"}: $4
+
+  # Network metrics
   network:
     simple:
       sources:
@@ -218,6 +276,8 @@ monitors:
           system.network.errors{network.io.direction="receive"}: $7
           system.network.io{network.io.direction="transmit"}: $8
           system.network.io{network.io.direction="receive"}: $9
+
+  # Physical disk metrics
   physical_disk:
     simple:
       sources:
@@ -262,6 +322,8 @@ monitors:
           system.disk.io_time: $6
           system.disk.operation_time{disk.io.direction="read"}: $7
           system.disk.operation_time{disk.io.direction="write"}: $8
+
+  # General system information and uptime
   system:
     simple:
       sources:
