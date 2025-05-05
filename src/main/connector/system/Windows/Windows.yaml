@@ -247,8 +247,8 @@ monitors:
   network:
     simple:
       sources:
-        # Name;PacketsOutboundDiscarded;PacketsReceivedDiscarded;PacketsSentPersec;PacketsReceivedPersec;PacketsOutboundErrors;PacketsReceivedErrors
-        networkInformation:
+        # Name;PacketsOutboundDiscarded;PacketsReceivedDiscarded;PacketsSentPersec;PacketsReceivedPersec;PacketsOutboundErrors;PacketsReceivedErrors;BytesSentPerSec;BytesReceivedPerSec;BandwidthBps
+        Win32_PerfRawData_Tcpip_NetworkInterface:
           type: wmi
           namespace: root\CIMv2
           query: >
@@ -260,10 +260,18 @@ monitors:
               PacketsOutboundErrors,
               PacketsReceivedErrors,
               BytesSentPerSec,
-              BytesReceivedPerSec
+              BytesReceivedPerSec,
+              CurrentBandwidth
             FROM Win32_PerfRawData_Tcpip_NetworkInterface
+          computes:
+            # Converting Bandwidth from bits to bytes
+            # Name;PacketsOutboundDiscarded;PacketsReceivedDiscarded;PacketsSentPersec;PacketsReceivedPersec;PacketsOutboundErrors;PacketsReceivedErrors;BytesSentPerSec;BytesReceivedPerSec;BandwidthBytes
+            - type: divide
+              column: 10
+              value: 8
+
       mapping:
-        source: ${source::networkInformation}
+        source: ${source::Win32_PerfRawData_Tcpip_NetworkInterface}
         attributes:
           id: $1
           network.interface.name: $1
@@ -276,6 +284,7 @@ monitors:
           system.network.errors{network.io.direction="receive"}: $7
           system.network.io{network.io.direction="transmit"}: $8
           system.network.io{network.io.direction="receive"}: $9
+          system.network.bandwidth.limit: $10
 
   # Physical disk metrics
   physical_disk:
