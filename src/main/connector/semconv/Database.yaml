@@ -95,7 +95,7 @@ metrics:
     description: The total time spent executing operations.
     type: Counter
     unit: s
-  db.server.io_time:
+  db.server.storage.io_time:
     description: The total time spent on input/output.
     type: Counter
     unit: s
