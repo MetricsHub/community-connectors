@@ -1,7 +1,7 @@
 extends:
 - ../../semconv/System
 connector:
-  displayName: LinuxOS
+  displayName: Linux System
   platforms: Linux
   reliesOn: Linux OsCommands
   information: Gives OS specific information and metrics
