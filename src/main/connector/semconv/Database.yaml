@@ -147,5 +147,3 @@ metrics:
     description: Number of locks
     type: Gauge
     unit: "{lock}"
-  
-  

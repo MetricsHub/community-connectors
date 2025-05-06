@@ -3,7 +3,7 @@ extends:
 connector:
   displayName: PostgreSQL
   platforms: PostgreSQL
-  reliesOn: PostgreSQL Database
+  reliesOn: PostgreSQL Database version 17 or higher
   information: Monitors performance and operational metrics for a PostgreSQL database.
   detection:
     appliesTo:
@@ -34,7 +34,7 @@ metrics:
       unit: "{operation}"
     db.server.postgresql.replication.status:
       description: State of the replication.
-      type: 
+      type:
         stateSet:
           - startup
           - catchup
@@ -83,7 +83,7 @@ metrics:
       unit: By
 
 monitors:
-  
+
   #Database
   postgressql_database:
     keys:
@@ -103,17 +103,17 @@ monitors:
                   psd.tup_fetched,  -- $8
                   psd.tup_inserted, -- $9
                   psd.tup_deleted, -- $10
-                  coalesce(psd.blks_hit, 0) * current_setting('block_size')::int AS blks_hit_bytes,-- $11
-                  coalesce(psd.blks_read, 0) * current_setting('block_size')::int AS blks_read_bytes -- $12
-                  pg_database_size(db.datname) AS db_size  -- $13
-                  psd.active_time / 1000.0 AS active_time_seconds -- $14
-                  psd.session_time / 1000.0 AS session_time_seconds  -- $15
-                  psd.idle_in_transaction_time / 1000.0 AS idle_in_tx_time_seconds --$16
-                  psd.sessions,                         -- $17
-                  psd.sessions_abandoned,              -- $18
-                  psd.sessions_fatal,                  -- $19
-                  psd.sessions_killed                  -- $20
-                  psd.numbackends                      --$21
+                  coalesce(psd.blks_hit, 0) * current_setting('block_size')::int AS blks_hit_bytes, -- $11
+                  coalesce(psd.blks_read, 0) * current_setting('block_size')::int AS blks_read_bytes, -- $12
+                  pg_database_size(db.datname) AS db_size, -- $13
+                  psd.active_time / 1000.0 AS active_time_seconds, -- $14
+                  psd.session_time / 1000.0 AS session_time_seconds, -- $15
+                  psd.idle_in_transaction_time / 1000.0 AS idle_in_tx_time_seconds, --$16
+                  psd.sessions, -- $17
+                  psd.sessions_abandoned, -- $18
+                  psd.sessions_fatal, -- $19
+                  psd.sessions_killed, -- $20
+                  psd.numbackends --$21
               FROM pg_stat_database psd
               JOIN pg_database db ON db.oid = psd.datid
               WHERE db.datistemplate = false    -- exclure toutes les bases marquées comme "template"
@@ -168,8 +168,8 @@ monitors:
                 cp.write_time / 1000.0 AS write_time_s, -- $14
                 cp.sync_time / 1000.0 AS sync_time_s, -- $15
                 wal.wal_buffers_full, -- $16
-                wal_bytes, -- $17,
-                current_setting('shared_buffers')::int AS shared_buffers_size_bytes --$18
+                wal.wal_bytes, -- $17
+                pg_size_bytes(current_setting('shared_buffers')) AS shared_buffers_bytes --$18
             FROM 
                 (SELECT COUNT(*) AS total_connections,
                         COUNT(*) FILTER (WHERE state = 'active') AS active_connections,
@@ -178,7 +178,7 @@ monitors:
                 (SELECT COUNT(*) AS user_table_count FROM pg_stat_user_tables) t,
                 pg_stat_bgwriter bg,
                 pg_stat_checkpointer cp,
-                (SELECT wal_buffers_full FROM pg_stat_wal) wal; 
+                (SELECT wal_buffers_full, wal_bytes FROM pg_stat_wal) wal,
                 (SELECT current_setting('block_size')::int AS block_size) bs;
       mapping:
         source: ${source::postgresqlInfo}
@@ -207,7 +207,7 @@ monitors:
 
   #Replication
   replication:
-    keys: [ usename, application_name ]
+    keys: [ db.user.name, db.server.application_name ]
     simple:
       sources:
         replication:
@@ -241,10 +241,10 @@ monitors:
 
   #Postgressql locks
   postgressql_lock:
-    keys: [ db.name, relation, lock.type ]
+    keys: [ db.namespace, db.server.lock.relation, db.server.lock.type ]
     simple:
       sources:
-        postgresqlLocks:
+        postgresqlLock:
           type: sql
           query: |
             SELECT current_database() AS db_name,
@@ -263,4 +263,3 @@ monitors:
           db.server.lock.type: $3
         metrics:
           db.server.locks: $4
-
