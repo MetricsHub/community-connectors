@@ -71,7 +71,7 @@
 			<dependency>
 				<groupId>org.junit</groupId>
 				<artifactId>junit-bom</artifactId>
-				<version>5.12.1</version>
+				<version>5.12.2</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -154,7 +154,7 @@
 			<plugin>
 				<groupId>org.metricshub.maven</groupId>
 				<artifactId>metricshub-connector-maven-plugin</artifactId>
-				<version>1.0.10</version>
+				<version>1.0.11</version>
 				<configuration>
 					<defaultPlatformIconFilename>default.png</defaultPlatformIconFilename>
 				</configuration>

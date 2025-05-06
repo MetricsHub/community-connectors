@@ -172,7 +172,7 @@ monitors:
           db.server.io{db.io.direction="receive"}: $6
           db.server.io{db.io.direction="transmit"}: $7
           db.server.connections{db.connection.state="success"}: $8
-          db.server.current_connections: $9
+          db.server.current_connections{db.connection.state="active"}: $9
           db.server.queries{db.query.state="failed", error.type="set_timeout_failed"}: $10
           db.server.queries{db.query.state="failed", error.type="timeout"}: $11
           db.server.page.size{db.mysql.engine="innodb"}: $12
