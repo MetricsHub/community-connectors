@@ -77,6 +77,7 @@ monitors:
           system.cpu.time{system.cpu.state="idle"}: $5
           system.cpu.time{system.cpu.state="io_wait"}: $6
           system.cpu.frequency: $8
+
   # Memory
   memory:
     simple:
