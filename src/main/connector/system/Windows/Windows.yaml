@@ -21,14 +21,16 @@ monitors:
     simple:
       sources:
         processorInformation:
-          # cpuId;user;system;idle;
+          # logicalCpuId;user;system;idle;actualFrequency
           type: wmi
           namespace: root\CIMv2
-          query: SELECT Name,PercentUserTime,PercentPrivilegedTime,PercentIdleTime FROM Win32_PerfRawData_Counters_ProcessorInformation
+          query: SELECT Name,PercentUserTime,PercentPrivilegedTime,PercentIdleTime,ActualFrequency FROM Win32_PerfRawData_Counters_ProcessorInformation
           computes:
           - type: excludeMatchingLines
             column: 1
             regExp: _Total
+          - type: duplicateColumn
+            column: 1
           - type: extract
             column: 1
             subSeparators: ","
@@ -43,7 +45,13 @@ monitors:
           - type: divide
             column: 4
             value: 10000000
+          # Convert MHz to Hz
+          - type: divide
+            column: 5
+            value: 1000000
       mapping:
+        # Semantic conventions for CPU metrics
+        # https://opentelemetry.io/docs/specs/semconv/system/cpu-metrics/
         source: ${source::processorInformation}
         attributes:
           id: $1
@@ -56,6 +64,7 @@ monitors:
           system.cpu.time{system.cpu.state="user"}: $2
           system.cpu.time{system.cpu.state="system"}: $3
           system.cpu.time{system.cpu.state="idle"}: $4
+          system.cpu.frequency: $5
   memory:
     simple:
       sources:
@@ -65,7 +74,7 @@ monitors:
           namespace: root\CIMv2
           query: SELECT AvailableBytes,AvailableBytes,CacheBytes,CacheBytes FROM Win32_PerfRawData_PerfOS_Memory
         calculatedMemoryInformation:
-        # Free;Free%;Cached;Cached%;Used;Used%;Total
+          # Free;Free%;Cached;Cached%;Used;Used%;Total
           type: wmi
           namespace: root\CIMv2
           query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
