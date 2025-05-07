@@ -16,6 +16,8 @@ connector:
     - Solaris
     - NT
     - OOB
+    supersedes:
+    - lmsensors
     criteria:
     # Let the KM/PM validate whether IPMI is available or not
     - type: ipmi
