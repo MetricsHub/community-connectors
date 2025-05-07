@@ -169,8 +169,8 @@ monitors:
           db.server.tables: $3
           db.server.connections{error.type="client_disconnected", db.connection.state="aborted"}: $4
           db.server.connections{error.type="failed_attempt", db.connection.state="aborted"}: $5
-          db.server.io{db.io.direction="write"}: $6
-          db.server.io{db.io.direction="read"}: $7
+          db.server.io{db.io.direction="receive"}: $6
+          db.server.io{db.io.direction="transmit"}: $7
           db.server.connections{db.connection.state="success"}: $8
           db.server.current_connections{db.connection.state="active"}: $9
           db.server.queries{db.query.state="failed", error.type="set_timeout_failed"}: $10
@@ -186,10 +186,10 @@ monitors:
           db.server.cache.operations{db.io.direction="read", db.cache.state="hit", db.mysql.engine="innodb"}: $20
           db.server.cache.operations{db.io.direction="write", db.mysql.engine="innodb"}: $21
           db.server.cache.operations{db.io.direction="read", db.cache.state="miss", db.mysql.engine="innodb"}: $22
-          db.server.operations{db.io.direction="read", db.mysql.engine="innodb"}: $23
-          db.server.operations{db.io.direction="write", db.mysql.engine="innodb"}: $24
-          db.server.io{db.io.direction="read", db.mysql.engine="innodb"}: $25
-          db.server.io{db.io.direction="write", db.mysql.engine="innodb"}: $26
+          db.server.storage.operations{db.io.direction="read", db.mysql.engine="innodb"}: $23
+          db.server.storage.operations{db.io.direction="write", db.mysql.engine="innodb"}: $24
+          db.server.storage.io{db.io.direction="read", db.mysql.engine="innodb"}: $25
+          db.server.storage.io{db.io.direction="write", db.mysql.engine="innodb"}: $26
           db.server.pending_operations{db.io.direction="read", db.mysql.engine="innodb"}: $27
           db.server.pending_operations{db.io.direction="write", db.mysql.engine="innodb"}: $28
           db.server.mysql.doublewrite_buffer.usage{db.mysql.engine="innodb"}: $29
