@@ -1,24 +1,47 @@
-/MemTotal/ {
-    memTotal = $2 * 1024
+BEGIN {
+	# Initialization of variables
+	memTotal = 0
+	memFree = 0
+	memUsed = 0
+	memBuffers = 0
+	memCached = 0
+	memFreeUtilization = 0
+	memUsedUtilization = 0
+	memBuffersUtilization = 0
+	memCachedUtilization = 0
+	OFS = ";"
 }
 
-/MemFree/ {
-    memFree = $2 * 1024
-    memFreeUtilization = memFree / memTotal
+# From lsmem -b
+/^Total online memory:/ {
+	memTotal = $4
 }
 
-/Buffers/ {
-    memBuffers = $2 * 1024
-    memBuffersUtilization = memBuffers / memTotal
+# From /proc/meminfo
+/^MemTotal:/ && memTotal == 0 {
+	memTotal = $2 * 1024
 }
 
-/^Cached/ {
-    memCached = $2 * 1024
-    memCachedUtilization = memCached / memTotal
-    memUsed = memTotal - memCached - memFree
-    memUsedUtilization = memUsed / memTotal
+/^MemFree:/ {
+	memFree = $2 * 1024
+	memFreeUtilization = memFree / memTotal
+}
+
+/^Buffers:/ {
+	memBuffers = $2 * 1024
+	memBuffersUtilization = memBuffers / memTotal
+}
+
+/^Cached:/ {
+	memCached = $2 * 1024
+	memCachedUtilization = memCached / memTotal
 }
 
 END {
-    printf("%s;%s;%s;%s;%s;%s;%s;%s;%s\n", memTotal, memFree, memUsed, memBuffers, memCached, memFreeUtilization, memUsedUtilization, memBuffersUtilization, memCachedUtilization)
+	# Calculate used memory and its utilization
+	memUsed = memTotal - memFree - memBuffers - memCached
+	memUsedUtilization = memUsed / memTotal
+
+	# Print the results in the required format
+	print(memTotal, memFree, memUsed, memBuffers, memCached, memFreeUtilization, memUsedUtilization, memBuffersUtilization, memCachedUtilization)
 }
