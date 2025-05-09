@@ -66,7 +66,6 @@ monitors:
           type: Computer
           serial_number: $4
           bios_version: $6
-          name: "${awk::sprintf(\"Computer: %s (%s)\", $3, $2)}"
   temperature:
     discovery:
       sources:
