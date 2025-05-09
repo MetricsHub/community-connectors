@@ -8,6 +8,8 @@ connector:
   information: This connector discovers and monitors the logical disks in a Microsoft Windows system through the DISKPART.EXE utility.
   version: 1.0
   detection:
+    connectionTypes:
+    - local
     appliesTo:
     - NT
     criteria:
@@ -18,7 +20,6 @@ connector:
     # Diskpart must be int he path and return something meaningful. Please note that we're using CHCP 437 to make sure the locale is English.
     - type: commandLine
       commandLine: CHCP 437&&DISKPART.EXE /S ${file::exit.txt}
-      expectedResult: Leaving DiskPart
       timeout: 120
     tags: [ hardware, windows ]
 monitors:
