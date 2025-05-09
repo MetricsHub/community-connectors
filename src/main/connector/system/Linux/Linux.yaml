@@ -59,6 +59,7 @@ monitors:
           rightTable: ${source::cpuFrequencyData}
           leftKeyColumn: 1
           rightKeyColumn: 1
+          defaultRightLine: ;;
       mapping:
         source: ${source::cpuAllData}
         attributes:
