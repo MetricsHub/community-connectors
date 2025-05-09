@@ -16,71 +16,71 @@ connector:
         errorMessage: Not a PostgreSQL Server.
     tags: [linux, windows, database]
 metrics:
-    db.server.postgresql.bgwriter.clean_stops:
-      description: Number of times the background writer stopped a cleaning scan because it had written too many buffers.
-      type: Counter
-      unit: "{stop_cleaning}"
-    db.server.postgresql.bgwriter.buffers:
-      description: Total size of buffers written by the background writer.
-      type: Counter
-      unit: By
-    db.server.postgresql.checkpointer.buffers:
-      description: Total size of buffers written during checkpoints and restartpoints.
-      type: Counter
-      unit: "{buffer}"
-    db.server.postgresql.checkpointer.operations:
-      description: Number of checkpoints performed, including scheduled (due to timeout) and requested.
-      type: Counter
-      unit: "{operation}"
-    db.server.postgresql.replication.status:
-      description: State of the replication.
-      type:
-        stateSet:
-          - startup
-          - catchup
-          - streaming
-          - backup
-          - stopping
-    db.server.postgresql.index.row_operations:
-      description: Number of live rows fetched by index scans in the database
-      type: Counter
-      unit: "{row}"
-    db.server.postgresql.session_time:
-      description: Time spent by database sessions.
-      type: Counter
-      unit: s
-    db.server.postgresql.transaction_time:
-      description: Time spent by transaction.
-      type: Counter
-      unit: s
-    db.server.postgresql.checkpointer.write_time:
-      description: Time spent writing files to disk during checkpoints and restartpoints.
-      type: Counter
-      unit: s
-    db.server.postgresql.checkpointer.sync_time:
-      description: Time spent synchronizing files to disk during checkpoints and restartpoints.
-      type: Counter
-      unit: s
-    db.server.postgresql.wal.io:
-      description: Total amount of WAL data generated.
-      type: Counter
-      unit: By
-    db.server.postgresql.replication.write_lag.time:
-      description: Time elapsed between flushing WAL locally and receiving notification that the standby has written it.
-      type: Gauge
-      unit: s
-    db.server.postgresql.replication.flush_lag.time:
-      description: Time elapsed between flushing WAL locally and receiving notification that the standby has written and flushed it.
-      type: Gauge
-      unit: s
-    db.server.postgresql.replication.replay_lag.time:
-      description: Time elapsed between flushing WAL locally and receiving notification that the standby has written, flushed, and applied it.
-      type: Gauge
-      unit: s
-    db.server.postgresql.replication.lag:
-      description: Amount of WAL data, between WAL sent and replayed on the standby.
-      type: Gauge
-      unit: By
+  db.server.postgresql.bgwriter.clean_stops:
+    description: Number of times the background writer stopped a cleaning scan because it had written too many buffers.
+    type: Counter
+    unit: "{stop_cleaning}"
+  db.server.postgresql.bgwriter.buffers:
+    description: Total size of buffers written by the background writer.
+    type: Counter
+    unit: By
+  db.server.postgresql.checkpointer.buffers:
+    description: Total size of buffers written during checkpoints and restartpoints.
+    type: Counter
+    unit: "{buffer}"
+  db.server.postgresql.checkpointer.operations:
+    description: Number of checkpoints performed, including scheduled (due to timeout) and requested.
+    type: Counter
+    unit: "{operation}"
+  db.server.postgresql.replication.status:
+    description: State of the replication.
+    type:
+      stateSet:
+        - startup
+        - catchup
+        - streaming
+        - backup
+        - stopping
+  db.server.postgresql.index.row_operations:
+    description: Number of live rows fetched by index scans in the database
+    type: Counter
+    unit: "{row}"
+  db.server.postgresql.session_time:
+    description: Time spent by database sessions.
+    type: Counter
+    unit: s
+  db.server.postgresql.transaction_time:
+    description: Time spent by transaction.
+    type: Counter
+    unit: s
+  db.server.postgresql.checkpointer.write_time:
+    description: Time spent writing files to disk during checkpoints and restartpoints.
+    type: Counter
+    unit: s
+  db.server.postgresql.checkpointer.sync_time:
+    description: Time spent synchronizing files to disk during checkpoints and restartpoints.
+    type: Counter
+    unit: s
+  db.server.postgresql.wal.io:
+    description: Total amount of WAL data generated.
+    type: Counter
+    unit: By
+  db.server.postgresql.replication.write_lag.time:
+    description: Time elapsed between flushing WAL locally and receiving notification that the standby has written it.
+    type: Gauge
+    unit: s
+  db.server.postgresql.replication.flush_lag.time:
+    description: Time elapsed between flushing WAL locally and receiving notification that the standby has written and flushed it.
+    type: Gauge
+    unit: s
+  db.server.postgresql.replication.replay_lag.time:
+    description: Time elapsed between flushing WAL locally and receiving notification that the standby has written, flushed, and applied it.
+    type: Gauge
+    unit: s
+  db.server.postgresql.replication.lag:
+    description: Amount of WAL data, between WAL sent and replayed on the standby.
+    type: Gauge
+    unit: By
 
 monitors:
 
