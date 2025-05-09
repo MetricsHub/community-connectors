@@ -35,7 +35,7 @@ monitors:
       type: multiInstance
       sources:
         cpuInfo:
-          # cpuId;user;nice;system;idle;iowait
+          # logical_cpuId;user;nice;system;idle;iowait
           type: commandLine
           commandLine: cat /proc/stat
           computes:
@@ -45,10 +45,25 @@ monitors:
                 sub("cpu","");
                 print $1 ";" $2 / 100 ";" $3 / 100 ";" $4 / 100 ";" $5 / 100 ";" $6 / 100
               }
+        cpuFrequencyData:
+          # logical_cpuId;frequency
+          type: commandLine
+          commandLine: cat /proc/cpuinfo
+          computes:
+          - type: awk
+            script: ${file::cpu.awk}
+        cpuAllData:
+          # logical_cpuId;user;nice;system;idle;iowait;logical_cpuId;frequency
+          type: tableJoin
+          leftTable: ${source::cpuInfo}
+          rightTable: ${source::cpuFrequencyData}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+          defaultRightLine: ;;
       mapping:
-        source: ${source::cpuInfo}
+        source: ${source::cpuAllData}
         attributes:
-          id: $1
+          id: cpu $1
           name: ${awk::sprintf("%s %s", "cpu", $1)}
           system.cpu.logical_number: $1
         metrics:
@@ -62,6 +77,7 @@ monitors:
           system.cpu.time{system.cpu.state="system"}: $4
           system.cpu.time{system.cpu.state="idle"}: $5
           system.cpu.time{system.cpu.state="io_wait"}: $6
+          system.cpu.frequency: $8
 
   # Memory
   memory:
