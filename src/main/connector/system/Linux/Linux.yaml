@@ -147,8 +147,8 @@ monitors:
         metrics:
           system.paging.faults{system.paging.type="minor"}: $1
           system.paging.faults{system.paging.type="major"}: $2
-          system.paging.operations{system.paging.type="in"}: $3
-          system.paging.operations{system.paging.type="out"}: $4
+          system.paging.operations{system.paging.direction="in"}: $3
+          system.paging.operations{system.paging.direction="out"}: $4
 
   # Network
   network:
