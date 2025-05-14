@@ -222,13 +222,13 @@ monitors:
   paging_activity:
     simple:
       sources:
-        # PagesInput;PagesOutput;totalPageFaults(soft+hard),PageReads(hard)
+        # PagesInput;PagesOutput;totalPageFaults(minor+major),PageReads(major)
         pagingActivity:
           type: wmi
           namespace: root\CIMv2
           query: SELECT PagesInputPersec,PagesOutputPersec,PageFaultsPersec,PageReadsPersec FROM Win32_PerfRawData_PerfOS_Memory
           computes:
-          # Subtracting PageReads from totalPageFaults to get soft page faults
+          # Subtracting PageReads from totalPageFaults to get minor page faults
           - type: subtract
             column: 3
             value: $4
@@ -240,8 +240,8 @@ monitors:
         metrics:
           system.paging.operations{system.paging.direction="in"}: $1
           system.paging.operations{system.paging.direction="out"}: $2
-          system.paging.faults{system.paging.type="soft"}: $3
-          system.paging.faults{system.paging.type="hard"}: $4
+          system.paging.faults{system.paging.type="minor"}: $3
+          system.paging.faults{system.paging.type="major"}: $4
 
   # Network metrics
   network:

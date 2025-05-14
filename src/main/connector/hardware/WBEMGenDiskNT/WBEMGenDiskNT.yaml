@@ -113,7 +113,6 @@ monitors:
           leftKeyColumn: 2
           rightKeyColumn: 1
       mapping:
-        # Pfew... that's end, folks! here is the InstanceTable: Source(7)
         source: ${source::monitors.disk_controller.discovery.sources.source(7)}
         attributes:
           id: $2
@@ -121,7 +120,6 @@ monitors:
           vendor: ""
           model: $1
           hw.parent.type: enclosure
-          name: "${awk::sprintf(\"Disk Controller: %s (%s %s)\", $2, \"\", $1)}"
   physical_disk:
     discovery:
       sources:
