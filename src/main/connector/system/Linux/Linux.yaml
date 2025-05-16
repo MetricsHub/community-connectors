@@ -132,35 +132,67 @@ monitors:
         metrics:
           system.paging.faults{system.paging.type="minor"}: $1
           system.paging.faults{system.paging.type="major"}: $2
-          system.paging.operations{system.paging.type="in"}: $3
-          system.paging.operations{system.paging.type="out"}: $4
+          system.paging.operations{system.paging.direction="in"}: $3
+          system.paging.operations{system.paging.direction="out"}: $4
 
   # Network
   network:
     simple:
       sources:
-        networkInformation:
-          # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns";
+        # Use the ip command to get network interface information
+        ipLink:
+          # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns;
           type: commandLine
           commandLine: /usr/sbin/ip -s link
           computes:
           - type: awk
             script: ${file::network.awk}
-        interfaceInformation:
+
+        # Use the sysfs filesystem to filter out virtual interfaces
+        sysClassNet:
+          # Interface;
           type: commandLine
           commandLine: ls -l /sys/class/net
           computes:
           - type: awk
             script: |
               $0 !~ /virtual/ && $0 !~ /total/ {print $9}
-        networkPhysicalInterface:
+
+        # Use the sysfs filesystem to get the link speed of each interface
+        linkSpeed:
+          # Interface;SpeedMbps
+          # Note: The speed is in Mbps, so we need to convert it to bytes per second
+          type: commandLine
+          commandLine: |
+            for iface in `ls /sys/class/net`; do
+              speed=$(cat /sys/class/net/$iface/speed 2>/dev/null || echo 0)
+              echo "$iface;$speed"
+            done
+          computes:
+          # Convert speed from Mbps to bytes per second
+          # Interface;SpeedBytesPerSecond
+          - type: multiply
+            value: 125000
+            column: 2
+
+        # Now join the three sources together
+        networkTempJoin:
+          # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns;Interface;
           type: tableJoin
-          leftTable: ${source::networkInformation}
-          rightTable: ${source::interfaceInformation}
+          leftTable: ${source::ipLink}
+          rightTable: ${source::sysClassNet}
           leftKeyColumn: 1
           rightKeyColumn: 1
+        networkAll:
+          # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns;Interface;Interface;SpeedBytesPerSecond
+          type: tableJoin
+          leftTable: ${source::networkTempJoin}
+          rightTable: ${source::linkSpeed}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+
       mapping:
-        source: ${source::networkPhysicalInterface}
+        source: ${source::networkAll}
         attributes:
           id: $1
           network.interface.name: $1
@@ -173,6 +205,7 @@ monitors:
           system.network.errors{network.io.direction="receive"}: $6
           system.network.io{network.io.direction="transmit"}: $10
           system.network.io{network.io.direction="receive"}: $4
+          system.network.bandwidth.limit: $18
 
   # Physical disks
   physical_disk:

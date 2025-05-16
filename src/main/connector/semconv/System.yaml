@@ -107,6 +107,10 @@ metrics:
     description: Network I/O count
     type: Counter
     unit: By
+  system.network.bandwidth.limit:
+    description: Current link speed of the network interface
+    type: UpDownCounter
+    unit: By
   system.network.connections:
     description: Count of network connections
     type: UpDownCounter

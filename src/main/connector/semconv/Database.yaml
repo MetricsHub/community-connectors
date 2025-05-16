@@ -47,19 +47,23 @@ metrics:
     description: The number of logical read or write requests made to the database cache by the storage engine.
     type: Counter
     unit: "{operation}"
-  db.server.operations:
-    description: The total number of data read or write operations in the database cache.
+  db.server.storage.operations:
+    description: The total number of read or write operations performed at the storage layer.
     type: Counter
     unit: "{operation}"
   db.server.io:
     description: The amount of data read or written by the database.
     type: Counter
     unit: By
+  db.server.storage.io:
+    description: The amount of data read from or written to the storage layer.
+    type: Counter
+    unit: By
   db.server.pending_operations:
     description: The Current number of pending read or write operations in the database engine.
     type: UpDownCounter
     unit: "{operation}"
-  db.server.files:
+  db.server.storage.files:
     description: The current number of files that the database engine holds open.
     type: Gauge
     unit: "{file}"
@@ -91,7 +95,11 @@ metrics:
     description: The total time spent executing operations.
     type: Counter
     unit: s
-  db.server.size:
+  db.server.storage.io_time:
+    description: The total time spent on input/output.
+    type: Counter
+    unit: s
+  db.server.storage.size:
     description: The total size of the database on disk.
     type: Gauge
     unit: By
@@ -115,3 +123,27 @@ metrics:
     description: Total number of SQL queries currently stored in the cache
     type: Counter
     unit: "{query}"
+  db.server.sessions:
+    description: Total number of sessions established to the database.
+    type: Counter
+    unit: "{session}"
+  db.server.commits:
+    description: Total number of commits in the database.
+    type: Counter
+    unit: "{commit}"
+  db.server.rollbacks:
+    description: Total number of rollbacks in the database.
+    type: Counter
+    unit: "{rollback}"
+  db.server.current_connections.limit:
+    description: The maximum number of client connections allowed to the database.
+    type: Gauge
+    unit: "{connection}"
+  db.server.cache.size:
+    description: The size of the database cache.
+    type: Gauge
+    unit: By
+  db.server.locks:
+    description: Number of locks
+    type: Gauge
+    unit: "{lock}"
