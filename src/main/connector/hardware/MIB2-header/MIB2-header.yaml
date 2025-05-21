@@ -239,8 +239,8 @@ monitors:
           hw.network.packets{direction="transmit"}: $12
           hw.network.io{direction="receive"}: $7
           hw.network.io{direction="transmit"}: $11
-          hw.network.dropped{network.io.direction = "receive"}: $15
-          hw.network.dropped{network.io.direction = "transmit"}: $16
+          hw.network.dropped{network.io.direction="receive"}: $15
+          hw.network.dropped{network.io.direction="transmit"}: $16
         legacyTextParameters:
           StatusInformation: $5
 translations:
