@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>community-connectors</artifactId>
-	<version>1.0.11-SNAPSHOT</version>
+	<version>1.0.12-SNAPSHOT</version>
 
 	<name>MetricsHub Community Connectors</name>
 	<description>MetricsHub Community Connector Repository</description>
@@ -63,7 +63,7 @@
 
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-		<project.build.outputTimestamp>2025-04-03T13:27:40Z</project.build.outputTimestamp>
+		<project.build.outputTimestamp>2025-05-22T09:23:34Z</project.build.outputTimestamp>
 	</properties>
 
 	<dependencyManagement>
