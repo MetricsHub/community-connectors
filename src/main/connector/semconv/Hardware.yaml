@@ -226,6 +226,11 @@ metrics:
     description: Link status.
     type: UpDownCounter
 
+  hw.network.dropped:
+    description: The number of packets which were chosen to be discarded even though no errors had been detected.
+    type: Counter
+    unit: "{packet}"
+
   hw.other_device.uses:
     description: Number of times the device has been used.
     type: Counter
