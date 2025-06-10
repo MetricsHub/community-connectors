@@ -67,49 +67,49 @@ monitors:
       sources:
         source(1):
           # Source(1) = ifTable SNMP Table
-          # PortID;Description;Speed;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+          # PortID;Description;Speed;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           type: snmpTable
           oid: 1.3.6.1.2.1.2.2.1
-          selectColumns: ID,2,5,8,10,11,12,14,16,17,18,20
+          selectColumns: ID,2,5,8,10,11,12,14,16,17,18,20,13,19
           computes:
             # Duplicate Status twice
-            # PortID;Description;Speed;OperationalStatus;OperationalStatus;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;Speed;OperationalStatus;OperationalStatus;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: duplicateColumn
             column: 4
           - type: duplicateColumn
             column: 5
             # Translate the first column status into a PATROLStatus
-            # PortID;Description;Speed;PATROLStatus;OperationalStatus;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;Speed;PATROLStatus;OperationalStatus;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: translate
             column: 4
             translationTable: ${translation::PortStatusTranslationTable}
             # Translate the second column status into a more readable string
-            # PortID;Description;Speed;PATROLStatus;StatusInformation;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;Speed;PATROLStatus;StatusInformation;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: translate
             column: 5
             translationTable: ${translation::PortStatusInformationTranslationTable}
             # Translate the third column status into a LinkStatus value
-            # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: translate
             column: 6
             translationTable: ${translation::PortLinkStatusInformationTranslationTable}
             # Convert bits/sec into Mbps
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: divide
             column: 3
             value: 1000000
             # Add up ReceivedUnicastPackets and ReceivedNonUnicastPackets
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: add
             column: 8
             value: $9
             # Add up TransmittedUnicastPackets and TransmittedNonUnicastPackets
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: add
             column: 12
             value: $13
             # Add up ReceivedErrors and TransmittedErrors
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: add
             column: 10
             value: $14
@@ -140,7 +140,7 @@ monitors:
             columnNumbers: 1,2,3,4,7,8
         source(3):
           # Source(3) = Table Joint of (1) and (2)
-          # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+          # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableJoin
           leftTable: ${source::monitors.network.collect.sources.source(1)}
           rightTable: ${source::monitors.network.collect.sources.source(2)}
@@ -149,24 +149,24 @@ monitors:
           defaultRightLine: ;;;;;;
           computes:
             # Now add MSHW to the Left and Right of the ifMIBObjects SpeedMBS
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;
           - type: prepend
-            column: 16
+            column: 18
             value: MSHW
           - type: append
-            column: 16
+            column: 18
             value: MSHW
             # Replace "MSHWMSHW", i.e. a blank column with the ifTable value.
             # This will use the old 32^2 limited value of link bps speed if a Mbps value is not available
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;
           - type: replace
-            column: 16
+            column: 18
             existingValue: MSHWMSHW
             newValue: $3
             # Now get rid of any remaining MSHWs
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;
           - type: replace
-            column: 16
+            column: 18
             existingValue: MSHW
             newValue: ""
         source(4):
@@ -175,47 +175,47 @@ monitors:
           from: ${source::monitors.network.collect.sources.source(3)}
           computes:
             # Keep only interfaces with 64bit counters
-            #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+            #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20   #21               #22
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           - type: keepOnlyMatchingLines
             column: 20
             regExp: .
             # Replace 32 bit counters with 64 bit ones
             # ReceivedBytes
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           - type: replace
             column: 7
             existingValue: $7
-            newValue: $17
+            newValue: $19
           # ReceivedPackets
           - type: replace
             column: 8
             existingValue: $8
-            newValue: $18
+            newValue: $20
           # TransmittedBytes
           - type: replace
             column: 11
             existingValue: $11
-            newValue: $19
+            newValue: $21
           # TransmittedPackets
           - type: replace
             column: 12
             existingValue: $12
-            newValue: $20
+            newValue: $22
         source(5):
           # Make a copy of Source(3)
           type: copy
           from: ${source::monitors.network.collect.sources.source(3)}
           computes:
             # Exclude interfaces with 64bit counters
-            #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+            #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20   #21               #22
+            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           - type: excludeMatchingLines
-            column: 20
+            column: 22
             regExp: .
         source(6):
           # Union 32 and 64 bit tables
-          # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+          # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableUnion
           tables:
           - ${source::monitors.network.collect.sources.source(4)}
@@ -228,12 +228,14 @@ monitors:
         metrics:
           hw.status{hw.type="network"}: $4
           hw.network.up: legacyLinkStatus($6)
-          hw.network.bandwidth.limit: megaBit2Byte($16)
+          hw.network.bandwidth.limit: megaBit2Byte($18)
           hw.errors{hw.type="network"}: $10
           hw.network.packets{direction="receive"}: $8
           hw.network.packets{direction="transmit"}: $12
           hw.network.io{direction="receive"}: $7
           hw.network.io{direction="transmit"}: $11
+          hw.network.dropped{network.io.direction="receive"}: $15
+          hw.network.dropped{network.io.direction="transmit"}: $16
         legacyTextParameters:
           StatusInformation: $5
 translations:
