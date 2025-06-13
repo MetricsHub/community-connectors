@@ -1,0 +1,288 @@
+extends:
+  - ../../semconv/Database
+
+connector:
+  displayName: Apache Cassandra
+  platforms:
+    - Java Applications
+  reliesOn: JDK, Apache Cassandra 3.0 or higher
+  information: >
+    This connector uses Java Management Extensions (JMX) to discover and monitor
+    MBeans exposed by Apache Cassandra. It connects remotely (or locally via
+    JMX RMI) to fetch MBean attributes and expose them as hardware or application metrics.
+    Monitors performance, operational metrics, and cluster health for Cassandra databases.
+  detection:
+    connectionTypes:
+      - remote
+      - local
+    appliesTo:
+      - linux
+      - nt
+    tags:
+      - database
+      - linux
+      - windows
+      - cassandra
+    criteria:
+      - type: jmx
+        objectName: "java.lang:type=Runtime"
+        attributes:
+          - "Uptime"
+        expectedPatterns:
+          - "^[0-9]+$"    # any non‐negative integer ⇒ JMX is responding
+      - type: jmx
+        objectName: "org.apache.cassandra.metrics:type=Storage,name=Load"
+        attributes:
+          - "Count"
+        expectedPatterns:
+          - "^[0-9]+$"    # Cassandra-specific check
+
+metrics:
+  db.server.cassandra.hints.total:
+    description: Total number of hints stored on the node.
+    type: Counter
+    unit: "{hint}"
+  db.server.cassandra.gc.time:
+    description: Total time spent in garbage collection.
+    type: Counter
+    unit: ms
+
+monitors:
+  cassandra:
+    simple:
+      sources:
+        # Storage metrics
+        totalHintsSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=Storage,name=TotalHints"
+          attributes:
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        storageLoadSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=Storage,name=Load"
+          attributes:
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Read/Write latency metrics
+        readLatencySource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency"
+          attributes:
+            - "FifteenMinuteRate"
+            - "MeanRate"
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        writeLatencySource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency"
+          attributes:
+            - "MeanRate"
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Table metrics
+        tableBytesFlushedSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=Table,name=BytesFlushed"
+          attributes:
+            - "Value"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Compaction metrics
+        pendingCompactionsSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=Compaction,name=PendingTasks"
+          attributes:
+            - "Value"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Memory metrics
+        memtableSizeSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=Table,name=MemtableOnHeapSize"
+          attributes:
+            - "Value"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Cache metrics
+        keyCacheHitRateSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=Cache,scope=KeyCache,name=HitRate"
+          attributes:
+            - "Value"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # GC metrics
+        gcTimeSource:
+          type: jmx
+          mbean: "java.lang:type=GarbageCollector,name=*"
+          attributes:
+            - "CollectionTime"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Timeout and error metrics
+        readTimeoutsSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Timeouts"
+          attributes:
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        writeTimeoutsSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Timeouts"
+          attributes:
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        readUnavailableSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Unavailables"
+          attributes:
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        writeUnavailableSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Unavailables"
+          attributes:
+            - "Count"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Dropped messages
+        droppedMessagesSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=DroppedMessage,scope=*,name=Dropped"
+          attributes:
+            - "Count"
+          keysAsAttributes: ["scope"]
+          forceSerialization: false
+
+        # System uptime
+        uptimeSource:
+          type: jmx
+          mbean: "java.lang:type=Runtime"
+          attributes:
+            - "Uptime"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Connection metrics
+        nativeConnectionsSource:
+          type: jmx
+          mbean: "org.apache.cassandra.metrics:type=Client,name=connectedNativeClients"
+          attributes:
+            - "Value"
+          keysAsAttributes: []
+          forceSerialization: false
+
+        # Unified source combining all metrics
+        unifiedSource:
+          type: tableUnion
+          tables:
+            - "${source::monitors.cassandra.simple.sources.totalHintsSource}"
+            - "${source::monitors.cassandra.simple.sources.storageLoadSource}"
+            - "${source::monitors.cassandra.simple.sources.readLatencySource}"
+            - "${source::monitors.cassandra.simple.sources.writeLatencySource}"
+            - "${source::monitors.cassandra.simple.sources.tableBytesFlushedSource}"
+            - "${source::monitors.cassandra.simple.sources.pendingCompactionsSource}"
+            - "${source::monitors.cassandra.simple.sources.memtableSizeSource}"
+            - "${source::monitors.cassandra.simple.sources.keyCacheHitRateSource}"
+            - "${source::monitors.cassandra.simple.sources.gcTimeSource}"
+            - "${source::monitors.cassandra.simple.sources.readTimeoutsSource}"
+            - "${source::monitors.cassandra.simple.sources.writeTimeoutsSource}"
+            - "${source::monitors.cassandra.simple.sources.readUnavailableSource}"
+            - "${source::monitors.cassandra.simple.sources.writeUnavailableSource}"
+            - "${source::monitors.cassandra.simple.sources.droppedMessagesSource}"
+            - "${source::monitors.cassandra.simple.sources.uptimeSource}"
+            - "${source::monitors.cassandra.simple.sources.nativeConnectionsSource}"
+          computes:
+            - type: awk
+              script: "${file::transpose.awk}"
+
+      mapping:
+        source: ${source::unifiedSource}
+        attributes:
+          id: cassandra
+          db.system: cassandra
+          db.server.name: ${source::hostname}
+        metrics:
+          # Storage and hints (Cassandra-specific)
+          db.server.cassandra.hints.total: $1
+          db.server.storage.load: $2
+          
+          # Read metrics (using common patterns)
+          db.server.operations{db.io.direction="read", db.operation.rate_type="fifteen_minute"}: $3
+          db.server.operations{db.io.direction="read", db.operation.rate_type="mean"}: $4
+          db.server.operations{db.io.direction="read"}: $5
+          
+          # Write metrics (using common patterns)
+          db.server.operations{db.io.direction="write", db.operation.rate_type="mean"}: $6
+          db.server.operations{db.io.direction="write"}: $7
+          
+          # Storage I/O (similar to MySQL/PostgreSQL storage.io)
+          db.server.storage.io{db.io.direction="write", db.storage.operation="flush"}: $8
+          db.server.pending_operations{db.operation.type="compaction"}: $9
+          db.server.cache.usage{db.cache.type="memtable"}: $10
+          
+          # Cache performance (consistent with MySQL/PostgreSQL cache patterns)
+          db.server.cache.operations{db.cache.state="hit", db.cache.type="key_cache"}: $11
+          
+          # System metrics
+          db.server.cassandra.gc.time: $12
+          
+          # Error metrics (using common error patterns)
+          db.server.errors{error.type="read_timeout"}: $13
+          db.server.errors{error.type="write_timeout"}: $14
+          db.server.errors{error.type="read_unavailable"}: $15
+          db.server.errors{error.type="write_unavailable"}: $16
+          db.server.errors{error.type="dropped_message"}: $17
+          
+          # System uptime and connections (common metrics)
+          db.server.uptime: $18
+          db.server.current_connections{db.connection.type="native"}: $19
+
+  # Additional monitor for cluster-level metrics
+  cassandra_cluster:
+    simple:
+      sources:
+        clusterInfoSource:
+          type: jmx
+          mbean: "org.apache.cassandra.db:type=StorageService"
+          attributes:
+            - "LiveNodes"
+            - "UnreachableNodes"
+            - "JoiningNodes"
+            - "LeavingNodes"
+            - "MovingNodes"
+          keysAsAttributes: []
+          forceSerialization: false
+
+      mapping:
+        source: ${source::clusterInfoSource}
+        attributes:
+          id: cassandra_cluster
+          db.system: cassandra
+        metrics:
+          db.server.cluster.nodes{db.node.state="live"}: $1
+          db.server.cluster.nodes{db.node.state="unreachable"}: $2
+          db.server.cluster.nodes{db.node.state="joining"}: $3
+          db.server.cluster.nodes{db.node.state="leaving"}: $4
+          db.server.cluster.nodes{db.node.state="moving"}: $5
