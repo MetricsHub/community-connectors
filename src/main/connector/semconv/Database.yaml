@@ -87,7 +87,7 @@ metrics:
     description: The total number of rows affected in tables, categorized by operation type (insert, read, update, delete).
     type: Counter
     unit: "{row}"
-  db.threads:
+  db.server.threads:
     description: "The number of database threads categorized by their state (cached, connected, created, or running)."
     type: Gauge
     unit: "{thread}"
@@ -147,3 +147,33 @@ metrics:
     description: Number of locks
     type: Gauge
     unit: "{lock}"
+  db.server.lock_waits:
+    description: The total number of lock wait.
+    type: Gauge
+    unit: "{lock_wait}"
+  db.server.current_locks:
+    description: Current number of locks.
+    type: Counter
+    unit: "{current_lock}"
+  db.server.storage.mirrored:
+    description: Indicates whether the database storage is mirrored (1 = mirrored, 0 = not mirrored).
+    type: Gauge
+  db.server.storage.encrypted:
+    description: Indicates whether the database storage is encrypted (1 = encrypted, 0 = not encrypted).
+    type: Gauge
+  db.server.storage.limit:
+    description: The storage capacity allocated.
+    type: Gauge
+    unit: By
+  db.server.storage.usage:
+    description: The storage utilization in bytes, classified by state (“used” or “free”).
+    type: UpDownCounter
+    unit: By
+  db.server.storage.status:
+    description: State of the storage
+    type:
+      stateSet:
+        - ok
+        - failed
+        - degraded
+

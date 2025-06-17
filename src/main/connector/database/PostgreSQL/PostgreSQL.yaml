@@ -85,12 +85,12 @@ metrics:
 monitors:
 
   #Database
-  postgressql_database:
+  postgresql_database:
     keys:
     - db.namespace
     simple:
       sources:
-        database:
+        postgresqlDatabase:
           type: sql
           query: |
             SELECT db.datname, -- $1
@@ -119,7 +119,7 @@ monitors:
               WHERE db.datistemplate = false    -- exclure toutes les bases marquées comme "template"
                 AND db.datname IS NOT NULL;     -- pour éviter le cas global (datname = NULL)
       mapping:
-        source: ${source::postgressqlDatabase}
+        source: ${source::postgresqlDatabase}
         attributes:
           db.namespace: $1
           db.system: postgresql
@@ -239,8 +239,8 @@ monitors:
           db.server.postgresql.replication.lag: $8
           db.server.postgresql.replication.status: $9
 
-  #Postgressql locks
-  postgressql_lock:
+  #Postgresql locks
+  postgresql_lock:
     keys: [ db.namespace, db.server.lock.relation, db.server.lock.type ]
     simple:
       sources:
