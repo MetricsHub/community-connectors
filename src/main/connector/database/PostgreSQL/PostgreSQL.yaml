@@ -116,8 +116,8 @@ monitors:
                   psd.numbackends --$21
               FROM pg_stat_database psd
               JOIN pg_database db ON db.oid = psd.datid
-              WHERE db.datistemplate = false    -- exclure toutes les bases marquées comme "template"
-                AND db.datname IS NOT NULL;     -- pour éviter le cas global (datname = NULL)
+              WHERE db.datistemplate = false
+                AND db.datname IS NOT NULL;
       mapping:
         source: ${source::postgresqlDatabase}
         attributes:
