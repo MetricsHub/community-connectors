@@ -147,3 +147,7 @@ metrics:
     description: Number of locks
     type: Gauge
     unit: "{lock}"
+  db.server.threads:
+    description: Number of threads in the database, categorized by their state.
+    type: Gauge
+    unit: "{thread}"

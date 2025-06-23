@@ -5,294 +5,460 @@ extends:
 connector:
   displayName: Apache Cassandra
   platforms:
-    - Cassandra
-  reliesOn: JDK, Apache Cassandra 3.0 or higher
-  information: >
-    This connector uses Java Management Extensions (JMX) to discover and monitor
-    MBeans exposed by Apache Cassandra. It connects remotely (or locally via
-    JMX RMI) to fetch MBean attributes and expose them as hardware or application metrics.
-    Monitors performance, operational metrics, and cluster health for Cassandra databases.
+  - Cassandra
+  reliesOn: Apache Cassandra 3.0 or higher
+  information: Monitors performance, operational metrics, and cluster health for Cassandra databases through Java Management Extensions (JMX)
   detection:
-    connectionTypes:
-      - remote
-      - local
     appliesTo:
-      - linux
-      - nt
+    - linux
+    - nt
     tags:
-      - database
-      - linux
-      - windows
+    - database
+    - linux
+    - windows
     criteria:
-      - type: jmx
-        objectName: "org.apache.cassandra.metrics:type=Storage,name=Load"
-        attributes:
-          - Count
-        expectedResult: ^[0-9]
+    - type: jmx
+      objectName: org.apache.cassandra.metrics:type=Storage,name=Load
+      attributes:
+      - Count
+      expectedResult: ^[0-9]
+
 metrics:
   db.server.cassandra.hints:
     description: Total number of hints stored on the node.
     type: Counter
     unit: "{hint}"
-  
-  # Once this metric name is confirmed, its definition goes in database.yaml
-  db.server.garbage_collector.time:
-    description: Total time spent in garbage collection.
-    type: Counter
-    unit: s
 
-  db.server.cassandra.cluster.nodes:
-    description: the number of cassandra  nodes per status (Live, Unreachable, Joining, Leaving, Moving)
-    type: Counter
+  db.server.cassandra.nodes:
+    description: The number of nodes in the Cassandra cluster, categorized by their state.
+    type: Gauge
     unit: "{node}"
 
+beforeAll:
+  # ServerName for the Cassandra instance
+  dbServerName:
+    type: jmx
+    # The name of the Cassandra server, typically the hostname or IP address.
+    objectName: java.lang:type=Runtime
+    attributes:
+    - Name
+    computes:
+    - type: awk
+      script: |
+        BEGIN {
+            FS = "@"
+        }
+
+        {
+            if (NF == 2 && $1 ~ /^[0-9]+$/) {
+                print $2
+            } else {
+                print ""
+            }
+        }
+
+  # Cluster name for the Cassandra instance
+  # ClusterName;
+  dbClusterName:
+    type: jmx
+    # The name of the Cassandra cluster
+    objectName: org.apache.cassandra.db:type=StorageService
+    attributes:
+    - ClusterName
+
+  # Release version of the Cassandra instance
+  # ReleaseVersion;
+  dbReleaseVersion:
+    type: jmx
+    # The version of the Cassandra instance
+    objectName: org.apache.cassandra.db:type=StorageService
+    attributes:
+    - ReleaseVersion
 
 monitors:
   cassandra:
+    keys: [ db.system ]
     simple:
       sources:
         # Storage metrics $1
-        totalHintsSource:
+        totalHints:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=Storage,name=TotalHints"
+          # Number of hint messages written to this node since [re]start.
+          objectName: org.apache.cassandra.metrics:type=Storage,name=TotalHints
           attributes:
-            - "Count"
-          keyProperties: []
-        
-        #$2
-        storageLoadSource:
-          type: jmx
-          objectName: "org.apache.cassandra.metrics:type=Storage,name=Load"
-          attributes:
-            - "Count"
-          keyProperties: []
+          - Count
 
-        # Read/Write latency metrics #$3$4$5
-        readLatencySource:
+        # $2
+        storageLoad:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency"
+          # Size, in bytes, of the on disk data size this node manages.
+          objectName: org.apache.cassandra.metrics:type=Storage,name=Load
           attributes:
-            - "FifteenMinuteRate"
-            - "MeanRate"
-            - "Count"
-          keyProperties: []
+          - Count
 
-        #$6$7
-        writeLatencySource:
+        # Read/Write latency Bean to get the number of read and write operations
+        # $3
+        readLatency:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency"
+          # Latency of read operations, Count is the number of read operations
+          objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency
           attributes:
-            - "MeanRate"
-            - "Count"
-          keyProperties: []
+          - Count
 
-        # Table metrics $8
-        tableBytesFlushedSource:
+        # $4
+        writeLatency:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=Table,name=BytesFlushed"
+          # Latency of write operations, Count is the number of write operations
+          objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency
           attributes:
-            - "Value"
-          keyProperties: []
+          - Count
 
-        # Compaction metrics $9
-        pendingCompactionsSource:
+        # Table metrics $5
+        tableBytesFlushed:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=Compaction,name=PendingTasks"
+          # Total number of bytes flushed since server [re]start.
+          objectName: org.apache.cassandra.metrics:type=Table,name=BytesFlushed
           attributes:
-            - "Value"
-          keyProperties: []
+          - Value
 
-        # Memory metrics $10
-        memtableSizeSource:
+        # Compaction metrics $6
+        pendingTasks:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=Table,name=MemtableOnHeapSize"
+          # Estimated number of compactions remaining to perform
+          objectName: org.apache.cassandra.metrics:type=Compaction,name=PendingTasks
           attributes:
-            - "Value"
-          keyProperties: []
+          - Value
 
-        # Cache metrics $11
-        keyCacheHitRateSource:
+        # Memory metrics $7
+        memtableOnHeapSize:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=Cache,scope=KeyCache,name=HitRate"
+          # Total amount of data stored in the memtable that resides on-heap, including
+          # column related overhead and partitions overwritten.
+          objectName: org.apache.cassandra.metrics:type=Table,name=MemtableOnHeapSize
           attributes:
-            - "Value"
-          keyProperties: []
+          - Value
 
-        # GC metrics $12
-        gcTimeSource:
+        # Memory metrics $8
+        memtableOffHeapSize:
           type: jmx
-          objectName: "java.lang:type=GarbageCollector,name=G1 Young Generation"
+          # Total amount of data stored in the memtable that resides off-heap, including
+          # column related overhead and partitions overwritten.
+          objectName: org.apache.cassandra.metrics:type=Table,name=MemtableOffHeapSize
           attributes:
-            - "CollectionTime"
-          keyProperties: []
+          - Value
+
+        # Timeout and error metrics $9
+        readTimeouts:
+          type: jmx
+          # Number of Read timeouts encountered.
+          objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Timeouts
+          attributes:
+          - Count
+
+        # $10
+        writeTimeouts:
+          type: jmx
+          # Number of Write timeouts encountered.
+          objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Timeouts
+          attributes:
+          - Count
+
+        # $11
+        readUnavailable:
+          type: jmx
+          # Number of unavailable exceptions encountered for Read requests.
+          objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Unavailables
+          attributes:
+          - Count
+
+        # $12
+        writeUnavailable:
+          type: jmx
+          # Number of unavailable exceptions encountered for Write requests.
+          objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Unavailables
+          attributes:
+          - Count
+
+        # System uptime $13
+        uptime:
+          type: jmx
+          # Uptime of the Cassandra instance in milliseconds.
+          objectName: java.lang:type=Runtime
+          attributes:
+          - Uptime
           computes:
           - type: divide
             column: 1
             value: 1000
 
-        # Timeout and error metrics $13
-        readTimeoutsSource:
+        # Connection metrics $14
+        connectedNativeClients:
           type: jmx
-          objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Timeouts"
+          # Number of clients connected to this nodes native protocol server
+          objectName: org.apache.cassandra.metrics:type=Client,name=connectedNativeClients
           attributes:
-            - "Count"
-          keyProperties: []
+          - Value
 
-        #$14
-        writeTimeoutsSource:
-          type: jmx
-          objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Timeouts"
-          attributes:
-            - "Count"
-          keyProperties: []
-
-        readUnavailableSource:
-          type: jmx
-          objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Unavailables"
-          attributes:
-            - "Count"
-          keyProperties: []
-
-        #$15
-        writeUnavailableSource:
-          type: jmx
-          objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Unavailables"
-          attributes:
-            - "Count"
-          keyProperties: []
-
-        # System uptime $16
-        uptimeSource:
-          type: jmx
-          objectName: "java.lang:type=Runtime"
-          attributes:
-            - "Uptime"
-          keyProperties: []
-          computes:
-          - type: divide
-            column: 1
-            value: 1000
-
-        # Connection metrics $17
-        nativeConnectionsSource:
-          type: jmx
-          objectName: "org.apache.cassandra.metrics:type=Client,name=connectedNativeClients"
-          attributes:
-            - "Value"
-          keyProperties: []
-
-        # ServerName for the Cassandra instance $18
-        dbServerName:
-          type: jmx
-          objectName: "java.lang:type=Runtime"
-          attributes:
-          - Name
-          computes:
-          - type: awk
-            script: |
-              BEGIN {
-                  FS = "@"
-              }
-
-              {
-                  if (NF == 2 && $1 ~ /^[0-9]+$/) {
-                      print $2
-                  } else {
-                      print ""
-                  }
-              }
-
-        # Unified source combining all metrics
-        unifiedSource:
+        # Combine all metrics into a single source table
+        # Then transpose the table to have a single row with all metrics
+        dbMetrics:
           type: tableUnion
           tables:
-            - "${source::monitors.cassandra.simple.sources.totalHintsSource}"
-            - "${source::monitors.cassandra.simple.sources.storageLoadSource}"
-            - "${source::monitors.cassandra.simple.sources.readLatencySource}"
-            - "${source::monitors.cassandra.simple.sources.writeLatencySource}"
-            - "${source::monitors.cassandra.simple.sources.tableBytesFlushedSource}"
-            - "${source::monitors.cassandra.simple.sources.pendingCompactionsSource}"
-            - "${source::monitors.cassandra.simple.sources.memtableSizeSource}"
-            - "${source::monitors.cassandra.simple.sources.keyCacheHitRateSource}"
-            - "${source::monitors.cassandra.simple.sources.gcTimeSource}"
-            - "${source::monitors.cassandra.simple.sources.readTimeoutsSource}"
-            - "${source::monitors.cassandra.simple.sources.writeTimeoutsSource}"
-            - "${source::monitors.cassandra.simple.sources.readUnavailableSource}"
-            - "${source::monitors.cassandra.simple.sources.writeUnavailableSource}"
-            - "${source::monitors.cassandra.simple.sources.uptimeSource}"
-            - "${source::monitors.cassandra.simple.sources.nativeConnectionsSource}"
+            - ${source::totalHints}
+            - ${source::storageLoad}
+            - ${source::readLatency}
+            - ${source::writeLatency}
+            - ${source::tableBytesFlushed}
+            - ${source::pendingTasks}
+            - ${source::memtableOnHeapSize}
+            - ${source::memtableOffHeapSize}
+            - ${source::readTimeouts}
+            - ${source::writeTimeouts}
+            - ${source::readUnavailable}
+            - ${source::writeUnavailable}
+            - ${source::uptime}
+            - ${source::connectedNativeClients}
           computes:
             - type: awk
-              script: "${file::transpose.awk}"
-
+              script: |
+                {
+                    gsub(/^[ \t]+|[ \t]+$/, "", $0)
+                    printf "%s", $0
+                }
       mapping:
-        source: ${source::unifiedSource}
+        source: ${source::dbMetrics}
         attributes:
-          id: cassandra
           db.system: cassandra
-          db.server.name: ${source::dbServerName}
+          db.server.name: ${source::beforeAll.dbServerName}
+          db.version: ${source::beforeAll.dbReleaseVersion}
+          db.cluster.name: ${source::beforeAll.dbClusterName}
         metrics:
-          # Storage and hints (Cassandra-specific)
+          # Storage and hints
           db.server.cassandra.hints: $1
           db.server.storage.size: $2
           
-          # Read metrics (using common patterns)
-          db.server.operations{db.io.direction="read", db.operation.rate_type="fifteen_minute"}: $3
-          db.server.operations{db.io.direction="read", db.operation.rate_type="mean"}: $4
-          db.server.operations{db.io.direction="read"}: $5
+          # Read metrics
+          db.server.operations{db.io.direction="read"}: $3
           
-          # Write metrics (using common patterns)
-          db.server.operations{db.io.direction="write", db.operation.rate_type="mean"}: $6
-          db.server.operations{db.io.direction="write"}: $7
+          # Write metrics
+          db.server.operations{db.io.direction="write"}: $4
           
           # Storage I/O
-          db.server.storage.io{db.io.direction="write"}: $8
-          db.server.pending_operations{db.operation.type="compaction"}: $9
-          db.server.cache.usage{db.cache.type="memtable"}: $10
+          db.server.storage.io{db.io.direction="write"}: $5
+          db.server.pending_operations{db.operation.type="compaction"}: $6
+          db.server.cache.usage{db.cache.state="on_heap", db.cassandra.cache.type="memtable"}: $7
+          db.server.cache.usage{db.cache.state="off_heap", db.cassandra.cache.type="memtable"}: $8
           
-          # Cache performance
-          db.server.cache.hit_ratio{db.cache.type="key_cache"}: $11
+          # Error metrics
+          db.server.errors{error.type="read_timeout"}: $9
+          db.server.errors{error.type="write_timeout"}: $10
+          db.server.errors{error.type="read_unavailable"}: $11
+          db.server.errors{error.type="write_unavailable"}: $12
           
-          # System metrics
-          db.server.garbage_collector.time: $12
-          
-          # Error metrics (using common error patterns)
-          db.server.errors{error.type="read_timeout"}: $13
-          db.server.errors{error.type="write_timeout"}: $14
-          db.server.errors{error.type="read_unavailable"}: $15
-          db.server.errors{error.type="write_unavailable"}: $16
-          
-          # System uptime and connections (common metrics)
-          db.server.uptime: $17
-          db.server.current_connections{db.connection.type="native"}: $18
+          # DB Server uptime and connections
+          db.server.uptime: $13
+          db.server.current_connections: $14
+
+  cache:
+    keys: [ db.cassandra.cache.type ]
+    simple:
+      sources:
+        # Cashe size
+        # scope;Size
+        cacheSize:
+          type: jmx
+          # Size of the cache, in bytes, for a specific scope (e.g., KeyCache, RowCache, CounterCache etc.)
+          objectName: org.apache.cassandra.metrics:type=Cache,scope=*,name=Capacity
+          attributes:
+          - Value
+          keyProperties:
+          - scope
+
+        # Cache Hits
+        # scope;Hits
+        cacheHits:
+          type: jmx
+          # Total number of cache hits for the specific scope (e.g., KeyCache, RowCache, CounterCache etc.)
+          objectName: org.apache.cassandra.metrics:type=Cache,scope=*,name=Hits
+          attributes:
+          - Count
+          keyProperties:
+          - scope
+
+        # Cache Misses
+        # scope;Misses
+        cacheMisses:
+          type: jmx
+          # Total number of cache misses for the specific scope (e.g., KeyCache, RowCache, CounterCache etc.)
+          objectName: org.apache.cassandra.metrics:type=Cache,scope=*,name=Misses
+          attributes:
+          - Count
+          keyProperties:
+          - scope
+
+        # Cache Requests
+        # scope;Requests
+        cacheRequests:
+          type: jmx
+          # Total number of cache requests for the specific scope (e.g., KeyCache, RowCache, CounterCache etc.)
+          objectName: org.apache.cassandra.metrics:type=Cache,scope=*,name=Requests
+          attributes:
+          - Count
+          keyProperties:
+          - scope
+
+        # Cache Size and Hits
+        # scope;Size;scope;Hits
+        table1:
+          type: tableJoin
+          leftTable: ${source::cacheSize}
+          rightTable: ${source::cacheHits}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+
+        # Cache Size, Hits and Misses
+        # scope;Size;scope;Hits;scope;Misses
+        table2:
+          type: tableJoin
+          leftTable: ${source::table1}
+          rightTable: ${source::cacheMisses}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+  
+        # Cache Size, Hits, Misses and Requests
+        # scope;Size;scope;Hits;scope;Misses;scope;Requests
+        # Then after computation, we will have:
+        # scope;Size;Hits;Misses;Requests
+        cacheMetrics:
+          type: tableJoin
+          leftTable: ${source::table2}
+          rightTable: ${source::cacheRequests}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+          # Optimization to reduce the number of columns
+          computes:
+          - type: keepColumns
+            columnNumbers: 1,2,4,6,8
+  
+      mapping:
+        # Mapping for cache metrics
+        # scope;Size;Hits;Misses;Requests
+        source: ${source::cacheMetrics}
+        attributes:
+          db.system: cassandra
+          db.cassandra.cache.type: $1
+          db.server.name: ${source::beforeAll.dbServerName}
+          db.version: ${source::beforeAll.dbReleaseVersion}
+          db.cluster.name: ${source::beforeAll.dbClusterName}
+        metrics:
+          db.server.cache.size: $2
+          db.server.cache.operations{db.cache.state="hit"}: $3
+          db.server.cache.operations{db.cache.state="miss"}: $4
+          db.server.cache.requests: $5
+
+  thread:
+    keys: [ db.cassandra.thread.role ]
+    # Thread pool metrics
+    simple:
+      sources:
+        # scope;path;PendingTasks
+        pendingTasks:
+          type: jmx
+          # Number of queued tasks queued up on this pool.
+          objectName: org.apache.cassandra.metrics:type=ThreadPools,scope=*,path=request,name=PendingTasks
+          attributes:
+          - Value
+          keyProperties:
+          - scope
+          - path
+        # scope;path;ActiveTasks
+        activeTasks:
+          type: jmx
+          # Number of tasks being actively worked on by this pool.
+          objectName: org.apache.cassandra.metrics:type=ThreadPools,scope=*,path=request,name=ActiveTasks
+          attributes:
+          - Value
+          keyProperties:
+          - scope
+          - path
+        # scope;path;CurrentlyBlockedTasks
+        currentlyBlockedTasks:
+          type: jmx
+          # Number of tasks that are currently blocked due to queue saturation but on retry will become unblocked.
+          objectName: org.apache.cassandra.metrics:type=ThreadPools,scope=*,path=request,name=CurrentlyBlockedTasks
+          attributes:
+          - Count
+          keyProperties:
+          - scope
+          - path
+        # scope;path;PendingTasks;scope;path;ActiveTasks
+        table1:
+          type: tableJoin
+          leftTable: ${source::pendingTasks}
+          rightTable: ${source::activeTasks}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+        # scope;path;PendingTasks;scope;path;ActiveTasks;scope;path;CurrentlyBlockedTasks
+        # Then after computation, we will have:
+        # scope;path;PendingTasks;ActiveTasks;CurrentlyBlockedTasks
+        threadMetrics:
+          type: tableJoin
+          leftTable: ${source::table1}
+          rightTable: ${source::currentlyBlockedTasks}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+          # Optimization to reduce the number of columns
+          computes:
+          - type: keepColumns
+            columnNumbers: 1,2,3,6,9
+      mapping:
+        # Mapping for thread metrics
+        # scope;path;PendingTasks;ActiveTasks;CurrentlyBlockedTasks
+        source: ${source::threadMetrics}
+        attributes:
+          db.system: cassandra
+          db.cassandra.thread.role: $1
+          db.thread.pool: $2
+          db.server.name: ${source::beforeAll.dbServerName}
+          db.version: ${source::beforeAll.dbReleaseVersion}
+          db.cluster.name: ${source::beforeAll.dbClusterName}
+        metrics:
+          db.server.threads{db.thread.state="pending"}: $3
+          db.server.threads{db.thread.state="active"}: $4
+          db.server.threads{db.thread.state="blocked"}: $5
 
   # Additional monitor for cluster-level metrics
   cassandra_cluster:
+    keys: [ db.system ]
     simple:
       sources:
-        clusterInfoSource:
+        clusterNodes:
           type: jmx
+          # Cluster information including live, unreachable, joining, leaving, and moving nodes
+          # Output format: LiveNodes;UnreachableNodes;JoiningNodes;LeavingNodes;MovingNodes
+          # Example: [172.17.0.6, host1, host2];[host3];[host4, host5];[host6];[]
           objectName: "org.apache.cassandra.db:type=StorageService"
           attributes:
-            - "LiveNodes"
-            - "UnreachableNodes"
-            - "JoiningNodes"
-            - "LeavingNodes"
-            - "MovingNodes"
-          keyProperties: []
-          # We need to calculate the number of nodes in each column
+            - LiveNodes
+            - UnreachableNodes
+            - JoiningNodes
+            - LeavingNodes
+            - MovingNodes
+          # Compute the number of nodes in each state
           computes:
             - type: awk
-              script: "${file::count_nodes.awk}"
+              script: "${file::nodes.awk}"
 
       mapping:
-        source: ${source::clusterInfoSource}
+        source: ${source::clusterNodes}
         attributes:
-          id: cassandra_cluster
           db.system: cassandra
+          db.server.name: ${source::beforeAll.dbServerName}
+          db.version: ${source::beforeAll.dbReleaseVersion}
+          db.cluster.name: ${source::beforeAll.dbClusterName}
         metrics:
-          db.server.cassandra.cluster.nodes{db.node.state="live"}: $1
-          db.server.cassandra.cluster.nodes{db.node.state="unreachable"}: $2
-          db.server.cassandra.cluster.nodes{db.node.state="joining"}: $3
-          db.server.cassandra.cluster.nodes{db.node.state="leaving"}: $4
-          db.server.cassandra.cluster.nodes{db.node.state="moving"}: $5
+          db.server.cassandra.nodes{db.node.state="live"}: $1
+          db.server.cassandra.nodes{db.node.state="unreachable"}: $2
+          db.server.cassandra.nodes{db.node.state="joining"}: $3
+          db.server.cassandra.nodes{db.node.state="leaving"}: $4
+          db.server.cassandra.nodes{db.node.state="moving"}: $5
