@@ -88,7 +88,7 @@ metrics:
     type: Counter
     unit: "{row}"
   db.server.threads:
-    description: "The number of database threads categorized by their state (cached, connected, created, or running)."
+    description: The number of database threads categorized by their state.
     type: Gauge
     unit: "{thread}"
   db.server.operation_time:
