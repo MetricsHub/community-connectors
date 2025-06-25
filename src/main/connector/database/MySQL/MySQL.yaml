@@ -162,7 +162,7 @@ monitors:
         attributes:
           db.system: mysql
           db.server.name: $59
-          id: $1
+          id: $59
           db.namespace: $1
           db.version: $2
         metrics:
