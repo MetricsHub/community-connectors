@@ -229,7 +229,7 @@ metrics:
   hw.network.dropped:
     description: The number of packets which were chosen to be discarded even though no errors had been detected.
     type: Counter
-    unit: "{packet}"
+    unit: "{packets}"
 
   hw.other_device.uses:
     description: Number of times the device has been used.
