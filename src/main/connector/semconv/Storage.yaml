@@ -54,6 +54,6 @@ metrics:
       - ok
 
   storage.latency:
-    description: Current latency in the storage system.
+    description: Current storage latency
     type: Gauge
     unit: s
