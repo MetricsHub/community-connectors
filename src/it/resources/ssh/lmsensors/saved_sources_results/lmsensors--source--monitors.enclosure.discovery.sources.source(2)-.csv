@@ -1,0 +1,48 @@
+---
+table:
+- - "# dmidecode 3.4"
+- - Getting SMBIOS data from sysfs.
+- - SMBIOS 3.3.0 present.
+- - ""
+- - "Handle 0x0000, DMI type 0, 26 bytes"
+- - BIOS Information
+- - "\tVendor: GIGABYTE"
+- - "\tVersion: F20"
+- - "\tRelease Date: 01/09/2024"
+- - "\tAddress: 0xF0000"
+- - "\tRuntime Size: 64 kB"
+- - "\tROM Size: 32 MB"
+- - "\tCharacteristics:"
+- - "\t\tPCI is supported"
+- - "\t\tBIOS is upgradeable"
+- - "\t\tBIOS shadowing is allowed"
+- - "\t\tBoot from CD is supported"
+- - "\t\tSelectable boot is supported"
+- - "\t\tBIOS ROM is socketed"
+- - "\t\tEDD is supported"
+- - "\t\tJapanese floppy for NEC 9800 1.2 MB is supported (int 13h)"
+- - "\t\tJapanese floppy for Toshiba 1.2 MB is supported (int 13h)"
+- - "\t\t5.25\"/360 kB floppy services are supported (int 13h)"
+- - "\t\t5.25\"/1.2 MB floppy services are supported (int 13h)"
+- - "\t\t3.5\"/720 kB floppy services are supported (int 13h)"
+- - "\t\t3.5\"/2.88 MB floppy services are supported (int 13h)"
+- - "\t\tPrint screen service is supported (int 5h)"
+- - "\t\tSerial services are supported (int 14h)"
+- - "\t\tPrinter services are supported (int 17h)"
+- - "\t\tCGA/mono video services are supported (int 10h)"
+- - "\t\tUSB legacy is supported"
+- - "\t\tBIOS boot specification is supported"
+- - "\t\tTargeted content distribution is supported"
+- - "\t\tUEFI is supported"
+- - "\tBIOS Revision: 5.22"
+- - ""
+- - "Handle 0x0054, DMI type 13, 22 bytes"
+- - BIOS Language Information
+- - "\tLanguage Description Format: Long"
+- - "\tInstallable Languages: 1"
+- - "\t\ten|US|iso8859-1"
+- - "\tCurrently Installed Language: en|US|iso8859-1"
+- - ""
+headers: []
+rawData: "# dmidecode 3.4\nGetting SMBIOS data from sysfs.\nSMBIOS 3.3.0 present.\n\nHandle 0x0000, DMI type 0, 26 bytes\nBIOS Information\n\tVendor: GIGABYTE\n\tVersion: F20\n\tRelease Date: 01/09/2024\n\tAddress: 0xF0000\n\tRuntime Size: 64 kB\n\tROM Size: 32 MB\n\tCharacteristics:\n\t\tPCI is supported\n\t\tBIOS is upgradeable\n\t\tBIOS shadowing is allowed\n\t\tBoot from CD is supported\n\t\tSelectable boot is supported\n\t\tBIOS ROM is socketed\n\t\tEDD is supported\n\t\tJapanese floppy for NEC 9800 1.2 MB is supported (int 13h)\n\t\tJapanese floppy for Toshiba 1.2 MB is supported (int 13h)\n\t\t5.25\"/360 kB floppy services are supported (int 13h)\n\t\t5.25\"/1.2 MB floppy services are supported (int 13h)\n\t\t3.5\"/720 kB floppy services are supported (int 13h)\n\t\t3.5\"/2.88 MB floppy services are supported (int 13h)\n\t\tPrint screen service is supported (int 5h)\n\t\tSerial services are supported (int 14h)\n\t\tPrinter services are supported (int 17h)\n\t\tCGA/mono video services are supported (int 10h)\n\t\tUSB legacy is supported\n\t\tBIOS boot specification is supported\n\t\tTargeted content distribution is supported\n\t\tUEFI is supported\n\tBIOS Revision: 5.22\n\nHandle 0x0054, DMI type 13, 22 bytes\nBIOS Language Information\n\tLanguage Description Format: Long\n\tInstallable Languages: 1\n\t\ten|US|iso8859-1\n\tCurrently Installed Language: en|US|iso8859-1\n"
+empty: false

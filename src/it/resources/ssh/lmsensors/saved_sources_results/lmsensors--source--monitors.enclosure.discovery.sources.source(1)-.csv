@@ -1,0 +1,20 @@
+---
+table:
+- - "# dmidecode 3.4"
+- - Getting SMBIOS data from sysfs.
+- - SMBIOS 3.3.0 present.
+- - ""
+- - "Handle 0x0001, DMI type 1, 27 bytes"
+- - System Information
+- - "\tManufacturer: GIGABYTE"
+- - "\tProduct Name: E162-220-00"
+- - "\tVersion: 0100"
+- - "\tSerial Number: DNGANQ521A0001"
+- - "\tUUID: db938000-fd74-11e7-8000-d85ed34d1564"
+- - "\tWake-up Type: Power Switch"
+- - "\tSKU Number: 01234567890123456789AB"
+- - "\tFamily: Server"
+- - ""
+headers: []
+rawData: "# dmidecode 3.4\nGetting SMBIOS data from sysfs.\nSMBIOS 3.3.0 present.\n\nHandle 0x0001, DMI type 1, 27 bytes\nSystem Information\n\tManufacturer: GIGABYTE\n\tProduct Name: E162-220-00\n\tVersion: 0100\n\tSerial Number: DNGANQ521A0001\n\tUUID: db938000-fd74-11e7-8000-d85ed34d1564\n\tWake-up Type: Power Switch\n\tSKU Number: 01234567890123456789AB\n\tFamily: Server\n"
+empty: false
