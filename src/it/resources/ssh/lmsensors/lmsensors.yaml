@@ -1,0 +1,213 @@
+---
+extends:
+- ./semconv/Hardware
+connector:
+  displayName: lm_sensors
+  platforms: Linux
+  reliesOn: lm_sensors
+  information: This connector enables the monitoring of environment sensors on Linux, through the sensors command.
+  version: 1.1
+  detection:
+    connectionTypes:
+    - remote
+    - local
+    appliesTo:
+    - Linux
+    criteria:
+    - type: deviceType
+      keep:
+      - Linux
+    # Commented out criteria because we can't guarantee lm_sensors is installed on every test system, and we don't want to use a remote machine
+    # - type: commandLine
+    #   commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -h"
+    #   expectedResult: "Usage: sensors "
+    #   errorMessage: lm_sensors is not installed on this server.
+    onLastResort: temperature
+    tags: [ hardware, linux ]
+sudoCommands:
+- /usr/sbin/dmidecode
+- /usr/bin/sensors
+monitors:
+  enclosure:
+    discovery:
+      sources:
+        source(1):
+          # Discovery Enclosure
+          type: commandLine
+          commandLine: "%{SUDO:/usr/sbin/dmidecode} /usr/sbin/dmidecode -t system"
+          computes:
+          # '"MSHW;"Manufacturer";"Type";"SN";"'
+          - type: awk
+            script: ${file::enclosureDiscovery1.awk}
+            keep: ^MSHW;
+            separators: ;
+        source(2):
+          type: commandLine
+          commandLine: "%{SUDO:/usr/sbin/dmidecode} /usr/sbin/dmidecode -t bios"
+          computes:
+          # '"MSHW;"Bios Info"'
+          - type: awk
+            script: ${file::enclosureDiscovery2.awk}
+            keep: ^MSHW;
+            separators: ;
+        source(3):
+          # '"MSHW;"Manufacturer";"Type";"SN";"'
+          type: tableJoin
+          leftTable: ${source::monitors.enclosure.discovery.sources.source(1)}
+          rightTable: ${source::monitors.enclosure.discovery.sources.source(2)}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+      mapping:
+        # Enclosure Instance Table
+        # "MSHW;"Name";"Type";"SN";""MSHW;"Bios Info"
+        source: ${source::monitors.enclosure.discovery.sources.source(3)}
+        attributes:
+          id: Computer
+          __display_id: $3
+          vendor: $2
+          type: Computer
+          serial_number: $4
+          bios_version: $6
+  temperature:
+    discovery:
+      sources:
+        source(1):
+          # Discovery Temperature
+          type: commandLine
+          commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -u -A"
+          computes:
+          - type: awk
+            script: ${file::temperature.awk}
+            keep: ^MSHW;
+            separators: ;
+      mapping:
+        # Temperature Instance Table
+        # "MSHW;"Name";"Type";"Value";"Max";"Critical";"
+        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        attributes:
+          id: $2
+          __display_id: $2
+          hw.parent.type: enclosure
+          hw.parent.id: Computer
+          name: $2
+        metrics:
+          hw.temperature.limit{limit_type="high.degraded"}: $5
+          hw.temperature.limit{limit_type="high.critical"}: $6
+    collect:
+      # Collection Type
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        source(1):
+          type: commandLine
+          commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -u -A"
+          computes:
+          - type: awk
+            script: ${file::temperature.awk}
+            keep: ^MSHW;
+            separators: ;
+      mapping:
+        # Temperature Value Table
+        # "MSHW;"Name";"Type";"Value";"Max";"Critical";"
+        source: ${source::monitors.temperature.collect.sources.source(1)}
+        attributes:
+          id: $2
+        metrics:
+          hw.temperature: $4
+  voltage:
+    discovery:
+      sources:
+        source(1):
+          # Discovery Voltage
+          type: commandLine
+          commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -A"
+          computes:
+          - type: awk
+            script: "${file::voltage.awk}"
+            keep: ^MSHW;
+            separators: ;
+      mapping:
+        # Voltage Instance Table
+        # "MSHW;"Name";"Type";"Value";Lower";"Upper";"
+        source: ${source::monitors.voltage.discovery.sources.source(1)}
+        attributes:
+          id: $2
+          __display_id: $2
+          sensor_location: Planar
+          hw.parent.type: enclosure
+          hw.parent.id: Computer
+          name: ${awk::sprintf("%s (%s)", $2, "Planar")}
+        metrics:
+          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($5)
+          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($6)
+    collect:
+      # Collection Type
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        source(1):
+          type: commandLine
+          commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -A"
+          computes:
+          - type: awk
+            script: ${file::voltage.awk}
+            keep: ^MSHW;
+            separators: ;
+      mapping:
+        # Voltage Value Table
+        # "MSHW;"Name";"Type";"Value";
+        source: ${source::monitors.voltage.collect.sources.source(1)}
+        attributes:
+          id: $2
+        metrics:
+          hw.voltage: milliVolt2Volt($4)
+  fan:
+    discovery:
+      sources:
+        source(1):
+          # Discovery FAN
+          type: commandLine
+          commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -u -A"
+          computes:
+          - type: awk
+            script: ${file::fan.awk}
+            keep: ^MSHW;
+            separators: ;
+      mapping:
+        # FAN Instance Table
+        # ""MSHW;"DName"-"FName";"Value";"Min";"Max";"Alarm";"
+        source: ${source::monitors.fan.discovery.sources.source(1)}
+        attributes:
+          id: $2
+          __display_id: $2
+          sensor_location: Planar
+          hw.parent.type: enclosure
+          hw.parent.id: Computer
+          name: ${awk::sprintf("%s (%s)", $2, "Planar")}
+        metrics:
+          hw.fan.speed.limit{limit_type="low.degraded"}: $5
+          hw.fan.speed.limit{limit_type="low.critical"}: $6
+    collect:
+      # Collection Type
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        source(1):
+          type: commandLine
+          commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -u -A"
+          computes:
+          - type: awk
+            script: ${file::fan.awk}
+            keep: ^MSHW;
+            separators: ;
+      mapping:
+        # Voltage Value Table
+        # "MSHW;"Name";"Type";"Value";
+        source: ${source::monitors.fan.collect.sources.source(1)}
+        attributes:
+          id: $2
+        metrics:
+          hw.fan.speed: $3
