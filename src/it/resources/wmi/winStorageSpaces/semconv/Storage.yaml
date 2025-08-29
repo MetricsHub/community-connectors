@@ -1,0 +1,59 @@
+metrics:
+
+  storage.usage:
+    description: Storage capacity usage.
+    type: UpDownCounter
+    unit: By
+
+  storage.limit:
+    description: Storage usage and provisioning limit.
+    type: UpDownCounter
+    unit: By
+
+  storage.size:
+    description: Storage size.
+    type: UpDownCounter
+    unit: By
+
+  storage.provisioning:
+    description: Amount of provisioned storage.
+    type: UpDownCounter
+    unit: By
+
+  storage.operations:
+    description: Number of operations performed.
+    type: Counter
+    unit: "{operation}"
+
+  storage.io:
+    description: Amount of data processed.
+    type: Counter
+    unit: By
+
+  storage.compression:
+    description: Ratio of the data compression.
+    type: Gauge
+    unit: 1
+
+  storage.operation_time:
+    description: Sum of the time each storage operation took to complete.
+    type: Counter
+    unit: s
+
+  storage.io_time:
+    description: Busy time (non-idle)
+    type: Counter
+    unit: s
+
+  storage.status:
+    description: 'Operational status: 1 (true) or 0 (false) for each of the possible states.'
+    type:
+      stateSet:
+      - degraded
+      - failed
+      - ok
+
+  storage.latency:
+    description: Current storage latency
+    type: Gauge
+    unit: s
