@@ -1,0 +1,19 @@
+---
+table:
+- - total 0
+- - lrwxrwxrwx 1 root root 0 Jun 12 08:13 docker0 -> ../../devices/virtual/net/docker0
+- - lrwxrwxrwx 1 root root 0 Jun 12 08:13 eno1 -> ../../devices/pci0000:00/0000:00:1c.0/0000:07:00.0/net/eno1
+- - lrwxrwxrwx 1 root root 0 Jun 12 08:13 eno2 -> ../../devices/pci0000:00/0000:00:1c.0/0000:07:00.1/net/eno2
+- - lrwxrwxrwx 1 root root 0 Jun 12 08:13 lo -> ../../devices/virtual/net/lo
+- - lrwxrwxrwx 1 root root 0 Jun 12 08:13 virbr0 -> ../../devices/virtual/net/virbr0
+- - lrwxrwxrwx 1 root root 0 Jun 12 08:13 virbr0-nic -> ../../devices/virtual/net/virbr0-nic
+headers: []
+rawData: |-
+  total 0
+  lrwxrwxrwx 1 root root 0 Jun 12 08:13 docker0 -> ../../devices/virtual/net/docker0
+  lrwxrwxrwx 1 root root 0 Jun 12 08:13 eno1 -> ../../devices/pci0000:00/0000:00:1c.0/0000:07:00.0/net/eno1
+  lrwxrwxrwx 1 root root 0 Jun 12 08:13 eno2 -> ../../devices/pci0000:00/0000:00:1c.0/0000:07:00.1/net/eno2
+  lrwxrwxrwx 1 root root 0 Jun 12 08:13 lo -> ../../devices/virtual/net/lo
+  lrwxrwxrwx 1 root root 0 Jun 12 08:13 virbr0 -> ../../devices/virtual/net/virbr0
+  lrwxrwxrwx 1 root root 0 Jun 12 08:13 virbr0-nic -> ../../devices/virtual/net/virbr0-nic
+empty: false
