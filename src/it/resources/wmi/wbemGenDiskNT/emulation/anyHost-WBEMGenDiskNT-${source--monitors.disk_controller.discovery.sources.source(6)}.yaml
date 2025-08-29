@@ -1,0 +1,33 @@
+---
+table:
+- - ATA Channel 0
+  - PCIIDE\IDECHANNEL\4&27E16BB&0&0
+- - ATA Channel 1
+  - PCIIDE\IDECHANNEL\4&27E16BB&0&1
+- - ATA Channel 2
+  - PCIIDE\IDECHANNEL\4&27E16BB&0&2
+- - ATA Channel 3
+  - PCIIDE\IDECHANNEL\4&27E16BB&0&3
+- - Intel(R) 8 Series/C220 Series SATA AHCI Controller - 8C02
+  - PCI\VEN_8086&DEV_8C02&SUBSYS_080615D9&REV_05\3&11583659&0&FA
+- - ATA Channel 4
+  - PCIIDE\IDECHANNEL\4&27E16BB&0&4
+- - ATA Channel 5
+  - PCIIDE\IDECHANNEL\4&27E16BB&0&5
+- - Intel(R) USB 3.0 eXtensible Host Controller
+  - PCI\VEN_8086&DEV_8C31&SUBSYS_080615D9&REV_05\3&11583659&0&A0
+- - "Intel(R) 8 Series/C220 Series USB EHCI #1 - 8C26"
+  - PCI\VEN_8086&DEV_8C26&SUBSYS_080615D9&REV_05\3&11583659&0&E8
+- - "Intel(R) 8 Series/C220 Series USB EHCI #2 - 8C2D"
+  - PCI\VEN_8086&DEV_8C2D&SUBSYS_080615D9&REV_05\3&11583659&0&D0
+- - ASPEED Graphics Family(WDDM)
+  - PCI\VEN_1A03&DEV_2000&SUBSYS_080615D9&REV_30\5&12BA8BD6&0&0000E0
+- - Communications Port (COM1)
+  - ACPI\PNP0501\1
+- - Communications Port (COM2)
+  - ACPI\PNP0501\2
+- - Communications Port (COM3)
+  - ACPI\PNP0501\3
+headers: []
+rawData: null
+empty: false

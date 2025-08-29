@@ -89,6 +89,31 @@
 			<artifactId>junit-jupiter-engine</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.metricshub</groupId>
+            <artifactId>metricshub-engine</artifactId>
+            <version>1.0.08-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.metricshub</groupId>
+            <artifactId>metricshub-agent</artifactId>
+            <version>1.0.08-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.metricshub</groupId>
+            <artifactId>metricshub-wmi-extension</artifactId>
+            <version>1.0.08-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.metricshub</groupId>
+            <artifactId>metricshub-it-common</artifactId>
+            <version>1.0.08-SNAPSHOT</version>
+            <scope>test</scope>
+            <classifier>tests</classifier>
+        </dependency>
 	</dependencies>
 
 	<build>
