@@ -1,0 +1,23 @@
+---
+table:
+- - Filesystem                 Mounted on     Type             Used       Avail    1B-blocks
+- - devtmpfs                   /dev           devtmpfs            0  8296923136   8296923136
+- - tmpfs                      /dev/shm       tmpfs          307200  8308809728   8309116928
+- - tmpfs                      /run           tmpfs       849166336  7459950592   8309116928
+- - tmpfs                      /sys/fs/cgroup tmpfs               0  8309116928   8309116928
+- - /dev/mapper/rootvg-lv_root /              xfs      140291854336 10011029504 150302883840
+- - /dev/sda1                  /boot          xfs         266874880  1870123008   2136997888
+- - /dev/mapper/rootvg-lv_tmp  /tmp           xfs         514158592  3770322944   4284481536
+- - tmpfs                      /run/user/0    tmpfs               0  1661825024   1661825024
+headers: []
+rawData: |-
+  Filesystem                 Mounted on     Type             Used       Avail    1B-blocks
+  devtmpfs                   /dev           devtmpfs            0  8296923136   8296923136
+  tmpfs                      /dev/shm       tmpfs          307200  8308809728   8309116928
+  tmpfs                      /run           tmpfs       849166336  7459950592   8309116928
+  tmpfs                      /sys/fs/cgroup tmpfs               0  8309116928   8309116928
+  /dev/mapper/rootvg-lv_root /              xfs      140291854336 10011029504 150302883840
+  /dev/sda1                  /boot          xfs         266874880  1870123008   2136997888
+  /dev/mapper/rootvg-lv_tmp  /tmp           xfs         514158592  3770322944   4284481536
+  tmpfs                      /run/user/0    tmpfs               0  1661825024   1661825024
+empty: false
