@@ -1,0 +1,110 @@
+{
+  "total": 3,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1756727765066,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": null,
+          "stateSet": [ "ok", "failed" ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "MySQL.yaml",
+        "name": "MySQL",
+        "connector_id": "MySQL",
+        "applies_to_os": "linux,windows",
+        "parent.id": "anyHost",
+        "id": "MySQL"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [LINUX]\n- Exclude: []\n\nResult:\nConfigured OS type : LINUX\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1756727765066,
+      "type": "connector",
+      "id": "connector_MySQL",
+      "identifyingAttributeKeys": [ "id" ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": true,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1756727765066,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "os.type": "linux",
+        "host.type": "compute",
+        "host.name": "anyHost",
+        "agent.host.name": "PC-Maalej"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1756727765066,
+      "type": "host",
+      "id": "endpoint_host_anyHost",
+      "identifyingAttributeKeys": [ "host.name" ],
+      "endpointHost": true,
+      "endpoint": true,
+      "connector": false,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "db.server.io{db.io.direction=\"receive\"}": {
+          "name": "db.server.io{db.io.direction=\"receive\"}",
+          "collectTime": 1756727765066,
+          "previousCollectTime": null,
+          "attributes": {
+            "db.io.direction": "receive"
+          },
+          "resetMetricTime": true,
+          "value": 9.84117291E8,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "db.version": "9.2.0",
+        "db.system": "mysql",
+        "connector_id": "MySQL",
+        "id": "c52e41411c85",
+        "db.server.name": "c52e41411c85",
+        "db.namespace": "sys"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1756727765066,
+      "type": "mysql",
+      "id": "MySQL_mysql_c52e41411c85",
+      "identifyingAttributeKeys": [ "id" ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    }
+  ]
+}
