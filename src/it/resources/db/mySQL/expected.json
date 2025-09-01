@@ -1,0 +1,132 @@
+{
+  "total": 3,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1757335622163,
+          "previousCollectTime": 1757335502163,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": "ok",
+          "stateSet": [
+            "ok",
+            "failed"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "MySQL.yaml",
+        "name": "MySQL",
+        "connector_id": "MySQL",
+        "applies_to_os": "linux,windows",
+        "parent.id": "anyHost",
+        "id": "MySQL"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed SqlCriterion Criterion:\n- Query SELECT @@version_comment REGEXP 'mysql' AS is_mysql;\n- ExpectedResult: 1\n- ErrorMessage: Not a MySQL Server\n\nResult:\n1;\n\nMessage:\n====================================\nHostname raz-docker - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1757335502163,
+      "type": "connector",
+      "id": "connector_MySQL",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpoint": false,
+      "endpointHost": false,
+      "connector": true,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.up{protocol=\"jdbc\"}": {
+          "name": "metricshub.host.up{protocol=\"jdbc\"}",
+          "collectTime": 1757335622163,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "jdbc"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1757335622163,
+          "previousCollectTime": 1757335502163,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "host.type": "compute",
+        "host.name": "anyHost",
+        "agent.host.name": "PC-Maalej",
+        "os.type": "linux"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757335622163,
+      "type": "host",
+      "id": "endpoint_host_anyHost",
+      "identifyingAttributeKeys": [
+        "host.name"
+      ],
+      "endpoint": true,
+      "endpointHost": true,
+      "connector": false,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "db.server.io{db.io.direction=\"receive\"}": {
+          "name": "db.server.io{db.io.direction=\"receive\"}",
+          "collectTime": 1757335502163,
+          "previousCollectTime": null,
+          "attributes": {
+            "db.io.direction": "receive"
+          },
+          "resetMetricTime": true,
+          "value": 998216322.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "db.version": "9.2.0",
+        "db.system": "mysql",
+        "connector_id": "MySQL",
+        "id": "c52e41411c85",
+        "db.server.name": "c52e41411c85",
+        "db.namespace": "sys"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757335502163,
+      "type": "mysql",
+      "id": "MySQL_mysql_c52e41411c85",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpoint": false,
+      "endpointHost": false,
+      "connector": false,
+      "is_endpoint": false
+    }
+  ]
+}
