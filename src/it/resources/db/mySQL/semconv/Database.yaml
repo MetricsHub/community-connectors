@@ -1,0 +1,179 @@
+metrics:
+  db.server.connections:
+    description: The number of connection attempts (successful or not) to the database.
+    type: Counter
+    unit: "{connection}"
+  db.server.current_connections:
+    description: The number of client connections to the database.
+    type: UpDownCounter
+    unit: "{connection}"
+  db.server.uptime:
+    description: The total number of seconds the server has been up.
+    type: Gauge
+    unit: s
+  db.server.queries:
+    description: The total number of statements executed by the server.
+    type: Counter
+    unit: "{statement}"
+  db.server.tables:
+    description: The total number of tables in the database.
+    type: Gauge
+    unit: "{table}"
+  db.server.page.size:
+    description: The size of an engine data page, typically 16 KB by default.
+    type: Gauge
+    unit: By
+  db.server.cache.requests:
+    description: The number of requests to flush pages from the database cache.
+    type: Counter
+    unit: "{request}"
+  db.server.cache.usage:
+    description: The number of bytes used by the database cache, categorized by state (data, dirty, or free).
+    type: UpDownCounter
+    unit: By
+  db.server.cache.read_ahead:
+    description: The number of bytes read into the database cache by the read-ahead background thread.
+    type: Counter
+    unit: By
+  db.server.cache.read_head.evicted:
+    description: The number of bytes read into the database cache by the read-ahead thread and evicted without being accessed by queries.
+    type: Counter
+    unit: By
+  db.server.cache.read_ahead.operations:
+    description: The number of read-aheads initiated by the engine.
+    type: Counter
+    unit: "{operation}"
+  db.server.cache.operations:
+    description: The number of logical read or write requests made to the database cache by the storage engine.
+    type: Counter
+    unit: "{operation}"
+  db.server.storage.operations:
+    description: The total number of read or write operations performed at the storage layer.
+    type: Counter
+    unit: "{operation}"
+  db.server.io:
+    description: The amount of data read or written by the database.
+    type: Counter
+    unit: By
+  db.server.storage.io:
+    description: The amount of data read from or written to the storage layer.
+    type: Counter
+    unit: By
+  db.server.pending_operations:
+    description: The Current number of pending read or write operations in the database engine.
+    type: UpDownCounter
+    unit: "{operation}"
+  db.server.storage.files:
+    description: The current number of files that the database engine holds open.
+    type: Gauge
+    unit: "{file}"
+  db.server.errors:
+    description: Number of errors encountered by the component.
+    type: Counter
+    unit: "{error}"
+  db.server.row_lock.time:
+    description: The total time spent acquiring row locks on tables.
+    type: Counter
+    unit: s
+  db.server.row_lock.waits:
+    description: The number of times operations on tables had to wait for a row lock.
+    type: Counter
+    unit: "{lock_wait}"
+  db.server.row_lock.current_waits:
+    description: The number of row locks currently waited for by operations on tables.
+    type: Gauge
+    unit: "{current_lock}"
+  db.server.row_operations:
+    description: The total number of rows affected in tables, categorized by operation type (insert, read, update, delete).
+    type: Counter
+    unit: "{row}"
+  db.server.threads:
+    description: The number of database threads categorized by their state.
+    type: Gauge
+    unit: "{thread}"
+  db.server.operation_time:
+    description: The total time spent executing operations.
+    type: Counter
+    unit: s
+  db.server.storage.io_time:
+    description: The total time spent on input/output.
+    type: Counter
+    unit: s
+  db.server.storage.size:
+    description: The total size of the database on disk.
+    type: Gauge
+    unit: By
+  db.server.logons:
+    description: Total number of current logons.
+    type: Counter
+    unit: "{logon}"
+  db.server.user.rollbacks:
+    description: The number of user rollbacks due to manual ROLLBACK statements or transaction errors.
+    type: Counter
+    unit: "{rollback}"
+  db.server.user.commits:
+    description: Number of user commits in the database.
+    type: Counter
+    unit: "{commit}"
+  db.server.cpu.time:
+    description: CPU time used by the database in seconds since startup.
+    type: Counter
+    unit: s
+  db.server.cache.queries:
+    description: Total number of SQL queries currently stored in the cache
+    type: Counter
+    unit: "{query}"
+  db.server.sessions:
+    description: Total number of sessions established to the database.
+    type: Counter
+    unit: "{session}"
+  db.server.commits:
+    description: Total number of commits in the database.
+    type: Counter
+    unit: "{commit}"
+  db.server.rollbacks:
+    description: Total number of rollbacks in the database.
+    type: Counter
+    unit: "{rollback}"
+  db.server.current_connections.limit:
+    description: The maximum number of client connections allowed to the database.
+    type: Gauge
+    unit: "{connection}"
+  db.server.cache.size:
+    description: The size of the database cache.
+    type: Gauge
+    unit: By
+  db.server.locks:
+    description: Number of locks
+    type: Gauge
+    unit: "{lock}"
+  db.server.lock_waits:
+    description: The total number of lock wait.
+    type: Gauge
+    unit: "{lock_wait}"
+  db.server.current_locks:
+    description: Current number of locks.
+    type: Counter
+    unit: "{current_lock}"
+  db.server.storage.mirrored:
+    description: Indicates whether the database storage is mirrored (1 = mirrored, 0 = not mirrored).
+    type: Gauge
+  db.server.storage.encrypted:
+    description: Indicates whether the database storage is encrypted (1 = encrypted, 0 = not encrypted).
+    type: Gauge
+  db.server.storage.limit:
+    description: The storage capacity allocated.
+    type: Gauge
+    unit: By
+  db.server.storage.usage:
+    description: The storage utilization in bytes, classified by state (“used” or “free”).
+    type: UpDownCounter
+    unit: By
+  db.server.storage.status:
+    description: State of the storage
+    type:
+      stateSet:
+        - ok
+        - failed
+        - degraded
+

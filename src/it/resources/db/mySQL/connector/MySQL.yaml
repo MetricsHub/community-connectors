@@ -1,0 +1,223 @@
+extends:
+- ../semconv/Database
+connector:
+  displayName: MySQL
+  platforms: MySQL
+  reliesOn : MySQL Database version 8.0 or higher
+  information: Monitors performance and operational metrics for a MySQL database.
+  detection:
+    connectionTypes:
+    - remote
+    - local
+    appliesTo:
+    - windows
+    - linux
+    criteria:
+    - type: deviceType
+      keep:
+      - linux
+    tags: [ linux, windows, database ]
+metrics:
+  db.server.mysql.doublewrite_buffer.usage:
+    description: The number of bytes that have been written to the doublewrite buffer.
+    type: Counter
+    unit: By
+  db.server.mysql.doublewrite_buffer.operations:
+    description: The number of doublewrite operations that have been performed.
+    type: Counter
+    unit: "{operation}"
+monitors:
+  mysql:
+    simple:
+      sources:
+        mysqlInfo:
+          type: sql
+          query: |
+            SELECT
+              DATABASE() AS db_namespace,
+              (SELECT VERSION()) AS version,
+              (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE()) AS total_tables,
+              MAX(CASE WHEN VARIABLE_NAME = 'Aborted_clients' THEN VARIABLE_VALUE END) AS aborted_clients,
+              MAX(CASE WHEN VARIABLE_NAME = 'Aborted_connects' THEN VARIABLE_VALUE END) AS aborted_connects,
+              MAX(CASE WHEN VARIABLE_NAME = 'Bytes_received' THEN VARIABLE_VALUE END) AS bytes_received,
+              MAX(CASE WHEN VARIABLE_NAME = 'Bytes_sent' THEN VARIABLE_VALUE END) AS bytes_sent,
+              MAX(CASE WHEN VARIABLE_NAME = 'Connections' THEN VARIABLE_VALUE END) -
+              (
+                MAX(CASE WHEN VARIABLE_NAME = 'Aborted_clients' THEN VARIABLE_VALUE END) +
+                MAX(CASE WHEN VARIABLE_NAME = 'Aborted_connects' THEN VARIABLE_VALUE END)
+              ) AS successful_connections,
+              (SELECT COUNT(*) FROM information_schema.processlist WHERE command <> 'Sleep') AS active_connections,
+              MAX(CASE WHEN VARIABLE_NAME = 'Max_execution_time_set_failed' THEN VARIABLE_VALUE END) AS max_execution_time_set_failed,
+              MAX(CASE WHEN VARIABLE_NAME = 'Max_execution_time_exceeded' THEN VARIABLE_VALUE END) AS max_execution_time_exceeded,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS Innodb_page_size,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_bytes_data' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_bytes_dirty' THEN VARIABLE_VALUE END) AS Innodb_buffer_pool_bytes_data_clean,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_bytes_dirty' THEN VARIABLE_VALUE END) AS Innodb_buffer_pool_bytes_data_dirty,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_pages_flushed' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_pages_flushed,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_pages_free' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_bytes_free,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_ahead' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_bytes_read_ahead,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_ahead_evicted' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_bytes_read_ahead_evicted,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_ahead_rnd' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_read_ahead_rnd,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_requests' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_reads' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_read_hit,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_write_requests' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_write_requests,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_reads' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_read_cache_miss,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_reads' THEN VARIABLE_VALUE END) AS innodb_data_reads,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_writes' THEN VARIABLE_VALUE END) AS innodb_data_writes,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_read' THEN VARIABLE_VALUE END) AS innodb_data_read,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_written' THEN VARIABLE_VALUE END) AS innodb_data_written,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_pending_reads' THEN VARIABLE_VALUE END) AS innodb_data_pending_reads,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_pending_writes' THEN VARIABLE_VALUE END) AS innodb_data_pending_writes,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_dblwr_pages_written' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_dblwr_pages_written,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_dblwr_writes' THEN VARIABLE_VALUE END) AS Innodb_dblwr_writes,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_num_open_files' THEN VARIABLE_VALUE END) AS innodb_num_open_files,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_accounts_lost' THEN VARIABLE_VALUE END) AS performance_schema_accounts_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_cond_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_cond_classes_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_digest_lost' THEN VARIABLE_VALUE END) AS performance_schema_digest_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_file_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_file_classes_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_file_handles_lost' THEN VARIABLE_VALUE END) AS performance_schema_file_handles_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_file_instances_lost' THEN VARIABLE_VALUE END) AS performance_schema_file_instances_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_hosts_lost' THEN VARIABLE_VALUE END) AS performance_schema_hosts_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_index_stat_lost' THEN VARIABLE_VALUE END) AS performance_schema_index_stat_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_locker_lost' THEN VARIABLE_VALUE END) AS performance_schema_locker_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_memory_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_memory_classes_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_metadata_lock_lost' THEN VARIABLE_VALUE END) AS performance_schema_metadata_lock_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_mutex_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_mutex_classes_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_mutex_instances_lost' THEN VARIABLE_VALUE END) AS performance_schema_mutex_instances_lost,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_row_lock_time' THEN VARIABLE_VALUE / 1000 END) AS innodb_row_lock_time,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_row_lock_waits' THEN VARIABLE_VALUE END) AS innodb_row_lock_waits,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_row_lock_current_waits' THEN VARIABLE_VALUE END) AS innodb_row_lock_current_waits,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_deleted' THEN VARIABLE_VALUE END) AS innodb_rows_deleted,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_inserted' THEN VARIABLE_VALUE END) AS innodb_rows_inserted,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_read' THEN VARIABLE_VALUE END) AS innodb_rows_read,
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_updated' THEN VARIABLE_VALUE END) AS innodb_rows_updated,
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_cached' THEN VARIABLE_VALUE END) AS threads_cached,
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_connected' THEN VARIABLE_VALUE END) AS threads_connected,
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_created' THEN VARIABLE_VALUE END) AS threads_created,
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_running' THEN VARIABLE_VALUE END) AS threads_running,
+              MAX(CASE WHEN VARIABLE_NAME = 'Uptime' THEN VARIABLE_VALUE END) AS uptime,
+              MAX(CASE WHEN VARIABLE_NAME = 'Slow_queries' THEN VARIABLE_VALUE END) AS slow_queries,
+              MAX(CASE WHEN VARIABLE_NAME = 'Queries' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Slow_queries' THEN VARIABLE_VALUE END) AS normal_queries,
+              @@hostname AS db_server_name
+            FROM
+              performance_schema.global_status
+            WHERE
+              VARIABLE_NAME IN (
+                'Aborted_clients',
+                'Aborted_connects',
+                'Bytes_received',
+                'Bytes_sent',
+                'Connections',
+                'Max_execution_time_set_failed',
+                'Max_execution_time_exceeded',
+                'Innodb_page_size',
+                'Innodb_buffer_pool_bytes_data',
+                'Innodb_buffer_pool_bytes_dirty',
+                'Innodb_buffer_pool_pages_flushed',
+                'Innodb_buffer_pool_pages_free',
+                'Innodb_buffer_pool_read_ahead',
+                'Innodb_buffer_pool_read_ahead_evicted',
+                'Innodb_buffer_pool_read_ahead_rnd',
+                'Innodb_buffer_pool_read_requests',
+                'Innodb_buffer_pool_write_requests',
+                'Innodb_buffer_pool_reads',
+                'Innodb_data_reads',
+                'Innodb_data_writes',
+                'Innodb_data_read',
+                'Innodb_data_written',
+                'Innodb_data_pending_reads',
+                'Innodb_data_pending_writes',
+                'Innodb_dblwr_pages_written',
+                'Innodb_dblwr_writes',
+                'Innodb_num_open_files',
+                'Performance_schema_accounts_lost',
+                'Performance_schema_cond_classes_lost',
+                'Performance_schema_digest_lost',
+                'Performance_schema_file_classes_lost',
+                'Performance_schema_file_handles_lost',
+                'Performance_schema_file_instances_lost',
+                'Performance_schema_hosts_lost',
+                'Performance_schema_index_stat_lost',
+                'Performance_schema_locker_lost',
+                'Performance_schema_memory_classes_lost',
+                'Performance_schema_metadata_lock_lost',
+                'Performance_schema_mutex_classes_lost',
+                'Performance_schema_mutex_instances_lost',
+                'Innodb_row_lock_time',
+                'Innodb_row_lock_waits',
+                'Innodb_row_lock_current_waits',
+                'Innodb_rows_deleted',
+                'Innodb_rows_inserted',
+                'Innodb_rows_read',
+                'Innodb_rows_updated',
+                'Threads_cached',
+                'Threads_connected',
+                'Threads_created',
+                'Threads_running',
+                'Uptime',
+                'Slow_queries',
+                'Queries'
+              );
+      mapping:
+        source: ${source::mysqlInfo}
+        attributes:
+          db.system: mysql
+          db.server.name: $59
+          id: $59
+          db.namespace: $1
+          db.version: $2
+        metrics:
+          db.server.tables: $3
+          db.server.connections{error.type="client_disconnected", db.connection.state="aborted"}: $4
+          db.server.connections{error.type="failed_attempt", db.connection.state="aborted"}: $5
+          db.server.io{db.io.direction="receive"}: $6
+          db.server.io{db.io.direction="transmit"}: $7
+          db.server.connections{db.connection.state="success"}: $8
+          db.server.current_connections{db.connection.state="active"}: $9
+          db.server.queries{db.query.state="failed", error.type="set_timeout_failed"}: $10
+          db.server.queries{db.query.state="failed", error.type="timeout"}: $11
+          db.server.page.size{db.mysql.engine="innodb"}: $12
+          db.server.cache.usage{db.cache.state="data_clean", db.mysql.engine="innodb"}: $13
+          db.server.cache.usage{db.cache.state="data_dirty", db.mysql.engine="innodb"}: $14
+          db.server.cache.requests{db.cache.request.type="flushed", db.mysql.engine="innodb"}: $15
+          db.server.cache.usage{db.cache.state="free", db.mysql.engine="innodb"}: $16
+          db.server.cache.read_ahead{db.mysql.engine="innodb"}: $17
+          db.server.cache.read_head.evicted{db.mysql.engine="innodb"}: $18
+          db.server.cache.read_ahead.operations{db.cache.read_ahead.state="random", db.mysql.engine="innodb"}: $19
+          db.server.cache.operations{db.io.direction="read", db.cache.state="hit", db.mysql.engine="innodb"}: $20
+          db.server.cache.operations{db.io.direction="write", db.mysql.engine="innodb"}: $21
+          db.server.cache.operations{db.io.direction="read", db.cache.state="miss", db.mysql.engine="innodb"}: $22
+          db.server.storage.operations{db.io.direction="read", db.mysql.engine="innodb"}: $23
+          db.server.storage.operations{db.io.direction="write", db.mysql.engine="innodb"}: $24
+          db.server.storage.io{db.io.direction="read", db.mysql.engine="innodb"}: $25
+          db.server.storage.io{db.io.direction="write", db.mysql.engine="innodb"}: $26
+          db.server.pending_operations{db.io.direction="read", db.mysql.engine="innodb"}: $27
+          db.server.pending_operations{db.io.direction="write", db.mysql.engine="innodb"}: $28
+          db.server.mysql.doublewrite_buffer.usage{db.mysql.engine="innodb"}: $29
+          db.server.mysql.doublewrite_buffer.operations{db.mysql.engine="innodb"}: $30
+          db.server.files{db.file.state="open", db.mysql.engine="innodb"}: $31
+          db.server.errors{error.type="lost_account_insert", db.mysql.engine="performance_schema"}: $32
+          db.server.errors{error.type="lost_condition_instrument", db.mysql.engine="performance_schema"}: $33
+          db.server.errors{error.type="lost_digest_instance", db.mysql.engine="performance_schema"}: $34
+          db.server.errors{error.type="lost_file_instrument", db.mysql.engine="performance_schema"}: $35
+          db.server.errors{error.type="lost_file_handle", db.mysql.engine="performance_schema"}: $36
+          db.server.errors{error.type="lost_file_instance", db.mysql.engine="performance_schema"}: $37
+          db.server.errors{error.type="lost_hosts_insert", db.mysql.engine="performance_schema"}: $38
+          db.server.errors{error.type="lost_index_statistic", db.mysql.engine="performance_schema"}: $39
+          db.server.errors{error.type="lost_locker", db.mysql.engine="performance_schema"}: $40
+          db.server.errors{error.type="lost_memory_instrument", db.mysql.engine="performance_schema"}: $41
+          db.server.errors{error.type="lost_metadata_lock", db.mysql.engine="performance_schema"}: $42
+          db.server.errors{error.type="lost_mutex_instrument", db.mysql.engine="performance_schema"}: $43
+          db.server.errors{error.type="lost_mutex_instance", db.mysql.engine="performance_schema"}: $44
+          db.server.row_lock.time{db.mysql.engine="innodb"}: $45
+          db.server.row_lock.waits{db.mysql.engine="innodb"}: $46
+          db.server.row_lock.current_waits{db.mysql.engine="innodb"}: $47
+          db.server.row_operations{db.row_operation.type="delete", db.mysql.engine="innodb"}: $48
+          db.server.row_operations{db.row_operation.type="insert", db.mysql.engine="innodb"}: $49
+          db.server.row_operations{db.row_operation.type="read", db.mysql.engine="innodb"}: $50
+          db.server.row_operations{db.row_operation.type="update", db.mysql.engine="innodb"}: $51
+          db.server.threads{db.thread.state="cached"}: $52
+          db.server.threads{db.thread.state="connected"}: $53
+          db.server.threads{db.thread.state="created"}: $54
+          db.server.threads{db.thread.state="running"}: $55
+          db.server.uptime: $56
+          db.server.queries{db.query.state="slow"}: $57
+          db.server.queries{db.query.state="normal"}: $58
