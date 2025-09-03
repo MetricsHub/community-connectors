@@ -52,3 +52,8 @@ metrics:
       - degraded
       - failed
       - ok
+
+  storage.latency:
+    description: Current storage latency
+    type: Gauge
+    unit: s
