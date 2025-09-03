@@ -115,6 +115,26 @@ ${esc.d}{attribute::<attribute-key>}
           selectColumns: "2,3,4,5,6,7,8,9"
 ```
 
+## Resource Attribute Reference
+
+### Format
+
+```yaml
+${esc.d}{resource.attribute::<attribute-key>}
+```
+
+### Example
+
+```yaml
+        collect:
+          type: monoInstance
+          sources:
+            httpSource:
+              type: http
+              path: /api/data
+              header: "Authorization: Bearer ${esc.d}{resource.attribute::api.token}"
+```
+
 ## Translation Table Reference
 
 ### Format
