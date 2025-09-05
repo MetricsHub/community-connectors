@@ -92,31 +92,31 @@
 		<dependency>
 			<groupId>org.metricshub</groupId>
 			<artifactId>metricshub-engine</artifactId>
-			<version>1.0.06-SNAPSHOT</version>
+			<version>1.0.08-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.metricshub</groupId>
 			<artifactId>metricshub-agent</artifactId>
-			<version>1.0.06-SNAPSHOT</version>
+			<version>1.0.08-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.metricshub</groupId>
 			<artifactId>metricshub-snmp-extension</artifactId>
-			<version>1.0.06-SNAPSHOT</version>
+			<version>1.0.08-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.metricshub</groupId>
 			<artifactId>metricshub-oscommand-extension</artifactId>
-			<version>1.0.06-SNAPSHOT</version>
+			<version>1.0.08-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.metricshub</groupId>
 			<artifactId>metricshub-it-common</artifactId>
-			<version>1.0.06-SNAPSHOT</version>
+			<version>1.0.08-SNAPSHOT</version>
 			<scope>test</scope>
 			<classifier>tests</classifier>
 		</dependency>
