@@ -1,0 +1,10 @@
+---
+result: "1.3.6.1.2.1.2.2.1.1.1\tASN_INTEGER\t1"
+success: true
+message: "Hostname ecs1-01 - Successful SNMP GetNext of 1.3.6.1.2.1.2.2.1. Returned result: 1.3.6.1.2.1.2.2.1.1.1\tASN_INTEGER\t1."
+exception: null
+criterion: !<snmpGetNext>
+  type: snmpGetNext
+  forceSerialization: false
+  oid: 1.3.6.1.2.1.2.2.1
+  expectedResult: null
