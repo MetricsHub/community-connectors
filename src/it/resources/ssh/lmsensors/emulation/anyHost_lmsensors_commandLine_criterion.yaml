@@ -1,0 +1,13 @@
+---
+result: "Usage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n"
+success: true
+message: "CommandLineCriterion test succeeded:\n- CommandLine:  /usr/bin/sensors -h\n- ExecuteLocally: false\n- ExpectedResult: Usage: sensors \n\nResult: Usage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n"
+exception: null
+criterion: !<commandLine>
+  type: commandLine
+  forceSerialization: false
+  commandLine: "%{SUDO:/usr/bin/sensors} /usr/bin/sensors -h"
+  errorMessage: lm_sensors is not installed on this server.
+  expectedResult: "Usage: sensors "
+  executeLocally: false
+  timeout: null

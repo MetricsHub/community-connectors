@@ -1,0 +1,1049 @@
+{
+  "total": 18,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": "ok",
+          "stateSet": [
+            "ok",
+            "failed"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "lmsensors.yaml",
+        "name": "lm_sensors",
+        "connector_id": "lmsensors",
+        "applies_to_os": "linux",
+        "parent.id": "anyHost",
+        "id": "lmsensors"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [LINUX]\n- Exclude: []\n\nResult:\nConfigured OS type : LINUX\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: %{SUDO:/usr/bin/sensors} /usr/bin/sensors -h\n- ExecuteLocally: false\n- ExpectedResult: Usage: sensors \n\nResult:\nUsage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine:  /usr/bin/sensors -h\n- ExecuteLocally: false\n- ExpectedResult: Usage: sensors \n\nResult: Usage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "connector",
+      "id": "connector_lmsensors",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": true,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {},
+      "attributes": {
+        "__display_id": " PRIMERGY RX300 S7",
+        "vendor": " FUJITSU",
+        "connector_id": "lmsensors",
+        "serial_number": " YLAR004219",
+        "id": "Computer",
+        "type": "Computer",
+        "bios_version": "Vendor: FUJITSU // American Megatrends Inc. Version: V4.6.5.3 R1.32.0 for D2939-A1x Date: 06/24/2019"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "enclosure",
+      "id": "lmsensors_enclosure_Computer",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.up{protocol=\"ssh\"}": {
+          "name": "metricshub.host.up{protocol=\"ssh\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "ssh"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "host.type": "compute",
+        "host.name": "anyHost",
+        "agent.host.name": "PC-Maalej",
+        "os.type": "linux"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "host",
+      "id": "endpoint_host_anyHost",
+      "identifyingAttributeKeys": [
+        "host.name"
+      ],
+      "endpointHost": true,
+      "endpoint": true,
+      "connector": false,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 32.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0000-Core0",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0000-Core0",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0000-Core0"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0000-Core0",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 29.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0000-Core1",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0000-Core1",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0000-Core1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0000-Core1",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 29.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0000-Core2",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0000-Core2",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0000-Core2"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0000-Core2",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 31.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0000-Core3",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0000-Core3",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0000-Core3"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0000-Core3",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 31.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0000-Core4",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0000-Core4",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0000-Core4"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0000-Core4",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 30.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0000-Core5",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0000-Core5",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0000-Core5"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0000-Core5",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 32.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0000-Package id 0",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0000-Package id 0",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0000-Package id 0"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0000-Packageid0",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 32.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0001-Core0",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0001-Core0",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0001-Core0"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0001-Core0",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 35.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0001-Core1",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0001-Core1",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0001-Core1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0001-Core1",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 34.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0001-Core2",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0001-Core2",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0001-Core2"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0001-Core2",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 33.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0001-Core3",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0001-Core3",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0001-Core3"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0001-Core3",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 35.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0001-Core4",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0001-Core4",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0001-Core4"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0001-Core4",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 32.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0001-Core5",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0001-Core5",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0001-Core5"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0001-Core5",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 81.0,
+          "previousValue": 81.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 91.0,
+          "previousValue": 91.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 35.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "coretemp-isa-0001-Package id 1",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "coretemp-isa-0001-Package id 1",
+        "connector_id": "lmsensors",
+        "id": "coretemp-isa-0001-Package id 1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_coretemp-isa-0001-Packageid1",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 120.0,
+          "previousValue": 120.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1757319098207,
+          "previousCollectTime": 1757318978207,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": true,
+          "value": 110.0,
+          "previousValue": 110.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1757319098207,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 54.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "i350bb-pci-0700-loc1",
+        "hw.parent.type": "enclosure",
+        "hw.parent.id": "Computer",
+        "name": "i350bb-pci-0700-loc1",
+        "connector_id": "lmsensors",
+        "id": "i350bb-pci-0700-loc1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757318978207,
+      "type": "temperature",
+      "id": "lmsensors_temperature_i350bb-pci-0700-loc1",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    }
+  ]
+}
