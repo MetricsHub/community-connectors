@@ -14,7 +14,6 @@ import org.metricshub.engine.strategy.discovery.DiscoveryStrategy;
 import org.metricshub.engine.strategy.simple.SimpleStrategy;
 import org.metricshub.engine.telemetry.HostProperties;
 import org.metricshub.engine.telemetry.TelemetryManager;
-import org.metricshub.extension.oscommand.SshConfiguration;
 import org.metricshub.extension.snmp.SnmpConfiguration;
 import org.metricshub.extension.snmp.SnmpExtension;
 import org.metricshub.hardware.strategy.HardwareMonitorNameGenerationStrategy;
@@ -59,16 +58,8 @@ public class Mib2IT {
 				.timeout(120L)
 				.build();
 
-		final SshConfiguration sshConfiguration = SshConfiguration
-				.sshConfigurationBuilder()
-				.username("any")
-				.password("any".toCharArray())
-				.timeout(120L)
-				.build();
-
 		final Map<Class<? extends IConfiguration>, IConfiguration> configurations = new HashMap<>();
 		configurations.put(SnmpConfiguration.class, snmpConfiguration);
-		configurations.put(SshConfiguration.class, sshConfiguration);
 		final HostConfiguration hostConfiguration = HostConfiguration
 				.builder()
 				.hostId(HOST)
