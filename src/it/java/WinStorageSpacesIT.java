@@ -11,10 +11,14 @@ import org.metricshub.engine.strategy.collect.PrepareCollectStrategy;
 import org.metricshub.engine.strategy.collect.ProtocolHealthCheckStrategy;
 import org.metricshub.engine.strategy.detection.DetectionStrategy;
 import org.metricshub.engine.strategy.discovery.DiscoveryStrategy;
+import org.metricshub.engine.strategy.simple.SimpleStrategy;
 import org.metricshub.engine.telemetry.HostProperties;
 import org.metricshub.engine.telemetry.TelemetryManager;
 import org.metricshub.extension.wmi.WmiConfiguration;
 import org.metricshub.extension.wmi.WmiExtension;
+import org.metricshub.hardware.strategy.HardwareMonitorNameGenerationStrategy;
+import org.metricshub.hardware.strategy.HardwarePostCollectStrategy;
+import org.metricshub.hardware.strategy.HardwarePostDiscoveryStrategy;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -81,12 +85,18 @@ public class WinStorageSpacesIT {
 		new EmulatedIntegrationTest(telemetryManager)
 				.executeStrategies(
 						new DetectionStrategy(telemetryManager, discoveryTime, clientsExecutor, extensionManager),
-						new DiscoveryStrategy(telemetryManager, discoveryTime, clientsExecutor, extensionManager)
+						new DiscoveryStrategy(telemetryManager, discoveryTime, clientsExecutor, extensionManager),
+						new SimpleStrategy(telemetryManager, discoveryTime, clientsExecutor, extensionManager),
+						new HardwarePostDiscoveryStrategy(telemetryManager, discoveryTime, clientsExecutor, extensionManager),
+						new HardwareMonitorNameGenerationStrategy(telemetryManager, discoveryTime, clientsExecutor, extensionManager)
 				)
 				.executeStrategies(
 						new PrepareCollectStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
 						new ProtocolHealthCheckStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
-						new CollectStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager))
+						new CollectStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
+						new SimpleStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
+						new HardwarePostCollectStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
+						new HardwareMonitorNameGenerationStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager))
 				.verifyExpected("wmi/winStorageSpaces/expected.json");
 	}
 }
