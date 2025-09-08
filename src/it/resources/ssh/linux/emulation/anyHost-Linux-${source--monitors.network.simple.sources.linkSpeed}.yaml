@@ -1,0 +1,23 @@
+---
+table:
+- - docker0
+  - 0
+- - eno1
+  - 1000
+- - eno2
+  - 1000
+- - lo
+  - 0
+- - virbr0
+  - 0
+- - virbr0-nic
+  - 0
+headers: []
+rawData: |-
+  docker0;0
+  eno1;1000
+  eno2;1000
+  lo;0
+  virbr0;0
+  virbr0-nic;0
+empty: false

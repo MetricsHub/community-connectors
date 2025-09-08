@@ -1,0 +1,7 @@
+---
+table:
+- - "Filename\t\t\t\tType\t\tSize\tUsed\tPriority"
+- - "/dev/dm-1                               partition\t4194300\t2541832\t-2"
+headers: []
+rawData: "Filename\t\t\t\tType\t\tSize\tUsed\tPriority\n/dev/dm-1                               partition\t4194300\t2541832\t-2"
+empty: false

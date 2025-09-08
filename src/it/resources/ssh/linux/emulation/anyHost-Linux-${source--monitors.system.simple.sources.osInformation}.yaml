@@ -1,0 +1,9 @@
+---
+table:
+- - CentOS Linux
+  - 7 (Core)
+  - 3.10.0-1160.119.1.el7.x86_64
+  - 7613796
+headers: []
+rawData: CentOS Linux;7 (Core);3.10.0-1160.119.1.el7.x86_64;7613796
+empty: false
