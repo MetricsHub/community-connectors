@@ -99,8 +99,7 @@ public class MySqlIT {
 						new CollectStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
 						new SimpleStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
 						new HardwarePostCollectStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager),
-						new HardwareMonitorNameGenerationStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager));
-		System.out.println();
-				//).verifyExpected("db/mySQL/expected.json");
+						new HardwareMonitorNameGenerationStrategy(telemetryManager, collectTime, clientsExecutor, extensionManager))
+				.verifyExpected("db/mySQL/expected.json");
 	}
 }
