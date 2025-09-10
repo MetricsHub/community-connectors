@@ -1,0 +1,332 @@
+{
+  "total": 6,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1757320535201,
+          "previousCollectTime": 1757320415201,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": "ok",
+          "stateSet": [
+            "ok",
+            "failed"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "WinStorageSpaces.yaml",
+        "name": "Windows Storage Spaces (WMI)",
+        "connector_id": "WinStorageSpaces",
+        "applies_to_os": "windows",
+        "parent.id": "anyHost",
+        "id": "WinStorageSpaces"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [WINDOWS]\n- Exclude: []\n\nResult:\nConfigured OS type : WINDOWS\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted WmiCriterion Criterion:\n- WQL Query: SELECT ObjectId FROM MSFT_Volume\n- Namespace: root\\Microsoft\\Windows\\Storage\n\nResult:\n{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{76eb873e-3a26-4f72-bca5-6d356171ba48}\\\";\n{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\";\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT ObjectId FROM MSFT_Volume\n- Namespace: root\\Microsoft\\Windows\\Storage\n\nResult: {1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{76eb873e-3a26-4f72-bca5-6d356171ba48}\\\";\n{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\";\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1757320415201,
+      "type": "connector",
+      "id": "connector_WinStorageSpaces",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": true,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {},
+      "attributes": {
+        "hw.parent.type": "enclosure",
+        "name": "Disk Controller: Win32_SCSIController.DeviceID=\"PCI\\\\VEN_144D&DEV_A809&SUBSYS_A801144D&REV_00\\\\4&2485E8A5&0&0014\" (Contr\u00f4leur NVM Express standard)",
+        "connector_id": "WinStorageSpaces",
+        "model": "Contr\u00f4leur NVM Express standard",
+        "id": "Win32_SCSIController.DeviceID=\"PCI\\\\VEN_144D&DEV_A809&SUBSYS_A801144D&REV_00\\\\4&2485E8A5&0&0014\""
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757320415201,
+      "type": "disk_controller",
+      "id": "WinStorageSpaces_disk_controller_Win32_SCSIController.DeviceID=\"PCI\\\\VEN_144D&DEV_A809&SUBSYS_A801144D&REV_00\\\\4&2485E8A5&0&0014\"",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.up{protocol=\"wmi\"}": {
+          "name": "metricshub.host.up{protocol=\"wmi\"}",
+          "collectTime": 1757320535201,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "wmi"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1757320535201,
+          "previousCollectTime": 1757320415201,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "os.type": "windows",
+        "host.type": "compute",
+        "host.name": "anyHost",
+        "agent.host.name": "PC-Maalej"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757320415201,
+      "type": "host",
+      "id": "endpoint_host_anyHost",
+      "identifyingAttributeKeys": [
+        "host.name"
+      ],
+      "endpointHost": true,
+      "endpoint": true,
+      "connector": false,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"logical_disk\"}": {
+          "name": "hw.status{hw.type=\"logical_disk\"}",
+          "collectTime": 1757320535201,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "logical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        },
+        "hw.logical_disk.limit": {
+          "name": "hw.logical_disk.limit",
+          "collectTime": 1757320535201,
+          "previousCollectTime": 1757320415201,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 510998343680.0,
+          "previousValue": 510998343680.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.logical_disk.usage{state=\"free\"}": {
+          "name": "hw.logical_disk.usage{state=\"free\"}",
+          "collectTime": 1757320535201,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "free"
+          },
+          "resetMetricTime": false,
+          "value": 346148065280.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "C: Windows ",
+        "hw.parent.type": "enclosure",
+        "name": "C: Windows  (475.90 GiB)",
+        "connector_id": "WinStorageSpaces",
+        "id": "C:",
+        "type": "Volume",
+        "info": "File System: NTFS"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": ""
+      },
+      "alertRules": {},
+      "discoveryTime": 1757320415201,
+      "type": "logical_disk",
+      "id": "WinStorageSpaces_logical_disk_C:",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"logical_disk\"}": {
+          "name": "hw.status{hw.type=\"logical_disk\"}",
+          "collectTime": 1757320535201,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "logical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        },
+        "hw.logical_disk.limit": {
+          "name": "hw.logical_disk.limit",
+          "collectTime": 1757320535201,
+          "previousCollectTime": 1757320415201,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 815788032.0,
+          "previousValue": 815788032.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.logical_disk.usage{state=\"free\"}": {
+          "name": "hw.logical_disk.usage{state=\"free\"}",
+          "collectTime": 1757320535201,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "free"
+          },
+          "resetMetricTime": false,
+          "value": 139751424.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "Windows RE Tools",
+        "hw.parent.type": "enclosure",
+        "name": "Windows RE Tools (778.00 MiB)",
+        "connector_id": "WinStorageSpaces",
+        "id": "{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\"",
+        "type": "Volume",
+        "info": "File System: NTFS"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": ""
+      },
+      "alertRules": {},
+      "discoveryTime": 1757320415201,
+      "type": "logical_disk",
+      "id": "WinStorageSpaces_logical_disk_{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\"",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}",
+          "collectTime": 1757320535201,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "predicted_failure",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.physical_disk.size": {
+          "name": "hw.physical_disk.size",
+          "collectTime": 1757320535201,
+          "previousCollectTime": 1757320415201,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 512110190592.0,
+          "previousValue": 512110190592.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\"}",
+          "collectTime": 1757320535201,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "hw.parent.type": "disk_controller",
+        "hw.parent.id": "Win32_SCSIController.DeviceID=\"PCI\\\\VEN_144D&DEV_A809&SUBSYS_A801144D&REV_00\\\\4&2485E8A5&0&0014\"",
+        "vendor": "SAMSUNG MZVLQ512HBLU-00BH1 - SSD - NVMe",
+        "name": "0 (SAMSUNG MZVLQ512HBLU-00BH1 - SSD - NVMe - 512.11 GB)",
+        "connector_id": "WinStorageSpaces",
+        "serial_number": "0025_38DC_21C0_558A.",
+        "firmware_version": "HPS1NFAV",
+        "id": "0"
+      },
+      "conditionalCollection": {
+        "hw.errors{hw.type=\"physical_disk\"}": "",
+        "hw.physical_disk.endurance_utilization{state=\"remaining\"}": ""
+      },
+      "legacyTextParameters": {
+        "StatusInformation": ""
+      },
+      "alertRules": {},
+      "discoveryTime": 1757320415201,
+      "type": "physical_disk",
+      "id": "WinStorageSpaces_physical_disk_0",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    }
+  ]
+}
