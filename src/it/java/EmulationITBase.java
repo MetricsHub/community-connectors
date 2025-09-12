@@ -1,6 +1,10 @@
+import util.ConfigReader;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.metricshub.agent.config.ResourceConfig;
-import org.metricshub.agent.context.AgentContext;
+import org.metricshub.agent.context.MetricDefinitions;
 import org.metricshub.agent.helper.ConfigHelper;
+import org.metricshub.agent.opentelemetry.MetricsExporter;
 import org.metricshub.agent.service.task.MonitoringTask;
 import org.metricshub.agent.service.task.MonitoringTaskInfo;
 import org.metricshub.configuration.YamlConfigurationProvider;
@@ -28,8 +32,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -44,9 +50,15 @@ public class EmulationITBase {
 	private static ExtensionManager extensionManager;
 	protected String connectorName;
 	protected TelemetryManager telemetryManager;
+	protected String configurationFilePath;
+
+	public EmulationITBase(final String connectorName, final String configurationFilePath) {
+		this.connectorName = connectorName;
+		this.configurationFilePath = configurationFilePath;
+	}
 
 	public EmulationITBase(final String connectorName) {
-		this.connectorName = connectorName;
+		this(connectorName, "src/it/resources/" + connectorName + "/metricshub.yaml");
 	}
 
 	static void createExtensionManger() {
@@ -75,23 +87,23 @@ public class EmulationITBase {
 		// Create the extension manager
 		createExtensionManger();
 
+		// Set the connector emulation files, expected result and config directory
+		final String connectorFilesDirectory = Paths.get("src", "it", "resources", connectorName).toString();
+
 		// Initialize the application context
-		final AgentContext agentContext = new AgentContext(null, extensionManager);
+		final ConfigReader configReader = new ConfigReader(
+				connectorFilesDirectory, extensionManager);
 
-		// Start OpenTelemetry Collector process
-		agentContext.getOtelCollectorProcessService().launch();
-
-		// Get the second resource group entry
-		final Map.Entry<String, Map<String, TelemetryManager>> secondGroupEntry =
-				agentContext.getTelemetryManagers()
+		// Get the first resource group entry
+		final Map.Entry<String, Map<String, TelemetryManager>> firstGroupEntry =
+				configReader.getTelemetryManagers()
 						.entrySet()
-						.stream()
-						.skip(1)   // skip the first
+						.stream()// skip the first
 						.findFirst()
 						.orElseThrow(() -> new NoSuchElementException("No second group found"));
 
-		final String resourceGroupKey = secondGroupEntry.getKey();
-		final Map<String, TelemetryManager> groupManagers = secondGroupEntry.getValue();
+		final String resourceGroupKey = firstGroupEntry.getKey();
+		final Map<String, TelemetryManager> groupManagers = firstGroupEntry.getValue();
 
 		// Get the first resource entry from that group
 		final Map.Entry<String, TelemetryManager> firstResourceEntry =
@@ -102,25 +114,22 @@ public class EmulationITBase {
 
 		// Get the matching ResourceConfig for that resource
 		final ResourceConfig resourceConfig =
-				agentContext.getAgentConfig()
-						.getResourceGroups()
-						.get(resourceGroupKey)
+				configReader.getAgentConfig()
 						.getResources()
 						.get(resourceKey);
 
-		telemetryManager.setEmulationInputDirectory(ConfigHelper.getDefaultOutputDirectory().toString());
-
+		telemetryManager.setEmulationInputDirectory(Paths.get("src", "it", "resources", connectorName).toString());
 		final MonitoringTaskInfo monitoringTaskInfo = MonitoringTaskInfo.builder()
 				.telemetryManager(telemetryManager)
 				.resourceConfig(resourceConfig)
 				.resourceKey(resourceKey)
 				.resourceGroupKey(resourceGroupKey)
-				.metricsExporter(agentContext.getMetricsExporter())
-				.hostMetricDefinitions(agentContext.getHostMetricDefinitions())
 				.extensionManager(extensionManager)
+				.metricsExporter(MetricsExporter.builder().build())
+				.hostMetricDefinitions(new MetricDefinitions(new HashMap<>()))
 				.build();
-
 		new MonitoringTask(monitoringTaskInfo).run();
+		System.out.println();
 	}
 
 	/**
@@ -366,8 +375,8 @@ public class EmulationITBase {
 
 	/**
 	 * Initialize the InputStream on the actual IT resource file path
-	 * @param itResourcePath
-	 * @return {@link InputStream}
+	 * @param itResourcePath relative path inside the resources folder
+	 * @return {@link InputStream} of the IT resource file
 	 * @throws IOException
 	 */
 	public static InputStream getItResourceAsInputStream(String itResourcePath) throws IOException {
@@ -375,13 +384,19 @@ public class EmulationITBase {
 	}
 
 	/**
-	 * @param itResourcePath
-	 * @return The path under <em>src/it/resources</em>
+	 * Get the IT resource file path
+	 * @param itResourcePath relative path inside the resources folder
+	 * @return the full path
 	 */
 	public static String getItResourcePath(final String itResourcePath) {
 		return "src/it/resources/" + itResourcePath;
 	}
 
+	/**
+	 * Verify that the collected monitors match the expected monitors defined in the expected JSON file
+	 * @param expectedPath relative path inside the resources folder
+	 * @throws Exception in case of any error
+	 */
 	public void verifyExpected(final String expectedPath) throws Exception {
 		final InputStream is = getItResourceAsInputStream(expectedPath);
 		final MonitorsVo expectedMonitors = JsonHelper.deserialize(is, MonitorsVo.class);
@@ -403,6 +418,17 @@ public class EmulationITBase {
 					assertMonitor(expectedMonitor, actualMonitor);
 				});
 	}
-
+	/**
+	 * Load the {@link ConfigReader.PreConfig} instance
+	 *
+	 * @param configNode The configuration JSON node
+	 *
+	 * @return new {@link ConfigReader.PreConfig} instance.
+	 * @throws IOException  If an I/O error occurs during the initial reading of the YAML file.
+	 */
+	private static ConfigReader.PreConfig loadPreConfig(final JsonNode configNode) throws IOException {
+		final ObjectMapper objectMapper = ConfigHelper.newObjectMapper();
+		return JsonHelper.deserialize(objectMapper, configNode, ConfigReader.PreConfig.class);
+	}
 
 }

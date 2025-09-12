@@ -1,0 +1,113 @@
+---
+table:
+- - RANGE                                        SIZE  STATE REMOVABLE  BLOCK
+- - 0x0000000000000000-0x000000007fffffff  2147483648 online        no   0-15
+- - 0x0000000100000000-0x000000047fffffff 15032385536 online        no 32-143
+- - ""
+- - "Memory block size:            134217728"
+- - "Total online memory:        17179869184"
+- - "Total offline memory:                 0"
+- - "MemTotal:       16228744 kB"
+- - "MemFree:          288148 kB"
+- - "MemAvailable:    6115128 kB"
+- - "Buffers:            2288 kB"
+- - "Cached:          4448920 kB"
+- - "SwapCached:        97736 kB"
+- - "Active:          6996844 kB"
+- - "Inactive:        5706372 kB"
+- - "Active(anon):    4977412 kB"
+- - "Inactive(anon):  4130400 kB"
+- - "Active(file):    2019432 kB"
+- - "Inactive(file):  1575972 kB"
+- - "Unevictable:       18848 kB"
+- - "Mlocked:           18848 kB"
+- - "SwapTotal:       4194300 kB"
+- - "SwapFree:        1652468 kB"
+- - "Dirty:              1176 kB"
+- - "Writeback:             0 kB"
+- - "AnonPages:       8184016 kB"
+- - "Mapped:           316332 kB"
+- - "Shmem:            847072 kB"
+- - "Slab:            2834480 kB"
+- - "SReclaimable:    2631600 kB"
+- - "SUnreclaim:       202880 kB"
+- - "KernelStack:       37792 kB"
+- - "PageTables:        66892 kB"
+- - "NFS_Unstable:          0 kB"
+- - "Bounce:                0 kB"
+- - "WritebackTmp:          0 kB"
+- - "CommitLimit:    12308672 kB"
+- - "Committed_AS:   19184016 kB"
+- - "VmallocTotal:   34359738367 kB"
+- - "VmallocUsed:      314708 kB"
+- - "VmallocChunk:   34350426108 kB"
+- - "Percpu:             8704 kB"
+- - "HardwareCorrupted:     0 kB"
+- - "AnonHugePages:   4481024 kB"
+- - "CmaTotal:              0 kB"
+- - "CmaFree:               0 kB"
+- - "HugePages_Total:       0"
+- - "HugePages_Free:        0"
+- - "HugePages_Rsvd:        0"
+- - "HugePages_Surp:        0"
+- - "Hugepagesize:       2048 kB"
+- - "DirectMap4k:      166504 kB"
+- - "DirectMap2M:     6090752 kB"
+- - "DirectMap1G:    12582912 kB"
+headers: []
+rawData: |-
+  RANGE                                        SIZE  STATE REMOVABLE  BLOCK
+  0x0000000000000000-0x000000007fffffff  2147483648 online        no   0-15
+  0x0000000100000000-0x000000047fffffff 15032385536 online        no 32-143
+
+  Memory block size:            134217728
+  Total online memory:        17179869184
+  Total offline memory:                 0
+  MemTotal:       16228744 kB
+  MemFree:          288148 kB
+  MemAvailable:    6115128 kB
+  Buffers:            2288 kB
+  Cached:          4448920 kB
+  SwapCached:        97736 kB
+  Active:          6996844 kB
+  Inactive:        5706372 kB
+  Active(anon):    4977412 kB
+  Inactive(anon):  4130400 kB
+  Active(file):    2019432 kB
+  Inactive(file):  1575972 kB
+  Unevictable:       18848 kB
+  Mlocked:           18848 kB
+  SwapTotal:       4194300 kB
+  SwapFree:        1652468 kB
+  Dirty:              1176 kB
+  Writeback:             0 kB
+  AnonPages:       8184016 kB
+  Mapped:           316332 kB
+  Shmem:            847072 kB
+  Slab:            2834480 kB
+  SReclaimable:    2631600 kB
+  SUnreclaim:       202880 kB
+  KernelStack:       37792 kB
+  PageTables:        66892 kB
+  NFS_Unstable:          0 kB
+  Bounce:                0 kB
+  WritebackTmp:          0 kB
+  CommitLimit:    12308672 kB
+  Committed_AS:   19184016 kB
+  VmallocTotal:   34359738367 kB
+  VmallocUsed:      314708 kB
+  VmallocChunk:   34350426108 kB
+  Percpu:             8704 kB
+  HardwareCorrupted:     0 kB
+  AnonHugePages:   4481024 kB
+  CmaTotal:              0 kB
+  CmaFree:               0 kB
+  HugePages_Total:       0
+  HugePages_Free:        0
+  HugePages_Rsvd:        0
+  HugePages_Surp:        0
+  Hugepagesize:       2048 kB
+  DirectMap4k:      166504 kB
+  DirectMap2M:     6090752 kB
+  DirectMap1G:    12582912 kB
+empty: false
