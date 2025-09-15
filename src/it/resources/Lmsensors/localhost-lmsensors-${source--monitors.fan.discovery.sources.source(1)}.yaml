@@ -1,0 +1,174 @@
+---
+table:
+- - i350bb-pci-0700
+- - "loc1:"
+- - "  temp1_input: 54.000"
+- - "  temp1_max: 120.000"
+- - "  temp1_crit: 110.000"
+- - ""
+- - power_meter-acpi-0
+- - "power1:"
+- - "  power1_average: 116.000"
+- - "  power1_average_interval: 60.000"
+- - ""
+- - coretemp-isa-0000
+- - "Package id 0:"
+- - "  temp1_input: 34.000"
+- - "  temp1_max: 81.000"
+- - "  temp1_crit: 91.000"
+- - "  temp1_crit_alarm: 0.000"
+- - "Core 0:"
+- - "  temp2_input: 34.000"
+- - "  temp2_max: 81.000"
+- - "  temp2_crit: 91.000"
+- - "  temp2_crit_alarm: 0.000"
+- - "Core 1:"
+- - "  temp3_input: 30.000"
+- - "  temp3_max: 81.000"
+- - "  temp3_crit: 91.000"
+- - "  temp3_crit_alarm: 0.000"
+- - "Core 2:"
+- - "  temp4_input: 30.000"
+- - "  temp4_max: 81.000"
+- - "  temp4_crit: 91.000"
+- - "  temp4_crit_alarm: 0.000"
+- - "Core 3:"
+- - "  temp5_input: 30.000"
+- - "  temp5_max: 81.000"
+- - "  temp5_crit: 91.000"
+- - "  temp5_crit_alarm: 0.000"
+- - "Core 4:"
+- - "  temp6_input: 32.000"
+- - "  temp6_max: 81.000"
+- - "  temp6_crit: 91.000"
+- - "  temp6_crit_alarm: 0.000"
+- - "Core 5:"
+- - "  temp7_input: 30.000"
+- - "  temp7_max: 81.000"
+- - "  temp7_crit: 91.000"
+- - "  temp7_crit_alarm: 0.000"
+- - ""
+- - coretemp-isa-0001
+- - "Package id 1:"
+- - "  temp1_input: 36.000"
+- - "  temp1_max: 81.000"
+- - "  temp1_crit: 91.000"
+- - "  temp1_crit_alarm: 0.000"
+- - "Core 0:"
+- - "  temp2_input: 33.000"
+- - "  temp2_max: 81.000"
+- - "  temp2_crit: 91.000"
+- - "  temp2_crit_alarm: 0.000"
+- - "Core 1:"
+- - "  temp3_input: 36.000"
+- - "  temp3_max: 81.000"
+- - "  temp3_crit: 91.000"
+- - "  temp3_crit_alarm: 0.000"
+- - "Core 2:"
+- - "  temp4_input: 34.000"
+- - "  temp4_max: 81.000"
+- - "  temp4_crit: 91.000"
+- - "  temp4_crit_alarm: 0.000"
+- - "Core 3:"
+- - "  temp5_input: 34.000"
+- - "  temp5_max: 81.000"
+- - "  temp5_crit: 91.000"
+- - "  temp5_crit_alarm: 0.000"
+- - "Core 4:"
+- - "  temp6_input: 33.000"
+- - "  temp6_max: 81.000"
+- - "  temp6_crit: 91.000"
+- - "  temp6_crit_alarm: 0.000"
+- - "Core 5:"
+- - "  temp7_input: 32.000"
+- - "  temp7_max: 81.000"
+- - "  temp7_crit: 91.000"
+- - "  temp7_crit_alarm: 0.000"
+- - ""
+headers: []
+rawData: |
+  i350bb-pci-0700
+  loc1:
+    temp1_input: 54.000
+    temp1_max: 120.000
+    temp1_crit: 110.000
+
+  power_meter-acpi-0
+  power1:
+    power1_average: 116.000
+    power1_average_interval: 60.000
+
+  coretemp-isa-0000
+  Package id 0:
+    temp1_input: 34.000
+    temp1_max: 81.000
+    temp1_crit: 91.000
+    temp1_crit_alarm: 0.000
+  Core 0:
+    temp2_input: 34.000
+    temp2_max: 81.000
+    temp2_crit: 91.000
+    temp2_crit_alarm: 0.000
+  Core 1:
+    temp3_input: 30.000
+    temp3_max: 81.000
+    temp3_crit: 91.000
+    temp3_crit_alarm: 0.000
+  Core 2:
+    temp4_input: 30.000
+    temp4_max: 81.000
+    temp4_crit: 91.000
+    temp4_crit_alarm: 0.000
+  Core 3:
+    temp5_input: 30.000
+    temp5_max: 81.000
+    temp5_crit: 91.000
+    temp5_crit_alarm: 0.000
+  Core 4:
+    temp6_input: 32.000
+    temp6_max: 81.000
+    temp6_crit: 91.000
+    temp6_crit_alarm: 0.000
+  Core 5:
+    temp7_input: 30.000
+    temp7_max: 81.000
+    temp7_crit: 91.000
+    temp7_crit_alarm: 0.000
+
+  coretemp-isa-0001
+  Package id 1:
+    temp1_input: 36.000
+    temp1_max: 81.000
+    temp1_crit: 91.000
+    temp1_crit_alarm: 0.000
+  Core 0:
+    temp2_input: 33.000
+    temp2_max: 81.000
+    temp2_crit: 91.000
+    temp2_crit_alarm: 0.000
+  Core 1:
+    temp3_input: 36.000
+    temp3_max: 81.000
+    temp3_crit: 91.000
+    temp3_crit_alarm: 0.000
+  Core 2:
+    temp4_input: 34.000
+    temp4_max: 81.000
+    temp4_crit: 91.000
+    temp4_crit_alarm: 0.000
+  Core 3:
+    temp5_input: 34.000
+    temp5_max: 81.000
+    temp5_crit: 91.000
+    temp5_crit_alarm: 0.000
+  Core 4:
+    temp6_input: 33.000
+    temp6_max: 81.000
+    temp6_crit: 91.000
+    temp6_crit_alarm: 0.000
+  Core 5:
+    temp7_input: 32.000
+    temp7_max: 81.000
+    temp7_crit: 91.000
+    temp7_crit_alarm: 0.000
+empty: false

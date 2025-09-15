@@ -1,0 +1,41 @@
+---
+table:
+- - "# dmidecode 3.2"
+- - Getting SMBIOS data from sysfs.
+- - SMBIOS 2.7 present.
+- - ""
+- - "Handle 0x0000, DMI type 0, 24 bytes"
+- - BIOS Information
+- - "\tVendor: FUJITSU // American Megatrends Inc."
+- - "\tVersion: V4.6.5.3 R1.32.0 for D2939-A1x"
+- - "\tRelease Date: 06/24/2019"
+- - "\tAddress: 0xF0000"
+- - "\tRuntime Size: 64 kB"
+- - "\tROM Size: 8192 kB"
+- - "\tCharacteristics:"
+- - "\t\tPCI is supported"
+- - "\t\tBIOS is upgradeable"
+- - "\t\tBIOS shadowing is allowed"
+- - "\t\tBoot from CD is supported"
+- - "\t\tSelectable boot is supported"
+- - "\t\tEDD is supported"
+- - "\t\tPrint screen service is supported (int 5h)"
+- - "\t\tSerial services are supported (int 14h)"
+- - "\t\tPrinter services are supported (int 17h)"
+- - "\t\tACPI is supported"
+- - "\t\tUSB legacy is supported"
+- - "\t\tBIOS boot specification is supported"
+- - "\t\tTargeted content distribution is supported"
+- - "\t\tUEFI is supported"
+- - "\tBIOS Revision: 1.32"
+- - ""
+- - "Handle 0x0077, DMI type 13, 22 bytes"
+- - BIOS Language Information
+- - "\tLanguage Description Format: Long"
+- - "\tInstallable Languages: 1"
+- - "\t\ten|US|iso8859-1"
+- - "\tCurrently Installed Language: en|US|iso8859-1"
+- - ""
+headers: []
+rawData: "# dmidecode 3.2\nGetting SMBIOS data from sysfs.\nSMBIOS 2.7 present.\n\nHandle 0x0000, DMI type 0, 24 bytes\nBIOS Information\n\tVendor: FUJITSU // American Megatrends Inc.\n\tVersion: V4.6.5.3 R1.32.0 for D2939-A1x\n\tRelease Date: 06/24/2019\n\tAddress: 0xF0000\n\tRuntime Size: 64 kB\n\tROM Size: 8192 kB\n\tCharacteristics:\n\t\tPCI is supported\n\t\tBIOS is upgradeable\n\t\tBIOS shadowing is allowed\n\t\tBoot from CD is supported\n\t\tSelectable boot is supported\n\t\tEDD is supported\n\t\tPrint screen service is supported (int 5h)\n\t\tSerial services are supported (int 14h)\n\t\tPrinter services are supported (int 17h)\n\t\tACPI is supported\n\t\tUSB legacy is supported\n\t\tBIOS boot specification is supported\n\t\tTargeted content distribution is supported\n\t\tUEFI is supported\n\tBIOS Revision: 1.32\n\nHandle 0x0077, DMI type 13, 22 bytes\nBIOS Language Information\n\tLanguage Description Format: Long\n\tInstallable Languages: 1\n\t\ten|US|iso8859-1\n\tCurrently Installed Language: en|US|iso8859-1\n"
+empty: false

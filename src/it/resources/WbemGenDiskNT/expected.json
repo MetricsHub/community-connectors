@@ -1,0 +1,260 @@
+{
+  "total": 4,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1757942729537,
+          "previousCollectTime": 1757942722940,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": "ok",
+          "stateSet": [
+            "ok",
+            "failed"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "WBEMGenDiskNT.yaml",
+        "name": "WMI - Disks",
+        "connector_id": "WBEMGenDiskNT",
+        "applies_to_os": "windows",
+        "parent.id": "localhost",
+        "id": "WBEMGenDiskNT"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [WINDOWS]\n- Exclude: []\n\nResult:\nConfigured OS type : WINDOWS\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted ServiceCriterion Criterion:\n- Service: WINMGMT\n\nResult:\nThe WINMGMT Windows Service is currently running.\n\nMessage:\n====================================\nServiceCriterion test succeeded:\n- Service: WINMGMT\n\nResult: The WINMGMT Windows Service is currently running.\n====================================\n\n\nExecuted WmiCriterion Criterion:\n- WQL Query: SELECT InstanceName FROM MSStorageDriver_FailurePredictStatus WHERE Active=TRUE\n- Namespace: root\\WMI\n- Expected Result: \\(^[^M]...\\)\\|\\(^.[^P]..\\)\\|\\(^..[^I].\\)\\|\\(^...[^O]\\)\n\nResult:\nIDE\\\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT InstanceName FROM MSStorageDriver_FailurePredictStatus WHERE Active=TRUE\n- Namespace: root\\WMI\n- Expected Result: \\(^[^M]...\\)\\|\\(^.[^P]..\\)\\|\\(^..[^I].\\)\\|\\(^...[^O]\\)\n\nResult: IDE\\\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1757942722940,
+      "type": "connector",
+      "id": "connector_WBEMGenDiskNT",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "connector": true,
+      "endpoint": false,
+      "endpointHost": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.power{hw.type=\"disk_controller\"}": {
+          "name": "hw.power{hw.type=\"disk_controller\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "disk_controller"
+          },
+          "resetMetricTime": false,
+          "value": 15.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"disk_controller\", state=\"present\"}": {
+          "name": "hw.status{hw.type=\"disk_controller\", state=\"present\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": 1757942722940,
+          "attributes": {
+            "state": "present",
+            "hw.type": "disk_controller"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "controller_number": "PCIIDE\\IDECHANNEL\\4&27E16BB&0&0",
+        "hw.parent.type": "enclosure",
+        "vendor": "",
+        "connector_id": "WBEMGenDiskNT",
+        "name": "Disk Controller: PCIIDE\\IDECHANNEL\\4&27E16BB&0&0 (ATA Channel 0)",
+        "model": "ATA Channel 0",
+        "id": "PCIIDE\\IDECHANNEL\\4&27E16BB&0&0",
+        "__id_count": "1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757942722940,
+      "type": "disk_controller",
+      "id": "WBEMGenDiskNT_disk_controller_PCIIDE\\IDECHANNEL\\4&27E16BB&0&0",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "connector": false,
+      "endpoint": false,
+      "endpointHost": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.up{protocol=\"wmi\"}": {
+          "name": "metricshub.host.up{protocol=\"wmi\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "wmi"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.host.power{quality=\"estimated\"}": {
+          "name": "hw.host.power{quality=\"estimated\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": null,
+          "attributes": {
+            "quality": "estimated"
+          },
+          "resetMetricTime": false,
+          "value": 50.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1757942729537,
+          "previousCollectTime": 1757942722940,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "os.type": "windows",
+        "agent.host.name": "PC-Maalej",
+        "host.name": "localhost",
+        "host.type": "compute"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757942729537,
+      "type": "host",
+      "id": "endpoint_host_localhost",
+      "identifyingAttributeKeys": [
+        "host.name"
+      ],
+      "connector": false,
+      "endpoint": true,
+      "endpointHost": true,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "predicted_failure",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.power{hw.type=\"physical_disk\"}": {
+          "name": "hw.power{hw.type=\"physical_disk\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 30.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.physical_disk.size": {
+          "name": "hw.physical_disk.size",
+          "collectTime": 1757942729537,
+          "previousCollectTime": 1757942722940,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 2000396321280.0,
+          "previousValue": 2000396321280.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\", state=\"present\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"present\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": 1757942722940,
+          "attributes": {
+            "state": "present",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "0",
+        "hw.parent.type": "disk_controller",
+        "hw.parent.id": "PCIIDE\\IDECHANNEL\\4&27E16BB&0&0",
+        "vendor": "HGST HUS726020ALE614 ATA Device",
+        "name": "0 (HGST HUS726020ALE614 ATA Device - 2.00 TB)",
+        "connector_id": "WBEMGenDiskNT",
+        "id": "IDE\\DiskHGST_HUS726020ALE614____________________APGNW7J0\\5&1d9e0700&0&0.0.0_0",
+        "__id_count": "1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": ""
+      },
+      "alertRules": {},
+      "discoveryTime": 1757942722940,
+      "type": "physical_disk",
+      "id": "WBEMGenDiskNT_physical_disk_IDE\\DiskHGST_HUS726020ALE614____________________APGNW7J0\\5&1d9e0700&0&0.0.0_0",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "connector": false,
+      "endpoint": false,
+      "endpointHost": false,
+      "is_endpoint": false
+    }
+  ]
+}

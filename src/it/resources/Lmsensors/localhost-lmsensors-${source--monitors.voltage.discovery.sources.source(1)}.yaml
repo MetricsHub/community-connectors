@@ -1,0 +1,52 @@
+---
+table:
+- - i350bb-pci-0700
+- - "loc1:         +54.0°C  (high = +120.0°C, crit = +110.0°C)"
+- - ""
+- - power_meter-acpi-0
+- - "power1:      116.00 W  (interval =  60.00 s)"
+- - ""
+- - coretemp-isa-0000
+- - "Package id 0:  +34.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 0:        +34.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 1:        +30.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 2:        +30.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 3:        +30.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 4:        +32.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 5:        +30.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - ""
+- - coretemp-isa-0001
+- - "Package id 1:  +36.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 0:        +33.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 1:        +36.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 2:        +34.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 3:        +34.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 4:        +33.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - "Core 5:        +32.0°C  (high = +81.0°C, crit = +91.0°C)"
+- - ""
+headers: []
+rawData: |
+  i350bb-pci-0700
+  loc1:         +54.0°C  (high = +120.0°C, crit = +110.0°C)
+
+  power_meter-acpi-0
+  power1:      116.00 W  (interval =  60.00 s)
+
+  coretemp-isa-0000
+  Package id 0:  +34.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 0:        +34.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 1:        +30.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 2:        +30.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 3:        +30.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 4:        +32.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 5:        +30.0°C  (high = +81.0°C, crit = +91.0°C)
+
+  coretemp-isa-0001
+  Package id 1:  +36.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 0:        +33.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 1:        +36.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 2:        +34.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 3:        +34.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 4:        +33.0°C  (high = +81.0°C, crit = +91.0°C)
+  Core 5:        +32.0°C  (high = +81.0°C, crit = +91.0°C)
+empty: false

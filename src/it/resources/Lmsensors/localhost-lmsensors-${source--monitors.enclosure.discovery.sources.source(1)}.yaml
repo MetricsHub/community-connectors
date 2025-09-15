@@ -1,0 +1,30 @@
+---
+table:
+- - "# dmidecode 3.2"
+- - Getting SMBIOS data from sysfs.
+- - SMBIOS 2.7 present.
+- - ""
+- - "Handle 0x0001, DMI type 1, 27 bytes"
+- - System Information
+- - "\tManufacturer: FUJITSU"
+- - "\tProduct Name: PRIMERGY RX300 S7"
+- - "\tVersion: GS01"
+- - "\tSerial Number: YLAR004219"
+- - "\tUUID: 45d49e43-9a34-f346-bb03-316da3b423fd"
+- - "\tWake-up Type: Power Switch"
+- - "\tSKU Number: ABN:K1373-M205-11"
+- - "\tFamily: SERVER"
+- - ""
+- - "Handle 0x0025, DMI type 12, 5 bytes"
+- - System Configuration Options
+- - "\tOption 1: J3-5: Default position"
+- - "\tOption 2: J1-2: Password Skip active"
+- - "\tOption 3: J5-6: Recovery BIOS active"
+- - ""
+- - "Handle 0x005B, DMI type 32, 20 bytes"
+- - System Boot Information
+- - "\tStatus: No errors detected"
+- - ""
+headers: []
+rawData: "# dmidecode 3.2\nGetting SMBIOS data from sysfs.\nSMBIOS 2.7 present.\n\nHandle 0x0001, DMI type 1, 27 bytes\nSystem Information\n\tManufacturer: FUJITSU\n\tProduct Name: PRIMERGY RX300 S7\n\tVersion: GS01\n\tSerial Number: YLAR004219\n\tUUID: 45d49e43-9a34-f346-bb03-316da3b423fd\n\tWake-up Type: Power Switch\n\tSKU Number: ABN:K1373-M205-11\n\tFamily: SERVER\n\nHandle 0x0025, DMI type 12, 5 bytes\nSystem Configuration Options\n\tOption 1: J3-5: Default position\n\tOption 2: J1-2: Password Skip active\n\tOption 3: J5-6: Recovery BIOS active\n\nHandle 0x005B, DMI type 32, 20 bytes\nSystem Boot Information\n\tStatus: No errors detected\n"
+empty: false

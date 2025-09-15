@@ -1,0 +1,8 @@
+---
+table:
+- - Win32_DiskDrive.DeviceID="\\\\.\\PHYSICALDRIVE0"
+  - 0025_38DC_21C0_558A.
+  - SCSI\DISK&VEN_NVME&PROD_SAMSUNG_MZVLQ512\5&FA82E14&0&000000
+headers: []
+rawData: null
+empty: false

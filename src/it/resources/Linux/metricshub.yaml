@@ -1,0 +1,12 @@
+#MetricsHub Configuration
+resources:
+  localhost:
+    attributes:
+      host.name: localhost
+      host.type: linux
+    protocols:
+      ssh:
+        username: user
+        password: password
+        timeout: 300
+    connectors: ["+Linux"]
