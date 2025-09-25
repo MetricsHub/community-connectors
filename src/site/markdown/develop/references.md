@@ -134,6 +134,24 @@ ${esc.d}{resource.attribute::<attribute-key>}
               path: /api/data
               header: "Authorization: Bearer ${esc.d}{resource.attribute::api.token}"
 ```
+## Protocol Reference
+
+### Format
+
+```yaml
+${esc.d}{protocol::<protocol-type>.<property>}
+```
+
+### Example
+
+```yaml
+        collect:
+          type: monoInstance
+          sources:
+            customSource:
+              type: http
+              url: https://${esc.d}{protocol::http.hostname}:${esc.d}{protocol::http.port}/api/data
+```
 
 ## Translation Table Reference
 
