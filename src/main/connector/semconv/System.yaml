@@ -83,6 +83,10 @@ metrics:
     description: Average time taken for I/O requests to be served
     type: Gauge
     unit: s
+  system.disk.limit:
+    description: The total storage capacity of the disk
+    type: UpDownCounter
+    unit: By
   system.filesystem.usage:
     description: Filesystem usage
     type: UpDownCounter
@@ -91,6 +95,10 @@ metrics:
     description: Filesystem utilization for each possible state
     type: Gauge
     unit: "1"
+  system.filesystem.limit:
+    description: The total storage capacity of the filesystem
+    type: UpDownCounter
+    unit: By
   system.network.dropped:
     description: Count of dropped packets
     type: Counter
