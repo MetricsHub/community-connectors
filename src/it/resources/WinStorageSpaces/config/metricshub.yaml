@@ -1,4 +1,6 @@
 #MetricsHub Configuration
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
 patchDirectory: "src/main/connector"
 resources:
   localhost:

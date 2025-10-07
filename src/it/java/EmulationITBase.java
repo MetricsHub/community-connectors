@@ -91,8 +91,7 @@ public class EmulationITBase {
 		final AgentContext agentContext = new AgentContext(
 				configFileDirectory, extensionManager);
 
-		try {
-			// Get the first resource group entry
+		// Get the first resource group entry
 			final Map.Entry<String, Map<String, TelemetryManager>> firstGroupEntry =
 					agentContext.getTelemetryManagers()
 							.entrySet()
@@ -127,9 +126,6 @@ public class EmulationITBase {
 					.hostMetricDefinitions(new MetricDefinitions(new HashMap<>()))
 					.build();
 			new MonitoringTask(monitoringTaskInfo).run();
-		} finally {
-			agentContext.getMetricsExporter().shutdown();
-		}
 	}
 
 	/**
