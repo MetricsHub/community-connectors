@@ -1,0 +1,889 @@
+{
+  "total": 12,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": "ok",
+          "stateSet": [
+            "ok",
+            "failed"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "SmartMonLinux.yaml",
+        "name": "SmartMon Tools",
+        "connector_id": "SmartMonLinux",
+        "applies_to_os": "linux",
+        "parent.id": "localhost",
+        "id": "SmartMonLinux"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [LINUX]\n- Exclude: []\n\nResult:\nConfigured OS type : LINUX\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult:\n/usr/sbin/smartd\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult: /usr/sbin/smartd\n\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult:\n/usr/sbin/smartd\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult: /usr/sbin/smartd\n\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult:\n/usr/sbin/smartd\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult: /usr/sbin/smartd\n\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult:\n/usr/sbin/smartd\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /bin/ls /usr/sbin/smartd\n- ExecuteLocally: false\n- ExpectedResult: ^/usr/sbin/smartd$\n\nResult: /usr/sbin/smartd\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "connector",
+      "id": "connector_SmartMonLinux",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": true,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.up{protocol=\"snmp\"}": {
+          "name": "metricshub.host.up{protocol=\"snmp\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "snmp"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.host.heating_margin": {
+          "name": "hw.host.heating_margin",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 33.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.host.power{quality=\"estimated\"}": {
+          "name": "hw.host.power{quality=\"estimated\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "quality": "estimated"
+          },
+          "resetMetricTime": false,
+          "value": 61.11,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.host.ambient_temperature": {
+          "name": "hw.host.ambient_temperature",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 27.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "host.type": "compute",
+        "host.name": "localhost",
+        "agent.host.name": "PC-Maalej",
+        "os.type": "linux"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1759814200293,
+      "type": "host",
+      "id": "endpoint_host_localhost",
+      "identifyingAttributeKeys": [
+        "host.name"
+      ],
+      "endpointHost": true,
+      "endpoint": true,
+      "connector": false,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "predicted_failure",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.power{hw.type=\"physical_disk\"}": {
+          "name": "hw.power{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 11.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\", state=\"present\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"present\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "state": "present",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "OK",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "vendor": "TOSHIBA",
+        "connector_id": "SmartMonLinux",
+        "name": "/dev/sda (TOSHIBA)",
+        "serial_number": "Z7A0A04RTEZE",
+        "id": "/dev/sda",
+        "__id_count": "3"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Working"
+      },
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "physical_disk",
+      "id": "SmartMonLinux_physical_disk_/dev/sda",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "predicted_failure",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.power{hw.type=\"physical_disk\"}": {
+          "name": "hw.power{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 11.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\", state=\"present\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"present\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "state": "present",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "OK",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "vendor": "TOSHIBA",
+        "connector_id": "SmartMonLinux",
+        "name": "/dev/sdb (TOSHIBA)",
+        "serial_number": "Z7A0A04NTEZE",
+        "id": "/dev/sdb",
+        "__id_count": "1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Working"
+      },
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "physical_disk",
+      "id": "SmartMonLinux_physical_disk_/dev/sdb",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "predicted_failure",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.power{hw.type=\"physical_disk\"}": {
+          "name": "hw.power{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 11.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\", state=\"present\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"present\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "state": "present",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "OK",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "vendor": "TOSHIBA",
+        "connector_id": "SmartMonLinux",
+        "name": "/dev/sdc (TOSHIBA)",
+        "serial_number": "Z7A0A04WTEZE",
+        "id": "/dev/sdc",
+        "__id_count": "2"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Working"
+      },
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "physical_disk",
+      "id": "SmartMonLinux_physical_disk_/dev/sdc",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "predicted_failure",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.power{hw.type=\"physical_disk\"}": {
+          "name": "hw.power{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 11.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\", state=\"present\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"present\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "state": "present",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "OK",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "vendor": "TOSHIBA",
+        "connector_id": "SmartMonLinux",
+        "name": "/dev/sdd (TOSHIBA)",
+        "serial_number": "Z7A0A057TEZE",
+        "id": "/dev/sdd",
+        "__id_count": "5"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Working"
+      },
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "physical_disk",
+      "id": "SmartMonLinux_physical_disk_/dev/sdd",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"predicted_failure\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "state": "predicted_failure",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.power{hw.type=\"physical_disk\"}": {
+          "name": "hw.power{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 11.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\", state=\"present\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\", state=\"present\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "state": "present",
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"physical_disk\"}": {
+          "name": "hw.status{hw.type=\"physical_disk\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "physical_disk"
+          },
+          "resetMetricTime": false,
+          "value": "OK",
+          "previousValue": null,
+          "stateSet": [
+            "failed",
+            "degraded",
+            "ok"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "vendor": "SEAGATE",
+        "connector_id": "SmartMonLinux",
+        "name": "/dev/sde (SEAGATE)",
+        "serial_number": "W4706KMD",
+        "id": "/dev/sde",
+        "__id_count": "4"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Working"
+      },
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "physical_disk",
+      "id": "SmartMonLinux_physical_disk_/dev/sde",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 64.0,
+          "previousValue": 64.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": false,
+          "value": 70.4,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 27.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "__is_cpu_sensor": "false",
+        "sensor_location": "Harddisk",
+        "name": "/dev/sda (Harddisk)",
+        "connector_id": "SmartMonLinux",
+        "id": "/dev/sda",
+        "__id_count": "2"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "temperature",
+      "id": "SmartMonLinux_temperature_/dev/sda",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 64.0,
+          "previousValue": 64.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": false,
+          "value": 70.4,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 27.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "__is_cpu_sensor": "false",
+        "sensor_location": "Harddisk",
+        "name": "/dev/sdb (Harddisk)",
+        "connector_id": "SmartMonLinux",
+        "id": "/dev/sdb",
+        "__id_count": "1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "temperature",
+      "id": "SmartMonLinux_temperature_/dev/sdb",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 64.0,
+          "previousValue": 64.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": false,
+          "value": 70.4,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 27.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "__is_cpu_sensor": "false",
+        "sensor_location": "Harddisk",
+        "name": "/dev/sdc (Harddisk)",
+        "connector_id": "SmartMonLinux",
+        "id": "/dev/sdc",
+        "__id_count": "4"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "temperature",
+      "id": "SmartMonLinux_temperature_/dev/sdc",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 64.0,
+          "previousValue": 64.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": false,
+          "value": 70.4,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 27.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "__is_cpu_sensor": "false",
+        "sensor_location": "Harddisk",
+        "name": "/dev/sdd (Harddisk)",
+        "connector_id": "SmartMonLinux",
+        "id": "/dev/sdd",
+        "__id_count": "5"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "temperature",
+      "id": "SmartMonLinux_temperature_/dev/sdd",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "hw.temperature.limit{limit_type=\"high.degraded\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.degraded\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": 1759814195315,
+          "attributes": {
+            "limit_type": "high.degraded"
+          },
+          "resetMetricTime": true,
+          "value": 60.0,
+          "previousValue": 60.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature.limit{limit_type=\"high.critical\"}": {
+          "name": "hw.temperature.limit{limit_type=\"high.critical\"}",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {
+            "limit_type": "high.critical"
+          },
+          "resetMetricTime": false,
+          "value": 66.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.temperature": {
+          "name": "hw.temperature",
+          "collectTime": 1759814200293,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 27.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__device_type_option": "",
+        "hw.parent.type": "enclosure",
+        "__is_cpu_sensor": "false",
+        "sensor_location": "Harddisk",
+        "name": "/dev/sde (Harddisk)",
+        "connector_id": "SmartMonLinux",
+        "id": "/dev/sde",
+        "__id_count": "3"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1759814195315,
+      "type": "temperature",
+      "id": "SmartMonLinux_temperature_/dev/sde",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpointHost": false,
+      "endpoint": false,
+      "connector": false,
+      "is_endpoint": false
+    }
+  ]
+}

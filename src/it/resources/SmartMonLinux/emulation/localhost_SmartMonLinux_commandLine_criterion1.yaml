@@ -1,0 +1,20 @@
+---
+result: |
+  /usr/sbin/smartd
+success: true
+message: |
+  CommandLineCriterion test succeeded:
+  - CommandLine: /bin/ls /usr/sbin/smartd
+  - ExecuteLocally: false
+  - ExpectedResult: ^/usr/sbin/smartd$
+
+  Result: /usr/sbin/smartd
+exception: null
+criterion: !<commandLine>
+  type: commandLine
+  forceSerialization: false
+  commandLine: /bin/ls /usr/sbin/smartd
+  errorMessage: Unable to find the smartd program in /usr/sbin
+  expectedResult: ^/usr/sbin/smartd$
+  executeLocally: false
+  timeout: null

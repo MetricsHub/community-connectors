@@ -1,4 +1,5 @@
 #MetricsHub Configuration
+patchDirectory: "src/main/connector"
 resources:
   localhost:
     attributes:
@@ -7,4 +8,4 @@ resources:
     protocols:
       snmp:
         timeout: 300
-    connectors: ["+LmSensors"]
+    connectors: ["+SmartMonLinux"]

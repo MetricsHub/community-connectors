@@ -1,0 +1,162 @@
+---
+result: |
+  smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
+  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+
+  =======> ARGUMENT REQUIRED FOR OPTION: c <=======
+  =======> VALID ARGUMENTS ARE: <FILE_NAME>, - <=======
+
+  Use smartd -h to get a usage summary
+
+  smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
+  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+
+  Opened configuration file /etc/smartd.conf
+  Drive: DEVICESCAN, implied '-a' Directive on line 21 of file /etc/smartd.conf
+  Configuration file /etc/smartd.conf was parsed, found DEVICESCAN, scanning devices
+  Device: /dev/sda, opened
+  Device: /dev/sda, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: Z7A0A04RTEZE, 960 GB
+  Device: /dev/sda, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sda, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04RTEZE.scsi.state
+  Device: /dev/sdb, opened
+  Device: /dev/sdb, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: Z7A0A04NTEZE, 960 GB
+  Device: /dev/sdb, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdb, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04NTEZE.scsi.state
+  Device: /dev/sdc, opened
+  Device: /dev/sdc, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: Z7A0A04WTEZE, 960 GB
+  Device: /dev/sdc, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdc, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04WTEZE.scsi.state
+  Device: /dev/sdd, opened
+  Device: /dev/sdd, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: Z7A0A057TEZE, 960 GB
+  Device: /dev/sdd, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdd, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A057TEZE.scsi.state
+  Device: /dev/sde, opened
+  Device: /dev/sde, [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: W4706KMD, 1.00 TB
+  Device: /dev/sde, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sde, state read from /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-W4706KMD.scsi.state
+  Device: /dev/bus/0 [megaraid_disk_00], opened
+  Device: /dev/bus/0 [megaraid_disk_00], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: Z7A0A04RTEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sda, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_00] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_01], opened
+  Device: /dev/bus/0 [megaraid_disk_01], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: Z7A0A04NTEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sdb, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_01] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_02], opened
+  Device: /dev/bus/0 [megaraid_disk_02], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: Z7A0A04WTEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sdc, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_02] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_03], opened
+  Device: /dev/bus/0 [megaraid_disk_03], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: Z7A0A057TEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sdd, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_03] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_04], opened
+  Device: /dev/bus/0 [megaraid_disk_04], [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: W4706KMD, 1.00 TB
+  Device: /dev/bus/0, same identity as /dev/sde, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_04] at line 21 of file /etc/smartd.conf
+  Monitoring 0 ATA/SATA, 5 SCSI/SAS and 0 NVMe devices
+  Device: /dev/sda, opened SCSI device
+  Device: /dev/sda, SMART health: passed
+  Device: /dev/sdb, opened SCSI device
+  Device: /dev/sdb, SMART health: passed
+  Device: /dev/sdc, opened SCSI device
+  Device: /dev/sdc, SMART health: passed
+  Device: /dev/sdd, opened SCSI device
+  Device: /dev/sdd, SMART health: passed
+  Device: /dev/sde, opened SCSI device
+  Device: /dev/sde, SMART health: passed
+  Device: /dev/sda, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04RTEZE.scsi.state
+  Device: /dev/sdb, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04NTEZE.scsi.state
+  Device: /dev/sdc, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04WTEZE.scsi.state
+  Device: /dev/sdd, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A057TEZE.scsi.state
+  Device: /dev/sde, state written to /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-W4706KMD.scsi.state
+  Started with '-q onecheck' option. All devices successfully checked once.
+  smartd is exiting (exit status 0)
+success: true
+message: |
+  CommandLineCriterion test succeeded:
+  - CommandLine: /usr/sbin/smartd -c;/usr/sbin/smartd -q onecheck
+  - ExecuteLocally: false
+  - ExpectedResult: Device: .* opened
+
+  Result: smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
+  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+
+  =======> ARGUMENT REQUIRED FOR OPTION: c <=======
+  =======> VALID ARGUMENTS ARE: <FILE_NAME>, - <=======
+
+  Use smartd -h to get a usage summary
+
+  smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
+  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+
+  Opened configuration file /etc/smartd.conf
+  Drive: DEVICESCAN, implied '-a' Directive on line 21 of file /etc/smartd.conf
+  Configuration file /etc/smartd.conf was parsed, found DEVICESCAN, scanning devices
+  Device: /dev/sda, opened
+  Device: /dev/sda, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: Z7A0A04RTEZE, 960 GB
+  Device: /dev/sda, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sda, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04RTEZE.scsi.state
+  Device: /dev/sdb, opened
+  Device: /dev/sdb, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: Z7A0A04NTEZE, 960 GB
+  Device: /dev/sdb, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdb, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04NTEZE.scsi.state
+  Device: /dev/sdc, opened
+  Device: /dev/sdc, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: Z7A0A04WTEZE, 960 GB
+  Device: /dev/sdc, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdc, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04WTEZE.scsi.state
+  Device: /dev/sdd, opened
+  Device: /dev/sdd, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: Z7A0A057TEZE, 960 GB
+  Device: /dev/sdd, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdd, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A057TEZE.scsi.state
+  Device: /dev/sde, opened
+  Device: /dev/sde, [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: W4706KMD, 1.00 TB
+  Device: /dev/sde, is SMART capable. Adding to "monitor" list.
+  Device: /dev/sde, state read from /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-W4706KMD.scsi.state
+  Device: /dev/bus/0 [megaraid_disk_00], opened
+  Device: /dev/bus/0 [megaraid_disk_00], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: Z7A0A04RTEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sda, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_00] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_01], opened
+  Device: /dev/bus/0 [megaraid_disk_01], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: Z7A0A04NTEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sdb, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_01] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_02], opened
+  Device: /dev/bus/0 [megaraid_disk_02], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: Z7A0A04WTEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sdc, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_02] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_03], opened
+  Device: /dev/bus/0 [megaraid_disk_03], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: Z7A0A057TEZE, 960 GB
+  Device: /dev/bus/0, same identity as /dev/sdd, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_03] at line 21 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_04], opened
+  Device: /dev/bus/0 [megaraid_disk_04], [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: W4706KMD, 1.00 TB
+  Device: /dev/bus/0, same identity as /dev/sde, ignored
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_04] at line 21 of file /etc/smartd.conf
+  Monitoring 0 ATA/SATA, 5 SCSI/SAS and 0 NVMe devices
+  Device: /dev/sda, opened SCSI device
+  Device: /dev/sda, SMART health: passed
+  Device: /dev/sdb, opened SCSI device
+  Device: /dev/sdb, SMART health: passed
+  Device: /dev/sdc, opened SCSI device
+  Device: /dev/sdc, SMART health: passed
+  Device: /dev/sdd, opened SCSI device
+  Device: /dev/sdd, SMART health: passed
+  Device: /dev/sde, opened SCSI device
+  Device: /dev/sde, SMART health: passed
+  Device: /dev/sda, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04RTEZE.scsi.state
+  Device: /dev/sdb, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04NTEZE.scsi.state
+  Device: /dev/sdc, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A04WTEZE.scsi.state
+  Device: /dev/sdd, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-Z7A0A057TEZE.scsi.state
+  Device: /dev/sde, state written to /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-W4706KMD.scsi.state
+  Started with '-q onecheck' option. All devices successfully checked once.
+  smartd is exiting (exit status 0)
+exception: null
+criterion: !<commandLine>
+  type: commandLine
+  forceSerialization: false
+  commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -c;%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
+  errorMessage: Unable to run the smartd/smartctl utility (not enough privilege?)
+  expectedResult: "Device: .* opened"
+  executeLocally: false
+  timeout: null

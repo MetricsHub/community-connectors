@@ -1,11 +1,11 @@
 #MetricsHub Configuration
+patchDirectory: "src/main/connector"
 resources:
   localhost:
     attributes:
       host.name: localhost
-      host.type: linux
+      host.type: windows
     protocols:
-      jdbc:
+      wmi:
         timeout: 300
-        type: mysql
-    connectors: ["+MySql"]
+    connectors: ["+WbemGenDiskNT"]

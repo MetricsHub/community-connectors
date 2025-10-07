@@ -1,4 +1,5 @@
 #MetricsHub Configuration
+patchDirectory: "src/main/connector"
 resources:
   localhost:
     attributes:
