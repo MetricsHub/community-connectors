@@ -1,0 +1,10 @@
+---
+result: null
+success: true
+message: null
+exception: null
+criterion: !<productRequirements>
+  type: productRequirements
+  forceSerialization: false
+  engineVersion: null
+  kmVersion: 11.3.00
