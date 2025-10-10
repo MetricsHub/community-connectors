@@ -77,7 +77,7 @@ message: |
   CommandLineCriterion test succeeded:
   - CommandLine: /usr/sbin/smartd -c;/usr/sbin/smartd -q onecheck
   - ExecuteLocally: false
-  - ExpectedResult: Device: .* opened
+  - ExpectedResult: Device: .* is SMART capable
 
   Result: smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
   Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
@@ -156,7 +156,7 @@ criterion: !<commandLine>
   type: commandLine
   forceSerialization: false
   commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -c;%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
-  errorMessage: Unable to run the smartd/smartctl utility (not enough privilege?)
-  expectedResult: "Device: .* opened"
+  errorMessage: No S.M.A.R.T-capable disk found.
+  expectedResult: "Device: .* is SMART capable"
   executeLocally: false
   timeout: null
