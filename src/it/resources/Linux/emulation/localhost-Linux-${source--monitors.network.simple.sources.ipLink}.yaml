@@ -1,0 +1,41 @@
+---
+table:
+- - "1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000"
+- - '    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00'
+- - "    RX: bytes  packets  errors  dropped overrun mcast   "
+- - '    4052022203790 6537644028 0       0       0       0       '
+- - "    TX: bytes  packets  errors  dropped carrier collsns "
+- - '    4052022203790 6537644028 0       0       0       0       '
+- - "2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000"
+- - '    link/ether 00:19:99:c5:7b:dd brd ff:ff:ff:ff:ff:ff'
+- - "    RX: bytes  packets  errors  dropped overrun mcast   "
+- - '    268189060994 1938209175 0       743     0       715814  '
+- - "    TX: bytes  packets  errors  dropped carrier collsns "
+- - '    331895897388 1751981465 0       0       0       0       '
+- - "3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000"
+- - '    link/ether 00:19:99:c5:7b:de brd ff:ff:ff:ff:ff:ff'
+- - "    RX: bytes  packets  errors  dropped overrun mcast   "
+- - '    16650051559 246424510 0       9382866 0       115167  '
+- - "    TX: bytes  packets  errors  dropped carrier collsns "
+- - '    3822       91       0       0       0       0       '
+- - "4: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000"
+- - '    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff'
+- - "    RX: bytes  packets  errors  dropped overrun mcast   "
+- - '    0          0        0       0       0       0       '
+- - "    TX: bytes  packets  errors  dropped carrier collsns "
+- - '    0          0        0       0       0       0       '
+- - "5: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN mode DEFAULT group default qlen 1000"
+- - '    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff'
+- - "    RX: bytes  packets  errors  dropped overrun mcast   "
+- - '    0          0        0       0       0       0       '
+- - "    TX: bytes  packets  errors  dropped carrier collsns "
+- - '    0          0        0       0       0       0       '
+- - "6: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default "
+- - '    link/ether 02:42:d2:66:06:b2 brd ff:ff:ff:ff:ff:ff'
+- - "    RX: bytes  packets  errors  dropped overrun mcast   "
+- - '    0          0        0       0       0       0       '
+- - "    TX: bytes  packets  errors  dropped carrier collsns "
+- - '    0          0        0       0       0       0       '
+headers: []
+rawData: "1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n    RX: bytes  packets  errors  dropped overrun mcast   \n    4052022203790 6537644028 0       0       0       0       \n    TX: bytes  packets  errors  dropped carrier collsns \n    4052022203790 6537644028 0       0       0       0       \n2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\n    link/ether 00:19:99:c5:7b:dd brd ff:ff:ff:ff:ff:ff\n    RX: bytes  packets  errors  dropped overrun mcast   \n    268189060994 1938209175 0       743     0       715814  \n    TX: bytes  packets  errors  dropped carrier collsns \n    331895897388 1751981465 0       0       0       0       \n3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\n    link/ether 00:19:99:c5:7b:de brd ff:ff:ff:ff:ff:ff\n    RX: bytes  packets  errors  dropped overrun mcast   \n    16650051559 246424510 0       9382866 0       115167  \n    TX: bytes  packets  errors  dropped carrier collsns \n    3822       91       0       0       0       0       \n4: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000\n    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff\n    RX: bytes  packets  errors  dropped overrun mcast   \n    0          0        0       0       0       0       \n    TX: bytes  packets  errors  dropped carrier collsns \n    0          0        0       0       0       0       \n5: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN mode DEFAULT group default qlen 1000\n    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff\n    RX: bytes  packets  errors  dropped overrun mcast   \n    0          0        0       0       0       0       \n    TX: bytes  packets  errors  dropped carrier collsns \n    0          0        0       0       0       0       \n6: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default \n    link/ether 02:42:d2:66:06:b2 brd ff:ff:ff:ff:ff:ff\n    RX: bytes  packets  errors  dropped overrun mcast   \n    0          0        0       0       0       0       \n    TX: bytes  packets  errors  dropped carrier collsns \n    0          0        0       0       0       0       "
+empty: false

@@ -1,0 +1,25 @@
+---
+table:
+- - Win32_SCSIController.DeviceID="ROOT\\SPACEPORT\\0000"
+  - Contrôleur des espaces de stockage Microsoft
+- - Win32_SCSIController.DeviceID="PCI\\VEN_144D&DEV_A809&SUBSYS_A801144D&REV_00\\4&2485E8A5&0&0014"
+  - Contrôleur NVM Express standard
+- - Win32_VideoController.DeviceID="VideoController1"
+  - AMD Radeon(TM) Graphics
+- - Win32_USBController.DeviceID="PCI\\VEN_1022&DEV_161D&SUBSYS_8990103C&REV_00\\4&33381BD1&0&0341"
+  - Contrôleur hôte AMD USB 3.10 eXtensible - 1.20 (Microsoft)
+- - Win32_USBController.DeviceID="PCI\\VEN_1022&DEV_161F&SUBSYS_8990103C&REV_00\\4&301EEED7&0&0043"
+  - Contrôleur hôte AMD USB 2.0 eXtensible - 1.20 (Microsoft)
+- - Win32_USBController.DeviceID="PCI\\VEN_1022&DEV_162F&SUBSYS_162F1022&REV_00&USB4_MS_CM\\4&301EEED7&0&0643"
+  - Routeur hôte USB4(TM) (Microsoft)
+- - Win32_USBController.DeviceID="PCI\\VEN_1022&DEV_15D6&SUBSYS_15D61022&REV_00\\4&301EEED7&0&0343"
+  - Contrôleur hôte AMD USB 3.10 eXtensible - 1.20 (Microsoft)
+- - Win32_USBController.DeviceID="PCI\\VEN_1022&DEV_15D7&SUBSYS_15D71022&REV_00\\4&301EEED7&0&0443"
+  - Contrôleur hôte AMD USB 3.10 eXtensible - 1.20 (Microsoft)
+- - Win32_USBController.DeviceID="PCI\\VEN_1022&DEV_161E&SUBSYS_8990103C&REV_00\\4&33381BD1&0&0441"
+  - Contrôleur hôte AMD USB 3.10 eXtensible - 1.20 (Microsoft)
+- - Win32_USBController.DeviceID="PCI\\VEN_1022&DEV_162E&SUBSYS_162E1022&REV_00&USB4_MS_CM\\4&301EEED7&0&0543"
+  - Routeur hôte USB4(TM) (Microsoft)
+headers: []
+rawData: null
+empty: false
