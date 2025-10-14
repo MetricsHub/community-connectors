@@ -5,13 +5,13 @@ class ConnectorReplayIT {
 
 	@ParameterizedTest
 	@ValueSource(strings = {
-			"WinStorageSpaces",
-			"MIB2",
-			"Lmsensors",
-			"Linux",
-			"MySql",
-			"WbemGenDiskNT",
-			"SmartMonLinux"
+		"WinStorageSpaces",
+		"MIB2",
+		"Lmsensors",
+		"Linux",
+		"MySql",
+		"WbemGenDiskNT",
+		"SmartMonLinux"
 	})
 	void testConnectorReplay(String connectorName) throws Exception {
 		final EmulationITBase emulation = new EmulationITBase(connectorName);
