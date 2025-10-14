@@ -137,7 +137,6 @@
       "attributes": {
         "host.type": "compute",
         "os.type": "linux",
-        "agent.host.name": "PC-Maalej",
         "host.name": "localhost"
       },
       "conditionalCollection": {},

@@ -29,7 +29,7 @@
       },
       "conditionalCollection": {},
       "legacyTextParameters": {
-        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [WINDOWS]\n- Exclude: []\n\nResult:\nConfigured OS type : WINDOWS\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted WmiCriterion Criterion:\n- WQL Query: SELECT ObjectId FROM MSFT_Volume\n- Namespace: root\\Microsoft\\Windows\\Storage\n\nResult:\n{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{76eb873e-3a26-4f72-bca5-6d356171ba48}\\\";\n{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\";\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT ObjectId FROM MSFT_Volume\n- Namespace: root\\Microsoft\\Windows\\Storage\n\nResult: {1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{76eb873e-3a26-4f72-bca5-6d356171ba48}\\\";\n{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\";\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [WINDOWS]\n- Exclude: []\n\nResult:\nConfigured OS type : WINDOWS\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted WmiCriterion Criterion:\n- WQL Query: SELECT ObjectId FROM MSFT_Volume\n- Namespace: root\\Microsoft\\Windows\\Storage\n\nResult:\n{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{76eb873e-3a26-4f72-bca5-6d356171ba48}\\\";\n{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\";\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT ObjectId FROM MSFT_Volume\n- Namespace: root\\Microsoft\\Windows\\Storage\n\nResult: {1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{76eb873e-3a26-4f72-bca5-6d356171ba48}\\\";\n{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\";\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
       },
       "alertRules": {},
       "discoveryTime": 1757497099622,
@@ -138,8 +138,7 @@
       "attributes": {
         "os.type": "windows",
         "host.type": "compute",
-        "host.name": "localhost",
-        "agent.host.name": "PC-Maalej"
+        "host.name": "localhost"
       },
       "conditionalCollection": {},
       "legacyTextParameters": {},
@@ -276,7 +275,7 @@
         "hw.parent.type": "enclosure",
         "name": "Windows RE Tools (778.00 MiB)",
         "connector_id": "WinStorageSpaces",
-        "id": "{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\"",
+        "id": "{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\"",
         "type": "Volume",
         "info": "File System: NTFS",
         "__id_count": "1"
@@ -288,7 +287,7 @@
       "alertRules": {},
       "discoveryTime": 1757497099622,
       "type": "logical_disk",
-      "id": "WinStorageSpaces_logical_disk_{1}\\\\PC-MAALEJ\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\"",
+      "id": "WinStorageSpaces_logical_disk_{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\"",
       "identifyingAttributeKeys": [
         "id"
       ],

@@ -67,7 +67,6 @@
       },
       "attributes": {
         "host.name": "localhost",
-        "agent.host.name": "PC-Maalej",
         "os.type": "management",
         "host.type": "compute"
       },
