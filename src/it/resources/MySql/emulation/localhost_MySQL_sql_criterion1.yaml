@@ -1,0 +1,12 @@
+---
+result: 1;
+success: true
+message: "Hostname raz-docker-3306 - SQL test succeeded. Returned result: 1;."
+exception: null
+criterion: !<sql>
+  type: sql
+  forceSerialization: false
+  database: null
+  query: SELECT @@version_comment REGEXP 'mysql' AS is_mysql;
+  expectedResult: 1
+  errorMessage: Not a MySQL Server

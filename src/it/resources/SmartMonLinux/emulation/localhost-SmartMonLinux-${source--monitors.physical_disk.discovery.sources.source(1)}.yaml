@@ -1,0 +1,25 @@
+---
+table:
+- - /dev/sda
+  - TOSHIBA
+  - Z7A0A04RTEZE
+- - /dev/sdb
+  - TOSHIBA
+  - Z7A0A04NTEZE
+- - /dev/sdc
+  - TOSHIBA
+  - Z7A0A04WTEZE
+- - /dev/sdd
+  - TOSHIBA
+  - Z7A0A057TEZE
+- - /dev/sde
+  - SEAGATE
+  - W4706KMD
+headers: []
+rawData: |-
+  /dev/sda;TOSHIBA;Z7A0A04RTEZE
+  /dev/sdb;TOSHIBA;Z7A0A04NTEZE
+  /dev/sdc;TOSHIBA;Z7A0A04WTEZE
+  /dev/sdd;TOSHIBA;Z7A0A057TEZE
+  /dev/sde;SEAGATE;W4706KMD
+empty: false

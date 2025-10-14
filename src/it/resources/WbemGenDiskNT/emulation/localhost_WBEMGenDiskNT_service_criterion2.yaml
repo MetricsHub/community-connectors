@@ -1,0 +1,13 @@
+---
+result: The WINMGMT Windows Service is currently running.
+success: true
+message: |-
+  ServiceCriterion test succeeded:
+  - Service: WINMGMT
+
+  Result: The WINMGMT Windows Service is currently running.
+exception: null
+criterion: !<service>
+  type: service
+  forceSerialization: false
+  name: WINMGMT

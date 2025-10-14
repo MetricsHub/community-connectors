@@ -1,0 +1,20 @@
+---
+table:
+- - /dev/sda
+  - 64
+- - /dev/sdb
+  - 64
+- - /dev/sdc
+  - 64
+- - /dev/sdd
+  - 64
+- - /dev/sde
+  - 60
+headers: []
+rawData: |-
+  /dev/sda;64
+  /dev/sdb;64
+  /dev/sdc;64
+  /dev/sdd;64
+  /dev/sde;60
+empty: false
