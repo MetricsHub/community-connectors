@@ -1,0 +1,20 @@
+---
+result: |
+  /usr/sbin/smartctl
+success: true
+message: |
+  CommandLineCriterion test succeeded:
+  - CommandLine: /bin/ls /usr/sbin/smartctl
+  - ExecuteLocally: false
+  - ExpectedResult: ^/usr/sbin/smartctl$
+
+  Result: /usr/sbin/smartctl
+exception: null
+criterion: !<commandLine>
+  type: commandLine
+  forceSerialization: false
+  commandLine: /bin/ls /usr/sbin/smartctl
+  errorMessage: Unable to find the smartctl program in /usr/sbin
+  expectedResult: ^/usr/sbin/smartctl$
+  executeLocally: false
+  timeout: null

@@ -1,0 +1,244 @@
+{
+  "total": 3,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1755063182952,
+          "previousCollectTime": 1755063062952,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": "ok",
+          "stateSet": ["ok", "failed"],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "MIB2.yaml",
+        "name": "MIB-2 Standard SNMP Agent - Network Interfaces",
+        "connector_id": "MIB2",
+        "applies_to_os": "hpux,network,oob,storage,tru64,vms",
+        "parent.id": "localhost",
+        "id": "MIB2"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed SnmpGetNextCriterion Criterion:\n- OID: 1.3.6.1.2.1.2.2.1\n\nResult:\n1.3.6.1.2.1.2.2.1.1.1\tstring\t1\n\nMessage:\n====================================\nHostname localhost - Successful SNMP GetNext of 1.3.6.1.2.1.2.2.1. Returned result: 1.3.6.1.2.1.2.2.1.1.1\tstring\t1.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1755063062952,
+      "type": "connector",
+      "id": "connector_MIB2",
+      "identifyingAttributeKeys": ["id"],
+      "connector": true,
+      "endpointHost": false,
+      "endpoint": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.up{protocol=\"snmp\"}": {
+          "name": "metricshub.host.up{protocol=\"snmp\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "snmp"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1755063182952,
+          "previousCollectTime": 1755063062952,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "host.name": "localhost",
+        "os.type": "management",
+        "host.type": "compute"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1755063062952,
+      "type": "host",
+      "id": "endpoint_host_localhost",
+      "identifyingAttributeKeys": ["host.name"],
+      "connector": false,
+      "endpointHost": true,
+      "endpoint": true,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "hw.network.dropped{network.io.direction=\"receive\"}": {
+          "name": "hw.network.dropped{network.io.direction=\"receive\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "network.io.direction": "receive"
+          },
+          "resetMetricTime": false,
+          "value": 4162801.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.status{hw.type=\"network\"}": {
+          "name": "hw.status{hw.type=\"network\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "network"
+          },
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": null,
+          "stateSet": ["failed", "degraded", "ok"],
+          "type": "StateSetMetric",
+          "updated": true
+        },
+        "hw.network.io{direction=\"transmit\"}": {
+          "name": "hw.network.io{direction=\"transmit\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "direction": "transmit"
+          },
+          "resetMetricTime": false,
+          "value": 1.247951411E9,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.network.packets{direction=\"receive\"}": {
+          "name": "hw.network.packets{direction=\"receive\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "direction": "receive"
+          },
+          "resetMetricTime": false,
+          "value": 9.9965673E7,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.network.dropped{network.io.direction=\"transmit\"}": {
+          "name": "hw.network.dropped{network.io.direction=\"transmit\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "network.io.direction": "transmit"
+          },
+          "resetMetricTime": false,
+          "value": 0.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.network.bandwidth.limit": {
+          "name": "hw.network.bandwidth.limit",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.25E8,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.network.packets{direction=\"transmit\"}": {
+          "name": "hw.network.packets{direction=\"transmit\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "direction": "transmit"
+          },
+          "resetMetricTime": false,
+          "value": 7115904.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.network.io{direction=\"receive\"}": {
+          "name": "hw.network.io{direction=\"receive\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "direction": "receive"
+          },
+          "resetMetricTime": false,
+          "value": 2.978514024E9,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.network.up": {
+          "name": "hw.network.up",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "hw.errors{hw.type=\"network\"}": {
+          "name": "hw.errors{hw.type=\"network\"}",
+          "collectTime": 1755063182952,
+          "previousCollectTime": null,
+          "attributes": {
+            "hw.type": "network"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "__display_id": "",
+        "physical_address": "50 9A 4C B2 88 0A",
+        "hw.parent.type": "enclosure",
+        "hw.network.name": "",
+        "hw.network.alias": "",
+        "name": "bond0 (Ethernet)",
+        "connector_id": "MIB2",
+        "physical_address_type": "MAC",
+        "device_type": "Ethernet",
+        "id": "6"
+      },
+      "conditionalCollection": {
+        "hw.network.bandwidth.limit": "1000000000"
+      },
+      "legacyTextParameters": {
+        "StatusInformation": "Up"
+      },
+      "alertRules": {},
+      "discoveryTime": 1755063062952,
+      "type": "network",
+      "id": "MIB2_network_6",
+      "identifyingAttributeKeys": ["id"],
+      "connector": false,
+      "endpointHost": false,
+      "endpoint": false,
+      "is_endpoint": false
+    }
+  ]
+}

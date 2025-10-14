@@ -1,0 +1,18 @@
+---
+result: IDE\
+success: true
+message: |-
+  WmiCriterion test succeeded:
+  - WQL Query: SELECT InstanceName FROM MSStorageDriver_FailurePredictStatus WHERE Active=TRUE
+  - Namespace: root\WMI
+  - Expected Result: \(^[^M]...\)\|\(^.[^P]..\)\|\(^..[^I].\)\|\(^...[^O]\)
+
+  Result: IDE\
+exception: null
+criterion: !<wmi>
+  type: wmi
+  forceSerialization: false
+  query: SELECT InstanceName FROM MSStorageDriver_FailurePredictStatus WHERE Active=TRUE
+  namespace: root\WMI
+  expectedResult: "\\(^[^M]...\\)\\|\\(^.[^P]..\\)\\|\\(^..[^I].\\)\\|\\(^...[^O]\\)"
+  errorMessage: null

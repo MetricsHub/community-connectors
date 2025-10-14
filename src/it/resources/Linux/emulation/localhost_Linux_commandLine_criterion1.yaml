@@ -1,0 +1,20 @@
+---
+result: |
+  GNU/Linux
+success: true
+message: |
+  CommandLineCriterion test succeeded:
+  - CommandLine: /usr/bin/uname -o || /bin/uname -o
+  - ExecuteLocally: false
+  - ExpectedResult: GNU/Linux
+
+  Result: GNU/Linux
+exception: null
+criterion: !<commandLine>
+  type: commandLine
+  forceSerialization: false
+  commandLine: /usr/bin/uname -o || /bin/uname -o
+  errorMessage: Not a Linux host.
+  expectedResult: GNU/Linux
+  executeLocally: false
+  timeout: null

@@ -1,0 +1,102 @@
+---
+table:
+- - "smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)"
+- - "Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org"
+- - ""
+- - === START OF INFORMATION SECTION ===
+- - "Vendor:               TOSHIBA"
+- - "Product:              PX05SVB096Y"
+- - "Revision:             AS0B"
+- - "Compliance:           SPC-4"
+- - "User Capacity:        960,197,124,096 bytes [960 GB]"
+- - "Logical block size:   512 bytes"
+- - "LU is resource provisioned, LBPRZ=1"
+- - "Rotation Rate:        Solid State Device"
+- - "Form Factor:          2.5 inches"
+- - "Logical Unit id:      0x58ce38ee2011d385"
+- - "Serial number:        Z7A0A04NTEZE"
+- - "Device type:          disk"
+- - "Transport protocol:   SAS (SPL-4)"
+- - "Local Time is:        Tue Oct  7 07:00:08 2025 CEST"
+- - "SMART support is:     Available - device has SMART capability."
+- - "SMART support is:     Enabled"
+- - "Temperature Warning:  Disabled or Not Supported"
+- - ""
+- - === START OF READ SMART DATA SECTION ===
+- - "SMART Health Status: OK"
+- - ""
+- - "Percentage used endurance indicator: 44%"
+- - "Current Drive Temperature:     27 C"
+- - "Drive Trip Temperature:        64 C"
+- - ""
+- - "Accumulated power on time, hours:minutes 67452:24"
+- - Manufactured in week 49 of year 2017
+- - "Error counter log:"
+- - '           Errors Corrected by           Total   Correction     Gigabytes    Total'
+- - '               ECC          rereads/    errors   algorithm      processed    uncorrected'
+- - "           fast | delayed   rewrites  corrected  invocations   [10^9 bytes]  errors"
+- - "read:          0        0         0         0          0     285752.273           0"
+- - "write:         0        0         0         0          0     196233.410           0"
+- - "verify:        0        0         0         0          0          5.639           0"
+- - ""
+- - "Non-medium error count:  2862892"
+- - ""
+- - SMART Self-test log
+- - "Num  Test              Status                 segment  LifeTime  LBA_first_err [SK ASC ASQ]"
+- - '     Description                              number   (hours)'
+- - "# 1  Background long   Completed                  96      19                 - [-   -    -]"
+- - "# 2  Background short  Completed                  96      19                 - [-   -    -]"
+- - ""
+- - "Long (extended) Self-test duration: 300 seconds [5.0 minutes]"
+- - ""
+headers: []
+rawData: |
+  smartctl 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
+  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+
+  === START OF INFORMATION SECTION ===
+  Vendor:               TOSHIBA
+  Product:              PX05SVB096Y
+  Revision:             AS0B
+  Compliance:           SPC-4
+  User Capacity:        960,197,124,096 bytes [960 GB]
+  Logical block size:   512 bytes
+  LU is resource provisioned, LBPRZ=1
+  Rotation Rate:        Solid State Device
+  Form Factor:          2.5 inches
+  Logical Unit id:      0x58ce38ee2011d385
+  Serial number:        Z7A0A04NTEZE
+  Device type:          disk
+  Transport protocol:   SAS (SPL-4)
+  Local Time is:        Tue Oct  7 07:00:08 2025 CEST
+  SMART support is:     Available - device has SMART capability.
+  SMART support is:     Enabled
+  Temperature Warning:  Disabled or Not Supported
+
+  === START OF READ SMART DATA SECTION ===
+  SMART Health Status: OK
+
+  Percentage used endurance indicator: 44%
+  Current Drive Temperature:     27 C
+  Drive Trip Temperature:        64 C
+
+  Accumulated power on time, hours:minutes 67452:24
+  Manufactured in week 49 of year 2017
+  Error counter log:
+             Errors Corrected by           Total   Correction     Gigabytes    Total
+                 ECC          rereads/    errors   algorithm      processed    uncorrected
+             fast | delayed   rewrites  corrected  invocations   [10^9 bytes]  errors
+  read:          0        0         0         0          0     285752.273           0
+  write:         0        0         0         0          0     196233.410           0
+  verify:        0        0         0         0          0          5.639           0
+
+  Non-medium error count:  2862892
+
+  SMART Self-test log
+  Num  Test              Status                 segment  LifeTime  LBA_first_err [SK ASC ASQ]
+       Description                              number   (hours)
+  # 1  Background long   Completed                  96      19                 - [-   -    -]
+  # 2  Background short  Completed                  96      19                 - [-   -    -]
+
+  Long (extended) Self-test duration: 300 seconds [5.0 minutes]
+empty: false
