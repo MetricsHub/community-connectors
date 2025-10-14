@@ -97,19 +97,6 @@
     },
     {
       "metrics": {
-        "metricshub.host.up{protocol=\"wmi\"}": {
-          "name": "metricshub.host.up{protocol=\"wmi\"}",
-          "collectTime": 1757497105006,
-          "previousCollectTime": null,
-          "attributes": {
-            "protocol": "wmi"
-          },
-          "resetMetricTime": false,
-          "value": 1.0,
-          "previousValue": null,
-          "type": "NumberMetric",
-          "updated": true
-        },
         "hw.host.power{quality=\"estimated\"}": {
           "name": "hw.host.power{quality=\"estimated\"}",
           "collectTime": 1757497105006,
