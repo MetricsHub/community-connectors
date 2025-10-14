@@ -13,7 +13,7 @@ public class ConnectorReplayIT {
 			"WbemGenDiskNT",
 			"SmartMonLinux"
 	})
-	void testEmulation(String connectorName) throws Exception {
+	void testConnectorReplay(String connectorName) throws Exception {
 		final EmulationITBase emulation = new EmulationITBase(connectorName);
 		emulation.emulateViaConfig();
 		emulation.verifyExpected(connectorName + "/expected/expected.json");
