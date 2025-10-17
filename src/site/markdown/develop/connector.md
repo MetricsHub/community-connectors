@@ -451,10 +451,10 @@ monitors:
             length: # <string>
           - type: encode
             column: # <number>
-            value: # <string>
+            encoding: # <string>
           - type: decode
             column: # <number>
-            value: # <string>
+            encoding: # <string>
           - type: translate
             column: # <number>
             translationTable:  # <string>
