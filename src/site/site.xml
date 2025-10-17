@@ -129,6 +129,8 @@
 				<item name="Append" href="develop/computes/append.html" />
 				<item name="Substring" href="develop/computes/substring.html" />
 				<item name="Subtract" href="develop/computes/subtract.html" />
+				<item name="Encode" href="develop/computes/encode.html" />
+				<item name="Decode" href="develop/computes/decode.html" />
 				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
 				<item name="Translate" href="develop/computes/translate.html" />
 				<item name="XML to CSV" href="develop/computes/xml2csv.html" />
