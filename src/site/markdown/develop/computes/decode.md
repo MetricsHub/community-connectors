@@ -3,12 +3,12 @@ description: Use the "decode" compute operation to reverse an encoding (e.g., Ba
 
 # `decode`
 
-The Decode compute reverses an encoding previously applied to the values in the selected column.
+The `Decode` compute reverses an encoding previously applied to the values in the selected column.
 It can be used to retrieve the original text from Base64 or other supported encodings.
 
 ```yaml
 connector:
-
+  # ...
 beforeAll: # <object>
   <sourceKey>: # <source-object>
 
