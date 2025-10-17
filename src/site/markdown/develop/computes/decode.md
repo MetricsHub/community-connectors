@@ -20,5 +20,5 @@ monitors:
           computes: # <compute-object-array>
           - type: decode
             column: # <number>
-            encoding: # <string> # e.g., base64
+            encoding: # <string> # possible values [ base64, url ]
 ```
