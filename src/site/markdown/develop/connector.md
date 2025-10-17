@@ -449,6 +449,12 @@ monitors:
             column: # <number>
             start: # <string>
             length: # <string>
+          - type: encode
+            column: # <number>
+            encoding: # <string> possible values [ base64, url ]
+          - type: decode
+            column: # <number>
+            encoding: # <string> possible values [ base64, url ]
           - type: translate
             column: # <number>
             translationTable:  # <string>
