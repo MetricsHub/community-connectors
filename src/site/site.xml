@@ -112,27 +112,27 @@
 			<item name="Computes" href="develop/computes/index.html" >
 				<item name="Add" href="develop/computes/add.html" />
 				<item name="And" href="develop/computes/and.html" />
+			    <item name="Append" href="develop/computes/append.html" />
 				<item name="Array Translate" href="develop/computes/array-translate.html" />
 				<item name="AWK" href="develop/computes/awk.html" />
 				<item name="Convert" href="develop/computes/convert.html" />
+				<item name="Decode" href="develop/computes/decode.html" />
 				<item name="Divide" href="develop/computes/divide.html" />
 				<item name="Duplicate Column" href="develop/computes/duplicate-column.html" />
+				<item name="Encode" href="develop/computes/encode.html" />
 				<item name="Exclude Matching Lines" href="develop/computes/exclude-matching-lines.html" />
-				<item name="Extract WBEM Property" href="develop/computes/extract-wbem-property.html" />
 				<item name="Extract" href="develop/computes/extract.html" />
+				<item name="Extract WBEM Property" href="develop/computes/extract-wbem-property.html" />
 				<item name="JSON to CSV" href="develop/computes/json2csv.html" />
 				<item name="Keep Columns" href="develop/computes/keep-columns.html" />
 				<item name="Keep Only Matching Lines" href="develop/computes/keep-only-matching-lines.html" />
+			    <item name="Multiply" href="develop/computes/multiply.html" />
 				<item name="Prepend" href="develop/computes/prepend.html" />
-				<item name="Multiply" href="develop/computes/multiply.html" />
 				<item name="Replace" href="develop/computes/replace.html" />
-				<item name="Append" href="develop/computes/append.html" />
 				<item name="Substring" href="develop/computes/substring.html" />
 				<item name="Subtract" href="develop/computes/subtract.html" />
-				<item name="Encode" href="develop/computes/encode.html" />
-				<item name="Decode" href="develop/computes/decode.html" />
-				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
 				<item name="Translate" href="develop/computes/translate.html" />
+				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
 				<item name="XML to CSV" href="develop/computes/xml2csv.html" />
 			</item>
 			<item name="References" href="develop/references.html" />
