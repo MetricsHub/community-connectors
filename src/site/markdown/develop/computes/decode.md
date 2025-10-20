@@ -3,7 +3,7 @@ description: Use the "decode" compute operation to reverse an encoding (e.g., Ba
 
 # `decode`
 
-Use the `Decode` compute to reverse the encoding applied to the selected column such as retrieving the original text from Base64.
+Use the `decode` compute operation to reverse the encoding applied to the selected column, using either `base64` or `url` encoding. You can for example use `decode` for retrieving the original text from Base64.
 
 **Supported encodings:**
 - `base64` — decodes values using Base64.
@@ -28,7 +28,7 @@ monitors:
 
 Example:
 
-The following example decodes the contents of column 2 using Base64:
+The following example decodes the content of column `2` using `base64`:
 
 ```yaml
 computes:

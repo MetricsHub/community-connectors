@@ -3,7 +3,7 @@ description: Use the "encode" compute operation to apply an encoding (e.g., Base
 
 # `encode`
 
-Use the `Encode` compute to encode the text value in the selected column.
+Use the `encode` compute to encode the text of a specific column, using either `base64` or `url` encoding.
 
 **Supported encodings:**
 - `base64` — encodes values using Base64.
@@ -27,7 +27,7 @@ monitors:
 ```
 Example:
 
-The following example encodes the contents of column 2 using Base64:
+The following example encodes the content of column `2` using `base64`:
 
 ```yaml
 computes:
