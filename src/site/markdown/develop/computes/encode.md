@@ -5,10 +5,6 @@ description: Use the "encode" compute operation to apply an encoding (e.g., Base
 
 Use the `encode` compute to encode the text of a specific column, using either `base64` or `url` encoding.
 
-**Supported encodings:**
-- `base64` — encodes values using Base64.
-- `url` — encodes values using URL encoding.
-
 ```yaml
 connector:
   # ...
