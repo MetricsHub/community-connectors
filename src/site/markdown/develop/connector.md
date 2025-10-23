@@ -212,6 +212,13 @@ monitors:
     <job>: # <object> | <job> key possible values [ discovery, collect, simple]
       type: # <string> | Only for collect <job> | possible values [ multiInstance, monoInstance ]
       keys: # <string-array> | Only for collect <job> with multiInstance type | Default: [ id ]
+      metrics:
+        <metricName>: # <object>
+          unit: # <string>
+          description: # <string>
+          type: # oneOf [ <enum>, <object> ] | possible values for <enum> [ Gauge, Counter, UpDownCounter ]
+            stateSet: # <string-array>
+            output: # <enum> | possible values [ Gauge, Counter, UpDownCounter ] | Optional | Default: UpDownCounter
       # Sources
       sources: # <source-object>
         # Http Source

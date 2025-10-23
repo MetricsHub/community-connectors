@@ -30,7 +30,7 @@ Each source is defined in the [Sources](sources.md) page.
 
 ## Mapping
 
-This page describes how to map metrics and attributes in a connector file.
+This section describes how to map metrics and attributes in a connector file.
 
 ### Format
 
@@ -67,7 +67,7 @@ Metrics are separated in different categories:
 
 ## Metrics
 
-This page shows how to defines in a connector the OpenTelemetry metrics that this connector will collect and report.
+This section shows how to define in a connector the OpenTelemetry metrics that this connector will collect and report.
 
 ### Format
 
@@ -82,4 +82,26 @@ metrics:
     type: # oneOf [ <enum>, <object> ] | possible values for <enum> [ Gauge, Counter, UpDownCounter ]
       stateSet: # <string-array>
       output: # <enum> | possible values [ Gauge, Counter, UpDownCounter ] | Optional | Default: UpDownCounter
+```
+
+### Overriding connector root level metrics
+
+This section shows how to override the connector root level metrics with the monitor job metrics.
+
+```yaml
+connector:
+# ...
+
+monitors:
+  <monitorType>: # <object>
+    <job>: # <object> | <job> key possible values [ discovery, collect, simple]
+      type: # <string> | Only for collect <job> | possible values [ multiInstance, monoInstance ]
+      keys: # <string-array> | Only for collect <job> with multiInstance type | Default: [ id ]
+      metrics:
+        <metricName>: # <object>
+          unit: # <string>
+          description: # <string>
+          type: # oneOf [ <enum>, <object> ] | possible values for <enum> [ Gauge, Counter, UpDownCounter ]
+            stateSet: # <string-array>
+            output: # <enum> | possible values [ Gauge, Counter, UpDownCounter ] | Optional | Default: UpDownCounter
 ```
