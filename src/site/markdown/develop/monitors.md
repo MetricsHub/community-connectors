@@ -3,8 +3,6 @@ description: How to configure a monitor in a connector file to discover and coll
 
 # Monitors
 
-<div class="alert alert-warning"><span class="fa-solid fa-person-digging"></span> Documentation under construction...</div>
-
 A monitor defines how **MetricsHub** collects metrics for a specific resource in your target platform.
 
 For each monitor, you must specify:
@@ -99,7 +97,7 @@ monitors:
           type: ipmi
           computes:
           - type: awk
-            script: ${file::enclosure.awk}
+            script: ${esc.d}{file::enclosure.awk}
     collect:
       type: multiInstance
       sources:
@@ -107,7 +105,7 @@ monitors:
           type: ipmi
           computes:
           - type: awk
-            script: ${file::enclosure.awk}
+            script: ${esc.d}{file::enclosure.awk}
 
 ```
 
@@ -124,7 +122,7 @@ monitors:
     <job>: # <object>
       # ...
       mapping:
-        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        source: ${esc.d}{source::monitors.temperature.discovery.sources.source(1)}
         attributes:
           <key>: # <string>
         metrics:
@@ -148,14 +146,14 @@ You can also use the following mapping functions:
 
 ```yaml
 mapping:
-  source: ${source::monitors.temperature.simple.sources.source(1)}
+  source: ${esc.d}{source::monitors.temperature.simple.sources.source(1)}
   attributes:
-    id: $2
-    sensor_location: $3
+    id: ${esc.d}2
+    sensor_location: ${esc.d}3
   metrics:
-    hw.temperature: $5
+    hw.temperature: ${esc.d}5
   conditionalCollection:
-    hw.temperature: $5 # Only collect if hw.temperature has a value
+    hw.temperature: ${esc.d}5 # Only collect if hw.temperature has a value
 ```
 
 ### Step 3 - Define the OpenTelemetry Metrics Metadata to be Collected
