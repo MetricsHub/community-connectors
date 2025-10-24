@@ -3,6 +3,8 @@ description: How to configure a monitor in a connector file to discover and coll
 
 # Monitors
 
+<!-- MACRO{toc|fromDepth=1|toDepth=2|id=toc} -->
+
 A monitor defines how **MetricsHub** collects metrics for a specific resource in your target platform.
 
 For each monitor, you must specify:
@@ -79,7 +81,7 @@ monitors:
       sources: # <object>
 ```
 
-Then;
+Then:
 
 * replace `<monitorName>` with the actual monitor name
 * Define the `keys` parameter. By default, it references the `[ id ]` array. To use different identifiers for your resources, replace `[ id ]` with your own array of keys.
@@ -142,7 +144,7 @@ You can also use the following mapping functions:
 * `fakeCounter` to simulate a counter operation based on a value expressed as a rate
 * `rate` to calculate a rate from counter values.
 
-#### Example
+##### Example
 
 ```yaml
 mapping:
@@ -173,7 +175,7 @@ metrics:
       output: # <enum> | possible values [ Gauge, Counter, UpDownCounter ] | Optional | Default: UpDownCounter
 ```
 
-#### Example extracted from the Hardware semconv connector (MetricsHub/connectors/semconv/Hardware.yaml)
+##### Example extracted from the Hardware semconv connector (MetricsHub/connectors/semconv/Hardware.yaml)
 
 ```yaml
 metrics:
@@ -210,7 +212,7 @@ monitors:
           output: # <enum> | possible values [ Gauge, Counter, UpDownCounter ] | Optional | Default: UpDownCounter
 ```
 
-#### Example
+##### Example
 
 ```yaml
 monitors:
