@@ -217,9 +217,9 @@ monitors:
         type: # oneOf [ <enum>, <object> ] | possible values for <enum> [ Gauge, Counter, UpDownCounter ]
           stateSet: # <string-array>
           output: # <enum> | possible values [ Gauge, Counter, UpDownCounter ] | Optional | Default: UpDownCounter
-      # Sources
     <job>: # <object> | <job> key possible values [ discovery, collect, simple]
       type: # <string> | Only for collect <job> | possible values [ multiInstance, monoInstance ]
+      # Sources
       sources: # <source-object>
         # Http Source
         <http-sourceKey>: # <source-object>
