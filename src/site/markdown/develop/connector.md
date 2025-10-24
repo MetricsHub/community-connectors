@@ -209,9 +209,16 @@ beforeAll: # <object>
 
 monitors:
   <monitorType>: # <object>
+    keys: # <string-array> | Default: [ id ]
+    metrics:
+      <metricName>: # <object>
+        unit: # <string>
+        description: # <string>
+        type: # oneOf [ <enum>, <object> ] | possible values for <enum> [ Gauge, Counter, UpDownCounter ]
+          stateSet: # <string-array>
+          output: # <enum> | possible values [ Gauge, Counter, UpDownCounter ] | Optional | Default: UpDownCounter
     <job>: # <object> | <job> key possible values [ discovery, collect, simple]
       type: # <string> | Only for collect <job> | possible values [ multiInstance, monoInstance ]
-      keys: # <string-array> | Only for collect <job> with multiInstance type | Default: [ id ]
       # Sources
       sources: # <source-object>
         # Http Source
@@ -342,8 +349,7 @@ monitors:
               concatEnd: # <string>
           computes: # <compute-object-array>
         # SQL Source
-        <Sql-sourceKey>: # <source-object>
-        <sourceKey>:
+        <sql-sourceKey>: # <source-object>
           type: sql
           query: # <string>
           forceSerialization: # <boolean>
@@ -355,7 +361,6 @@ monitors:
           computes: # <compute-object-array>
         # InternalDbQuery Source
         <internalDbQuery-sourceKey>: # <source-object>
-        <sourceKey>:
           type: internalDbQuery
           tables: # <sqltable-object-array>
           - source: # <string>
@@ -365,17 +370,23 @@ monitors:
               number: # <integer>
               type: # <string>
           query: # <string>
+          forceSerialization: # <boolean>
           computes: # <compute-object-array>
         # Awk Source
         <awk-sourceKey>: # <source-object>
-        <sourceKey>:
           type: awk
           script: # <string>
           input: # <string>
           separators: # <string>
           forceSerialization: # <boolean>
           computes: # <compute-object-array>
-
+        <jmx-source>: # <source-object>
+          type: jmx
+          objectName: # <string>
+          attributes: # <string-array>
+          keyProperties: # <string-array>
+          forceSerialization: # <boolean>
+          computes: # <compute-object-array>
         # Computes
         <sourceKey>: # <source-object>
           computes: # <compute-object-array>

@@ -92,22 +92,23 @@
 			</item>
 			<item name="Monitors" href="develop/monitors.html" />
 			<item name="Sources" href="develop/sources/index.html" >
+				<item name="AfterAll Sources" href="develop/sources/after-all.html" />
+				<item name="Awk" href="develop/sources/awk.html" />
+				<item name="BeforeAll Sources" href="develop/sources/before-all.html" />
 				<item name="Command Line" href="develop/sources/command-line.html" />
+				<item name="Copy (Duplicate)" href="develop/sources/copy.html" />
 				<item name="HTTP" href="develop/sources/http.html" />
+				<item name="Internal DB Query" href="develop/sources/internal-db-query.html" />
 				<item name="IPMI" href="develop/sources/ipmi.html" />
+				<item name="JMX" href="develop/sources/jmx.html" />
 				<item name="SNMP Get" href="develop/sources/snmp-get.html" />
 				<item name="SNMP Table" href="develop/sources/snmp-table.html" />
+				<item name="SQL" href="develop/sources/sql.html" />
+				<item name="Static (Constant)" href="develop/sources/static.html" />
 				<item name="Table Join" href="develop/sources/table-join.html" />
 				<item name="Table Union" href="develop/sources/table-union.html" />
 				<item name="WBEM" href="develop/sources/wbem.html" />
 				<item name="WMI" href="develop/sources/wmi.html" />
-				<item name="Static (Constant)" href="develop/sources/static.html" />
-				<item name="Copy (Duplicate)" href="develop/sources/copy.html" />
-				<item name="Internal DB Query" href="develop/sources/internal-db-query.html" />
-				<item name="SQL" href="develop/sources/sql.html" />
-				<item name="Awk" href="develop/sources/awk.html" />
-				<item name="BeforeAll Sources" href="develop/sources/before-all.html" />
-				<item name="AfterAll Sources" href="develop/sources/after-all.html" />
 			</item>
 			<item name="Computes" href="develop/computes/index.html" >
 				<item name="Add" href="develop/computes/add.html" />
