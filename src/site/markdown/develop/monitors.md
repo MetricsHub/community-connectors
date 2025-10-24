@@ -43,7 +43,7 @@ connector:
   # ...
 monitors:
   <monitorName>: # <object>
-    keys: # <string-array> | Only for monitors with multiInstance collect or simple job | Default: [ id ]
+    keys: # <string-array> | Default: [ id ]
     discovery: # <object>
       executionOrder: # <string-array> | Optional
       sources: # <object>
