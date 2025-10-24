@@ -32,11 +32,7 @@ monitors:
           # Discovery
           # Source(2) = output of the command ls -l /sys/class/net
           type: commandLine
-          commandLine: ls -l --time-style full-iso /sys/class/net
-          computes:
-            - type: awk
-              script: |
-                $0 !~ /virtual/ && $0 !~ /total/ {print $9}
+          commandLine: for p in /sys/class/net/*; do [ -e "$p/device" ] && printf '%s\n' "${p##*/}"; done
         source(3):
           type: tableJoin
           leftTable: ${source::monitors.network.discovery.sources.source(2)}
