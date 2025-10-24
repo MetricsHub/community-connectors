@@ -32,7 +32,7 @@ monitors:
           # Discovery
           # Source(2) = output of the command ls -l /sys/class/net
           type: commandLine
-          commandLine: ls -l /sys/class/net
+          commandLine: ls -l --time-style full-iso /sys/class/net
           computes:
             - type: awk
               script: |
