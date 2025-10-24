@@ -152,11 +152,7 @@ monitors:
         sysClassNet:
           # Interface;
           type: commandLine
-          commandLine: ls -l /sys/class/net
-          computes:
-          - type: awk
-            script: |
-              $0 !~ /virtual/ && $0 !~ /total/ {print $9}
+          commandLine: for p in /sys/class/net/*; do [ -e "$p/device" ] && printf '%s\n' "${p##*/}"; done
 
         # Use the sysfs filesystem to get the link speed of each interface
         linkSpeed:
