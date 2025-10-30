@@ -166,10 +166,10 @@ monitors:
             done
           computes:
           - type: awk
-          # Remove Network interfaces with a negative value.
+          # Replace Network interfaces with a negative value by an empty string.
             script: 
-              BEGIN { FS = ";" }
-              NF >= 2 && ($2 + 0) != -1 { print }
+              BEGIN { FS=";"; OFS=";" }
+              { if (($2 + 0) == -1) $2 = ""; print }
           # Convert speed from Mbps to bytes per second
           # Interface;SpeedBytesPerSecond
           - type: multiply
