@@ -122,6 +122,32 @@
           "previousValue": 1.0,
           "type": "NumberMetric",
           "updated": true
+        },
+        "metricshub.host.up{protocol=\"wmi\"}": {
+          "name": "metricshub.host.up{protocol=\"wmi\"}",
+          "collectTime": 1757942729537,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "wmi"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.response_time{protocol=\"wmi\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"wmi\"}",
+          "collectTime" : 1761830837654,
+          "previousCollectTime" : null,
+          "attributes" : {
+            "protocol" : "wmi"
+          },
+          "resetMetricTime" : false,
+          "value" : 1.0,
+          "previousValue" : null,
+          "type" : "NumberMetric",
+          "updated" : true
         }
       },
       "attributes": {

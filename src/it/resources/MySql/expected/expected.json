@@ -53,10 +53,23 @@
             "protocol": "jdbc"
           },
           "resetMetricTime": false,
-          "value": 0.0,
+          "value": 1.0,
           "previousValue": null,
           "type": "NumberMetric",
           "updated": true
+        },
+        "metricshub.host.response_time{protocol=\"jdbc\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"jdbc\"}",
+          "collectTime" : 1761830794557,
+          "previousCollectTime" : null,
+          "attributes" : {
+            "protocol" : "jdbc"
+          },
+          "resetMetricTime" : false,
+          "value" : 1.0,
+          "previousValue" : null,
+          "type" : "NumberMetric",
+          "updated" : true
         },
         "metricshub.host.configured": {
           "name": "metricshub.host.configured",

@@ -8,6 +8,8 @@ resources:
       host.name: localhost
       host.type: linux
     protocols:
-      snmp:
+      ssh:
+        username: anyUser
+        password: anyPassword
         timeout: 300
     connectors: ["+LmSensors"]
