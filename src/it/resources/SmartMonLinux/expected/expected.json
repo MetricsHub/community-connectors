@@ -45,18 +45,31 @@
     },
     {
       "metrics": {
-        "metricshub.host.up{protocol=\"snmp\"}": {
-          "name": "metricshub.host.up{protocol=\"snmp\"}",
+        "metricshub.host.up{protocol=\"ssh\"}": {
+          "name": "metricshub.host.up{protocol=\"ssh\"}",
           "collectTime": 1759814200293,
           "previousCollectTime": null,
           "attributes": {
-            "protocol": "snmp"
+            "protocol": "ssh"
           },
           "resetMetricTime": false,
           "value": 1.0,
           "previousValue": null,
           "type": "NumberMetric",
           "updated": true
+        },
+        "metricshub.host.response_time{protocol=\"ssh\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+          "collectTime" : 1761830883261,
+          "previousCollectTime" : null,
+          "attributes" : {
+            "protocol" : "ssh"
+          },
+          "resetMetricTime" : false,
+          "value" : 1.0,
+          "previousValue" : null,
+          "type" : "NumberMetric",
+          "updated" : true
         },
         "hw.host.heating_margin": {
           "name": "hw.host.heating_margin",
