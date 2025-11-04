@@ -1,4 +1,4 @@
-package org.metricshub.community_connectors.it;
+package org.metricshub.connector.it;
 
 import org.metricshub.agent.context.AgentContext;
 import org.metricshub.agent.config.ResourceConfig;
