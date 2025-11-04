@@ -12,6 +12,8 @@ table:
   - 0
 - - virbr0-nic
   - 0
+- - en03
+  - -1
 headers: []
 rawData: |-
   docker0;0
@@ -20,4 +22,5 @@ rawData: |-
   lo;0
   virbr0;0
   virbr0-nic;0
+  en03;-1
 empty: false
