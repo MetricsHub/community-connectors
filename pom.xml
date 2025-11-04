@@ -94,117 +94,6 @@
             <artifactId>junit-jupiter-params</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Core MetricsHub -->
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-agent</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Extensions -->
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-http-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-internaldb-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-ipmi-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-jawk-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-jdbc-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-jmx-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-oscommand-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-ping-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-programmable-configuration-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-snmp-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-snmp-extension-common</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-snmpv3-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-wbem-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-win-extension-common</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-winrm-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-wmi-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.metricshub</groupId>
-            <artifactId>metricshub-yaml-configuration-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
 	</dependencies>
 
 	<build>
@@ -237,7 +126,6 @@
 					<execution>
 						<phase>prepare-package</phase>
 						<goals>
-							<goal>site</goal>
 							<goal>jar</goal>
 						</goals>
 						<configuration>
@@ -261,6 +149,7 @@
                             <sources>
                                 <source>src/it/java</source>
                             </sources>
+                            <skipAddTestSource>true</skipAddTestSource>
                         </configuration>
                     </execution>
                 </executions>
