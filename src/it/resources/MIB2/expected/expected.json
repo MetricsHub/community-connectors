@@ -53,6 +53,19 @@
           "type": "NumberMetric",
           "updated": true
         },
+        "metricshub.host.response_time{protocol=\"snmp\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"snmp\"}",
+          "collectTime" : 1761830616185,
+          "previousCollectTime" : null,
+          "attributes" : {
+            "protocol" : "snmp"
+          },
+          "resetMetricTime" : false,
+          "value" : 1.0,
+          "previousValue" : null,
+          "type" : "NumberMetric",
+          "updated" : true
+        },
         "metricshub.host.configured": {
           "name": "metricshub.host.configured",
           "collectTime": 1755063182952,

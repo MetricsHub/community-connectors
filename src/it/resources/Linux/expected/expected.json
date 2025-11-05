@@ -5591,10 +5591,23 @@
             "protocol": "ssh"
           },
           "resetMetricTime": false,
-          "value": 0.0,
+          "value": 1.0,
           "previousValue": null,
           "type": "NumberMetric",
           "updated": true
+        },
+        "metricshub.host.response_time{protocol=\"ssh\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+          "collectTime" : 1761831070649,
+          "previousCollectTime" : null,
+          "attributes" : {
+            "protocol" : "ssh"
+          },
+          "resetMetricTime" : false,
+          "value" : 1.0,
+          "previousValue" : null,
+          "type" : "NumberMetric",
+          "updated" : true
         },
         "metricshub.host.configured": {
           "name": "metricshub.host.configured",
