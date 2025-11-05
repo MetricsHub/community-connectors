@@ -60,7 +60,7 @@
 	<properties>
 		<!-- Java 8 -->
 		<maven.compiler.release>8</maven.compiler.release>
-        <metricshub-community.version>1.0.09-SNAPSHOT</metricshub-community.version>
+        <metricshub-community.version>1.0.09</metricshub-community.version>
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
 		<project.build.outputTimestamp>2025-11-04T10:26:23Z</project.build.outputTimestamp>
