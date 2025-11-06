@@ -173,7 +173,7 @@ monitors:
     discovery:
       sources:
         source(1):
-          # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwarzzeRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;
+          # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(3)}
           computes:
@@ -183,7 +183,7 @@ monitors:
             column: 12
             valueList: 10
             # Substract 11 from ID to get FRU Parent
-            # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;
+            # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;ORIGINAL_ID;
           - type: awk
             script: ${file::fan.awk}
         source(2):
@@ -193,28 +193,24 @@ monitors:
           rightTable: ${source::monitors.enclosure.discovery.sources.source(3)}
           leftKeyColumn: 1
           rightKeyColumn: 1
+          defaultRightLine: ;;;;;;;;;;;;;
           computes:
           - type: keepColumns
-            columnNumbers: 14,15,16,17,18,19,20,21,22,23,24,25
-          - type: prepend
-            column: 9
-            value: "Model: "
-          - type: prepend
-            column: 8
-            value: "Manufacturer: "
-          - type: prepend
-            column: 7
-            value: "Serial Number: "
+            # Keep: PhysicalDescription; Serial/Manufacturer/Model (primary); OriginalID; Serial/Manufacturer/Model (fallback)
+            columnNumbers: 2,7,8,9,14,21,22,23
+          - type: awk
+            script: ${file::fan-info.awk}
       mapping:
         # Instance Table
         source: ${source::monitors.fan.discovery.sources.source(2)}
         attributes:
+          # fan-info.awk outputs ID;name;info
           id: $1
           __display_id: $2
-          info: ${awk::join(" ", $7, $8, $9)}
+          name: $2
+          info: $3
           hw.parent.type: enclosure
           hw.parent.id: ${constant::_DEVICE_ID}
-          name: $2
     collect:
       # Collect type = multi-instance
       type: multiInstance
@@ -232,7 +228,7 @@ monitors:
         # ValueTable = Enclosure.Collect.Source(1)
         source: ${source::monitors.fan.collect.sources.source(1)}
         attributes:
-          id: $1
+          id: $14
         metrics:
           hw.fan.speed: $4
           hw.status{hw.type="fan"}: $5

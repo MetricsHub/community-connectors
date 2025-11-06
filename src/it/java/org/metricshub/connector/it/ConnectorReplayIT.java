@@ -13,7 +13,8 @@ class ConnectorReplayIT {
 		"Linux",
 		"MySql",
 		"WbemGenDiskNT",
-		"SmartMonLinux"
+		"SmartMonLinux",
+		"MIB2Switch",
 	})
 	void testConnectorReplay(String connectorName) throws Exception {
 		final EmulationITBase emulation = new EmulationITBase(connectorName);

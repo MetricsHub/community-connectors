@@ -51,15 +51,28 @@ public class EmulationITBase {
 	protected TelemetryManager telemetryManager;
 	protected String configurationFilePath;
 
+	/**
+	 * Constructor for the Emulation IT Base
+	 * @param connectorName         The name of the connector (Identifier)
+	 * @param configurationFilePath The path to the configuration file
+	 */
 	public EmulationITBase(final String connectorName, final String configurationFilePath) {
 		this.connectorName = connectorName;
 		this.configurationFilePath = configurationFilePath;
 	}
 
+	/**
+	 * Constructor for the Emulation IT Base
+	 * 
+	 * @param connectorName The name of the connector (Identifier)
+	 */
 	public EmulationITBase(final String connectorName) {
 		this(connectorName, "src/it/resources/" + connectorName + "/metricshub.yaml");
 	}
 
+	/**
+	 * Create the Extension Manager with all required extensions for the IT tests
+	 */
 	static void createExtensionManger() {
 		final List<IProtocolExtension> extensions = new ArrayList<>();
 		extensions.add(new HttpExtension());
@@ -81,6 +94,10 @@ public class EmulationITBase {
 
 	}
 
+	/**
+	 * Emulate the connector via configuration files
+	 * @throws Exception in case of any error
+	 */
 	void emulateViaConfig() throws Exception {
 
 		// Create the extension manager
@@ -142,7 +159,7 @@ public class EmulationITBase {
 		assertConditionalCollection(expected, actual);
 		assertLegacyTextParameters(expected, actual);
 		assertAlertRules(expected, actual);
-		assertNotNull(actual.getDiscoveryTime());
+		assertNotNull(actual.getDiscoveryTime(), "Discovery time cannot be null.");
 
 		final String expectedMonitorId = expected.getId();
 		assertEquals(
@@ -331,16 +348,17 @@ public class EmulationITBase {
 			final String expected = expectedEntry.getValue();
 			final String expectedKey = expectedEntry.getKey();
 
-			final String actual = expectedMonitor.getConditionalCollection().get(expectedKey);
+			final String actual = actualMonitor.getConditionalCollection().get(expectedKey);
 
 			assertEquals(
 					expected,
 					actual,
-					() ->
-							String.format(
-									"Actual conditional collection did not match expected: %s on monitor identifier: %s." + expectedKey,
-									expectedMonitor.getId()
-							)
+					() -> 
+						String.format(
+							"Actual conditional collection did not match expected: %s on monitor identifier: %s.",
+							expectedKey,
+							expectedMonitor.getId()
+						)
 			);
 		}
 	}
@@ -356,7 +374,7 @@ public class EmulationITBase {
 			final String expected = expectedEntry.getValue();
 			final String expectedKey = expectedEntry.getKey();
 
-			final String actual = expectedMonitor.getLegacyTextParameters().get(expectedKey);
+			final String actual = actualMonitor.getLegacyTextParameters().get(expectedKey);
 
 			assertEquals(
 					expected,
@@ -401,7 +419,7 @@ public class EmulationITBase {
 
 		final MonitorsVo actual = telemetryManager.getVo();
 
-		assertEquals(expectedMonitors.getTotal(), actual.getTotal());
+		assertEquals(expectedMonitors.getTotal(), actual.getTotal(), "Total number of monitors does not match.");
 
 		expectedMonitors
 				.getMonitors()
