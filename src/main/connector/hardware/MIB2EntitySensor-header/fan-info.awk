@@ -1,6 +1,5 @@
 BEGIN {
     FS = OFS = ";";
-    OFS = ";";
 }
 
 # Helpers: trim and validity check (treat "N/A" case-insensitively as empty)
