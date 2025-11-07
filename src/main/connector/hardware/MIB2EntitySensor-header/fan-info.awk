@@ -4,8 +4,8 @@ BEGIN {
 }
 
 # Helpers: trim and validity check (treat "N/A" case-insensitively as empty)
-function ltrim(s) { sub(/^[[:space:]]+/, "", s); return s }
-function rtrim(s) { sub(/[[:space:]]+$/, "", s); return s }
+function ltrim(s) { sub("^[ \t]+", "", s); return s }
+function rtrim(s) { sub(/[ \t]+$/, "", s); return s }
 function trim(s)  { s = ltrim(s); s = rtrim(s); return s }
 function isInvalid(v) { v = trim(v); return (v == "" || tolower(v) == "n/a") }
 
