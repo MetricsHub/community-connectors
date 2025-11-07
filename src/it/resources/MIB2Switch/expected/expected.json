@@ -1,0 +1,5326 @@
+{
+  "total" : 40,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "MIB2Switch.yaml",
+      "name" : "Ethernet Switch with Sensors (SNMP)",
+      "connector_id" : "MIB2Switch",
+      "applies_to_os" : "network",
+      "parent.id" : "localhost",
+      "id" : "MIB2Switch"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed SnmpGetNextCriterion Criterion:\n- OID: 1.3.6.1.2.1.2.2.1\n\nResult:\n1.3.6.1.2.1.2.2.1.1.1\tASN_INTEGER\t1\n\nMessage:\n====================================\nHostname localhost - Successful SNMP GetNext of 1.3.6.1.2.1.2.2.1. Returned result: 1.3.6.1.2.1.2.2.1.1.1\tASN_INTEGER\t1.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "connector",
+    "id" : "connector_MIB2Switch",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "NVIDIA MSN2010, 18 port 25GbE + 4 port 100GbE Switch System",
+      "vendor" : "NVIDIA",
+      "name" : "Enclosure: NVIDIA MSN2010, 18 port 25GbE + 4 port 100GbE Switch System (NVIDIA MSN2010-CB2F)",
+      "connector_id" : "MIB2Switch",
+      "model" : "MSN2010-CB2F",
+      "serial_number" : "MT1818X19190",
+      "id" : "EthernetSwitch",
+      "type" : "Switch",
+      "bios_version" : "A4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "enclosure",
+    "id" : "MIB2Switch_enclosure_EthernetSwitch",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 11505.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 500.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.505,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/FAN1/F1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "name" : "MGMT/FAN1/F1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200021021",
+      "info" : "Manufacturer: NVIDIA"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "fan",
+    "id" : "MIB2Switch_fan_200021021",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 11813.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 500.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.813,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/FAN2/F1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "name" : "MGMT/FAN2/F1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200022021",
+      "info" : "Manufacturer: NVIDIA"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "fan",
+    "id" : "MIB2Switch_fan_200022021",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 11606.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 500.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.606,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/FAN3/F1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "name" : "MGMT/FAN3/F1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200023021",
+      "info" : "Manufacturer: NVIDIA"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "fan",
+    "id" : "MIB2Switch_fan_200023021",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 12480.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 500.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 12.48,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/FAN4/F1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "name" : "MGMT/FAN4/F1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200024021",
+      "info" : "Manufacturer: NVIDIA"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "fan",
+    "id" : "MIB2Switch_fan_200024021",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"snmp\"}" : {
+        "name" : "metricshub.host.up{protocol=\"snmp\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "snmp"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"snmp\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"snmp\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "snmp"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "value" : 328.06,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.ambient_temperature" : {
+        "name" : "hw.host.ambient_temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 19.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "host.type" : "network",
+      "os.type" : "network",
+      "host.name" : "localhost"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1762469108842,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpoint" : true,
+    "endpointHost" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.472617894E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2263.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.884652644E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 278665.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 63",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "100"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_100",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.871959093E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 6.704764056E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.2958853E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.206263707E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 64",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "101"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_101",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.493953822E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.356905335E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 16265.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.052877489E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.256179771E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 65",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "102"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_102",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.471781827E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.884648131E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 677.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 66",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "103"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_103",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 67",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "104"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Down"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_104",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.473608915E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 147.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.88466211E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 27798.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 68",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "105"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_105",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 9.94622107E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.289387631E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.0080743E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 6.504049879E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 8.55685726E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 69",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "106"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_106",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.071292253E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.39687243E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.239903719E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.30145019E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 6A",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "107"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_107",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.472336416E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.884646931E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 383.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 6B",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "108"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_108",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.016846821E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.47798986E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.4353553E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 6.924880893E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.879648971E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 6C",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "109"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_109",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 6D",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "110"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Down"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_110",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 98.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.324135202E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.405172561E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.25E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.349584067E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.113825301E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.25,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B B6 73 94",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "3"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "1000000000"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.107351337E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 9.9637902E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.965453884E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 8.8437154E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 40",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "65"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_65",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 7.35472984E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.10880656E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.8277572E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 6.719192051E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.896255233E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 41",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "66"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_66",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.139335509E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2413502.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.887106601E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.20047502E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 249084.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 42",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "67"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_67",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.418626218E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.117186637E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3299444.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.130843894E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.185939911E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 43",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "68"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_68",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 44",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "69"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Down"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_69",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.618973034E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 163631.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.884841226E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.6727696E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 48",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "73"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_73",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 4C",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "77"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Down"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_77",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 50",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "81"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Down"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_81",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.47215473E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 138.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.884651028E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 22108.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 51.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 60",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "97"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_97",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.76802865E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.018594E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.887839043E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.23793681E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 61",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "98"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_98",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.network.dropped{network.io.direction=\"receive\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\"}" : {
+        "name" : "hw.status{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : 1762469104048,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 2.266672798E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.515582957E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.dropped{network.io.direction=\"transmit\"}" : {
+        "name" : "hw.network.dropped{network.io.direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "network.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 3.0975792E7,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 5.3687091187500006E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.145204086E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.429814433E9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 13.623599479298553,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "",
+      "physical_address" : "50 6B 4B 8C F7 62",
+      "hw.parent.type" : "enclosure",
+      "hw.network.name" : "",
+      "hw.parent.id" : "EthernetSwitch",
+      "hw.network.alias" : "",
+      "name" : " (Ethernet)",
+      "connector_id" : "MIB2Switch",
+      "physical_address_type" : "MAC",
+      "device_type" : "Ethernet",
+      "id" : "99"
+    },
+    "conditionalCollection" : {
+      "hw.network.bandwidth.limit" : "4294967295"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Up"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "network",
+    "id" : "MIB2Switch_network_99",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 19.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/CPU Core Sensor/T1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "__is_cpu_sensor" : "false",
+      "name" : "MGMT/CPU Core Sensor/T1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200110011"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "temperature",
+    "id" : "MIB2Switch_temperature_200110011",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 19.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/CPU Core Sensor/T2",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "__is_cpu_sensor" : "false",
+      "name" : "MGMT/CPU Core Sensor/T2",
+      "connector_id" : "MIB2Switch",
+      "id" : "200110012"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "temperature",
+    "id" : "MIB2Switch_temperature_200110012",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 19.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/CPU Core Sensor/T3",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "__is_cpu_sensor" : "false",
+      "name" : "MGMT/CPU Core Sensor/T3",
+      "connector_id" : "MIB2Switch",
+      "id" : "200110013"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "temperature",
+    "id" : "MIB2Switch_temperature_200110013",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 19.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/CPU Core Sensor/T4",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "__is_cpu_sensor" : "false",
+      "name" : "MGMT/CPU Core Sensor/T4",
+      "connector_id" : "MIB2Switch",
+      "id" : "200110014"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "temperature",
+    "id" : "MIB2Switch_temperature_200110014",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 24.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/Board AMB temp/T1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "__is_cpu_sensor" : "false",
+      "name" : "MGMT/Board AMB temp/T1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200220011"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "temperature",
+    "id" : "MIB2Switch_temperature_200220011",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 24.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/Ports AMB temp/T1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "__is_cpu_sensor" : "false",
+      "name" : "MGMT/Ports AMB temp/T1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200230011"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "temperature",
+    "id" : "MIB2Switch_temperature_200230011",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 37.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/SPC/T1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "__is_cpu_sensor" : "false",
+      "name" : "MGMT/SPC/T1",
+      "connector_id" : "MIB2Switch",
+      "id" : "200370011"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "temperature",
+    "id" : "MIB2Switch_temperature_200370011",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 12.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/PS1/VOLTAGE",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "sensor_location" : "MGMT/PS1/VOLTAGE",
+      "name" : "MGMT/PS1/VOLTAGE (MGMT/PS1/VOLTAGE)",
+      "connector_id" : "MIB2Switch",
+      "id" : "200011050"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "voltage",
+    "id" : "MIB2Switch_voltage_200011050",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/PS2/VOLTAGE",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "sensor_location" : "MGMT/PS2/VOLTAGE",
+      "name" : "MGMT/PS2/VOLTAGE (MGMT/PS2/VOLTAGE)",
+      "connector_id" : "MIB2Switch",
+      "id" : "200012050"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "voltage",
+    "id" : "MIB2Switch_voltage_200012050",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 12.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1762469108842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "MGMT/acdc-monitor2/CONSUMER_VOLTAGE",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "EthernetSwitch",
+      "sensor_location" : "MGMT/acdc-monitor2/CONSUMER_VOLTAGE",
+      "name" : "MGMT/acdc-monitor2/CONSUMER_VOLTAGE (MGMT/acdc-monitor2/CONSUMER_VOLTAGE)",
+      "connector_id" : "MIB2Switch",
+      "id" : "200292080"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1762469104048,
+    "type" : "voltage",
+    "id" : "MIB2Switch_voltage_200292080",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}
