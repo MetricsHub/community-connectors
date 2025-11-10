@@ -17,8 +17,9 @@ class ConnectorReplayIT {
 		"MIB2Switch",
 	})
 	void testConnectorReplay(String connectorName) throws Exception {
-		final EmulationITBase emulation = new EmulationITBase(connectorName);
-		emulation.emulateViaConfig();
-		emulation.verifyExpected(connectorName + "/expected/expected.json");
+		new EmulationITBase(connectorName)
+			.withServerRecordData()
+			.executeStrategies()
+			.verifyExpected(connectorName + "/expected/expected.json");
 	}
 }
