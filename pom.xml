@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>community-connectors</artifactId>
-	<version>1.0.15-SNAPSHOT</version>
+	<version>1.0.17-SNAPSHOT</version>
 
 	<name>MetricsHub Community Connectors</name>
 	<description>MetricsHub Community Connector Repository</description>
@@ -58,12 +58,12 @@
 	</developers>
 
 	<properties>
-		<!-- Java 8 -->
-		<maven.compiler.release>8</maven.compiler.release>
-
+		<!-- Java 17 -->
+		<maven.compiler.release>17</maven.compiler.release>
+		<metricshub-community.version>1.0.11</metricshub-community.version>
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-		<project.build.outputTimestamp>2025-09-29T08:36:01Z</project.build.outputTimestamp>
+		<project.build.outputTimestamp>2025-11-07T10:15:17Z</project.build.outputTimestamp>
 	</properties>
 
 	<dependencyManagement>
@@ -98,111 +98,120 @@
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-agent</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- MetricsHub IT common-->
+        <dependency>
+            <groupId>org.metricshub</groupId>
+            <artifactId>metricshub-it-common</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+            <version>${metricshub-community.version}</version>
         </dependency>
 
         <!-- Extensions -->
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-http-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-internaldb-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-ipmi-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-jawk-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-jdbc-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-jmx-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-oscommand-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-ping-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-programmable-configuration-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-snmp-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-snmp-extension-common</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-snmpv3-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-wbem-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-win-extension-common</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-winrm-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-wmi-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-yaml-configuration-extension</artifactId>
-            <version>1.0.09-SNAPSHOT</version>
+            <version>${metricshub-community.version}</version>
             <scope>test</scope>
         </dependency>
 	</dependencies>
@@ -237,7 +246,6 @@
 					<execution>
 						<phase>prepare-package</phase>
 						<goals>
-							<goal>site</goal>
 							<goal>jar</goal>
 						</goals>
 						<configuration>

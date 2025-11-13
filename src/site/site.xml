@@ -113,7 +113,7 @@
 			<item name="Computes" href="develop/computes/index.html" >
 				<item name="Add" href="develop/computes/add.html" />
 				<item name="And" href="develop/computes/and.html" />
-			    <item name="Append" href="develop/computes/append.html" />
+				<item name="Append" href="develop/computes/append.html" />
 				<item name="Array Translate" href="develop/computes/array-translate.html" />
 				<item name="AWK" href="develop/computes/awk.html" />
 				<item name="Convert" href="develop/computes/convert.html" />
@@ -137,6 +137,9 @@
 				<item name="XML to CSV" href="develop/computes/xml2csv.html" />
 			</item>
 			<item name="References" href="develop/references.html" />
+		</menu>
+		<menu name="Develop">
+			<item name="Writing Integration Tests" href="develop/integration-tests.html" />
 		</menu>
 	</body>
 

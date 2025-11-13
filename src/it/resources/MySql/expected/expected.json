@@ -29,7 +29,7 @@
       },
       "conditionalCollection": {},
       "legacyTextParameters": {
-        "StatusInformation": "Executed SqlCriterion Criterion:\n- Query SELECT @@version_comment REGEXP 'mysql' AS is_mysql;\n- ExpectedResult: 1\n- ErrorMessage: Not a MySQL Server\n\nResult:\n1;\n\nMessage:\n====================================\nHostname raz-docker - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+        "StatusInformation": "Executed SqlCriterion Criterion:\n- Query SELECT @@version_comment REGEXP 'mysql' AS is_mysql;\n- ExpectedResult: 1\n- ErrorMessage: Not a MySQL Server\n\nResult:\n1;\n\nMessage:\n====================================\nHostname raz-docker-3306 - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
       },
       "alertRules": {},
       "discoveryTime": 1757941635101,
@@ -53,10 +53,23 @@
             "protocol": "jdbc"
           },
           "resetMetricTime": false,
-          "value": 0.0,
+          "value": 1.0,
           "previousValue": null,
           "type": "NumberMetric",
           "updated": true
+        },
+        "metricshub.host.response_time{protocol=\"jdbc\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"jdbc\"}",
+          "collectTime" : 1761830794557,
+          "previousCollectTime" : null,
+          "attributes" : {
+            "protocol" : "jdbc"
+          },
+          "resetMetricTime" : false,
+          "value" : 1.0,
+          "previousValue" : null,
+          "type" : "NumberMetric",
+          "updated" : true
         },
         "metricshub.host.configured": {
           "name": "metricshub.host.configured",
