@@ -3,8 +3,17 @@ package org.metricshub.connector.it;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+/**
+ * Integration tests for various connectors using recorded data replay.
+ */
 class ConnectorReplayIT {
 
+	/**
+	 * Replays recorded data for the specified connector and verifies the expected results.
+	 *
+	 * @param connectorId The identifier of the connector to test
+	 * @throws Exception In case of any errors during the test execution
+	 */
 	@ParameterizedTest
 	@ValueSource(strings = {
 		"WinStorageSpaces",
@@ -16,10 +25,10 @@ class ConnectorReplayIT {
 		"SmartMonLinux",
 		"MIB2Switch",
 	})
-	void testConnectorReplay(String connectorName) throws Exception {
-		new EmulationITBase(connectorName)
+	void testConnectorReplay(String connectorId) throws Exception {
+		new EmulationITBase(connectorId)
 			.withServerRecordData()
 			.executeStrategies()
-			.verifyExpected(connectorName + "/expected/expected.json");
+			.verifyExpected(connectorId + "/expected/expected.json");
 	}
 }

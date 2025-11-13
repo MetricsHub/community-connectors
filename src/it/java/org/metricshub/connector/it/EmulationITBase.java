@@ -1,7 +1,6 @@
 package org.metricshub.connector.it;
 
 import org.metricshub.agent.context.AgentContext;
-import org.metricshub.agent.config.ResourceConfig;
 import org.metricshub.agent.context.MetricDefinitions;
 import org.metricshub.agent.opentelemetry.MetricsExporter;
 import org.metricshub.agent.service.task.MonitoringTask;
@@ -9,7 +8,6 @@ import org.metricshub.agent.service.task.MonitoringTaskInfo;
 import org.metricshub.configuration.YamlConfigurationProvider;
 import org.metricshub.engine.extension.ExtensionManager;
 import org.metricshub.engine.extension.IProtocolExtension;
-import org.metricshub.engine.telemetry.TelemetryManager;
 import org.metricshub.extension.http.HttpExtension;
 import org.metricshub.extension.ipmi.IpmiExtension;
 import org.metricshub.extension.jdbc.JdbcExtension;
@@ -24,46 +22,101 @@ import org.metricshub.extension.wmi.WmiExtension;
 import org.metricshub.it.job.AbstractITJob;
 import org.metricshub.it.job.ITJob;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
+/**
+ * Base class for Emulation Integration Tests
+ */
 public class EmulationITBase extends AbstractITJob {
 
-	private static ExtensionManager extensionManager;
-	private final String connectorName;
-	private TelemetryManager emulatedTelemetryManager;
-	private String resourceGroupKey;
-	private String resourceKey;
-	private ResourceConfig resourceConfig;
+	private static final ExtensionManager EXTENSION_MANAGER = createExtensionManger();
+
+	private final String connectorId;
+	private MonitoringTaskInfo monitoringTaskInfo;
 
 	/**
 	 * Constructor for the Emulation IT Base
-	 * @param telemetryManager		The telemetry manager
-	 * @param connectorName         The name of the connector (Identifier)
+	 *
+	 * @param connectorId        The unique identifier of the connector
+	 * @param MonitoringTaskInfo The monitoring task information
 	 */
-	public EmulationITBase(final String connectorName, final TelemetryManager telemetryManager) {
-		super(telemetryManager);
-		this.connectorName = connectorName;
+	public EmulationITBase(final String connectorId, final MonitoringTaskInfo monitoringTaskInfo) {
+		super(monitoringTaskInfo.getTelemetryManager());
+		this.connectorId = connectorId;
+		this.monitoringTaskInfo = monitoringTaskInfo;
 	}
 
 	/**
 	 * Constructor for the Emulation IT Base
-	 * 
-	 * @param connectorName The name of the connector (Identifier)
+	 *
+	 * @param connectorId The unique identifier of the connector
+	 * @throws IOException In case of IO errors during initialization
 	 */
-	public EmulationITBase(final String connectorName) {
-		this(connectorName, new TelemetryManager());
+	public EmulationITBase(final String connectorId) throws IOException {
+		this(connectorId, newMonitoringTaskInfo(connectorId));
+	}
+
+	/**
+	 * Prepare the Monitoring Task Info for the given connector name
+	 *
+	 * @param connectorId The name of the connector
+	 * @return MonitoringTaskInfo The prepared monitoring task info
+	 * @throws IOException In case of IO errors during initialization
+	 */
+	private static MonitoringTaskInfo newMonitoringTaskInfo(final String connectorName) throws IOException {
+		// Set the connector emulation files, expected result and config directory
+		final String configFileDirectory = Paths.get("src", "it", "resources", connectorName, "config").toString();
+
+		// Initialize the application context
+		final var agentContext = new AgentContext(configFileDirectory, EXTENSION_MANAGER);
+
+		// Get the first resource group entry
+		final var firstGroupEntry = agentContext
+			.getTelemetryManagers()
+			.entrySet()
+			.stream()// skip the first
+			.findFirst()
+			.orElseThrow(() -> new NoSuchElementException("No second group found"));
+
+		final var resourceGroupKey = firstGroupEntry.getKey();
+		final var groupManagers = firstGroupEntry.getValue();
+
+		// Get the first resource entry from that group
+		final var firstResourceEntry =
+			groupManagers.entrySet().iterator().next();
+
+		final var resourceKey = firstResourceEntry.getKey();
+		final var telemetryManager = firstResourceEntry.getValue();
+
+		// Get the matching ResourceConfig for that resource
+		final var resourceConfig = agentContext
+			.getAgentConfig()
+			.getResources()
+			.get(resourceKey);
+
+		return MonitoringTaskInfo.builder()
+			.telemetryManager(telemetryManager)
+			.resourceConfig(resourceConfig)
+			.resourceKey(resourceKey)
+			.resourceGroupKey(resourceGroupKey)
+			.extensionManager(EXTENSION_MANAGER)
+			.metricsExporter(MetricsExporter.builder().build())
+			.hostMetricDefinitions(new MetricDefinitions(new HashMap<>()))
+			.build();
 	}
 
 	/**
 	 * Create the Extension Manager with all required extensions for the IT tests
+	 *
+	 * @return ExtensionManager The created extension manager
 	 */
-	static void createExtensionManger() {
+	private static ExtensionManager createExtensionManger() {
 		final List<IProtocolExtension> extensions = new ArrayList<>();
 		extensions.add(new HttpExtension());
 		extensions.add(new IpmiExtension());
@@ -77,72 +130,28 @@ public class EmulationITBase extends AbstractITJob {
 		extensions.add(new WinRmExtension());
 		extensions.add(new WmiExtension());
 
-		extensionManager = ExtensionManager.builder()
+		return ExtensionManager.builder()
 			.withProtocolExtensions(extensions)
-			.withConfigurationProviderExtensions(Collections.singletonList(new YamlConfigurationProvider()))
+			.withConfigurationProviderExtensions(
+				Collections.singletonList(new YamlConfigurationProvider())
+			)
 			.build();
 
 	}
 
-	/**
-	 * Copies telemetry manager from emulated telemetry manager
-	 * @param emulatedTelemetryManager The emulated telemetry manager
-	 */
-	private void copyTelemetryManagerFromEmulation(final TelemetryManager emulatedTelemetryManager) {
-		this.telemetryManager.setStrategyTime(emulatedTelemetryManager.getStrategyTime());
-		this.telemetryManager.setEmulationInputDirectory(emulatedTelemetryManager.getEmulationInputDirectory());
-		this.telemetryManager.setMonitors(emulatedTelemetryManager.getMonitors());
-		this.telemetryManager.setHostConfiguration(emulatedTelemetryManager.getHostConfiguration());
-		this.telemetryManager.setHostProperties(emulatedTelemetryManager.getHostProperties());
-		this.telemetryManager.setRecordOutputDirectory(emulatedTelemetryManager.getRecordOutputDirectory());
-		this.telemetryManager.setConnectorStore(emulatedTelemetryManager.getConnectorStore());
-	}
-
 	@Override
 	public EmulationITBase withServerRecordData(String... strings) throws Exception {
-		// Create the extension manager
-		createExtensionManger();
 
-		// Set the connector emulation files, expected result and config directory
-		final String configFileDirectory = Paths.get("src", "it", "resources", connectorName, "config").toString();
+		telemetryManager.setEmulationInputDirectory(
+			Paths.get("src", "it", "resources", connectorId, "emulation").toString()
+		);
 
-		// Initialize the application context
-		final AgentContext agentContext = new AgentContext(
-			configFileDirectory, extensionManager);
-
-		// Get the first resource group entry
-		final Map.Entry<String, Map<String, TelemetryManager>> firstGroupEntry =
-			agentContext.getTelemetryManagers()
-				.entrySet()
-				.stream()// skip the first
-				.findFirst()
-				.orElseThrow(() -> new NoSuchElementException("No second group found"));
-
-		resourceGroupKey = firstGroupEntry.getKey();
-		final Map<String, TelemetryManager> groupManagers = firstGroupEntry.getValue();
-
-		// Get the first resource entry from that group
-		final Map.Entry<String, TelemetryManager> firstResourceEntry =
-			groupManagers.entrySet().iterator().next();
-
-		resourceKey = firstResourceEntry.getKey();
-		emulatedTelemetryManager = firstResourceEntry.getValue();
-
-		// Get the matching ResourceConfig for that resource
-		resourceConfig =
-			agentContext.getAgentConfig()
-				.getResources()
-				.get(resourceKey);
-
-		emulatedTelemetryManager.setEmulationInputDirectory(Paths.get("src", "it", "resources", connectorName, "emulation").toString());
-		// Since telemetryManager is final in the super class,
-		// we need to fill it with the emulated telemetryManager data
-		copyTelemetryManagerFromEmulation(emulatedTelemetryManager);
 		return this;
 	}
 
 	@Override
 	public void stopServer() {
+		// No server to stop in emulation mode
 	}
 
 	@Override
@@ -151,20 +160,13 @@ public class EmulationITBase extends AbstractITJob {
 	}
 
 	/**
-	 * Executes the monitoring task using the given information and
+	 * Executes a new monitoring task with the monitoring task info
+	 *
 	 * @return ITJob An integration test job instance
 	 */
 	protected ITJob executeStrategies() {
-		final MonitoringTaskInfo monitoringTaskInfo = MonitoringTaskInfo.builder()
-			.telemetryManager(emulatedTelemetryManager)
-			.resourceConfig(resourceConfig)
-			.resourceKey(resourceKey)
-			.resourceGroupKey(resourceGroupKey)
-			.extensionManager(extensionManager)
-			.metricsExporter(MetricsExporter.builder().build())
-			.hostMetricDefinitions(new MetricDefinitions(new HashMap<>()))
-			.build();
 		new MonitoringTask(monitoringTaskInfo).run();
 		return this;
 	}
+
 }
