@@ -1,5 +1,5 @@
-keywords: develop, integration tests, emulation tests
-description: Learn how to write emulation-based integration tests for community connectors in MetricsHub.
+keywords: develop, integration tests
+description: Learn how to write integration tests for community connectors in MetricsHub.
 
 ## Writing Integration Tests
 
@@ -41,7 +41,7 @@ snmpcli dev-01 --walk 1.3.6.1 --community public --version v1 --port 161 --timeo
 
 You may generate **multiple `.walk` files** (e.g., for different OIDs or components).
 
-All of them must be placed in the connector’s `src/it/resources/<MyConnectorId>/emulation` folder (e.g. `src/it/resources/MIB2/emulation`) and will be used during emulation mode.
+All of them must be placed in the connector’s `src/it/resources/<MyConnectorId>/emulation` folder (e.g. `src/it/resources/MIB2/emulation`) and will be used during emulation mode (IT).
 
 ### Copy Recorded Data to `emulation` Folder
 
