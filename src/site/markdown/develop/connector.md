@@ -488,4 +488,3 @@ translations: # <object>
   <table-key>: # <object>
     <key>: # <string>
 ```
-

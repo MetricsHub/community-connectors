@@ -102,6 +102,15 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- MetricsHub IT common-->
+        <dependency>
+            <groupId>org.metricshub</groupId>
+            <artifactId>metricshub-it-common</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+            <version>${metricshub-community.version}</version>
+        </dependency>
+
         <!-- Extensions -->
         <dependency>
             <groupId>org.metricshub</groupId>
