@@ -44,7 +44,7 @@ public class EmulationITBase extends AbstractITJob {
 	 * Constructor for the Emulation IT Base
 	 *
 	 * @param connectorId        The unique identifier of the connector
-	 * @param MonitoringTaskInfo The monitoring task information
+	 * @param monitoringTaskInfo The monitoring task information
 	 */
 	public EmulationITBase(final String connectorId, final MonitoringTaskInfo monitoringTaskInfo) {
 		super(monitoringTaskInfo.getTelemetryManager());
@@ -65,11 +65,11 @@ public class EmulationITBase extends AbstractITJob {
 	/**
 	 * Prepare the Monitoring Task Info for the given connector name
 	 *
-	 * @param connectorId The name of the connector
+	 * @param connectorId The identifier of the connector
 	 * @return MonitoringTaskInfo The prepared monitoring task info
 	 * @throws IOException In case of IO errors during initialization
 	 */
-	private static MonitoringTaskInfo newMonitoringTaskInfo(final String connectorName) throws IOException {
+	private static MonitoringTaskInfo newMonitoringTaskInfo(final String connectorId) throws IOException {
 		// Set the connector emulation files, expected result and config directory
 		final String configFileDirectory = Paths.get("src", "it", "resources", connectorName, "config").toString();
 
@@ -170,3 +170,4 @@ public class EmulationITBase extends AbstractITJob {
 	}
 
 }
+
