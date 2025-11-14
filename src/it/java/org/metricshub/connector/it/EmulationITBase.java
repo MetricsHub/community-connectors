@@ -71,7 +71,7 @@ public class EmulationITBase extends AbstractITJob {
 	 */
 	private static MonitoringTaskInfo newMonitoringTaskInfo(final String connectorId) throws IOException {
 		// Set the connector emulation files, expected result and config directory
-		final String configFileDirectory = Paths.get("src", "it", "resources", connectorName, "config").toString();
+		final String configFileDirectory = Paths.get("src", "it", "resources", connectorId, "config").toString();
 
 		// Initialize the application context
 		final var agentContext = new AgentContext(configFileDirectory, EXTENSION_MANAGER);
@@ -170,4 +170,5 @@ public class EmulationITBase extends AbstractITJob {
 	}
 
 }
+
 
