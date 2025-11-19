@@ -1,0 +1,234 @@
+---
+extends:
+- ../../semconv/Hardware
+- ../../semconv/System
+connector:
+  displayName: IPMI
+  platforms: IPMI
+  reliesOn: IPMI
+  information: This connector provides environmental information on several IPMI-enabled servers in-band and out-of-band (temperatures, fans, etc.).
+  version: 2.0
+  detection:
+    connectionTypes:
+    - remote
+    - local
+    appliesTo:
+    - Linux
+    supersedes:
+    - IpmiTool
+    criteria:
+    - type: commandline
+      commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info
+      expectedResult: IPMI Version
+      errorMessage: Did not get the expected result from the IPMI tool command
+    tags: [ hardware, linux ]
+
+monitors:
+  enclosure:
+    simple:
+      sources:
+        allFrus:
+          type: commandline
+          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open fru
+          computes:
+          - type: awk # FRU;fruID;Vendor;Model;SerialNumber;quality
+            script: ${file::frus.awk}
+        sdr:
+          type: commandline
+          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open -v sdr elist all
+          computes:
+          - type: awk # sensorType;sensorId;sensorName;statusGroupInfo;sensorFruId;location;valueReading;threshold1;threshold2
+            script: ${file::sensors.awk}
+        cpuUsageSensor:
+          type: copy
+          from: ${source::sdr}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: "CPU Usage"
+          - type: append
+            column: 8
+            value: ;joinKey
+        memoryUsageSensor:
+          type: copy
+          from: ${source::sdr}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: "MEM Usage"
+          - type: append
+            column: 8
+            value: ;joinKey
+            # We join FRUs and Sdr to keep only the enclosure FRU
+        frusJoinSdr:
+          type: tableJoin
+          leftTable: ${source::allFrus}
+          rightTable: ${source::sdr}
+          leftKeyColumn: 2
+          rightKeyColumn: 6
+          computes:
+          - type: keepColumns
+            columnNumbers: 2,3,4,5,10,11
+          - type: prepend
+            column: 1
+            value: FRU_
+          - type: append
+            column: 6
+            value: ;joinKey
+        enclosureJoinCpuUsage:
+          type: tableJoin
+          leftTable: ${source::frusJoinSdr}
+          rightTable: ${source::cpuUsageSensor}
+          leftKeyColumn: 7
+          rightKeyColumn: 9
+          computes:
+          - type: keepColumns
+            columnNumbers: 1,2,3,4,5,6,15,16
+        enclosureJoinMemoryUsage:
+          type: tableJoin
+          leftTable: ${source::enclosureJoinCpuUsage}
+          rightTable: ${source::memoryUsageSensor}
+          leftKeyColumn: 8
+          rightKeyColumn: 9
+          computes:
+          - type: keepColumns
+            columnNumbers: 1,2,3,4,5,6,7,16
+          - type: translate
+            column: 5
+            translationTable: ${translation::statusTranslationTable}
+      mapping:
+        source: ${source::enclosureJoinMemoryUsage}
+        attributes:
+          id: $1
+          vendor: $2
+          model: $3
+          serial_number: $4
+        metrics:
+          hw.status{hw.type="enclosure"}: $5
+          system.cpu.utilization: $7
+          system.memory.utilization: $8
+        legacyTextParameters:
+          StatusInformation: $6
+
+  temperature:
+    simple:
+      sources:
+        temperatureSensors:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sdr}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Temperature
+          - type: excludeMatchingLines
+            column: 8
+            valueList: N/A
+          - type: translate
+            column: 4
+            translationTable: ${translation::statusTranslationTable}
+      mapping:
+        source: ${source::temperatureSensors}
+        attributes:
+          id: $2
+          name: ${awk::sprintf("%s (%s)", $3, $7)}
+          sensor_location: $7
+        metrics:
+          hw.temperature: $8
+          hw.temperature.limit{limit_type="high.degraded"}: $9
+          hw.temperature.limit{limit_type="high.critical"}: $10
+          hw.status{hw.type="temperature"}: $4
+        legacyTextParameters:
+          StatusInformation: $5
+
+  fan:
+    simple:
+      sources:
+        fanSensors:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sdr}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan
+          - type: excludeMatchingLines
+            column: 8
+            valueList: N/A
+          - type: translate
+            column: 4
+            translationTable: ${translation::statusTranslationTable}
+      mapping:
+        source: ${source::fanSensors}
+        attributes:
+          id: $2
+          name: ${awk::sprintf("%s (%s)", $3, $7)}
+          sensor_location: $7
+        metrics:
+          hw.fan.speed: $8
+          hw.fan.speed.limit{limit_type="low.degraded"}: $9
+          hw.fan.speed.limit{limit_type="low.critical"}: $10
+          hw.status{hw.type="fan"}: $4
+        legacyTextParameters:
+          StatusInformation: $5
+
+  voltage:
+    simple:
+      sources:
+        voltageSensors:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sdr}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Voltage
+          - type: excludeMatchingLines
+            column: 8
+            valueList: N/A
+          - type: translate
+            column: 4
+            translationTable: ${translation::statusTranslationTable}
+      mapping:
+        source: ${source::voltageSensors}
+        attributes:
+          id: $2
+          name: ${awk::sprintf("%s (%s)", $3, $7)}
+          sensor_location: $6
+        metrics:
+          hw.voltage: milliVolt2Volt($8)
+          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($9)
+          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($10)
+          hw.status{hw.type="voltage"}: $4
+        legacyTextParameters:
+          StatusInformation: $5
+
+  power_supply:
+    simple:
+      sources:
+        powerSupplySensors:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sdr}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: "Power Supply"
+          - type: excludeMatchingLines
+            column: 8
+            valueList: N/A
+          - type: translate
+            column: 4
+            translationTable: ${translation::statusTranslationTable}
+      mapping:
+        source: ${source::powerSupplySensors}
+        attributes:
+          id: $2
+          name: ${awk::sprintf("%s (%s)", $3, $7)}
+          sensor_location: $7
+        metrics:
+          hw.status{hw.type="power_supply"}: $4
+        legacyTextParameters:
+          StatusInformation: $5
+
+translations:
+  statusTranslationTable:
+    ok: ok
+    Not Available: degraded
+    default: unknown

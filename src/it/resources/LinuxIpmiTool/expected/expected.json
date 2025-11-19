@@ -1,0 +1,1926 @@
+{
+  "total" : 21,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "LinuxIpmiTool.yaml",
+      "name" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "applies_to_os" : "linux",
+      "parent.id" : "localhost",
+      "id" : "LinuxIpmiTool"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info\n- ExecuteLocally: false\n- ExpectedResult: IPMI Version\n\nResult:\nDevice ID                 : 32\nDevice Revision           : 1\nFirmware Revision         : 2.86\nIPMI Version              : 2.0\nManufacturer ID           : 674\nManufacturer Name         : DELL Inc\nProduct ID                : 256 (0x0100)\nProduct Name              : Unknown (0x100)\nDevice Available          : yes\nProvides Device SDRs      : yes\nAdditional Device Support :\n    Sensor Device\n    SDR Repository Device\n    SEL Device\n    FRU Inventory Device\n    IPMB Event Receiver\n    Bridge\n    Chassis Device\nAux Firmware Rev Info     : \n    0x00\n    0x06\n    0x56\n    0x56\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info\n- ExecuteLocally: false\n- ExpectedResult: IPMI Version\n\nResult: Device ID                 : 32\nDevice Revision           : 1\nFirmware Revision         : 2.86\nIPMI Version              : 2.0\nManufacturer ID           : 674\nManufacturer Name         : DELL Inc\nProduct ID                : 256 (0x0100)\nProduct Name              : Unknown (0x100)\nDevice Available          : yes\nProvides Device SDRs      : yes\nAdditional Device Support :\n    Sensor Device\n    SDR Repository Device\n    SEL Device\n    FRU Inventory Device\n    IPMB Event Receiver\n    Bridge\n    Chassis Device\nAux Firmware Rev Info     : \n    0x00\n    0x06\n    0x56\n    0x56\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560224314,
+    "type" : "connector",
+    "id" : "connector_LinuxIpmiTool",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.memory.utilization" : {
+        "name" : "system.memory.utilization",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"enclosure\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : true,
+        "value" : "unknown",
+        "previousValue" : "unknown",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "system.cpu.utilization" : {
+        "name" : "system.cpu.utilization",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.32,
+        "previousValue" : 0.32,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "vendor" : "DELL",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "enclosure: DELL PowerEdge R630",
+      "model" : "PowerEdge R630",
+      "serial_number" : "CNIVC007B30852",
+      "id" : "FRU_0",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "enclosure",
+    "id" : "LinuxIpmiTool_enclosure_FRU_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5760.0,
+        "previousValue" : 5760.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.76,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan1A (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x30",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan1A=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x30",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4320.0,
+        "previousValue" : 4320.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.32,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan1B (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x31",
+      "__id_count" : "9"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan1B=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x31",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5760.0,
+        "previousValue" : 5760.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.76,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan2A (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x32",
+      "__id_count" : "13"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan2A=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4320.0,
+        "previousValue" : 4320.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.32,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan2B (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x33",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan2B=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x33",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5880.0,
+        "previousValue" : 5880.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.88,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan3A (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x34",
+      "__id_count" : "14"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan3A=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x34",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4320.0,
+        "previousValue" : 4320.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.32,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan3B (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x35",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan3B=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x35",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5760.0,
+        "previousValue" : 5760.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.76,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan4A (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x36",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan4A=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x36",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4320.0,
+        "previousValue" : 4320.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.32,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan4B (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x37",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan4B=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x37",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5760.0,
+        "previousValue" : 5760.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.76,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan5A (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x38",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan5A=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x38",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4440.0,
+        "previousValue" : 4440.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.44,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan5B (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x39",
+      "__id_count" : "12"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan5B=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x39",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5880.0,
+        "previousValue" : 5880.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.88,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan6A (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x3a",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan6A=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x3a",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4320.0,
+        "previousValue" : 4320.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.32,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan6B (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x3b",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan6B=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x3b",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5760.0,
+        "previousValue" : 5760.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.76,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan7A (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x3c",
+      "__id_count" : "11"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan7A=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x3c",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4320.0,
+        "previousValue" : 4320.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 840.0,
+        "previousValue" : 840.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.32,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 600.0,
+        "previousValue" : 600.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "System Board 7",
+      "name" : "Fan7B (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x3d",
+      "__id_count" : "10"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Fan7B=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_0x3d",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "__hw.host.average_warning_threshold" : {
+        "name" : "__hw.host.average_warning_threshold",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 63.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.heating_margin" : {
+        "name" : "hw.host.heating_margin",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 17.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.host.average_cpu_temperature" : {
+        "name" : "__hw.host.average_cpu_temperature",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 46.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.host.cpu.thermal_dissipation_rate" : {
+        "name" : "__hw.host.cpu.thermal_dissipation_rate",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.55,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "value" : 78.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.ambient_temperature" : {
+        "name" : "hw.host.ambient_temperature",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 25.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "host.name" : "localhost",
+      "host.type" : "compute",
+      "os.type" : "linux"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 70.0,
+        "previousValue" : 70.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 75.0,
+        "previousValue" : 75.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 34.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "sensor_location" : "System Board 7",
+      "name" : "Exhaust Temp (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x1",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Exhaust Temp=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "temperature",
+    "id" : "LinuxIpmiTool_temperature_0x1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 42.0,
+        "previousValue" : 42.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 47.0,
+        "previousValue" : 47.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 25.0,
+        "previousValue" : 25.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "sensor_location" : "System Board 7",
+      "name" : "Inlet Temp (System Board 7)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x4",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Inlet Temp=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "temperature",
+    "id" : "LinuxIpmiTool_temperature_0x4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 77.0,
+        "previousValue" : 77.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 83.0,
+        "previousValue" : 83.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 46.0,
+        "previousValue" : 46.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "true",
+      "sensor_location" : "Processor 3",
+      "name" : "Temp (Processor 3)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0xe",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Temp=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "temperature",
+    "id" : "LinuxIpmiTool_temperature_0xe",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 220.0,
+        "previousValue" : 220.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1763560230465,
+        "previousCollectTime" : 1763560224314,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "sensor_location" : "",
+      "name" : "Voltage 2 (Power Supply 10)",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "0x6d",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Voltage 2=ok"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1763560230465,
+    "type" : "voltage",
+    "id" : "LinuxIpmiTool_voltage_0x6d",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}
