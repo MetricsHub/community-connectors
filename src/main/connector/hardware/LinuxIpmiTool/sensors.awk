@@ -1,7 +1,7 @@
 function checkSubStrAndReturnDelimitedString(str, subStr) {
     pos = index(str, subStr)
     if (pos != 0) {
-        rest = substr(str, pos + length("subStr"))
+        rest = substr(str, pos + length(subStr))
         colonIndex = index(rest, ":")
 
         if (colonIndex > 0) {
@@ -138,7 +138,6 @@ function rtrim(rtrimString) { sub(/[ \t\r\n]+$/, "", rtrimString); return rtrimS
 function trim(trimString) { return rtrim(ltrim(trimString)); }
 
 BEGIN {
-    FS = "\n"
     OFS = ";"
     sensorId = ""
     sensorName = ""
@@ -158,6 +157,125 @@ BEGIN {
     thresholdLowerNonCritical = ""
     thresholdLowerCritical = ""
     thresholdUpperNonRecoverable = ""
+}
+
+/Sensor ID/ {
+    sensorIdLine = $0
+    indexTwoPoint = index(sensorIdLine, ":")
+    indexOpeningParenthesis = index(sensorIdLine, "(")
+    indexClosingParenthesis = index(sensorIdLine, ")")
+    sensorName = trim(substr($0, indexTwoPoint + 1, indexOpeningParenthesis - indexTwoPoint - 1))
+
+    sensorId = trim(substr($0, indexOpeningParenthesis + 1, indexClosingParenthesis - indexOpeningParenthesis - 1))
+}
+
+/Device ID/ {
+    trueDeviceId = trim(substr($0, indexTwoPoint + 1))
+}
+
+/Entity ID/ {
+    entityId = trim($4)
+
+    indexPoint = index(entityId, ".")
+    if (indexPoint != 0) {
+        deviceId = trim(substr(entityId, 0, indexPoint - 1))
+    }
+
+    entityIdLine = $0
+    openingParenthesisIndex = index(entityIdLine, "(")
+    closingParenthesisIndex = index(entityIdLine, ")")
+    if (openingParenthesisIndex > 0 && closingParenthesisIndex > openingParenthesisIndex) {
+        deviceType = trim(substr(entityIdLine, openingParenthesisIndex + 1, closingParenthesisIndex - openingParenthesisIndex - 1))
+    }
+}
+
+/OEM Specific/ {
+    sdrEntry = $0
+    zeroXIndex = index(sdrEntry, "0x")
+
+    if (statesAsserted == 1 && zeroXIndex != 0) {
+        oemSpecific = substr(sdrEntry, zeroXIndex + 2)
+
+        # Convert from hex string to decimal
+        decVal = hex_to_dec(oemSpecific)
+
+        # Bitwise OR with 32768 (0x8000)
+        decVal = decVal + 32768
+
+        # Convert back to hex (lowercase)
+        hexVal = tolower(sprintf("%x", decVal))
+
+        # Pad to 4 characters with leading zeros
+        oemSpecific = sprintf("%04s", hexVal)
+
+        statusGroup = trim(sensorName "=0x" oemSpecific)
+    }
+}
+
+/States Asserted/ {
+    statesAsserted = 1
+}
+
+/Assertions Enabled/ {
+    # sometimes there is nothing after "Assertions Enabled    :"
+    sdrEntry = $0
+    assertionsEnabledLine = trim(substr(sdrEntry, index(sdrEntry, ":") + 1))
+    if (assertionsEnabledLine != "") {
+        assertionsEnabled = 1
+    }
+}
+
+/Deassertions Enabled/ {
+    assertionsEnabled = 0
+}
+
+/\[*\]/ {
+    if (assertionsEnabled == 1) {
+        assertion = $0
+        gsub("\\[", "", assertion)
+        gsub("\\]", "", assertion)
+        statusGroup = statusGroup separator sensorName "=" trim(assertion)
+        separator = "|"
+    }
+}
+
+/Status/ {
+    if (statusGroup == "") {
+        sdrEntry = $0
+        status = trim(substr(sdrEntry, index(sdrEntry, ":") + 1))
+        statusGroup = sensorName "=" status
+    }
+}
+
+/Logical FRU Device/ {
+    fruDevice = $5
+    gsub("h", "", fruDevice)
+    sensorFruId = hex_to_dec(fruDevice)
+}
+
+/Sensor Reading/ {
+    sdrEntry = $0
+    sensorReading = trim(substr(sdrEntry, index(sdrEntry, ":") + 1))
+}
+
+/Upper non-critical/ {
+    thresholdUpperNonCritical = $4
+}
+
+/Upper critical/ {
+    thresholdUpperCritical = $4
+}
+
+/Lower non-critical/ {
+    thresholdLowerNonCritical = $4
+}
+
+/Lower critical/ {
+    thresholdLowerCritical = $4
+}
+
+/Upper non-recoverable/ {
+    thresholdUpperNonRecoverable = $4
 }
 
 {
@@ -192,142 +310,6 @@ BEGIN {
         thresholdLowerNonCritical = ""
         thresholdLowerCritical = ""
         thresholdUpperNonRecoverable = ""
-    } else {
-        sensorIdLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Sensor ID")
-        openingParenthesisIndex = index(sensorIdLine, "(")
-        closingParenthesisIndex = index(sensorIdLine, ")")
-        if (openingParenthesisIndex != 0) {
-            sensorName = trim(substr(sensorIdLine, 0, openingParenthesisIndex - 2))
-            if (closingParenthesisIndex != 0 && closingParenthesisIndex > openingParenthesisIndex) {
-                sensorId = trim(substr(sensorIdLine, openingParenthesisIndex + 1, closingParenthesisIndex - openingParenthesisIndex - 1))
-            }
-        }
-
-        trueDeviceIdIndex = index(sdrEntry, "Device ID")
-
-        if (trueDeviceIdIndex != 0) {
-            trueDeviceId = trim(checkSubStrAndReturnDelimitedString(sdrEntry, "Device ID"))
-        }
-
-        entityIdLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Entity ID")
-        if (entityIdLine != "") {
-            openingParenthesisIndex = index(entityIdLine, "(")
-            if (openingParenthesisIndex != 0) {
-                entityId = trim(substr(entityIdLine, 0, openingParenthesisIndex- 1))
-            }
-
-            indexPoint = index(entityIdLine, ".")
-            if (indexPoint != 0) {
-                deviceId = trim(substr(entityIdLine, 1, indexPoint - 1))
-            }
-
-            openingParenthesisIndex = index(entityIdLine, "(")
-            closingParenthesisIndex = index(entityIdLine, ")")
-            if (openingParenthesisIndex > 0 && closingParenthesisIndex > openingParenthesisIndex) {
-                deviceType = substr(entityIdLine, openingParenthesisIndex + 1, closingParenthesisIndex - openingParenthesisIndex - 1)
-                deviceType = trim(substr(entityIdLine, openingParenthesisIndex + 1, closingParenthesisIndex - openingParenthesisIndex - 1))
-            }
-        }
-
-        oemSpecificIndex = index(sdrEntry, "OEM Specific")
-        zeroXIndex = index(sdrEntry, "0x")
-
-        if (index(sdrEntry, "States Asserted") != 0) {
-            statesAsserted = 1
-        }
-
-        if (statesAsserted == 1 && oemSpecificIndex != 0 && zeroXIndex != 0) {
-            oemSpecific = substr(sdrEntry, zeroXIndex + 2)
-            
-            # Convert from hex string to decimal
-            decVal = hex_to_dec(oemSpecific)
-
-            # Bitwise OR with 32768 (0x8000)
-            decVal = decVal + 32768
-
-            # Convert back to hex (lowercase)
-            hexVal = tolower(sprintf("%x", decVal))
-
-            # Pad to 4 characters with leading zeros
-            oemSpecific = sprintf("%04s", hexVal)
-
-            statusGroup = trim(sensorName "=0x" oemSpecific)
-        }
-        
-        assertionsEnabledIndex = index(sdrEntry, "Assertions Enabled ")
-        if (assertionsEnabledIndex != 0) {
-            assertionsEnabledLine = trim(checkSubStrAndReturnDelimitedString(sdrEntry, "Assertions Enabled"))
-            if (assertionsEnabledLine != "") {
-                assertionsEnabled = 1
-            }
-        } else {
-            openingBracketIndex = index(sdrEntry, "[")
-            closingBracketIndex = index(sdrEntry, "]")
-            if (openingBracketIndex != 0 && closingBracketIndex != 0) {
-                if (assertionsEnabled == 1) {
-                    statusGroup = statusGroup separator sensorName "=" trim(substr(sdrEntry, openingBracketIndex + 1, closingBracketIndex - openingBracketIndex - 1))
-                    separator = "|"
-                }
-            } else {
-                assertionsEnabled = 0
-            }
-        }
-
-        statusLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Status")
-
-        if (statusLine != "" && statusGroup == "") {
-            status = trim(statusLine)
-            statusGroup = sensorName "=" status
-        }
-
-        logicalFRUDeviceIndex = index(sdrEntry, "Logical FRU Device")
-
-        if (logicalFRUDeviceIndex != 0) {
-            fruDevice = checkSubStrAndReturnDelimitedString(sdrEntry, "Logical FRU Device")
-            gsub(" ", "", fruDevice)
-            gsub("h", "", fruDevice)
-            sensorFruId = hex_to_dec(fruDevice)
-        }
-
-        sensorReadingLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Sensor Reading")
-        if (sensorReadingLine != "") {
-            sensorReading = sensorReadingLine
-        }
-
-        thresholdUpperNonCriticalLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Upper non-critical")
-        if (thresholdUpperNonCriticalLine != "") {
-            thresholdUpperNonCritical = thresholdUpperNonCriticalLine
-            gsub(" ", "", thresholdUpperNonCritical)
-            gsub(":", "", thresholdUpperNonCritical)
-        }
-
-        thresholdUpperCriticalLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Upper critical")
-        if (thresholdUpperCriticalLine != "") {
-            thresholdUpperCritical = thresholdUpperCriticalLine
-            gsub(" ", "", thresholdUpperCritical)
-            gsub(":", "", thresholdUpperCritical)
-        }
-
-        thresholdLowerNonCriticalLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Lower non-critical")
-        if (thresholdLowerNonCriticalLine != "") {
-            thresholdLowerNonCritical = thresholdLowerNonCriticalLine
-            gsub(" ", "", thresholdLowerNonCritical)
-            gsub(":", "", thresholdLowerNonCritical)
-        }
-
-        thresholdLowerCriticalLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Lower critical")
-        if (thresholdLowerCriticalLine != "") {
-            thresholdLowerCritical = thresholdLowerCriticalLine
-            gsub(" ", "", thresholdLowerCritical)
-            gsub(":", "", thresholdLowerCritical)
-        }
-
-        thresholdUpperNonRecoverableLine = checkSubStrAndReturnDelimitedString(sdrEntry, "Upper non-recoverable")
-        if (thresholdUpperNonRecoverableLine != "") {
-            thresholdUpperNonRecoverable = thresholdUpperNonRecoverableLine
-            gsub(" ", "", thresholdUpperNonRecoverable)
-            gsub(":", "", thresholdUpperNonRecoverable)
-        }
     }
 }
 

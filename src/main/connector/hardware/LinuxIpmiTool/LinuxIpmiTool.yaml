@@ -3,7 +3,7 @@ extends:
 - ../../semconv/Hardware
 - ../../semconv/System
 connector:
-  displayName: IPMI
+  displayName: Linux IPMI (ipmitool)
   platforms: IPMI
   reliesOn: IPMI
   information: This connector provides environmental information on several IPMI-enabled servers in-band and out-of-band (temperatures, fans, etc.).

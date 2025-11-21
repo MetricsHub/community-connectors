@@ -17,7 +17,7 @@
     },
     "attributes" : {
       "filename" : "LinuxIpmiTool.yaml",
-      "name" : "IPMI",
+      "name" : "Linux IPMI (ipmitool)",
       "connector_id" : "LinuxIpmiTool",
       "applies_to_os" : "linux",
       "parent.id" : "localhost",
