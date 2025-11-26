@@ -3,11 +3,16 @@ table:
 - - "{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{76eb873e-3a26-4f72-bca5-6d356171ba48}\\\""
   - 67
   - 0
-  - 341928693760
+  - 320528191488
+- - "{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\""
 - - "{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{d10a2cd5-5253-4838-b880-b246f4222ba2}\\\""
   - ""
   - 0
-  - 139751424
+  - 103104512
+- - "{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{febf85c8-34a2-4241-873e-ff226d2fa3c7}\\\""
+  - ""
+  - 0
+  - 96088064
 headers: []
 rawData: null
 empty: false
