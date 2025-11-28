@@ -12,6 +12,12 @@ table:
   - NTFS
   - Windows RE Tools
   - 815788032
+- - "{1}\\\\localhost\\root/Microsoft/Windows/Storage/Providers_v2\\WSP_Volume.ObjectId=\"{c55bd753-bb5f-11ed-9465-806e6f6e6963}:VO:\\\\?\\Volume{febf85c8-34a2-4241-873e-ff226d2fa3c7}\\\""
+  - ""
+  - 3
+  - FAT32
+  - SYSTEM
+  - 268435456
 headers: []
 rawData: null
 empty: false
