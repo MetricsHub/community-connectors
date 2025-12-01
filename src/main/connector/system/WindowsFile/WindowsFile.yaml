@@ -21,9 +21,13 @@ connector:
       query: SELECT * FROM Win32_OperatingSystem
     tags: [ system, windows ]
   variables:
+    matchPath:
+      description: "Regular expression pattern to match file names for monitoring. (C:\\Users\\Public\\logs\\*.log,C:\\Program Files\\MetricsHub\\logs\\*.log)"
+      defaultValue: ""
     contentPattern:
-      description: Regular expression pattern to match file content for monitoring.
-      defaultValue:
+      description: "Regular expression pattern to match file content for monitoring. (Error|Exception|Failure)"
+      defaultValue: ""
+    
 
 beforeAll:
   files:

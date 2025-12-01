@@ -22,9 +22,12 @@ connector:
       errorMessage: Nothing matched.
     tags: [ system, linux ]
   variables:
+    matchPath:
+      description: "Regular expression pattern to match file names for monitoring. (/opt/metricshub/logs/*.log,/var/log/*.log)"
+      defaultValue: ""
     contentPattern:
-      description: Regular expression pattern to match file content for monitoring.
-      defaultValue:
+      description: "Regular expression pattern to match file content for monitoring. (Error|Exception|Failure)"
+      defaultValue: ""
 
 beforeAll:
   files:
