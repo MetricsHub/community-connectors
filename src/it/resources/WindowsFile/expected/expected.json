@@ -1,0 +1,300 @@
+{
+  "total" : 7,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "WindowsFile.yaml",
+      "name" : "Windows Files Monitoring",
+      "connector_id" : "WindowsFile",
+      "applies_to_os" : "windows",
+      "parent.id" : "localhost",
+      "id" : "WindowsFile"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed WmiCriterion Criterion:\n- WQL Query: SELECT * FROM Win32_OperatingSystem\n- Namespace: root\\CIMv2\n\nResult:\nWin32_OperatingSystem;CIM_OperatingSystem|CIM_LogicalElement|CIM_ManagedSystemElement|;CIM_ManagedSystemElement;2;root\\CIMv2;Win32_OperatingSystem=@;64;Win32_OperatingSystem=@;DEV-HV-01;CIM_OperatingSystem;\\Device\\HarddiskVolume2;17763;Multiprocessor Free;Microsoft Windows Server 2019 Standard;1252;33;Win32_OperatingSystem;Win32_ComputerSystem;;DEV-HV-01;60;True;True;True;3;False;;False;256;2;113385996;19922944;133720336;1729702433;;1762527830;1764586918;040c;Microsoft Corporation;4294967295;137438953344;en-US|;Microsoft Windows Server 2019 Standard|C:\\WINDOWS|\\Device\\Harddisk0\\Partition4;0;158;19;7;;64-bit;1033;272;18;;;;;False;True;3;Windows User;00429-70000-00000-AA165;0;0;19922944;OK;272;\\Device\\HarddiskVolume4;C:\\WINDOWS\\system32;C:;;154007668;134084724;10.0.17763;C:\\WINDOWS;\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT * FROM Win32_OperatingSystem\n- Namespace: root\\CIMv2\n\nResult: Win32_OperatingSystem;CIM_OperatingSystem|CIM_LogicalElement|CIM_ManagedSystemElement|;CIM_ManagedSystemElement;2;root\\CIMv2;Win32_OperatingSystem=@;64;Win32_OperatingSystem=@;DEV-HV-01;CIM_OperatingSystem;\\Device\\HarddiskVolume2;17763;Multiprocessor Free;Microsoft Windows Server 2019 Standard;1252;33;Win32_OperatingSystem;Win32_ComputerSystem;;DEV-HV-01;60;True;True;True;3;False;;False;256;2;113385996;19922944;133720336;1729702433;;1762527830;1764586918;040c;Microsoft Corporation;4294967295;137438953344;en-US|;Microsoft Windows Server 2019 Standard|C:\\WINDOWS|\\Device\\Harddisk0\\Partition4;0;158;19;7;;64-bit;1033;272;18;;;;;False;True;3;Windows User;00429-70000-00000-AA165;0;0;19922944;OK;272;\\Device\\HarddiskVolume4;C:\\WINDOWS\\system32;C:;;154007668;134084724;10.0.17763;C:\\WINDOWS;\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1764596132445,
+    "type" : "connector",
+    "id" : "connector_WindowsFile",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.ctime" : {
+        "name" : "system.file.ctime",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.76424194E9,
+        "previousValue" : 1.76424194E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.lines" : {
+        "name" : "system.file.lines",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 14.0,
+        "previousValue" : 14.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.atime" : {
+        "name" : "system.file.atime",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.76424194E9,
+        "previousValue" : 1.76424194E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.size" : {
+        "name" : "system.file.size",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 225.0,
+        "previousValue" : 225.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.mtime" : {
+        "name" : "system.file.mtime",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.76424171E9,
+        "previousValue" : 1.76424171E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "C:\\Users\\Public\\file.txt",
+      "system.file.name" : "file.txt",
+      "connector_id" : "WindowsFile",
+      "id" : "C:\\Users\\Public\\file.txt"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764596137282,
+    "type" : "file",
+    "id" : "WindowsFile_file_C:\\Users\\Public\\file.txt",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"wmi\"}" : {
+        "name" : "metricshub.host.up{protocol=\"wmi\"}",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "wmi"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"wmi\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"wmi\"}",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "wmi"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "windows",
+      "host.type" : "compute",
+      "host.name" : "localhost",
+      "agent.host.name" : "PC-ELYES.lan"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764596137282,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpoint" : true,
+    "endpointHost" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "C:\\Users\\Public\\file.txt",
+      "system.file.name" : "file.txt",
+      "connector_id" : "WindowsFile",
+      "id" : "C:\\Users\\Public\\file.txt",
+      "system.file.keyword" : "Error"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764596137282,
+    "type" : "patternMatching",
+    "id" : "WindowsFile_patternMatching_C:\\Users\\Public\\file.txt_Error",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 7.0,
+        "previousValue" : 7.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "C:\\Users\\Public\\file.txt",
+      "system.file.name" : "file.txt",
+      "connector_id" : "WindowsFile",
+      "id" : "C:\\Users\\Public\\file.txt",
+      "system.file.keyword" : "Exception"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764596137282,
+    "type" : "patternMatching",
+    "id" : "WindowsFile_patternMatching_C:\\Users\\Public\\file.txt_Exception",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "C:\\Users\\Public\\file.txt",
+      "system.file.name" : "file.txt",
+      "connector_id" : "WindowsFile",
+      "id" : "C:\\Users\\Public\\file.txt",
+      "system.file.keyword" : "Failed"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764596137282,
+    "type" : "patternMatching",
+    "id" : "WindowsFile_patternMatching_C:\\Users\\Public\\file.txt_Failed",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764596137282,
+        "previousCollectTime" : 1764596132445,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 8.0,
+        "previousValue" : 8.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "C:\\Users\\Public\\file.txt",
+      "system.file.name" : "file.txt",
+      "connector_id" : "WindowsFile",
+      "id" : "C:\\Users\\Public\\file.txt",
+      "system.file.keyword" : "dev-hv-01"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764596137282,
+    "type" : "patternMatching",
+    "id" : "WindowsFile_patternMatching_C:\\Users\\Public\\file.txt_dev-hv-01",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

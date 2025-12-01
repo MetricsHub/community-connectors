@@ -1,0 +1,11 @@
+---
+table:
+- - C:\Users\Public\file.txt
+  - file.txt
+  - 225
+  - 1764241940
+  - 1764241710
+  - 1764241940
+headers: []
+rawData: C:\Users\Public\file.txt;file.txt;225;1764241940;1764241710;1764241940
+empty: false
