@@ -1,0 +1,951 @@
+{
+  "total" : 22,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "LinuxFile.yaml",
+      "name" : "Linux Files Monitoring",
+      "connector_id" : "LinuxFile",
+      "applies_to_os" : "linux",
+      "parent.id" : "localhost",
+      "id" : "LinuxFile"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: ${file::1} \"/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml\"\n- ExecuteLocally: false\n- ExpectedResult: .+\n\nResult:\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log\n/opt/metricshub/config/metricshub.yaml\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: C:\\Users\\ELYESC~1\\AppData\\Local\\Temp\\metricshub_embedded_detection15803086741945325003.sh \"/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml\"\n- ExecuteLocally: false\n- ExpectedResult: .+\n\nResult: /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log\n/opt/metricshub/config/metricshub.yaml\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1764585924951,
+    "type" : "connector",
+    "id" : "connector_LinuxFile",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.ctime" : {
+        "name" : "system.file.ctime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349419E9,
+        "previousValue" : 1.764349419E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.lines" : {
+        "name" : "system.file.lines",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 417.0,
+        "previousValue" : 417.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.atime" : {
+        "name" : "system.file.atime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764555519E9,
+        "previousValue" : 1.764555519E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.size" : {
+        "name" : "system.file.size",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 16945.0,
+        "previousValue" : 16945.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.mtime" : {
+        "name" : "system.file.mtime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349419E9,
+        "previousValue" : 1.764349419E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/config/metricshub.yaml",
+      "system.file.name" : "metricshub.yaml",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/config/metricshub.yaml"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "file",
+    "id" : "LinuxFile_file_/opt/metricshub/config/metricshub.yaml",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.ctime" : {
+        "name" : "system.file.ctime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349508E9,
+        "previousValue" : 1.764349508E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.lines" : {
+        "name" : "system.file.lines",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.atime" : {
+        "name" : "system.file.atime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764555517E9,
+        "previousValue" : 1.764555517E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.size" : {
+        "name" : "system.file.size",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 240.0,
+        "previousValue" : 240.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.mtime" : {
+        "name" : "system.file.mtime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349508E9,
+        "previousValue" : 1.764349508E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "file",
+    "id" : "LinuxFile_file_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.ctime" : {
+        "name" : "system.file.ctime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349532E9,
+        "previousValue" : 1.764349532E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.lines" : {
+        "name" : "system.file.lines",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.atime" : {
+        "name" : "system.file.atime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764555518E9,
+        "previousValue" : 1.764555518E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.size" : {
+        "name" : "system.file.size",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 240.0,
+        "previousValue" : 240.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.mtime" : {
+        "name" : "system.file.mtime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349532E9,
+        "previousValue" : 1.764349532E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "file",
+    "id" : "LinuxFile_file_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.ctime" : {
+        "name" : "system.file.ctime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349509E9,
+        "previousValue" : 1.764349509E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.lines" : {
+        "name" : "system.file.lines",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.atime" : {
+        "name" : "system.file.atime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764555517E9,
+        "previousValue" : 1.764555517E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.size" : {
+        "name" : "system.file.size",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 240.0,
+        "previousValue" : 240.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.mtime" : {
+        "name" : "system.file.mtime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349509E9,
+        "previousValue" : 1.764349509E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "file",
+    "id" : "LinuxFile_file_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.ctime" : {
+        "name" : "system.file.ctime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349533E9,
+        "previousValue" : 1.764349533E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.lines" : {
+        "name" : "system.file.lines",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.atime" : {
+        "name" : "system.file.atime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764555516E9,
+        "previousValue" : 1.764555516E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.size" : {
+        "name" : "system.file.size",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 240.0,
+        "previousValue" : 240.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "system.file.mtime" : {
+        "name" : "system.file.mtime",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.764349533E9,
+        "previousValue" : 1.764349533E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "file",
+    "id" : "LinuxFile_file_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "linux",
+      "host.type" : "compute",
+      "host.name" : "localhost"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/config/metricshub.yaml",
+      "system.file.name" : "metricshub.yaml",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/config/metricshub.yaml",
+      "system.file.keyword" : "Error"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/config/metricshub.yaml_Error",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/config/metricshub.yaml",
+      "system.file.name" : "metricshub.yaml",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/config/metricshub.yaml",
+      "system.file.keyword" : "Exception"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/config/metricshub.yaml_Exception",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/config/metricshub.yaml",
+      "system.file.name" : "metricshub.yaml",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/config/metricshub.yaml",
+      "system.file.keyword" : "Failed"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/config/metricshub.yaml_Failed",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4.0,
+        "previousValue" : 4.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+      "system.file.keyword" : "Error"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log_Error",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+      "system.file.keyword" : "Exception"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log_Exception",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log",
+      "system.file.keyword" : "Failed"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log_Failed",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4.0,
+        "previousValue" : 4.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+      "system.file.keyword" : "Error"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log_Error",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+      "system.file.keyword" : "Exception"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log_Exception",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-global-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log",
+      "system.file.keyword" : "Failed"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log_Failed",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4.0,
+        "previousValue" : 4.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "system.file.keyword" : "Error"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log_Error",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "system.file.keyword" : "Exception"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log_Exception",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log",
+      "system.file.keyword" : "Failed"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log_Failed",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4.0,
+        "previousValue" : 4.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "system.file.keyword" : "Error"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log_Error",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "system.file.keyword" : "Exception"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log_Exception",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.file.keywords" : {
+        "name" : "system.file.keywords",
+        "collectTime" : 1764585929852,
+        "previousCollectTime" : 1764585924951,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.file.path" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "system.file.name" : "metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "connector_id" : "LinuxFile",
+      "id" : "/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log",
+      "system.file.keyword" : "Failed"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764585929852,
+    "type" : "patternMatching",
+    "id" : "LinuxFile_patternMatching_/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log_Failed",
+    "identifyingAttributeKeys" : [ "id", "system.file.keyword" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

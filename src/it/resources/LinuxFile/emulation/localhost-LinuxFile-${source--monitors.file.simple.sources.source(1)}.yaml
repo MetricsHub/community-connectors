@@ -1,0 +1,40 @@
+---
+table:
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - 240
+  - 1764555516
+  - 1764349533
+  - 1764349533
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - 240
+  - 1764555517
+  - 1764349509
+  - 1764349509
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+  - metricshub-agent-global-2025-11-28-06-05-08.log
+  - 240
+  - 1764555517
+  - 1764349508
+  - 1764349508
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+  - metricshub-agent-global-2025-11-28-06-05-32.log
+  - 240
+  - 1764555518
+  - 1764349532
+  - 1764349532
+- - /opt/metricshub/config/metricshub.yaml
+  - metricshub.yaml
+  - 16945
+  - 1764555519
+  - 1764349419
+  - 1764349419
+headers: []
+rawData: |-
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log;metricshub-agent-localhost-2025-11-28-06-05-32.log;240;1764555516;1764349533;1764349533
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log;metricshub-agent-localhost-2025-11-28-06-05-08.log;240;1764555517;1764349509;1764349509
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log;metricshub-agent-global-2025-11-28-06-05-08.log;240;1764555517;1764349508;1764349508
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log;metricshub-agent-global-2025-11-28-06-05-32.log;240;1764555518;1764349532;1764349532
+  /opt/metricshub/config/metricshub.yaml;metricshub.yaml;16945;1764555519;1764349419;1764349419
+empty: false
