@@ -1,0 +1,137 @@
+---
+extends:
+- ../../semconv/Hardware
+- ../../semconv/System
+connector:
+  displayName: Windows IPMI (ipmitool)
+  platforms: IPMI
+  reliesOn: IPMI
+  information: This connector provides environmental information on several IPMI-enabled servers in-band and out-of-band (temperatures, fans, etc.).
+  version: 2.0
+  detection:
+    connectionTypes:
+    - remote
+    - local
+    appliesTo:
+    - Windows
+    supersedes:
+    - IpmiTool
+    criteria:
+    - type: wmi
+      query: SELECT Description FROM ComputerSystem
+      namespace: root\hardware
+    tags: [ hardware, windows ]
+
+monitors:
+  enclosure:
+    simple:
+      sources:
+        computerSystems:
+          type: wmi
+          query: SELECT IdentifyingNumber,Name,Vendor FROM Win32_ComputerSystemProduct
+          namespace: root\cimv2
+        numericSensors:
+          type: wmi
+          query: SELECT BaseUnits,CurrentReading,Description,LowerThresholdCritical,LowerThresholdNonCritical,SensorType,UnitModifier,UpperThresholdCritical,UpperThresholdNonCritical FROM NumericSensor
+          namespace: root\hardware
+          computes:
+          - type: awk
+            script: ${file::numeric_sensors.awk}
+        discreteSensors:
+          type: wmi
+          query: SELECT CurrentState,Description FROM Sensor
+          namespace: root\hardware
+          computes:
+          - type: awk
+            script: ${file::discrete_sensors.awk}
+        sensorsUnion:
+          type: tableUnion
+          tables:
+            - ${source::numericSensors}
+            - ${source::discreteSensors}
+      mapping:
+        source: ${source::computerSystems}
+        attributes:
+          id: $1
+          name: $2
+          vendor: $3
+          serial_number: $1
+
+  temperature:
+    simple:
+      sources:
+        temperatures:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Temperature
+      mapping:
+        source: ${source::temperatures}
+        attributes:
+          id: $2
+          name: $3
+        metrics:
+          hw.temperature: $5
+          hw.temperature.limit{limit_type="high.degraded"}: $6
+          hw.temperature.limit{limit_type="high.critical"}: $7
+
+  fan:
+    simple:
+      sources:
+        fans:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan
+      mapping:
+        source: ${source::fans}
+        attributes:
+          id: $2
+          name: $3
+        metrics:
+          hw.fan.speed: $5
+          hw.fan.speed_ratio: $8
+          hw.fan.speed.limit{limit_type="low.degraded"}: $6
+          hw.fan.speed.limit{limit_type="low.critical"}: $7
+
+  voltage:
+    simple:
+      sources:
+        voltages:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Voltage
+      mapping:
+        source: ${source::voltages}
+        attributes:
+          id: $2
+          name: $3
+        metrics:
+          hw.voltage: $5
+          hw.voltage.limit{limit_type="low.critical"}: $6
+          hw.voltage.limit{limit_type="high.critical"}: $7
+
+  power_supply:
+    simple:
+      sources:
+        power_supplies:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: PowerSupply
+      mapping:
+        source: ${source::power_supplies}
+        attributes:
+          id: $2
+          name: $3
+        metrics:
+          hw.power: $5

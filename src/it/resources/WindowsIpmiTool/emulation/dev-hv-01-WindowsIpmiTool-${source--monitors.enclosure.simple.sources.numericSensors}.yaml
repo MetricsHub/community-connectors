@@ -1,0 +1,392 @@
+---
+table:
+- - 2
+  - 220
+  - 01-Inlet Ambient(3.0.32):Temperature for OEM System Integrator defined entity 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 420
+  - ""
+- - 2
+  - 400
+  - 02-CPU 1(4.0.32):Temperature for OEM System Integrator defined entity 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 700
+  - ""
+- - 2
+  - 400
+  - 03-CPU 2(5.0.32):Temperature for OEM System Integrator defined entity 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 700
+  - ""
+- - 2
+  - 270
+  - 04-P1 DIMM 1-6(6.0.32):Temperature for Memory device 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 890
+  - ""
+- - 2
+  - 280
+  - 05-P1 DIMM 7-12(7.0.32):Temperature for Memory device 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 890
+  - ""
+- - 2
+  - 290
+  - 06-P2 DIMM 1-6(8.0.32):Temperature for Memory device 3
+  - ""
+  - ""
+  - 2
+  - -1
+  - 890
+  - ""
+- - 2
+  - 290
+  - 07-P2 DIMM 7-12(9.0.32):Temperature for Memory device 4
+  - ""
+  - ""
+  - 2
+  - -1
+  - 890
+  - ""
+- - 2
+  - 350
+  - 08-HD Max(10.0.32):Temperature for Disk or disk bay 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 600
+  - ""
+- - 2
+  - 0
+  - 09-Exp Bay Drive(11.0.32):Temperature for Disk or disk bay 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 750
+  - ""
+- - 2
+  - 390
+  - 10-Chipset(12.0.32):Temperature for OEM System Integrator defined entity 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1050
+  - ""
+- - 2
+  - 350
+  - 13-VR P1(15.0.32):Temperature for Power module 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1150
+  - ""
+- - 2
+  - 350
+  - 14-VR P2(16.0.32):Temperature for Power module 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1150
+  - ""
+- - 2
+  - 300
+  - 15-VR P1 Mem(17.0.32):Temperature for Power module 3
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1150
+  - ""
+- - 2
+  - 290
+  - 16-VR P1 Mem(18.0.32):Temperature for Power module 4
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1150
+  - ""
+- - 2
+  - 320
+  - 17-VR P2 Mem(19.0.32):Temperature for Power module 5
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1150
+  - ""
+- - 2
+  - 310
+  - 18-VR P2 Mem(20.0.32):Temperature for Power module 6
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1150
+  - ""
+- - 2
+  - 560
+  - 24-HD Controller(26.0.32):Temperature for Add-in card 4
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1000
+  - ""
+- - 2
+  - 400
+  - 25-LOM Card(27.0.32):Temperature for Add-in card 5
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1000
+  - ""
+- - 2
+  - 470
+  - 26-LOM(28.0.32):Temperature for OEM System Integrator defined entity 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1000
+  - ""
+- - 2
+  - 260
+  - 27-Front Ambient(29.0.32):Temperature for OEM System Integrator defined entity 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 650
+  - ""
+- - 2
+  - 310
+  - 28-P/S 2 Zone(30.0.32):Temperature for OEM System Integrator defined entity 3
+  - ""
+  - ""
+  - 2
+  - -1
+  - 750
+  - ""
+- - 2
+  - 330
+  - 29-Battery Zone(31.0.32):Temperature for Battery 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 750
+  - ""
+- - 2
+  - 400
+  - 30-iLO Zone(32.0.32):Temperature for System management module 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 900
+  - ""
+- - 2
+  - 360
+  - 31-PCI 1 Zone(33.0.32):Temperature for System internal expansion board 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - 700
+  - ""
+- - 2
+  - 340
+  - 32-PCI 2 Zone(34.0.32):Temperature for System internal expansion board 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 700
+  - ""
+- - 2
+  - 340
+  - 34-HD Cntlr Zone(36.0.32):Temperature for Add-in card 6
+  - ""
+  - ""
+  - 2
+  - -1
+  - 700
+  - ""
+- - 2
+  - 310
+  - 35-I/O Zone(37.0.32):Temperature for OEM System Integrator defined entity 4
+  - ""
+  - ""
+  - 2
+  - -1
+  - 750
+  - ""
+- - 2
+  - 260
+  - 36-Storage Batt(38.0.32):Temperature for Battery 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - 600
+  - ""
+- - 2
+  - 280
+  - 11-PS 1 Inlet(13.0.32):Temperature for Power supply 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - ""
+  - ""
+- - 2
+  - 400
+  - 19-PS 1 Internal(21.0.32):Temperature for Power supply 1
+  - ""
+  - ""
+  - 2
+  - -1
+  - ""
+  - ""
+- - 7
+  - 5000
+  - PS 1 Output(62.0.32):Power Supply for Power supply 1
+  - ""
+  - ""
+  - 1
+  - -2
+  - ""
+  - ""
+- - 2
+  - 300
+  - 12-PS 2 Inlet(14.0.32):Temperature for Power supply 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - ""
+  - ""
+- - 2
+  - 400
+  - 20-PS 2 Internal(22.0.32):Temperature for Power supply 2
+  - ""
+  - ""
+  - 2
+  - -1
+  - ""
+  - ""
+- - 7
+  - 4500
+  - PS 2 Output(65.0.32):Power Supply for Power supply 2
+  - ""
+  - ""
+  - 1
+  - -2
+  - ""
+  - ""
+- - 2
+  - 320
+  - 37-Fuse(39.0.32):Temperature for Power supply 3
+  - ""
+  - ""
+  - 2
+  - -1
+  - 1000
+  - ""
+- - 7
+  - 9500
+  - PwrMeter Output(68.0.32):Other Units-based Sensor for System board 1
+  - ""
+  - ""
+  - 1
+  - -2
+  - ""
+  - ""
+- - 0
+  - 20
+  - Fan 1 DutyCycle(41.0.32):Fan for Fan/cooling device 1
+  - ""
+  - ""
+  - 5
+  - 0
+  - ""
+  - ""
+- - 0
+  - 17
+  - Fan 2 DutyCycle(44.0.32):Fan for Fan/cooling device 2
+  - ""
+  - ""
+  - 5
+  - 0
+  - ""
+  - ""
+- - 0
+  - 20
+  - Fan 3 DutyCycle(47.0.32):Fan for Fan/cooling device 3
+  - ""
+  - ""
+  - 5
+  - 0
+  - ""
+  - ""
+- - 0
+  - 21
+  - Fan 4 DutyCycle(50.0.32):Fan for Fan/cooling device 4
+  - ""
+  - ""
+  - 5
+  - 0
+  - ""
+  - ""
+- - 0
+  - 21
+  - Fan 5 DutyCycle(53.0.32):Fan for Fan/cooling device 5
+  - ""
+  - ""
+  - 5
+  - 0
+  - ""
+  - ""
+- - 0
+  - 21
+  - Fan 6 DutyCycle(56.0.32):Fan for Fan/cooling device 6
+  - ""
+  - ""
+  - 5
+  - 0
+  - ""
+  - ""
+- - 0
+  - 20
+  - Fan 7 DutyCycle(59.0.32):Fan for Fan/cooling device 7
+  - ""
+  - ""
+  - 5
+  - 0
+  - ""
+  - ""
+headers: []
+rawData: null
+empty: false

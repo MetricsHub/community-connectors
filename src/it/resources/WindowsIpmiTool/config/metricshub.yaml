@@ -1,0 +1,14 @@
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
+patchDirectory: "src/main/connector"
+resources:
+  localhost:
+    attributes:
+      host.name: localhost
+      host.type: windows
+    protocols:
+      ssh:
+        username: username
+        password: password
+        timeout: 300
+    connectors: ["+WindowsIpmiTool"]

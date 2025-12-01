@@ -1,0 +1,2600 @@
+{
+  "total" : 45,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "WindowsIpmiTool.yaml",
+      "name" : "Windows IPMI (ipmitool)",
+      "connector_id" : "WindowsIpmiTool",
+      "applies_to_os" : "windows",
+      "parent.id" : "localhost",
+      "id" : "WindowsIpmiTool"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed WmiCriterion Criterion:\n- WQL Query: SELECT Description FROM ComputerSystem\n- Namespace: root\\hardware\n\nResult:\nBMC 19 - IPMI v2.0 - fw v2.82;\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT Description FROM ComputerSystem\n- Namespace: root\\hardware\n\nResult: BMC 19 - IPMI v2.0 - fw v2.82;\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1764337148824,
+    "type" : "connector",
+    "id" : "connector_WindowsIpmiTool",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : true,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "vendor" : "HP",
+      "name" : "ProLiant DL360 Gen9",
+      "connector_id" : "WindowsIpmiTool",
+      "serial_number" : "CZJ619086Z",
+      "id" : "CZJ619086Z"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "enclosure",
+    "id" : "WindowsIpmiTool_enclosure_CZJ619086Z",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.2,
+        "previousValue" : 0.2,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "Fan 1 DutyCycle",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "41.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_41.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.19,
+        "previousValue" : 0.19,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "Fan 2 DutyCycle",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "44.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_44.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.2,
+        "previousValue" : 0.2,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "Fan 3 DutyCycle",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "47.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_47.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.24,
+        "previousValue" : 0.24,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.2,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "Fan 4 DutyCycle",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "50.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_50.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.24,
+        "previousValue" : 0.24,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.2,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "Fan 5 DutyCycle",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "53.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_53.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.24,
+        "previousValue" : 0.24,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.2,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "Fan 6 DutyCycle",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "56.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_56.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.23,
+        "previousValue" : 0.23,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.1500000000000001,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "Fan 7 DutyCycle",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "59.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_59.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"wmi\"}" : {
+        "name" : "metricshub.host.up{protocol=\"wmi\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "wmi"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"wmi\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"wmi\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "wmi"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.09,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.heating_margin" : {
+        "name" : "hw.host.heating_margin",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 15.799999999999997,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "value" : 8.56,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.ambient_temperature" : {
+        "name" : "hw.host.ambient_temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 22.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "host.name" : "localhost",
+      "agent.host.name" : "192.168.10.131",
+      "os.type" : "windows",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "connector" : false,
+    "endpoint" : true,
+    "endpointHost" : true,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.power" : {
+        "name" : "hw.power",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 50.0,
+        "previousValue" : 50.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "PS 1 Output",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "62.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "power_supply",
+    "id" : "WindowsIpmiTool_power_supply_62.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.power" : {
+        "name" : "hw.power",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 45.0,
+        "previousValue" : 45.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "PS 2 Output",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "65.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "power_supply",
+    "id" : "WindowsIpmiTool_power_supply_65.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.power" : {
+        "name" : "hw.power",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 95.0,
+        "previousValue" : 95.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "name" : "PwrMeter Output",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "68.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "power_supply",
+    "id" : "WindowsIpmiTool_power_supply_68.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 54.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 60.0,
+        "previousValue" : 60.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 35.0,
+        "previousValue" : 35.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "08-HD Max",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "10.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_10.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 94.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 105.0,
+        "previousValue" : 105.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 39.0,
+        "previousValue" : 39.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "10-Chipset",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "12.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_12.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 28.0,
+        "previousValue" : 28.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "11-PS 1 Inlet",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "13.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_13.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 30.0,
+        "previousValue" : 30.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "12-PS 2 Inlet",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "14.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_14.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 103.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 115.0,
+        "previousValue" : 115.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 35.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "13-VR P1",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "15.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_15.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 103.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 115.0,
+        "previousValue" : 115.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 35.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "14-VR P2",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "16.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_16.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 103.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 115.0,
+        "previousValue" : 115.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 30.0,
+        "previousValue" : 30.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "15-VR P1 Mem",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "17.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_17.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 103.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 115.0,
+        "previousValue" : 115.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 29.0,
+        "previousValue" : 29.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "16-VR P1 Mem",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "18.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_18.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 103.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 115.0,
+        "previousValue" : 115.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 32.0,
+        "previousValue" : 32.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "17-VR P2 Mem",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "19.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_19.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 103.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 115.0,
+        "previousValue" : 115.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 31.0,
+        "previousValue" : 31.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "18-VR P2 Mem",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "20.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_20.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 40.0,
+        "previousValue" : 40.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "19-PS 1 Internal",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "21.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_21.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 40.0,
+        "previousValue" : 40.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "20-PS 2 Internal",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "22.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_22.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 90.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 56.0,
+        "previousValue" : 56.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "24-HD Controller",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "26.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_26.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 90.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 40.0,
+        "previousValue" : 40.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "25-LOM Card",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "27.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_27.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 90.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 47.0,
+        "previousValue" : 47.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "26-LOM",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "28.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_28.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 58.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 65.0,
+        "previousValue" : 65.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 26.0,
+        "previousValue" : 26.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "27-Front Ambient",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "29.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_29.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 37.800000000000004,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 42.0,
+        "previousValue" : 42.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 22.0,
+        "previousValue" : 22.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "01-Inlet Ambient",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "3.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_3.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 67.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 75.0,
+        "previousValue" : 75.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 31.0,
+        "previousValue" : 31.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "28-P/S 2 Zone",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "30.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_30.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 67.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 75.0,
+        "previousValue" : 75.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 34.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "29-Battery Zone",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "31.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_31.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 81.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 90.0,
+        "previousValue" : 90.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 40.0,
+        "previousValue" : 40.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "30-iLO Zone",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "32.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_32.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 63.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 70.0,
+        "previousValue" : 70.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 37.0,
+        "previousValue" : 37.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "31-PCI 1 Zone",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "33.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_33.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 63.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 70.0,
+        "previousValue" : 70.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 35.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "32-PCI 2 Zone",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "34.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_34.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 63.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 70.0,
+        "previousValue" : 70.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 34.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "34-HD Cntlr Zone",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "36.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_36.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 67.5,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 75.0,
+        "previousValue" : 75.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 31.0,
+        "previousValue" : 31.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "35-I/O Zone",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "37.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_37.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 54.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 60.0,
+        "previousValue" : 60.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 26.0,
+        "previousValue" : 26.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "36-Storage Batt",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "38.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_38.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 90.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 31.0,
+        "previousValue" : 31.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "37-Fuse",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "39.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_39.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 63.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 70.0,
+        "previousValue" : 70.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 40.0,
+        "previousValue" : 40.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "02-CPU 1",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "4.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_4.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 63.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 70.0,
+        "previousValue" : 70.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 40.0,
+        "previousValue" : 40.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "03-CPU 2",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "5.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_5.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 80.10000000000001,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 89.0,
+        "previousValue" : 89.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 27.0,
+        "previousValue" : 27.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "04-P1 DIMM 1-6",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "6.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_6.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 80.10000000000001,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 89.0,
+        "previousValue" : 89.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 28.0,
+        "previousValue" : 27.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "05-P1 DIMM 7-12",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "7.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_7.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 80.10000000000001,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 89.0,
+        "previousValue" : 89.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 29.0,
+        "previousValue" : 29.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "06-P2 DIMM 1-6",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "8.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_8.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 80.10000000000001,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 89.0,
+        "previousValue" : 89.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764337178157,
+        "previousCollectTime" : 1764337148824,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 29.0,
+        "previousValue" : 29.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__is_cpu_sensor" : "false",
+      "name" : "07-P2 DIMM 7-12",
+      "connector_id" : "WindowsIpmiTool",
+      "id" : "9.0.32"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764337178157,
+    "type" : "temperature",
+    "id" : "WindowsIpmiTool_temperature_9.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpoint" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  } ]
+}

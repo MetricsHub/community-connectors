@@ -24,6 +24,7 @@ class ConnectorReplayIT {
 		"WbemGenDiskNT",
 		"SmartMonLinux",
 		"MIB2Switch",
+		"WindowsIpmiTool"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)
