@@ -24,7 +24,8 @@ class ConnectorReplayIT {
 		"WbemGenDiskNT",
 		"SmartMonLinux",
 		"MIB2Switch",
-		"WindowsFile"
+		"WindowsFile",
+		"LinuxFile"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)

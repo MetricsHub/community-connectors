@@ -1,0 +1,80 @@
+---
+table:
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - Error
+  - 4
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - Exception
+  - 2
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - metricshub-agent-localhost-2025-11-28-06-05-32.log
+  - Failed
+  - 2
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - Error
+  - 4
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - Exception
+  - 2
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - metricshub-agent-localhost-2025-11-28-06-05-08.log
+  - Failed
+  - 2
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+  - metricshub-agent-global-2025-11-28-06-05-08.log
+  - Error
+  - 4
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+  - metricshub-agent-global-2025-11-28-06-05-08.log
+  - Exception
+  - 2
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+  - metricshub-agent-global-2025-11-28-06-05-08.log
+  - Failed
+  - 2
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+  - metricshub-agent-global-2025-11-28-06-05-32.log
+  - Error
+  - 4
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+  - metricshub-agent-global-2025-11-28-06-05-32.log
+  - Exception
+  - 2
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+  - metricshub-agent-global-2025-11-28-06-05-32.log
+  - Failed
+  - 2
+- - /opt/metricshub/config/metricshub.yaml
+  - metricshub.yaml
+  - Error
+  - 2
+- - /opt/metricshub/config/metricshub.yaml
+  - metricshub.yaml
+  - Exception
+  - 1
+- - /opt/metricshub/config/metricshub.yaml
+  - metricshub.yaml
+  - Failed
+  - 1
+headers: []
+rawData: |-
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log;metricshub-agent-localhost-2025-11-28-06-05-32.log;Error;4
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log;metricshub-agent-localhost-2025-11-28-06-05-32.log;Exception;2
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log;metricshub-agent-localhost-2025-11-28-06-05-32.log;Failed;2
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log;metricshub-agent-localhost-2025-11-28-06-05-08.log;Error;4
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log;metricshub-agent-localhost-2025-11-28-06-05-08.log;Exception;2
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log;metricshub-agent-localhost-2025-11-28-06-05-08.log;Failed;2
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log;metricshub-agent-global-2025-11-28-06-05-08.log;Error;4
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log;metricshub-agent-global-2025-11-28-06-05-08.log;Exception;2
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log;metricshub-agent-global-2025-11-28-06-05-08.log;Failed;2
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log;metricshub-agent-global-2025-11-28-06-05-32.log;Error;4
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log;metricshub-agent-global-2025-11-28-06-05-32.log;Exception;2
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log;metricshub-agent-global-2025-11-28-06-05-32.log;Failed;2
+  /opt/metricshub/config/metricshub.yaml;metricshub.yaml;Error;2
+  /opt/metricshub/config/metricshub.yaml;metricshub.yaml;Exception;1
+  /opt/metricshub/config/metricshub.yaml;metricshub.yaml;Failed;1
+empty: false
