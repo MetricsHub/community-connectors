@@ -28,7 +28,7 @@ table:
   - 700
   - ""
 - - 2
-  - 270
+  - 300
   - 04-P1 DIMM 1-6(6.0.32):Temperature for Memory device 1
   - ""
   - ""
@@ -37,7 +37,7 @@ table:
   - 890
   - ""
 - - 2
-  - 280
+  - 300
   - 05-P1 DIMM 7-12(7.0.32):Temperature for Memory device 2
   - ""
   - ""
@@ -46,7 +46,7 @@ table:
   - 890
   - ""
 - - 2
-  - 290
+  - 310
   - 06-P2 DIMM 1-6(8.0.32):Temperature for Memory device 3
   - ""
   - ""
@@ -55,7 +55,7 @@ table:
   - 890
   - ""
 - - 2
-  - 290
+  - 310
   - 07-P2 DIMM 7-12(9.0.32):Temperature for Memory device 4
   - ""
   - ""
@@ -82,7 +82,7 @@ table:
   - 750
   - ""
 - - 2
-  - 390
+  - 400
   - 10-Chipset(12.0.32):Temperature for OEM System Integrator defined entity 1
   - ""
   - ""
@@ -91,7 +91,7 @@ table:
   - 1050
   - ""
 - - 2
-  - 350
+  - 360
   - 13-VR P1(15.0.32):Temperature for Power module 1
   - ""
   - ""
@@ -100,7 +100,7 @@ table:
   - 1150
   - ""
 - - 2
-  - 350
+  - 360
   - 14-VR P2(16.0.32):Temperature for Power module 2
   - ""
   - ""
@@ -109,7 +109,7 @@ table:
   - 1150
   - ""
 - - 2
-  - 300
+  - 310
   - 15-VR P1 Mem(17.0.32):Temperature for Power module 3
   - ""
   - ""
@@ -127,7 +127,7 @@ table:
   - 1150
   - ""
 - - 2
-  - 320
+  - 330
   - 17-VR P2 Mem(19.0.32):Temperature for Power module 5
   - ""
   - ""
@@ -136,7 +136,7 @@ table:
   - 1150
   - ""
 - - 2
-  - 310
+  - 320
   - 18-VR P2 Mem(20.0.32):Temperature for Power module 6
   - ""
   - ""
@@ -181,7 +181,7 @@ table:
   - 650
   - ""
 - - 2
-  - 310
+  - 330
   - 28-P/S 2 Zone(30.0.32):Temperature for OEM System Integrator defined entity 3
   - ""
   - ""
@@ -190,7 +190,7 @@ table:
   - 750
   - ""
 - - 2
-  - 330
+  - 340
   - 29-Battery Zone(31.0.32):Temperature for Battery 1
   - ""
   - ""
@@ -199,7 +199,7 @@ table:
   - 750
   - ""
 - - 2
-  - 400
+  - 410
   - 30-iLO Zone(32.0.32):Temperature for System management module 1
   - ""
   - ""
@@ -208,7 +208,7 @@ table:
   - 900
   - ""
 - - 2
-  - 360
+  - 370
   - 31-PCI 1 Zone(33.0.32):Temperature for System internal expansion board 1
   - ""
   - ""
@@ -217,7 +217,7 @@ table:
   - 700
   - ""
 - - 2
-  - 340
+  - 350
   - 32-PCI 2 Zone(34.0.32):Temperature for System internal expansion board 2
   - ""
   - ""
@@ -235,7 +235,7 @@ table:
   - 700
   - ""
 - - 2
-  - 310
+  - 320
   - 35-I/O Zone(37.0.32):Temperature for OEM System Integrator defined entity 4
   - ""
   - ""
@@ -253,7 +253,7 @@ table:
   - 600
   - ""
 - - 2
-  - 280
+  - 290
   - 11-PS 1 Inlet(13.0.32):Temperature for Power supply 1
   - ""
   - ""
@@ -271,7 +271,7 @@ table:
   - ""
   - ""
 - - 7
-  - 5000
+  - 5500
   - PS 1 Output(62.0.32):Power Supply for Power supply 1
   - ""
   - ""
@@ -280,7 +280,7 @@ table:
   - ""
   - ""
 - - 2
-  - 300
+  - 310
   - 12-PS 2 Inlet(14.0.32):Temperature for Power supply 2
   - ""
   - ""
@@ -307,7 +307,7 @@ table:
   - ""
   - ""
 - - 2
-  - 320
+  - 330
   - 37-Fuse(39.0.32):Temperature for Power supply 3
   - ""
   - ""
@@ -316,7 +316,7 @@ table:
   - 1000
   - ""
 - - 7
-  - 9500
+  - 10500
   - PwrMeter Output(68.0.32):Other Units-based Sensor for System board 1
   - ""
   - ""
@@ -334,7 +334,7 @@ table:
   - ""
   - ""
 - - 0
-  - 17
+  - 19
   - Fan 2 DutyCycle(44.0.32):Fan for Fan/cooling device 2
   - ""
   - ""
@@ -352,7 +352,7 @@ table:
   - ""
   - ""
 - - 0
-  - 21
+  - 24
   - Fan 4 DutyCycle(50.0.32):Fan for Fan/cooling device 4
   - ""
   - ""
@@ -361,7 +361,7 @@ table:
   - ""
   - ""
 - - 0
-  - 21
+  - 24
   - Fan 5 DutyCycle(53.0.32):Fan for Fan/cooling device 5
   - ""
   - ""
@@ -370,7 +370,7 @@ table:
   - ""
   - ""
 - - 0
-  - 21
+  - 24
   - Fan 6 DutyCycle(56.0.32):Fan for Fan/cooling device 6
   - ""
   - ""
@@ -379,7 +379,7 @@ table:
   - ""
   - ""
 - - 0
-  - 20
+  - 23
   - Fan 7 DutyCycle(59.0.32):Fan for Fan/cooling device 7
   - ""
   - ""
