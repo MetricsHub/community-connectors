@@ -1,0 +1,91 @@
+---
+extends:
+- ../../semconv/System
+connector:
+  displayName: Windows Files Monitoring
+  platforms: Microsoft Windows
+  reliesOn: PowerShell and WMI
+  information: This connector returns information of a specific file on Windows.
+  version: 1.0
+  detection:
+    connectionTypes:
+    - local
+    - remote
+    appliesTo:
+    - nt
+    disableAutoDetection: true
+    criteria:
+      # OS should be Windows
+    - type: wmi
+      namespace: root\CIMv2
+      query: SELECT * FROM Win32_OperatingSystem
+    tags: [ system, windows ]
+  variables:
+    contentPattern:
+      description: Regular expression pattern to match file content for monitoring.
+      defaultValue:
+
+beforeAll:
+  files:
+    type: commandLine
+    commandLine: PowerShell.exe -ExecutionPolicy Bypass -File "${file::detection.ps1}" "${var::matchPath}"
+
+monitors:
+  file:
+    simple:
+      sources:
+        # file.path;file.name;file.size;file.atime;file.mtime;file.ctime
+        source(1):
+          type: commandLine
+          commandLine: PowerShell.exe -ExecutionPolicy Bypass -Command "$file='$1'; if (Test-Path -Path $file -PathType Leaf) { $item = Get-Item -Path $file; $name = $item.Name; $size = $item.Length; $atime = [DateTimeOffset]::new($item.LastAccessTime).ToUnixTimeSeconds(); $mtime = [DateTimeOffset]::new($item.LastWriteTime).ToUnixTimeSeconds(); $ctime = [DateTimeOffset]::new($item.CreationTime).ToUnixTimeSeconds(); Write-Output \"$file;$name;$size;$atime;$mtime;$ctime\" }"
+          executeForEachEntryOf:
+            source: "${source::beforeAll.files}"
+            concatMethod: list
+        # file.path;file.lines
+        source(2):
+          type: commandLine
+          commandLine: PowerShell.exe -ExecutionPolicy Bypass -Command "$file='$1'; if (Test-Path -Path $file -PathType Leaf) { $lines = (Get-Content -Path $file -ErrorAction SilentlyContinue | Measure-Object -Line).Lines; Write-Output \"$file;$lines\" }"
+          executeForEachEntryOf:
+            source: "${source::beforeAll.files}"
+            concatMethod: list
+        # file.path;file.name;file.size;file.atime;file.mtime;file.ctime;file.lines
+        filedetails:
+          type: tableJoin
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+      mapping:
+        source: ${source::filedetails}
+        attributes:
+          id: $1
+          system.file.path: $1
+          system.file.name: $2
+        metrics: 
+          system.file.size: $3
+          system.file.atime: $4
+          system.file.mtime: $5
+          system.file.ctime: $6
+          system.file.lines: $8
+  patternMatching:
+    keys:
+    - id
+    - system.file.keyword
+    simple:
+      sources:
+        #file.path;file.name;keyword;keyword.count
+        patternMatchingSource:
+          type: commandLine
+          commandLine: PowerShell.exe -ExecutionPolicy Bypass -File "${file::patternmatching.ps1}" "$1" "${var::contentPattern}"
+          executeForEachEntryOf:
+            source: "${source::beforeAll.files}"
+            concatMethod: list
+      mapping:
+        source: ${source::patternMatchingSource}
+        attributes:
+          id: $1
+          system.file.path: $1
+          system.file.name: $2
+          system.file.keyword: $3
+        metrics:
+          system.file.keywords: $4

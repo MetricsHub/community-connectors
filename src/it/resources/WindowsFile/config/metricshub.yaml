@@ -1,0 +1,19 @@
+#MetricsHub Configuration
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
+patchDirectory: "src/main/connector"
+resources:
+  localhost:
+    attributes:
+      host.name: localhost
+      host.type: win
+    protocols:
+      wmi:
+        username: user
+        password: pass
+        timeout: 240
+    additionalConnectors:
+      WindowsFile:
+        variables:
+          matchPath: "C:\\Users\\public\\*.txt"
+          contentPattern: "Exception|Error|Failed|dev-hv-01"

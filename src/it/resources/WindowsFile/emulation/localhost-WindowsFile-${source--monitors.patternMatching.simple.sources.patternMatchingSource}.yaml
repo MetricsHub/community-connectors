@@ -1,0 +1,25 @@
+---
+table:
+- - C:\Users\Public\file.txt
+  - file.txt
+  - dev-hv-01
+  - 8
+- - C:\Users\Public\file.txt
+  - file.txt
+  - Error
+  - 1
+- - C:\Users\Public\file.txt
+  - file.txt
+  - Exception
+  - 7
+- - C:\Users\Public\file.txt
+  - file.txt
+  - Failed
+  - 1
+headers: []
+rawData: |-
+  C:\Users\Public\file.txt;file.txt;dev-hv-01;8
+  C:\Users\Public\file.txt;file.txt;Error;1
+  C:\Users\Public\file.txt;file.txt;Exception;7
+  C:\Users\Public\file.txt;file.txt;Failed;1
+empty: false

@@ -167,3 +167,35 @@ metrics:
     description: System uptime in seconds indicates how long the host has been running since its last boot
     type: Gauge
     unit: s
+  system.file.size:
+    description: Size of the file in bytes.
+    type: Gauge
+    unit: By
+  system.file.atime:
+    description: Last access time of the file as epoch timestamp in seconds.
+    type: Gauge
+    unit: s
+  system.file.mtime:
+    description: Last modification time of the file as epoch timestamp in seconds.
+    type: Gauge
+    unit: s
+  system.file.ctime:
+    description: Last change time of the file as epoch timestamp in seconds.
+    type: Gauge
+    unit: s
+  system.file.io{direction="read"}:
+    description: Number of bytes read from the file.
+    type: Counter
+    unit: By
+  system.file.io{direction="write"}:
+    description: Number of bytes written to the file.
+    type: Counter
+    unit: By
+  system.files:
+    description: Number of files matching the monitoring criteria.
+    type: Gauge
+    unit: "{files}"
+  system.file.keywords:
+    description: Count of keywords found in file content matching the pattern.
+    type: Counter
+    unit: "{matches}"
