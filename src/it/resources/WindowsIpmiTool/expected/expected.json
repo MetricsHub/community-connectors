@@ -738,7 +738,6 @@
     "attributes" : {
       "host.type" : "compute",
       "host.name" : "localhost",
-      "agent.host.name" : "192.168.10.131",
       "os.type" : "windows"
     },
     "conditionalCollection" : { },
