@@ -8,6 +8,8 @@ resources:
       host.name: localhost
       host.type: linux
     protocols:
-      osCommand:
+      ssh:
+        username: user
+        password: password
         timeout: 300
-    connectors: [ +AMDRadeon ]
+    connectors: ["+AMDRadeon"]
