@@ -1,0 +1,95 @@
+---
+extends:
+- ../../semconv/System
+connector:
+  displayName: Linux Files Monitoring
+  platforms: Linux
+  reliesOn: Linux commands and SSH
+  information: This connector returns information of a specific file on Linux.
+  version: 1.0
+  detection:
+    connectionTypes:
+    - local
+    - remote
+    appliesTo:
+    - linux
+    disableAutoDetection: true
+    criteria:
+      # OS should be Linux
+    - type: commandLine
+      commandLine: "${file::detection.sh} \"${var::matchPath}\""
+      expectedResult: .+
+      errorMessage: Nothing matched.
+    tags: [ system, linux ]
+  variables:
+    matchPath:
+      description: "Regular expression pattern to match file names for monitoring. (/opt/metricshub/logs/*.log,/var/log/*.log)"
+      defaultValue: ""
+    contentPattern:
+      description: "Regular expression pattern to match file content for monitoring. (Error|Exception|Failure)"
+      defaultValue: ""
+
+beforeAll:
+  files:
+    type: commandLine
+    commandLine: "${file::detection.sh} \"${var::matchPath}\""
+
+monitors:
+  file:
+    simple:
+      sources:
+        # file.path;file.name;file.size;file.atime;file.mtime;file.ctime
+        source(1):
+          type: commandLine
+          commandLine: file="$1"; basename_result=$(basename "$file"); stat_result=$(stat -c '%s;%X;%Y;%Z' "$file"); echo "$file;$basename_result;$stat_result"
+          executeForEachEntryOf:
+            source: "${source::beforeAll.files}"
+            concatMethod: list
+        # file.path;file.lines
+        source(2):
+          type: commandLine
+          commandLine: file="$1"; echo "$file;$(wc -l < "$file")"
+          executeForEachEntryOf:
+            source: "${source::beforeAll.files}"
+            concatMethod: list
+        # file.path;file.name;file.size;file.atime;file.mtime;file.ctime;file.lines
+        filedetails:
+          type: tableJoin
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
+          leftKeyColumn: 1
+          rightKeyColumn: 1
+      mapping:
+        source: ${source::filedetails}
+        attributes:
+          id: $1
+          system.file.path: $1
+          system.file.name: $2
+        metrics: 
+          system.file.size: $3
+          system.file.atime: $4
+          system.file.mtime: $5
+          system.file.ctime: $6
+          system.file.lines: $8
+  patternMatching:
+    keys:
+    - id
+    - system.file.keyword
+    simple:
+      sources:
+        #file.path;file.name;keyword;keyword.count
+        patternMatchingSource:
+          type: commandLine
+          commandLine: file="$1"; keywords="${var::contentPattern}"; if [ -n "$keywords" ] && [ -f "$file" ]; then for keyword in $(echo "$keywords" | tr '|' '\n' | sort); do count=$(grep -Eoi "$keyword" "$file" 2>/dev/null | wc -l); echo "$file;$(basename "$file");$keyword;$count"; done; fi
+          executeForEachEntryOf:
+            source: "${source::beforeAll.files}"
+            concatMethod: list
+      mapping:
+        source: ${source::patternMatchingSource}
+        attributes:
+          id: $1
+          system.file.path: $1
+          system.file.name: $2
+          system.file.keyword: $3
+        metrics:
+          system.file.keywords: $4

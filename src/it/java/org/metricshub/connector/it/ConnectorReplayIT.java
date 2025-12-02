@@ -1,7 +1,5 @@
 package org.metricshub.connector.it;
 
-import java.nio.file.Paths;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -26,6 +24,8 @@ class ConnectorReplayIT {
 		"WbemGenDiskNT",
 		"SmartMonLinux",
 		"MIB2Switch",
+		"WindowsFile",
+		"LinuxFile",
 		"WindowsIpmiTool"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {

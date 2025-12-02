@@ -1,0 +1,15 @@
+---
+table:
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+- - /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+- - /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+- - /opt/metricshub/config/metricshub.yaml
+headers: []
+rawData: |-
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+  /opt/metricshub/config/metricshub.yaml
+empty: false
