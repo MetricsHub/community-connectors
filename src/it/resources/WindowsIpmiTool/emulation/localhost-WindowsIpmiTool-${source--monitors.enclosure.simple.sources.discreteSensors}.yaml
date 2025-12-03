@@ -1,0 +1,59 @@
+---
+table:
+- - "OEM State,Value=0280h"
+  - UID(1.0.32):OEM RESERVED for System chassis 1
+- - "OEM State,Value=0280h"
+  - Sys Health LED(2.0.32):OEM RESERVED for System chassis 2
+- - State 0 Asserted
+  - C1 P1I Bay 1(73.0.32):Drive Slot for Disk or disk bay 1
+- - State 0 Asserted
+  - C1 P1I Bay 2(74.0.32):Drive Slot for Disk or disk bay 2
+- - battery presence detected
+  - Megacell Status(71.0.32):Battery for Battery 1
+- - Presence detected
+  - Power Supply 1(61.0.32):Power Supply for Power supply 1
+- - Device Inserted/Device Present
+  - PS 1 Presence(63.0.32):Power Supply for Power supply 1
+- - Presence detected
+  - Power Supply 2(64.0.32):Power Supply for Power supply 2
+- - Device Inserted/Device Present
+  - PS 2 Presence(66.0.32):Power Supply for Power supply 2
+- - Fully Redundant
+  - Power Supplies(69.0.32):Power Supply for Power supply 3
+- - Device Enabled
+  - Power Meter(67.0.32):Current for System board 1
+- - Transition to Running
+  - Fan 1(40.0.32):Fan for Fan/cooling device 1
+- - Device Inserted/Device Present
+  - Fan 1 Presence(42.0.32):Fan for Fan/cooling device 1
+- - Transition to Running
+  - Fan 2(43.0.32):Fan for Fan/cooling device 2
+- - Device Inserted/Device Present
+  - Fan 2 Presence(45.0.32):Fan for Fan/cooling device 2
+- - Transition to Running
+  - Fan 3(46.0.32):Fan for Fan/cooling device 3
+- - Device Inserted/Device Present
+  - Fan 3 Presence(48.0.32):Fan for Fan/cooling device 3
+- - Transition to Running
+  - Fan 4(49.0.32):Fan for Fan/cooling device 4
+- - Device Inserted/Device Present
+  - Fan 4 Presence(51.0.32):Fan for Fan/cooling device 4
+- - Transition to Running
+  - Fan 5(52.0.32):Fan for Fan/cooling device 5
+- - Device Inserted/Device Present
+  - Fan 5 Presence(54.0.32):Fan for Fan/cooling device 5
+- - Transition to Running
+  - Fan 6(55.0.32):Fan for Fan/cooling device 6
+- - Device Inserted/Device Present
+  - Fan 6 Presence(57.0.32):Fan for Fan/cooling device 6
+- - Transition to Running
+  - Fan 7(58.0.32):Fan for Fan/cooling device 7
+- - Device Inserted/Device Present
+  - Fan 7 Presence(60.0.32):Fan for Fan/cooling device 7
+- - Fully Redundant
+  - Fans(70.0.32):Fan for Fan/cooling device 8
+- - Presence detected
+  - Memory Status(72.0.32):Memory for System board 2
+headers: []
+rawData: null
+empty: false
