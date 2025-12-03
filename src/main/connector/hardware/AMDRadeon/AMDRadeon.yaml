@@ -31,9 +31,6 @@ monitors:
           computes:
           - type: awk
             script: ${file::rocmSmi.awk}
-          # Convert the JSON response to CSV
-          - type: json2Csv
-          properties: /
       mapping:
         source: ${source::source(1)}
   gpu:
