@@ -31,21 +31,16 @@ monitors:
           computes:
           - type: awk
             script: ${file::rocmSmi.awk}
+          - type : divide
+            column: 14
+            value: 1000000000
       mapping:
         source: ${source::source(1)}
   gpu:
     type: multiInstance
     simple:
-      sources:
-        source(1):
-          type: copy
-          from: ${source::monitors.enclosure.simple.sources.source(1)}
-          computes:
-            - type : divide
-              column: 14
-              value: 1000000000
       mapping:
-        source: ${source::source(1)}
+        source: ${source::monitors.enclosure.simple.sources.source(1)}
         attributes:
           vendor: AMD
           id: $1
@@ -67,35 +62,27 @@ monitors:
   temperature:
     type: multiInstance
     simple:
-      sources:
-        source(1):
-          type: copy
-          from: ${source::monitors.enclosure.simple.sources.source(1)}
       mapping:
-        source: ${source::source(1)}
+        source: ${source::monitors.enclosure.simple.sources.source(1)}
         attributes:
           id: $1
           hw.parent.type: enclosure
           sensor_location: gpu
           name: ${awk::sprintf("%s (%s)", $1, "gpu")}
         metrics:
-          hw.temperature{hw.sensor_location="edge"}: $5 # edgeTemp hw.temperature{sensor="edge"}
+          hw.temperature{hw.sensor_location="edge"}: $5 # edgeTemp
           hw.temperature{hw.sensor_location="junction"}: $6  # junctionTemp
           hw.temperature{hw.sensor_location="memory"}:  $7  # memTemp
   voltage:
     type: multiInstance
     simple:
-      sources:
-        source(1):
-          type: copy
-          from: ${source::monitors.enclosure.simple.sources.source(1)}
       mapping:
-        source: ${source::source(1)}
+        source: ${source::monitors.enclosure.simple.sources.source(1)}
         attributes:
           id: $1
           hw.parent.type: enclosure
           sensor_location: gpu
-          name: ${awk::sprintf("%s (%s)", $1, "voltage")}
+          name: ${awk::sprintf("%s (%s)", $1, "gpu")}
         metrics:
           hw.voltage: milliVolt2Volt($12)
   fan:
@@ -115,6 +102,6 @@ monitors:
           id: $1
           sensor_location: gpu
           hw.parent.type: enclosure
-          name: ${awk::sprintf("%s (%s)", $1, "fan")}
+          name: ${awk::sprintf("%s (%s)", $1, "gpu")}
         metrics:
           hw.fan.speed_ratio: percent2Ratio($2)
