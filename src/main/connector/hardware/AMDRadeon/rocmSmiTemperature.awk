@@ -5,7 +5,7 @@
 #   id;gpu_junction;val6
 #   id;gpu_memory;val7
 BEGIN {
-    FS = OFS = ";"   # CSV delimiter
+    FS = OFS = ";"
 }
 
 NF >= 7 {
