@@ -106,10 +106,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "0 (fan)",
+      "name" : "0 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "0",
-      "__id_count" : "8"
+      "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -192,10 +192,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "1 (fan)",
+      "name" : "1 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "1",
-      "__id_count" : "5"
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -278,10 +278,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "2 (fan)",
+      "name" : "2 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "2",
-      "__id_count" : "7"
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -364,7 +364,7 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "3 (fan)",
+      "name" : "3 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "3",
       "__id_count" : "4"
@@ -450,10 +450,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "4 (fan)",
+      "name" : "4 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "4",
-      "__id_count" : "2"
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -536,10 +536,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "5 (fan)",
+      "name" : "5 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "5",
-      "__id_count" : "3"
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -622,10 +622,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "6 (fan)",
+      "name" : "6 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "6",
-      "__id_count" : "6"
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -708,10 +708,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "7 (fan)",
+      "name" : "7 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "7",
-      "__id_count" : "1"
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2210,17 +2210,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_edge",
-      "name" : "card0 (temperature_edge)",
+      "name" : "card0 (gpu_edge)",
       "connector_id" : "AMDRadeon",
       "id" : "card0",
-      "__id_count" : "5"
+      "__id_count" : "14"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card0_gpu_edge",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card0_gpu_edge",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2243,17 +2243,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_edge",
-      "name" : "card1 (temperature_edge)",
+      "name" : "card1 (gpu_edge)",
       "connector_id" : "AMDRadeon",
       "id" : "card1",
-      "__id_count" : "7"
+      "__id_count" : "21"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card1_gpu_edge",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card1_gpu_edge",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2276,17 +2276,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_edge",
-      "name" : "card2 (temperature_edge)",
+      "name" : "card2 (gpu_edge)",
       "connector_id" : "AMDRadeon",
       "id" : "card2",
-      "__id_count" : "2"
+      "__id_count" : "18"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card2_gpu_edge",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card2_gpu_edge",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2309,116 +2309,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_edge",
-      "name" : "card3 (temperature_edge)",
+      "name" : "card3 (gpu_edge)",
       "connector_id" : "AMDRadeon",
       "id" : "card3",
-      "__id_count" : "4"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card3_gpu_edge",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 21.0,
-        "previousValue" : 21.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_edge",
-      "name" : "card4 (temperature_edge)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card4",
-      "__id_count" : "8"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card4_gpu_edge",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 21.0,
-        "previousValue" : 21.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_edge",
-      "name" : "card5 (temperature_edge)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card5",
-      "__id_count" : "3"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card5_gpu_edge",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 21.0,
-        "previousValue" : 21.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_edge",
-      "name" : "card6 (temperature_edge)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card6",
       "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card6_gpu_edge",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card3_gpu_edge",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2441,17 +2342,116 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_edge",
-      "name" : "card7 (temperature_edge)",
+      "name" : "card4 (gpu_edge)",
       "connector_id" : "AMDRadeon",
-      "id" : "card7",
-      "__id_count" : "1"
+      "id" : "card4",
+      "__id_count" : "15"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_edge",
-    "id" : "AMDRadeon_temperature_edge_card7_gpu_edge",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card4_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card5 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card5",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card5_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card6 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card6",
+      "__id_count" : "13"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card6_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card7 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card7",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card7_gpu_edge",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2474,7 +2474,7 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_junction",
-      "name" : "card0 (temperature_junction)",
+      "name" : "card0 (gpu_junction)",
       "connector_id" : "AMDRadeon",
       "id" : "card0",
       "__id_count" : "3"
@@ -2483,8 +2483,8 @@
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card0_gpu_junction",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card0_gpu_junction",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2507,17 +2507,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_junction",
-      "name" : "card1 (temperature_junction)",
+      "name" : "card1 (gpu_junction)",
       "connector_id" : "AMDRadeon",
       "id" : "card1",
-      "__id_count" : "6"
+      "__id_count" : "24"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card1_gpu_junction",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card1_gpu_junction",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2540,17 +2540,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_junction",
-      "name" : "card2 (temperature_junction)",
+      "name" : "card2 (gpu_junction)",
       "connector_id" : "AMDRadeon",
       "id" : "card2",
-      "__id_count" : "5"
+      "__id_count" : "16"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card2_gpu_junction",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card2_gpu_junction",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2573,17 +2573,83 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_junction",
-      "name" : "card3 (temperature_junction)",
+      "name" : "card3 (gpu_junction)",
       "connector_id" : "AMDRadeon",
       "id" : "card3",
+      "__id_count" : "23"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card3_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 23.0,
+        "previousValue" : 23.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card4 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card4",
       "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card3_gpu_junction",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card4_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card5 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card5",
+      "__id_count" : "17"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card5_gpu_junction",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2606,50 +2672,50 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_junction",
-      "name" : "card4 (temperature_junction)",
+      "name" : "card6 (gpu_junction)",
       "connector_id" : "AMDRadeon",
-      "id" : "card4",
+      "id" : "card6",
+      "__id_count" : "12"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card6_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card7 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card7",
       "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card4_gpu_junction",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 24.0,
-        "previousValue" : 24.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_junction",
-      "name" : "card5 (temperature_junction)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card5",
-      "__id_count" : "7"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card5_gpu_junction",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card7_gpu_junction",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2671,18 +2737,18 @@
     },
     "attributes" : {
       "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_junction",
-      "name" : "card6 (temperature_junction)",
+      "sensor_location" : "gpu_memory",
+      "name" : "card0 (gpu_memory)",
       "connector_id" : "AMDRadeon",
-      "id" : "card6",
-      "__id_count" : "8"
+      "id" : "card0",
+      "__id_count" : "22"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card6_gpu_junction",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card0_gpu_memory",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2704,150 +2770,84 @@
     },
     "attributes" : {
       "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_junction",
-      "name" : "card7 (temperature_junction)",
+      "sensor_location" : "gpu_memory",
+      "name" : "card1 (gpu_memory)",
       "connector_id" : "AMDRadeon",
-      "id" : "card7",
+      "id" : "card1",
+      "__id_count" : "19"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card1_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card2 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card2",
+      "__id_count" : "10"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card2_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card3 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card3",
       "__id_count" : "4"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_junction",
-    "id" : "AMDRadeon_temperature_junction_card7_gpu_junction",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 23.0,
-        "previousValue" : 23.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_memory",
-      "name" : "card0 (temperature_memory)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card0",
-      "__id_count" : "3"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card0_gpu_memory",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 24.0,
-        "previousValue" : 24.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_memory",
-      "name" : "card1 (temperature_memory)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card1",
-      "__id_count" : "6"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card1_gpu_memory",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 24.0,
-        "previousValue" : 24.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_memory",
-      "name" : "card2 (temperature_memory)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card2",
-      "__id_count" : "7"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card2_gpu_memory",
-    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
-    "endpoint" : false,
-    "connector" : false,
-    "endpointHost" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.temperature" : {
-        "name" : "hw.temperature",
-        "collectTime" : 1764787708080,
-        "previousCollectTime" : 1764787702790,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 24.0,
-        "previousValue" : 24.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu_memory",
-      "name" : "card3 (temperature_memory)",
-      "connector_id" : "AMDRadeon",
-      "id" : "card3",
-      "__id_count" : "8"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card3_gpu_memory",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card3_gpu_memory",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2870,17 +2870,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_memory",
-      "name" : "card4 (temperature_memory)",
+      "name" : "card4 (gpu_memory)",
       "connector_id" : "AMDRadeon",
       "id" : "card4",
-      "__id_count" : "2"
+      "__id_count" : "20"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card4_gpu_memory",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card4_gpu_memory",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2903,17 +2903,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_memory",
-      "name" : "card5 (temperature_memory)",
+      "name" : "card5 (gpu_memory)",
       "connector_id" : "AMDRadeon",
       "id" : "card5",
-      "__id_count" : "1"
+      "__id_count" : "9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card5_gpu_memory",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card5_gpu_memory",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2936,17 +2936,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_memory",
-      "name" : "card6 (temperature_memory)",
+      "name" : "card6 (gpu_memory)",
       "connector_id" : "AMDRadeon",
       "id" : "card6",
-      "__id_count" : "4"
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card6_gpu_memory",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card6_gpu_memory",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -2969,17 +2969,17 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu_memory",
-      "name" : "card7 (temperature_memory)",
+      "name" : "card7 (gpu_memory)",
       "connector_id" : "AMDRadeon",
       "id" : "card7",
-      "__id_count" : "5"
+      "__id_count" : "11"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1764787708080,
-    "type" : "temperature_memory",
-    "id" : "AMDRadeon_temperature_memory_card7_gpu_memory",
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card7_gpu_memory",
     "identifyingAttributeKeys" : [ "id", "sensor_location" ],
     "endpoint" : false,
     "connector" : false,
@@ -3002,10 +3002,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card0 (voltage)",
+      "name" : "card0 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card0",
-      "__id_count" : "5"
+      "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3035,10 +3035,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card1 (voltage)",
+      "name" : "card1 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card1",
-      "__id_count" : "7"
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3068,10 +3068,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card2 (voltage)",
+      "name" : "card2 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card2",
-      "__id_count" : "6"
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3101,10 +3101,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card3 (voltage)",
+      "name" : "card3 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card3",
-      "__id_count" : "8"
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3134,10 +3134,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card4 (voltage)",
+      "name" : "card4 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card4",
-      "__id_count" : "1"
+      "__id_count" : "4"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3167,10 +3167,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card5 (voltage)",
+      "name" : "card5 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card5",
-      "__id_count" : "4"
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3200,10 +3200,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card6 (voltage)",
+      "name" : "card6 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card6",
-      "__id_count" : "2"
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3233,10 +3233,10 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "sensor_location" : "gpu",
-      "name" : "card7 (voltage)",
+      "name" : "card7 (gpu)",
       "connector_id" : "AMDRadeon",
       "id" : "card7",
-      "__id_count" : "3"
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
