@@ -31,6 +31,8 @@ connector:
     tags: [ hardware, windows ]
 monitors:
   network:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -141,8 +143,6 @@ monitors:
     collect:
       # Collect type is multi-instance
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source (1) = MSFC_FibrePortHBAAttributes

@@ -153,6 +153,8 @@ monitors:
         legacyTextParameters:
           StatusInformation: $3
   voltage:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -237,8 +239,6 @@ monitors:
     collect:
       # Voltage Collect
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: snmpGet
@@ -303,6 +303,8 @@ monitors:
         metrics:
           hw.voltage: milliVolt2Volt($3)
   temperature:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -322,8 +324,6 @@ monitors:
     collect:
       # Temperature Collect
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: snmpGet

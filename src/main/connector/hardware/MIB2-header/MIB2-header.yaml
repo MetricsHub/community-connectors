@@ -13,6 +13,8 @@ connector:
       oid: 1.3.6.1.2.1.2.2.1
 monitors:
   network:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -62,8 +64,6 @@ monitors:
     collect:
       # Collect type = multi-instance
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = ifTable SNMP Table

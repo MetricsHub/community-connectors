@@ -156,6 +156,8 @@ monitors:
           hw.parent.type: enclosure
           name: "${awk::sprintf(\"Disk Controller: %s (%s)\", $1, $2)}"
   physical_disk:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -201,8 +203,6 @@ monitors:
     collect:
       # Collect
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = the MSFT_PhysicalDisk table
@@ -285,6 +285,8 @@ monitors:
         legacyTextParameters:
           StatusInformation: $4
   logical_disk:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -321,8 +323,6 @@ monitors:
     collect:
       # Collect
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = MSFT_Volume
@@ -364,6 +364,8 @@ monitors:
         legacyTextParameters:
           StatusInformation: $3
   temperature:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -412,8 +414,6 @@ monitors:
     collect:
       # Collect
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = ASSOCIATORS of each MSFT_PhysicalDisk, from the MSFT_StorageReliabilityCounter table

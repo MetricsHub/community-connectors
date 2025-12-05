@@ -28,6 +28,8 @@ connector:
     tags: [ hardware, linux ]
 monitors:
   vm:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -49,8 +51,6 @@ monitors:
           hw.power{hw.type="vm"}: 0
     collect:
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: commandLine

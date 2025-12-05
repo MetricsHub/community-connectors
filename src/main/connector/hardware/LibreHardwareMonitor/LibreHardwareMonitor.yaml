@@ -50,6 +50,8 @@ monitors:
           model: $2
           name: "${awk::sprintf(\"Computer: (%s %s)\", $1, $2)}"
   voltage:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -84,8 +86,6 @@ monitors:
           name: ${awk::sprintf("%s (%s)", $6, $2)}
     collect:
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = The Processor WMI class
@@ -108,6 +108,8 @@ monitors:
         metrics:
           hw.voltage: milliVolt2Volt($2)
   temperature:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -148,8 +150,6 @@ monitors:
           hw.temperature.limit{limit_type="high.critical"}: $4
     collect:
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = The Processor WMI class
@@ -166,6 +166,8 @@ monitors:
         metrics:
           hw.temperature: $2
   physical_disk:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -207,8 +209,6 @@ monitors:
     collect:
       # Collect
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source 1 = Storage Sensor
@@ -235,6 +235,8 @@ monitors:
         metrics:
           hw.physical_disk.endurance_utilization{state="remaining"}: percent2Ratio($3)
   fan:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -280,8 +282,6 @@ monitors:
           name: $6
     collect:
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = The Processor WMI class
@@ -298,6 +298,8 @@ monitors:
         metrics:
           hw.fan.speed: $2
   cpu:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -353,8 +355,6 @@ monitors:
           hw.power{hw.type="cpu"}: $6
     collect:
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = Sensor type 'Clock'
@@ -480,6 +480,8 @@ monitors:
         metrics:
           hw.memory.limit: mebiByte2Byte($5)
   gpu:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -532,8 +534,6 @@ monitors:
           hw.gpu.memory.limit: mebiByte2Byte($6)
     collect:
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = The Processor WMI class
