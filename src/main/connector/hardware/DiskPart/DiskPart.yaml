@@ -24,6 +24,8 @@ connector:
     tags: [ hardware, windows ]
 monitors:
   logical_disk:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -65,8 +67,6 @@ monitors:
     collect:
       # Collection is multi-instance
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = DISKPART.EXE running "list volume" and "exit

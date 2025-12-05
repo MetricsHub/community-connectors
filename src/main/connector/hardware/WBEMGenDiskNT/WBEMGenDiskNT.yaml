@@ -121,6 +121,8 @@ monitors:
           model: $1
           hw.parent.type: enclosure
   physical_disk:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -160,8 +162,6 @@ monitors:
     collect:
       # This a multi-instance collect (please minimize the number of wbem queries...)
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # Source(1) = the Win32_DiskDrive table

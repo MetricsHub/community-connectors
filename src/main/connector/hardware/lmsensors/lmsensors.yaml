@@ -68,6 +68,8 @@ monitors:
           serial_number: $4
           bios_version: $6
   temperature:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -95,8 +97,6 @@ monitors:
     collect:
       # Collection Type
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: commandLine
@@ -115,6 +115,8 @@ monitors:
         metrics:
           hw.temperature: $4
   voltage:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -143,8 +145,6 @@ monitors:
     collect:
       # Collection Type
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: commandLine
@@ -163,6 +163,8 @@ monitors:
         metrics:
           hw.voltage: milliVolt2Volt($4)
   fan:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -191,8 +193,6 @@ monitors:
     collect:
       # Collection Type
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: commandLine
