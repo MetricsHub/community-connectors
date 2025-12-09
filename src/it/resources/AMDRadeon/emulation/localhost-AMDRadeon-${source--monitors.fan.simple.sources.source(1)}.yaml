@@ -1,0 +1,30 @@
+---
+table:
+- - ""
+- - ""
+- - ====================================== ROCm System Management Interface ======================================
+- - ================================================ Concise Info ================================================
+- - "Device  [Model : Revision]    Temp    Power  Partitions      SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  "
+- - "        Name (20 chars)       (Edge)  (Avg)  (Mem, Compute)                                                   "
+- - ==============================================================================================================
+- - "0       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - "1       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - "2       [0x0c34 : 0x01]       23.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - "3       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - "4       [0x0c34 : 0x01]       21.0°C  33.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - "5       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - "6       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - "7       [0x0c34 : 0x01]       21.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    "
+- - "        Arcturus GL-XL [Inst                                                                                  "
+- - ==============================================================================================================
+- - ============================================ End of ROCm SMI Log =============================================
+headers: []
+rawData: "\n\n====================================== ROCm System Management Interface ======================================\n================================================ Concise Info ================================================\nDevice  [Model : Revision]    Temp    Power  Partitions      SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  \n        Name (20 chars)       (Edge)  (Avg)  (Mem, Compute)                                                   \n==============================================================================================================\n0       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n1       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n2       [0x0c34 : 0x01]       23.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n3       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n4       [0x0c34 : 0x01]       21.0°C  33.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n5       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n6       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n7       [0x0c34 : 0x01]       21.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n==============================================================================================================\n============================================ End of ROCm SMI Log ============================================="
+empty: false

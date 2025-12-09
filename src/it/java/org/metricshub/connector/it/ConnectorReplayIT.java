@@ -26,6 +26,7 @@ class ConnectorReplayIT {
 		"MIB2Switch",
 		"WindowsFile",
 		"LinuxFile",
+		"AMDRadeon",
 		"WindowsIpmiTool"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {

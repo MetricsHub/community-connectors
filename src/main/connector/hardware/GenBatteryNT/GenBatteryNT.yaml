@@ -25,6 +25,8 @@ connector:
     tags: [ hardware, windows ]
 monitors:
   battery:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -50,8 +52,6 @@ monitors:
     collect:
       # COLLECT
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           # BatteryStatus, DeviceID, Charge remaining, time left and status

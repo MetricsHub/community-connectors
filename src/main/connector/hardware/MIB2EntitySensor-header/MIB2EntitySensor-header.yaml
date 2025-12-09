@@ -88,6 +88,8 @@ monitors:
         attributes:
           id: ${constant::_DEVICE_ID}
   temperature:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -112,8 +114,6 @@ monitors:
     collect:
       # Collect type = multi-instance
       type: multiInstance
-      keys:
-      - id
       mapping:
         source: ${source::monitors.enclosure.collect.sources.source(2)}
         attributes:
@@ -124,6 +124,8 @@ monitors:
         legacyTextParameters:
           StatusInformation: $6
   voltage:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -148,8 +150,6 @@ monitors:
     collect:
       # Collect type = multi-instance
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: copy
@@ -170,6 +170,8 @@ monitors:
         legacyTextParameters:
           StatusInformation: $6
   fan:
+    keys:
+    - id
     discovery:
       sources:
         source(1):
@@ -214,8 +216,6 @@ monitors:
     collect:
       # Collect type = multi-instance
       type: multiInstance
-      keys:
-      - id
       sources:
         source(1):
           type: copy
