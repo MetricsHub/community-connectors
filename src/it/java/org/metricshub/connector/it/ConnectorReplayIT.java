@@ -24,7 +24,10 @@ class ConnectorReplayIT {
 		"MySql",
 		"WbemGenDiskNT",
 		"SmartMonLinux",
-		"MIB2Switch"
+		"MIB2Switch",
+		"WindowsFile",
+		"LinuxFile",
+		"AMDRadeon"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)

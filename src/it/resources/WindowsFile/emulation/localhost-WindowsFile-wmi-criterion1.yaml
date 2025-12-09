@@ -1,0 +1,17 @@
+---
+result: Win32_OperatingSystem;CIM_OperatingSystem|CIM_LogicalElement|CIM_ManagedSystemElement|;CIM_ManagedSystemElement;2;root\CIMv2;Win32_OperatingSystem=@;64;Win32_OperatingSystem=@;DEV-HV-01;CIM_OperatingSystem;\Device\HarddiskVolume2;17763;Multiprocessor Free;Microsoft Windows Server 2019 Standard;1252;33;Win32_OperatingSystem;Win32_ComputerSystem;;DEV-HV-01;60;True;True;True;3;False;;False;256;2;113385996;19922944;133720336;1729702433;;1762527830;1764586918;040c;Microsoft Corporation;4294967295;137438953344;en-US|;Microsoft Windows Server 2019 Standard|C:\WINDOWS|\Device\Harddisk0\Partition4;0;158;19;7;;64-bit;1033;272;18;;;;;False;True;3;Windows User;00429-70000-00000-AA165;0;0;19922944;OK;272;\Device\HarddiskVolume4;C:\WINDOWS\system32;C:;;154007668;134084724;10.0.17763;C:\WINDOWS;
+success: true
+message: |-
+  WmiCriterion test succeeded:
+  - WQL Query: SELECT * FROM Win32_OperatingSystem
+  - Namespace: root\CIMv2
+
+  Result: Win32_OperatingSystem;CIM_OperatingSystem|CIM_LogicalElement|CIM_ManagedSystemElement|;CIM_ManagedSystemElement;2;root\CIMv2;Win32_OperatingSystem=@;64;Win32_OperatingSystem=@;DEV-HV-01;CIM_OperatingSystem;\Device\HarddiskVolume2;17763;Multiprocessor Free;Microsoft Windows Server 2019 Standard;1252;33;Win32_OperatingSystem;Win32_ComputerSystem;;DEV-HV-01;60;True;True;True;3;False;;False;256;2;113385996;19922944;133720336;1729702433;;1762527830;1764586918;040c;Microsoft Corporation;4294967295;137438953344;en-US|;Microsoft Windows Server 2019 Standard|C:\WINDOWS|\Device\Harddisk0\Partition4;0;158;19;7;;64-bit;1033;272;18;;;;;False;True;3;Windows User;00429-70000-00000-AA165;0;0;19922944;OK;272;\Device\HarddiskVolume4;C:\WINDOWS\system32;C:;;154007668;134084724;10.0.17763;C:\WINDOWS;
+exception: null
+criterion: !<wmi>
+  type: wmi
+  forceSerialization: false
+  query: SELECT * FROM Win32_OperatingSystem
+  namespace: root\CIMv2
+  expectedResult: null
+  errorMessage: null

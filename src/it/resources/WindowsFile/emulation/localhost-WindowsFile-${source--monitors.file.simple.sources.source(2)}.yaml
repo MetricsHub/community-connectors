@@ -1,0 +1,7 @@
+---
+table:
+- - C:\Users\Public\file.txt
+  - 14
+headers: []
+rawData: C:\Users\Public\file.txt;14
+empty: false

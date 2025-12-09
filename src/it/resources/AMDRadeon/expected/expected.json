@@ -1,0 +1,3253 @@
+{
+  "total" : 50,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "AMDRadeon.yaml",
+      "name" : "AMD Radeon (ROCm SMI)",
+      "connector_id" : "AMDRadeon",
+      "applies_to_os" : "linux",
+      "parent.id" : "localhost",
+      "id" : "AMDRadeon"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: rocm-smi\n- ExecuteLocally: false\n- ExpectedResult: ROCm System Management Interface\n\nResult:\n\n\n====================================== ROCm System Management Interface ======================================\n================================================ Concise Info ================================================\nDevice  [Model : Revision]    Temp    Power  Partitions      SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  \n        Name (20 chars)       (Edge)  (Avg)  (Mem, Compute)                                                   \n==============================================================================================================\n0       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n1       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n2       [0x0c34 : 0x01]       23.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n3       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n4       [0x0c34 : 0x01]       21.0°C  33.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n5       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n6       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n7       [0x0c34 : 0x01]       21.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n==============================================================================================================\n============================================ End of ROCm SMI Log =============================================\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: rocm-smi\n- ExecuteLocally: false\n- ExpectedResult: ROCm System Management Interface\n\nResult: \n\n====================================== ROCm System Management Interface ======================================\n================================================ Concise Info ================================================\nDevice  [Model : Revision]    Temp    Power  Partitions      SCLK    MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  \n        Name (20 chars)       (Edge)  (Avg)  (Mem, Compute)                                                   \n==============================================================================================================\n0       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n1       [0x0c34 : 0x01]       23.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n2       [0x0c34 : 0x01]       23.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n3       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n4       [0x0c34 : 0x01]       21.0°C  33.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n5       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n6       [0x0c34 : 0x01]       21.0°C  30.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n7       [0x0c34 : 0x01]       21.0°C  34.0W  N/A, N/A        300Mhz  1200Mhz  0%   auto  290.0W   98%   0%    \n        Arcturus GL-XL [Inst                                                                                  \n==============================================================================================================\n============================================ End of ROCm SMI Log =============================================\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1764787702790,
+    "type" : "connector",
+    "id" : "connector_AMDRadeon",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : true,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "0 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "0",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "1 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "1",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "2 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "2",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "3 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "3",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "4 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "4",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "5 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "5",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "6 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "6",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "7 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "7",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "fan",
+    "id" : "AMDRadeon_fan_7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 30.0,
+        "previousValue" : 30.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card0",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card0",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 30.0,
+        "previousValue" : 30.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card1",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card1",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 34.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card2",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card2",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 31.0,
+        "previousValue" : 31.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card3",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card3",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 33.0,
+        "previousValue" : 33.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card4",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card4",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 29.0,
+        "previousValue" : 29.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card5",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card5",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 30.0,
+        "previousValue" : 30.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card6",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card6",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.energy{hw.type=\"gpu\"}" : {
+        "name" : "hw.energy{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 1583778.0,
+        "previousValue" : 1583778.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization" : {
+        "name" : "hw.gpu.memory.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"gpu\"}" : {
+        "name" : "hw.power{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 34.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.95,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization" : {
+        "name" : "hw.gpu.utilization",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.memory.bandwidth" : {
+        "name" : "hw.gpu.memory.bandwidth",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
+        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power.limit{hw.type=\"gpu\"}" : {
+        "name" : "hw.power.limit{hw.type=\"gpu\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : {
+          "hw.type" : "gpu"
+        },
+        "resetMetricTime" : true,
+        "value" : 290.0,
+        "previousValue" : 290.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.gpu.speed" : {
+        "name" : "hw.gpu.speed",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.402E9,
+        "previousValue" : 1.402E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "performance_level" : "auto",
+      "vendor" : "AMD",
+      "name" : "card7",
+      "connector_id" : "AMDRadeon",
+      "model" : "0x0c34",
+      "serial_number" : "N/A",
+      "id" : "card7",
+      "info" : "0x0c34 Advanced Micro Devices Inc. [AMD/ATI]",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "gpu",
+    "id" : "AMDRadeon_gpu_card7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "value" : 278.89,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "linux",
+      "host.name" : "localhost",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpoint" : true,
+    "connector" : false,
+    "endpointHost" : true,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 23.0,
+        "previousValue" : 23.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card0 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card0",
+      "__id_count" : "14"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card0_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 23.0,
+        "previousValue" : 23.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card1 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card1",
+      "__id_count" : "21"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card1_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card2 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card2",
+      "__id_count" : "18"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card2_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card3 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card3",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card3_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card4 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card4",
+      "__id_count" : "15"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card4_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card5 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card5",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card5_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card6 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card6",
+      "__id_count" : "13"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card6_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_edge",
+      "name" : "card7 (gpu_edge)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card7",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card7_gpu_edge",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 26.0,
+        "previousValue" : 26.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card0 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card0",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card0_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 25.0,
+        "previousValue" : 25.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card1 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card1",
+      "__id_count" : "24"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card1_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 26.0,
+        "previousValue" : 26.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card2 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card2",
+      "__id_count" : "16"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card2_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 25.0,
+        "previousValue" : 25.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card3 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card3",
+      "__id_count" : "23"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card3_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 23.0,
+        "previousValue" : 23.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card4 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card4",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card4_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card5 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card5",
+      "__id_count" : "17"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card5_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 23.0,
+        "previousValue" : 23.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card6 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card6",
+      "__id_count" : "12"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card6_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_junction",
+      "name" : "card7 (gpu_junction)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card7",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card7_gpu_junction",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 23.0,
+        "previousValue" : 23.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card0 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card0",
+      "__id_count" : "22"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card0_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card1 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card1",
+      "__id_count" : "19"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card1_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card2 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card2",
+      "__id_count" : "10"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card2_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card3 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card3",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card3_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 22.0,
+        "previousValue" : 22.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card4 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card4",
+      "__id_count" : "20"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card4_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card5 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card5",
+      "__id_count" : "9"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card5_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 23.0,
+        "previousValue" : 23.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card6 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card6",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card6_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu_memory",
+      "name" : "card7 (gpu_memory)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card7",
+      "__id_count" : "11"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "temperature",
+    "id" : "AMDRadeon_temperature_card7_gpu_memory",
+    "identifyingAttributeKeys" : [ "id", "sensor_location" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.662,
+        "previousValue" : 0.662,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card0 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card0",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.662,
+        "previousValue" : 0.662,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card1 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card1",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.662,
+        "previousValue" : 0.662,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card2 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card2",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.662,
+        "previousValue" : 0.662,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card3 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card3",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.656,
+        "previousValue" : 0.656,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card4 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card4",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.656,
+        "previousValue" : 0.656,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card5 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card5",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.662,
+        "previousValue" : 0.662,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card6 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card6",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1764787708080,
+        "previousCollectTime" : 1764787702790,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.656,
+        "previousValue" : 0.656,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "sensor_location" : "gpu",
+      "name" : "card7 (gpu)",
+      "connector_id" : "AMDRadeon",
+      "id" : "card7",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1764787708080,
+    "type" : "voltage",
+    "id" : "AMDRadeon_voltage_card7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "connector" : false,
+    "endpointHost" : false,
+    "is_endpoint" : false
+  } ]
+}

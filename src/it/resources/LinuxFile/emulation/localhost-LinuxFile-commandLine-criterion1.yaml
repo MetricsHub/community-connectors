@@ -1,0 +1,28 @@
+---
+result: |
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+  /opt/metricshub/config/metricshub.yaml
+success: true
+message: |
+  CommandLineCriterion test succeeded:
+  - CommandLine: C:\Users\ELYESC~1\AppData\Local\Temp\metricshub_embedded_detection15803086741945325003.sh "/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml"
+  - ExecuteLocally: false
+  - ExpectedResult: .+
+
+  Result: /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log
+  /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log
+  /opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log
+  /opt/metricshub/config/metricshub.yaml
+exception: null
+criterion: !<commandLine>
+  type: commandLine
+  forceSerialization: false
+  commandLine: "${file::1} \"/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml\""
+  errorMessage: Nothing matched.
+  expectedResult: .+
+  executeLocally: false
+  timeout: null
