@@ -1,0 +1,17 @@
+---
+result: BMC 19 - IPMI v2.0 - fw v2.82;
+success: true
+message: |-
+  WmiCriterion test succeeded:
+  - WQL Query: SELECT Description FROM ComputerSystem
+  - Namespace: root\hardware
+
+  Result: BMC 19 - IPMI v2.0 - fw v2.82;
+exception: null
+criterion: !<wmi>
+  type: wmi
+  forceSerialization: false
+  query: SELECT Description FROM ComputerSystem
+  namespace: root\hardware
+  expectedResult: null
+  errorMessage: null
