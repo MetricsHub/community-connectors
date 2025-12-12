@@ -3,7 +3,10 @@ extends:
 - ../../semconv/Hardware
 connector:
   displayName: AMD Radeon (ROCm SMI)
-  platforms: Any system with AMD Radeon GPUs
+  platforms: 
+  - AMD
+  - Microsoft Windows
+  - Linux
   reliesOn: ROCm drivers with rocm-smi support.
   information: This connector provides hardware information about AMD Radeon GPUs.
   detection:
