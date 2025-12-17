@@ -1,6 +1,6 @@
 ---
 table:
-- - C:\Users\Public\file.txt
+- - "C:\\Users\\Administrator\\Desktop\\file.txt\r"
 headers: []
-rawData: C:\Users\Public\file.txt
+rawData: "C:\\Users\\Administrator\\Desktop\\file.txt\r"
 empty: false

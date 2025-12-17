@@ -1,0 +1,13 @@
+---
+result: "Windows\r\n"
+success: true
+message: "CommandLineCriterion test succeeded:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult: Windows\r\n"
+exception: null
+criterion: !<commandLine>
+  type: commandLine
+  forceSerialization: false
+  commandLine: "PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\""
+  errorMessage: Not a Windows machine.
+  expectedResult: Windows
+  executeLocally: false
+  timeout: null
