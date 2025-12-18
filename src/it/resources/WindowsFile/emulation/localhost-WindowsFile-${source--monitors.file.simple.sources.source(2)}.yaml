@@ -1,7 +1,7 @@
 ---
 table:
-- - C:\Users\Public\file.txt
-  - 14
+- - C:\Users\Administrator\Desktop\file.txt
+  - "14\r"
 headers: []
-rawData: C:\Users\Public\file.txt;14
+rawData: "C:\\Users\\Administrator\\Desktop\\file.txt;14\r"
 empty: false

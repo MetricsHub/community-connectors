@@ -1,25 +1,21 @@
 ---
 table:
-- - C:\Users\Public\file.txt
+- - C:\Users\Administrator\Desktop\file.txt
   - file.txt
-  - dev-hv-01
-  - 8
-- - C:\Users\Public\file.txt
+  - ec-win-01
+  - "1\r"
+- - C:\Users\Administrator\Desktop\file.txt
   - file.txt
   - Error
-  - 1
-- - C:\Users\Public\file.txt
+  - "8\r"
+- - C:\Users\Administrator\Desktop\file.txt
   - file.txt
   - Exception
-  - 7
-- - C:\Users\Public\file.txt
+  - "3\r"
+- - C:\Users\Administrator\Desktop\file.txt
   - file.txt
   - Failed
-  - 1
+  - "2\r"
 headers: []
-rawData: |-
-  C:\Users\Public\file.txt;file.txt;dev-hv-01;8
-  C:\Users\Public\file.txt;file.txt;Error;1
-  C:\Users\Public\file.txt;file.txt;Exception;7
-  C:\Users\Public\file.txt;file.txt;Failed;1
+rawData: "C:\\Users\\Administrator\\Desktop\\file.txt;file.txt;ec-win-01;1\r\nC:\\Users\\Administrator\\Desktop\\file.txt;file.txt;Error;8\r\nC:\\Users\\Administrator\\Desktop\\file.txt;file.txt;Exception;3\r\nC:\\Users\\Administrator\\Desktop\\file.txt;file.txt;Failed;2\r"
 empty: false
