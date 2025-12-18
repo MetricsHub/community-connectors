@@ -154,8 +154,7 @@
     "attributes" : {
       "os.type" : "windows",
       "host.type" : "compute",
-      "host.name" : "localhost",
-      "agent.host.name" : "PC-ELYES.lan"
+      "host.name" : "localhost"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
