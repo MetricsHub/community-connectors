@@ -176,4 +176,20 @@ metrics:
         - ok
         - failed
         - degraded
+  db.server.connections.limit: 
+    description: The maximum number of simultaneous client connections.
+    type: Counter
+    unit: "{connection}"
+  db.server.table_cache.operations:
+    description: Number of lookup operations performed on the table open cache.
+    type: Counter
+    unit: "{operation}"
+  db.server.temp_tables:
+    type: Counter
+    description: total number of internal temporary tables.
+    unit: "{table}"
+  db.server.table_locks:
+    description: the number of table locks
+    type: Counter
+    unit: "{table_lock}"
 
