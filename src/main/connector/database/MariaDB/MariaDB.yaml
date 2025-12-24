@@ -520,8 +520,8 @@ monitors:
           db.server.mariadb.galera_replication.parallel_transactions.limit: $125 #wsrep_cert_deps_distance: Represents the node’s potential for parallel transaction application, 
 translations:
   GaleraClusterStatusTranslationTable:
-      Primary: ok
-      Default: failed
+    Primary: ok
+    Default: failed
   OnOffStatusTranslationTable:
     "1": on
     "0": off
