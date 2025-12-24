@@ -1,0 +1,14 @@
+#MetricsHub Configuration
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
+patchDirectory: "src/main/connector"
+resources:
+  localhost:
+    attributes:
+      host.name: localhost
+      host.type: linux
+    protocols:
+      jdbc:
+        timeout: 300
+        url: jdbc:mysql://localhost:3308
+    connectors: [+MariaDB]

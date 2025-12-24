@@ -1,0 +1,12 @@
+---
+result: 1;
+success: true
+message: "Hostname HOSTNAME - SQL test succeeded. Returned result: 1;."
+exception: null
+criterion: !<sql>
+  type: sql
+  forceSerialization: false
+  database: null
+  query: SELECT @@version LIKE '%MariaDB%' AS is_mariadb;
+  expectedResult: 1
+  errorMessage: Not a MariaDB Server

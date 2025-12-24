@@ -865,7 +865,109 @@
           "previousValue": 5027804601.0,
           "type": "NumberMetric",
           "updated": true
-        }
+        },
+        "db.server.connections.limit" : {
+        "name" : "db.server.connections.limit",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 151.0,
+        "previousValue" : 151.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+        "db.server.table_cache.operations{db.cache.state=\"miss\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"miss\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 192.0,
+        "previousValue" : 192.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_cache.operations{db.cache.state=\"overflow\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"overflow\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.cache.state" : "overflow"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_cache.operations{db.cache.state=\"hit\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"hit\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 3491.0,
+        "previousValue" : 3491.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.temp_tables{db.temp_table.storage=\"disk\"}" : {
+        "name" : "db.server.temp_tables{db.temp_table.storage=\"disk\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.temp_table.storage" : "disk"
+        },
+        "resetMetricTime" : true,
+        "value" : 26.0,
+        "previousValue" : 26.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.temp_tables{db.temp_table.storage=\"memory\"}" : {
+        "name" : "db.server.temp_tables{db.temp_table.storage=\"memory\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.temp_table.storage" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : 15.0,
+        "previousValue" : 15.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_locks{db.lock.state=\"immediate\"}" : {
+        "name" : "db.server.table_locks{db.lock.state=\"immediate\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.lock.state" : "immediate"
+        },
+        "resetMetricTime" : true,
+        "value" : 55.0,
+        "previousValue" : 55.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_locks{db.lock.state=\"waited\"}" : {
+        "name" : "db.server.table_locks{db.lock.state=\"waited\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.lock.state" : "waited"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
       },
       "attributes": {
         "db.version": "9.2.0",
