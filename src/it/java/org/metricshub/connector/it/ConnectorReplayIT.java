@@ -20,13 +20,15 @@ class ConnectorReplayIT {
 		"MIB2",
 		"Lmsensors",
 		"Linux",
+		"LinuxIpmiTool",
 		"MySql",
 		"WbemGenDiskNT",
 		"SmartMonLinux",
 		"MIB2Switch",
 		"WindowsFile",
 		"LinuxFile",
-		"AMDRadeon"
+		"AMDRadeon",
+		"IpmiTool"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)
