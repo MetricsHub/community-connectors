@@ -1,7 +1,7 @@
 ---
-result: "Device ID                 : 3\nDevice Revision           : 3\nFirmware Revision         : 4.10\nIPMI Version              : 2.0\nManufacturer ID           : 10368\nManufacturer Name         : Fujitsu Siemens\nProduct ID                : 790 (0x0316)\nProduct Name              : Unknown (0x316)\nDevice Available          : yes\nProvides Device SDRs      : no\nAdditional Device Support :\n    Sensor Device\n    SDR Repository Device\n    SEL Device\n    FRU Inventory Device\n    IPMB Event Receiver\n    Bridge\n    Chassis Device\nAux Firmware Rev Info     : \n    0x06\n    0x41\n    0x00\n    0x41\n"
+result: System power state is up
 success: true
-message: Successfully connected to the IPMI BMC chip with the in-band driver interface.
+message: Successfully connected to the IPMI BMC chip with the IPMI-over-LAN interface.
 exception: null
 criterion: !<ipmi>
   type: ipmi

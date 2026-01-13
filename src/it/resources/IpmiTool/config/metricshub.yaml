@@ -5,9 +5,9 @@ resources:
   localhost:
     attributes:
       host.name: anyHost
-      host.type: linux
+      host.type: oob
     protocols:
-      ssh:
+      ipmi:
         username: username
         password: password
         timeout: 300

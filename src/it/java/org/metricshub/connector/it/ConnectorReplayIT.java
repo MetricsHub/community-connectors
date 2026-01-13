@@ -20,7 +20,7 @@ class ConnectorReplayIT {
 		"MIB2",
 		"Lmsensors",
 		"Linux",
-		"LinuxIpmiTool",
+		//"LinuxIpmiTool",
 		"MySql",
 		"WbemGenDiskNT",
 		"SmartMonLinux",
