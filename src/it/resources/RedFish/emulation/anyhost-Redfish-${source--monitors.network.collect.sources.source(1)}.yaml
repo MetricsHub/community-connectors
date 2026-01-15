@@ -1,5 +1,0 @@
----
-table: []
-headers: []
-rawData: "[{\"@odata.context\":\"/redfish/v1/$metadata#EthernetInterfaceCollection.EthernetInterfaceCollection\",\"@odata.type\":\"#EthernetInterfaceCollection.EthernetInterfaceCollection\",\"@odata.id\":\"/redfish/v1/Systems/1/EthernetInterfaces\",\"Name\":\"Ethernet Network Interface Collection\",\"Description\":\"Simple Network Collection\",\"Members@odata.count\":2,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1/EthernetInterfaces/1\"},{\"@odata.id\":\"/redfish/v1/Systems/1/EthernetInterfaces/2\"}]}]"
-empty: false

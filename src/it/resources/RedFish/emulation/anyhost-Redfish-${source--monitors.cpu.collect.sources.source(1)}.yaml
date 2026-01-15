@@ -1,5 +1,0 @@
----
-table: []
-headers: []
-rawData: "[{\"@odata.context\":\"/redfish/v1/$metadata#ProcessorCollection.ProcessorCollection\",\"@odata.type\":\"#ProcessorCollection.ProcessorCollection\",\"@odata.id\":\"/redfish/v1/Systems/1/Processors\",\"Name\":\"Processors Collection\",\"Description\":\"Processors Collection\",\"Members@odata.count\":1,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1/Processors/1\"}]}]"
-empty: false
