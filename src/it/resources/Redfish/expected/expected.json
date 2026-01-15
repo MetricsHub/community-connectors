@@ -851,8 +851,7 @@
     "attributes" : {
       "os.type" : "management",
       "host.type" : "compute",
-      "host.name" : "anyhost",
-      "agent.host.name" : "PC-ELYES.lan"
+      "host.name" : "anyhost"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
