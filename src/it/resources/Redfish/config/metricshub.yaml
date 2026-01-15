@@ -1,0 +1,16 @@
+#MetricsHub Configuration
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
+patchDirectory: "src/main/connector"
+resources:
+  anyhost:
+    attributes:
+      host.name: anyhost
+      host.type: oob
+    protocols:
+      http:
+        https: true
+        username: user
+        password: pass
+        timeout: 120
+    connectors: ["+Redfish"]

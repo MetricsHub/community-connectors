@@ -16,9 +16,10 @@ connector:
     disableAutoDetection: true
     criteria:
       # OS should be Windows
-    - type: wmi
-      namespace: root\CIMv2
-      query: SELECT * FROM Win32_OperatingSystem
+    - type: commandLine
+      commandLine: PowerShell.exe -ExecutionPolicy Bypass -Command "if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }"
+      expectedResult: Windows
+      errorMessage: Not a Windows machine.
     tags: [ system, windows ]
   variables:
     matchPath:

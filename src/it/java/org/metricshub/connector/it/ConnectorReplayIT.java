@@ -28,8 +28,10 @@ class ConnectorReplayIT {
 		"WindowsFile",
 		"LinuxFile",
 		"AMDRadeon",
-		"IpmiTool"
+		"IpmiTool",
+		"Redfish"
 	})
+
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)
 			.withServerRecordData()
