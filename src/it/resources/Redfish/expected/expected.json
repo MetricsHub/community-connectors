@@ -1,0 +1,2906 @@
+{
+  "total" : 39,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "Redfish.yaml",
+      "name" : "RedFish (REST)",
+      "connector_id" : "Redfish",
+      "applies_to_os" : "oob",
+      "parent.id" : "anyhost",
+      "id" : "Redfish"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed HttpCriterion Criterion:\n- Method: GET\n- Path: /redfish/v1/Systems\n- Header: Authorization: Basic %{BASIC_AUTH_BASE64}\n- ExpectedResult: redfish\n- ErrorMessage: Invalid credentials / not a redfish system\n- ResultContent: BODY\n\nResult:\n{\"@odata.context\":\"/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.type\":\"#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.id\":\"/redfish/v1/Systems\",\"Name\":\"Computer System Collection\",\"Description\":\"Computer System Collection\",\"Members@odata.count\":1,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1\"}]}\n\nMessage:\n====================================\nHostname com-prox-01-mgt - HTTP test succeeded. Returned result: {\"@odata.context\":\"/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.type\":\"#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.id\":\"/redfish/v1/Systems\",\"Name\":\"Computer System Collection\",\"Description\":\"Computer System Collection\",\"Members@odata.count\":1,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1\"}]}.\n====================================\n\nConclusion:\nTest on anyhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "connector",
+    "id" : "connector_Redfish",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"cpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"cpu\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"cpu\"}" : {
+        "name" : "hw.status{hw.type=\"cpu\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.cpu.speed.limit{limit_type=\"max\"}" : {
+        "name" : "hw.cpu.speed.limit{limit_type=\"max\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "max"
+        },
+        "resetMetricTime" : true,
+        "value" : 4.0E9,
+        "previousValue" : 4.0E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"cpu\"}" : {
+        "name" : "hw.power{hw.type=\"cpu\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 19.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "CPU1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "vendor" : "Intel",
+      "name" : "CPU1 (Intel - Intel(R) Xeon(R) CPU E5-2603 v4 @ 1.70GHz - 4.00 GHz)",
+      "connector_id" : "Redfish",
+      "model" : "Intel(R) Xeon(R) CPU E5-2603 v4 @ 1.70GHz",
+      "id" : "1",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "cpu",
+    "id" : "Redfish_cpu_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"enclosure\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "System",
+      "vendor" : "Supermicro",
+      "name" : "Enclosure: System (Supermicro SYS-5018R-MR)",
+      "connector_id" : "Redfish",
+      "model" : "SYS-5018R-MR",
+      "serial_number" : "E16232127101810",
+      "id" : "/redfish/v1/Systems/1",
+      "type" : "enclosure",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "enclosure",
+    "id" : "Redfish_enclosure_/redfish/v1/Systems/1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 4900.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 700.0,
+        "previousValue" : 700.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.19291338582677164,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 500.0,
+        "previousValue" : 500.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "FAN1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "FAN1",
+      "connector_id" : "Redfish",
+      "id" : "0",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : {
+      "hw.fan.speed_ratio" : "200"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "fan",
+    "id" : "Redfish_fan_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 4600.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 700.0,
+        "previousValue" : 700.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.18110236220472442,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.6,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 500.0,
+        "previousValue" : 500.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "FAN2",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "FAN2",
+      "connector_id" : "Redfish",
+      "id" : "1",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : {
+      "hw.fan.speed_ratio" : "200"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "fan",
+    "id" : "Redfish_fan_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 4900.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 700.0,
+        "previousValue" : 700.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.19291338582677164,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.9,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 500.0,
+        "previousValue" : 500.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "FAN3",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "FAN3",
+      "connector_id" : "Redfish",
+      "id" : "2",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : {
+      "hw.fan.speed_ratio" : "200"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "fan",
+    "id" : "Redfish_fan_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.05,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 4800.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 700.0,
+        "previousValue" : 700.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio" : {
+        "name" : "hw.fan.speed_ratio",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.1889763779527559,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 500.0,
+        "previousValue" : 500.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "FAN4",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "FAN4",
+      "connector_id" : "Redfish",
+      "id" : "3",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : {
+      "hw.fan.speed_ratio" : "200"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "fan",
+    "id" : "Redfish_fan_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "__hw.host.cpu.thermal_dissipation_rate" : {
+        "name" : "__hw.host.cpu.thermal_dissipation_rate",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.29,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.ambient_temperature" : {
+        "name" : "hw.host.ambient_temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 23.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.host.average_warning_threshold" : {
+        "name" : "__hw.host.average_warning_threshold",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 85.45,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"http\"}" : {
+        "name" : "metricshub.host.up{protocol=\"http\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "http"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.heating_margin" : {
+        "name" : "hw.host.heating_margin",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 47.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"http\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"http\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "http"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.host.average_cpu_temperature" : {
+        "name" : "__hw.host.average_cpu_temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 41.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "value" : 62.44,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "management",
+      "host.type" : "compute",
+      "host.name" : "anyhost",
+      "agent.host.name" : "PC-ELYES.lan"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1768484036220,
+    "type" : "host",
+    "id" : "endpoint_host_anyhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpoint" : true,
+    "endpointHost" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.memory.limit" : {
+        "name" : "hw.memory.limit",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.7179869184E10,
+        "previousValue" : 1.7179869184E10,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMA1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "vendor" : "Samsung",
+      "name" : "DIMMA1 (Samsung - DDR4 - 16384 MB)",
+      "connector_id" : "Redfish",
+      "model" : "M393A2G40DB0-CPB",
+      "serial_number" : "39EBBAA9",
+      "id" : "1",
+      "type" : "DDR4",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "memory",
+    "id" : "Redfish_memory_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.memory.limit" : {
+        "name" : "hw.memory.limit",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.7179869184E10,
+        "previousValue" : 1.7179869184E10,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMB1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "vendor" : "Samsung",
+      "name" : "DIMMB1 (Samsung - DDR4 - 16384 MB)",
+      "connector_id" : "Redfish",
+      "model" : "M393A2G40DB0-CPB",
+      "serial_number" : "39EBBCF8",
+      "id" : "2",
+      "type" : "DDR4",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "memory",
+    "id" : "Redfish_memory_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.memory.limit" : {
+        "name" : "hw.memory.limit",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.7179869184E10,
+        "previousValue" : 1.7179869184E10,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMC1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "vendor" : "Kingston",
+      "name" : "DIMMC1 (Kingston - DDR4 - 16384 MB)",
+      "connector_id" : "Redfish",
+      "model" : "9965604-052.D00G",
+      "serial_number" : "73785A05",
+      "id" : "3",
+      "type" : "DDR4",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "memory",
+    "id" : "Redfish_memory_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.memory.limit" : {
+        "name" : "hw.memory.limit",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.7179869184E10,
+        "previousValue" : 1.7179869184E10,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 4.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMD1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "vendor" : "Kingston",
+      "name" : "DIMMD1 (Kingston - DDR4 - 16384 MB)",
+      "connector_id" : "Redfish",
+      "model" : "9965604-052.D00G",
+      "serial_number" : "73785A26",
+      "id" : "4",
+      "type" : "DDR4",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "memory",
+    "id" : "Redfish_memory_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "OnBoard LAN 1",
+      "physical_address" : "0c:c4:7a:db:bd:ac",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "OnBoard LAN 1",
+      "connector_id" : "Redfish",
+      "id" : "1",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"network\"}" : "",
+      "hw.network.bandwidth.limit" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "network",
+    "id" : "Redfish_network_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "OnBoard LAN 2",
+      "physical_address" : "0c:c4:7a:db:bd:ad",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "OnBoard LAN 2",
+      "connector_id" : "Redfish",
+      "id" : "2",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"network\"}" : "",
+      "hw.network.bandwidth.limit" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "network",
+    "id" : "Redfish_network_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.power_supply.limit" : {
+        "name" : "hw.power_supply.limit",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 228.0,
+        "previousValue" : 228.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Power Supply Bay 1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "power_supply_type" : "AC",
+      "name" : "Power Supply Bay 1 (AC - 228 W)",
+      "connector_id" : "Redfish",
+      "id" : "0",
+      "info" : "Model: PWS-406P-1R Firmware Version: 1.3 Serial Number: P406PCG25LT1342",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "power_supply",
+    "id" : "Redfish_power_supply_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.power_supply.limit" : {
+        "name" : "hw.power_supply.limit",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 230.0,
+        "previousValue" : 230.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Power Supply Bay 2",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "power_supply_type" : "AC",
+      "name" : "Power Supply Bay 2 (AC - 230 W)",
+      "connector_id" : "Redfish",
+      "id" : "1",
+      "info" : "Model: PWS-406P-1R Firmware Version: 1.3 Serial Number: P406PCG25LT1346",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "power_supply",
+    "id" : "Redfish_power_supply_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 90.0,
+        "previousValue" : 90.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 36.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "CPU Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "true",
+      "name" : "CPU Temp",
+      "connector_id" : "Redfish",
+      "id" : "0",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 90.0,
+        "previousValue" : 90.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 95.0,
+        "previousValue" : 95.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 30.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "PCH Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "PCH Temp",
+      "connector_id" : "Redfish",
+      "id" : "1",
+      "__id_count" : "11"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 80.0,
+        "previousValue" : 80.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 31.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMC1 Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "DIMMC1 Temp",
+      "connector_id" : "Redfish",
+      "id" : "11",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_11",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 80.0,
+        "previousValue" : 80.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 33.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMD1 Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "DIMMD1 Temp",
+      "connector_id" : "Redfish",
+      "id" : "13",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_13",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 80.0,
+        "previousValue" : 80.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 23.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "System Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "System Temp",
+      "connector_id" : "Redfish",
+      "id" : "2",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 80.0,
+        "previousValue" : 80.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 30.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Peripheral Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "Peripheral Temp",
+      "connector_id" : "Redfish",
+      "id" : "3",
+      "__id_count" : "9"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 95.0,
+        "previousValue" : 95.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 46.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "VcpuVRM Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "true",
+      "name" : "VcpuVRM Temp",
+      "connector_id" : "Redfish",
+      "id" : "4",
+      "__id_count" : "10"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 95.0,
+        "previousValue" : 95.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 33.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "VmemABVRM Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "VmemABVRM Temp",
+      "connector_id" : "Redfish",
+      "id" : "5",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 95.0,
+        "previousValue" : 95.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 29.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "VmemCDVRM Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "VmemCDVRM Temp",
+      "connector_id" : "Redfish",
+      "id" : "6",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 80.0,
+        "previousValue" : 80.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 28.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMA1 Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "DIMMA1 Temp",
+      "connector_id" : "Redfish",
+      "id" : "7",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "value" : 80.0,
+        "previousValue" : 80.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : 1768484028170,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 29.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "DIMMB1 Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "__is_cpu_sensor" : "false",
+      "name" : "DIMMB1 Temp",
+      "connector_id" : "Redfish",
+      "id" : "9",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_9",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 12063.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "12V",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "12V",
+      "connector_id" : "Redfish",
+      "id" : "0",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 4974.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "5VCC",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "5VCC",
+      "connector_id" : "Redfish",
+      "id" : "1",
+      "__id_count" : "9"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1209.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "1.2V BMC",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "1.2V BMC",
+      "connector_id" : "Redfish",
+      "id" : "10",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_10",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1050.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "1.05V PCH",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "1.05V PCH",
+      "connector_id" : "Redfish",
+      "id" : "11",
+      "__id_count" : "10"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_11",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 3350.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "3.3VCC",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "3.3VCC",
+      "connector_id" : "Redfish",
+      "id" : "2",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 3159.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "VBAT",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "VBAT",
+      "connector_id" : "Redfish",
+      "id" : "3",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1800.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Vcpu",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "Vcpu",
+      "connector_id" : "Redfish",
+      "id" : "4",
+      "__id_count" : "12"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1200.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "VDIMMAB",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "VDIMMAB",
+      "connector_id" : "Redfish",
+      "id" : "5",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1200.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "VDIMMCD",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "VDIMMCD",
+      "connector_id" : "Redfish",
+      "id" : "6",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 4948.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "5VSB",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "5VSB",
+      "connector_id" : "Redfish",
+      "id" : "7",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 3282.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "3.3VSB",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "3.3VSB",
+      "connector_id" : "Redfish",
+      "id" : "8",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_8",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.voltage" : {
+        "name" : "hw.voltage",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1509.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1768484036220,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "1.5V PCH",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "1.5V PCH",
+      "connector_id" : "Redfish",
+      "id" : "9",
+      "__id_count" : "11"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "The device is running normal."
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768484028170,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_9",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}
