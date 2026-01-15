@@ -26,7 +26,8 @@ class ConnectorReplayIT {
 		"MIB2Switch",
 		"WindowsFile",
 		"LinuxFile",
-		"AMDRadeon"
+		"AMDRadeon",
+		"Redfish"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)

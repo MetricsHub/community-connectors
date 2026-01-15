@@ -1,0 +1,23 @@
+---
+table: []
+headers: []
+rawData: |-
+  [{
+  "Entry":{
+  "Full":"[0]/Entry/Value/Members[0],/redfish/v1/Systems/1,/redfish/v1/Systems/1/EthernetInterfaces/1",
+  "Column(1)":"[0]/Entry/Value/Members[0]",
+  "Column(2)":"/redfish/v1/Systems/1",
+  "Column(3)":"/redfish/v1/Systems/1/EthernetInterfaces/1",
+  "Value":{"@odata.context":"/redfish/v1/$metadata#EthernetInterface.EthernetInterface","@odata.type":"#EthernetInterface.v1_0_0.EthernetInterface","@odata.id":"/redfish/v1/Systems/1/EthernetInterfaces/1","Id":"1","Name":"OnBoard LAN 1","Description":"OnBoard #1","Status":{"State":"Disabled","Health":"OK"},"MACAddress":"0c:c4:7a:db:bd:ac","SpeedMbps":0,"FQDN":""}
+  }
+  },
+  {
+  "Entry":{
+  "Full":"[0]/Entry/Value/Members[1],/redfish/v1/Systems/1,/redfish/v1/Systems/1/EthernetInterfaces/2",
+  "Column(1)":"[0]/Entry/Value/Members[1]",
+  "Column(2)":"/redfish/v1/Systems/1",
+  "Column(3)":"/redfish/v1/Systems/1/EthernetInterfaces/2",
+  "Value":{"@odata.context":"/redfish/v1/$metadata#EthernetInterface.EthernetInterface","@odata.type":"#EthernetInterface.v1_0_0.EthernetInterface","@odata.id":"/redfish/v1/Systems/1/EthernetInterfaces/2","Id":"2","Name":"OnBoard LAN 2","Description":"OnBoard #2","Status":{"State":"Disabled","Health":"OK"},"MACAddress":"0c:c4:7a:db:bd:ad","SpeedMbps":0,"FQDN":""}
+  }
+  }]
+empty: false
