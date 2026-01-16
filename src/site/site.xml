@@ -69,8 +69,8 @@
 
 		<menu name="User Documentation">
 			<item name="Getting Started" href="index.html" />
-			<item name="Connectors Directory" href="metricshub-connectors-directory.html" />
-			<item name="Connectors Full Listing" href="metricshub-connectors-full-listing.html" />
+			<item name="Supported Platforms" href="supported-platforms.html" />
+			<item name="Connectors Directory" href="connectors-directory.html" />
 		</menu>
 
 		<menu name="Connector Design Guide &lt;span class='fa-solid fa-person-digging'&gt;&lt;/span&gt;">
