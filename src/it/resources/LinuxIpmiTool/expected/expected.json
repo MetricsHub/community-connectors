@@ -1,11 +1,65 @@
 {
-  "total" : 35,
+  "total" : 64,
   "monitors" : [ {
+    "metrics" : {
+      "hw.status{hw.type=\"battery\"}" : {
+        "name" : "hw.status{hw.type=\"battery\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "battery"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"battery\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"battery\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "battery"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "0",
+      "model" : "",
+      "id" : "0",
+      "info" : "Monitored by sensors: BATT 3.0V, status serialNumber: ",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "battery",
+    "id" : "LinuxIpmiTool_battery_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
     "metrics" : {
       "metricshub.connector.status" : {
         "name" : "metricshub.connector.status",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : false,
         "value" : "ok",
@@ -20,39 +74,164 @@
       "name" : "Linux IPMI (ipmitool)",
       "connector_id" : "LinuxIpmiTool",
       "applies_to_os" : "linux",
-      "parent.id" : "localhost",
+      "parent.id" : "anyHost",
       "id" : "LinuxIpmiTool"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info\n- ExecuteLocally: false\n- ExpectedResult: IPMI Version\n\nResult:\nDevice ID                 : 3\nDevice Revision           : 3\nFirmware Revision         : 4.10\nIPMI Version              : 2.0\nManufacturer ID           : 10368\nManufacturer Name         : Fujitsu Siemens\nProduct ID                : 790 (0x0316)\nProduct Name              : Unknown (0x316)\nDevice Available          : yes\nProvides Device SDRs      : no\nAdditional Device Support :\n    Sensor Device\n    SDR Repository Device\n    SEL Device\n    FRU Inventory Device\n    IPMB Event Receiver\n    Bridge\n    Chassis Device\nAux Firmware Rev Info     : \n    0x06\n    0x41\n    0x00\n    0x41\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info\n- ExecuteLocally: false\n- ExpectedResult: IPMI Version\n\nResult: Device ID                 : 3\nDevice Revision           : 3\nFirmware Revision         : 4.10\nIPMI Version              : 2.0\nManufacturer ID           : 10368\nManufacturer Name         : Fujitsu Siemens\nProduct ID                : 790 (0x0316)\nProduct Name              : Unknown (0x316)\nDevice Available          : yes\nProvides Device SDRs      : no\nAdditional Device Support :\n    Sensor Device\n    SDR Repository Device\n    SEL Device\n    FRU Inventory Device\n    IPMB Event Receiver\n    Bridge\n    Chassis Device\nAux Firmware Rev Info     : \n    0x06\n    0x41\n    0x00\n    0x41\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info\n- ExecuteLocally: false\n- ExpectedResult: IPMI Version\n\nResult:\nDevice ID                 : 3\nDevice Revision           : 3\nFirmware Revision         : 4.10\nIPMI Version              : 2.0\nManufacturer ID           : 10368\nManufacturer Name         : Fujitsu Siemens\nProduct ID                : 790 (0x0316)\nProduct Name              : Unknown (0x316)\nDevice Available          : yes\nProvides Device SDRs      : no\nAdditional Device Support :\n    Sensor Device\n    SDR Repository Device\n    SEL Device\n    FRU Inventory Device\n    IPMB Event Receiver\n    Bridge\n    Chassis Device\nAux Firmware Rev Info     : \n    0x06\n    0x41\n    0x00\n    0x41\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info\n- ExecuteLocally: false\n- ExpectedResult: IPMI Version\n\nResult: Device ID                 : 3\nDevice Revision           : 3\nFirmware Revision         : 4.10\nIPMI Version              : 2.0\nManufacturer ID           : 10368\nManufacturer Name         : Fujitsu Siemens\nProduct ID                : 790 (0x0316)\nProduct Name              : Unknown (0x316)\nDevice Available          : yes\nProvides Device SDRs      : no\nAdditional Device Support :\n    Sensor Device\n    SDR Repository Device\n    SEL Device\n    FRU Inventory Device\n    IPMB Event Receiver\n    Bridge\n    Chassis Device\nAux Firmware Rev Info     : \n    0x06\n    0x41\n    0x00\n    0x41\n\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
     },
     "alertRules" : { },
-    "discoveryTime" : 1766066286804,
+    "discoveryTime" : 1768815739056,
     "type" : "connector",
     "id" : "connector_LinuxIpmiTool",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : true,
     "endpoint" : false,
+    "connector" : true,
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "hw.enclosure.energy" : {
-        "name" : "hw.enclosure.energy",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 1165.08,
-        "previousValue" : null,
+      "hw.status{hw.type=\"cpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"cpu\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
         "type" : "NumberMetric",
         "updated" : true
       },
+      "hw.status{hw.type=\"cpu\"}" : {
+        "name" : "hw.status{hw.type=\"cpu\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"cpu\"}" : {
+        "name" : "hw.power{hw.type=\"cpu\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 15.2,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "0",
+      "model" : "",
+      "id" : "0",
+      "info" : "Monitored by sensors: CPU1, status, CPU1 Power, status, CPU1, CPU1, CPU1, CPU1 SerialNumber: ",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "CPU1: ierr - CPU1: thermal trip - CPU1: configuration error - CPU1: Configuration Error - CPU1: Configuration Error - "
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "cpu",
+    "id" : "LinuxIpmiTool_cpu_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"cpu\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"cpu\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"cpu\"}" : {
+        "name" : "hw.status{hw.type=\"cpu\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"cpu\"}" : {
+        "name" : "hw.power{hw.type=\"cpu\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 15.2,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "1",
+      "model" : "",
+      "id" : "1",
+      "info" : "Monitored by sensors: CPU2, status, CPU2 Power, status, CPU2, CPU2, CPU2, CPU2 SerialNumber: ",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "CPU2: ierr - CPU2: thermal trip - CPU2: configuration error - CPU2: Configuration Error - CPU2: Configuration Error - "
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "cpu",
+    "id" : "LinuxIpmiTool_cpu_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
       "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : {
           "state" : "present",
           "hw.type" : "enclosure"
@@ -65,37 +244,37 @@
       },
       "hw.status{hw.type=\"enclosure\"}" : {
         "name" : "hw.status{hw.type=\"enclosure\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : {
           "hw.type" : "enclosure"
         },
         "resetMetricTime" : true,
-        "value" : "UNKNOWN",
-        "previousValue" : "UNKNOWN",
+        "value" : "failed",
+        "previousValue" : "failed",
         "stateSet" : [ "failed", "degraded", "ok" ],
         "type" : "StateSetMetric",
         "updated" : true
       },
       "__hw.enclosure.energy.fake_counter_from" : {
         "name" : "__hw.enclosure.energy.fake_counter_from",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : false,
         "value" : 120.0,
-        "previousValue" : 128.0,
+        "previousValue" : 120.0,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.enclosure.power" : {
         "name" : "hw.enclosure.power",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 120.0,
-        "previousValue" : 128.0,
+        "previousValue" : 120.0,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -103,215 +282,35 @@
     "attributes" : {
       "vendor" : "Fujitsu-Siemens",
       "connector_id" : "LinuxIpmiTool",
+      "name" : "enclosure: Fujitsu-Siemens D2939",
       "model" : "D2939",
       "serial_number" : "39159317",
       "id" : "IPMI",
-      "info" : "Monitored by sensors: "
+      "info" : "Monitored by sensors: Systemboard 1, status, Systemboard 2, status, STBY 12V, status, STBY 5V, status, STBY 3.3V, status, LAN 1.8V STBY, status, iRMC 1.5V STBY, status, LAN 1.0V STBY, status, MAIN 12V, status, MAIN 5V, status, MAIN 3.3V, status, PCH 1.5V, status, PCH 1.1V, status, CPU1 1.05V, status, CPU2 1.05V, status, System Power, status, CPU detection, Systemboard Pwr, status, System BIOS, status",
+      "__id_count" : "1"
     },
     "conditionalCollection" : {
-      "hw.status{hw.type=\"enclosure\"}" : "UNKNOWN",
+      "hw.status{hw.type=\"enclosure\"}" : "failed",
       "hw.enclosure.power" : "120"
     },
     "legacyTextParameters" : {
       "StatusInformation" : ""
     },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "enclosure",
     "id" : "LinuxIpmiTool_enclosure_IPMI",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 4860.0,
-        "previousValue" : 4860.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
-        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "low.degraded"
-        },
-        "resetMetricTime" : false,
-        "value" : 500.0,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.power{hw.type=\"fan\"}" : {
-        "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "value" : 21.6,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
-        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "low.critical"
-        },
-        "resetMetricTime" : false,
-        "value" : 0.0,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "sensor_location" : "Fan Device 29",
-      "connector_id" : "LinuxIpmiTool",
-      "id" : "20",
-      "info" : ""
-    },
-    "conditionalCollection" : {
-      "hw.status{hw.type=\"fan\"}" : "",
-      "hw.fan.speed" : "4860"
-    },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1766066296513,
-    "type" : "fan",
-    "id" : "LinuxIpmiTool_fan_20",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpointHost" : false,
-    "connector" : false,
-    "endpoint" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.fan.speed" : {
-        "name" : "hw.fan.speed",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 4860.0,
-        "previousValue" : 4860.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
-        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "low.degraded"
-        },
-        "resetMetricTime" : false,
-        "value" : 500.0,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.power{hw.type=\"fan\"}" : {
-        "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "value" : 21.6,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
-        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "low.critical"
-        },
-        "resetMetricTime" : false,
-        "value" : 0.0,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "sensor_location" : "Fan Device 29",
-      "connector_id" : "LinuxIpmiTool",
-      "id" : "21",
-      "info" : ""
-    },
-    "conditionalCollection" : {
-      "hw.status{hw.type=\"fan\"}" : "",
-      "hw.fan.speed" : "4860"
-    },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1766066296513,
-    "type" : "fan",
-    "id" : "LinuxIpmiTool_fan_21",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpointHost" : false,
-    "connector" : false,
-    "endpoint" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.fan.speed" : {
-        "name" : "hw.fan.speed",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 4800.0,
@@ -321,7 +320,7 @@
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
@@ -334,8 +333,8 @@
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
@@ -348,20 +347,20 @@
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 21.33,
+        "value" : 6.14,
         "previousValue" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
@@ -376,10 +375,12 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "Fan Device 29",
+      "sensor_location" : "Fan Device 0",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "22",
-      "info" : ""
+      "name" : "20 (Fan Device 0)",
+      "id" : "20",
+      "info" : "",
+      "__id_count" : "2"
     },
     "conditionalCollection" : {
       "hw.status{hw.type=\"fan\"}" : "",
@@ -389,111 +390,20 @@
       "StatusInformation" : ""
     },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "fan",
-    "id" : "LinuxIpmiTool_fan_22",
+    "id" : "LinuxIpmiTool_fan_20",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 4980.0,
-        "previousValue" : 4980.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
-        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "low.degraded"
-        },
-        "resetMetricTime" : false,
-        "value" : 500.0,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.power{hw.type=\"fan\"}" : {
-        "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "value" : 22.13,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
-        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "low.critical"
-        },
-        "resetMetricTime" : false,
-        "value" : 0.0,
-        "previousValue" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "sensor_location" : "Fan Device 29",
-      "connector_id" : "LinuxIpmiTool",
-      "id" : "23",
-      "info" : ""
-    },
-    "conditionalCollection" : {
-      "hw.status{hw.type=\"fan\"}" : "",
-      "hw.fan.speed" : "4980"
-    },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1766066296513,
-    "type" : "fan",
-    "id" : "LinuxIpmiTool_fan_23",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpointHost" : false,
-    "connector" : false,
-    "endpoint" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.fan.speed" : {
-        "name" : "hw.fan.speed",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 4860.0,
@@ -503,7 +413,7 @@
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
@@ -516,8 +426,8 @@
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
@@ -530,20 +440,20 @@
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 21.6,
+        "value" : 6.22,
         "previousValue" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
@@ -558,10 +468,12 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "Fan Device 29",
+      "sensor_location" : "Fan Device 1",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "24",
-      "info" : ""
+      "name" : "21 (Fan Device 1)",
+      "id" : "21",
+      "info" : "",
+      "__id_count" : "1"
     },
     "conditionalCollection" : {
       "hw.status{hw.type=\"fan\"}" : "",
@@ -571,30 +483,30 @@
       "StatusInformation" : ""
     },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "fan",
-    "id" : "LinuxIpmiTool_fan_24",
+    "id" : "LinuxIpmiTool_fan_21",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
-        "value" : 1280.0,
-        "previousValue" : 1360.0,
+        "value" : 4800.0,
+        "previousValue" : 4800.0,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
@@ -607,8 +519,8 @@
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
@@ -621,20 +533,20 @@
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 5.69,
+        "value" : 6.14,
         "previousValue" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
@@ -649,33 +561,221 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "Power Supply 10",
+      "sensor_location" : "Fan Device 2",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "25",
-      "info" : ""
+      "name" : "22 (Fan Device 2)",
+      "id" : "22",
+      "info" : "",
+      "__id_count" : "3"
     },
     "conditionalCollection" : {
       "hw.status{hw.type=\"fan\"}" : "",
-      "hw.fan.speed" : "1280"
+      "hw.fan.speed" : "4800"
     },
     "legacyTextParameters" : {
       "StatusInformation" : ""
     },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "fan",
-    "id" : "LinuxIpmiTool_fan_25",
+    "id" : "LinuxIpmiTool_fan_22",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4980.0,
+        "previousValue" : 4980.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 500.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 6.37,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "Fan Device 3",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "23 (Fan Device 3)",
+      "id" : "23",
+      "info" : "",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "",
+      "hw.fan.speed" : "4980"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_23",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4860.0,
+        "previousValue" : 4860.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 500.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 6.22,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "Fan Device 4",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "24 (Fan Device 4)",
+      "id" : "24",
+      "info" : "",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "",
+      "hw.fan.speed" : "4860"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_24",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 1360.0,
@@ -685,7 +785,7 @@
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
@@ -698,8 +798,8 @@
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
@@ -712,20 +812,20 @@
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 6.04,
+        "value" : 1.74,
         "previousValue" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
@@ -740,10 +840,12 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "Power Supply 10",
+      "sensor_location" : "Power Supply 4",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "26",
-      "info" : ""
+      "name" : "25 (Power Supply 4)",
+      "id" : "25",
+      "info" : "",
+      "__id_count" : "7"
     },
     "conditionalCollection" : {
       "hw.status{hw.type=\"fan\"}" : "",
@@ -753,31 +855,245 @@
       "StatusInformation" : ""
     },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
+    "type" : "fan",
+    "id" : "LinuxIpmiTool_fan_25",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1360.0,
+        "previousValue" : 1360.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "value" : 500.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.74,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "Power Supply 8",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "26 (Power Supply 8)",
+      "id" : "26",
+      "info" : "",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "",
+      "hw.fan.speed" : "1360"
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
     "type" : "fan",
     "id" : "LinuxIpmiTool_fan_26",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.759,
+        "previousValue" : 1.644,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"blade\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"blade\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "blade"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"cpu\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"cpu\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.007,
+        "previousValue" : 0.015,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"led\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"led\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : 0.003,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
       "metricshub.host.response_time{protocol=\"ssh\"}" : {
         "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "protocol" : "ssh"
         },
         "resetMetricTime" : false,
-        "value" : 0.382,
+        "value" : 1.0,
         "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.006,
+        "previousValue" : 0.005,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"memory\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"memory\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.129,
+        "previousValue" : 0.146,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.002,
+        "previousValue" : 0.002,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"power_supply\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"power_supply\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.127,
+        "previousValue" : 0.162,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.host.power{quality=\"measured\"}" : {
         "name" : "hw.host.power{quality=\"measured\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "quality" : "measured"
@@ -788,9 +1104,24 @@
         "type" : "NumberMetric",
         "updated" : true
       },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"battery\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"battery\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "battery"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.016,
+        "previousValue" : 0.025,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
       "metricshub.host.up{protocol=\"ssh\"}" : {
         "name" : "metricshub.host.up{protocol=\"ssh\"}",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : {
           "protocol" : "ssh"
@@ -801,10 +1132,40 @@
         "type" : "NumberMetric",
         "updated" : true
       },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"other_device\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"other_device\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.206,
+        "previousValue" : 0.191,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"voltage\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"voltage\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.192,
+        "previousValue" : 0.184,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
       "metricshub.host.configured" : {
         "name" : "metricshub.host.configured",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -812,9 +1173,39 @@
         "type" : "NumberMetric",
         "updated" : true
       },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.165,
+        "previousValue" : 0.174,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"physical_disk\", connector_id=\"LinuxIpmiTool\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"physical_disk\", connector_id=\"LinuxIpmiTool\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxIpmiTool",
+          "monitor.type" : "physical_disk"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.002,
+        "previousValue" : 0.003,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
       "hw.host.ambient_temperature" : {
         "name" : "hw.host.ambient_temperature",
-        "collectTime" : 1766066296513,
+        "collectTime" : 1768815748880,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
@@ -825,27 +1216,1567 @@
       }
     },
     "attributes" : {
+      "host.name" : "anyHost",
       "host.type" : "compute",
-      "host.name" : "localhost",
       "os.type" : "linux"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "host",
-    "id" : "endpoint_host_localhost",
+    "id" : "endpoint_host_anyHost",
     "identifyingAttributeKeys" : [ "host.name" ],
     "endpointHost" : true,
-    "connector" : false,
     "endpoint" : true,
+    "connector" : false,
     "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 0 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "0",
+      "info" : "Monitored by sensors: MEM A, status",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 1 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "1",
+      "info" : "Monitored by sensors: MEM B, status",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 2 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "2",
+      "info" : "Monitored by sensors: MEM C, status",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 3 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "3",
+      "info" : "Monitored by sensors: MEM D, status",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 4 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "4",
+      "info" : "Monitored by sensors: MEM E, status",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 5 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "5",
+      "info" : "Monitored by sensors: MEM F, status",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 6 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "6",
+      "info" : "Monitored by sensors: MEM G, status",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"memory\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"memory\"}" : {
+        "name" : "hw.status{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"memory\"}" : {
+        "name" : "hw.power{hw.type=\"memory\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.12,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "name" : "Memory Device 7 ( -  MB)",
+      "connector_id" : "LinuxIpmiTool",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "7",
+      "info" : "Monitored by sensors: MEM H, status",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "memory",
+    "id" : "LinuxIpmiTool_memory_7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "Unknown (0xE0): 0",
+      "additional_label" : "",
+      "device_type" : "Unknown (0xE0)",
+      "id" : "0",
+      "info" : "Monitored by sensors: Total Power, status, Total Power, status Serial Number: ",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "Unknown (0xE0): 1",
+      "additional_label" : "",
+      "device_type" : "Unknown (0xE0)",
+      "id" : "1",
+      "info" : "Monitored by sensors: Total Power Out, status, Total Power Out, status Serial Number: ",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "UNKNOWN",
+        "previousValue" : "UNKNOWN",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "Unknown (0xE0): 2",
+      "additional_label" : "",
+      "device_type" : "Unknown (0xE0)",
+      "id" : "2",
+      "info" : "Monitored by sensors: Power Level, status, Power Level, status Serial Number: ",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "System Management Module: 3",
+      "additional_label" : "",
+      "device_type" : "System Management Module",
+      "id" : "3",
+      "info" : "Monitored by sensors: I2C3 error ratio, status, I2C3, status Serial Number: ",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "System Management Module: 4",
+      "additional_label" : "",
+      "device_type" : "System Management Module",
+      "id" : "4",
+      "info" : "Monitored by sensors: I2C4 error ratio, status, I2C4, status Serial Number: ",
+      "__id_count" : "9"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "System Management Module: 5",
+      "additional_label" : "",
+      "device_type" : "System Management Module",
+      "id" : "5",
+      "info" : "Monitored by sensors: I2C5 error ratio, status, I2C5, status Serial Number: ",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "System Management Module: 6",
+      "additional_label" : "",
+      "device_type" : "System Management Module",
+      "id" : "6",
+      "info" : "Monitored by sensors: I2C6 error ratio, status, I2C6, status Serial Number: ",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "System Management Module: 7",
+      "additional_label" : "",
+      "device_type" : "System Management Module",
+      "id" : "7",
+      "info" : "Monitored by sensors: I2C7 error ratio, status, I2C7, status Serial Number: ",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "System Management Module: 8",
+      "additional_label" : "",
+      "device_type" : "System Management Module",
+      "id" : "8",
+      "info" : "Monitored by sensors: I2C8 error ratio, status, I2C8, status Serial Number: ",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "other_device",
+    "id" : "LinuxIpmiTool_other_device_8",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.power{hw.type=\"physical_disk\"}" : {
+        "name" : "hw.power{hw.type=\"physical_disk\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "physical_disk"
+        },
+        "resetMetricTime" : false,
+        "value" : 14.08,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"physical_disk\"}" : {
+        "name" : "hw.status{hw.type=\"physical_disk\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "physical_disk"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"physical_disk\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"physical_disk\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "physical_disk"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "vendor" : "",
+      "connector_id" : "LinuxIpmiTool",
+      "name" : "0",
+      "model" : "",
+      "serial_number" : "",
+      "id" : "0",
+      "info" : "Monitored by sensors: HDD Power, status",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "physical_disk",
+    "id" : "LinuxIpmiTool_physical_disk_0",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "10",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "10",
+      "info" : "Power Supply 4 4",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "4"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_10",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "11",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "11",
+      "info" : "Power Supply 8 8",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "8"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_11",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "25",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "25",
+      "info" : "Power Supply 4 4",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "4"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_25",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "26",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "26",
+      "info" : "Power Supply 8 8",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "8"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_26",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "2b",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "2b",
+      "info" : " Power Supply 100",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Power Supply 100"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_2b",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "2c",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "2c",
+      "info" : " Power Supply 104",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Power Supply 104"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_2c",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "e",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "e",
+      "info" : "Power Supply 4 4",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "4"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_e",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"power_supply\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "name" : "f",
+      "connector_id" : "LinuxIpmiTool",
+      "id" : "f",
+      "info" : "Power Supply 8 8",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "8"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1768815748880,
+    "type" : "power_supply",
+    "id" : "LinuxIpmiTool_power_supply_f",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 24.5,
@@ -858,28 +2789,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "External Environment 39",
-      "name" : "Ambient (External Environment 39)",
+      "sensor_location" : "External Environment 0",
+      "name" : "Ambient (External Environment 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "1"
+      "id" : "1",
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_1",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 52.0,
@@ -892,28 +2824,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Power Supply 10",
-      "name" : "PSU1 (Power Supply 10)",
+      "sensor_location" : "Power Supply 4",
+      "name" : "PSU1 (Power Supply 4)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "10"
+      "id" : "10",
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_10",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 52.0,
@@ -926,28 +2859,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Power Supply 10",
-      "name" : "PSU2 (Power Supply 10)",
+      "sensor_location" : "Power Supply 8",
+      "name" : "PSU2 (Power Supply 8)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "11"
+      "id" : "11",
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_11",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 25.0,
@@ -960,28 +2894,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "System Board 7",
-      "name" : "Systemboard 1 (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "Systemboard 1 (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "2"
+      "id" : "2",
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_2",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 36.0,
@@ -994,28 +2929,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "System Board 7",
-      "name" : "Systemboard 2 (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "Systemboard 2 (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "3"
+      "id" : "3",
+      "__id_count" : "10"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_3",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 34.0,
@@ -1028,32 +2964,33 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Processor 3",
-      "name" : "CPU1 (Processor 3)",
+      "sensor_location" : "Processor 0",
+      "name" : "CPU1 (Processor 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "4"
+      "id" : "4",
+      "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_4",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 36.0,
-        "previousValue" : 37.0,
+        "previousValue" : 36.0,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1062,28 +2999,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Processor 3",
-      "name" : "CPU2 (Processor 3)",
+      "sensor_location" : "Processor 1",
+      "name" : "CPU2 (Processor 1)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "5"
+      "id" : "5",
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_5",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 30.0,
@@ -1096,28 +3034,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Memory Device 32",
-      "name" : "MEM A (Memory Device 32)",
+      "sensor_location" : "Memory Device 0",
+      "name" : "MEM A (Memory Device 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "6"
+      "id" : "6",
+      "__id_count" : "4"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_6",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 30.0,
@@ -1130,28 +3069,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Memory Device 32",
-      "name" : "MEM E (Memory Device 32)",
+      "sensor_location" : "Memory Device 4",
+      "name" : "MEM E (Memory Device 4)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "a"
+      "id" : "a",
+      "__id_count" : "9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_a",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 26.0,
@@ -1164,28 +3104,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Power Supply 10",
-      "name" : "PSU1 Inlet (Power Supply 10)",
+      "sensor_location" : "Power Supply 4",
+      "name" : "PSU1 Inlet (Power Supply 4)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "e"
+      "id" : "e",
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_e",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 26.0,
@@ -1198,28 +3139,29 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
-      "sensor_location" : "Power Supply 10",
-      "name" : "PSU2 Inlet (Power Supply 10)",
+      "sensor_location" : "Power Supply 8",
+      "name" : "PSU2 Inlet (Power Supply 8)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "f"
+      "id" : "f",
+      "__id_count" : "11"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "temperature",
     "id" : "LinuxIpmiTool_temperature_f",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 3.225,
@@ -1231,28 +3173,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "Battery 40",
-      "name" : "BATT 3.0V (Battery 40)",
+      "sensor_location" : "Battery 0",
+      "name" : "BATT 3.0V (Battery 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "12"
+      "id" : "12",
+      "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_12",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 11.76,
@@ -1264,28 +3207,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "STBY 12V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "STBY 12V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "13"
+      "id" : "13",
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_13",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 5.124,
@@ -1297,28 +3241,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "STBY 5V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "STBY 5V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "14"
+      "id" : "14",
+      "__id_count" : "11"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_14",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 3.283,
@@ -1330,28 +3275,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "STBY 3.3V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "STBY 3.3V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "15"
+      "id" : "15",
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_15",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 1.81,
@@ -1363,28 +3309,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "LAN 1.8V STBY (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "LAN 1.8V STBY (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "16"
+      "id" : "16",
+      "__id_count" : "13"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_16",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 1.47,
@@ -1396,28 +3343,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "iRMC 1.5V STBY (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "iRMC 1.5V STBY (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "17"
+      "id" : "17",
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_17",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 0.98,
@@ -1429,28 +3377,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "LAN 1.0V STBY (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "LAN 1.0V STBY (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "18"
+      "id" : "18",
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_18",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 12.371,
@@ -1462,31 +3411,32 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "MAIN 12V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "MAIN 12V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "19"
+      "id" : "19",
+      "__id_count" : "12"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_19",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
-        "value" : 5.0,
+        "value" : 5.025,
         "previousValue" : 5.025,
         "type" : "NumberMetric",
         "updated" : true
@@ -1495,28 +3445,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "MAIN 5V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "MAIN 5V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "1a"
+      "id" : "1a",
+      "__id_count" : "4"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_1a",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 3.317,
@@ -1528,28 +3479,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "MAIN 3.3V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "MAIN 3.3V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "1b"
+      "id" : "1b",
+      "__id_count" : "14"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_1b",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 1.48,
@@ -1561,28 +3513,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "PCH 1.5V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "PCH 1.5V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "1c"
+      "id" : "1c",
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_1c",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 1.08,
@@ -1594,28 +3547,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "PCH 1.1V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "PCH 1.1V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "1d"
+      "id" : "1d",
+      "__id_count" : "10"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_1d",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 1.03,
@@ -1627,28 +3581,29 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "CPU1 1.05V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "CPU1 1.05V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "1e"
+      "id" : "1e",
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_1e",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1766066296513,
-        "previousCollectTime" : 1766066286804,
+        "collectTime" : 1768815748880,
+        "previousCollectTime" : 1768815739056,
         "attributes" : { },
         "resetMetricTime" : true,
         "value" : 1.03,
@@ -1660,21 +3615,22 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "sensor_location" : "System Board 7",
-      "name" : "CPU2 1.05V (System Board 7)",
+      "sensor_location" : "System Board 0",
+      "name" : "CPU2 1.05V (System Board 0)",
       "connector_id" : "LinuxIpmiTool",
-      "id" : "1f"
+      "id" : "1f",
+      "__id_count" : "9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1766066296513,
+    "discoveryTime" : 1768815748880,
     "type" : "voltage",
     "id" : "LinuxIpmiTool_voltage_1f",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
-    "connector" : false,
     "endpoint" : false,
+    "connector" : false,
     "is_endpoint" : false
   } ]
 }

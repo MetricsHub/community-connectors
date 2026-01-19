@@ -94,6 +94,7 @@ BEGIN {
             serialNumber = ""
             valueReading = ""
             unit = ""
+            sensorStatus = ""
             statusArray = ""
             oemSpecificActive = 0
             assertionEnabled = 0
@@ -135,10 +136,10 @@ BEGIN {
                             deviceType = deviceType ")"
                         }
                     }
+                    s = split(entityId, deviceIdResult, ".")
 
-                    entityIdPointIndex = index(entityId, ".")
-                    if (entityIdPointIndex != 0) {
-                        deviceId = trim(substr(entityId, 0, entityIdPointIndex - 1))
+                    if(s>=2) {
+                        deviceId = trim(deviceIdResult[2])
                     }
                 }
 
@@ -195,6 +196,10 @@ BEGIN {
                     }
                     unit = trim(substr(entry, closingParenthesisIndex + 1))
                 }
+                if (index(entry, "Status") != 0) {
+                    sensorStatus = trim(substr(entry, twoPointIndex + 1))
+                    print "DEBUG: STATUS= ###########" sensorStatus "for " sensorName
+                }
 
                 if (index(entry, "Upper non-critical") != 0) {
                     thresholdUpperNonCritical = trim(substr(entry, twoPointIndex + 1))
@@ -216,15 +221,17 @@ BEGIN {
                     thresholdUpperNonRecoverable = trim(substr(entry, twoPointIndex + 1))
                 }
             }
-
+            if (statusArray == "") {
+                statusArray = sensorName "=" valueReading "|status=" sensorStatus
+            }
             if (sensorId != "") {
-                deviceElement = deviceId " " deviceType
+                deviceElement = deviceType " " deviceId
                 existingDevice = devicesArray[deviceElement]
                 # If the deviceId was already there, we just had its status array
-                if (existingDevice == "" && statusArray != "") {
-                    deviceEntryResult = deviceId ";" deviceType ";" model ";" vendor ";" serialNumber ";" statusArray
+                if (existingDevice == "") {
+                    deviceEntryResult = deviceType ";" deviceId ";" deviceElement ";" vendor ";" model ";" serialNumber ";" statusArray
                     devicesArray[deviceElement] = deviceEntryResult
-                } else if (statusArray != "") {
+                } else {
                     devicesArray[deviceElement] = existingDevice "|" statusArray
                 }
 

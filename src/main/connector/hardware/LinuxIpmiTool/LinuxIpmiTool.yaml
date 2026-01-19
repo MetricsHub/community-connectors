@@ -28,13 +28,13 @@ monitors:
     simple:
       sources:
         allFrus:
-          type: commandline
+          type: commandLine
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open fru
           computes:
           - type: awk
             script: ${file::frus_formatter.awk}
         sdr:
-          type: commandline
+          type: commandLine
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open -v sdr elist all
           computes:
           - type: awk
@@ -114,40 +114,9 @@ monitors:
           - type: append
             column: 9
             value: ;
-        fanDevices:
-          # fanDevices = copy of Enclosure.Simple.fruUnionSdr
-          type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
-          computes:
-            # Keep only "Fan Device" lines
-            # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Fan Device
-            # Keep only interesting columns
-            # Fan Device;DeviceID;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: keepColumns
-            columnNumbers: 1,2,3,7,8,9
-            # Add empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
-          - type: append
-            column: 5
-            value: ;;;;
-            # Convert StatusArray to a simple (unique) PATROLStatus
-            # Fan Device;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: convert
-            column: 4
-            conversion: array2SimpleStatus
-        fansUnion:
-          # fansUnion = Table Union of fans and fanDevices
-          # Fan;DeviceID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
-          type: tableUnion
-          tables:
-          - ${source::fans}
-          - ${source::fanDevices}
       mapping:
         # The instance table
-        source: ${source::fansUnion}
+        source: ${source::fans}
         attributes:
           id: $2
           sensor_location: $6
@@ -242,32 +211,53 @@ monitors:
           from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
           computes:
             # Keep only power supply lines
-            # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+            # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Power supply
+            column: 4
+            regExp: ^Power Supply
           - type: prepend
             column: 6
             value: "SerialNumber: "
           - type: prepend
             column: 5
             value: "Model: "
+        powerSupplies2:
+          # powerSupplies = copy of Enclosure.Simple.fruUnionSdr
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          computes:
+            # Keep only power supply lines
+            # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 3
+            regExp: ^Power Supply
+        powerSuppliesJoin:
+          type: tableJoin
+          leftTable: ${source::powerSupplies}
+          rightTable: ${source::powerSupplies2}
+          leftKeyColumn: 4
+          rightKeyColumn: 3
+          computes:
+          - type: append
+            column: 12
+            value: $13
+          - type: convert
+            column: 12
+            conversion: array2SimpleStatus
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
-          - type: convert
-            column: 7
-            conversion: array2SimpleStatus
+
       mapping:
         # InstanceTable = powerSupplies
-        source: ${source::powerSupplies}
+        source: ${source::powerSuppliesJoin}
         attributes:
           id: $2
-          info: ${awk::join(" ", $9, $6, $5)}
+          info: ${awk::join(" ", $9, $8)}
           hw.parent.type: enclosure
           hw.parent.id: IPMI
           name: $2
         metrics:
-          hw.status{hw.type="power_supply"}: $7
+          hw.status{hw.type="power_supply"}: $12
         legacyTextParameters:
           StatusInformation: $8
 
