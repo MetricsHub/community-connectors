@@ -344,7 +344,7 @@ monitors:
                 'Com_stmt_close',
                 'Com_stmt_reprepare',
 
-                -- Binlog cache (tes ajouts)
+                -- Binlog cache
                 'Binlog_cache_use',
                 'Binlog_cache_disk_use',
                 'Binlog_stmt_cache_use',
