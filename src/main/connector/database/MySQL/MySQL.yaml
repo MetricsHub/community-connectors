@@ -97,9 +97,22 @@ monitors:
               MAX(CASE WHEN VARIABLE_NAME = 'Uptime' THEN VARIABLE_VALUE END) AS uptime,
               MAX(CASE WHEN VARIABLE_NAME = 'Slow_queries' THEN VARIABLE_VALUE END) AS slow_queries,
               MAX(CASE WHEN VARIABLE_NAME = 'Queries' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Slow_queries' THEN VARIABLE_VALUE END) AS normal_queries,
-              @@hostname AS db_server_name
+              @@hostname AS db_server_name,
+              v.max_connections,
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_open_cache_hits' THEN VARIABLE_VALUE END) AS Table_open_cache_hits,
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_open_cache_misses' THEN VARIABLE_VALUE END) AS Table_open_cache_misses,
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_open_cache_overflows' THEN VARIABLE_VALUE END) AS Table_open_cache_overflows,
+              MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_tables' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_disk_tables' THEN VARIABLE_VALUE END) AS created_tmp_memory_tables,
+              MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_disk_tables' THEN VARIABLE_VALUE END) AS created_tmp_disk_tables,
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_locks_immediate' THEN VARIABLE_VALUE END) AS table_locks_immediate,
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_locks_waited' THEN VARIABLE_VALUE END) AS table_locks_waited
             FROM
               performance_schema.global_status
+              CROSS JOIN (
+                  SELECT VARIABLE_VALUE AS max_connections
+                  FROM performance_schema.global_variables
+                  WHERE VARIABLE_NAME = 'max_connections'
+              ) v
             WHERE
               VARIABLE_NAME IN (
                 'Aborted_clients',
@@ -155,7 +168,14 @@ monitors:
                 'Threads_running',
                 'Uptime',
                 'Slow_queries',
-                'Queries'
+                'Queries',
+                'Table_open_cache_hits',
+                'Table_open_cache_misses',
+                'Table_open_cache_overflows',
+                'Created_tmp_tables',
+                'Created_tmp_disk_tables',
+                'Table_locks_immediate',
+                'Table_locks_waited'
               );
       mapping:
         source: ${source::mysqlInfo}
@@ -222,3 +242,12 @@ monitors:
           db.server.uptime: $56
           db.server.queries{db.query.state="slow"}: $57
           db.server.queries{db.query.state="normal"}: $58
+          db.server.connections.limit: $60 #max_connections: The maximum number of simultaneous client connections.
+          db.server.table_cache.operations{db.cache.state="hit"}: $61 #Table_open_cache_hits: number of hits for open tables cache lookups.
+          db.server.table_cache.operations{db.cache.state="miss"}: $62 #Table_open_cache_misses: number of misses for open tables cache lookups.
+          db.server.table_cache.operations{db.cache.state="overflow"}: $63 #Table_open_cache_overflows: number of overflows for open tables cache lookups.
+          db.server.temp_tables{db.temp_table.storage="memory"}: $64 #total number of internal temporary tables created in memory
+          db.server.temp_tables{db.temp_table.storage="disk"}: $65 ##total number of internal temporary tables created on disk
+          db.server.table_locks{db.lock.state="immediate"}: $66 #Table_locks_immediate: Number of table locks which were completed immediately.
+          db.server.table_locks{db.lock.state="waited"}: $67 #Table_locks_waited: Number of table locks which had to wait. Indicates table lock contention.
+          

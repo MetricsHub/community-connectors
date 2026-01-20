@@ -27,6 +27,7 @@ class ConnectorReplayIT {
 		"WindowsFile",
 		"LinuxFile",
 		"AMDRadeon",
+		"MariaDB",
 		"Redfish"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {

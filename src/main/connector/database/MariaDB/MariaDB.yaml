@@ -1,0 +1,531 @@
+extends:
+- ../../semconv/Database
+connector:
+  displayName: MariaDB
+  platforms: MariaDB
+  reliesOn: MariaDB Server 11.8 or higher
+  information: Monitors performance and operational metrics for a MariaDB database.
+  detection:
+    connectionTypes:
+      - remote
+      - local
+    appliesTo:
+      - windows
+      - linux
+    criteria:
+      - type: sql
+        query: SELECT @@version LIKE '%MariaDB%' AS is_mariadb;
+        expectedResult: 1
+        errorMessage: Not a MariaDB Server
+    tags: [ linux, windows, database ]
+
+metrics:
+  db.server.mariadb.doublewrite_buffer.usage:
+    description: The number of bytes that have been written to the doublewrite buffer.
+    type: Counter
+    unit: By
+  db.server.mariadb.doublewrite_buffer.operations:
+    description: The number of doublewrite operations that have been performed.
+    type: Counter
+    unit: "{operation}"
+  db.server.mariadb.galera_cluster.nodes:
+    description: Number of nodes in the Galera cluster
+    type: Gauge
+    unit: "{node}"
+  db.server.mariadb.replication.galera_cluster.status:
+    description: Status of the Galera cluster component the node belongs to
+    type:
+      stateSet:
+      - ok
+      - failed
+  db.server.mariadb.galera_replication.up:
+    description: Status of the Galera cluster component the node belongs to
+    type:
+      stateSet:
+      - on
+      - off
+  db.server.mariadb.galera_replication.status:
+    description: Indicates whether the MariaDB server is connected to the wsrep (Galera) provider
+    type:
+      stateSet:
+      - on
+      - off
+  db.server.mariadb.galera_replication.flow_control.utilisation:
+    description: Fraction of time the node has been paused by Galera Flow Control to allow slower nodes to catch up
+    type: Gauge
+    unit: 1
+  db.server.mariadb.galera_replication.queue_size: 
+    description: Average number of write-sets waiting to be processed by Galera replication (send or receive).
+    type: Gauge
+    unit: "{write_sets}"
+  db.server.mariadb.galera_replication.parallel_transactions.limit:
+    description: Indicates how many transactions can be applied in parallel during Galera replication.
+    type: Gauge
+    unit: "{transaction}"
+  db.server.mariadb.handlers:
+    description: Number of internal handler operations executed by MariaDB.
+    type: Counter
+    unit: "{operation}"
+  db.server.mariadb.commands:
+    description: Number of SQL commands executed by MariaDB, classified by command type.
+    type: Counter
+    unit: "{operation}"
+monitors:
+  mariadb:
+    simple:
+      sources:
+        mysqlInfo:
+          type: sql
+          query: |
+            SELECT
+              v.db_namespace, -- $1
+              (SELECT VERSION()) AS version, -- $2
+              (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE()) AS total_tables, -- $3
+              MAX(CASE WHEN VARIABLE_NAME = 'Aborted_clients' THEN VARIABLE_VALUE END) AS aborted_clients, -- $4
+              MAX(CASE WHEN VARIABLE_NAME = 'Aborted_connects' THEN VARIABLE_VALUE END) AS aborted_connects, -- $5
+              MAX(CASE WHEN VARIABLE_NAME = 'Bytes_received' THEN VARIABLE_VALUE END) AS bytes_received, -- $6
+              MAX(CASE WHEN VARIABLE_NAME = 'Bytes_sent' THEN VARIABLE_VALUE END) AS bytes_sent, -- $7
+              MAX(CASE WHEN VARIABLE_NAME = 'Connections' THEN VARIABLE_VALUE END) -
+              (
+                MAX(CASE WHEN VARIABLE_NAME = 'Aborted_clients' THEN VARIABLE_VALUE END) +
+                MAX(CASE WHEN VARIABLE_NAME = 'Aborted_connects' THEN VARIABLE_VALUE END)
+              ) AS successful_connections, -- $8
+              (SELECT COUNT(*) FROM information_schema.processlist WHERE command <> 'Sleep') AS active_connections, -- $9
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS Innodb_page_size, -- $10
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_bytes_data' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_bytes_dirty' THEN VARIABLE_VALUE END) AS Innodb_buffer_pool_bytes_data_clean, -- $11
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_bytes_dirty' THEN VARIABLE_VALUE END) AS Innodb_buffer_pool_bytes_data_dirty, -- $12
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_pages_flushed' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_pages_flushed, -- $13
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_pages_free' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_bytes_free, -- $14
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_ahead' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_bytes_read_ahead, -- $15
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_ahead_evicted' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_bytes_read_ahead_evicted, -- $16
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_ahead_rnd' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_read_ahead_rnd, -- $17
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_read_requests' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_reads' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_read_hit, -- $18
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_write_requests' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_write_requests, -- $19
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_buffer_pool_reads' THEN VARIABLE_VALUE END) AS innodb_buffer_pool_read_cache_miss, -- $20
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_reads' THEN VARIABLE_VALUE END) AS innodb_data_reads, -- $21
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_writes' THEN VARIABLE_VALUE END) AS innodb_data_writes, -- $22
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_read' THEN VARIABLE_VALUE END) AS innodb_data_read, -- $23
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_written' THEN VARIABLE_VALUE END) AS innodb_data_written, -- $24
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_pending_reads' THEN VARIABLE_VALUE END) AS innodb_data_pending_reads, -- $25
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_data_pending_writes' THEN VARIABLE_VALUE END) AS innodb_data_pending_writes, -- $26
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_dblwr_pages_written' THEN VARIABLE_VALUE END) * MAX(CASE WHEN VARIABLE_NAME = 'Innodb_page_size' THEN VARIABLE_VALUE END) AS innodb_dblwr_pages_written, -- $27
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_dblwr_writes' THEN VARIABLE_VALUE END) AS Innodb_dblwr_writes, -- $28
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_num_open_files' THEN VARIABLE_VALUE END) AS innodb_num_open_files, -- $29
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_accounts_lost' THEN VARIABLE_VALUE END) AS performance_schema_accounts_lost, -- $30
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_cond_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_cond_classes_lost, -- $31
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_digest_lost' THEN VARIABLE_VALUE END) AS performance_schema_digest_lost, -- $32
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_file_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_file_classes_lost, -- $33
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_file_handles_lost' THEN VARIABLE_VALUE END) AS performance_schema_file_handles_lost, -- $34
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_file_instances_lost' THEN VARIABLE_VALUE END) AS performance_schema_file_instances_lost, -- $35
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_hosts_lost' THEN VARIABLE_VALUE END) AS performance_schema_hosts_lost, -- $36
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_index_stat_lost' THEN VARIABLE_VALUE END) AS performance_schema_index_stat_lost, -- $37
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_locker_lost' THEN VARIABLE_VALUE END) AS performance_schema_locker_lost, -- $38
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_memory_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_memory_classes_lost, -- $39
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_metadata_lock_lost' THEN VARIABLE_VALUE END) AS performance_schema_metadata_lock_lost, -- $40
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_mutex_classes_lost' THEN VARIABLE_VALUE END) AS performance_schema_mutex_classes_lost, -- $41
+              MAX(CASE WHEN VARIABLE_NAME = 'Performance_schema_mutex_instances_lost' THEN VARIABLE_VALUE END) AS performance_schema_mutex_instances_lost, -- $42
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_row_lock_time' THEN VARIABLE_VALUE / 1000 END) AS innodb_row_lock_time, -- $43
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_row_lock_waits' THEN VARIABLE_VALUE END) AS innodb_row_lock_waits, -- $44
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_row_lock_current_waits' THEN VARIABLE_VALUE END) AS innodb_row_lock_current_waits, -- $45
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_deleted' THEN VARIABLE_VALUE END) AS innodb_rows_deleted, -- $46
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_inserted' THEN VARIABLE_VALUE END) AS innodb_rows_inserted, -- $47
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_read' THEN VARIABLE_VALUE END) AS innodb_rows_read, -- $48
+              MAX(CASE WHEN VARIABLE_NAME = 'Innodb_rows_updated' THEN VARIABLE_VALUE END) AS innodb_rows_updated, -- $49
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_cached' THEN VARIABLE_VALUE END) AS threads_cached,  -- $50
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_connected' THEN VARIABLE_VALUE END) AS threads_connected, -- $51
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_created' THEN VARIABLE_VALUE END) AS threads_created, -- $52
+              MAX(CASE WHEN VARIABLE_NAME = 'Threads_running' THEN VARIABLE_VALUE END) AS threads_running, -- $53
+              MAX(CASE WHEN VARIABLE_NAME = 'Uptime' THEN VARIABLE_VALUE END) AS uptime, -- $54
+              MAX(CASE WHEN VARIABLE_NAME = 'Slow_queries' THEN VARIABLE_VALUE END) AS slow_queries, -- $55
+              MAX(CASE WHEN VARIABLE_NAME = 'Queries' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Slow_queries' THEN VARIABLE_VALUE END) AS normal_queries, -- $56
+              @@hostname AS db_server_name, -- $57
+
+              v.max_connections AS max_connections, -- $58
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_open_cache_hits' THEN VARIABLE_VALUE END) AS Table_open_cache_hits, -- $59
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_open_cache_misses' THEN VARIABLE_VALUE END) AS Table_open_cache_misses, -- $60
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_open_cache_overflows' THEN VARIABLE_VALUE END) AS Table_open_cache_overflows, -- $61
+
+              MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_tables' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_disk_tables' THEN VARIABLE_VALUE END) AS created_tmp_memory_tables, -- $62
+              MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_disk_tables' THEN VARIABLE_VALUE END) AS created_tmp_disk_tables, -- $63
+
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_locks_immediate' THEN VARIABLE_VALUE END) AS table_locks_immediate, -- $64
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_locks_waited' THEN VARIABLE_VALUE END) AS table_locks_waited, -- $65
+
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_commit' THEN VARIABLE_VALUE END) AS handler_commit, -- $66
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_rollback' THEN VARIABLE_VALUE END) AS handler_rollback, -- $67
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_key' THEN VARIABLE_VALUE END) AS handler_read_key, -- $68
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_first' THEN VARIABLE_VALUE END) AS handler_read_first, -- $69
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_next' THEN VARIABLE_VALUE END) AS handler_read_next, -- $70
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_prev' THEN VARIABLE_VALUE END) AS handler_read_prev, -- $71
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_last' THEN VARIABLE_VALUE END) AS handler_read_last, -- $72
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_rnd' THEN VARIABLE_VALUE END) AS handler_read_rnd, -- $73
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_rnd_next' THEN VARIABLE_VALUE END) AS handler_read_rnd_next, -- $74
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_read_rnd_deleted' THEN VARIABLE_VALUE END) AS handler_read_rnd_deleted, -- $75
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_write' THEN VARIABLE_VALUE END) AS handler_write, -- $76
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_update' THEN VARIABLE_VALUE END) AS handler_update, -- $77
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_delete' THEN VARIABLE_VALUE END) AS handler_delete, -- $78
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_tmp_write' THEN VARIABLE_VALUE END) AS handler_tmp_write, -- $79
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_tmp_update' THEN VARIABLE_VALUE END) AS handler_tmp_update, -- $80
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_tmp_delete' THEN VARIABLE_VALUE END) AS handler_tmp_delete, -- $81
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_icp_attempts' THEN VARIABLE_VALUE END) AS handler_icp_attempts, -- $82
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_icp_match' THEN VARIABLE_VALUE END) AS handler_icp_match, -- $83
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_mrr_init' THEN VARIABLE_VALUE END) AS handler_mrr_init, -- $84
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_mrr_key_refills' THEN VARIABLE_VALUE END) AS handler_mrr_key_refills, -- $85
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_mrr_rowid_refills' THEN VARIABLE_VALUE END) AS handler_mrr_rowid_refills, -- $86
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_prepare' THEN VARIABLE_VALUE END) AS handler_prepare, -- $87
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_savepoint' THEN VARIABLE_VALUE END) AS handler_savepoint, -- $88
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_savepoint_rollback' THEN VARIABLE_VALUE END) AS handler_savepoint_rollback, -- $89
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_external_lock' THEN VARIABLE_VALUE END) AS handler_external_lock, -- $90
+              MAX(CASE WHEN VARIABLE_NAME = 'Handler_discover' THEN VARIABLE_VALUE END) AS handler_discover, -- $91
+
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_select' THEN VARIABLE_VALUE END) AS com_select, -- $92
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_insert' THEN VARIABLE_VALUE END) AS com_insert, -- $93
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_update' THEN VARIABLE_VALUE END) AS com_update, -- $94
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_delete' THEN VARIABLE_VALUE END) AS com_delete, -- $95
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_replace' THEN VARIABLE_VALUE END) AS com_replace, -- $96
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_insert_select' THEN VARIABLE_VALUE END) AS com_insert_select, -- $97
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_begin' THEN VARIABLE_VALUE END) AS com_begin, -- $98
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_commit' THEN VARIABLE_VALUE END) AS com_commit, -- $99
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_rollback' THEN VARIABLE_VALUE END) AS com_rollback, -- $100
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_savepoint' THEN VARIABLE_VALUE END) AS com_savepoint, -- $101
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_rollback_to_savepoint' THEN VARIABLE_VALUE END) AS com_rollback_to_savepoint, -- $102
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_stmt_prepare' THEN VARIABLE_VALUE END) AS com_stmt_prepare, -- $103
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_stmt_execute' THEN VARIABLE_VALUE END) AS com_stmt_execute, -- $104
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_stmt_close' THEN VARIABLE_VALUE END) AS com_stmt_close, -- $105
+              MAX(CASE WHEN VARIABLE_NAME = 'Com_stmt_reprepare' THEN VARIABLE_VALUE END) AS com_stmt_reprepare, -- $106
+
+              MAX(CASE WHEN VARIABLE_NAME = 'Binlog_cache_use' THEN VARIABLE_VALUE END) -MAX(CASE WHEN VARIABLE_NAME = 'Binlog_cache_disk_use' THEN VARIABLE_VALUE END) AS binlog_cache_hit_use, -- $107
+              MAX(CASE WHEN VARIABLE_NAME = 'Binlog_cache_disk_use' THEN VARIABLE_VALUE END) AS binlog_cache_disk_use, -- $108
+              MAX(CASE WHEN VARIABLE_NAME = 'Binlog_stmt_cache_use' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Binlog_stmt_cache_disk_use' THEN VARIABLE_VALUE END) AS binlog_stmt_cache_hit_use, -- $109
+              MAX(CASE WHEN VARIABLE_NAME = 'Binlog_stmt_cache_disk_use' THEN VARIABLE_VALUE END) AS binlog_stmt_cache_disk_use, -- $110
+
+            -- Aria (tool liste aussi blocks_used/unused + transaction_log_syncs)
+              MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_read_requests' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_reads' THEN VARIABLE_VALUE END) AS aria_pagecache_read_requests, -- $111
+              MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_reads' THEN VARIABLE_VALUE END) AS aria_pagecache_reads, -- $112
+              MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_write_requests' THEN VARIABLE_VALUE END) AS aria_pagecache_write_requests, -- $113
+              MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_writes' THEN VARIABLE_VALUE END) * v.aria_block_size AS aria_pagecache_writes, -- $114
+              MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_blocks_not_flushed' THEN VARIABLE_VALUE END) * v.aria_block_size AS aria_pagecache_blocks_not_flushed, -- $115
+              (MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_blocks_used' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_blocks_not_flushed' THEN VARIABLE_VALUE END)) * v.aria_block_size AS aria_pagecache_data_clean, -- $116
+              MAX(CASE WHEN VARIABLE_NAME = 'Aria_pagecache_blocks_unused' THEN VARIABLE_VALUE END) * v.aria_block_size AS aria_pagecache_blocks_unused, -- $117
+
+            -- Galera / wsrep
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cluster_size' THEN VARIABLE_VALUE END) AS wsrep_cluster_size, -- $118
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cluster_status' THEN VARIABLE_VALUE END) AS wsrep_cluster_status, -- $119
+              MAX(CASE WHEN VARIABLE_NAME='wsrep_ready' THEN IF(VARIABLE_VALUE='ON',1,0) END) AS wsrep_ready, -- $120
+              MAX(CASE WHEN VARIABLE_NAME='wsrep_connected' THEN IF(VARIABLE_VALUE='ON',1,0) END) AS wsrep_connected, -- $121
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_flow_control_paused' THEN VARIABLE_VALUE END) AS wsrep_flow_control_paused, -- $122
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_recv_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_recv_queue_avg, -- $123
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_send_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_send_queue_avg, -- $124
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cert_deps_distance' THEN VARIABLE_VALUE END) AS wsrep_cert_deps_distance -- $125
+            FROM information_schema.GLOBAL_STATUS s
+            CROSS JOIN (
+              SELECT
+                MAX(CASE WHEN VARIABLE_NAME='aria_block_size' THEN VARIABLE_VALUE END) AS aria_block_size,
+                MAX(CASE WHEN VARIABLE_NAME='max_connections' THEN VARIABLE_VALUE END) AS max_connections,
+                DATABASE() AS db_namespace
+              FROM information_schema.GLOBAL_VARIABLES
+            ) v
+            WHERE s.VARIABLE_NAME IN (
+                'Aborted_clients',
+                'Aborted_connects',
+                'Bytes_received',
+                'Bytes_sent',
+                'Connections',
+                'Innodb_page_size',
+                'Innodb_buffer_pool_bytes_data',
+                'Innodb_buffer_pool_bytes_dirty',
+                'Innodb_buffer_pool_pages_flushed',
+                'Innodb_buffer_pool_pages_free',
+                'Innodb_buffer_pool_read_ahead',
+                'Innodb_buffer_pool_read_ahead_evicted',
+                'Innodb_buffer_pool_read_ahead_rnd',
+                'Innodb_buffer_pool_read_requests',
+                'Innodb_buffer_pool_write_requests',
+                'Innodb_buffer_pool_reads',
+                'Innodb_data_reads',
+                'Innodb_data_writes',
+                'Innodb_data_read',
+                'Innodb_data_written',
+                'Innodb_data_pending_reads',
+                'Innodb_data_pending_writes',
+                'Innodb_dblwr_pages_written',
+                'Innodb_dblwr_writes',
+                'Innodb_num_open_files',
+                'Performance_schema_accounts_lost',
+                'Performance_schema_cond_classes_lost',
+                'Performance_schema_digest_lost',
+                'Performance_schema_file_classes_lost',
+                'Performance_schema_file_handles_lost',
+                'Performance_schema_file_instances_lost',
+                'Performance_schema_hosts_lost',
+                'Performance_schema_index_stat_lost',
+                'Performance_schema_locker_lost',
+                'Performance_schema_memory_classes_lost',
+                'Performance_schema_metadata_lock_lost',
+                'Performance_schema_mutex_classes_lost',
+                'Performance_schema_mutex_instances_lost',
+                'Innodb_row_lock_time',
+                'Innodb_row_lock_waits',
+                'Innodb_row_lock_current_waits',
+                'Innodb_rows_deleted',
+                'Innodb_rows_inserted',
+                'Innodb_rows_read',
+                'Innodb_rows_updated',
+                'Threads_cached',
+                'Threads_connected',
+                'Threads_created',
+                'Threads_running',
+                'Uptime',
+                'Slow_queries',
+                'Queries',
+
+                -- Connections/table cache
+                'Table_open_cache_hits',
+                'Table_open_cache_misses',
+                'Table_open_cache_overflows',
+
+                -- Temp tables/files
+                'Created_tmp_tables',
+                'Created_tmp_disk_tables',
+
+                -- Table locks
+                'Table_locks_immediate',
+                'Table_locks_waited',
+                
+                -- Handlers (reads)
+                'Handler_read_key',
+                'Handler_read_first',
+                'Handler_read_next',
+                'Handler_read_prev',
+                'Handler_read_last',
+                'Handler_read_rnd',
+                'Handler_read_rnd_next',
+                -- Handlers (writes)
+                'Handler_write',
+                'Handler_update',
+                'Handler_delete',
+                -- Handlers (temporary tables)
+                'Handler_tmp_write',
+                'Handler_tmp_update',
+                'Handler_tmp_delete',
+                -- Handlers (transactions)
+                'Handler_commit',
+                'Handler_rollback',
+                'Handler_prepare',
+                'Handler_savepoint',
+                'Handler_savepoint_rollback',
+                -- Handlers (engine optimizations)
+                'Handler_icp_attempts',
+                'Handler_icp_match',
+                'Handler_mrr_init',
+                'Handler_mrr_key_refills',
+                'Handler_mrr_rowid_refills',
+                -- Handlers (internal)
+                'Handler_external_lock',
+                'Handler_discover',
+                'Handler_read_retry',
+
+                -- Commands
+                'Com_select',
+                'Com_insert',
+                'Com_update',
+                'Com_delete',
+                'Com_replace',
+                'Com_insert_select',
+                -- Transactions
+                'Com_begin',
+                'Com_commit',
+                'Com_rollback',
+                'Com_savepoint',
+                'Com_rollback_to_savepoint',
+                -- Prepared statements
+                'Com_stmt_prepare',
+                'Com_stmt_execute',
+                'Com_stmt_close',
+                'Com_stmt_reprepare',
+
+                -- Binlog cache
+                'Binlog_cache_use',
+                'Binlog_cache_disk_use',
+                'Binlog_stmt_cache_use',
+                'Binlog_stmt_cache_disk_use',
+
+                -- Aria 
+                'Aria_pagecache_read_requests',
+                'Aria_pagecache_reads',
+                'Aria_pagecache_write_requests',
+                'Aria_pagecache_writes',
+                'Aria_pagecache_blocks_not_flushed',
+                'Aria_pagecache_blocks_used',
+                'Aria_pagecache_blocks_unused',
+
+                -- Galera / wsrep
+                'wsrep_cluster_size',
+                'wsrep_cluster_status',
+                'wsrep_ready',
+                'wsrep_connected',
+                'wsrep_flow_control_paused',
+                'wsrep_local_recv_queue_avg',
+                'wsrep_local_send_queue_avg',
+                'wsrep_cert_deps_distance'
+                );
+          computes:
+          - type: translate
+            column: 119
+            translationTable: "${translation::GaleraClusterStatusTranslationTable}"
+          - type: translate
+            column: 120
+            translationTable: "${translation::OnOffStatusTranslationTable}"
+          - type: translate
+            column: 121
+            translationTable: "${translation::OnOffStatusTranslationTable}"
+      mapping:
+        source: ${source::mysqlInfo}
+        attributes:
+          db.system: mariadb
+          db.server.name: $57
+          id: $57
+          db.namespace: $1
+          db.version: $2
+        metrics:
+          db.server.tables: $3
+          db.server.connections{error.type="client_disconnected", db.connection.state="aborted"}: $4
+          db.server.connections{error.type="failed_attempt", db.connection.state="aborted"}: $5
+          db.server.io{db.io.direction="receive"}: $6
+          db.server.io{db.io.direction="transmit"}: $7
+          db.server.connections{db.connection.state="success"}: $8
+          db.server.current_connections{db.connection.state="active"}: $9
+          db.server.page.size{db.mariadb.engine="innodb"}: $10
+          db.server.cache.usage{db.cache.state="data_clean", db.mariadb.engine="innodb"}: $11
+          db.server.cache.usage{db.cache.state="data_dirty", db.mariadb.engine="innodb"}: $12
+          db.server.cache.requests{db.cache.request.type="flushed", db.mariadb.engine="innodb"}: $13
+          db.server.cache.usage{db.cache.state="free", db.mariadb.engine="innodb"}: $14
+          db.server.cache.read_ahead{db.mariadb.engine="innodb"}: $15
+          db.server.cache.read_head.evicted{db.mariadb.engine="innodb"}: $16
+          db.server.cache.read_ahead.operations{db.cache.read_ahead.state="random", db.mariadb.engine="innodb"}: $17
+          db.server.cache.operations{db.io.direction="read", db.cache.state="hit", db.mariadb.engine="innodb"}: $18
+          db.server.cache.operations{db.io.direction="write", db.mariadb.engine="innodb"}: $19
+          db.server.cache.operations{db.io.direction="read", db.cache.state="miss", db.mariadb.engine="innodb"}: $20
+          db.server.storage.operations{db.io.direction="read", db.mariadb.engine="innodb"}: $21
+          db.server.storage.operations{db.io.direction="write", db.mariadb.engine="innodb"}: $22
+          db.server.storage.io{db.io.direction="read", db.mariadb.engine="innodb"}: $23
+          db.server.storage.io{db.io.direction="write", db.mariadb.engine="innodb"}: $24
+          db.server.pending_operations{db.io.direction="read", db.mariadb.engine="innodb"}: $25
+          db.server.pending_operations{db.io.direction="write", db.mariadb.engine="innodb"}: $26
+          db.server.mariadb.doublewrite_buffer.usage{db.mariadb.engine="innodb"}: $27
+          db.server.mariadb.doublewrite_buffer.operations{db.mariadb.engine="innodb"}: $28
+          db.server.files{db.file.state="open", db.mariadb.engine="innodb"}: $29
+          db.server.errors{error.type="lost_account_insert", db.mariadb.engine="performance_schema"}: $30
+          db.server.errors{error.type="lost_condition_instrument", db.mariadb.engine="performance_schema"}: $31
+          db.server.errors{error.type="lost_digest_instance", db.mariadb.engine="performance_schema"}: $32
+          db.server.errors{error.type="lost_file_instrument", db.mariadb.engine="performance_schema"}: $33
+          db.server.errors{error.type="lost_file_handle", db.mariadb.engine="performance_schema"}: $34
+          db.server.errors{error.type="lost_file_instance", db.mariadb.engine="performance_schema"}: $35
+          db.server.errors{error.type="lost_hosts_insert", db.mariadb.engine="performance_schema"}: $36
+          db.server.errors{error.type="lost_index_statistic", db.mariadb.engine="performance_schema"}: $37
+          db.server.errors{error.type="lost_locker", db.mariadb.engine="performance_schema"}: $38
+          db.server.errors{error.type="lost_memory_instrument", db.mariadb.engine="performance_schema"}: $39
+          db.server.errors{error.type="lost_metadata_lock", db.mariadb.engine="performance_schema"}: $40
+          db.server.errors{error.type="lost_mutex_instrument", db.mariadb.engine="performance_schema"}: $41
+          db.server.errors{error.type="lost_mutex_instance", db.mariadb.engine="performance_schema"}: $42
+          db.server.row_lock.time{db.mariadb.engine="innodb"}: $43
+          db.server.row_lock.waits{db.mariadb.engine="innodb"}: $44
+          db.server.row_lock.current_waits{db.mariadb.engine="innodb"}: $45
+          db.server.row_operations{db.row_operation.type="delete", db.mariadb.engine="innodb"}: $46
+          db.server.row_operations{db.row_operation.type="insert", db.mariadb.engine="innodb"}: $47
+          db.server.row_operations{db.row_operation.type="read", db.mariadb.engine="innodb"}: $48
+          db.server.row_operations{db.row_operation.type="update", db.mariadb.engine="innodb"}: $49
+          db.server.threads{db.thread.state="cached"}: $50
+          db.server.threads{db.thread.state="connected"}: $51
+          db.server.threads{db.thread.state="created"}: $52
+          db.server.threads{db.thread.state="running"}: $53
+          db.server.uptime: $54
+          db.server.queries{db.query.state="slow"}: $55
+          db.server.queries{db.query.state="normal"}: $56
+          # Connection / tables
+          db.server.connections.limit: $58 #max_connections: The maximum number of simultaneous client connections.
+          db.server.table_cache.operations{db.cache.state="hit"}: $59 #Table_open_cache_hits: number of hits for open tables cache lookups.
+          db.server.table_cache.operations{db.cache.state="miss"}: $60 #Table_open_cache_misses: number of misses for open tables cache lookups.
+          db.server.table_cache.operations{db.cache.state="overflow"}: $61 #Table_open_cache_overflows: number of overflows for open tables cache lookups.
+          # Temp tables
+          db.server.temp_tables{db.temp_table.storage="memory"}: $62 #total number of internal temporary tables created in memory
+          db.server.temp_tables{db.temp_table.storage="disk"}: $63 ##total number of internal temporary tables created on disk
+          # Table locks
+          db.server.table_locks{db.lock.state="immediate"}: $64 #Table_locks_immediate: Number of table locks which were completed immediately.
+          db.server.table_locks{db.lock.state="waited"}: $65 #Table_locks_waited: Number of table locks which had to wait. Indicates table lock contention.
+          # Handlers
+          db.server.mariadb.handlers{db.mariadb.handler.type="commit"}: $66 #handler_commit:  number of internal COMMIT requests.
+          db.server.mariadb.handlers{db.mariadb.handler.type="rollback"}: $67 #handler_rollback: number of transaction rollback requests given to a storage engine.
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_key"}: $68 #Handler_read_key: number of row read requests based on an index value.
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_first"}: $69 #handler_read_first: number of requests to read the first row from an index.
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_next"}: $70 #handler_read_next: number of requests to read the next row from an index (in order).
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_previous"}: $71 #handler__read_prev: number of requests to read the previous row from an index (in order).
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_last"}: $72 #handler_read_last: number of requests to read the last row from an index.
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_"random"}: $73 #handler_read_rnd: number of requests to read a row based on its position.
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_"random_next"}: $74 #handler_read_rnd_next: 
+          db.server.mariadb.handlers{db.mariadb.handler.type="read_random_deleted"}: $75 #handler_read_rnd_deleted
+          db.server.mariadb.handlers{db.mariadb.handler.type="write"}: $76 #handler_write: number of requests to write a row to a table
+          db.server.mariadb.handlers{db.mariadb.handler.type="update"}: $77 #handler_update: number of requests to update a row in a table
+          db.server.mariadb.handlers{db.mariadb.handler.type="delete"}: $78 #handler_delete: number of times rows have been deleted from tables.
+          db.server.mariadb.handlers{db.mariadb.handler.type="tmp_write"}: $79 #handler_tmp_write: number of requests to write a row to a temporary table.
+          db.server.mariadb.handlers{db.mariadb.handler.type="tmp_update"}: $80 #handler_tmp_update: number of requests to update a row in a table.
+          db.server.mariadb.handlers{db.mariadb.handler.type="tmp_delete"}: $81 #handler_tmp_delete: number of requests to delete a row in a temporary table.
+          db.server.mariadb.handlers{db.mariadb.handler.type="icp_attempts"}: $82 #handler_icp_attempts : number of times pushed index condition was checked (icp: index condition pushdown)
+          db.server.mariadb.handlers{db.mariadb.handler.type="icp_match"}: $83 #handler_icp_match: number of times pushed index condition was matched.
+          db.server.mariadb.handlers{db.mariadb.handler.type="multi_range_read_init"}: $84 #handler__mrr_init: counts how many MRR (multi-range read) scans were performed.
+          db.server.mariadb.handlers{db.mariadb.handler.type="multi_range_read_key_refills"}: $85 #handler_mrr_key_refills: number of times key buffer was refilled (not counting the initial fill)
+          db.server.mariadb.handlers{db.mariadb.handler.type="multi_range_read_rowid_refills"}: $86 #handler_handler_mrr_rowid_refills: number of times rowid buffer was refilled (not counting the initial fill).
+          db.server.mariadb.handlers{db.mariadb.handler.type="prepare"}: $87 #handler_prepare : number of two-phase commit prepares.
+          db.server.mariadb.handlers{db.mariadb.handler.type="savepoint"}: $88 #handler_savepoint: number of transaction savepoint creation requests
+          db.server.mariadb.handlers{db.mariadb.handler.type="savepoint_rollback"}: $89 #handler_savepoint_rollback: number of requests to rollback to a transaction
+          db.server.mariadb.handlers{db.mariadb.handler.type="external_lock"}: $90 #handler_external_lock: incremented for each call to the external_lock() function, which generally occurs at the beginning and end of access to a table instance.
+          db.server.mariadb.handlers{db.mariadb.handler.type="discover"}: $91 #handler_discover: discovery is when the server asks the NDBCLUSTER storage engine if it knows about a table with a given name.
+          # commands
+          db.server.mariadb.commands{db.mariadb.command.type="select"}: $92 #Com_select: number of SELECT commands executed. Also includes queries that make use of the query cache.
+          db.server.mariadb.commands{db.mariadb.command.type="insert"}: $93 #Com_insert: number of INSERT commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="update"}: $94 #Com_update: number of UPDATE commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="delete"}: $95 #Com_delete: number of DELETE commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="replace"}: $96 #Com_replace: number of REPLACE commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="insert_select"}: $97 #Com_insert_select: number of INSERT ... SELECT commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="begin"}: $98 #Com_begin: number of BEGIN or START TRANSACTION statements executed.
+          db.server.mariadb.commands{db.mariadb.command.type="commit"}: $99 #Com_commit: number of COMMIT commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="rollback"}: $100 #Com_rollback: number of ROLLBACK commands executed
+          db.server.mariadb.commands{db.mariadb.command.type="savepoint"}: $101 #Com_savepoint: number of RELEASE SAVEPOINT commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="rollback_to_savepoint"}: $102 #Com_rollback_to_savepoint: number of ROLLBACK ... TO SAVEPOINT commands executed.
+          db.server.mariadb.commands{db.mariadb.command.type="prepare_statement"}: $103 #Com_stmt_prepare: number of PREPARE statements executed.
+          db.server.mariadb.commands{db.mariadb.command.type="execute_statement"}: $104 #Com_stmt_execute: number of EXECUTE statements executed.
+          db.server.mariadb.commands{db.mariadb.command.type="close_statement"}: $105 #Com_stmt_close: number of prepared statements closed 
+          db.server.mariadb.commands{db.mariadb.command.type="reprepare_statement"}: $106 #Com_stmt_reprepare: number of prepared statements reprepared
+          # Binlog
+          db.server.mariadb.cache.operations{db.cache.state="hit", db.mariadb.cache.type="binlog"}: $107 # Binlog_cache_use -Binlog_cache_disk_use/  Binlog_cache_use: Number of transactions that used the regular binlog cache (smaller than binlog_cache_size)
+          db.server.cache.operations{db.cache.state="miss", db.mariadb.cache.type="binlog"}: $108 # Binlog_cache_disk_use: Number of transactions that used a temporary disk cache (could not fit in binlog_cache_size)
+          db.server.cache.operations{db.cache.state="hit", db.mariadb.cache.type="binlog_statement"}: $109 # Binlog_stmt_cache_use: Number of non-transaction statements that used the regular statement cache (smaller than binlog_stmt_cache_size)
+          db.server.cache.operations{db.cache.state="miss", db.mariadb.cache.type="binlog_statement"}: $110 # Binlog_stmt_cache_disk_use: Number of non-transaction statements that used a temporary disk cache (could not fit in binlog_stmt_cache_size)
+          # Aria
+          db.server.cache.operations{db.io.direction="read", db.mariadb.engine="aria", db.cache.state="hit"}: $111 #Aria_pagecache_read_requests - Aria_pagecache_reads/ Aria_pagecache_read_requests: The number of requests to read something from the Aria page cache.
+          db.server.cache.operations{db.io.direction="read", db.mariadb.engine="aria", db.cache.state="miss"}: $112 #Aria_pagecache_reads: The number of Aria page cache read requests that caused a block to be read from the disk.
+          db.server.cache.operations{db.io.direction="write", db.mariadb.engine="aria"}: $113 #Aria_pagecache_write_requests : The number of requests to write a block to the Aria page cache.
+          db.server.storage.io{db.io.direction="write", db.mariadb.engine="aria"}: $114 #Aria_pagecache_writes: The number of blocks written to disk from the Aria page cache.
+          db.server.cache.usage{db.cache.state="data_dirty", db.mariadb.engine="aria"}: $115 #Aria_pagecache_blocks_not_flushed * aria_page_size
+          db.server.cache.usage{db.cache.state="data_clean", db.mariadb.engine="aria"}: $116 #(Aria_pagecache_blocks_used - Aria_pagecache_blocks_not_flushed) * aria_page_size
+          db.server.cache.usage{db.cache.state="free", db.mariadb.engine="aria"}: $117 #Aria_pagecache_blocks_unused' * aria_page_size
+          # Galera / wsrep
+          db.server.mariadb.galera_cluster.nodes: $118 #wsrep_cluster_size
+          db.server.mariadb.replication.galera_cluster.status: $119 #wsrep_cluster_status: status of the component the node belongs to.
+          db.server.mariadb.galera_replication.up: $120 #wsrep_ready ON and OFF Indicates if the node can accept queries. 0 or 1
+          db.server.mariadb.galera_replication.status: $121 #wsrep_connected: Whether or not MariaDB is connected to the wsrep provider. Possible values are ON or OFF
+          db.server.mariadb.galera_replication.flow_control.utilisation: $122 #wsrep_flow_control_paused: Fraction of time the node has been paused by Flow Control. A value close to 0.0 is ideal; a high value indicates a performance bottleneck.
+          db.server.mariadb.galera_replication.queue_size{db.server.write-sets="receive"}: $123 #wsrep_local_recv_queue_avg: Average size of the queue of write-sets waiting to be applied. 
+          db.server.mariadb.galera_replication.queue_size{db.server.write-sets="send"}: $124 #wsrep_local_send_queue_avg Average: size of the queue of write-sets waiting to be sent to other nodes.
+          db.server.mariadb.galera_replication.parallel_transactions.limit: $125 #wsrep_cert_deps_distance: Represents the node’s potential for parallel transaction application, 
+translations:
+  GaleraClusterStatusTranslationTable:
+    Primary: ok
+    Default: failed
+  OnOffStatusTranslationTable:
+    "1": on
+    "0": off
+    Default: unknown
+
+
+  
