@@ -8,12 +8,12 @@ resources:
       host.name: localhost
       host.type: win
     protocols:
-      wmi:
+      ssh:
         username: user
         password: pass
         timeout: 240
     additionalConnectors:
       WindowsFile:
         variables:
-          matchPath: "C:\\Users\\public\\*.txt"
-          contentPattern: "Exception|Error|Failed|dev-hv-01"
+          matchPath: "C:\\Users\\Administrator\\Desktop\\*.txt"
+          contentPattern: "Exception|Error|Failed|ec-win-01"

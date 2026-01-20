@@ -1,11 +1,11 @@
 ---
 table:
-- - C:\Users\Public\file.txt
+- - C:\Users\Administrator\Desktop\file.txt
   - file.txt
-  - 225
-  - 1764241940
-  - 1764241710
-  - 1764241940
+  - 136
+  - 1765388036
+  - 1765388036
+  - "1765387975\r"
 headers: []
-rawData: C:\Users\Public\file.txt;file.txt;225;1764241940;1764241710;1764241940
+rawData: "C:\\Users\\Administrator\\Desktop\\file.txt;file.txt;136;1765388036;1765388036;1765387975\r"
 empty: false
