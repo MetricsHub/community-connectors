@@ -1,5 +1,5 @@
 {
-  "total": 40,
+  "total": 43,
   "monitors": [
     {
       "metrics": {
@@ -6877,6 +6877,363 @@
       "identifyingAttributeKeys": [
         "id"
       ],
+      "connector": false,
+      "endpoint": false,
+      "endpointHost": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "system.disk.operation_time{disk.io.direction=\"write\"}": {
+          "name": "system.disk.operation_time{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 220.33,
+          "previousValue": 220.33,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io{disk.io.direction=\"write\"}": {
+          "name": "system.disk.io{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 609247232.0,
+          "previousValue": 609247232.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operation_time{disk.io.direction=\"read\"}": {
+          "name": "system.disk.operation_time{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 281.45,
+          "previousValue": 281.45,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.merged{disk.io.direction=\"write\"}": {
+          "name": "system.disk.merged{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 8421.0,
+          "previousValue": 8421.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.merged{disk.io.direction=\"read\"}": {
+          "name": "system.disk.merged{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 1200.0,
+          "previousValue": 1200.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io_time": {
+          "name": "system.disk.io_time",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 84.21,
+          "previousValue": 84.21,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operations{disk.io.direction=\"write\"}": {
+          "name": "system.disk.operations{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 61290.0,
+          "previousValue": 61290.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io{disk.io.direction=\"read\"}": {
+          "name": "system.disk.io{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 2007572480.0,
+          "previousValue": 2007572480.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operations{disk.io.direction=\"read\"}": {
+          "name": "system.disk.operations{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 84512.0,
+          "previousValue": 84512.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "system.device": "mmcblk0",
+        "connector_id": "Linux",
+        "id": "mmcblk0"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757941027133,
+      "type": "physical_disk",
+      "id": "Linux_physical_disk_mmcblk0",
+      "identifyingAttributeKeys": ["id"],
+      "connector": false,
+      "endpoint": false,
+      "endpointHost": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "system.disk.operation_time{disk.io.direction=\"write\"}": {
+          "name": "system.disk.operation_time{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 0.012,
+          "previousValue": 0.012,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io{disk.io.direction=\"write\"}": {
+          "name": "system.disk.io{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 8192.0,
+          "previousValue": 8192.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operation_time{disk.io.direction=\"read\"}": {
+          "name": "system.disk.operation_time{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 0.62,
+          "previousValue": 0.62,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.merged{disk.io.direction=\"write\"}": {
+          "name": "system.disk.merged{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.merged{disk.io.direction=\"read\"}": {
+          "name": "system.disk.merged{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io_time": {
+          "name": "system.disk.io_time",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 0.08,
+          "previousValue": 0.08,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operations{disk.io.direction=\"write\"}": {
+          "name": "system.disk.operations{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 8.0,
+          "previousValue": 8.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io{disk.io.direction=\"read\"}": {
+          "name": "system.disk.io{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 4194304.0,
+          "previousValue": 4194304.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operations{disk.io.direction=\"read\"}": {
+          "name": "system.disk.operations{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 1024.0,
+          "previousValue": 1024.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "system.device": "mmcblk0p1",
+        "connector_id": "Linux",
+        "id": "mmcblk0p1"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757941027133,
+      "type": "physical_disk",
+      "id": "Linux_physical_disk_mmcblk0p1",
+      "identifyingAttributeKeys": ["id"],
+      "connector": false,
+      "endpoint": false,
+      "endpointHost": false,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "system.disk.operation_time{disk.io.direction=\"write\"}": {
+          "name": "system.disk.operation_time{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 220.318,
+          "previousValue": 220.318,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io{disk.io.direction=\"write\"}": {
+          "name": "system.disk.io{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 609239040.0,
+          "previousValue": 609239040.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operation_time{disk.io.direction=\"read\"}": {
+          "name": "system.disk.operation_time{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 280.83,
+          "previousValue": 280.83,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.merged{disk.io.direction=\"write\"}": {
+          "name": "system.disk.merged{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 8421.0,
+          "previousValue": 8421.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.merged{disk.io.direction=\"read\"}": {
+          "name": "system.disk.merged{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 1200.0,
+          "previousValue": 1200.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io_time": {
+          "name": "system.disk.io_time",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 84.13,
+          "previousValue": 84.13,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operations{disk.io.direction=\"write\"}": {
+          "name": "system.disk.operations{disk.io.direction=\"write\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "write" },
+          "resetMetricTime": true,
+          "value": 61282.0,
+          "previousValue": 61282.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.io{disk.io.direction=\"read\"}": {
+          "name": "system.disk.io{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 2001920000.0,
+          "previousValue": 2001920000.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "system.disk.operations{disk.io.direction=\"read\"}": {
+          "name": "system.disk.operations{disk.io.direction=\"read\"}",
+          "collectTime": 1757941027133,
+          "previousCollectTime": 1757941020867,
+          "attributes": { "disk.io.direction": "read" },
+          "resetMetricTime": true,
+          "value": 83120.0,
+          "previousValue": 83120.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "system.device": "mmcblk0p2",
+        "connector_id": "Linux",
+        "id": "mmcblk0p2"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757941027133,
+      "type": "physical_disk",
+      "id": "Linux_physical_disk_mmcblk0p2",
+      "identifyingAttributeKeys": ["id"],
       "connector": false,
       "endpoint": false,
       "endpointHost": false,
