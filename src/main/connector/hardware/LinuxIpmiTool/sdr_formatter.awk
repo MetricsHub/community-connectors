@@ -1,9 +1,20 @@
-function ltrim(ltrimString) { sub(/^[ \t\r\n]+/, "", ltrimString); return ltrimString }
-function rtrim(rtrimString) { sub(/[ \t\r\n]+$/, "", rtrimString); return rtrimString }
-function trim(trimString) { return rtrim(ltrim(trimString)); }
-
 BEGIN {
     sdr = "SDR"
+    OFS = ";"
+}
+
+function ltrim(ltrimString) {
+    sub(/^[ \t\r\n]+/, "", ltrimString);
+    return ltrimString
+}
+
+function rtrim(rtrimString) {
+    sub(/[ \t\r\n]+$/, "", rtrimString);
+    return rtrimString
+}
+
+function trim(trimString) {
+    return rtrim(ltrim(trimString));
 }
 
 /Sensor ID/ {

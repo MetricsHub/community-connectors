@@ -151,12 +151,6 @@ BEGIN {
 		}
 		sensorName = substr(sensorArray[i], 1, equalsIndex - 1)
 		sensorReading = substr(sensorArray[i], equalsIndex + 1, length(sensorArray[i]) - equalsIndex)
-		if (sensorReading == "ok" || sensorReading == "failed" || sensorReading == "degraded") {
-        status = status sensorReading "|"
-        } else if(sensorReading == "Unavailable") {
-				status = status  "failed|"
-		}
-
 		lcaseSensorReading = tolower(sensorReading)
 		# Add the sensor name to the list of sensor names, so that the user will be able to see the list of
 		# sensors associated with one device

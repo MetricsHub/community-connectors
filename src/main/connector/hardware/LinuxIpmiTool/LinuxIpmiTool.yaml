@@ -88,37 +88,57 @@ monitors:
 
   fan:
     simple:
-      # Collect type is: multi-instance
       type: multiInstance
       keys:
       - id
       sources:
-        fans:
-          # fans = copy of Enclosure.Simple.fruUnionSdr
+        source(1):
+          # Copy of Enclosure.Simple.fruUnionSdr
           # SensorType;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
           type: copy
           from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
           computes:
-            # Keep only fans
-            # Fan;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
-            # Add empty Status and StatusInformation columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;
           - type: append
             column: 3
             value: ;;
-            # Add empty AdditionalInformation1 column at the very end
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
           - type: append
             column: 9
             value: ;
+
+        source(2):
+          # Handle "Fan Device" format
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan Device
+            # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepColumns
+            columnNumbers: 1,2,3,7,8,9
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: append
+            column: 5
+            value: ;;;;
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
+
+        source(3):
+          # Union of both fan formats
+          type: tableUnion
+          tables:
+          - ${source::monitors.fan.simple.sources.source(1)}
+          - ${source::monitors.fan.simple.sources.source(2)}
+
       mapping:
-        # The instance table
-        source: ${source::fans}
+        source: ${source::monitors.fan.simple.sources.source(3)}
         attributes:
           id: $2
+          __display_id: $3
           sensor_location: $6
           info: $10
           hw.parent.type: enclosure
@@ -133,6 +153,7 @@ monitors:
           hw.fan.speed: $7
         legacyTextParameters:
           StatusInformation: $5
+
 
   temperature:
     simple:
@@ -200,67 +221,30 @@ monitors:
 
   power_supply:
     simple:
-      # Collect type is: multi-instance
-      type: multiInstance
-      keys:
-      - id
       sources:
-        powerSupplies:
-          # powerSupplies = copy of Enclosure.Simple.fruUnionSdr
+        powerSupplySensors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
           computes:
-            # Keep only power supply lines
-            # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: keepOnlyMatchingLines
-            column: 4
-            regExp: ^Power Supply
-          - type: prepend
-            column: 6
-            value: "SerialNumber: "
-          - type: prepend
-            column: 5
-            value: "Model: "
-        powerSupplies2:
-          # powerSupplies = copy of Enclosure.Simple.fruUnionSdr
-          type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
-          computes:
-            # Keep only power supply lines
-            # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: keepOnlyMatchingLines
-            column: 3
-            regExp: ^Power Supply
-        powerSuppliesJoin:
-          type: tableJoin
-          leftTable: ${source::powerSupplies}
-          rightTable: ${source::powerSupplies2}
-          leftKeyColumn: 4
-          rightKeyColumn: 3
-          computes:
-          - type: append
-            column: 12
-            value: $13
+            column: 1
+            valueList: "Power Supply"
+          - type: excludeMatchingLines
+            column: 8
+            valueList: N/A
           - type: convert
-            column: 12
+            column: 7
             conversion: array2SimpleStatus
-            # Convert StatusArray to a simple (unique) PATROLStatus
-            # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
-
       mapping:
-        # InstanceTable = powerSupplies
-        source: ${source::powerSuppliesJoin}
+        source: ${source::powerSupplySensors}
         attributes:
           id: $2
-          info: ${awk::join(" ", $9, $8)}
-          hw.parent.type: enclosure
-          hw.parent.id: IPMI
-          name: $2
+          name: ${awk::sprintf("%s %s", $1, $2)}
+          sensor_location: $3
         metrics:
-          hw.status{hw.type="power_supply"}: $12
+          hw.status{hw.type="power_supply"}: $7
         legacyTextParameters:
-          StatusInformation: $8
-
+          StatusInformation: $5
   cpu:
     simple:
       # Collect type is: multi-instance
@@ -293,7 +277,7 @@ monitors:
           id: $2
           vendor: $4
           model: $5
-          info: ${awk::join(" ", $9, $6)}
+          info: $9
           hw.parent.type: enclosure
           hw.parent.id: IPMI
         metrics:
@@ -459,9 +443,9 @@ monitors:
         source: ${source::otherDevices}
         attributes:
           device_type: $1
-          id: $2
+          id: ${awk::sprintf("%s %s", $1, $2)}
           additional_label: $4
-          info: ${awk::join(" ", $9, $6)}
+          info: $9
           hw.parent.type: enclosure
           hw.parent.id: IPMI
         metrics:
@@ -538,7 +522,7 @@ monitors:
         attributes:
           id: $2
           model: $5
-          info: ${awk::join(" ", $9, $6)}
+          info: $9
           hw.parent.type: enclosure
           hw.parent.id: IPMI
         metrics:
