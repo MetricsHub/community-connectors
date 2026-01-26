@@ -1,0 +1,1725 @@
+{
+  "total" : 3,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "MariaDB.yaml",
+      "name" : "MariaDB",
+      "connector_id" : "MariaDB",
+      "applies_to_os" : "linux,windows",
+      "parent.id" : "localhost",
+      "id" : "MariaDB"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed SqlCriterion Criterion:\n- Query SELECT @@version LIKE '%MariaDB%' AS is_mariadb;\n- ExpectedResult: 1\n- ErrorMessage: Not a MariaDB Server\n\nResult:\n1;\n\nMessage:\n====================================\nHostname HOSTNAME - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1766571979250,
+    "type" : "connector",
+    "id" : "connector_MariaDB",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"jdbc\"}" : {
+        "name" : "metricshub.host.up{protocol=\"jdbc\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "jdbc"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"jdbc\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"jdbc\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "jdbc"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "linux",
+      "host.name" : "localhost",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1766571979535,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpoint" : true,
+    "endpointHost" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "db.server.io{db.io.direction=\"receive\"}" : {
+        "name" : "db.server.io{db.io.direction=\"receive\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "receive"
+        },
+        "resetMetricTime" : true,
+        "value" : 8077770.0,
+        "previousValue" : 8077770.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\", db.mariadb.cache.type=\"binlog_statement\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\", db.mariadb.cache.type=\"binlog_statement\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "miss",
+          "db.mariadb.cache.type" : "binlog_statement"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.io{db.io.direction=\"write\", db.mariadb.engine=\"aria\"}" : {
+        "name" : "db.server.storage.io{db.io.direction=\"write\", db.mariadb.engine=\"aria\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "write",
+          "db.mariadb.engine" : "aria"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_cache.operations{db.cache.state=\"miss\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"miss\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 24.0,
+        "previousValue" : 24.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_index_statistic\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_index_statistic\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_index_statistic",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"savepoint\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"savepoint\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "savepoint"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"delete\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"delete\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\", db.mariadb.cache.type=\"binlog\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\", db.mariadb.cache.type=\"binlog\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "miss",
+          "db.mariadb.cache.type" : "binlog"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"rollback\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"rollback\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "rollback"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"multi_range_read_rowid_refills\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"multi_range_read_rowid_refills\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "multi_range_read_rowid_refills"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.read_ahead{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.read_ahead{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"insert\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"insert\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "insert"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_hosts_insert\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_hosts_insert\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_hosts_insert",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.pending_operations{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.pending_operations{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "write",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.io.direction=\"read\", db.mariadb.engine=\"aria\", db.cache.state=\"miss\"}" : {
+        "name" : "db.server.cache.operations{db.io.direction=\"read\", db.mariadb.engine=\"aria\", db.cache.state=\"miss\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "read",
+          "db.mariadb.engine" : "aria",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 34.0,
+        "previousValue" : 34.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.io.direction=\"read\", db.mariadb.engine=\"aria\", db.cache.state=\"hit\"}" : {
+        "name" : "db.server.cache.operations{db.io.direction=\"read\", db.mariadb.engine=\"aria\", db.cache.state=\"hit\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "read",
+          "db.mariadb.engine" : "aria",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 3272.0,
+        "previousValue" : 3272.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.pending_operations{db.io.direction=\"read\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.pending_operations{db.io.direction=\"read\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "read",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_cache.operations{db.cache.state=\"overflow\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"overflow\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "overflow"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"data_dirty\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"data_dirty\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "data_dirty",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 16384.0,
+        "previousValue" : 16384.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_lock.current_waits{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.row_lock.current_waits{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.doublewrite_buffer.operations{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.mariadb.doublewrite_buffer.operations{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.query.state=\"normal\"}" : {
+        "name" : "db.server.queries{db.query.state=\"normal\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.query.state" : "normal"
+        },
+        "resetMetricTime" : true,
+        "value" : 4926.0,
+        "previousValue" : 4926.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"read\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"read\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.row_operation.type" : "read",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"reprepare_statement\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"reprepare_statement\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "reprepare_statement"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"icp_attempts\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"icp_attempts\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "icp_attempts"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"hit\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"hit\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "read",
+          "db.cache.state" : "hit",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 2023.0,
+        "previousValue" : 2023.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.page.size{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.page.size{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 16384.0,
+        "previousValue" : 16384.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"created\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"created\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.thread.state" : "created"
+        },
+        "resetMetricTime" : true,
+        "value" : 12.0,
+        "previousValue" : 12.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"multi_range_read_key_refills\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"multi_range_read_key_refills\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "multi_range_read_key_refills"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"running\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"running\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.thread.state" : "running"
+        },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"close_statement\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"close_statement\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "close_statement"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.query.state=\"slow\"}" : {
+        "name" : "db.server.queries{db.query.state=\"slow\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.query.state" : "slow"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"data_clean\", db.mariadb.engine=\"aria\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"data_clean\", db.mariadb.engine=\"aria\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "data_clean",
+          "db.mariadb.engine" : "aria"
+        },
+        "resetMetricTime" : true,
+        "value" : 131072.0,
+        "previousValue" : 131072.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.galera_replication.parallel_transactions.limit" : {
+        "name" : "db.server.mariadb.galera_replication.parallel_transactions.limit",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.requests{db.cache.request.type=\"flushed\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.requests{db.cache.request.type=\"flushed\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.request.type" : "flushed",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"insert\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"insert\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.row_operation.type" : "insert",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_cache.operations{db.cache.state=\"hit\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"hit\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 28.0,
+        "previousValue" : 28.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_mutex_instance\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_mutex_instance\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_mutex_instance",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"update\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"update\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.row_operation.type" : "update",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.read_ahead.operations{db.cache.read_ahead.state=\"random\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.read_ahead.operations{db.cache.read_ahead.state=\"random\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.read_ahead.state" : "random",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"delete\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"delete\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"prepare\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"prepare\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "prepare"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_key\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_key\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "read_key"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"rollback\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"rollback\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "rollback"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.files{db.file.state=\"open\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.files{db.file.state=\"open\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.file.state" : "open",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 8.0,
+        "previousValue" : 8.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"tmp_update\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"tmp_update\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "tmp_update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"savepoint_rollback\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"savepoint_rollback\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "savepoint_rollback"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"commit\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"commit\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "commit"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.io{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.storage.io{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "write",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"update\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"update\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.operations{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "write",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 516.0,
+        "previousValue" : 516.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_first\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_first\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "read_first"
+        },
+        "resetMetricTime" : true,
+        "value" : 21.0,
+        "previousValue" : 21.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_file_instance\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_file_instance\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_file_instance",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.doublewrite_buffer.usage{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.mariadb.doublewrite_buffer.usage{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"free\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"free\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "free",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 1.27254528E8,
+        "previousValue" : 1.27254528E8,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.connections{db.connection.state=\"success\"}" : {
+        "name" : "db.server.connections{db.connection.state=\"success\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.connection.state" : "success"
+        },
+        "resetMetricTime" : true,
+        "value" : 1035.0,
+        "previousValue" : 1035.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_condition_instrument\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_condition_instrument\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_condition_instrument",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_mutex_instrument\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_mutex_instrument\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_mutex_instrument",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_account_insert\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_account_insert\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_account_insert",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_\"random\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_\"random\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "read_random"
+        },
+        "resetMetricTime" : true,
+        "value" : 36.0,
+        "previousValue" : 36.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_memory_instrument\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_memory_instrument\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_memory_instrument",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_locks{db.lock.state=\"immediate\"}" : {
+        "name" : "db.server.table_locks{db.lock.state=\"immediate\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.lock.state" : "immediate"
+        },
+        "resetMetricTime" : true,
+        "value" : 44.0,
+        "previousValue" : 44.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_lock.waits{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.row_lock.waits{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"update\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"update\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections{db.connection.state=\"active\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"active\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.connection.state" : "active"
+        },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"execute_statement\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"execute_statement\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "execute_statement"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_metadata_lock\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_metadata_lock\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_metadata_lock",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_locks{db.lock.state=\"waited\"}" : {
+        "name" : "db.server.table_locks{db.lock.state=\"waited\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.lock.state" : "waited"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.connections{error.type=\"failed_attempt\", db.connection.state=\"aborted\"}" : {
+        "name" : "db.server.connections{error.type=\"failed_attempt\", db.connection.state=\"aborted\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "failed_attempt",
+          "db.connection.state" : "aborted"
+        },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.temp_tables{db.temp_table.storage=\"disk\"}" : {
+        "name" : "db.server.temp_tables{db.temp_table.storage=\"disk\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.temp_table.storage" : "disk"
+        },
+        "resetMetricTime" : true,
+        "value" : 755.0,
+        "previousValue" : 755.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.tables" : {
+        "name" : "db.server.tables",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.connections.limit" : {
+        "name" : "db.server.connections.limit",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 151.0,
+        "previousValue" : 151.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.galera_cluster.nodes" : {
+        "name" : "db.server.mariadb.galera_cluster.nodes",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 3.0,
+        "previousValue" : 3.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.galera_replication.queue_size{db.server.write-sets=\"send\"}" : {
+        "name" : "db.server.mariadb.galera_replication.queue_size{db.server.write-sets=\"send\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.server.write-sets" : "send"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.galera_replication.status" : {
+        "name" : "db.server.mariadb.galera_replication.status",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : "true",
+        "previousValue" : "true",
+        "stateSet" : [ "true", "false" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"savepoint\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"savepoint\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "savepoint"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_locker\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_locker\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_locker",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"free\", db.mariadb.engine=\"aria\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"free\", db.mariadb.engine=\"aria\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "free",
+          "db.mariadb.engine" : "aria"
+        },
+        "resetMetricTime" : true,
+        "value" : 1.2808192E8,
+        "previousValue" : 1.2808192E8,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.io{db.io.direction=\"read\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.storage.io{db.io.direction=\"read\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "read",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 2736128.0,
+        "previousValue" : 2736128.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.uptime" : {
+        "name" : "db.server.uptime",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 162071.0,
+        "previousValue" : 162071.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_previous\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_previous\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "read_previous"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"miss\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"miss\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "read",
+          "db.cache.state" : "miss",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 167.0,
+        "previousValue" : 167.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_file_instrument\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_file_instrument\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_file_instrument",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_file_handle\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_file_handle\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_file_handle",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.connections{error.type=\"client_disconnected\", db.connection.state=\"aborted\"}" : {
+        "name" : "db.server.connections{error.type=\"client_disconnected\", db.connection.state=\"aborted\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "client_disconnected",
+          "db.connection.state" : "aborted"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"prepare_statement\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"prepare_statement\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "prepare_statement"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"lost_digest_instance\", db.mariadb.engine=\"performance_schema\"}" : {
+        "name" : "db.server.errors{error.type=\"lost_digest_instance\", db.mariadb.engine=\"performance_schema\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "error.type" : "lost_digest_instance",
+          "db.mariadb.engine" : "performance_schema"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_next\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_next\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "read_next"
+        },
+        "resetMetricTime" : true,
+        "value" : 37.0,
+        "previousValue" : 37.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"multi_range_read_init\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"multi_range_read_init\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "multi_range_read_init"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"commit\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"commit\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "commit"
+        },
+        "resetMetricTime" : true,
+        "value" : 44.0,
+        "previousValue" : 44.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"rollback_to_savepoint\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"rollback_to_savepoint\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "rollback_to_savepoint"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"external_lock\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"external_lock\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "external_lock"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.temp_tables{db.temp_table.storage=\"memory\"}" : {
+        "name" : "db.server.temp_tables{db.temp_table.storage=\"memory\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.temp_table.storage" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : 1215.0,
+        "previousValue" : 1215.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.read_head.evicted{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.read_head.evicted{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"icp_match\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"icp_match\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "icp_match"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.cache.operations{db.cache.state=\"hit\", db.mariadb.cache.type=\"binlog\"}" : {
+        "name" : "db.server.mariadb.cache.operations{db.cache.state=\"hit\", db.mariadb.cache.type=\"binlog\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "hit",
+          "db.mariadb.cache.type" : "binlog"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.galera_replication.flow_control.utilisation" : {
+        "name" : "db.server.mariadb.galera_replication.flow_control.utilisation",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"tmp_write\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"tmp_write\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "tmp_write"
+        },
+        "resetMetricTime" : true,
+        "value" : 272205.0,
+        "previousValue" : 272205.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.galera_replication.queue_size{db.server.write-sets=\"receive\"}" : {
+        "name" : "db.server.mariadb.galera_replication.queue_size{db.server.write-sets=\"receive\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.server.write-sets" : "receive"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"discover\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"discover\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "discover"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"delete\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"delete\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.row_operation.type" : "delete",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"hit\", db.mariadb.cache.type=\"binlog_statement\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"hit\", db.mariadb.cache.type=\"binlog_statement\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "hit",
+          "db.mariadb.cache.type" : "binlog_statement"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"begin\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"begin\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "begin"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"select\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"select\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "select"
+        },
+        "resetMetricTime" : true,
+        "value" : 1765.0,
+        "previousValue" : 1765.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.operations{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.storage.operations{db.io.direction=\"write\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "write",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 5.0,
+        "previousValue" : 5.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.replication.galera_cluster.status" : {
+        "name" : "db.server.mariadb.replication.galera_cluster.status",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.row_lock.time{db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.row_lock.time{db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"connected\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"connected\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.thread.state" : "connected"
+        },
+        "resetMetricTime" : true,
+        "value" : 4.0,
+        "previousValue" : 4.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.galera_replication.up" : {
+        "name" : "db.server.mariadb.galera_replication.up",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : "true",
+        "previousValue" : "true",
+        "stateSet" : [ "true", "false" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_\"random_next\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_\"random_next\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "read_random_next"
+        },
+        "resetMetricTime" : true,
+        "value" : 274011.0,
+        "previousValue" : 274011.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"insert_select\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"insert_select\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "insert_select"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"data_dirty\", db.mariadb.engine=\"aria\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"data_dirty\", db.mariadb.engine=\"aria\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "data_dirty",
+          "db.mariadb.engine" : "aria"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"write\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"write\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "write"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_last\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"read_last\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "read_last"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.handlers{db.mariadb.handler.type=\"tmp_delete\"}" : {
+        "name" : "db.server.mariadb.handlers{db.mariadb.handler.type=\"tmp_delete\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.handler.type" : "tmp_delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"cached\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"cached\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.thread.state" : "cached"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"data_clean\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"data_clean\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.cache.state" : "data_clean",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 4866048.0,
+        "previousValue" : 4866048.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.mariadb.commands{db.mariadb.command.type=\"replace\"}" : {
+        "name" : "db.server.mariadb.commands{db.mariadb.command.type=\"replace\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.mariadb.command.type" : "replace"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.operations{db.io.direction=\"read\", db.mariadb.engine=\"innodb\"}" : {
+        "name" : "db.server.storage.operations{db.io.direction=\"read\", db.mariadb.engine=\"innodb\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "read",
+          "db.mariadb.engine" : "innodb"
+        },
+        "resetMetricTime" : true,
+        "value" : 185.0,
+        "previousValue" : 185.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.io.direction=\"write\", db.mariadb.engine=\"aria\"}" : {
+        "name" : "db.server.cache.operations{db.io.direction=\"write\", db.mariadb.engine=\"aria\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "write",
+          "db.mariadb.engine" : "aria"
+        },
+        "resetMetricTime" : true,
+        "value" : 1398.0,
+        "previousValue" : 1398.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.io{db.io.direction=\"transmit\"}" : {
+        "name" : "db.server.io{db.io.direction=\"transmit\"}",
+        "collectTime" : 1766571979535,
+        "previousCollectTime" : 1766571979250,
+        "attributes" : {
+          "db.io.direction" : "transmit"
+        },
+        "resetMetricTime" : true,
+        "value" : 3770541.0,
+        "previousValue" : 3770541.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "10.5.29-MariaDB-ubu2004",
+      "db.system" : "mariadb",
+      "connector_id" : "MariaDB",
+      "id" : "0e7cecdb37b8",
+      "db.server.name" : "0e7cecdb37b8",
+      "db.namespace" : ""
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1766571979535,
+    "type" : "mariadb",
+    "id" : "MariaDB_mariadb_0e7cecdb37b8",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

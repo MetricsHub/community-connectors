@@ -29,6 +29,7 @@ class ConnectorReplayIT {
 		"LinuxFile",
 		"AMDRadeon",
 		"IpmiTool",
+		"MariaDB",
 		"Redfish"
 	})
 
