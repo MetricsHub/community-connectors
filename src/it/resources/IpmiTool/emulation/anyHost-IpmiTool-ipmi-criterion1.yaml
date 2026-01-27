@@ -1,0 +1,8 @@
+---
+result: System power state is up
+success: true
+message: Successfully connected to the IPMI BMC chip with the IPMI-over-LAN interface.
+exception: null
+criterion: !<ipmi>
+  type: ipmi
+  forceSerialization: true
