@@ -28,7 +28,9 @@ class ConnectorReplayIT {
 		"LinuxFile",
 		"AMDRadeon",
 		"MariaDB",
-		"Redfish"
+		"Redfish",
+		"LinuxIPNetwork",
+		"LinuxIfConfigNetwork"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)
