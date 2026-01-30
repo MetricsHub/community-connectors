@@ -1,0 +1,14 @@
+---
+table:
+- - "eno2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500"
+- - '        inet 10.1.1.31  netmask 255.255.255.0  broadcast 10.1.1.255'
+- - '        ether 00:19:99:c5:7b:de  txqueuelen 1000  (Ethernet)'
+- - '        RX packets 760661932  bytes 51887572000 (48.3 GiB)'
+- - '        RX errors 0  dropped 25137403  overruns 0  frame 0'
+- - '        TX packets 225  bytes 9450 (9.2 KiB)'
+- - '        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0'
+- - '        device memory 0xdf900000-df91ffff  '
+- - ""
+headers: []
+rawData: "eno2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 10.1.1.31  netmask 255.255.255.0  broadcast 10.1.1.255\n        ether 00:19:99:c5:7b:de  txqueuelen 1000  (Ethernet)\n        RX packets 760661932  bytes 51887572000 (48.3 GiB)\n        RX errors 0  dropped 25137403  overruns 0  frame 0\n        TX packets 225  bytes 9450 (9.2 KiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device memory 0xdf900000-df91ffff  \n"
+empty: false

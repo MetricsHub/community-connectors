@@ -1,0 +1,469 @@
+{
+  "total" : 4,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : 1769616494050,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "LinuxIPNetwork.yaml",
+      "name" : "Linux - Network (ip)",
+      "connector_id" : "LinuxIPNetwork",
+      "applies_to_os" : "linux",
+      "parent.id" : "anyHost",
+      "id" : "LinuxIPNetwork"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed DeviceTypeCriterion Criterion:\n- Keep: [LINUX]\n- Exclude: []\n\nResult:\nConfigured OS type : LINUX\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: /sbin/ip a\n- ExecuteLocally: false\n- ExpectedResult: LOOPBACK\n\nResult:\n1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n    inet 127.0.0.1/8 scope host lo\n       valid_lft forever preferred_lft forever\n2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000\n    link/ether 00:19:99:c5:7b:dd brd ff:ff:ff:ff:ff:ff\n    inet 10.0.10.31/16 brd 10.0.255.255 scope global noprefixroute dynamic eno1\n       valid_lft 590sec preferred_lft 590sec\n    inet6 fe80::cbbe:3c19:c9b8:13e9/64 scope link noprefixroute \n       valid_lft forever preferred_lft forever\n3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000\n    link/ether 00:19:99:c5:7b:de brd ff:ff:ff:ff:ff:ff\n    inet 10.1.1.31/24 brd 10.1.1.255 scope global noprefixroute eno2\n       valid_lft forever preferred_lft forever\n4: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000\n    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff\n    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0\n       valid_lft forever preferred_lft forever\n5: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000\n    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff\n6: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default \n    link/ether 02:42:d2:66:06:b2 brd ff:ff:ff:ff:ff:ff\n    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\n       valid_lft forever preferred_lft forever\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /sbin/ip a\n- ExecuteLocally: false\n- ExpectedResult: LOOPBACK\n\nResult: 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n    inet 127.0.0.1/8 scope host lo\n       valid_lft forever preferred_lft forever\n2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000\n    link/ether 00:19:99:c5:7b:dd brd ff:ff:ff:ff:ff:ff\n    inet 10.0.10.31/16 brd 10.0.255.255 scope global noprefixroute dynamic eno1\n       valid_lft 590sec preferred_lft 590sec\n    inet6 fe80::cbbe:3c19:c9b8:13e9/64 scope link noprefixroute \n       valid_lft forever preferred_lft forever\n3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000\n    link/ether 00:19:99:c5:7b:de brd ff:ff:ff:ff:ff:ff\n    inet 10.1.1.31/24 brd 10.1.1.255 scope global noprefixroute eno2\n       valid_lft forever preferred_lft forever\n4: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000\n    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff\n    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0\n       valid_lft forever preferred_lft forever\n5: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN group default qlen 1000\n    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff\n6: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default \n    link/ether 02:42:d2:66:06:b2 brd ff:ff:ff:ff:ff:ff\n    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\n       valid_lft forever preferred_lft forever\n\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769616494050,
+    "type" : "connector",
+    "id" : "connector_LinuxIPNetwork",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"network\", connector_id=\"LinuxIPNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"network\", connector_id=\"LinuxIPNetwork\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "LinuxIPNetwork",
+          "monitor.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.025,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "value" : 25.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"network\", connector_id=\"LinuxIPNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"network\", connector_id=\"LinuxIPNetwork\"}",
+        "collectTime" : 1769616494050,
+        "previousCollectTime" : 1769616494050,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "LinuxIPNetwork",
+          "monitor.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.165,
+        "previousValue" : 0.165,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : 1769616494050,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"LinuxIPNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"LinuxIPNetwork\"}",
+        "collectTime" : 1769616494050,
+        "previousCollectTime" : 1769616494050,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "LinuxIPNetwork",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.001,
+        "previousValue" : 0.001,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"LinuxIPNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"LinuxIPNetwork\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "LinuxIPNetwork",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.001,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "linux",
+      "host.type" : "compute",
+      "host.name" : "anyHost"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1769616502151,
+    "type" : "host",
+    "id" : "endpoint_host_anyHost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpoint" : true,
+    "endpointHost" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : 1769616494050,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 9450.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 7.60638609E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.full_duplex" : {
+        "name" : "hw.network.full_duplex",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.25E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 225.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.1885941788E10,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.25,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "physical_address" : "00:19:99:c5:7b:dd",
+      "hw.parent.type" : "enclosure",
+      "logical_address" : "10.0.10.31",
+      "name" : "eno1",
+      "connector_id" : "LinuxIPNetwork",
+      "logical_address_type" : "IP",
+      "physical_address_type" : "MAC",
+      "id" : "eno1",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1769616494050,
+    "type" : "network",
+    "id" : "LinuxIPNetwork_network_eno1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : 1769616494050,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 9450.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 7.60638609E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.full_duplex" : {
+        "name" : "hw.network.full_duplex",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.25E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 225.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.1885941788E10,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1769616502151,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.25,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "physical_address" : "00:19:99:c5:7b:de",
+      "hw.parent.type" : "enclosure",
+      "logical_address" : "10.1.1.31",
+      "name" : "eno2",
+      "connector_id" : "LinuxIPNetwork",
+      "logical_address_type" : "IP",
+      "physical_address_type" : "MAC",
+      "id" : "eno2",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1769616494050,
+    "type" : "network",
+    "id" : "LinuxIPNetwork_network_eno2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

@@ -1,0 +1,55 @@
+---
+table:
+- - "docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500"
+- - '        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255'
+- - '        ether 02:42:d2:66:06:b2  txqueuelen 0  (Ethernet)'
+- - '        RX packets 0  bytes 0 (0.0 B)'
+- - '        RX errors 0  dropped 0  overruns 0  frame 0'
+- - '        TX packets 0  bytes 0 (0.0 B)'
+- - '        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0'
+- - ""
+- - "eno1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500"
+- - '        inet 10.0.10.31  netmask 255.255.0.0  broadcast 10.0.255.255'
+- - '        inet6 fe80::cbbe:3c19:c9b8:13e9  prefixlen 64  scopeid 0x20<link>'
+- - '        ether 00:19:99:c5:7b:dd  txqueuelen 1000  (Ethernet)'
+- - '        RX packets 4669485314  bytes 659767404659 (614.4 GiB)'
+- - '        RX errors 0  dropped 2314  overruns 0  frame 0'
+- - '        TX packets 4019058760  bytes 734040876762 (683.6 GiB)'
+- - '        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0'
+- - '        device memory 0xdf920000-df93ffff  '
+- - ""
+- - "eno2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500"
+- - '        inet 10.1.1.31  netmask 255.255.255.0  broadcast 10.1.1.255'
+- - '        ether 00:19:99:c5:7b:de  txqueuelen 1000  (Ethernet)'
+- - '        RX packets 760661856  bytes 51887566998 (48.3 GiB)'
+- - '        RX errors 0  dropped 25137403  overruns 0  frame 0'
+- - '        TX packets 225  bytes 9450 (9.2 KiB)'
+- - '        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0'
+- - '        device memory 0xdf900000-df91ffff  '
+- - ""
+- - "lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536"
+- - '        inet 127.0.0.1  netmask 255.0.0.0'
+- - '        loop  txqueuelen 1000  (Local Loopback)'
+- - '        RX packets 17102689398  bytes 10604265425541 (9.6 TiB)'
+- - '        RX errors 0  dropped 0  overruns 0  frame 0'
+- - '        TX packets 17102689398  bytes 10604265425541 (9.6 TiB)'
+- - '        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0'
+- - ""
+- - "virbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500"
+- - '        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255'
+- - '        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)'
+- - '        RX packets 0  bytes 0 (0.0 B)'
+- - '        RX errors 0  dropped 0  overruns 0  frame 0'
+- - '        TX packets 0  bytes 0 (0.0 B)'
+- - '        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0'
+- - ""
+- - "virbr0-nic: flags=4098<BROADCAST,MULTICAST>  mtu 1500"
+- - '        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)'
+- - '        RX packets 0  bytes 0 (0.0 B)'
+- - '        RX errors 0  dropped 0  overruns 0  frame 0'
+- - '        TX packets 0  bytes 0 (0.0 B)'
+- - '        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0'
+- - ""
+headers: []
+rawData: "docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255\n        ether 02:42:d2:66:06:b2  txqueuelen 0  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\neno1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 10.0.10.31  netmask 255.255.0.0  broadcast 10.0.255.255\n        inet6 fe80::cbbe:3c19:c9b8:13e9  prefixlen 64  scopeid 0x20<link>\n        ether 00:19:99:c5:7b:dd  txqueuelen 1000  (Ethernet)\n        RX packets 4669485314  bytes 659767404659 (614.4 GiB)\n        RX errors 0  dropped 2314  overruns 0  frame 0\n        TX packets 4019058760  bytes 734040876762 (683.6 GiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device memory 0xdf920000-df93ffff  \n\neno2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 10.1.1.31  netmask 255.255.255.0  broadcast 10.1.1.255\n        ether 00:19:99:c5:7b:de  txqueuelen 1000  (Ethernet)\n        RX packets 760661856  bytes 51887566998 (48.3 GiB)\n        RX errors 0  dropped 25137403  overruns 0  frame 0\n        TX packets 225  bytes 9450 (9.2 KiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device memory 0xdf900000-df91ffff  \n\nlo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536\n        inet 127.0.0.1  netmask 255.0.0.0\n        loop  txqueuelen 1000  (Local Loopback)\n        RX packets 17102689398  bytes 10604265425541 (9.6 TiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 17102689398  bytes 10604265425541 (9.6 TiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nvirbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255\n        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nvirbr0-nic: flags=4098<BROADCAST,MULTICAST>  mtu 1500\n        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n"
+empty: false

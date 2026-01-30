@@ -1,0 +1,15 @@
+#MetricsHub Configuration
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
+patchDirectory: "src/main/connector"
+resources:
+  anyHost:
+    attributes:
+      host.name: anyHost
+      host.type: linux
+    protocols:
+      ssh:
+        username: user
+        password: password
+        timeout: 300
+    connectors: ["+LinuxIfConfigNetwork"]

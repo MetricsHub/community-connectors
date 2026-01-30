@@ -1,0 +1,11 @@
+---
+table:
+- - "3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000"
+- - '    link/ether 00:19:99:c5:7b:de brd ff:ff:ff:ff:ff:ff'
+- - "    RX: bytes  packets  errors  dropped overrun mcast   "
+- - '    51885941788 760638609 0       25136765 0       638114  '
+- - "    TX: bytes  packets  errors  dropped carrier collsns "
+- - '    9450       225      0       0       0       0       '
+headers: []
+rawData: "3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000\n    link/ether 00:19:99:c5:7b:de brd ff:ff:ff:ff:ff:ff\n    RX: bytes  packets  errors  dropped overrun mcast   \n    51885941788 760638609 0       25136765 0       638114  \n    TX: bytes  packets  errors  dropped carrier collsns \n    9450       225      0       0       0       0       "
+empty: false
