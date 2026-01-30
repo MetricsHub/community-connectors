@@ -27,7 +27,9 @@ class ConnectorReplayIT {
 		"WindowsFile",
 		"LinuxFile",
 		"AMDRadeon",
-		"WindowsIpmiTool"
+		"WindowsIpmiTool",
+		"MariaDB",
+		"Redfish"
 	})
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)
