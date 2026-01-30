@@ -28,7 +28,7 @@ table:
   - 700
   - ""
 - - 2
-  - 300
+  - 280
   - 04-P1 DIMM 1-6(6.0.32):Temperature for Memory device 1
   - ""
   - ""
@@ -37,7 +37,7 @@ table:
   - 890
   - ""
 - - 2
-  - 300
+  - 280
   - 05-P1 DIMM 7-12(7.0.32):Temperature for Memory device 2
   - ""
   - ""
@@ -46,7 +46,7 @@ table:
   - 890
   - ""
 - - 2
-  - 310
+  - 290
   - 06-P2 DIMM 1-6(8.0.32):Temperature for Memory device 3
   - ""
   - ""
@@ -55,7 +55,7 @@ table:
   - 890
   - ""
 - - 2
-  - 310
+  - 290
   - 07-P2 DIMM 7-12(9.0.32):Temperature for Memory device 4
   - ""
   - ""
@@ -82,7 +82,7 @@ table:
   - 750
   - ""
 - - 2
-  - 400
+  - 390
   - 10-Chipset(12.0.32):Temperature for OEM System Integrator defined entity 1
   - ""
   - ""
@@ -109,7 +109,7 @@ table:
   - 1150
   - ""
 - - 2
-  - 310
+  - 300
   - 15-VR P1 Mem(17.0.32):Temperature for Power module 3
   - ""
   - ""
@@ -127,7 +127,7 @@ table:
   - 1150
   - ""
 - - 2
-  - 330
+  - 320
   - 17-VR P2 Mem(19.0.32):Temperature for Power module 5
   - ""
   - ""
@@ -136,7 +136,7 @@ table:
   - 1150
   - ""
 - - 2
-  - 320
+  - 310
   - 18-VR P2 Mem(20.0.32):Temperature for Power module 6
   - ""
   - ""
@@ -181,7 +181,7 @@ table:
   - 650
   - ""
 - - 2
-  - 330
+  - 320
   - 28-P/S 2 Zone(30.0.32):Temperature for OEM System Integrator defined entity 3
   - ""
   - ""
@@ -199,7 +199,7 @@ table:
   - 750
   - ""
 - - 2
-  - 410
+  - 400
   - 30-iLO Zone(32.0.32):Temperature for System management module 1
   - ""
   - ""
@@ -253,7 +253,7 @@ table:
   - 600
   - ""
 - - 2
-  - 290
+  - 280
   - 11-PS 1 Inlet(13.0.32):Temperature for Power supply 1
   - ""
   - ""
@@ -271,7 +271,7 @@ table:
   - ""
   - ""
 - - 7
-  - 5500
+  - 5000
   - PS 1 Output(62.0.32):Power Supply for Power supply 1
   - ""
   - ""
@@ -307,7 +307,7 @@ table:
   - ""
   - ""
 - - 2
-  - 330
+  - 320
   - 37-Fuse(39.0.32):Temperature for Power supply 3
   - ""
   - ""

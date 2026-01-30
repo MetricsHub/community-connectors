@@ -1,117 +1,183 @@
-BEGIN {
-    FS = OFS = ";"
+###############################################################################
+# numeric_sensors.awk
+#
+# Purpose:
+#   Parse numeric sensor rows (typically from WMI NumericSensor / IPMI numeric
+#   equivalents) and normalize them into the simplified format expected by
+#   enclosure.awk.
+#
+# Input format (9 fields, ';' separated):
+#   BaseUnits;CurrentReading;Description;LowerThresholdCritical;
+#   LowerThresholdNonCritical;SensorType;UnitModifier;
+#   UpperThresholdCritical;UpperThresholdNonCritical
+#
+# Description parsing:
+#   "<SensorName>(<SensorID>): <something> for <DeviceType> <DeviceID>"
+#   - Extracts SensorName, SensorID
+#   - Extracts DeviceID as everything after " for " (kept as-is)
+#
+# Output format:
+#   Temperature;SensorID;SensorName;DeviceID;Value;UpperNonCritical;UpperCritical
+#   Fan;SensorID;SensorName;DeviceID;Value;LowerNonCritical;LowerCritical
+#   Voltage;SensorID;SensorName;DeviceID;Value(mV);LowerThreshold;UpperThreshold
+#   Current;SensorID;SensorName;DeviceID;Value
+#   PowerConsumption;SensorID;SensorName;DeviceID;Value;UpperNonCritical;UpperCritical
+#   EnergyUsage;SensorID;SensorName;DeviceID;Value(Wh)
+#
+# Notes:
+#   - UnitModifier is applied as 10^UnitModifier
+#   - Temperature is normalized to Celsius (C/F/K handled)
+#   - Voltage is converted to milliVolts (mV)
+#   - EnergyUsage converts Joules to Wh by dividing by 3,600,000
+#   - CurrentReading == 0 is treated as invalid and skipped
+#
+###############################################################################
+
+BEGIN { FS=";"; OFS=";" }
+
+function isNumeric(value) { return (value ~ /^-?[0-9]+(\.[0-9]+)?$/) }
+
+function powerOfTen(exponent,   result, i) {
+  result = 1
+  if (exponent > 0) for (i=0; i<exponent; i++) result *= 10
+  else if (exponent < 0) for (i=0; i<(-exponent); i++) result /= 10
+  return result
 }
 
-function convertKelvinToCelsius(value) {return value - 273.15}
-function convertFahrenheitToCelsius(value) {int(100 * (value - 32) * 5 / 9) / 100}
+# Parse Description like: "<SensorName>(<SensorID>): <something> for <DeviceType> <DeviceID>"
+function parse_description(description,   openParenPos, afterParen, closeParenPos, forPos) {
+  sensorName = ""; sensorID = ""; deviceID = ""
 
-{
-    baseUnit = $1
-    currentValue = $2
-    descriptionLine = $3
-    sensorType = $6
-    unitModifier = $7
+  # sensorName and sensorID from "Name(ID)"
+  openParenPos = index(description, "(")
+  if (openParenPos > 0) {
+    sensorName = substr(description, 1, openParenPos-1)
+    afterParen = substr(description, openParenPos+1)
+    closeParenPos = index(afterParen, ")")
+    if (closeParenPos > 0) sensorID = substr(afterParen, 1, closeParenPos-1)
+  } else {
+    sensorName = description
+    sensorID = ""
+  }
 
-    if (baseUnit == "") {
-        baseUnit = 0
+  # deviceID after " for "
+  forPos = index(description, " for ")
+  if (forPos > 0) {
+    deviceID = substr(description, forPos+5)
+  } else {
+    deviceID = ""
+  }
+
+  gsub(/[ \t]+$/, "", sensorName)
+  gsub(/^[ \t]+/, "", sensorName)
+}
+
+# BaseUnits;CurrentReading;Description;LowerCrit;LowerNonCrit;SensorType;UnitModifier;UpperCrit;UpperNonCrit
+NF >= 9 {
+  baseUnitCode             = $1
+  currentReadingRaw        = $2
+  description              = $3
+  lowerCriticalThreshold   = $4
+  lowerNonCriticalThreshold= $5
+  sensorTypeCode           = $6
+  unitModifierRaw          = $7
+  upperCriticalThreshold   = $8
+  upperNonCriticalThreshold= $9
+
+  if (!isNumeric(unitModifierRaw)) unitModifierRaw = 0
+  if (!isNumeric(currentReadingRaw) || currentReadingRaw == 0) next
+
+  parse_description(description)
+  unitScale = powerOfTen(unitModifierRaw)
+
+  # Temperatures (SensorType=2, BaseUnits=2(C),3(F),4(K))
+  if (sensorTypeCode == 2) {
+    if (!(baseUnitCode == 2 || baseUnitCode == 3 || baseUnitCode == 4)) next
+
+    value = currentReadingRaw * unitScale
+    upperNonCritical = upperNonCriticalThreshold
+    upperCritical    = upperCriticalThreshold
+
+    if (isNumeric(upperNonCritical)) upperNonCritical = upperNonCritical * unitScale; else upperNonCritical = ""
+    if (isNumeric(upperCritical))    upperCritical    = upperCritical    * unitScale; else upperCritical    = ""
+
+    # Kelvin -> Celsius
+    if (baseUnitCode == 4) {
+      value -= 273.15
+      if (upperNonCritical != "") upperNonCritical -= 273.15
+      if (upperCritical    != "") upperCritical    -= 273.15
+    }
+    # Fahrenheit -> Celsius
+    else if (baseUnitCode == 3) {
+      value = (value - 32) / 1.8
+      if (upperNonCritical != "") upperNonCritical = (upperNonCritical - 32) / 1.8
+      if (upperCritical    != "") upperCritical    = (upperCritical    - 32) / 1.8
     }
 
-    if (unitModifier == "") {
-        unitModifier = 0
+    print "Temperature", sensorID, sensorName, deviceID, value, upperNonCritical, upperCritical
+    next
+  }
+
+  # Fans (SensorType=5, BaseUnits=19 RPM)
+  if (sensorTypeCode == 5) {
+    if (baseUnitCode != 19) next
+
+    value = currentReadingRaw * unitScale
+    lowerNonCritical = lowerNonCriticalThreshold
+    lowerCritical    = lowerCriticalThreshold
+
+    if (isNumeric(lowerNonCritical)) lowerNonCritical = lowerNonCritical * unitScale; else lowerNonCritical = ""
+    if (isNumeric(lowerCritical))    lowerCritical    = lowerCritical    * unitScale; else lowerCritical    = ""
+
+    print "Fan", sensorID, sensorName, deviceID, value, lowerNonCritical, lowerCritical
+    next
+  }
+
+  # Voltage (SensorType=3, BaseUnits=5 Volts) -> milliVolts
+  if (sensorTypeCode == 3) {
+    if (baseUnitCode != 5) next
+
+    value = currentReadingRaw * unitScale * 1000
+
+    lowerThreshold = lowerNonCriticalThreshold
+    if (!isNumeric(lowerThreshold)) lowerThreshold = lowerCriticalThreshold
+
+    upperThreshold = upperNonCriticalThreshold
+    if (!isNumeric(upperThreshold)) upperThreshold = upperCriticalThreshold
+
+    if (isNumeric(lowerThreshold)) lowerThreshold = lowerThreshold * unitScale * 1000; else lowerThreshold = ""
+    if (isNumeric(upperThreshold)) upperThreshold = upperThreshold * unitScale * 1000; else upperThreshold = ""
+
+    print "Voltage", sensorID, sensorName, deviceID, value, lowerThreshold, upperThreshold
+    next
+  }
+
+  # Current (SensorType=4, BaseUnits=6 Amps)
+  if (sensorTypeCode == 4) {
+    if (baseUnitCode != 6) next
+    value = currentReadingRaw * unitScale
+    print "Current", sensorID, sensorName, deviceID, value
+    next
+  }
+
+  # PowerConsumption / EnergyUsage (SensorType=1)
+  if (sensorTypeCode == 1 && (baseUnitCode == 7 || baseUnitCode == 8)) {
+    value = currentReadingRaw * unitScale
+    upperNonCritical = upperNonCriticalThreshold
+    upperCritical    = upperCriticalThreshold
+
+    if (isNumeric(upperNonCritical)) upperNonCritical = upperNonCritical * unitScale; else upperNonCritical = ""
+    if (isNumeric(upperCritical))    upperCritical    = upperCritical    * unitScale; else upperCritical    = ""
+
+    # 7 = Watts
+    if (baseUnitCode == 7) {
+      print "PowerConsumption", sensorID, sensorName, deviceID, value, upperNonCritical, upperCritical
     }
-
-    if (sensorType == "") {
-        sensorType = 0
+    # 8 = Joules -> Wh  ( divide by 3600000)
+    else if (baseUnitCode == 8) {
+      value = value / 3600000
+      print "EnergyUsage", sensorID, sensorName, deviceID, value
     }
-
-    if (currentValue == "") {
-        currentValue = 0
-    }
-
-    openingParenthesisIndex = index(descriptionLine, "(")
-    closingParenthesisIndex = index(descriptionLine, ")")
-    twoPointIndex = index(descriptionLine, ":")
-
-    sensorId = substr(descriptionLine, openingParenthesisIndex + 1, closingParenthesisIndex - openingParenthesisIndex - 1)
-    sensorName = substr(descriptionLine, 0, openingParenthesisIndex - 1)
-    description = substr(descriptionLine, twoPointIndex + 1)
-
-    lookupIndex = index(description, " for ")
-    if (lookupIndex != 0) {
-        deviceId = substr(description, lookupIndex + 5)
-
-        if (sensorType == "2" && currentValue != 0 && "2 3 4" ~ baseUnit) { # Temperature sensors
-            currentValue = currentValue * 10 ^ unitModifier
-            threshold1 = $9 == "" ? "" : $9  * 10 ^ unitModifier
-            threshold2 = $8 == "" ? "" : $8  * 10 ^ unitModifier
-
-            if (baseUnit == 4) { # Kelvin to Celsius
-                currentValue = convertKelvinToCelsius(currentValue)
-                if (threshold1 != "") {
-                    threshold1 = convertKelvinToCelsius(threshold1)
-                }
-                if (threshold2 != "") {
-                    threshold2 = convertKelvinToCelsius(threshold2)
-                }
-            } else if (baseUnit == 3) { # Fahrenheit to Celsius
-                currentValue = convertFahrenheitToCelsius(currentValue)
-                if (threshold1 != "") {
-                    threshold1 = convertFahrenheitToCelsius(threshold1)
-                }
-                if (threshold2 != "") {
-                    threshold2 = convertFahrenheitToCelsius(threshold2)
-                }
-            }
-            print "Temperature", sensorId, sensorName, deviceId, currentValue, threshold1, threshold2, ""
-        } else if (sensorType == "5" && currentValue != 0 && (baseUnit == 19 || baseUnit == 0)) { # Fans
-            currentValue = currentValue * 10 ^ unitModifier
-            threshold1 = $5
-            threshold2 = $4
-            if (threshold1 != "") {
-                threshold1 = threshold1 * 10 ^ unitModifier
-            }
-            if (threshold2 != "") {
-                threshold2 = threshold2 * 10 ^ unitModifier
-            }
-            if (baseUnit == 19) { # currentValue is the fan speed in RPM
-                print "Fan", sensorId, sensorName, deviceId, currentValue, threshold1, threshold2, ""
-            } else { # currentValue is the fan speed ratio
-                print "Fan", sensorId, sensorName, deviceId, "", threshold1, threshold2, currentValue / 100
-            }
-        } else if (sensorType == "3" && currentValue != 0 && baseUnit == 5) { # Voltage
-            currentValue = currentValue * 10 ^ unitModifier
-
-            threshold1 = $5
-            if (threshold1 != "") {
-                threshold1 = threshold1 * 10 ^ unitModifier
-            } else {
-                threshold1 = $4
-                if (threshold1 != "") {
-                    threshold1 = threshold1 * 10 ^ unitModifier
-                }
-            }
-            
-            threshold2 = $9
-            if (threshold2 != "") {
-                threshold2 = threshold2 * 10 ^ unitModifier
-            } else {
-                threshold2 = $8
-                if (threshold2 != "") {
-                    threshold2 = threshold2 * 10 ^ unitModifier
-                }
-            }
-            print "Voltage", sensorId, sensorName, deviceId, currentValue, threshold1, threshold2, ""
-        } else if (sensorType == "1" && currentValue != 0 && baseUnit == 7) { # Power consumption
-            currentValue = currentValue * 10 ^ unitModifier
-            threshold1 = $9
-            threshold2 = $8
-            if (threshold1 != "") {
-                threshold1 = threshold1 * 10 ^ unitModifier
-            }
-            if (threshold2 != "") {
-                threshold2 = threshold2 * 10 ^ unitModifier
-            }
-            print "PowerSupply", sensorId, sensorName, deviceId, currentValue, threshold1, threshold2, ""
-        }
-    }
+    next
+  }
 }

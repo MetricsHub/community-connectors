@@ -2,9 +2,9 @@ otel:
   otel.exporter.otlp.metrics.protocol: noop
 patchDirectory: "src/main/connector"
 resources:
-  localhost:
+  anyHost:
     attributes:
-      host.name: localhost
+      host.name: anyHost
       host.type: windows
     protocols:
       wmi:
