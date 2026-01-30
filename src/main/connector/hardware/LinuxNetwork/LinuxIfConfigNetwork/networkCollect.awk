@@ -47,5 +47,5 @@ $1 == "TX" && $2 == "errors" {
 }
 
 END {
-	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes "; "
+	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes ";" unavailableIpState
 }
