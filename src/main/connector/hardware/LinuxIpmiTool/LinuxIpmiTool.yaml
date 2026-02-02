@@ -168,7 +168,7 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
           computes:
-            # Keep only fans
+            # Keep only temperatures
             # Temperature;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
           - type: keepOnlyMatchingLines
             column: 1
