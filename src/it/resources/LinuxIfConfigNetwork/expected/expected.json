@@ -1,0 +1,469 @@
+{
+  "total" : 4,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : 1769616940707,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "LinuxIfConfigNetwork.yaml",
+      "name" : "Linux - Network (ifconfig)",
+      "connector_id" : "LinuxIfConfigNetwork",
+      "applies_to_os" : "linux",
+      "parent.id" : "anyHost",
+      "id" : "LinuxIfConfigNetwork"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed DeviceTypeCriterion Criterion:\n- Keep: [LINUX]\n- Exclude: []\n\nResult:\nConfigured OS type : LINUX\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: /sbin/ifconfig -a\n- ExecuteLocally: false\n- ExpectedResult: LOOPBACK\n\nResult:\ndocker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255\n        ether 02:42:d2:66:06:b2  txqueuelen 0  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\neno1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 10.0.10.31  netmask 255.255.0.0  broadcast 10.0.255.255\n        inet6 fe80::cbbe:3c19:c9b8:13e9  prefixlen 64  scopeid 0x20<link>\n        ether 00:19:99:c5:7b:dd  txqueuelen 1000  (Ethernet)\n        RX packets 4669485843  bytes 659767493165 (614.4 GiB)\n        RX errors 0  dropped 2314  overruns 0  frame 0\n        TX packets 4019059252  bytes 734040967962 (683.6 GiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device memory 0xdf920000-df93ffff  \n\neno2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 10.1.1.31  netmask 255.255.255.0  broadcast 10.1.1.255\n        ether 00:19:99:c5:7b:de  txqueuelen 1000  (Ethernet)\n        RX packets 760661893  bytes 51887569282 (48.3 GiB)\n        RX errors 0  dropped 25137403  overruns 0  frame 0\n        TX packets 225  bytes 9450 (9.2 KiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device memory 0xdf900000-df91ffff  \n\nlo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536\n        inet 127.0.0.1  netmask 255.0.0.0\n        loop  txqueuelen 1000  (Local Loopback)\n        RX packets 17102690484  bytes 10604265953779 (9.6 TiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 17102690484  bytes 10604265953779 (9.6 TiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nvirbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255\n        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nvirbr0-nic: flags=4098<BROADCAST,MULTICAST>  mtu 1500\n        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /sbin/ifconfig -a\n- ExecuteLocally: false\n- ExpectedResult: LOOPBACK\n\nResult: docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255\n        ether 02:42:d2:66:06:b2  txqueuelen 0  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\neno1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 10.0.10.31  netmask 255.255.0.0  broadcast 10.0.255.255\n        inet6 fe80::cbbe:3c19:c9b8:13e9  prefixlen 64  scopeid 0x20<link>\n        ether 00:19:99:c5:7b:dd  txqueuelen 1000  (Ethernet)\n        RX packets 4669485843  bytes 659767493165 (614.4 GiB)\n        RX errors 0  dropped 2314  overruns 0  frame 0\n        TX packets 4019059252  bytes 734040967962 (683.6 GiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device memory 0xdf920000-df93ffff  \n\neno2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n        inet 10.1.1.31  netmask 255.255.255.0  broadcast 10.1.1.255\n        ether 00:19:99:c5:7b:de  txqueuelen 1000  (Ethernet)\n        RX packets 760661893  bytes 51887569282 (48.3 GiB)\n        RX errors 0  dropped 25137403  overruns 0  frame 0\n        TX packets 225  bytes 9450 (9.2 KiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n        device memory 0xdf900000-df91ffff  \n\nlo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536\n        inet 127.0.0.1  netmask 255.0.0.0\n        loop  txqueuelen 1000  (Local Loopback)\n        RX packets 17102690484  bytes 10604265953779 (9.6 TiB)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 17102690484  bytes 10604265953779 (9.6 TiB)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nvirbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500\n        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255\n        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\nvirbr0-nic: flags=4098<BROADCAST,MULTICAST>  mtu 1500\n        ether 52:54:00:38:1e:f3  txqueuelen 1000  (Ethernet)\n        RX packets 0  bytes 0 (0.0 B)\n        RX errors 0  dropped 0  overruns 0  frame 0\n        TX packets 0  bytes 0 (0.0 B)\n        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0\n\n\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769616940707,
+    "type" : "connector",
+    "id" : "connector_LinuxIfConfigNetwork",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"network\", connector_id=\"LinuxIfConfigNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"network\", connector_id=\"LinuxIfConfigNetwork\"}",
+        "collectTime" : 1769616940707,
+        "previousCollectTime" : 1769616940707,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "LinuxIfConfigNetwork",
+          "monitor.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.168,
+        "previousValue" : 0.168,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.host.up{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"ssh\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "ssh"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"network\", connector_id=\"LinuxIfConfigNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"network\", connector_id=\"LinuxIfConfigNetwork\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "LinuxIfConfigNetwork",
+          "monitor.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.028,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"LinuxIfConfigNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"LinuxIfConfigNetwork\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "LinuxIfConfigNetwork",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.001,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "value" : 25.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"LinuxIfConfigNetwork\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"LinuxIfConfigNetwork\"}",
+        "collectTime" : 1769616940707,
+        "previousCollectTime" : 1769616940707,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "LinuxIfConfigNetwork",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.002,
+        "previousValue" : 0.002,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : 1769616940707,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "host.name" : "anyHost",
+      "host.type" : "compute",
+      "os.type" : "linux"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1769616948835,
+    "type" : "host",
+    "id" : "endpoint_host_anyHost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : 1769616940707,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 9450.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 7.60661932E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.full_duplex" : {
+        "name" : "hw.network.full_duplex",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.25E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 225.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.1887572E10,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.25,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "physical_address" : "00:19:99:c5:7b:dd",
+      "hw.parent.type" : "enclosure",
+      "logical_address" : "10.0.10.31",
+      "name" : "eno1",
+      "connector_id" : "LinuxIfConfigNetwork",
+      "logical_address_type" : "IP",
+      "physical_address_type" : "MAC",
+      "id" : "eno1",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1769616940707,
+    "type" : "network",
+    "id" : "LinuxIfConfigNetwork_network_eno1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"network\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : 1769616940707,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"transmit\"}" : {
+        "name" : "hw.network.io{direction=\"transmit\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 9450.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"receive\"}" : {
+        "name" : "hw.network.packets{direction=\"receive\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 7.60661932E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.full_duplex" : {
+        "name" : "hw.network.full_duplex",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.bandwidth.limit" : {
+        "name" : "hw.network.bandwidth.limit",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.25E8,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.packets{direction=\"transmit\"}" : {
+        "name" : "hw.network.packets{direction=\"transmit\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "value" : 225.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.io{direction=\"receive\"}" : {
+        "name" : "hw.network.io{direction=\"receive\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "value" : 5.1887572E10,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.network.up" : {
+        "name" : "hw.network.up",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.errors{hw.type=\"network\"}" : {
+        "name" : "hw.errors{hw.type=\"network\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 0.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"network\"}" : {
+        "name" : "hw.power{hw.type=\"network\"}",
+        "collectTime" : 1769616948835,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "value" : 11.25,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "physical_address" : "00:19:99:c5:7b:de",
+      "hw.parent.type" : "enclosure",
+      "logical_address" : "10.1.1.31",
+      "name" : "eno2",
+      "connector_id" : "LinuxIfConfigNetwork",
+      "logical_address_type" : "IP",
+      "physical_address_type" : "MAC",
+      "id" : "eno2",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1769616940707,
+    "type" : "network",
+    "id" : "LinuxIfConfigNetwork_network_eno2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}
