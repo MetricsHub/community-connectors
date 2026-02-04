@@ -210,9 +210,9 @@ monitors:
 
             -- Galera / wsrep
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cluster_size' THEN VARIABLE_VALUE END) AS wsrep_cluster_size, -- $118
-              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cluster_status' THEN VARIABLE_VALUE END) AS wsrep_cluster_status, -- $119
-              MAX(CASE WHEN VARIABLE_NAME='wsrep_ready' THEN IF(VARIABLE_VALUE='ON',1,0) END) AS wsrep_ready, -- $120
-              MAX(CASE WHEN VARIABLE_NAME='wsrep_connected' THEN IF(VARIABLE_VALUE='ON',1,0) END) AS wsrep_connected, -- $121
+              COALESCE(MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cluster_status' THEN VARIABLE_VALUE END),'not_applicable') AS wsrep_cluster_status, -- $119
+              COALESCE(MAX(CASE WHEN VARIABLE_NAME='wsrep_ready' THEN IF(VARIABLE_VALUE='ON',1,0) END), 0) AS wsrep_ready, -- $120
+              COALESCE(MAX(CASE WHEN VARIABLE_NAME='wsrep_connected' THEN IF(VARIABLE_VALUE='ON',1,0) END), 0) AS wsrep_connected, -- $121
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_flow_control_paused' THEN VARIABLE_VALUE END) AS wsrep_flow_control_paused, -- $122
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_recv_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_recv_queue_avg, -- $123
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_send_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_send_queue_avg, -- $124
@@ -521,6 +521,7 @@ monitors:
 translations:
   GaleraClusterStatusTranslationTable:
     Primary: ok
+    not_applicable: unknown
     Default: failed
   OnOffStatusTranslationTable:
     "1": on
