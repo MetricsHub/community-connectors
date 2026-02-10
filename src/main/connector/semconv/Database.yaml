@@ -135,10 +135,6 @@ metrics:
     description: Total number of rollbacks in the database.
     type: Counter
     unit: "{rollback}"
-  db.server.current_connections.limit:
-    description: The maximum number of client connections allowed to the database.
-    type: Gauge
-    unit: "{connection}"
   db.server.cache.size:
     description: The size of the database cache.
     type: Gauge
@@ -178,7 +174,7 @@ metrics:
         - degraded
   db.server.connections.limit: 
     description: The maximum number of simultaneous client connections.
-    type: Counter
+    type: Gauge
     unit: "{connection}"
   db.server.table_cache.operations:
     description: Number of lookup operations performed on the table open cache.
