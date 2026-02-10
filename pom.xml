@@ -60,7 +60,7 @@
 	<properties>
 		<!-- Java 17 -->
 		<maven.compiler.release>17</maven.compiler.release>
-		<metricshub-community.version>3.9.01-SNAPSHOT</metricshub-community.version>
+		<metricshub-community.version>3.9.00</metricshub-community.version>
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
 		<project.build.outputTimestamp>2026-01-21T13:01:12Z</project.build.outputTimestamp>
@@ -237,7 +237,7 @@
 					<dependency>
 						<groupId>org.sentrysoftware.maven</groupId>
 						<artifactId>maven-skin-tools</artifactId>
-						<version>1.4.00</version>
+						<version>1.6.00</version>
 					</dependency>
 				</dependencies>
 				<executions>

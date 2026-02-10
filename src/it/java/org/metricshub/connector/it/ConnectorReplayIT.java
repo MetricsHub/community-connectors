@@ -30,7 +30,9 @@ class ConnectorReplayIT {
 		"AMDRadeon",
 		"IpmiTool",
 		"MariaDB",
-		"Redfish"
+		"Redfish",
+		"LinuxIPNetwork",
+		"LinuxIfConfigNetwork"
 	})
 
 	void testConnectorReplay(String connectorId) throws Exception {
