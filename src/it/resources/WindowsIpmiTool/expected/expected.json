@@ -71,7 +71,7 @@
     },
     "attributes" : {
       "filename" : "WindowsIpmiTool.yaml",
-      "name" : "Windows IPMI (ipmitool)",
+      "name" : "Windows IPMI (WMI)",
       "connector_id" : "WindowsIpmiTool",
       "applies_to_os" : "windows",
       "parent.id" : "anyHost",
