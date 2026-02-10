@@ -188,7 +188,7 @@ monitors:
           db.namespace: $1
           db.version: $2
         metrics:
-          db.server.current_connections.limit: $3
+          db.server.connections.limit: $3
           db.server.uptime: $4
           db.server.connections: $5
           db.server.current_connections{db.connection.state="active"}: $6
