@@ -1,0 +1,550 @@
+---
+extends:
+- ../../semconv/Hardware
+- ../../semconv/System
+
+connector:
+  displayName: Windows IPMI (WMI)
+  platforms: IPMI
+  reliesOn: IPMI
+  information: This connector provides environmental information on several IPMI-enabled servers in-band and out-of-band (temperatures, fans, etc.).
+  version: 2.0
+  detection:
+    connectionTypes:
+    - remote
+    - local
+    appliesTo:
+    - Windows
+    supersedes:
+    - IpmiTool
+    criteria:
+    - type: wmi
+      query: SELECT Description FROM ComputerSystem
+      namespace: root\hardware
+    tags: [ hardware, windows ]
+
+monitors:
+  enclosure:
+    simple:
+      sources:
+        computerSystems:
+          type: wmi
+          query: SELECT IdentifyingNumber,Name,Vendor FROM Win32_ComputerSystemProduct
+          namespace: root\cimv2
+          computes:
+            - type: awk
+              script: |
+                BEGIN { FS=";"; OFS=";" }
+
+                # Expect: IdentifyingNumber;Name;Vendor
+                NF >= 3 {
+                  print "FRU", $3, $2, $1
+                }
+
+              separators: ;
+
+        numericSensors:
+          type: wmi
+          query: SELECT BaseUnits,CurrentReading,Description,LowerThresholdCritical,LowerThresholdNonCritical,SensorType,UnitModifier,UpperThresholdCritical,UpperThresholdNonCritical FROM NumericSensor
+          namespace: root\hardware
+          computes:
+            - type: awk
+              script: ${file::numeric_sensors.awk}
+              separators: ;
+
+        discreteSensors:
+          type: wmi
+          query: SELECT CurrentState,Description FROM Sensor
+          namespace: root\hardware
+          computes:
+            - type: awk
+              script: ${file::discrete_sensors.awk}
+              separators: ;
+
+        sensorsUnion:
+          type: tableUnion
+          tables:
+            - ${source::computerSystems}
+            - ${source::numericSensors}
+            - ${source::discreteSensors}
+          computes:
+            - type: awk
+              script: ${file::../IpmiTool/enclosure.awk}
+              keep: ^MSHW;
+              separators: ;
+              selectColumns: 2,3,4,5,6,7,8,9,10,11
+        enclosures:
+          # enclosures = copy of sensorsUnion
+          type: copy
+          from: ${source::sensorsUnion}
+          computes:
+            # Keep only the enclosure line
+            # Enclosure;Vendor;Model;SerialNumber;Status;StatusInformation;PowerConsumption;AdditionalInformation
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: enclosure
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Enclosure;Vendor;Model;SerialNumber;Status;StatusInformation;PowerConsumption
+          - type: convert
+            column: 5
+            conversion: array2SimpleStatus
+      mapping:
+        source: ${source::enclosures}
+        attributes:
+          id: IPMI
+          vendor: $2
+          model: $3
+          serial_number: $4
+          info: $8
+        conditionalCollection:
+          hw.status{hw.type="enclosure"}: $5
+          hw.enclosure.power: $7
+        metrics:
+          hw.status{hw.type="enclosure"}: $5
+          hw.enclosure.power: $7
+          hw.enclosure.energy: fakeCounter($7)
+        legacyTextParameters:
+          StatusInformation: $6
+  fan:
+    simple:
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        source(1):
+          # Copy of Enclosure.Simple.sensorsUnion
+          # SensorType;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: fan
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;
+          - type: append
+            column: 3
+            value: ;;
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
+          - type: append
+            column: 9
+            value: ;
+
+        source(2):
+          # Handle "Fan Device" format
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan Device
+            # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepColumns
+            columnNumbers: 1,2,3,7,8,9
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: append
+            column: 5
+            value: ;;;;
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
+
+        source(3):
+          # Union of both fan formats
+          type: tableUnion
+          tables:
+          - ${source::monitors.fan.simple.sources.source(1)}
+          - ${source::monitors.fan.simple.sources.source(2)}
+
+      mapping:
+        source: ${source::monitors.fan.simple.sources.source(3)}
+        attributes:
+          id: $2
+          __display_id: $3
+          sensor_location: $6
+          info: $10
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+        metrics:
+          hw.status{hw.type="fan"}: $4
+          hw.fan.speed: $7
+          hw.fan.speed.limit{limit_type="low.degraded"}: $8
+          hw.fan.speed.limit{limit_type="low.critical"}: $9
+        conditionalCollection:
+          hw.status{hw.type="fan"}: $4
+          hw.fan.speed: $7
+        legacyTextParameters:
+          StatusInformation: $5
+
+
+  temperature:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        temperatures:
+          # temperature = copy of Enclosure.Simple.sensorsUnion
+          # SensorType;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only temperatures
+            # Temperature;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: temperature
+      mapping:
+        # The instance table
+        source: ${source::temperatures}
+        attributes:
+          id: $2
+          sensor_location: $4
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+          name: ${awk::sprintf("%s (%s)", $3, $4)}
+        metrics:
+          hw.temperature: $5
+          hw.temperature.limit{limit_type="high.degraded"}: $6
+          hw.temperature.limit{limit_type="high.critical"}: $7
+
+  voltage:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        voltages:
+          # voltages = copy of Enclosure.Simple.sensorsUnion
+          # SensorType;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only fans
+            # Voltage;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: voltage
+      mapping:
+        # The instance table
+        source: ${source::voltages}
+        attributes:
+          id: $2
+          sensor_location: $4
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+          name: ${awk::sprintf("%s (%s)", $3, $4)}
+        metrics:
+          hw.voltage: milliVolt2Volt($5)
+          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($6)
+          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($7)
+
+  power_supply:
+    simple:
+      sources:
+        powerSupplySensors:
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: "Power Supply"
+          - type: excludeMatchingLines
+            column: 8
+            valueList: N/A
+          - type: convert
+            column: 7
+            conversion: array2SimpleStatus
+      mapping:
+        source: ${source::powerSupplySensors}
+        attributes:
+          id: $2
+          name: ${awk::sprintf("%s %s", $1, $2)}
+          sensor_location: $3
+        metrics:
+          hw.status{hw.type="power_supply"}: $7
+        legacyTextParameters:
+          StatusInformation: $5
+  cpu:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        processors:
+          # processors = copy of Enclosure.Simple.sensorsUnion
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only processor lines
+            # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Processor
+          - type: prepend
+            column: 6
+            value: "SerialNumber: "
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
+          - type: convert
+            column: 7
+            conversion: array2SimpleStatus
+      mapping:
+        # InstanceTable = processors
+        source: ${source::processors}
+        attributes:
+          id: $2
+          vendor: $4
+          model: $5
+          info: $9
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+        metrics:
+          hw.status{hw.type="cpu"}: $7
+        legacyTextParameters:
+          StatusInformation: $8
+
+  memory:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        memories:
+          # memories = copy of Enclosure.Simple.sensorsUnion
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only memory lines
+            # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Memory module,Memory Device
+            # Duplicate the "Model" column because it is in the form of Model|Speed
+            # Memory module;DeviceID;Entity ID;Vendor;Model|Speed;Model|Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: duplicateColumn
+            column: 5
+            # Now extract "Model" from "Model|Size"
+            # Memory module;DeviceID;Entity ID;Vendor;Model;Model|Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: extract
+            column: 5
+            subColumn: 1
+            subSeparators: '|'
+            # Now extract "Size" from "Model|Size"
+            # Memory module;DeviceID;Entity ID;Vendor;Model;Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: extract
+            column: 6
+            subColumn: 2
+            subSeparators: '|'
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
+          - type: convert
+            column: 8
+            conversion: array2SimpleStatus
+      mapping:
+        # InstanceTable = memories
+        source: ${source::memories}
+        attributes:
+          id: $2
+          vendor: $4
+          model: $5
+          serial_number: $7
+          info: $10
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+          name: ${awk::sprintf("%s (%s - %s MB)", $3, $4, $6)}
+        metrics:
+          hw.memory.limit: mebiByte2Byte($6)
+          hw.status{hw.type="memory"}: $8
+        legacyTextParameters:
+          StatusInformation: $9
+
+  physical_disk:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        physicalDisks:
+          # physicalDisks = copy of Enclosure.Simple.sensorsUnion
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only disk lines
+            # Disk or disk bay;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Disk or disk bay,Disk or Disk Bay,Disk Drive Bay
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Disk or disk bay;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
+          - type: convert
+            column: 7
+            conversion: array2SimpleStatus
+      mapping:
+        # InstanceTable = physicalDisks
+        source: ${source::physicalDisks}
+        attributes:
+          id: $2
+          vendor: $4
+          model: $5
+          serial_number: $6
+          info: $9
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+        metrics:
+          hw.status{hw.type="physical_disk"}: $7
+        legacyTextParameters:
+          StatusInformation: $8
+
+  led:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        leds:
+          # leds = copy of Enclosure.Simple.sensorsUnion
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only LED lines
+            # LED;DeviceID;Name;EntityID;Color;OnStatus;OffStatus;BlinkingStatus;Status;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: led
+      mapping:
+        # InstanceTable = leds
+        source: ${source::leds}
+        attributes:
+          id: $2
+          color: $5
+          __on_status: $6
+          __off_status: $7
+          __blinking_status: $8
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+          name: ${awk::sprintf("%s (%s)", $3, $5)}
+        metrics:
+          hw.status{hw.type="led"}: legacyLedStatus($9)
+        legacyTextParameters:
+          StatusInformation: $9
+
+  other_device:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        otherDevices:
+          # otherDevices = copy of Enclosure.Simple.sensorsUnion
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Exclude what we know already
+            # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: excludeMatchingLines
+            column: 1
+            valueList: Battery,Disk or Disk Bay,Disk or disk bay,Disk Drive Bay,Memory module,Memory Device,LED,Temperature,Voltage,Power supply,Fan,Fan Device,Enclosure,FRU,Processor,Current,PowerConsumption,EnergyUsage,Blade,Processing Blade
+          - type: prepend
+            column: 6
+            value: "Serial Number: "
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Disk or disk bay;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
+          - type: convert
+            column: 7
+            conversion: array2SimpleStatus
+      mapping:
+        # InstanceTable = otherDevices
+        source: ${source::otherDevices}
+        attributes:
+          device_type: $1
+          id: ${awk::sprintf("%s %s", $1, $2)}
+          additional_label: $4
+          info: $9
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+        metrics:
+          hw.status{hw.type="other_device"}: $7
+        legacyTextParameters:
+          StatusInformation: $8
+
+  blade:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        blades:
+          # blades = copy of Enclosure.Simple.sensorsUnion
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only blade lines
+            # Blade;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: "Blade,Processing Blade"
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Blade;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
+          - type: convert
+            column: 7
+            conversion: array2SimpleStatus
+      mapping:
+        # InstanceTable = blades
+        source: ${source::blades}
+        attributes:
+          id: $2
+          model: $5
+          serial_number: $6
+          info: $9
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+          name: ${awk::sprintf("%s (%s)", $2, $5)}
+        metrics:
+          hw.status{hw.type="blade"}: $7
+        legacyTextParameters:
+          StatusInformation: $8
+
+  battery:
+    simple:
+      # Collect type is: multi-instance
+      type: multiInstance
+      keys:
+      - id
+      sources:
+        batteries:
+          # batteries = copy of Enclosure.Simple.sensorsUnion
+          type: copy
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
+          computes:
+            # Keep only battery lines
+            # Battery;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: battery
+          - type: prepend
+            column: 6
+            value: "serialNumber: "
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Battery;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
+          - type: convert
+            column: 7
+            conversion: array2SimpleStatus
+      mapping:
+        # InstanceTable = batteries
+        source: ${source::batteries}
+        attributes:
+          id: $2
+          model: $5
+          info: $9
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+        metrics:
+          hw.status{hw.type="battery"}: $7
+        legacyTextParameters:
+          StatusInformation: $8

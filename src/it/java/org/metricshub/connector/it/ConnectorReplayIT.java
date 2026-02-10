@@ -28,6 +28,7 @@ class ConnectorReplayIT {
 		"WindowsFile",
 		"LinuxFile",
 		"AMDRadeon",
+		"WindowsIpmiTool",
 		"IpmiTool",
 		"MariaDB",
 		"Redfish",
