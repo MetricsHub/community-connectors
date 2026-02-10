@@ -1,0 +1,11 @@
+---
+result: "Configured OS type : LINUX"
+success: true
+message: Successful OS detection operation
+exception: null
+criterion: !<deviceType>
+  type: deviceType
+  forceSerialization: false
+  keep:
+  - LINUX
+  exclude: []

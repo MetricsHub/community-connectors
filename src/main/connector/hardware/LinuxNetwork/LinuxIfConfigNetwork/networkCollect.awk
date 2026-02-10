@@ -45,7 +45,7 @@ $1 == "RX" && $2 == "errors" {
 $1 == "TX" && $2 == "errors" {
 	transmitErrors = $3
 }
-
+unavailableIpState = " "
 END {
-	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes
+	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes ";" unavailableIpState
 }

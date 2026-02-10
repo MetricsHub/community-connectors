@@ -61,12 +61,12 @@ monitors:
           commandLine: ${constant::COLLECT_COMMAND_LINE}
           computes:
             # Process the output of one of the two commands (ifconfig or ip) to retrieve statistics about the network interface
-            # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;
+            # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;IPState;
           - type: awk
             script: ${file::networkCollect.awk}
             keep: ^MSHW;
             separators: ;
-            selectColumns: "2,3,4,5,6,7"
+            selectColumns: "2,3,4,5,6,7,8"
         source(2):
           # Source(2) = output of ethtool
           type: commandLine
@@ -81,13 +81,32 @@ monitors:
             selectColumns: "2,3,4,5"
         source(3):
           # Source(3) = table joint of Source(1) and Source(2)
-          # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;DeviceID;LinkStatus;LinkSpeed;DuplexMode;
+          # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;IPState;DeviceID;LinkStatus;LinkSpeed;DuplexMode;
           type: tableJoin
           leftTable: ${source::monitors.network.collect.sources.source(1)}
           rightTable: ${source::monitors.network.collect.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: ;;;;
+          computes:
+          - type: translate
+            column: 7
+            translationTable: ${translation::NetworkStateTranslationTable}
+          - type: awk
+            script: |
+              BEGIN { FS=";"; OFS=";"; }
+              
+              {
+                gsub(/^[ \t]+|[ \t]+$/, "", $9)
+                gsub(/^[ \t]+|[ \t]+$/, "", $7)
+              
+                  if ($9 == "")
+                    $9 = $7
+              
+                print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
+              }
+            separators: ;
+
       mapping:
         # And here is the ValueTable
         source: ${source::monitors.network.collect.sources.source(3)}
@@ -97,6 +116,10 @@ monitors:
           hw.errors{hw.type="network"}: $4
           hw.network.io{direction="receive"}: $5
           hw.network.io{direction="transmit"}: $6
-          hw.network.up: legacyLinkStatus($8)
-          hw.network.bandwidth.limit: megaBit2Byte($9)
-          hw.network.full_duplex: legacyFullDuplex($10)
+          hw.network.up: legacyLinkStatus($9)
+          hw.network.bandwidth.limit: megaBit2Byte($10)
+          hw.network.full_duplex: legacyFullDuplex($11)
+translations:
+  NetworkStateTranslationTable:
+    UP: "ok"
+    DOWN: "failed"

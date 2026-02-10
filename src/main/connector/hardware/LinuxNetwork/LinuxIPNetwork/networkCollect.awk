@@ -5,12 +5,17 @@ BEGIN {
 	receiveErrors = ""
 	transmitBytes = ""
 	receiveBytes = ""
+	ipState = ""
 }
 
-# ip a
 $1 ~/^[0-9]+:/ && $2 ~ /^.*:/ {
 	deviceID = $2
 	gsub(":", "", deviceID)
+
+	ipState = ""
+	if (match($0, / state [A-Z_]+ /)) {
+		ipState = substr($0, RSTART + 7, RLENGTH - 8)
+	}
 }
 
 $1 ~ /RX:/ && $2 ~ /bytes/ && $3 ~ /packets/ {
@@ -28,5 +33,5 @@ $1 ~ /TX:/ && $2 ~ /bytes/ && $3 ~ /packets/ {
 }
 
 END {
-	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes
+	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes ";" ipState
 }
