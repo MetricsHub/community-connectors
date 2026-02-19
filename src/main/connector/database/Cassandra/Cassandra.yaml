@@ -78,7 +78,6 @@ beforeAll:
     type: static
     value: ${protocol::jmx.port}
 
-
 monitors:
   cassandra:
     keys: [ db.system ]
