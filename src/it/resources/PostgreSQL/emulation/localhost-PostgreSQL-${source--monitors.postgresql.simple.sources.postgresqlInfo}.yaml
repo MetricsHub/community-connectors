@@ -1,0 +1,24 @@
+---
+table:
+- - postgres
+  - "PostgreSQL 17.4 on x86_64-windows, compiled by msvc-19.42.34436, 64-bit"
+  - 200
+  - 769814.476968
+  - 10
+  - 2
+  - 3
+  - 8036352
+  - 0
+  - 0
+  - 0
+  - 3
+  - 942
+  - 0.025
+  - 0.01
+  - 0
+  - 736
+  - 134217728
+  - 5432
+headers: []
+rawData: null
+empty: false

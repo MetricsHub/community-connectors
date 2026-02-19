@@ -1,0 +1,50 @@
+---
+table:
+- - postgres
+  - pg_locks
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_class
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_class_relname_nsp_index
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_stat_database
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_database
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_database_datname_index
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_database_oid_index
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_class_tblspc_relfilenode_index
+  - AccessShareLock
+  - 1
+  - 5432
+- - postgres
+  - pg_class_oid_index
+  - AccessShareLock
+  - 1
+  - 5432
+headers: []
+rawData: null
+empty: false

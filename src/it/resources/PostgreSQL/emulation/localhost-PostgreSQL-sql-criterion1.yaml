@@ -1,0 +1,12 @@
+---
+result: 1;
+success: true
+message: "Hostname localhost - SQL test succeeded. Returned result: 1;."
+exception: null
+criterion: !<sql>
+  type: sql
+  forceSerialization: false
+  database: null
+  query: SELECT (LOWER(version()) LIKE '%postgresql%')::int AS is_postgresql;
+  expectedResult: 1
+  errorMessage: Not a PostgreSQL Server.

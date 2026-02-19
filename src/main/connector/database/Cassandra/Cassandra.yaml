@@ -74,6 +74,10 @@ beforeAll:
     objectName: org.apache.cassandra.db:type=StorageService
     attributes:
     - ReleaseVersion
+  dbPort:
+    type: static
+    value: ${protocol::jmx.port}
+
 
 monitors:
   cassandra:
@@ -230,6 +234,7 @@ monitors:
         attributes:
           db.system: cassandra
           db.server.name: ${source::beforeAll.dbServerName}
+          db.server.port: ${source::beforeAll.dbPort}
           db.version: ${source::beforeAll.dbReleaseVersion}
           db.cluster.name: ${source::beforeAll.dbClusterName}
         metrics:
@@ -348,6 +353,7 @@ monitors:
           db.system: cassandra
           db.cassandra.cache.type: $1
           db.server.name: ${source::beforeAll.dbServerName}
+          db.server.port: ${source::beforeAll.dbPort}
           db.version: ${source::beforeAll.dbReleaseVersion}
           db.cluster.name: ${source::beforeAll.dbClusterName}
         metrics:
@@ -420,6 +426,7 @@ monitors:
           db.cassandra.thread.role: $1
           db.thread.pool: $2
           db.server.name: ${source::beforeAll.dbServerName}
+          db.server.port: ${source::beforeAll.dbPort}
           db.version: ${source::beforeAll.dbReleaseVersion}
           db.cluster.name: ${source::beforeAll.dbClusterName}
         metrics:
@@ -454,6 +461,7 @@ monitors:
         attributes:
           db.system: cassandra
           db.server.name: ${source::beforeAll.dbServerName}
+          db.server.port: ${source::beforeAll.dbPort}
           db.version: ${source::beforeAll.dbReleaseVersion}
           db.cluster.name: ${source::beforeAll.dbClusterName}
         metrics:

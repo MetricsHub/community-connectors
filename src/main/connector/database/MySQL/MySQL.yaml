@@ -105,7 +105,8 @@ monitors:
               MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_tables' THEN VARIABLE_VALUE END) - MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_disk_tables' THEN VARIABLE_VALUE END) AS created_tmp_memory_tables,
               MAX(CASE WHEN VARIABLE_NAME = 'Created_tmp_disk_tables' THEN VARIABLE_VALUE END) AS created_tmp_disk_tables,
               MAX(CASE WHEN VARIABLE_NAME = 'Table_locks_immediate' THEN VARIABLE_VALUE END) AS table_locks_immediate,
-              MAX(CASE WHEN VARIABLE_NAME = 'Table_locks_waited' THEN VARIABLE_VALUE END) AS table_locks_waited
+              MAX(CASE WHEN VARIABLE_NAME = 'Table_locks_waited' THEN VARIABLE_VALUE END) AS table_locks_waited,
+              @@port AS db_port
             FROM
               performance_schema.global_status
               CROSS JOIN (
@@ -182,6 +183,7 @@ monitors:
         attributes:
           db.system: mysql
           db.server.name: $59
+          db.server.port: $68
           id: $59
           db.namespace: $1
           db.version: $2

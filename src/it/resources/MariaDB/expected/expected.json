@@ -1705,6 +1705,7 @@
     "attributes" : {
       "db.version" : "10.5.29-MariaDB-ubu2004",
       "db.system" : "mariadb",
+      "db.server.port" : "3305",
       "connector_id" : "MariaDB",
       "id" : "0e7cecdb37b8",
       "db.server.name" : "0e7cecdb37b8",
