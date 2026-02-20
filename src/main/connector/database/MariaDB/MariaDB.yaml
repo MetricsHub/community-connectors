@@ -74,7 +74,7 @@ monitors:
   mariadb:
     simple:
       sources:
-        mysqlInfo:
+        mariadbInfo:
           type: sql
           query: |
             SELECT
@@ -216,7 +216,8 @@ monitors:
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_flow_control_paused' THEN VARIABLE_VALUE END) AS wsrep_flow_control_paused, -- $122
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_recv_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_recv_queue_avg, -- $123
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_send_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_send_queue_avg, -- $124
-              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cert_deps_distance' THEN VARIABLE_VALUE END) AS wsrep_cert_deps_distance -- $125
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cert_deps_distance' THEN VARIABLE_VALUE END) AS wsrep_cert_deps_distance, -- $125
+              @@port AS db_port -- $126
             FROM information_schema.GLOBAL_STATUS s
             CROSS JOIN (
               SELECT
@@ -380,10 +381,11 @@ monitors:
             column: 121
             translationTable: "${translation::OnOffStatusTranslationTable}"
       mapping:
-        source: ${source::mysqlInfo}
+        source: ${source::mariadbInfo}
         attributes:
           db.system: mariadb
           db.server.name: $57
+          db.server.port: $126
           id: $57
           db.namespace: $1
           db.version: $2

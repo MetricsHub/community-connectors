@@ -1,0 +1,14 @@
+---
+table:
+- - CounterCache
+  - 0
+- - RowCache
+  - 0
+- - KeyCache
+  - 916
+headers: []
+rawData: |-
+  CounterCache;0;
+  RowCache;0;
+  KeyCache;916;
+empty: false

@@ -1,0 +1,1893 @@
+{
+  "total" : 17,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "PostgreSQL.yaml",
+      "name" : "PostgreSQL",
+      "connector_id" : "PostgreSQL",
+      "applies_to_os" : "linux,windows",
+      "parent.id" : "localhost",
+      "id" : "PostgreSQL"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed SqlCriterion Criterion:\n- Query SELECT (LOWER(version()) LIKE '%postgresql%')::int AS is_postgresql;\n- ExpectedResult: 1\n- ErrorMessage: Not a PostgreSQL Server.\n\nResult:\n1;\n\nMessage:\n====================================\nHostname localhost - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1771499550510,
+    "type" : "connector",
+    "id" : "connector_PostgreSQL",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.up{protocol=\"jdbc\"}" : {
+        "name" : "metricshub.host.up{protocol=\"jdbc\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "jdbc"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "host.type" : "compute",
+      "host.name" : "localhost",
+      "os.type" : "linux"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "db.server.uptime" : {
+        "name" : "db.server.uptime",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 769814.476968,
+        "previousValue" : 769814.476968,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.checkpointer.operations{db.operation.trigger_type=\"requested\"}" : {
+        "name" : "db.server.postgresql.checkpointer.operations{db.operation.trigger_type=\"requested\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.operation.trigger_type" : "requested"
+        },
+        "resetMetricTime" : true,
+        "value" : 3.0,
+        "previousValue" : 3.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections{db.connection.state=\"idle\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"idle\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.connection.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "value" : 3.0,
+        "previousValue" : 3.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.checkpointer.buffers" : {
+        "name" : "db.server.postgresql.checkpointer.buffers",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.wal.io{db.io.direction=\"write\"}" : {
+        "name" : "db.server.postgresql.wal.io{db.io.direction=\"write\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.io.direction" : "write"
+        },
+        "resetMetricTime" : true,
+        "value" : 736.0,
+        "previousValue" : 736.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.bgwriter.clean_stops" : {
+        "name" : "db.server.postgresql.bgwriter.clean_stops",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.checkpointer.operations{db.operation.trigger_type=\"scheduled\"}" : {
+        "name" : "db.server.postgresql.checkpointer.operations{db.operation.trigger_type=\"scheduled\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.operation.trigger_type" : "scheduled"
+        },
+        "resetMetricTime" : true,
+        "value" : 942.0,
+        "previousValue" : 942.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections{db.connection.state=\"active\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"active\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.connection.state" : "active"
+        },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.checkpointer.sync_time" : {
+        "name" : "db.server.postgresql.checkpointer.sync_time",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.01,
+        "previousValue" : 0.01,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.size{db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.size{db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer"
+        },
+        "resetMetricTime" : true,
+        "value" : 1.34217728E8,
+        "previousValue" : 1.34217728E8,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.io.direction=\"write\", db.cache.state=\"miss\", db.postgresql.cache.type=\"wal_buffer\"}" : {
+        "name" : "db.server.cache.operations{db.io.direction=\"write\", db.cache.state=\"miss\", db.postgresql.cache.type=\"wal_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "wal_buffer",
+          "db.io.direction" : "write",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.bgwriter.buffers{db.buffer.state=\"allocated\"}" : {
+        "name" : "db.server.postgresql.bgwriter.buffers{db.buffer.state=\"allocated\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.buffer.state" : "allocated"
+        },
+        "resetMetricTime" : true,
+        "value" : 8036352.0,
+        "previousValue" : 8036352.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.bgwriter.buffers{db.buffer.state=\"clean\"}" : {
+        "name" : "db.server.postgresql.bgwriter.buffers{db.buffer.state=\"clean\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.buffer.state" : "clean"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.checkpointer.write_time" : {
+        "name" : "db.server.postgresql.checkpointer.write_time",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.025,
+        "previousValue" : 0.025,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.connections.limit" : {
+        "name" : "db.server.connections.limit",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 200.0,
+        "previousValue" : 200.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.connections" : {
+        "name" : "db.server.connections",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 10.0,
+        "previousValue" : 10.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "PostgreSQL 17.4 on x86_64-windows, compiled by msvc-19.42.34436, 64-bit",
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "id" : "postgres",
+      "db.namespace" : "postgres"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql",
+    "id" : "PostgreSQL_postgresql_postgres",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.errors{error.type=\"session_killed\"}" : {
+        "name" : "db.server.errors{error.type=\"session_killed\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_killed"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"update\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"update\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_fatal_error\"}" : {
+        "name" : "db.server.errors{error.type=\"session_fatal_error\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_fatal_error"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"delete\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"delete\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"insert\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"insert\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "insert"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.commits" : {
+        "name" : "db.server.commits",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 37851.0,
+        "previousValue" : 37851.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_abandoned\"}" : {
+        "name" : "db.server.errors{error.type=\"session_abandoned\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_abandoned"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"read\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"read\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "read"
+        },
+        "resetMetricTime" : true,
+        "value" : 8760514.0,
+        "previousValue" : 8760514.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"sql\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"sql\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.operation.type" : "sql"
+        },
+        "resetMetricTime" : true,
+        "value" : 2146.605994,
+        "previousValue" : 2146.605994,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections" : {
+        "name" : "db.server.current_connections",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 3.0,
+        "previousValue" : 3.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.session_time" : {
+        "name" : "db.server.postgresql.session_time",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 379205.659661,
+        "previousValue" : 379205.659661,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.size" : {
+        "name" : "db.server.size",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.08252307E8,
+        "previousValue" : 1.08252307E8,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}" : {
+        "name" : "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.transaction.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 5873664.0,
+        "previousValue" : 5873664.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.sessions" : {
+        "name" : "db.server.sessions",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 9455.0,
+        "previousValue" : 9455.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 3.7619662848E10,
+        "previousValue" : 3.7619662848E10,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"deadlocks\"}" : {
+        "name" : "db.server.errors{error.type=\"deadlocks\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "deadlocks"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.rollbacks" : {
+        "name" : "db.server.rollbacks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}" : {
+        "name" : "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "fetch"
+        },
+        "resetMetricTime" : true,
+        "value" : 2773274.0,
+        "previousValue" : 2773274.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_database",
+    "id" : "PostgreSQL_postgresql_database_postgres",
+    "identifyingAttributeKeys" : [ "db.namespace" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.errors{error.type=\"session_killed\"}" : {
+        "name" : "db.server.errors{error.type=\"session_killed\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_killed"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"update\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"update\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_fatal_error\"}" : {
+        "name" : "db.server.errors{error.type=\"session_fatal_error\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_fatal_error"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"delete\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"delete\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"insert\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"insert\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "insert"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.commits" : {
+        "name" : "db.server.commits",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_abandoned\"}" : {
+        "name" : "db.server.errors{error.type=\"session_abandoned\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_abandoned"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"read\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"read\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "read"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"sql\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"sql\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.operation.type" : "sql"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections" : {
+        "name" : "db.server.current_connections",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.session_time" : {
+        "name" : "db.server.postgresql.session_time",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.size" : {
+        "name" : "db.server.size",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 7946767.0,
+        "previousValue" : 7946767.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}" : {
+        "name" : "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.transaction.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.sessions" : {
+        "name" : "db.server.sessions",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"deadlocks\"}" : {
+        "name" : "db.server.errors{error.type=\"deadlocks\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "deadlocks"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.rollbacks" : {
+        "name" : "db.server.rollbacks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}" : {
+        "name" : "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "fetch"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "test2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_database",
+    "id" : "PostgreSQL_postgresql_database_test2",
+    "identifyingAttributeKeys" : [ "db.namespace" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.errors{error.type=\"session_killed\"}" : {
+        "name" : "db.server.errors{error.type=\"session_killed\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_killed"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"update\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"update\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_fatal_error\"}" : {
+        "name" : "db.server.errors{error.type=\"session_fatal_error\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_fatal_error"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"delete\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"delete\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"insert\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"insert\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "insert"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.commits" : {
+        "name" : "db.server.commits",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_abandoned\"}" : {
+        "name" : "db.server.errors{error.type=\"session_abandoned\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_abandoned"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"read\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"read\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "read"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"sql\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"sql\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.operation.type" : "sql"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections" : {
+        "name" : "db.server.current_connections",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.session_time" : {
+        "name" : "db.server.postgresql.session_time",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.size" : {
+        "name" : "db.server.size",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 7946767.0,
+        "previousValue" : 7946767.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}" : {
+        "name" : "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.transaction.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.sessions" : {
+        "name" : "db.server.sessions",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"deadlocks\"}" : {
+        "name" : "db.server.errors{error.type=\"deadlocks\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "deadlocks"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.rollbacks" : {
+        "name" : "db.server.rollbacks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}" : {
+        "name" : "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "fetch"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "test3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_database",
+    "id" : "PostgreSQL_postgresql_database_test3",
+    "identifyingAttributeKeys" : [ "db.namespace" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.errors{error.type=\"session_killed\"}" : {
+        "name" : "db.server.errors{error.type=\"session_killed\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_killed"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"update\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"update\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_fatal_error\"}" : {
+        "name" : "db.server.errors{error.type=\"session_fatal_error\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_fatal_error"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"delete\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"delete\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"insert\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"insert\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "insert"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.commits" : {
+        "name" : "db.server.commits",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 7169.0,
+        "previousValue" : 7169.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_abandoned\"}" : {
+        "name" : "db.server.errors{error.type=\"session_abandoned\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_abandoned"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"read\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"read\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "read"
+        },
+        "resetMetricTime" : true,
+        "value" : 3163014.0,
+        "previousValue" : 3163014.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"sql\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"sql\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.operation.type" : "sql"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.310033,
+        "previousValue" : 0.310033,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections" : {
+        "name" : "db.server.current_connections",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.session_time" : {
+        "name" : "db.server.postgresql.session_time",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 83255.406859,
+        "previousValue" : 83255.406859,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.size" : {
+        "name" : "db.server.size",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 8105107.0,
+        "previousValue" : 8105107.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}" : {
+        "name" : "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.transaction.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 2408448.0,
+        "previousValue" : 2408448.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.sessions" : {
+        "name" : "db.server.sessions",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 4.0,
+        "previousValue" : 4.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 2.210635776E9,
+        "previousValue" : 2.210635776E9,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"deadlocks\"}" : {
+        "name" : "db.server.errors{error.type=\"deadlocks\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "deadlocks"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.rollbacks" : {
+        "name" : "db.server.rollbacks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}" : {
+        "name" : "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "fetch"
+        },
+        "resetMetricTime" : true,
+        "value" : 53379.0,
+        "previousValue" : 53379.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "test4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_database",
+    "id" : "PostgreSQL_postgresql_database_test4",
+    "identifyingAttributeKeys" : [ "db.namespace" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.errors{error.type=\"session_killed\"}" : {
+        "name" : "db.server.errors{error.type=\"session_killed\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_killed"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"update\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"update\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "update"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_fatal_error\"}" : {
+        "name" : "db.server.errors{error.type=\"session_fatal_error\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_fatal_error"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"delete\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"delete\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "delete"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"insert\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"insert\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "insert"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.commits" : {
+        "name" : "db.server.commits",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"session_abandoned\"}" : {
+        "name" : "db.server.errors{error.type=\"session_abandoned\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "session_abandoned"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"read\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"read\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "read"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"sql\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"sql\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.operation.type" : "sql"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections" : {
+        "name" : "db.server.current_connections",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.session_time" : {
+        "name" : "db.server.postgresql.session_time",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.size" : {
+        "name" : "db.server.size",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 7946767.0,
+        "previousValue" : 7946767.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}" : {
+        "name" : "db.server.postgresql.transaction_time{db.transaction.state=\"idle\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.transaction.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"miss\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.sessions" : {
+        "name" : "db.server.sessions",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}" : {
+        "name" : "db.server.cache.io{db.io.direction=\"read\", db.cache.state=\"hit\", db.postgresql.cache.type=\"shared_buffer\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.postgresql.cache.type" : "shared_buffer",
+          "db.io.direction" : "read",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"deadlocks\"}" : {
+        "name" : "db.server.errors{error.type=\"deadlocks\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "error.type" : "deadlocks"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.rollbacks" : {
+        "name" : "db.server.rollbacks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}" : {
+        "name" : "db.server.postgresql.index.row_operations{db.row_operation.type=\"fetch\"}",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : {
+          "db.row_operation.type" : "fetch"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "testdatabase"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_database",
+    "id" : "PostgreSQL_postgresql_database_testdatabase",
+    "identifyingAttributeKeys" : [ "db.namespace" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_class",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_class_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_class_oid_index",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_class_oid_index_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_class_relname_nsp_index",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_class_relname_nsp_index_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_class_tblspc_relfilenode_index",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_class_tblspc_relfilenode_index_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_database",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_database_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_database_datname_index",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_database_datname_index_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_database_oid_index",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_database_oid_index_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_locks",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_locks_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.locks" : {
+        "name" : "db.server.locks",
+        "collectTime" : 1771499555365,
+        "previousCollectTime" : 1771499550510,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.system" : "postgresql",
+      "db.server.port" : "5432",
+      "connector_id" : "PostgreSQL",
+      "db.namespace" : "postgres",
+      "db.server.lock.relation" : "pg_stat_database",
+      "db.server.lock.type" : "AccessShareLock"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771499555365,
+    "type" : "postgresql_lock",
+    "id" : "PostgreSQL_postgresql_lock_postgres_pg_stat_database_AccessShareLock",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.server.lock.relation", "db.server.lock.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

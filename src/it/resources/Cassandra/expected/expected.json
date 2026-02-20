@@ -1,0 +1,720 @@
+{
+  "total" : 9,
+  "monitors" : [ {
+    "metrics" : {
+      "db.server.cache.requests" : {
+        "name" : "db.server.cache.requests",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"hit\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"hit\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.size" : {
+        "name" : "db.server.cache.size",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 5.24288E7,
+        "previousValue" : 5.24288E7,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "5.0.4",
+      "db.system" : "cassandra",
+      "db.server.port" : "7199",
+      "connector_id" : "Cassandra",
+      "db.cluster.name" : "Test Cluster",
+      "db.server.name" : "110bae754392",
+      "db.cassandra.cache.type" : "CounterCache"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "cache",
+    "id" : "Cassandra_cache_CounterCache",
+    "identifyingAttributeKeys" : [ "db.cassandra.cache.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.cache.requests" : {
+        "name" : "db.server.cache.requests",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1000.0,
+        "previousValue" : 1000.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"hit\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"hit\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 84.0,
+        "previousValue" : 84.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 916.0,
+        "previousValue" : 916.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.size" : {
+        "name" : "db.server.cache.size",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 1.048576E8,
+        "previousValue" : 1.048576E8,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "5.0.4",
+      "db.system" : "cassandra",
+      "db.server.port" : "7199",
+      "connector_id" : "Cassandra",
+      "db.cluster.name" : "Test Cluster",
+      "db.server.name" : "110bae754392",
+      "db.cassandra.cache.type" : "KeyCache"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "cache",
+    "id" : "Cassandra_cache_KeyCache",
+    "identifyingAttributeKeys" : [ "db.cassandra.cache.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.cache.requests" : {
+        "name" : "db.server.cache.requests",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"hit\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"hit\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.size" : {
+        "name" : "db.server.cache.size",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "5.0.4",
+      "db.system" : "cassandra",
+      "db.server.port" : "7199",
+      "connector_id" : "Cassandra",
+      "db.cluster.name" : "Test Cluster",
+      "db.server.name" : "110bae754392",
+      "db.cassandra.cache.type" : "RowCache"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "cache",
+    "id" : "Cassandra_cache_RowCache",
+    "identifyingAttributeKeys" : [ "db.cassandra.cache.type" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.errors{error.type=\"write_timeout\"}" : {
+        "name" : "db.server.errors{error.type=\"write_timeout\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "error.type" : "write_timeout"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.uptime" : {
+        "name" : "db.server.uptime",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 2.1239753451E7,
+        "previousValue" : 2.1239753451E7,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"read_timeout\"}" : {
+        "name" : "db.server.errors{error.type=\"read_timeout\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "error.type" : "read_timeout"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"on_heap\", db.cassandra.cache.type=\"memtable\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"on_heap\", db.cassandra.cache.type=\"memtable\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "on_heap",
+          "db.cassandra.cache.type" : "memtable"
+        },
+        "resetMetricTime" : true,
+        "value" : 710336.0,
+        "previousValue" : 710336.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"read_unavailable\"}" : {
+        "name" : "db.server.errors{error.type=\"read_unavailable\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "error.type" : "read_unavailable"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.size" : {
+        "name" : "db.server.storage.size",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 125954.0,
+        "previousValue" : 125954.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.io{db.io.direction=\"write\"}" : {
+        "name" : "db.server.storage.io{db.io.direction=\"write\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.io.direction" : "write"
+        },
+        "resetMetricTime" : true,
+        "value" : 4.33583892E8,
+        "previousValue" : 4.33583892E8,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections" : {
+        "name" : "db.server.current_connections",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"write_unavailable\"}" : {
+        "name" : "db.server.errors{error.type=\"write_unavailable\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "error.type" : "write_unavailable"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cassandra.hints" : {
+        "name" : "db.server.cassandra.hints",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"off_heap\", db.cassandra.cache.type=\"memtable\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"off_heap\", db.cassandra.cache.type=\"memtable\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.cache.state" : "off_heap",
+          "db.cassandra.cache.type" : "memtable"
+        },
+        "resetMetricTime" : true,
+        "value" : 710336.0,
+        "previousValue" : 710336.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operations{db.io.direction=\"read\"}" : {
+        "name" : "db.server.operations{db.io.direction=\"read\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.io.direction" : "read"
+        },
+        "resetMetricTime" : true,
+        "value" : 10.0,
+        "previousValue" : 10.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operations{db.io.direction=\"write\"}" : {
+        "name" : "db.server.operations{db.io.direction=\"write\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.io.direction" : "write"
+        },
+        "resetMetricTime" : true,
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.pending_operations{db.operation.type=\"compaction\"}" : {
+        "name" : "db.server.pending_operations{db.operation.type=\"compaction\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.operation.type" : "compaction"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "5.0.4",
+      "db.system" : "cassandra",
+      "db.server.port" : "7199",
+      "connector_id" : "Cassandra",
+      "db.cluster.name" : "Test Cluster",
+      "db.server.name" : "110bae754392"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "cassandra",
+    "id" : "Cassandra_cassandra_cassandra",
+    "identifyingAttributeKeys" : [ "db.system" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.cassandra.nodes{db.node.state=\"unreachable\"}" : {
+        "name" : "db.server.cassandra.nodes{db.node.state=\"unreachable\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.node.state" : "unreachable"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cassandra.nodes{db.node.state=\"live\"}" : {
+        "name" : "db.server.cassandra.nodes{db.node.state=\"live\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.node.state" : "live"
+        },
+        "resetMetricTime" : true,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cassandra.nodes{db.node.state=\"moving\"}" : {
+        "name" : "db.server.cassandra.nodes{db.node.state=\"moving\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.node.state" : "moving"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cassandra.nodes{db.node.state=\"leaving\"}" : {
+        "name" : "db.server.cassandra.nodes{db.node.state=\"leaving\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.node.state" : "leaving"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cassandra.nodes{db.node.state=\"joining\"}" : {
+        "name" : "db.server.cassandra.nodes{db.node.state=\"joining\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.node.state" : "joining"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "5.0.4",
+      "db.system" : "cassandra",
+      "db.server.port" : "7199",
+      "connector_id" : "Cassandra",
+      "db.cluster.name" : "Test Cluster",
+      "db.server.name" : "110bae754392"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "cassandra_cluster",
+    "id" : "Cassandra_cassandra_cluster_cassandra",
+    "identifyingAttributeKeys" : [ "db.system" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "Cassandra.yaml",
+      "name" : "Apache Cassandra",
+      "connector_id" : "Cassandra",
+      "applies_to_os" : "linux,windows",
+      "parent.id" : "localhost",
+      "id" : "Cassandra"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed JmxCriterion Criterion:\n- ObjectName=org.apache.cassandra.metrics:type=Storage,name=Load\n- Attributes=[Count]\n- ExpectedResult=^[0-9]\n\nResult:\n125954;\n\nMessage:\n====================================\nHostname nb-docker - JMX test succeeded. Returned result: 125954;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1771500708347,
+    "type" : "connector",
+    "id" : "connector_Cassandra",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.host.response_time{protocol=\"jmx\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"jmx\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "jmx"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"jmx\"}" : {
+        "name" : "metricshub.host.up{protocol=\"jmx\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "jmx"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "host.name" : "localhost",
+      "host.type" : "compute",
+      "os.type" : "linux"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "db.server.threads{db.thread.state=\"active\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"active\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.thread.state" : "active"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"blocked\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"blocked\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.thread.state" : "blocked"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"pending\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"pending\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.thread.state" : "pending"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.cassandra.thread.role" : "MutationStage",
+      "db.version" : "5.0.4",
+      "db.system" : "cassandra",
+      "db.server.port" : "7199",
+      "connector_id" : "Cassandra",
+      "db.cluster.name" : "Test Cluster",
+      "db.thread.pool" : "request",
+      "db.server.name" : "110bae754392"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "thread",
+    "id" : "Cassandra_thread_MutationStage",
+    "identifyingAttributeKeys" : [ "db.cassandra.thread.role" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "db.server.threads{db.thread.state=\"active\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"active\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.thread.state" : "active"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"blocked\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"blocked\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.thread.state" : "blocked"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.threads{db.thread.state=\"pending\"}" : {
+        "name" : "db.server.threads{db.thread.state=\"pending\"}",
+        "collectTime" : 1771500713559,
+        "previousCollectTime" : 1771500708347,
+        "attributes" : {
+          "db.thread.state" : "pending"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.cassandra.thread.role" : "ReadStage",
+      "db.version" : "5.0.4",
+      "db.system" : "cassandra",
+      "db.server.port" : "7199",
+      "connector_id" : "Cassandra",
+      "db.cluster.name" : "Test Cluster",
+      "db.thread.pool" : "request",
+      "db.server.name" : "110bae754392"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1771500713559,
+    "type" : "thread",
+    "id" : "Cassandra_thread_ReadStage",
+    "identifyingAttributeKeys" : [ "db.cassandra.thread.role" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

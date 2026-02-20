@@ -16,24 +16,26 @@ class ConnectorReplayIT {
 	 */
 	@ParameterizedTest
 	@ValueSource(strings = {
-		"WinStorageSpaces",
-		"MIB2",
-		"Lmsensors",
-		"Linux",
-		"LinuxIpmiTool",
-		"MySql",
-		"WbemGenDiskNT",
-		"SmartMonLinux",
-		"MIB2Switch",
-		"WindowsFile",
-		"LinuxFile",
 		"AMDRadeon",
-		"WindowsIpmiTool",
+		"Cassandra",
 		"IpmiTool",
-		"MariaDB",
-		"Redfish",
+		"Linux",
+		"LinuxFile",
+		"LinuxIfConfigNetwork",
 		"LinuxIPNetwork",
-		"LinuxIfConfigNetwork"
+		"LinuxIpmiTool",
+		"Lmsensors",
+		"MariaDB",
+		"MIB2",
+		"MIB2Switch",
+		"MySQL",
+		"PostgreSQL",
+		"Redfish",
+		"SmartMonLinux",
+		"WbemGenDiskNT",
+		"WindowsFile",
+		"WindowsIpmiTool",
+		"WinStorageSpaces"
 	})
 
 	void testConnectorReplay(String connectorId) throws Exception {

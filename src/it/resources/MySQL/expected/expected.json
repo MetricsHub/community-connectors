@@ -1,0 +1,996 @@
+{
+  "total": 3,
+  "monitors": [
+    {
+      "metrics": {
+        "metricshub.connector.status": {
+          "name": "metricshub.connector.status",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": "ok",
+          "previousValue": "ok",
+          "stateSet": [
+            "ok",
+            "failed"
+          ],
+          "type": "StateSetMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "filename": "MySQL.yaml",
+        "name": "MySQL",
+        "connector_id": "MySQL",
+        "applies_to_os": "linux,windows",
+        "parent.id": "localhost",
+        "id": "MySQL"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {
+        "StatusInformation": "Executed SqlCriterion Criterion:\n- Query SELECT @@version_comment REGEXP 'mysql' AS is_mysql;\n- ExpectedResult: 1\n- ErrorMessage: Not a MySQL Server\n\nResult:\n1;\n\nMessage:\n====================================\nHostname raz-docker-3306 - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      },
+      "alertRules": {},
+      "discoveryTime": 1757941635101,
+      "type": "connector",
+      "id": "connector_MySQL",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpoint": false,
+      "endpointHost": false,
+      "connector": true,
+      "is_endpoint": false
+    },
+    {
+      "metrics": {
+        "metricshub.host.up{protocol=\"jdbc\"}": {
+          "name": "metricshub.host.up{protocol=\"jdbc\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": null,
+          "attributes": {
+            "protocol": "jdbc"
+          },
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": null,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "metricshub.host.response_time{protocol=\"jdbc\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"jdbc\"}",
+          "collectTime" : 1761830794557,
+          "previousCollectTime" : null,
+          "attributes" : {
+            "protocol" : "jdbc"
+          },
+          "resetMetricTime" : false,
+          "value" : 1.0,
+          "previousValue" : null,
+          "type" : "NumberMetric",
+          "updated" : true
+        },
+        "metricshub.host.configured": {
+          "name": "metricshub.host.configured",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {},
+          "resetMetricTime": false,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        }
+      },
+      "attributes": {
+        "os.type": "linux",
+        "host.name": "localhost",
+        "host.type": "compute"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757941641935,
+      "type": "host",
+      "id": "endpoint_host_localhost",
+      "identifyingAttributeKeys": [
+        "host.name"
+      ],
+      "endpoint": true,
+      "endpointHost": true,
+      "connector": false,
+      "is_endpoint": true
+    },
+    {
+      "metrics": {
+        "db.server.io{db.io.direction=\"receive\"}": {
+          "name": "db.server.io{db.io.direction=\"receive\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.io.direction": "receive"
+          },
+          "resetMetricTime": true,
+          "value": 998216322.0,
+          "previousValue": 998216322.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.mysql.doublewrite_buffer.usage{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.mysql.doublewrite_buffer.usage{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 269713408.0,
+          "previousValue": 269713408.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_metadata_lock\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_metadata_lock\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_metadata_lock"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.current_connections{db.connection.state=\"active\"}": {
+          "name": "db.server.current_connections{db.connection.state=\"active\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.connection.state": "active"
+          },
+          "resetMetricTime": true,
+          "value": 2.0,
+          "previousValue": 2.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.page.size{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.page.size{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 16384.0,
+          "previousValue": 16384.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.connections{error.type=\"failed_attempt\", db.connection.state=\"aborted\"}": {
+          "name": "db.server.connections{error.type=\"failed_attempt\", db.connection.state=\"aborted\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "error.type": "failed_attempt",
+            "db.connection.state": "aborted"
+          },
+          "resetMetricTime": true,
+          "value": 20.0,
+          "previousValue": 20.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.tables": {
+          "name": "db.server.tables",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 101.0,
+          "previousValue": 101.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.queries{db.query.state=\"failed\", error.type=\"set_timeout_failed\"}": {
+          "name": "db.server.queries{db.query.state=\"failed\", error.type=\"set_timeout_failed\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "error.type": "set_timeout_failed",
+            "db.query.state": "failed"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.files{db.file.state=\"open\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.files{db.file.state=\"open\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.file.state": "open"
+          },
+          "resetMetricTime": true,
+          "value": 15.0,
+          "previousValue": 15.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.storage.io{db.io.direction=\"read\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.storage.io{db.io.direction=\"read\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "read"
+          },
+          "resetMetricTime": true,
+          "value": 32950784.0,
+          "previousValue": 32950784.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.usage{db.cache.state=\"data_clean\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.usage{db.cache.state=\"data_clean\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.cache.state": "data_clean"
+          },
+          "resetMetricTime": true,
+          "value": 23674880.0,
+          "previousValue": 23674880.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_mutex_instance\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_mutex_instance\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_mutex_instance"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.uptime": {
+          "name": "db.server.uptime",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {},
+          "resetMetricTime": true,
+          "value": 8915308.0,
+          "previousValue": 8915308.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.row_lock.time{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.row_lock.time{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.connections{error.type=\"client_disconnected\", db.connection.state=\"aborted\"}": {
+          "name": "db.server.connections{error.type=\"client_disconnected\", db.connection.state=\"aborted\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "error.type": "client_disconnected",
+            "db.connection.state": "aborted"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.read_head.evicted{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.read_head.evicted{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_file_instance\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_file_instance\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_file_instance"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.queries{db.query.state=\"normal\"}": {
+          "name": "db.server.queries{db.query.state=\"normal\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.query.state": "normal"
+          },
+          "resetMetricTime": true,
+          "value": 2507035.0,
+          "previousValue": 2507035.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.requests{db.cache.request.type=\"flushed\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.requests{db.cache.request.type=\"flushed\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.cache.request.type": "flushed"
+          },
+          "resetMetricTime": true,
+          "value": 176884.0,
+          "previousValue": 176884.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.storage.io{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.storage.io{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "write"
+          },
+          "resetMetricTime": true,
+          "value": 2903241728.0,
+          "previousValue": 2903241728.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.pending_operations{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.pending_operations{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "write"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.threads{db.thread.state=\"created\"}": {
+          "name": "db.server.threads{db.thread.state=\"created\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.thread.state": "created"
+          },
+          "resetMetricTime": true,
+          "value": 2.0,
+          "previousValue": 2.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"miss\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"miss\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "read",
+            "db.cache.state": "miss"
+          },
+          "resetMetricTime": true,
+          "value": 1106.0,
+          "previousValue": 1106.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.threads{db.thread.state=\"running\"}": {
+          "name": "db.server.threads{db.thread.state=\"running\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.thread.state": "running"
+          },
+          "resetMetricTime": true,
+          "value": 2.0,
+          "previousValue": 2.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.row_lock.waits{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.row_lock.waits{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_index_statistic\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_index_statistic\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_index_statistic"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"hit\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.operations{db.io.direction=\"read\", db.cache.state=\"hit\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "read",
+            "db.cache.state": "hit"
+          },
+          "resetMetricTime": true,
+          "value": 185426712.0,
+          "previousValue": 185426712.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.row_operations{db.row_operation.type=\"read\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.row_operations{db.row_operation.type=\"read\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.row_operation.type": "read"
+          },
+          "resetMetricTime": true,
+          "value": 4713874.0,
+          "previousValue": 4713874.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.pending_operations{db.io.direction=\"read\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.pending_operations{db.io.direction=\"read\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "read"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.usage{db.cache.state=\"free\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.usage{db.cache.state=\"free\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.cache.state": "free"
+          },
+          "resetMetricTime": true,
+          "value": 110477312.0,
+          "previousValue": 110477312.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.queries{db.query.state=\"slow\"}": {
+          "name": "db.server.queries{db.query.state=\"slow\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.query.state": "slow"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_account_insert\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_account_insert\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_account_insert"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_memory_instrument\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_memory_instrument\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_memory_instrument"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.queries{db.query.state=\"failed\", error.type=\"timeout\"}": {
+          "name": "db.server.queries{db.query.state=\"failed\", error.type=\"timeout\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "error.type": "timeout",
+            "db.query.state": "failed"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.storage.operations{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.storage.operations{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "write"
+          },
+          "resetMetricTime": true,
+          "value": 499159.0,
+          "previousValue": 499159.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_mutex_instrument\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_mutex_instrument\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_mutex_instrument"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.mysql.doublewrite_buffer.operations{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.mysql.doublewrite_buffer.operations{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 221.0,
+          "previousValue": 221.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.row_operations{db.row_operation.type=\"delete\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.row_operations{db.row_operation.type=\"delete\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.row_operation.type": "delete"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_digest_instance\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_digest_instance\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_digest_instance"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.row_lock.current_waits{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.row_lock.current_waits{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_condition_instrument\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_condition_instrument\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_condition_instrument"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.threads{db.thread.state=\"connected\"}": {
+          "name": "db.server.threads{db.thread.state=\"connected\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.thread.state": "connected"
+          },
+          "resetMetricTime": true,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.storage.operations{db.io.direction=\"read\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.storage.operations{db.io.direction=\"read\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "read"
+          },
+          "resetMetricTime": true,
+          "value": 2028.0,
+          "previousValue": 2028.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_file_instrument\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_file_instrument\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_file_instrument"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_hosts_insert\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_hosts_insert\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_hosts_insert"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_locker\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_locker\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_locker"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.row_operations{db.row_operation.type=\"update\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.row_operations{db.row_operation.type=\"update\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.row_operation.type": "update"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.errors{error.type=\"lost_file_handle\", db.mysql.engine=\"performance_schema\"}": {
+          "name": "db.server.errors{error.type=\"lost_file_handle\", db.mysql.engine=\"performance_schema\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "performance_schema",
+            "error.type": "lost_file_handle"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.operations{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.operations{db.io.direction=\"write\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.io.direction": "write"
+          },
+          "resetMetricTime": true,
+          "value": 12367123.0,
+          "previousValue": 12367123.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.read_ahead.operations{db.cache.read_ahead.state=\"random\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.read_ahead.operations{db.cache.read_ahead.state=\"random\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.cache.read_ahead.state": "random"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.usage{db.cache.state=\"data_dirty\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.usage{db.cache.state=\"data_dirty\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.cache.state": "data_dirty"
+          },
+          "resetMetricTime": true,
+          "value": 65536.0,
+          "previousValue": 65536.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.cache.read_ahead{db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.cache.read_ahead{db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb"
+          },
+          "resetMetricTime": true,
+          "value": 0.0,
+          "previousValue": 0.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.connections{db.connection.state=\"success\"}": {
+          "name": "db.server.connections{db.connection.state=\"success\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.connection.state": "success"
+          },
+          "resetMetricTime": true,
+          "value": 281361.0,
+          "previousValue": 281361.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.row_operations{db.row_operation.type=\"insert\", db.mysql.engine=\"innodb\"}": {
+          "name": "db.server.row_operations{db.row_operation.type=\"insert\", db.mysql.engine=\"innodb\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.mysql.engine": "innodb",
+            "db.row_operation.type": "insert"
+          },
+          "resetMetricTime": true,
+          "value": 4713874.0,
+          "previousValue": 4713874.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.threads{db.thread.state=\"cached\"}": {
+          "name": "db.server.threads{db.thread.state=\"cached\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.thread.state": "cached"
+          },
+          "resetMetricTime": true,
+          "value": 1.0,
+          "previousValue": 1.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.io{db.io.direction=\"transmit\"}": {
+          "name": "db.server.io{db.io.direction=\"transmit\"}",
+          "collectTime": 1757941641935,
+          "previousCollectTime": 1757941635101,
+          "attributes": {
+            "db.io.direction": "transmit"
+          },
+          "resetMetricTime": true,
+          "value": 5027804601.0,
+          "previousValue": 5027804601.0,
+          "type": "NumberMetric",
+          "updated": true
+        },
+        "db.server.connections.limit" : {
+        "name" : "db.server.connections.limit",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : { },
+        "resetMetricTime" : true,
+        "value" : 151.0,
+        "previousValue" : 151.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+        "db.server.table_cache.operations{db.cache.state=\"miss\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"miss\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : true,
+        "value" : 192.0,
+        "previousValue" : 192.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_cache.operations{db.cache.state=\"overflow\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"overflow\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.cache.state" : "overflow"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_cache.operations{db.cache.state=\"hit\"}" : {
+        "name" : "db.server.table_cache.operations{db.cache.state=\"hit\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : true,
+        "value" : 3491.0,
+        "previousValue" : 3491.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.temp_tables{db.temp_table.storage=\"disk\"}" : {
+        "name" : "db.server.temp_tables{db.temp_table.storage=\"disk\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.temp_table.storage" : "disk"
+        },
+        "resetMetricTime" : true,
+        "value" : 26.0,
+        "previousValue" : 26.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.temp_tables{db.temp_table.storage=\"memory\"}" : {
+        "name" : "db.server.temp_tables{db.temp_table.storage=\"memory\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.temp_table.storage" : "memory"
+        },
+        "resetMetricTime" : true,
+        "value" : 15.0,
+        "previousValue" : 15.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_locks{db.lock.state=\"immediate\"}" : {
+        "name" : "db.server.table_locks{db.lock.state=\"immediate\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.lock.state" : "immediate"
+        },
+        "resetMetricTime" : true,
+        "value" : 55.0,
+        "previousValue" : 55.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.table_locks{db.lock.state=\"waited\"}" : {
+        "name" : "db.server.table_locks{db.lock.state=\"waited\"}",
+        "collectTime" : 1766495186470,
+        "previousCollectTime" : 1766495186270,
+        "attributes" : {
+          "db.lock.state" : "waited"
+        },
+        "resetMetricTime" : true,
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+      },
+      "attributes": {
+        "db.version": "9.2.0",
+        "db.system": "mysql",
+        "db.server.port" : "3306",
+        "connector_id": "MySQL",
+        "id": "c52e41411c85",
+        "db.server.name": "c52e41411c85",
+        "db.namespace": "sys"
+      },
+      "conditionalCollection": {},
+      "legacyTextParameters": {},
+      "alertRules": {},
+      "discoveryTime": 1757941641935,
+      "type": "mysql",
+      "id": "MySQL_mysql_c52e41411c85",
+      "identifyingAttributeKeys": [
+        "id"
+      ],
+      "endpoint": false,
+      "endpointHost": false,
+      "connector": false,
+      "is_endpoint": false
+    }
+  ]
+}

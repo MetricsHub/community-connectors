@@ -1,0 +1,13 @@
+---
+result: 125954;
+success: true
+message: "Hostname nb-docker - JMX test succeeded. Returned result: 125954;."
+exception: null
+criterion: !<jmx>
+  type: jmx
+  forceSerialization: false
+  objectName: "org.apache.cassandra.metrics:type=Storage,name=Load"
+  attributes:
+  - Count
+  expectedResult: "^[0-9]"
+  errorMessage: null

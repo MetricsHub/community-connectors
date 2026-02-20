@@ -113,7 +113,8 @@ monitors:
                   psd.sessions_abandoned, -- $18
                   psd.sessions_fatal, -- $19
                   psd.sessions_killed, -- $20
-                  psd.numbackends --$21
+                  psd.numbackends, --$21
+                  current_setting('port')::int AS db_port --$22
               FROM pg_stat_database psd
               JOIN pg_database db ON db.oid = psd.datid
               WHERE db.datistemplate = false
@@ -123,6 +124,7 @@ monitors:
         attributes:
           db.namespace: $1
           db.system: postgresql
+          db.server.port: $22
         metrics:
           db.server.commits: $2
           db.server.rollbacks: $3
@@ -169,7 +171,8 @@ monitors:
                 cp.sync_time / 1000.0 AS sync_time_s, -- $15
                 wal.wal_buffers_full, -- $16
                 wal.wal_bytes, -- $17
-                pg_size_bytes(current_setting('shared_buffers')) AS shared_buffers_bytes --$18
+                pg_size_bytes(current_setting('shared_buffers')) AS shared_buffers_bytes, --$18
+                current_setting('port')::int AS db_port --$19
             FROM 
                 (SELECT COUNT(*) AS total_connections,
                         COUNT(*) FILTER (WHERE state = 'active') AS active_connections,
@@ -187,6 +190,7 @@ monitors:
           id: $1
           db.namespace: $1
           db.version: $2
+          db.server.port: $19
         metrics:
           db.server.connections.limit: $3
           db.server.uptime: $4
@@ -222,12 +226,14 @@ monitors:
               EXTRACT(EPOCH FROM flush_lag) AS flush_lag_seconds,
               EXTRACT(EPOCH FROM replay_lag) AS replay_lag_seconds,
               pg_wal_lsn_diff(sent_lsn, replay_lsn) AS lag_bytes,
-              state
+              state,
+              current_setting('port')::int AS db_port
             FROM pg_stat_replication;
       mapping:
         source: ${source::replication}
         attributes:
           db.system: postgresql
+          db.server.port: $10
           db.user.name: $1
           db.server.application_name: $2
           db.replication.host.name: $3
@@ -250,7 +256,8 @@ monitors:
             SELECT current_database() AS db_name,
                   relname AS relation, 
                   mode AS lock_type, 
-                  COUNT(pid) AS locks
+                  COUNT(pid) AS locks,
+                  current_setting('port')::int AS db_port
             FROM pg_locks 
             JOIN pg_class ON pg_locks.relation = pg_class.oid
             GROUP BY db_name, relname, mode
@@ -258,6 +265,7 @@ monitors:
         source: ${source::postgresqlLock}
         attributes:
           db.system: postgresql
+          db.server.port: $5
           db.namespace: $1
           db.server.lock.relation: $2
           db.server.lock.type: $3
