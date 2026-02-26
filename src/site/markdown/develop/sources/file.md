@@ -15,7 +15,7 @@ monitors:
       sources: # <object>
         <sourceKey>:
           type: file
-          paths: # <string-array>
+          paths: # <string-array> | globs are supported (e.g. /opt/metricshub/logs/*.log)
           maxSizePerPoll: # <string> | size in bytes or shorthand (e.g. 5Mb); -1 for unlimited, default 5 MB
           mode: # <enum> | possible values: [ LOG, FLAT ]; default LOG
           forceSerialization: # <boolean>
