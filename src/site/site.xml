@@ -92,9 +92,9 @@
 			</item>
 			<item name="Monitors" href="develop/monitors.html" />
 			<item name="Sources" href="develop/sources/index.html" >
+				<item name="BeforeAll Sources" href="develop/sources/before-all.html" />
 				<item name="AfterAll Sources" href="develop/sources/after-all.html" />
 				<item name="Awk" href="develop/sources/awk.html" />
-				<item name="BeforeAll Sources" href="develop/sources/before-all.html" />
 				<item name="Command Line" href="develop/sources/command-line.html" />
 				<item name="Copy (Duplicate)" href="develop/sources/copy.html" />
 				<item name="File" href="develop/sources/file.html" />

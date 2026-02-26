@@ -1,19 +1,19 @@
 keywords: source
-description: In a MetricsHub connector, the sources describe how to query the monitored system to retrieve the required data and metrics.
+description: Defines how to query the monitored system to retrieve the required data and metrics.
 
 # Sources
 
 <div class="alert alert-warning"><span class="fa-solid fa-person-digging"></span> Documentation under construction...</div>
 
-In a MetricsHub connector, the sources describe how to query the monitored system to retrieve the required data and metrics.
+A source defines how to query the monitored system to retrieve the required data and metrics.
+
+Configure sources under:
+
+* the **[beforeAll](./before-all.md)** section to execute them before any monitoring job
+* the **[afterAll](./after-all.md)** section to execute them  after all monitoring jobs
+* the **[monitors](../monitors.md)** section to execute them as part of a monitoring job workflow.
 
 ## Format
-
-Sources can be defined in one of three locations, depending on when they need to be executed:
-
-- **beforeAll Section**: Sources specified here are executed before any monitoring job begins, setting up the connections or performing preparatory actions needed for subsequent tasks.
-- **afterAll Section**: Sources defined here are executed after all monitoring jobs are completed, typically used for cleanup, session termination, or post-processing.
-- **Monitoring Job Section**: Sources included directly within a specific monitoring `<job>` (e.g., `discovery`, `collect`, or `simple`) are executed as part of that job's workflow, tailored to the specific requirements of the job. 
 
 ```yaml
 connector:
@@ -32,4 +32,4 @@ afterAll: # <object>
 
 ```
 
-Under each source we can define a set of computes. Refer to the [Computes Section](../computes/index.md) page for more details.
+Each source must define a set of computes, as described in the [Computes Section](../computes/index.md).

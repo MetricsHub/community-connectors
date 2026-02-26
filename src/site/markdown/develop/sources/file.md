@@ -3,6 +3,17 @@ description: The "file" source reads content from local or remote files, with in
 
 # File (Source)
 
+Use the **File** source to monitor files on your systems.
+
+This source is typically use to search for specific strings such as "Error", "Exception", or "Failure" in log files.
+
+Once configured, it reads content from local or remote files using either:
+
+* `LOG` mode for incremental reading (new entries only)
+* `FLAT` mode for full-file reading.
+
+## Format
+
 ```yaml
 connector:
   # ...
@@ -26,3 +37,5 @@ monitors:
               concatEnd: # <string>
           computes: # <compute-object-array>
 ```
+
+Each source must define a set of computes, as described in the [Computes Section](../computes/index.md).
