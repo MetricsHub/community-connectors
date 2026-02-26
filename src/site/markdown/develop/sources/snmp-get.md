@@ -19,7 +19,7 @@ monitors:
           forceSerialization: # <boolean>
           executeForEachEntryOf: # <object>
             source: # <string>
-            concatMethod: # onOf [ <enum>, <object> ] | possible values for <enum> : [ list, json_array, json_array_extended ]
+            concatMethod: # oneOf [ <enum>, <object> ] | possible values for <enum> : [ list, json_array, json_array_extended ]
               concatStart: # <string>
               concatEnd: # <string>
           computes: # <compute-object-array>
