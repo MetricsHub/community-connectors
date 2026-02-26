@@ -1,9 +1,9 @@
 keywords: develop, afterAll
-description: This page defines sources that need to be executed after the monitoring jobs (discovery, collect and simple).
+description: This section defines the sources to be executed after each monitoring job.
 
-# *AfterAll* Sources
+# afterAll (Section)
 
-This page outlines the sources which are executed after each monitoring job, including discovery, collect, and simple jobs. These sources play a crucial role in finalizing processes, such as closing sessions, cleaning up temporary resources, or performing other post-monitoring activities.
+Under the **afterAll** section, define the sources to be executed after all monitoring jobs to properly finalize monitoring processes (closing sessions, cleaning up temporary resources, or any other post-monitoring task).
 
 ## Format
 
@@ -15,4 +15,4 @@ afterAll:
  <sourceName>: # <object>
 ```
 
-Each source format is defined in the [Sources Section](index.md) Section page.
+Each source declared under **afterAll** must follow the format described on its dedicated page in the [Sources Section](index.md).
