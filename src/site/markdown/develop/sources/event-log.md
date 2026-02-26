@@ -1,7 +1,7 @@
-keywords: snmp, mib, oid
-description: The "snmpTable" source type polls an entire table from an SNMP agent to process it with MetricsHub.
+keywords: event log, windows
+description: The "eventLog" source retrieves data from Windows Event Logs for MetricsHub.
 
-# SNMP Table (Source)
+# Event Log (Source)
 
 ```yaml
 connector:
@@ -14,9 +14,12 @@ monitors:
     <job>: # <object>
       sources: # <object>
         <sourceKey>:
-          type: snmpTable
-          oid: # <string>
-          selectColumns: # <string> | comma separated values
+          type: eventLog
+          logName: # <string>
+          eventIds: # <string-array>
+          sources: # <string-array>
+          levels: # <enum-array> | possible values: [ Error, Warning, Information, Audit Success, Audit Failure ] or codes 1-5
+          maxEventsPerPoll: # <integer>
           forceSerialization: # <boolean>
           executeForEachEntryOf: # <object>
             source: # <string>
@@ -25,4 +28,3 @@ monitors:
               concatEnd: # <string>
           computes: # <compute-object-array>
 ```
-
