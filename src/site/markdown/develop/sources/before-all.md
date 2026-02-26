@@ -3,7 +3,7 @@ description: This section defines the sources to be executed before each monitor
 
 # beforeAll (Section)
 
-Under the **beforeAll** section, define the sources to be executed before any monitoring job to set the connections or perform preparatory actions.
+Under the **beforeAll** section, define the sources to be executed before all the monitoring jobs to set the connections or perform preparatory actions.
 
 ## Format
 
