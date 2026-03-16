@@ -48,7 +48,7 @@ monitors:
           commandLine: "sh ${file::smartctlAll.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
           keep: ^MSHW;
           separators: ;
-          selectColumns: "2,3,4,5"
+          selectColumns: "2,3,4"
           computes:
           # Exclude Disks Whose vendor is listed as "Virtual"
           # This was added because IBM's drivers are badly written.
@@ -102,12 +102,39 @@ monitors:
           rightTable: "${source::monitors.physical_disk.collect.sources.source(2)}"
           leftKeyColumn: 1
           rightKeyColumn: 1
+          computes:
+            - type: append
+              column: 5
+              value: ;joinValue
+        source(4):
+          type: commandLine
+          commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
+          computes:
+            - type: awk
+              script: |
+                /Non-medium error count:/ {
+                    found = 1
+                    print $NF ";joinValue;"
+                }
+
+                END {
+                    if (!found)
+                        print " ;joinValue;"
+                }
+        source(5):
+          type: tableJoin
+          leftTable: "${source::monitors.physical_disk.collect.sources.source(3)}"
+          rightTable: "${source::monitors.physical_disk.collect.sources.source(4)}"
+          leftKeyColumn: 6
+          rightKeyColumn: 2
+          
       mapping:
         # ValueTable = Source(1)
-        source: "${source::monitors.physical_disk.collect.sources.source(3)}"
+        source: "${source::monitors.physical_disk.collect.sources.source(5)}"
         metrics:
           hw.status{hw.type="physical_disk", state="predicted_failure"}: boolean($2)
           hw.status{hw.type="physical_disk"}: $4
+          hw.errors{hw.type="physical_disk"}: $7
         legacyTextParameters:
           StatusInformation: $5
   temperature:
@@ -120,7 +147,7 @@ monitors:
           commandLine: "sh ${file::smartctlTempDisc.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
           keep: ^MSHW;
           separators: ;
-          selectColumns: "2,3,4"
+          selectColumns: "2,3"
       mapping:
         # InstanceTable = Source(1)
         source: "${source::monitors.temperature.discovery.sources.source(1)}"
