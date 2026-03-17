@@ -48,7 +48,7 @@ monitors:
           commandLine: "sh ${file::smartctlAll.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
           keep: ^MSHW;
           separators: ;
-          selectColumns: "2,3,4"
+          selectColumns: "2,3,4,5"
           computes:
           # Exclude Disks Whose vendor is listed as "Virtual"
           # This was added because IBM's drivers are badly written.
@@ -147,7 +147,7 @@ monitors:
           commandLine: "sh ${file::smartctlTempDisc.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
           keep: ^MSHW;
           separators: ;
-          selectColumns: "2,3"
+          selectColumns: "2,3,4"
       mapping:
         # InstanceTable = Source(1)
         source: "${source::monitors.temperature.discovery.sources.source(1)}"

@@ -2,24 +2,24 @@
 table:
 - - /dev/sda
   - TOSHIBA
-  - Z7A0A04RTEZE
+  - 47S0A01RF8KC
+  - ' '
 - - /dev/sdb
-  - TOSHIBA
-  - Z7A0A04NTEZE
+  - SAMSUNG
+  - S3LHNX0J800021
+  - -d sat
 - - /dev/sdc
-  - TOSHIBA
-  - Z7A0A04WTEZE
+  - SAMSUNG
+  - S3LHNX0J800024
+  - -d sat
 - - /dev/sdd
-  - TOSHIBA
-  - Z7A0A057TEZE
+  - SAMSUNG
+  - S3LHNX0J800016
+  - -d sat
 - - /dev/sde
-  - SEAGATE
-  - W4706KMD
+  - SAMSUNG
+  - S3LHNX0J800026
+  - -d sat
 headers: []
-rawData: |-
-  /dev/sda;TOSHIBA;Z7A0A04RTEZE
-  /dev/sdb;TOSHIBA;Z7A0A04NTEZE
-  /dev/sdc;TOSHIBA;Z7A0A04WTEZE
-  /dev/sdd;TOSHIBA;Z7A0A057TEZE
-  /dev/sde;SEAGATE;W4706KMD
+rawData: "/dev/sda;TOSHIBA;S3LHNX0J800021; \n/dev/sdb;SAMSUNG;S3LHNX0J800021;-d sat\n/dev/sdc;SAMSUNG;S3LHNX0J800024;-d sat\n/dev/sdd;SAMSUNG;S3LHNX0J800016;-d sat\n/dev/sde;SAMSUNG;S3LHNX0J800026;-d sat"
 empty: false

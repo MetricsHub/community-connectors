@@ -2,19 +2,19 @@
 table:
 - - /dev/sda
   - 64
+  - ' '
 - - /dev/sdb
   - 64
+  - -d sat
 - - /dev/sdc
   - 64
+  - -d sat
 - - /dev/sdd
   - 64
+  - -d sat
 - - /dev/sde
   - 60
+  - -d sat
 headers: []
-rawData: |-
-  /dev/sda;64
-  /dev/sdb;64
-  /dev/sdc;64
-  /dev/sdd;64
-  /dev/sde;60
+rawData: "/dev/sda;65; \n/dev/sdb;53;-d sat\n/dev/sdc;53;-d sat\n/dev/sdd;53;-d sat\n/dev/sde;53;-d sat"
 empty: false
