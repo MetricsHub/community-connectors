@@ -14,7 +14,7 @@ table:
 - - "Rotation Rate:        Solid State Device"
 - - "Form Factor:          2.5 inches"
 - - "Logical Unit id:      0x58ce38ee2011d385"
-- - "Serial number:        Z7A0A04NTEZE"
+- - "Serial number:        S3LHNX0J800016"
 - - "Device type:          disk"
 - - "Transport protocol:   SAS (SPL-4)"
 - - "Local Time is:        Tue Oct  7 07:00:08 2025 CEST"
@@ -65,7 +65,7 @@ rawData: |
   Rotation Rate:        Solid State Device
   Form Factor:          2.5 inches
   Logical Unit id:      0x58ce38ee2011d385
-  Serial number:        Z7A0A04NTEZE
+  Serial number:        S3LHNX0J800016
   Device type:          disk
   Transport protocol:   SAS (SPL-4)
   Local Time is:        Tue Oct  7 07:00:08 2025 CEST
