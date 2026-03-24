@@ -19,22 +19,31 @@ DEVICE_LABEL_LIST=$(awk '/^Device: .* is SMART capable/ {
     print deviceID "|" label;
 }' $TMPFILE)
 
+
 rm -f $TMPFILE
 
 # Loop over each device-label pair.
 echo "$DEVICE_LABEL_LIST" | while IFS='|' read DISKID LABEL; do
+    DEVTYPE=""
+    DRIVENUM=""
+    EXTRA=" "
+    CMD=""
+
     # Skip bus devices; if the device path starts with /dev/bus/ then ignore it.
     if echo "$DISKID" | grep -q "^/dev/bus/"; then
         continue
     fi
-    # Decide the proper smartctl command based on whether a label was detected.
+
     if [ -n "$LABEL" ]; then
         # If the label contains an underscore, assume it's of the form "type_disk_N".
         if echo "$LABEL" | grep -q '_'; then
             DEVTYPE=$(echo "$LABEL" | cut -d'_' -f1)
             DRIVENUM=$(echo "$LABEL" | awk -F'_' '{print $NF}')
+            EXTRA="-d ${DEVTYPE},${DRIVENUM}"
             CMD="$SMARTCTL -d ${DEVTYPE},${DRIVENUM} -a $DISKID"
         else
+            DEVTYPE=$(echo "$LABEL" | tr '[:upper:]' '[:lower:]')
+            EXTRA="-d ${DEVTYPE}"
             CMD="$SMARTCTL -a $DISKID"
         fi
     else
@@ -45,18 +54,14 @@ echo "$DEVICE_LABEL_LIST" | while IFS='|' read DISKID LABEL; do
     OUTPUT=$($CMD 2>&1)
 
     # Parse the output: extract the vendor from the "Vendor:" line and the serial number.
-    echo "$OUTPUT" | awk -v deviceID="$DISKID" -v deviceType="$DEVTYPE" -v driveNum="$DRIVENUM" '
+    echo "$OUTPUT" | awk -v deviceID="$DISKID" -v extra="$EXTRA" '
     BEGIN { vendor=""; serialNumber=""; }
     {
         if (tolower($1)=="vendor:") { vendor = $2; }
         if (tolower($1)=="serial" && tolower($2)=="number:") { serialNumber = $3; }
-        if(vendor == "" && tolower($1)== "device" && tolower($2) == "model:") { vendor = $3; }
+        if (vendor == "" && tolower($1)=="device" && tolower($2)=="model:") { vendor = $3; }
     }
     END {
-        result = "MSHW;" deviceID ";" vendor ";" serialNumber;
-        if (deviceType != "")
-            result = result ";" "-d " deviceType "," driveNum;
-        print result;
-    }
-    '
+        print "MSHW;" deviceID ";" vendor ";" serialNumber ";" extra
+    }'
 done

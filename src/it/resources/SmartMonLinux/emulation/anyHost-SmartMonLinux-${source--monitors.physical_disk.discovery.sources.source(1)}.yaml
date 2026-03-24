@@ -1,0 +1,25 @@
+---
+table:
+- - /dev/sda
+  - TOSHIBA
+  - 47S0A01RF8KC
+  - ' '
+- - /dev/sdb
+  - SAMSUNG
+  - S3LHNX0J800021
+  - -d sat
+- - /dev/sdc
+  - SAMSUNG
+  - S3LHNX0J800024
+  - -d sat
+- - /dev/sdd
+  - SAMSUNG
+  - S3LHNX0J800016
+  - -d sat
+- - /dev/sde
+  - SAMSUNG
+  - S3LHNX0J800026
+  - -d sat
+headers: []
+rawData: "/dev/sda;TOSHIBA;S3LHNX0J800021; \n/dev/sdb;SAMSUNG;S3LHNX0J800021;-d sat\n/dev/sdc;SAMSUNG;S3LHNX0J800024;-d sat\n/dev/sdd;SAMSUNG;S3LHNX0J800016;-d sat\n/dev/sde;SAMSUNG;S3LHNX0J800026;-d sat"
+empty: false
