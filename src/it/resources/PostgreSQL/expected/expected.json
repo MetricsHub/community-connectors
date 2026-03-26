@@ -281,7 +281,6 @@
     "attributes" : {
       "db.version" : "PostgreSQL 17.4 on x86_64-windows, compiled by msvc-19.42.34436, 64-bit",
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "id" : "postgres",
       "db.namespace" : "postgres"
@@ -541,7 +540,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres"
     },
@@ -800,7 +798,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "test2"
     },
@@ -1059,7 +1056,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "test3"
     },
@@ -1318,7 +1314,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "test4"
     },
@@ -1577,7 +1572,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "testdatabase"
     },
@@ -1608,7 +1602,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class",
@@ -1641,7 +1634,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class_oid_index",
@@ -1674,7 +1666,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class_relname_nsp_index",
@@ -1707,7 +1698,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class_tblspc_relfilenode_index",
@@ -1740,7 +1730,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_database",
@@ -1773,7 +1762,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_database_datname_index",
@@ -1806,7 +1794,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_database_oid_index",
@@ -1839,7 +1826,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_locks",
@@ -1872,7 +1858,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_stat_database",

@@ -21,7 +21,6 @@ table:
   - 0
   - 0
   - 3
-  - 5432
 - - testdatabase
   - 0
   - 0
@@ -43,7 +42,6 @@ table:
   - 0
   - 0
   - 0
-  - 5432
 - - test2
   - 0
   - 0
@@ -65,7 +63,6 @@ table:
   - 0
   - 0
   - 0
-  - 5432
 - - test3
   - 0
   - 0
@@ -87,7 +84,6 @@ table:
   - 0
   - 0
   - 0
-  - 5432
 - - test4
   - 7169
   - 0
@@ -109,7 +105,6 @@ table:
   - 0
   - 0
   - 1
-  - 5432
 headers: []
 rawData: null
 empty: false
