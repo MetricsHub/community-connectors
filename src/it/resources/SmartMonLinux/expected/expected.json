@@ -1908,7 +1908,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "CRC Error Count",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -1919,7 +1919,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_CRCErrorCount",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -1941,7 +1941,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "Current Pending Sector",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -1952,7 +1952,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_CurrentPendingSector",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -1974,7 +1974,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "ECC Error Rate",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -1985,7 +1985,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_ECCErrorRate",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2007,7 +2007,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "End to End Error",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2018,7 +2018,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_EndtoEndError",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2040,7 +2040,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "Erase Fail Count Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2051,7 +2051,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_EraseFailCountTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2073,7 +2073,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "Program Fail Cnt Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2084,7 +2084,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_ProgramFailCntTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2106,7 +2106,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "Reallocated Sector Ct",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2117,7 +2117,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_ReallocatedSectorCt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2139,7 +2139,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "Runtime Bad Block",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2150,7 +2150,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_RuntimeBadBlock",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2172,7 +2172,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdb",
+      "hw.id" : "/dev/sdb",
       "hw.physical_disk.smart_attribute" : "Uncorrectable Error Cnt",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2183,7 +2183,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdb_UncorrectableErrorCnt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2205,7 +2205,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "CRC Error Count",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2216,7 +2216,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_CRCErrorCount",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2238,7 +2238,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "Current Pending Sector",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2249,7 +2249,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_CurrentPendingSector",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2271,7 +2271,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "ECC Error Rate",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2282,7 +2282,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_ECCErrorRate",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2304,7 +2304,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "End to End Error",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2315,7 +2315,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_EndtoEndError",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2337,7 +2337,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "Erase Fail Count Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2348,7 +2348,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_EraseFailCountTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2370,7 +2370,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "Program Fail Cnt Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2381,7 +2381,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_ProgramFailCntTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2403,7 +2403,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "Reallocated Sector Ct",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2414,7 +2414,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_ReallocatedSectorCt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2436,7 +2436,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "Runtime Bad Block",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2447,7 +2447,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_RuntimeBadBlock",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2469,7 +2469,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdc",
+      "hw.id" : "/dev/sdc",
       "hw.physical_disk.smart_attribute" : "Uncorrectable Error Cnt",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2480,7 +2480,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdc_UncorrectableErrorCnt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2502,7 +2502,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "CRC Error Count",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2513,7 +2513,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_CRCErrorCount",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2535,7 +2535,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "Current Pending Sector",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2546,7 +2546,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_CurrentPendingSector",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2568,7 +2568,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "ECC Error Rate",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2579,7 +2579,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_ECCErrorRate",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2601,7 +2601,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "End to End Error",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2612,7 +2612,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_EndtoEndError",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2634,7 +2634,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "Erase Fail Count Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2645,7 +2645,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_EraseFailCountTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2667,7 +2667,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "Program Fail Cnt Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2678,7 +2678,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_ProgramFailCntTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2700,7 +2700,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "Reallocated Sector Ct",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2711,7 +2711,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_ReallocatedSectorCt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2733,7 +2733,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "Runtime Bad Block",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2744,7 +2744,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_RuntimeBadBlock",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2766,7 +2766,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sdd",
+      "hw.id" : "/dev/sdd",
       "hw.physical_disk.smart_attribute" : "Uncorrectable Error Cnt",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2777,7 +2777,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sdd_UncorrectableErrorCnt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2799,7 +2799,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "CRC Error Count",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2810,7 +2810,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_CRCErrorCount",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2832,7 +2832,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "Current Pending Sector",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2843,7 +2843,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_CurrentPendingSector",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2865,7 +2865,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "ECC Error Rate",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2876,7 +2876,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_ECCErrorRate",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2898,7 +2898,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "End to End Error",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2909,7 +2909,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_EndtoEndError",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2931,7 +2931,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "Erase Fail Count Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2942,7 +2942,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_EraseFailCountTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2964,7 +2964,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "Program Fail Cnt Total",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -2975,7 +2975,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_ProgramFailCntTotal",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -2997,7 +2997,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "Reallocated Sector Ct",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -3008,7 +3008,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_ReallocatedSectorCt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -3030,7 +3030,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "Runtime Bad Block",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -3041,7 +3041,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_RuntimeBadBlock",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,
@@ -3063,7 +3063,7 @@
       }
     },
     "attributes" : {
-      "diskName" : "/dev/sde",
+      "hw.id" : "/dev/sde",
       "hw.physical_disk.smart_attribute" : "Uncorrectable Error Cnt",
       "connector_id" : "SmartMonLinux",
       "name" : "smart"
@@ -3074,7 +3074,7 @@
     "discoveryTime" : 1774598946991,
     "type" : "smart",
     "id" : "SmartMonLinux_smart_/dev/sde_UncorrectableErrorCnt",
-    "identifyingAttributeKeys" : [ "diskName", "hw.physical_disk.smart_attribute" ],
+    "identifyingAttributeKeys" : [ "hw.id", "hw.physical_disk.smart_attribute" ],
     "endpointHost" : false,
     "connector" : false,
     "endpoint" : false,

@@ -37,10 +37,6 @@ connector:
 sudoCommands:
 - /usr/sbin/smartctl
 - /bin/dd
-metrics:
-  hw.physical_disk.smart:
-    description: "Value of the corresponding S.M.A.R.T (Self-Monitoring, Analysis, and Reporting Technology) attribute (e.g. Spin Retry Count, Seek Error Rate) providing device-level health indicators and failure prediction signals."
-    type: Gauge
 monitors:
   physical_disk:
     discovery:
@@ -192,7 +188,7 @@ monitors:
         metrics:
           hw.temperature: $1
   smart:
-    keys: [ diskName, hw.physical_disk.smart_attribute ]
+    keys: [ hw.id, hw.physical_disk.smart_attribute ]
     simple:
       sources:
         source(1):
@@ -206,7 +202,7 @@ monitors:
       mapping:
         source: "${source::monitors.smart.simple.sources.source(1)}"
         attributes:
-          diskName: $1
+          hw.id: $1
           hw.physical_disk.smart_attribute: $2
         metrics:
           hw.physical_disk.smart: $3
