@@ -1,75 +1,101 @@
 ---
 result: |
-  smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
-  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+  smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
+  Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
 
   =======> ARGUMENT REQUIRED FOR OPTION: c <=======
   =======> VALID ARGUMENTS ARE: <FILE_NAME>, - <=======
 
   Use smartd -h to get a usage summary
 
-  smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
-  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+  smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
+  Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
 
   Opened configuration file /etc/smartd.conf
-  Drive: DEVICESCAN, implied '-a' Directive on line 21 of file /etc/smartd.conf
   Configuration file /etc/smartd.conf was parsed, found DEVICESCAN, scanning devices
   Device: /dev/sda, opened
-  Device: /dev/sda, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: 47S0A01RF8KC, 960 GB
+  Device: /dev/sda, [TOSHIBA  AL14SEB030N      5704], lu id: 0x50000397b85235d1, S/N: 47S0A01RF8KC, 300 GB
+  Device: /dev/sda, enabled autosave (cleared GLTSD bit).
   Device: /dev/sda, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sda, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-47S0A01RF8KC.scsi.state
-  Device: /dev/sdb, opened
-  Device: /dev/sdb, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: S3LHNX0J800021, 960 GB
-  Device: /dev/sdb, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sdb, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800021.scsi.state
-  Device: /dev/sdc, opened
-  Device: /dev/sdc, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: S3LHNX0J800024, 960 GB
-  Device: /dev/sdc, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sdc, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800024.scsi.state
-  Device: /dev/sdd, opened
-  Device: /dev/sdd, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: S3LHNX0J800016, 960 GB
-  Device: /dev/sdd, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sdd, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800016.scsi.state
-  Device: /dev/sde, opened
-  Device: /dev/sde, [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: S3LHNX0J800026, 1.00 TB
-  Device: /dev/sde, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sde, state read from /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-S3LHNX0J800026.scsi.state
-  Device: /dev/bus/0 [megaraid_disk_00], opened
-  Device: /dev/bus/0 [megaraid_disk_00], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: 47S0A01RF8KC, 960 GB
+  Device: /dev/sda, state read from /var/lib/smartmontools/smartd.TOSHIBA-AL14SEB030N-47S0A01RF8KC.scsi.state
+  Device: /dev/sdb, type changed from 'scsi' to 'sat'
+  Device: /dev/sdb [SAT], opened
+  Device: /dev/sdb [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800021, WWN:5-002538-c40769d64, FW:GXT50F3Q, 960 GB
+  Device: /dev/sdb [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sdb [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sdb [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sdb [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sdb [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdb [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800021.ata.state
+  Device: /dev/sdc, type changed from 'scsi' to 'sat'
+  Device: /dev/sdc [SAT], opened
+  Device: /dev/sdc [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800024, WWN:5-002538-c40769d67, FW:GXT50F3Q, 960 GB
+  Device: /dev/sdc [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sdc [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sdc [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sdc [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sdc [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdc [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800024.ata.state
+  Device: /dev/sdd, type changed from 'scsi' to 'sat'
+  Device: /dev/sdd [SAT], opened
+  Device: /dev/sdd [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800016, WWN:5-002538-c40769d5f, FW:GXT50F3Q, 960 GB
+  Device: /dev/sdd [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sdd [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sdd [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sdd [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sdd [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdd [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800016.ata.state
+  Device: /dev/sde, type changed from 'scsi' to 'sat'
+  Device: /dev/sde [SAT], opened
+  Device: /dev/sde [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800026, WWN:5-002538-c40769d69, FW:GXT50F3Q, 960 GB
+  Device: /dev/sde [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sde [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sde [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sde [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sde [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sde [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800026.ata.state
+  Device: /dev/bus/0 [megaraid_disk_08], opened
+  Device: /dev/bus/0 [megaraid_disk_08], [TOSHIBA  AL14SEB030N      5704], lu id: 0x50000397b85235d1, S/N: 47S0A01RF8KC, 300 GB
   Device: /dev/bus/0, same identity as /dev/sda, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_00] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_01], opened
-  Device: /dev/bus/0 [megaraid_disk_01], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: Z7A0A04NTEZE, 960 GB
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_08] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_09], type changed from 'megaraid,9' to 'sat+megaraid,9'
+  Device: /dev/bus/0 [megaraid_disk_09] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_09] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800021, WWN:5-002538-c40769d64, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sdb, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_01] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_02], opened
-  Device: /dev/bus/0 [megaraid_disk_02], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: Z7A0A04WTEZE, 960 GB
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_09] [SAT] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_10], type changed from 'megaraid,10' to 'sat+megaraid,10'
+  Device: /dev/bus/0 [megaraid_disk_10] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_10] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800024, WWN:5-002538-c40769d67, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sdc, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_02] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_03], opened
-  Device: /dev/bus/0 [megaraid_disk_03], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: Z7A0A057TEZE, 960 GB
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_10] [SAT] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_11], type changed from 'megaraid,11' to 'sat+megaraid,11'
+  Device: /dev/bus/0 [megaraid_disk_11] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_11] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800016, WWN:5-002538-c40769d5f, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sdd, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_03] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_04], opened
-  Device: /dev/bus/0 [megaraid_disk_04], [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: W4706KMD, 1.00 TB
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_11] [SAT] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_12], type changed from 'megaraid,12' to 'sat+megaraid,12'
+  Device: /dev/bus/0 [megaraid_disk_12] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_12] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800026, WWN:5-002538-c40769d69, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sde, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_04] at line 21 of file /etc/smartd.conf
-  Monitoring 0 ATA/SATA, 5 SCSI/SAS and 0 NVMe devices
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_12] [SAT] at line 150 of file /etc/smartd.conf
+  Monitoring 4 ATA/SATA, 1 SCSI/SAS and 0 NVMe devices
   Device: /dev/sda, opened SCSI device
   Device: /dev/sda, SMART health: passed
-  Device: /dev/sdb, opened SCSI device
-  Device: /dev/sdb, SMART health: passed
-  Device: /dev/sdc, opened SCSI device
-  Device: /dev/sdc, SMART health: passed
-  Device: /dev/sdd, opened SCSI device
-  Device: /dev/sdd, SMART health: passed
-  Device: /dev/sde, opened SCSI device
-  Device: /dev/sde, SMART health: passed
-  Device: /dev/sda, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-47S0A01RF8KC.scsi.state
-  Device: /dev/sdb, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800021.scsi.state
-  Device: /dev/sdc, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800024.scsi.state
-  Device: /dev/sdd, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800016.scsi.state
-  Device: /dev/sde, state written to /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-S3LHNX0J800026.scsi.state
+  Device: /dev/sdb [SAT], opened ATA device
+  Device: /dev/sdb [SAT], SMART Usage Attribute: 190 Airflow_Temperature_Cel changed from 70 to 69
+  Device: /dev/sdb [SAT], SMART Usage Attribute: 194 Temperature_Celsius changed from 70 to 69
+  Device: /dev/sdb [SAT], previous self-test completed without error
+  Device: /dev/sdc [SAT], opened ATA device
+  Device: /dev/sdc [SAT], previous self-test completed without error
+  Device: /dev/sdd [SAT], opened ATA device
+  Device: /dev/sdd [SAT], previous self-test completed without error
+  Device: /dev/sde [SAT], opened ATA device
+  Device: /dev/sde [SAT], previous self-test completed without error
+  Device: /dev/sda, state written to /var/lib/smartmontools/smartd.TOSHIBA-AL14SEB030N-47S0A01RF8KC.scsi.state
+  Device: /dev/sdb [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800021.ata.state
+  Device: /dev/sdc [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800024.ata.state
+  Device: /dev/sdd [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800016.ata.state
+  Device: /dev/sde [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800026.ata.state
   Started with '-q onecheck' option. All devices successfully checked once.
   smartd is exiting (exit status 0)
 success: true
@@ -79,76 +105,102 @@ message: |
   - ExecuteLocally: false
   - ExpectedResult: Device: .* opened
 
-  Result: smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
-  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+  Result: smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
+  Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
 
   =======> ARGUMENT REQUIRED FOR OPTION: c <=======
   =======> VALID ARGUMENTS ARE: <FILE_NAME>, - <=======
 
   Use smartd -h to get a usage summary
 
-  smartd 7.3 2022-02-28 r5338 [x86_64-linux-6.8.12-15-pve] (local build)
-  Copyright (C) 2002-22, Bruce Allen, Christian Franke, www.smartmontools.org
+  smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
+  Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
 
   Opened configuration file /etc/smartd.conf
-  Drive: DEVICESCAN, implied '-a' Directive on line 21 of file /etc/smartd.conf
   Configuration file /etc/smartd.conf was parsed, found DEVICESCAN, scanning devices
   Device: /dev/sda, opened
-  Device: /dev/sda, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: 47S0A01RF8KC, 960 GB
+  Device: /dev/sda, [TOSHIBA  AL14SEB030N      5704], lu id: 0x50000397b85235d1, S/N: 47S0A01RF8KC, 300 GB
+  Device: /dev/sda, enabled autosave (cleared GLTSD bit).
   Device: /dev/sda, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sda, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-47S0A01RF8KC.scsi.state
-  Device: /dev/sdb, opened
-  Device: /dev/sdb, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: S3LHNX0J800021, 960 GB
-  Device: /dev/sdb, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sdb, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800021.scsi.state
-  Device: /dev/sdc, opened
-  Device: /dev/sdc, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: S3LHNX0J800024, 960 GB
-  Device: /dev/sdc, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sdc, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800024.scsi.state
-  Device: /dev/sdd, opened
-  Device: /dev/sdd, [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: S3LHNX0J800016, 960 GB
-  Device: /dev/sdd, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sdd, state read from /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800016.scsi.state
-  Device: /dev/sde, opened
-  Device: /dev/sde, [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: S3LHNX0J800026, 1.00 TB
-  Device: /dev/sde, is SMART capable. Adding to "monitor" list.
-  Device: /dev/sde, state read from /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-S3LHNX0J800026.scsi.state
-  Device: /dev/bus/0 [megaraid_disk_00], opened
-  Device: /dev/bus/0 [megaraid_disk_00], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d391, S/N: 47S0A01RF8KC, 960 GB
+  Device: /dev/sda, state read from /var/lib/smartmontools/smartd.TOSHIBA-AL14SEB030N-47S0A01RF8KC.scsi.state
+  Device: /dev/sdb, type changed from 'scsi' to 'sat'
+  Device: /dev/sdb [SAT], opened
+  Device: /dev/sdb [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800021, WWN:5-002538-c40769d64, FW:GXT50F3Q, 960 GB
+  Device: /dev/sdb [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sdb [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sdb [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sdb [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sdb [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdb [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800021.ata.state
+  Device: /dev/sdc, type changed from 'scsi' to 'sat'
+  Device: /dev/sdc [SAT], opened
+  Device: /dev/sdc [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800024, WWN:5-002538-c40769d67, FW:GXT50F3Q, 960 GB
+  Device: /dev/sdc [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sdc [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sdc [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sdc [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sdc [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdc [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800024.ata.state
+  Device: /dev/sdd, type changed from 'scsi' to 'sat'
+  Device: /dev/sdd [SAT], opened
+  Device: /dev/sdd [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800016, WWN:5-002538-c40769d5f, FW:GXT50F3Q, 960 GB
+  Device: /dev/sdd [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sdd [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sdd [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sdd [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sdd [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sdd [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800016.ata.state
+  Device: /dev/sde, type changed from 'scsi' to 'sat'
+  Device: /dev/sde [SAT], opened
+  Device: /dev/sde [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800026, WWN:5-002538-c40769d69, FW:GXT50F3Q, 960 GB
+  Device: /dev/sde [SAT], found in smartd database 7.3/5528: Samsung based SSDs
+  Device: /dev/sde [SAT], enabled SMART Attribute Autosave.
+  Device: /dev/sde [SAT], can't monitor Offline_Uncorrectable count - no Attribute 198
+  Device: /dev/sde [SAT], enabled SMART Automatic Offline Testing.
+  Device: /dev/sde [SAT], is SMART capable. Adding to "monitor" list.
+  Device: /dev/sde [SAT], state read from /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800026.ata.state
+  Device: /dev/bus/0 [megaraid_disk_08], opened
+  Device: /dev/bus/0 [megaraid_disk_08], [TOSHIBA  AL14SEB030N      5704], lu id: 0x50000397b85235d1, S/N: 47S0A01RF8KC, 300 GB
   Device: /dev/bus/0, same identity as /dev/sda, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_00] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_01], opened
-  Device: /dev/bus/0 [megaraid_disk_01], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d385, S/N: S3LHNX0J800016, 960 GB
+  Unable to register SCSI device /dev/bus/0 [megaraid_disk_08] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_09], type changed from 'megaraid,9' to 'sat+megaraid,9'
+  Device: /dev/bus/0 [megaraid_disk_09] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_09] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800021, WWN:5-002538-c40769d64, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sdb, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_01] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_02], opened
-  Device: /dev/bus/0 [megaraid_disk_02], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3a5, S/N: Z7A0A04WTEZE, 960 GB
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_09] [SAT] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_10], type changed from 'megaraid,10' to 'sat+megaraid,10'
+  Device: /dev/bus/0 [megaraid_disk_10] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_10] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800024, WWN:5-002538-c40769d67, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sdc, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_02] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_03], opened
-  Device: /dev/bus/0 [megaraid_disk_03], [TOSHIBA  PX05SVB096Y      AS0B], lu id: 0x58ce38ee2011d3d1, S/N: Z7A0A057TEZE, 960 GB
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_10] [SAT] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_11], type changed from 'megaraid,11' to 'sat+megaraid,11'
+  Device: /dev/bus/0 [megaraid_disk_11] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_11] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800016, WWN:5-002538-c40769d5f, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sdd, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_03] at line 21 of file /etc/smartd.conf
-  Device: /dev/bus/0 [megaraid_disk_04], opened
-  Device: /dev/bus/0 [megaraid_disk_04], [SEAGATE  ST1000NX0453     NS02], lu id: 0x5000c5009ebee1cf, S/N: W4706KMD, 1.00 TB
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_11] [SAT] at line 150 of file /etc/smartd.conf
+  Device: /dev/bus/0 [megaraid_disk_12], type changed from 'megaraid,12' to 'sat+megaraid,12'
+  Device: /dev/bus/0 [megaraid_disk_12] [SAT], opened
+  Device: /dev/bus/0 [megaraid_disk_12] [SAT], SAMSUNG MZ7LM960HMJP-00003, S/N:S3LHNX0J800026, WWN:5-002538-c40769d69, FW:GXT50F3Q, 960 GB
   Device: /dev/bus/0, same identity as /dev/sde, ignored
-  Unable to register SCSI device /dev/bus/0 [megaraid_disk_04] at line 21 of file /etc/smartd.conf
-  Monitoring 0 ATA/SATA, 5 SCSI/SAS and 0 NVMe devices
+  Unable to register ATA device /dev/bus/0 [megaraid_disk_12] [SAT] at line 150 of file /etc/smartd.conf
+  Monitoring 4 ATA/SATA, 1 SCSI/SAS and 0 NVMe devices
   Device: /dev/sda, opened SCSI device
   Device: /dev/sda, SMART health: passed
-  Device: /dev/sdb, opened SCSI device
-  Device: /dev/sdb, SMART health: passed
-  Device: /dev/sdc, opened SCSI device
-  Device: /dev/sdc, SMART health: passed
-  Device: /dev/sdd, opened SCSI device
-  Device: /dev/sdd, SMART health: passed
-  Device: /dev/sde, opened SCSI device
-  Device: /dev/sde, SMART health: passed
-  Device: /dev/sda, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-47S0A01RF8KC.scsi.state
-  Device: /dev/sdb, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800021.scsi.state
-  Device: /dev/sdc, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800024.scsi.state
-  Device: /dev/sdd, state written to /var/lib/smartmontools/smartd.TOSHIBA-PX05SVB096Y-S3LHNX0J800016.scsi.state
-  Device: /dev/sde, state written to /var/lib/smartmontools/smartd.SEAGATE-ST1000NX0453-S3LHNX0J800026.scsi.state
+  Device: /dev/sdb [SAT], opened ATA device
+  Device: /dev/sdb [SAT], SMART Usage Attribute: 190 Airflow_Temperature_Cel changed from 70 to 69
+  Device: /dev/sdb [SAT], SMART Usage Attribute: 194 Temperature_Celsius changed from 70 to 69
+  Device: /dev/sdb [SAT], previous self-test completed without error
+  Device: /dev/sdc [SAT], opened ATA device
+  Device: /dev/sdc [SAT], previous self-test completed without error
+  Device: /dev/sdd [SAT], opened ATA device
+  Device: /dev/sdd [SAT], previous self-test completed without error
+  Device: /dev/sde [SAT], opened ATA device
+  Device: /dev/sde [SAT], previous self-test completed without error
+  Device: /dev/sda, state written to /var/lib/smartmontools/smartd.TOSHIBA-AL14SEB030N-47S0A01RF8KC.scsi.state
+  Device: /dev/sdb [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800021.ata.state
+  Device: /dev/sdc [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800024.ata.state
+  Device: /dev/sdd [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800016.ata.state
+  Device: /dev/sde [SAT], state written to /var/lib/smartmontools/smartd.SAMSUNG_MZ7LM960HMJP_00003-S3LHNX0J800026.ata.state
   Started with '-q onecheck' option. All devices successfully checked once.
   smartd is exiting (exit status 0)
 exception: null

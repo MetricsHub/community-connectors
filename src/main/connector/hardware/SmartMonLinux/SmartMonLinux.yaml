@@ -111,22 +111,15 @@ monitors:
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
           computes:
             - type: awk
-              script: |
-                /Non-medium error count:/ {
-                    found = 1
-                    print $NF ";joinValue;"
-                }
-
-                END {
-                    if (!found)
-                        print " ;joinValue;"
-                }
+              script: "${file::physical_disk_error_counters.awk}"             
+              separators: ;
         source(5):
           type: tableJoin
           leftTable: "${source::monitors.physical_disk.collect.sources.source(3)}"
           rightTable: "${source::monitors.physical_disk.collect.sources.source(4)}"
           leftKeyColumn: 6
-          rightKeyColumn: 2
+          rightKeyColumn: 14
+          defaultRightLine: ";;;;;;;joinValue;"
           
       mapping:
         # ValueTable = Source(1)
@@ -134,7 +127,21 @@ monitors:
         metrics:
           hw.status{hw.type="physical_disk", state="predicted_failure"}: boolean($2)
           hw.status{hw.type="physical_disk"}: $4
-          hw.errors{hw.type="physical_disk"}: $7
+          hw.errors{hw.type="physical_disk", error.type="ecc_fast", disk.io.direction="read"}: $7
+          hw.errors{hw.type="physical_disk", error.type="ecc_delayed", disk.io.direction="read"}: $8
+          hw.errors{hw.type="physical_disk", error.type="rereads_rewrites", disk.io.direction="read"}: $9
+          hw.errors{hw.type="physical_disk", error.type="corrected", disk.io.direction="read"}: $10
+          hw.errors{hw.type="physical_disk", error.type="invocations", disk.io.direction="read"}: $11
+          hw.errors{hw.type="physical_disk", error.type="uncorrected", disk.io.direction="read"}: $12
+
+          hw.errors{hw.type="physical_disk", error.type="ecc_fast", disk.io.direction="write"}: $13
+          hw.errors{hw.type="physical_disk", error.type="ecc_delayed", disk.io.direction="write"}: $14
+          hw.errors{hw.type="physical_disk", error.type="rereads_rewrites", disk.io.direction="write"}: $15
+          hw.errors{hw.type="physical_disk", error.type="corrected", disk.io.direction="write"}: $16
+          hw.errors{hw.type="physical_disk", error.type="invocations", disk.io.direction="write"}: $17
+          hw.errors{hw.type="physical_disk", error.type="uncorrected", disk.io.direction="write"}: $18
+
+          hw.errors{hw.type="physical_disk", error.type="non_medium"}: $19
         legacyTextParameters:
           StatusInformation: $5
   temperature:
@@ -180,6 +187,25 @@ monitors:
         source: "${source::monitors.temperature.collect.sources.source(1)}"
         metrics:
           hw.temperature: $1
+  smart:
+    keys: [ hw.id, hw.physical_disk.smart_attribute ]
+    simple:
+      sources:
+        source(1):
+          # Source(1) = output of smartAttributes.sh
+          # GeneratedId;DiskId;SmartAttributeName;RawValue
+          type: commandLine
+          commandLine: "sh ${file::smartAttributes.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
+          keep: ^MSHW;
+          separators: ;
+          selectColumns: "2,3,4"
+      mapping:
+        source: "${source::monitors.smart.simple.sources.source(1)}"
+        attributes:
+          hw.id: $1
+          hw.physical_disk.smart_attribute: $2
+        metrics:
+          hw.physical_disk.smart: $3
 translations:
   PhysicalDiskPredictedFailureTranslationTable:
     Ok!: 1;false
