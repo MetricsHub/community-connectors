@@ -105,19 +105,6 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.current_connections{db.connection.state=\"idle\"}" : {
-        "name" : "db.server.current_connections{db.connection.state=\"idle\"}",
-        "collectTime" : 1771499555365,
-        "previousCollectTime" : 1771499550510,
-        "attributes" : {
-          "db.connection.state" : "idle"
-        },
-        "resetMetricTime" : true,
-        "value" : 3.0,
-        "previousValue" : 3.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
       "db.server.postgresql.checkpointer.buffers" : {
         "name" : "db.server.postgresql.checkpointer.buffers",
         "collectTime" : 1771499555365,
@@ -163,19 +150,6 @@
         "resetMetricTime" : true,
         "value" : 942.0,
         "previousValue" : 942.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "db.server.current_connections{db.connection.state=\"active\"}" : {
-        "name" : "db.server.current_connections{db.connection.state=\"active\"}",
-        "collectTime" : 1771499555365,
-        "previousCollectTime" : 1771499550510,
-        "attributes" : {
-          "db.connection.state" : "active"
-        },
-        "resetMetricTime" : true,
-        "value" : 2.0,
-        "previousValue" : 2.0,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -281,7 +255,6 @@
     "attributes" : {
       "db.version" : "PostgreSQL 17.4 on x86_64-windows, compiled by msvc-19.42.34436, 64-bit",
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "id" : "postgres",
       "db.namespace" : "postgres"
@@ -322,6 +295,21 @@
         "resetMetricTime" : true,
         "value" : 0.0,
         "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections{db.connection.state=\"idle\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"idle\"}",
+        "collectTime" : 1774626439572,
+        "previousCollectTime" : 1774626434732,
+        "attributes" : {
+          "db.connection.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "metricType" : "UpDownCounter",
+        "value" : 3.0,
+        "previousValue" : 3.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -414,14 +402,18 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.current_connections" : {
-        "name" : "db.server.current_connections",
-        "collectTime" : 1771499555365,
-        "previousCollectTime" : 1771499550510,
-        "attributes" : { },
+      "db.server.current_connections{db.connection.state=\"active\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"active\"}",
+        "collectTime" : 1774624022004,
+        "previousCollectTime" : 1774624016905,
+        "attributes" : {
+          "db.connection.state" : "active"
+        },
         "resetMetricTime" : true,
-        "value" : 3.0,
-        "previousValue" : 3.0,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -541,7 +533,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres"
     },
@@ -584,6 +575,21 @@
         "type" : "NumberMetric",
         "updated" : true
       },
+      "db.server.current_connections{db.connection.state=\"idle\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"idle\"}",
+        "collectTime" : 1774624022004,
+        "previousCollectTime" : 1774624016905,
+        "attributes" : {
+          "db.connection.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "metricType" : "UpDownCounter",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
       "db.server.errors{error.type=\"session_fatal_error\"}" : {
         "name" : "db.server.errors{error.type=\"session_fatal_error\"}",
         "collectTime" : 1771499555365,
@@ -673,14 +679,18 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.current_connections" : {
-        "name" : "db.server.current_connections",
-        "collectTime" : 1771499555365,
-        "previousCollectTime" : 1771499550510,
-        "attributes" : { },
+      "db.server.current_connections{db.connection.state=\"active\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"active\"}",
+        "collectTime" : 1774624022004,
+        "previousCollectTime" : 1774624016905,
+        "attributes" : {
+          "db.connection.state" : "active"
+        },
         "resetMetricTime" : true,
+        "metricType" : "UpDownCounter",
         "value" : 0.0,
         "previousValue" : 0.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -800,7 +810,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "test2"
     },
@@ -843,6 +852,21 @@
         "type" : "NumberMetric",
         "updated" : true
       },
+      "db.server.current_connections{db.connection.state=\"idle\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"idle\"}",
+        "collectTime" : 1774624022004,
+        "previousCollectTime" : 1774624016905,
+        "attributes" : {
+          "db.connection.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
       "db.server.errors{error.type=\"session_fatal_error\"}" : {
         "name" : "db.server.errors{error.type=\"session_fatal_error\"}",
         "collectTime" : 1771499555365,
@@ -932,14 +956,18 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.current_connections" : {
-        "name" : "db.server.current_connections",
-        "collectTime" : 1771499555365,
-        "previousCollectTime" : 1771499550510,
-        "attributes" : { },
+      "db.server.current_connections{db.connection.state=\"active\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"active\"}",
+        "collectTime" : 1774624022004,
+        "previousCollectTime" : 1774624016905,
+        "attributes" : {
+          "db.connection.state" : "active"
+        },
         "resetMetricTime" : true,
+        "metricType" : "UpDownCounter",
         "value" : 0.0,
         "previousValue" : 0.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -1059,7 +1087,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "test3"
     },
@@ -1099,6 +1126,21 @@
         "resetMetricTime" : true,
         "value" : 0.0,
         "previousValue" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections{db.connection.state=\"idle\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"idle\"}",
+        "collectTime" : 1774624022004,
+        "previousCollectTime" : 1774624016905,
+        "attributes" : {
+          "db.connection.state" : "idle"
+        },
+        "resetMetricTime" : true,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -1191,14 +1233,18 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.current_connections" : {
-        "name" : "db.server.current_connections",
-        "collectTime" : 1771499555365,
-        "previousCollectTime" : 1771499550510,
-        "attributes" : { },
+      "db.server.current_connections{db.connection.state=\"active\"}" : {
+        "name" : "db.server.current_connections{db.connection.state=\"active\"}",
+        "collectTime" : 1774624022004,
+        "previousCollectTime" : 1774624016905,
+        "attributes" : {
+          "db.connection.state" : "active"
+        },
         "resetMetricTime" : true,
-        "value" : 1.0,
-        "previousValue" : 1.0,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -1318,7 +1364,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "test4"
     },
@@ -1450,17 +1495,6 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.current_connections" : {
-        "name" : "db.server.current_connections",
-        "collectTime" : 1771499555365,
-        "previousCollectTime" : 1771499550510,
-        "attributes" : { },
-        "resetMetricTime" : true,
-        "value" : 0.0,
-        "previousValue" : 0.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
       "db.server.postgresql.session_time" : {
         "name" : "db.server.postgresql.session_time",
         "collectTime" : 1771499555365,
@@ -1577,7 +1611,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "testdatabase"
     },
@@ -1608,7 +1641,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class",
@@ -1641,7 +1673,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class_oid_index",
@@ -1674,7 +1705,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class_relname_nsp_index",
@@ -1707,7 +1737,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_class_tblspc_relfilenode_index",
@@ -1740,7 +1769,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_database",
@@ -1773,7 +1801,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_database_datname_index",
@@ -1806,7 +1833,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_database_oid_index",
@@ -1839,7 +1865,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_locks",
@@ -1872,7 +1897,6 @@
     },
     "attributes" : {
       "db.system" : "postgresql",
-      "db.server.port" : "5432",
       "connector_id" : "PostgreSQL",
       "db.namespace" : "postgres",
       "db.server.lock.relation" : "pg_stat_database",

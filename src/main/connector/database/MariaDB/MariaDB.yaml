@@ -216,8 +216,7 @@ monitors:
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_flow_control_paused' THEN VARIABLE_VALUE END) AS wsrep_flow_control_paused, -- $122
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_recv_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_recv_queue_avg, -- $123
               MAX(CASE WHEN VARIABLE_NAME = 'wsrep_local_send_queue_avg' THEN VARIABLE_VALUE END) AS wsrep_local_send_queue_avg, -- $124
-              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cert_deps_distance' THEN VARIABLE_VALUE END) AS wsrep_cert_deps_distance, -- $125
-              @@port AS db_port -- $126
+              MAX(CASE WHEN VARIABLE_NAME = 'wsrep_cert_deps_distance' THEN VARIABLE_VALUE END) AS wsrep_cert_deps_distance -- $125
             FROM information_schema.GLOBAL_STATUS s
             CROSS JOIN (
               SELECT
@@ -385,7 +384,6 @@ monitors:
         attributes:
           db.system: mariadb
           db.server.name: $57
-          db.server.port: $126
           id: $57
           db.namespace: $1
           db.version: $2

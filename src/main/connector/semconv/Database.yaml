@@ -188,4 +188,8 @@ metrics:
     description: the number of table locks
     type: Counter
     unit: "{table_lock}"
+  db.server.cache.io:
+    description: The amount of data requested through cache I/O operations.
+    type: Counter
+    unit: By
 
