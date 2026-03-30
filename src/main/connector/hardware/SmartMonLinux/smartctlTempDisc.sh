@@ -52,8 +52,9 @@ SMARTCTL=$2
 TMPFILE=/tmp/MS_HW_smartmontoolsHDF_$$
 
 # Build a temporary smartd inventory used to discover SMART-capable disks.
-"$SMARTD" -c > "$TMPFILE"
-"$SMARTD" -q onecheck >> "$TMPFILE"
+set -- $SMARTD
+"$@" -c > "$TMPFILE"
+"$@" -q onecheck >> "$TMPFILE"
 
 while IFS= read -r line; do
     case "$line" in
@@ -86,6 +87,8 @@ while IFS= read -r line; do
             esac
 
             # Build the appropriate smartctl command based on the discovered label.
+            set -- $SMARTCTL
+
             if [ -n "$LABEL" ]; then
                 LABEL=$(lowercase "$LABEL")
 
@@ -96,20 +99,19 @@ while IFS= read -r line; do
                         DEVTYPE=${LABEL%%_*}
                         DRIVENUM=${LABEL##*_}
                         EXTRA="-d ${DEVTYPE},${DRIVENUM}"
-                        OUTPUT=$("$SMARTCTL" -d "${DEVTYPE},${DRIVENUM}" -a "$DISKID" 2>&1)
+                        set -- "$@" -d "${DEVTYPE},${DRIVENUM}"
                         ;;
                     *)
                         # Simple label format: type
                         # Example: sat -> smartctl -d sat -a /dev/sdX
                         DEVTYPE=$LABEL
                         EXTRA="-d ${DEVTYPE}"
-                        OUTPUT=$("$SMARTCTL" -d "$DEVTYPE" -a "$DISKID" 2>&1)
+                        set -- "$@" -d "$DEVTYPE"
                         ;;
                 esac
-            else
-                OUTPUT=$("$SMARTCTL" -a "$DISKID" 2>&1)
             fi
-
+            # Plain device falls through automatically (no -d added)
+            OUTPUT=$("$@" -a "$DISKID" 2>&1)
             foundTemperature=0
             warningThreshold=
 

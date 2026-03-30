@@ -119,7 +119,7 @@ monitors:
           rightTable: "${source::monitors.physical_disk.collect.sources.source(4)}"
           leftKeyColumn: 6
           rightKeyColumn: 14
-          defaultRightLine: ";;;;;;;joinValue;"
+          defaultRightLine: ";;;;;;;;;;;;;joinValue"
           
       mapping:
         # ValueTable = Source(1)

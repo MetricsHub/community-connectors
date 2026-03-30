@@ -36,8 +36,10 @@ TMPFILE=/tmp/MS_HW_smartAttributes_$$
 SEEN=
 
 # Collect smartd discovery output in one temp file.
-"$SMARTD" -c > "$TMPFILE"
-"$SMARTD" -q onecheck >> "$TMPFILE"
+set -- $SMARTD
+"$@" -c > "$TMPFILE"
+set -- $SMARTD
+"$@" -q onecheck >> "$TMPFILE"
 
 while IFS= read -r line; do
     case "$line" in
@@ -94,11 +96,12 @@ while IFS= read -r line; do
             SEEN="$SEEN|$KEY"
 
             # Run smartctl with extra device hints when needed.
-            if [ -n "$EXTRA" ]; then
-                OUTPUT=$($SMARTCTL $EXTRA -a "$DISKID" 2>&1)
-            else
-                OUTPUT=$($SMARTCTL -a "$DISKID" 2>&1)
-            fi
+            set -- $SMARTCTL
+
+            # Append EXTRA arguments if present
+            [ -n "$EXTRA" ] && set -- "$@" $EXTRA
+
+            OUTPUT=$("$@" -a "$DISKID" 2>&1)
 
             in_smart_table=0
 

@@ -56,8 +56,9 @@ TMPFILE=/tmp/MS_HW_smartmontoolsHDF_$$
 # Build a temporary smartd inventory:
 # - smartd -c dumps the parsed configuration / discovered devices
 # - smartd -q onecheck performs one immediate check and prints device lines too
-"$SMARTD" -c > "$TMPFILE"
-"$SMARTD" -q onecheck >> "$TMPFILE"
+set -- $SMARTD
+"$@" -c > "$TMPFILE"
+"$@" -q onecheck >> "$TMPFILE"
 
 # Read smartd output line by line and only keep lines announcing SMART-capable devices.
 while IFS= read -r line; do
@@ -97,12 +98,14 @@ while IFS= read -r line; do
             esac
 
             # Decide how smartctl must be called.
-            if [ -n "$LABEL" ]; then
-                # Normalize the label once so both:
-                #   SAT        -> sat
-                #   SAT_disk_3 -> sat_disk_3
-                # are handled consistently.
-                LABEL=$(lowercase "$LABEL")
+           set -- $SMARTCTL
+
+           if [ -n "$LABEL" ]; then
+               # Normalize the label once so both:
+               #   SAT        -> sat
+               #   SAT_disk_3 -> sat_disk_3
+               # are handled consistently.
+               LABEL=$(lowercase "$LABEL")
 
                 case "$LABEL" in
                     *_*)
@@ -112,7 +115,7 @@ while IFS= read -r line; do
                         DEVTYPE=${LABEL%%_*}
                         DRIVENUM=${LABEL##*_}
                         EXTRA="-d ${DEVTYPE},${DRIVENUM}"
-                        OUTPUT=$("$SMARTCTL" -d "${DEVTYPE},${DRIVENUM}" -a "$DISKID" 2>&1)
+                        set -- "$@" -d "${DEVTYPE},${DRIVENUM}"
                         ;;
                     *)
                         # Simple label format: type
@@ -120,13 +123,13 @@ while IFS= read -r line; do
                         #   sat -> -d sat
                         DEVTYPE=$LABEL
                         EXTRA="-d ${DEVTYPE}"
-                        OUTPUT=$("$SMARTCTL" -d "$DEVTYPE" -a "$DISKID" 2>&1)
+                        set -- "$@" -d "$DEVTYPE"
                         ;;
                 esac
-            else
-                # Plain device without special selector.
-                OUTPUT=$("$SMARTCTL" -a "$DISKID" 2>&1)
             fi
+
+            # Plain device falls through automatically (no -d added)
+            OUTPUT=$("$@" -a "$DISKID" 2>&1)
 
             # Extract inventory fields from smartctl output.
             vendor=

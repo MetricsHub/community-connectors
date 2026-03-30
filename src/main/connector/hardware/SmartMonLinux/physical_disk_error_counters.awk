@@ -58,5 +58,5 @@ in_error_log && /^write:/ {
 
 # Emit one joined record for the caller.
 END {
-    print ecc_fast_read, ecc_delayed_read, rereads_rewrites_read, corrected_read, invocations_read, uncorrected_read, ecc_fast_write, ecc_delayed_write, rereads_rewrites_write, corrected_write, invocations_write, uncorrected_write, non_medium, "joinValue;"
+    print ecc_fast_read, ecc_delayed_read, rereads_rewrites_read, corrected_read, invocations_read, uncorrected_read, ecc_fast_write, ecc_delayed_write, rereads_rewrites_write, corrected_write, invocations_write, uncorrected_write, non_medium, "joinValue"
 }
