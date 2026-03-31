@@ -26,33 +26,35 @@ connector:
       expectedResult: ^/usr/sbin/smartctl$
       errorMessage: Unable to find the smartctl program in /usr/sbin
     - type: commandLine
-      commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -c;%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
+      commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
       expectedResult: "Device: .* opened"
       errorMessage: Unable to run the smartd/smartctl utility (not enough privilege?)
     - type: commandLine
-      commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -c;%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
+      commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
       expectedResult: "Device: .* is SMART capable"
       errorMessage: No S.M.A.R.T-capable disk found.
     tags: [ hardware, storage, linux ]
 sudoCommands:
 - /usr/sbin/smartctl
 - /bin/dd
+beforeAll:
+  smartctlAll:
+    # smartctl -a command output delimited with ###DEVICE and ###ENDDEVICE
+    type: commandLine
+    commandLine: "sh ${file::smartctlAll.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
 monitors:
   physical_disk:
     discovery:
       sources:
         source(1):
-          # Source(1) = output of smartd -c + smartctl reformatted by awk (see smartctlAll.sh)
-          # DeviceID;Vendor;SerialNumber
-          type: commandLine
-          commandLine: "sh ${file::smartctlAll.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
-          keep: ^MSHW;
-          separators: ;
-          selectColumns: "2,3,4,5"
+          type: copy
+          from: "${source::beforeAll.smartctlAll}"
           computes:
-          # Exclude Disks Whose vendor is listed as "Virtual"
-          # This was added because IBM's drivers are badly written.
-          # DeviceID;Vendor;Size
+          - type: awk
+            script: "${file::smartctl_inventory.awk}"
+            keep: ^MSHW;
+            separators: ;
+            selectColumns: "2,3,4,5"
           - type: excludeMatchingLines
             column: 2
             regExp: "[Vv]irtual"
@@ -74,10 +76,10 @@ monitors:
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}"
           computes:
-          # Process smartctl's output through awk physicalDiskSmartHealth.sh
+          # Process smartctl's output through awk physical_disk_smart_health.awk
           # SMARTstatus
           - type: awk
-            script: "${file::physicalDiskSmartHealth.sh}"
+            script: "${file::physical_disk_smart_health.awk}"
             keep: ^MSHW;
             separators: ;
             selectColumns: 2
@@ -111,7 +113,7 @@ monitors:
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
           computes:
             - type: awk
-              script: "${file::physical_disk_error_counters.awk}"             
+              script: "${file::physical_disk_error_counters.awk}"
               separators: ;
         source(5):
           type: tableJoin
@@ -148,13 +150,15 @@ monitors:
     discovery:
       sources:
         source(1):
-          # Source(1) = output of smartctlTempDisc.sh
-          # DeviceID;WarningThreshold
-          type: commandLine
-          commandLine: "sh ${file::smartctlTempDisc.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
-          keep: ^MSHW;
-          separators: ;
-          selectColumns: "2,3,4"
+          type: copy
+          from: "${source::beforeAll.smartctlAll}"
+          computes:
+          - type: awk
+            # Output: DeviceID;WarningThreshold
+            script: "${file::smartctl_temperature_discovery.awk}"
+            keep: ^MSHW;
+            separators: ;
+            selectColumns: "2,3,4"
       mapping:
         # InstanceTable = Source(1)
         source: "${source::monitors.temperature.discovery.sources.source(1)}"
@@ -175,10 +179,10 @@ monitors:
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
           computes:
-          # Process smartctl's output through awk smartctlTempColl.sh
+          # Process smartctl's output through awk smartctl_temperature_collect.awk
           # Temperature
           - type: awk
-            script: "${file::smartctlTempColl.sh}"
+            script: "${file::smartctl_temperature_collect.awk}"
             keep: ^MSHW;
             separators: ;
             selectColumns: 2
@@ -192,13 +196,16 @@ monitors:
     simple:
       sources:
         source(1):
-          # Source(1) = output of smartAttributes.sh
-          # GeneratedId;DiskId;SmartAttributeName;RawValue
-          type: commandLine
-          commandLine: "sh ${file::smartAttributes.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
-          keep: ^MSHW;
-          separators: ;
-          selectColumns: "2,3,4"
+          type: copy
+          from: "${source::beforeAll.smartctlAll}"
+          computes:
+          - type: awk
+            # Source(1) = output of smart_attributes.awk
+            # GeneratedId;DiskId;SmartAttributeName;RawValue
+            script: "${file::smart_attributes.awk}"
+            keep: ^MSHW;
+            separators: ;
+            selectColumns: "2,3,4"
       mapping:
         source: "${source::monitors.smart.simple.sources.source(1)}"
         attributes:

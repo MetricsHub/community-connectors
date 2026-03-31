@@ -1,88 +1,52 @@
 #!/bin/sh
 
-# Convert ASCII uppercase letters to lowercase without external tools.
-# This keeps the script strictly POSIX /bin/sh and avoids using tr/awk.
-lowercase() {
-    in=$1
-    out=
+# Collector only: discover SMART-capable devices, run smartctl -a,
+# and emit a deterministic record stream for MetricsHub/Jawk.
+# Output contract:
+#   ###DEVICE;;<device>;;<smartctl_extra>
+#   <verbatim smartctl -a output>
+#   ###ENDDEVICE
 
-    while [ -n "$in" ]; do
-        # Extract the first character.
-        c=${in%"${in#?}"}
-        # Drop the first character from the remaining input.
-        in=${in#?}
-
-        case "$c" in
-            A) c=a ;;
-            B) c=b ;;
-            C) c=c ;;
-            D) c=d ;;
-            E) c=e ;;
-            F) c=f ;;
-            G) c=g ;;
-            H) c=h ;;
-            I) c=i ;;
-            J) c=j ;;
-            K) c=k ;;
-            L) c=l ;;
-            M) c=m ;;
-            N) c=n ;;
-            O) c=o ;;
-            P) c=p ;;
-            Q) c=q ;;
-            R) c=r ;;
-            S) c=s ;;
-            T) c=t ;;
-            U) c=u ;;
-            V) c=v ;;
-            W) c=w ;;
-            X) c=x ;;
-            Y) c=y ;;
-            Z) c=z ;;
-        esac
-
-        out=$out$c
-    done
-
-    printf '%s\n' "$out"
-}
-
-# $1 = path to smartd
-# $2 = path to smartctl
 SMARTD=$1
 SMARTCTL=$2
-TMPFILE=/tmp/MS_HW_smartmontoolsHDF_$$
+SEEN=
 
-# Build a temporary smartd inventory:
-# - smartd -c dumps the parsed configuration / discovered devices
-# - smartd -q onecheck performs one immediate check and prints device lines too
+normalize_type() {
+    case "$1" in
+        SAT|sat)
+            printf '%s' 'sat'
+            ;;
+        NVME|nvme)
+            printf '%s' 'nvme'
+            ;;
+        SCSI|scsi)
+            printf '%s' 'scsi'
+            ;;
+        ATA|ata)
+            printf '%s' 'ata'
+            ;;
+        megaraid|MEGARAID)
+            printf '%s' 'megaraid'
+            ;;
+        *)
+            printf '%s' "$1"
+            ;;
+    esac
+}
+
 set -- $SMARTD
-"$@" -c > "$TMPFILE"
-"$@" -q onecheck >> "$TMPFILE"
-
-# Read smartd output line by line and only keep lines announcing SMART-capable devices.
+"$@" -q onecheck 2>&1 |
 while IFS= read -r line; do
     case "$line" in
         "Device: "*' is SMART capable'*)
-            # Parse the device path from the second whitespace-separated token.
-            # Example:
-            #   Device: /dev/sdb, is SMART capable. Add to smartd database.
             set -- $line
             DISKID=$2
-            # Remove the trailing comma after the device path.
             DISKID=${DISKID%,}
 
-            DEVTYPE=
-            DRIVENUM=
             LABEL=
-            # EXTRA is echoed as the 5th MetricsHub field so the monitor phase
-            # can reuse the exact smartctl device selector.
-            EXTRA=" "
+            EXTRA=
+            KEY=
 
-            # Extract the first bracketed label, if any.
-            # smartd lines may include labels like:
-            #   [SAT]
-            #   [SAT_disk_12]
             case "$line" in
                 *'['*']'*)
                     LABEL=${line#*[}
@@ -90,78 +54,48 @@ while IFS= read -r line; do
                     ;;
             esac
 
-            # Ignore USB bus helper devices and similar pseudo-paths.
             case "$DISKID" in
                 /dev/bus/*)
                     continue
                     ;;
             esac
 
-            # Decide how smartctl must be called.
-           set -- $SMARTCTL
-
-           if [ -n "$LABEL" ]; then
-               # Normalize the label once so both:
-               #   SAT        -> sat
-               #   SAT_disk_3 -> sat_disk_3
-               # are handled consistently.
-               LABEL=$(lowercase "$LABEL")
-
+            if [ -n "$LABEL" ]; then
+                # smartctl label encodes transport and optional slot/index.
                 case "$LABEL" in
                     *_*)
-                        # Label format: type_disk_N
-                        # Example:
-                        #   sat_disk_3 -> DEVTYPE=sat, DRIVENUM=3
                         DEVTYPE=${LABEL%%_*}
                         DRIVENUM=${LABEL##*_}
+                        DEVTYPE=$(normalize_type "$DEVTYPE")
                         EXTRA="-d ${DEVTYPE},${DRIVENUM}"
-                        set -- "$@" -d "${DEVTYPE},${DRIVENUM}"
+                        KEY="$DISKID|$EXTRA"
                         ;;
                     *)
-                        # Simple label format: type
-                        # Example:
-                        #   sat -> -d sat
-                        DEVTYPE=$LABEL
+                        DEVTYPE=$(normalize_type "$LABEL")
                         EXTRA="-d ${DEVTYPE}"
-                        set -- "$@" -d "$DEVTYPE"
+                        KEY="$DISKID|$EXTRA"
                         ;;
                 esac
+            else
+                KEY="$DISKID|plain"
             fi
 
-            # Plain device falls through automatically (no -d added)
-            OUTPUT=$("$@" -a "$DISKID" 2>&1)
+            case "|$SEEN|" in
+                *"|$KEY|"*)
+                    # Skip duplicate device/type combinations.
+                    continue
+                    ;;
+            esac
+            SEEN="$SEEN|$KEY"
 
-            # Extract inventory fields from smartctl output.
-            vendor=
-            serialNumber=
-            while IFS= read -r out_line; do
-                case "$out_line" in
-                    [Vv]endor:*)
-                        set -- $out_line
-                        vendor=$2
-                        ;;
-                    [Ss]erial\ [Nn]umber:*)
-                        set -- $out_line
-                        serialNumber=$3
-                        ;;
-                    [Dd]evice\ [Mm]odel:*)
-                        # Fallback for devices that expose only "Device Model"
-                        # and no explicit "Vendor" field.
-                        if [ -z "$vendor" ]; then
-                            set -- $out_line
-                            vendor=$3
-                        fi
-                        ;;
-                esac
-            done <<EOF
-$OUTPUT
-EOF
+            set -- $SMARTCTL
+            if [ -n "$EXTRA" ]; then
+                set -- "$@" $EXTRA
+            fi
 
-            # MetricsHub output format:
-            # MSHW;<DeviceID>;<Vendor>;<SerialNumber>;<Extra smartctl args>
-            echo "MSHW;$DISKID;$vendor;$serialNumber;$EXTRA"
+            printf '###DEVICE;;%s;;%s\n' "$DISKID" "$EXTRA"
+            "$@" -a "$DISKID" 2>&1
+            printf '%s\n' '###ENDDEVICE'
             ;;
     esac
-done < "$TMPFILE"
-
-rm -f "$TMPFILE"
+done
