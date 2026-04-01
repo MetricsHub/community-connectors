@@ -51,6 +51,7 @@ monitors:
           from: "${source::beforeAll.smartctlAll}"
           computes:
           - type: awk
+            # Output: "MSHW"; deviceID; vendor; serialNumber; extraOptions
             script: "${file::smartctl_inventory.awk}"
             keep: ^MSHW;
             separators: ;
@@ -113,6 +114,7 @@ monitors:
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
           computes:
             - type: awk
+              # Output: ecc_fast_read; ecc_delayed_read; rereads_rewrites_read; corrected_read; invocations_read; uncorrected_read; ecc_fast_write; ecc_delayed_write; rereads_rewrites_write; corrected_write; invocations_write; uncorrected_write; non_medium; "joinValue"
               script: "${file::physical_disk_error_counters.awk}"
               separators: ;
         source(5):
@@ -154,7 +156,7 @@ monitors:
           from: "${source::beforeAll.smartctlAll}"
           computes:
           - type: awk
-            # Output: DeviceID;WarningThreshold
+            # Output: DeviceID;WarningThreshold; ExtraOptions
             script: "${file::smartctl_temperature_discovery.awk}"
             keep: ^MSHW;
             separators: ;
@@ -180,7 +182,7 @@ monitors:
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
           computes:
           # Process smartctl's output through awk smartctl_temperature_collect.awk
-          # Temperature
+          # "MSHW"; Temperature
           - type: awk
             script: "${file::smartctl_temperature_collect.awk}"
             keep: ^MSHW;
@@ -201,7 +203,7 @@ monitors:
           computes:
           - type: awk
             # Source(1) = output of smart_attributes.awk
-            # GeneratedId;DiskId;SmartAttributeName;RawValue
+            # Output: "MSHW";DiskId;SmartAttributeName;RawValue
             script: "${file::smart_attributes.awk}"
             keep: ^MSHW;
             separators: ;
