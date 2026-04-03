@@ -3,14 +3,6 @@ result: |
   smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
   Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
 
-  =======> ARGUMENT REQUIRED FOR OPTION: c <=======
-  =======> VALID ARGUMENTS ARE: <FILE_NAME>, - <=======
-
-  Use smartd -h to get a usage summary
-
-  smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
-  Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
-
   Opened configuration file /etc/smartd.conf
   Configuration file /etc/smartd.conf was parsed, found DEVICESCAN, scanning devices
   Device: /dev/sda, opened
@@ -99,19 +91,11 @@ result: |
 success: true
 message: |
   CommandLineCriterion test succeeded:
-  - CommandLine: /usr/sbin/smartd -c;/usr/sbin/smartd -q onecheck
+  - CommandLine: /usr/sbin/smartd -q onecheck
   - ExecuteLocally: false
   - ExpectedResult: Device: .* is SMART capable
 
   Result: smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
-  Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
-
-  =======> ARGUMENT REQUIRED FOR OPTION: c <=======
-  =======> VALID ARGUMENTS ARE: <FILE_NAME>, - <=======
-
-  Use smartd -h to get a usage summary
-
-  smartd 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
   Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
 
   Opened configuration file /etc/smartd.conf
@@ -203,7 +187,7 @@ exception: null
 criterion: !<commandLine>
   type: commandLine
   forceSerialization: false
-  commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -c;%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
+  commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
   errorMessage: No S.M.A.R.T-capable disk found.
   expectedResult: "Device: .* is SMART capable"
   executeLocally: false
