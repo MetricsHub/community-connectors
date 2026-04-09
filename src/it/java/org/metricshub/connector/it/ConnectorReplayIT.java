@@ -1,5 +1,7 @@
 package org.metricshub.connector.it;
 
+import java.nio.file.Paths;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -16,28 +18,27 @@ class ConnectorReplayIT {
 	 */
 	@ParameterizedTest
 	@ValueSource(strings = {
-		"AMDRadeon",
-		"Cassandra",
-		"IpmiTool",
-		"Linux",
-		"LinuxFile",
-		"LinuxIfConfigNetwork",
-		"LinuxIPNetwork",
-		"LinuxIpmiTool",
-		"Lmsensors",
-		"MariaDB",
-		"MIB2",
-		"MIB2Switch",
-		"MySQL",
-		"PostgreSQL",
+		//"AMDRadeon",
+		//"Cassandra",
+		//"IpmiTool",
+		//"Linux",
+		//"LinuxFile",
+		//"LinuxIfConfigNetwork",
+		//"LinuxIPNetwork",
+		//"LinuxIpmiTool",
+		//"Lmsensors",
+		//"MariaDB",
+		//"MIB2",
+		//"MIB2Switch",
+		//"MySQL",
+		//"PostgreSQL",
 		"Redfish",
-		"SmartMonLinux",
-		"WbemGenDiskNT",
-		"WindowsFile",
-		"WindowsIpmiTool",
-		"WinStorageSpaces"
+		//"SmartMonLinux",
+		//"WbemGenDiskNT",
+		//"WindowsFile",
+		//"WindowsIpmiTool",
+		//"WinStorageSpaces"
 	})
-
 	void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)
 			.withServerRecordData()

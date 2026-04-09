@@ -4,10 +4,11 @@
     "metrics" : {
       "metricshub.connector.status" : {
         "name" : "metricshub.connector.status",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "ok", "failed" ],
@@ -25,41 +26,44 @@
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed HttpCriterion Criterion:\n- Method: GET\n- Path: /redfish/v1/Systems\n- Header: Authorization: Basic %{BASIC_AUTH_BASE64}\n- ExpectedResult: redfish\n- ErrorMessage: Invalid credentials / not a redfish system\n- ResultContent: BODY\n\nResult:\n{\"@odata.context\":\"/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.type\":\"#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.id\":\"/redfish/v1/Systems\",\"Name\":\"Computer System Collection\",\"Description\":\"Computer System Collection\",\"Members@odata.count\":1,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1\"}]}\n\nMessage:\n====================================\nHostname com-prox-01-mgt - HTTP test succeeded. Returned result: {\"@odata.context\":\"/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.type\":\"#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.id\":\"/redfish/v1/Systems\",\"Name\":\"Computer System Collection\",\"Description\":\"Computer System Collection\",\"Members@odata.count\":1,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1\"}]}.\n====================================\n\nConclusion:\nTest on anyhost SUCCEEDED"
+      "StatusInformation" : "Executed HttpCriterion Criterion:\n- Method: GET\n- Path: /redfish/v1/Systems\n- Header: Authorization: Basic %{BASIC_AUTH_BASE64}\n- ExpectedResult: redfish\n- ErrorMessage: Invalid credentials / not a redfish system\n- ResultContent: BODY\n\nResult:\n{\"@odata.context\":\"/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.type\":\"#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.id\":\"/redfish/v1/Systems\",\"Name\":\"Computer System Collection\",\"Description\":\"Computer System Collection\",\"Members@odata.count\":1,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1\"}]}\n\nMessage:\n====================================\nHostname anyhost - HTTP test succeeded. Returned result: {\"@odata.context\":\"/redfish/v1/$metadata#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.type\":\"#ComputerSystemCollection.ComputerSystemCollection\",\"@odata.id\":\"/redfish/v1/Systems\",\"Name\":\"Computer System Collection\",\"Description\":\"Computer System Collection\",\"Members@odata.count\":1,\"Members\":[{\"@odata.id\":\"/redfish/v1/Systems/1\"}]}.\n====================================\n\nConclusion:\nTest on anyhost SUCCEEDED"
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "connector",
     "id" : "connector_Redfish",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : true,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"cpu\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"cpu\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "cpu"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"cpu\"}" : {
         "name" : "hw.status{hw.type=\"cpu\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "cpu"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -68,27 +72,31 @@
       },
       "hw.cpu.speed.limit{limit_type=\"max\"}" : {
         "name" : "hw.cpu.speed.limit{limit_type=\"max\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "max"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 4.0E9,
         "previousValue" : 4.0E9,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.power{hw.type=\"cpu\"}" : {
         "name" : "hw.power{hw.type=\"cpu\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "cpu"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 19.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -109,38 +117,41 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "cpu",
     "id" : "Redfish_cpu_1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "enclosure"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"enclosure\"}" : {
         "name" : "hw.status{hw.type=\"enclosure\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "enclosure"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -164,24 +175,25 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "enclosure",
     "id" : "Redfish_enclosure_/redfish/v1/Systems/1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"fan\"}" : {
         "name" : "hw.status{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -190,102 +202,118 @@
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.05,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 4900.0,
+        "metricType" : "Gauge",
+        "value" : 5600.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 700.0,
         "previousValue" : 700.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio" : {
         "name" : "hw.fan.speed_ratio",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 0.19291338582677164,
+        "metricType" : "Gauge",
+        "value" : 0.2204724409448819,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 4.9,
+        "metricType" : "Gauge",
+        "value" : 5.6,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 500.0,
         "previousValue" : 500.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -306,24 +334,25 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "fan",
     "id" : "Redfish_fan_0",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"fan\"}" : {
         "name" : "hw.status{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -332,102 +361,118 @@
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.05,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 4600.0,
+        "metricType" : "Gauge",
+        "value" : 5300.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 700.0,
         "previousValue" : 700.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio" : {
         "name" : "hw.fan.speed_ratio",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 0.18110236220472442,
+        "metricType" : "Gauge",
+        "value" : 0.20866141732283464,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 4.6,
+        "metricType" : "Gauge",
+        "value" : 5.3,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 500.0,
         "previousValue" : 500.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -448,24 +493,25 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "fan",
     "id" : "Redfish_fan_1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"fan\"}" : {
         "name" : "hw.status{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -474,102 +520,118 @@
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.05,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 4900.0,
+        "metricType" : "Gauge",
+        "value" : 5600.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 700.0,
         "previousValue" : 700.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio" : {
         "name" : "hw.fan.speed_ratio",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 0.19291338582677164,
+        "metricType" : "Gauge",
+        "value" : 0.2204724409448819,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 4.9,
+        "metricType" : "Gauge",
+        "value" : 5.6,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 500.0,
         "previousValue" : 500.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -590,24 +652,25 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "fan",
     "id" : "Redfish_fan_2",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"fan\"}" : {
         "name" : "hw.status{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -616,102 +679,118 @@
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.05,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed" : {
         "name" : "hw.fan.speed",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 4800.0,
+        "metricType" : "Gauge",
+        "value" : 5500.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 700.0,
         "previousValue" : 700.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio" : {
         "name" : "hw.fan.speed_ratio",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 0.1889763779527559,
+        "metricType" : "Gauge",
+        "value" : 0.21653543307086615,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 4.8,
+        "metricType" : "Gauge",
+        "value" : 5.5,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 0.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "low.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 500.0,
         "previousValue" : 500.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -732,173 +811,519 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "fan",
     "id" : "Redfish_fan_3",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"cpu\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"cpu\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.011,
+        "previousValue" : 0.011,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"physical_disk\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"physical_disk\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "physical_disk"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.038,
+        "previousValue" : 0.038,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.021,
+        "previousValue" : 0.021,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"voltage\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"voltage\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.021,
+        "previousValue" : 0.021,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.021,
+        "previousValue" : 0.021,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"network\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"network\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.022,
+        "previousValue" : 0.022,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.002,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"network\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"network\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "network"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.017,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"voltage\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"voltage\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.015,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
       "__hw.host.cpu.thermal_dissipation_rate" : {
         "name" : "__hw.host.cpu.thermal_dissipation_rate",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : null,
         "value" : 0.29,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.host.ambient_temperature" : {
         "name" : "hw.host.ambient_temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 23.0,
+        "metricType" : "Gauge",
+        "value" : 25.0,
         "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"power_supply\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"power_supply\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.01,
+        "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "__hw.host.average_warning_threshold" : {
         "name" : "__hw.host.average_warning_threshold",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : null,
         "value" : 85.45,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.up{protocol=\"http\"}" : {
-        "name" : "metricshub.host.up{protocol=\"http\"}",
-        "collectTime" : 1768484036220,
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"fan\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"fan\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "http"
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "fan"
         },
         "resetMetricTime" : false,
-        "value" : 1.0,
+        "metricType" : "Gauge",
+        "value" : 0.015,
         "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"memory\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"memory\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.02,
+        "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.host.heating_margin" : {
         "name" : "hw.host.heating_margin",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 47.0,
+        "metricType" : "Gauge",
+        "value" : 46.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"http\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"http\"}",
-        "collectTime" : 1768484036220,
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "http"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : 0.003,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"enclosure\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"enclosure\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.026,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"temperature\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"temperature\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.009,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"power_supply\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"power_supply\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "power_supply"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.026,
+        "previousValue" : 0.026,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"cpu\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"cpu\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Redfish",
+          "monitor.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.01,
+        "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "__hw.host.average_cpu_temperature" : {
         "name" : "__hw.host.average_cpu_temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 41.0,
+        "metricType" : null,
+        "value" : 42.5,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"enclosure\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"enclosure\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.127,
+        "previousValue" : 0.127,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"memory\", connector_id=\"Redfish\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"memory\", connector_id=\"Redfish\"}",
+        "collectTime" : 1775757864259,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Redfish",
+          "monitor.type" : "memory"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.028,
+        "previousValue" : 0.028,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
       "hw.host.power{quality=\"estimated\"}" : {
         "name" : "hw.host.power{quality=\"estimated\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "quality" : "estimated"
         },
         "resetMetricTime" : false,
-        "value" : 62.44,
+        "metricType" : "Gauge",
+        "value" : 65.56,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "metricshub.host.configured" : {
         "name" : "metricshub.host.configured",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
     },
     "attributes" : {
       "os.type" : "management",
-      "host.type" : "compute",
-      "host.name" : "anyhost"
+      "host.name" : "anyhost",
+      "host.type" : "compute"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1768484036220,
+    "discoveryTime" : 1775757867404,
     "type" : "host",
     "id" : "endpoint_host_anyhost",
     "identifyingAttributeKeys" : [ "host.name" ],
-    "endpoint" : true,
     "endpointHost" : true,
+    "endpoint" : true,
     "connector" : false,
     "is_endpoint" : true
   }, {
     "metrics" : {
       "hw.status{hw.type=\"memory\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.memory.limit" : {
         "name" : "hw.memory.limit",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 1.7179869184E10,
         "previousValue" : 1.7179869184E10,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"memory\"}" : {
         "name" : "hw.status{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -907,14 +1332,16 @@
       },
       "hw.power{hw.type=\"memory\"}" : {
         "name" : "hw.power{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 4.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -937,49 +1364,54 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "memory",
     "id" : "Redfish_memory_1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"memory\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.memory.limit" : {
         "name" : "hw.memory.limit",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 1.7179869184E10,
         "previousValue" : 1.7179869184E10,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"memory\"}" : {
         "name" : "hw.status{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -988,14 +1420,16 @@
       },
       "hw.power{hw.type=\"memory\"}" : {
         "name" : "hw.power{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 4.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1018,49 +1452,54 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "memory",
     "id" : "Redfish_memory_2",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"memory\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.memory.limit" : {
         "name" : "hw.memory.limit",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 1.7179869184E10,
         "previousValue" : 1.7179869184E10,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"memory\"}" : {
         "name" : "hw.status{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1069,14 +1508,16 @@
       },
       "hw.power{hw.type=\"memory\"}" : {
         "name" : "hw.power{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 4.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1099,49 +1540,54 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "memory",
     "id" : "Redfish_memory_3",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"memory\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"memory\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.memory.limit" : {
         "name" : "hw.memory.limit",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 1.7179869184E10,
         "previousValue" : 1.7179869184E10,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"memory\"}" : {
         "name" : "hw.status{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1150,14 +1596,16 @@
       },
       "hw.power{hw.type=\"memory\"}" : {
         "name" : "hw.power{hw.type=\"memory\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "memory"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 4.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1180,51 +1628,57 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "memory",
     "id" : "Redfish_memory_4",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"network\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "network"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.network.up" : {
         "name" : "hw.network.up",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 0.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.power{hw.type=\"network\"}" : {
         "name" : "hw.power{hw.type=\"network\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "network"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 1.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1247,51 +1701,57 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "network",
     "id" : "Redfish_network_1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"network\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"network\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "network"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.network.up" : {
         "name" : "hw.network.up",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 0.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.power{hw.type=\"network\"}" : {
         "name" : "hw.power{hw.type=\"network\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "network"
         },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 1.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1314,35 +1774,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "network",
     "id" : "Redfish_network_2",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.power_supply.limit" : {
         "name" : "hw.power_supply.limit",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 228.0,
         "previousValue" : 228.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"power_supply\"}" : {
         "name" : "hw.status{hw.type=\"power_supply\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1351,15 +1814,17 @@
       },
       "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1380,35 +1845,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "power_supply",
     "id" : "Redfish_power_supply_0",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.power_supply.limit" : {
         "name" : "hw.power_supply.limit",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : { },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 230.0,
         "previousValue" : 230.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"power_supply\"}" : {
         "name" : "hw.status{hw.type=\"power_supply\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1417,15 +1885,17 @@
       },
       "hw.status{hw.type=\"power_supply\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"power_supply\", state=\"present\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "state" : "present",
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1446,37 +1916,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "power_supply",
     "id" : "Redfish_power_supply_1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 85.0,
         "previousValue" : 85.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1485,25 +1958,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 90.0,
         "previousValue" : 90.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 36.0,
+        "metricType" : "Gauge",
+        "value" : 38.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1523,37 +2000,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_0",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 90.0,
         "previousValue" : 90.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1562,25 +2042,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 95.0,
         "previousValue" : 95.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 30.0,
+        "metricType" : "Gauge",
+        "value" : 32.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1600,37 +2084,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 80.0,
         "previousValue" : 80.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1639,25 +2126,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 85.0,
         "previousValue" : 85.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 31.0,
+        "metricType" : "Gauge",
+        "value" : 33.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1677,37 +2168,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_11",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 80.0,
         "previousValue" : 80.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1716,25 +2210,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 85.0,
         "previousValue" : 85.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 33.0,
+        "metricType" : "Gauge",
+        "value" : 34.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1754,37 +2252,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_13",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 80.0,
         "previousValue" : 80.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1793,25 +2294,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 85.0,
         "previousValue" : 85.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 23.0,
+        "metricType" : "Gauge",
+        "value" : 25.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1831,37 +2336,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_2",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 80.0,
         "previousValue" : 80.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1870,25 +2378,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 85.0,
         "previousValue" : 85.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 30.0,
+        "metricType" : "Gauge",
+        "value" : 32.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1908,37 +2420,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_3",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 95.0,
         "previousValue" : 95.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1947,25 +2462,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 100.0,
         "previousValue" : 100.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 46.0,
+        "metricType" : "Gauge",
+        "value" : 47.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -1985,37 +2504,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_4",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 95.0,
         "previousValue" : 95.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2024,25 +2546,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 100.0,
         "previousValue" : 100.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 33.0,
+        "metricType" : "Gauge",
+        "value" : 35.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -2062,37 +2588,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_5",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 95.0,
         "previousValue" : 95.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2101,25 +2630,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 100.0,
         "previousValue" : 100.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 29.0,
+        "metricType" : "Gauge",
+        "value" : 31.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -2139,37 +2672,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_6",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 80.0,
         "previousValue" : 80.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2178,25 +2714,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 85.0,
         "previousValue" : 85.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 28.0,
+        "metricType" : "Gauge",
+        "value" : 31.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -2216,37 +2756,40 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_7",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.degraded"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 80.0,
         "previousValue" : 80.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"temperature\"}" : {
         "name" : "hw.status{hw.type=\"temperature\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "temperature"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2255,25 +2798,29 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1768484036220,
-        "previousCollectTime" : 1768484028170,
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
         "attributes" : {
           "limit_type" : "high.critical"
         },
         "resetMetricTime" : true,
+        "metricType" : "Gauge",
         "value" : 85.0,
         "previousValue" : 85.0,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 29.0,
+        "metricType" : "Gauge",
+        "value" : 31.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       }
@@ -2293,35 +2840,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "temperature",
     "id" : "Redfish_temperature_9",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 12063.0,
+        "metricType" : "Gauge",
+        "value" : 12126.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2343,35 +2893,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_0",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 4974.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2393,35 +2946,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_1",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 1209.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2443,35 +2999,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_10",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 1050.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2493,35 +3052,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_11",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 3350.0,
+        "metricType" : "Gauge",
+        "value" : 3367.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2543,35 +3105,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_2",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 3159.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2593,35 +3158,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_3",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 1800.0,
+        "metricType" : "Gauge",
+        "value" : 1809.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2643,35 +3211,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_4",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 1200.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2693,35 +3264,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_5",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 1200.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2743,35 +3317,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_6",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
-        "value" : 4948.0,
+        "metricType" : "Gauge",
+        "value" : 4974.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2793,35 +3370,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_7",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 3282.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2843,35 +3423,38 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_8",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.voltage" : {
         "name" : "hw.voltage",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 1509.0,
         "previousValue" : null,
+        "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
       "hw.status{hw.type=\"voltage\"}" : {
         "name" : "hw.status{hw.type=\"voltage\"}",
-        "collectTime" : 1768484036220,
+        "collectTime" : 1775757867404,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "voltage"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -2893,12 +3476,12 @@
       "StatusInformation" : "The device is running normal."
     },
     "alertRules" : { },
-    "discoveryTime" : 1768484028170,
+    "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_9",
     "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
     "endpointHost" : false,
+    "endpoint" : false,
     "connector" : false,
     "is_endpoint" : false
   } ]
