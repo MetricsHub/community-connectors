@@ -1,67 +1,101 @@
+#!/bin/sh
+
+# Collector only: discover SMART-capable devices, run smartctl -a,
+# and emit a deterministic record stream for MetricsHub/Jawk.
+# Output contract:
+#   ###DEVICE;;<device>;;<smartctl_extra>
+#   <verbatim smartctl -a output>
+#   ###ENDDEVICE
+
 SMARTD=$1
 SMARTCTL=$2
-TMPFILE=/tmp/MS_HW_smartmontoolsHDF_$$
+SEEN=
 
-# Generate smartd output and save it to a temporary file.
-$SMARTD -c > $TMPFILE
-$SMARTD -q onecheck >> $TMPFILE
+normalize_type() {
+    case "$1" in
+        SAT|sat)
+            printf '%s' 'sat'
+            ;;
+        NVME|nvme)
+            printf '%s' 'nvme'
+            ;;
+        SCSI|scsi)
+            printf '%s' 'scsi'
+            ;;
+        ATA|ata)
+            printf '%s' 'ata'
+            ;;
+        megaraid|MEGARAID)
+            printf '%s' 'megaraid'
+            ;;
+        *)
+            printf '%s' "$1"
+            ;;
+    esac
+}
 
-# Extract each device along with its label (if available) from smartd’s output.
-# The label (if any) is captured from the first pair of square brackets.
-DEVICE_LABEL_LIST=$(awk '/^Device: .* is SMART capable/ {
-    deviceID = $2;
-    if (substr(deviceID, length(deviceID), 1) == ",")
-        deviceID = substr(deviceID, 1, length(deviceID)-1);
-    label = "";
-    if (match($0, /\[[^]]+\]/)) {
-        label = substr($0, RSTART+1, RLENGTH-2);
-    }
-    print deviceID "|" label;
-}' $TMPFILE)
+set -- $SMARTD
+"$@" -q onecheck 2>&1 |
+while IFS= read -r line; do
+    case "$line" in
+        "Device: "*' is SMART capable'*)
+            set -- $line
+            DISKID=$2
+            DISKID=${DISKID%,}
 
+            LABEL=
+            EXTRA=
+            KEY=
 
-rm -f $TMPFILE
+            case "$line" in
+                *'['*']'*)
+                    LABEL=${line#*[}
+                    LABEL=${LABEL%%]*}
+                    ;;
+            esac
 
-# Loop over each device-label pair.
-echo "$DEVICE_LABEL_LIST" | while IFS='|' read DISKID LABEL; do
-    DEVTYPE=""
-    DRIVENUM=""
-    EXTRA=" "
-    CMD=""
+            case "$DISKID" in
+                /dev/bus/*)
+                    continue
+                    ;;
+            esac
 
-    # Skip bus devices; if the device path starts with /dev/bus/ then ignore it.
-    if echo "$DISKID" | grep -q "^/dev/bus/"; then
-        continue
-    fi
+            if [ -n "$LABEL" ]; then
+                # smartctl label encodes transport and optional slot/index.
+                case "$LABEL" in
+                    *_*)
+                        DEVTYPE=${LABEL%%_*}
+                        DRIVENUM=${LABEL##*_}
+                        DEVTYPE=$(normalize_type "$DEVTYPE")
+                        EXTRA="-d ${DEVTYPE},${DRIVENUM}"
+                        KEY="$DISKID|$EXTRA"
+                        ;;
+                    *)
+                        DEVTYPE=$(normalize_type "$LABEL")
+                        EXTRA="-d ${DEVTYPE}"
+                        KEY="$DISKID|$EXTRA"
+                        ;;
+                esac
+            else
+                KEY="$DISKID|plain"
+            fi
 
-    if [ -n "$LABEL" ]; then
-        # If the label contains an underscore, assume it's of the form "type_disk_N".
-        if echo "$LABEL" | grep -q '_'; then
-            DEVTYPE=$(echo "$LABEL" | cut -d'_' -f1)
-            DRIVENUM=$(echo "$LABEL" | awk -F'_' '{print $NF}')
-            EXTRA="-d ${DEVTYPE},${DRIVENUM}"
-            CMD="$SMARTCTL -d ${DEVTYPE},${DRIVENUM} -a $DISKID"
-        else
-            DEVTYPE=$(echo "$LABEL" | tr '[:upper:]' '[:lower:]')
-            EXTRA="-d ${DEVTYPE}"
-            CMD="$SMARTCTL -a $DISKID"
-        fi
-    else
-        CMD="$SMARTCTL -a $DISKID"
-    fi
+            case "|$SEEN|" in
+                *"|$KEY|"*)
+                    # Skip duplicate device/type combinations.
+                    continue
+                    ;;
+            esac
+            SEEN="$SEEN|$KEY"
 
-    # Run smartctl with the determined command.
-    OUTPUT=$($CMD 2>&1)
+            set -- $SMARTCTL
+            if [ -n "$EXTRA" ]; then
+                set -- "$@" $EXTRA
+            fi
 
-    # Parse the output: extract the vendor from the "Vendor:" line and the serial number.
-    echo "$OUTPUT" | awk -v deviceID="$DISKID" -v extra="$EXTRA" '
-    BEGIN { vendor=""; serialNumber=""; }
-    {
-        if (tolower($1)=="vendor:") { vendor = $2; }
-        if (tolower($1)=="serial" && tolower($2)=="number:") { serialNumber = $3; }
-        if (vendor == "" && tolower($1)=="device" && tolower($2)=="model:") { vendor = $3; }
-    }
-    END {
-        print "MSHW;" deviceID ";" vendor ";" serialNumber ";" extra
-    }'
+            printf '###DEVICE;;%s;;%s\n' "$DISKID" "$EXTRA"
+            "$@" -a "$DISKID" 2>&1
+            printf '%s\n' '###ENDDEVICE'
+            ;;
+    esac
 done
