@@ -9,4 +9,6 @@ resources:
       host.type: oob
     protocols:
       emulation:
+        http:
+          directory: src/it/resources/Redfish/emulation/http
     connectors: [ +Redfish ]

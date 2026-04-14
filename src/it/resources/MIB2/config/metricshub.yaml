@@ -9,4 +9,6 @@ resources:
       host.type: oob
     protocols:
       emulation:
+        snmp:
+          directory: src/it/resources/MIB2/emulation/snmp
     connectors: [ +MIB2 ]
