@@ -42,7 +42,6 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testAMDRadeon() throws Exception {
 		testConnectorReplay("AMDRadeon");
 	}

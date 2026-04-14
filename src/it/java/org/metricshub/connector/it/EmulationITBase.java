@@ -29,7 +29,6 @@ import java.util.NoSuchElementException;
  */
 public class EmulationITBase extends AbstractITJob {
 
-	private final String connectorId;
 	private MonitoringTaskInfo monitoringTaskInfo;
 
 	/**
@@ -40,7 +39,6 @@ public class EmulationITBase extends AbstractITJob {
 	 */
 	public EmulationITBase(final String connectorId, final MonitoringTaskInfo monitoringTaskInfo) {
 		super(monitoringTaskInfo.getTelemetryManager());
-		this.connectorId = connectorId;
 		this.monitoringTaskInfo = monitoringTaskInfo;
 	}
 
@@ -136,10 +134,6 @@ public class EmulationITBase extends AbstractITJob {
 
 	@Override
 	public EmulationITBase withServerRecordData(String... strings) throws Exception {
-
-		telemetryManager.setEmulationInputDirectory(
-			Paths.get("src", "it", "resources", connectorId, "emulation").toString()
-		);
 
 		return this;
 	}

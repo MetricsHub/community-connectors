@@ -9,4 +9,6 @@ resources:
       host.type: network
     protocols:
       emulation:
+        snmp:
+          directory: src/it/resources/MIB2Switch/emulation/snmp
     connectors: [ +MIB2Switch ]
