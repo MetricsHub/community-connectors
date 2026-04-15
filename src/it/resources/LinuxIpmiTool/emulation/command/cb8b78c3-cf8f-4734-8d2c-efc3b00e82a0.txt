@@ -1,0 +1,23 @@
+Device ID                 : 3
+Device Revision           : 3
+Firmware Revision         : 4.10
+IPMI Version              : 2.0
+Manufacturer ID           : 10368
+Manufacturer Name         : Fujitsu Siemens
+Product ID                : 790 (0x0316)
+Product Name              : Unknown (0x316)
+Device Available          : yes
+Provides Device SDRs      : no
+Additional Device Support :
+    Sensor Device
+    SDR Repository Device
+    SEL Device
+    FRU Inventory Device
+    IPMB Event Receiver
+    Bridge
+    Chassis Device
+Aux Firmware Rev Info     : 
+    0x06
+    0x41
+    0x00
+    0x41

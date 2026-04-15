@@ -8,8 +8,7 @@ resources:
       host.name: localhost
       host.type: linux
     protocols:
-      ssh:
-        username: user
-        password: password
-        timeout: 300
-    connectors: ["+Linux"]
+      emulation:
+        ssh:
+          directory: src/it/resources/Linux/emulation/command
+    connectors: [ +Linux ]

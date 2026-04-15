@@ -59,37 +59,31 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testLinux() throws Exception {
 		testConnectorReplay("Linux");
 	}
 
 	@Test
-	@Disabled
 	void testLinuxFile() throws Exception {
 		testConnectorReplay("LinuxFile");
 	}
 
 	@Test
-	@Disabled
 	void testLinuxIfConfigNetwork() throws Exception {
 		testConnectorReplay("LinuxIfConfigNetwork");
 	}
 
 	@Test
-	@Disabled
 	void testLinuxIPNetwork() throws Exception {
 		testConnectorReplay("LinuxIPNetwork");
 	}
 
 	@Test
-	@Disabled
 	void testLinuxIpmiTool() throws Exception {
 		testConnectorReplay("LinuxIpmiTool");
 	}
 
 	@Test
-	@Disabled
 	void testLmsensors() throws Exception {
 		testConnectorReplay("Lmsensors");
 	}

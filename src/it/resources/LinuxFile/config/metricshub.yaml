@@ -7,10 +7,9 @@ resources:
       host.name: localhost
       host.type: linux
     protocols:
-      ssh:
-        username: user
-        password: pass
-        timeout: 300
+      emulation:
+        ssh:
+          directory: src/it/resources/LinuxFile/emulation/command
     additionalConnectors:
       LinuxFile:
         uses: LinuxFile

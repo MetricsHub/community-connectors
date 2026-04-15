@@ -1,0 +1,14 @@
+---
+image:
+- command: /sbin/ifconfig -a
+  result: 222713ad-238e-4db3-9f76-2adba6539daf.txt
+- command: "for p in /sys/class/net/*; do [ -e \"$p/device\" ] && printf '%s\\n' \"${p##*/}\"; done"
+  result: ef573265-2f82-4561-acbc-ee4dd8d76a0d.txt
+- command: /sbin/ifconfig -a  eno1
+  result: 96b3fd1f-f23a-4917-8772-97e38ca928a7.txt
+- command: "%{SUDO:ethtool}/usr/sbin/ethtool eno1"
+  result: 5745ea1a-1726-49db-9caa-8c47f4226550.txt
+- command: /sbin/ifconfig -a  eno2
+  result: 8053e867-7939-446c-8e56-33d658b3d3a2.txt
+- command: "%{SUDO:ethtool}/usr/sbin/ethtool eno2"
+  result: 2564a31f-fb5a-4ec4-8294-0e1d92109564.txt

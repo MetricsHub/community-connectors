@@ -8,8 +8,7 @@ resources:
       host.name: anyHost
       host.type: linux
     protocols:
-      ssh:
-        username: anyUser
-        password: anyPassword
-        timeout: 300
+      emulation:
+        ssh:
+          directory: src/it/resources/SmartMonLinux/emulation/command
     connectors: ["+SmartMonLinux"]

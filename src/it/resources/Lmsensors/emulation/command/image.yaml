@@ -1,0 +1,12 @@
+---
+image:
+- command: '%{SUDO:/usr/sbin/dmidecode} /usr/sbin/dmidecode -t system'
+  result: 92b5fde4-f169-45d4-9baa-6e64823a080d.txt
+- command: '%{SUDO:/usr/sbin/dmidecode} /usr/sbin/dmidecode -t bios'
+  result: 874ac671-8ef3-481b-9c46-eca34b45a03c.txt
+- command: '%{SUDO:/usr/bin/sensors} /usr/bin/sensors -u -A'
+  result: f4390d80-facf-407a-bb52-6cd6e57f8513.txt
+- command: '%{SUDO:/usr/bin/sensors} /usr/bin/sensors -A'
+  result: 893370d7-2c53-41ad-9a96-8f4e53b479f0.txt
+- command: '%{SUDO:/usr/bin/sensors} /usr/bin/sensors -h'
+  result: 902da6bf-533d-42fe-9f4e-b59b49039ff4.txt

@@ -1,0 +1,34 @@
+---
+image:
+- command: '${file::1} "/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml"'
+  result: c6b9c14a-8293-4c5c-923b-1d5e9b4fb2f2.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log"; basename_result=$(basename "$file"); stat_result=$(stat -c ''%s;%X;%Y;%Z'' "$file"); echo "$file;$basename_result;$stat_result"'
+  result: 0a709572-8b4b-4dea-a20e-6b9e776a36da.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log"; echo "$file;$(wc -l < "$file")"'
+  result: 616bb940-8097-4f14-8e37-2cc80bb7cdd9.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log"; keywords="Exception|Error|Failed"; if [ -n "$keywords" ] && [ -f "$file" ]; then for keyword in $(echo "$keywords" | tr ''|'' ''\n'' | sort); do count=$(grep -Eoi "$keyword" "$file" 2>/dev/null | wc -l); echo "$file;$(basename "$file");$keyword;$count"; done; fi'
+  result: 664667c3-c238-4734-9e28-570610f234eb.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log"; basename_result=$(basename "$file"); stat_result=$(stat -c ''%s;%X;%Y;%Z'' "$file"); echo "$file;$basename_result;$stat_result"'
+  result: 143ff011-101e-4c4d-ae78-8d5a1c72bbeb.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log"; echo "$file;$(wc -l < "$file")"'
+  result: 65c4ec48-552f-4cd9-ad3c-7aef2d04af0a.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log"; keywords="Exception|Error|Failed"; if [ -n "$keywords" ] && [ -f "$file" ]; then for keyword in $(echo "$keywords" | tr ''|'' ''\n'' | sort); do count=$(grep -Eoi "$keyword" "$file" 2>/dev/null | wc -l); echo "$file;$(basename "$file");$keyword;$count"; done; fi'
+  result: 3999018a-ea0d-473f-a8ba-e6ad04631cdb.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log"; basename_result=$(basename "$file"); stat_result=$(stat -c ''%s;%X;%Y;%Z'' "$file"); echo "$file;$basename_result;$stat_result"'
+  result: 955ae540-3a06-46b5-a527-411d692fab33.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log"; echo "$file;$(wc -l < "$file")"'
+  result: f50eb547-b3a8-4243-aafe-8aeb7db8fcda.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log"; keywords="Exception|Error|Failed"; if [ -n "$keywords" ] && [ -f "$file" ]; then for keyword in $(echo "$keywords" | tr ''|'' ''\n'' | sort); do count=$(grep -Eoi "$keyword" "$file" 2>/dev/null | wc -l); echo "$file;$(basename "$file");$keyword;$count"; done; fi'
+  result: 97499349-78f7-4ace-92c8-d5ec809f40d4.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log"; basename_result=$(basename "$file"); stat_result=$(stat -c ''%s;%X;%Y;%Z'' "$file"); echo "$file;$basename_result;$stat_result"'
+  result: 0874e0d4-fbcd-43eb-92b7-65a657ebf2c3.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log"; echo "$file;$(wc -l < "$file")"'
+  result: 03fd951f-e7e4-4a5b-9401-393f5fbcb933.txt
+- command: 'file="/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log"; keywords="Exception|Error|Failed"; if [ -n "$keywords" ] && [ -f "$file" ]; then for keyword in $(echo "$keywords" | tr ''|'' ''\n'' | sort); do count=$(grep -Eoi "$keyword" "$file" 2>/dev/null | wc -l); echo "$file;$(basename "$file");$keyword;$count"; done; fi'
+  result: 290b25c1-af51-4986-b0c8-f3a04a57cd16.txt
+- command: 'file="/opt/metricshub/config/metricshub.yaml"; basename_result=$(basename "$file"); stat_result=$(stat -c ''%s;%X;%Y;%Z'' "$file"); echo "$file;$basename_result;$stat_result"'
+  result: dcc29509-d392-4139-a0d4-8efce2c5bd57.txt
+- command: 'file="/opt/metricshub/config/metricshub.yaml"; echo "$file;$(wc -l < "$file")"'
+  result: 9c726f75-0bfd-4796-9de5-bd47b2ab6977.txt
+- command: 'file="/opt/metricshub/config/metricshub.yaml"; keywords="Exception|Error|Failed"; if [ -n "$keywords" ] && [ -f "$file" ]; then for keyword in $(echo "$keywords" | tr ''|'' ''\n'' | sort); do count=$(grep -Eoi "$keyword" "$file" 2>/dev/null | wc -l); echo "$file;$(basename "$file");$keyword;$count"; done; fi'
+  result: b1f0daac-29d9-45da-9e54-f65c03cc2188.txt

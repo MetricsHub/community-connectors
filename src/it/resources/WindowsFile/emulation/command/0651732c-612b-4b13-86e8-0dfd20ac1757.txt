@@ -1,0 +1,4 @@
+C:\Users\Administrator\Desktop\file.txt;file.txt;ec-win-01;1
+C:\Users\Administrator\Desktop\file.txt;file.txt;Error;8
+C:\Users\Administrator\Desktop\file.txt;file.txt;Exception;3
+C:\Users\Administrator\Desktop\file.txt;file.txt;Failed;2

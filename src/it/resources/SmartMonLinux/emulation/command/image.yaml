@@ -1,0 +1,20 @@
+---
+image:
+- command: 'sh ${file::smartctlAll.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\"'
+  result: 82e4bc67-4eb3-451b-bca0-ef1113d55617.txt
+- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}'
+  result: c130eb55-7279-45a5-be5d-95d92debb619.txt
+- command: '/bin/sh ${file::physicalDiskStatusInformation.sh} ${attribute::id}'
+  result: bb3aabd9-5790-4219-a395-448143949264.txt
+- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}'
+  result: 8f78e655-f3c9-4194-9dbc-c0e51678834b.txt
+- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}'
+  result: da42cb19-cb5a-46c5-87fe-62f8968e95b6.txt
+- command: '/bin/ls /usr/sbin/smartd'
+  result: 6ccb9e07-aa9f-417a-932f-94650250db35.txt
+- command: '/bin/ls /usr/sbin/smartctl'
+  result: 771db352-7a78-47c3-af93-73e6c8e9997c.txt
+- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck'
+  result: df32520e-2a4b-4c37-a3a6-e15d7726f7a7.txt
+- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck'
+  result: 7bac818d-df46-44a2-914c-70c2e5cdde1e.txt

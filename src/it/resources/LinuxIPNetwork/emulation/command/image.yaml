@@ -1,0 +1,14 @@
+---
+image:
+- command: /sbin/ip a
+  result: 713b8ae3-e481-4d72-b729-2ecfeebcada7.txt
+- command: "for p in /sys/class/net/*; do [ -e \"$p/device\" ] && printf '%s\\n' \"${p##*/}\"; done"
+  result: f2cbfceb-8987-401b-9ea1-b16a49192e98.txt
+- command: /sbin/ip -s link show dev eno1
+  result: 9d243933-8570-47c4-97c3-319095d88c71.txt
+- command: "%{SUDO:ethtool}/usr/sbin/ethtool eno1"
+  result: d23ec768-be1f-46d2-bb61-a095475a7539.txt
+- command: /sbin/ip -s link show dev eno2
+  result: 69ac969e-f44a-4b45-ac19-5be96b19808b.txt
+- command: "%{SUDO:ethtool}/usr/sbin/ethtool eno2"
+  result: 17a6c43a-0067-4912-a12c-4ac30cb06a8f.txt

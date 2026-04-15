@@ -7,8 +7,7 @@ resources:
       host.name: anyHost
       host.type: linux
     protocols:
-      ssh:
-        username: user
-        password: pwd
-        timeout: 300
+      emulation:
+        ssh:
+          directory: src/it/resources/LinuxIpmiTool/emulation/command
     connectors: ["+LinuxIpmiTool"]

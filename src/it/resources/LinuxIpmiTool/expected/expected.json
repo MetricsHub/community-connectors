@@ -971,12 +971,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"ssh\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1769439815631,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ssh"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -1072,12 +1072,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.up{protocol=\"ssh\"}" : {
-        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1769439815631,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ssh"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
