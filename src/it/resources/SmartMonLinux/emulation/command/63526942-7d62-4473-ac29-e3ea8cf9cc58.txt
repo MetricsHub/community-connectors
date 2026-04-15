@@ -15,7 +15,7 @@ Logical Unit id:      0x50000397b85235d1
 Serial number:        47S0A01RF8KC
 Device type:          disk
 Transport protocol:   SAS (SPL-4)
-Local Time is:        Tue Mar 31 23:23:46 2026 CEST
+Local Time is:        Wed Apr 15 18:45:48 2026 CEST
 SMART support is:     Available - device has SMART capability.
 SMART support is:     Enabled
 Temperature Warning:  Enabled
@@ -23,10 +23,10 @@ Temperature Warning:  Enabled
 === START OF READ SMART DATA SECTION ===
 SMART Health Status: OK
 
-Current Drive Temperature:     25 C
+Current Drive Temperature:     28 C
 Drive Trip Temperature:        65 C
 
-Accumulated power on time, hours:minutes 71073:43
+Accumulated power on time, hours:minutes 71429:05
 Manufactured in week 17 of year 2017
 Specified cycle count over device lifetime:  50000
 Accumulated start-stop cycles:  23
@@ -38,8 +38,8 @@ Error counter log:
            Errors Corrected by           Total   Correction     Gigabytes    Total
                ECC          rereads/    errors   algorithm      processed    uncorrected
            fast | delayed   rewrites  corrected  invocations   [10^9 bytes]  errors
-read:          0    12674         0         0          0    1151872.936           0
-write:         0        0         0         0          0     429442.354           0
+read:          0    12701         0         0          0    1156002.147           0
+write:         0        0         0         0          0     433045.507           0
 
 Non-medium error count:       24
 
@@ -88,7 +88,7 @@ TRIM Command:     Available, deterministic, zeroed
 Device is:        In smartctl database 7.3/5528
 ATA Version is:   ACS-2, ATA8-ACS T13/1699-D revision 4c
 SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
-Local Time is:    Tue Mar 31 23:23:46 2026 CEST
+Local Time is:    Wed Apr 15 18:45:48 2026 CEST
 SMART support is: Available - device has SMART capability.
 SMART support is: Enabled
 
@@ -131,9 +131,9 @@ SMART Attributes Data Structure revision number: 1
 Vendor Specific SMART Attributes with Thresholds:
 ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
   5 Reallocated_Sector_Ct   0x0033   100   100   010    Pre-fail  Always       -       0
-  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71075
+  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71431
  12 Power_Cycle_Count       0x0032   099   099   000    Old_age   Always       -       25
-177 Wear_Leveling_Count     0x0013   092   092   005    Pre-fail  Always       -       586
+177 Wear_Leveling_Count     0x0013   092   092   005    Pre-fail  Always       -       594
 179 Used_Rsvd_Blk_Cnt_Tot   0x0013   100   100   010    Pre-fail  Always       -       0
 180 Unused_Rsvd_Blk_Cnt_Tot 0x0013   100   100   010    Pre-fail  Always       -       3301
 181 Program_Fail_Cnt_Total  0x0032   100   100   010    Old_age   Always       -       0
@@ -141,48 +141,48 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 183 Runtime_Bad_Block       0x0013   100   100   010    Pre-fail  Always       -       0
 184 End-to-End_Error        0x0033   100   100   097    Pre-fail  Always       -       0
 187 Uncorrectable_Error_Cnt 0x0032   100   100   000    Old_age   Always       -       0
-190 Airflow_Temperature_Cel 0x0032   070   041   000    Old_age   Always       -       30
-194 Temperature_Celsius     0x0022   070   041   000    Old_age   Always       -       30 (Min/Max 20/59)
+190 Airflow_Temperature_Cel 0x0032   066   041   000    Old_age   Always       -       34
+194 Temperature_Celsius     0x0022   066   041   000    Old_age   Always       -       34 (Min/Max 20/59)
 195 ECC_Error_Rate          0x001a   200   200   000    Old_age   Always       -       0
 197 Current_Pending_Sector  0x0032   100   100   000    Old_age   Always       -       0
 199 CRC_Error_Count         0x003e   100   100   000    Old_age   Always       -       0
 202 Exception_Mode_Status   0x0033   100   100   010    Pre-fail  Always       -       0
 235 POR_Recovery_Count      0x0012   099   099   000    Old_age   Always       -       9
-241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       507854764437
-242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       631517754354
+241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       516518579829
+242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       635205957482
 243 SATA_Downshift_Ct       0x0032   100   100   000    Old_age   Always       -       0
 244 Thermal_Throttle_St     0x0032   100   100   000    Old_age   Always       -       0
 245 Timed_Workld_Media_Wear 0x0032   100   100   000    Old_age   Always       -       65535
 246 Timed_Workld_RdWr_Ratio 0x0032   100   100   000    Old_age   Always       -       65535
 247 Timed_Workld_Timer      0x0032   100   100   000    Old_age   Always       -       65535
-251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1253331005440
+251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1271526868992
 
 SMART Error Log Version: 1
 No Errors Logged
 
 SMART Self-test log structure revision number 1
 Num  Test_Description    Status                  Remaining  LifeTime(hours)  LBA_of_first_error
-# 1  Short offline       Completed without error       00%      5518         -
-# 2  Short offline       Completed without error       00%      5494         -
-# 3  Short offline       Completed without error       00%      5447         -
-# 4  Short offline       Completed without error       00%      5423         -
-# 5  Short offline       Completed without error       00%      5399         -
-# 6  Short offline       Completed without error       00%      5375         -
-# 7  Short offline       Completed without error       00%      5351         -
-# 8  Short offline       Completed without error       00%      5327         -
-# 9  Short offline       Completed without error       00%      5303         -
-#10  Short offline       Completed without error       00%      5279         -
-#11  Short offline       Completed without error       00%      5255         -
-#12  Short offline       Completed without error       00%      5231         -
-#13  Short offline       Completed without error       00%      5207         -
-#14  Short offline       Completed without error       00%      5183         -
-#15  Short offline       Completed without error       00%      5159         -
-#16  Short offline       Completed without error       00%      5135         -
-#17  Short offline       Completed without error       00%      5111         -
-#18  Short offline       Completed without error       00%      5087         -
-#19  Short offline       Completed without error       00%      5063         -
-#20  Short offline       Completed without error       00%      5039         -
-#21  Short offline       Completed without error       00%      5015         -
+# 1  Short offline       Completed without error       00%      5878         -
+# 2  Short offline       Completed without error       00%      5854         -
+# 3  Short offline       Completed without error       00%      5830         -
+# 4  Short offline       Completed without error       00%      5806         -
+# 5  Short offline       Completed without error       00%      5782         -
+# 6  Short offline       Completed without error       00%      5758         -
+# 7  Short offline       Completed without error       00%      5734         -
+# 8  Short offline       Completed without error       00%      5710         -
+# 9  Short offline       Completed without error       00%      5686         -
+#10  Short offline       Completed without error       00%      5662         -
+#11  Short offline       Completed without error       00%      5638         -
+#12  Short offline       Completed without error       00%      5614         -
+#13  Short offline       Completed without error       00%      5590         -
+#14  Short offline       Completed without error       00%      5566         -
+#15  Short offline       Completed without error       00%      5542         -
+#16  Short offline       Completed without error       00%      5518         -
+#17  Short offline       Completed without error       00%      5494         -
+#18  Short offline       Completed without error       00%      5447         -
+#19  Short offline       Completed without error       00%      5423         -
+#20  Short offline       Completed without error       00%      5399         -
+#21  Short offline       Completed without error       00%      5375         -
 
 SMART Selective self-test log data structure revision number 1
  SPAN  MIN_LBA  MAX_LBA  CURRENT_TEST_STATUS
@@ -217,7 +217,7 @@ TRIM Command:     Available, deterministic, zeroed
 Device is:        In smartctl database 7.3/5528
 ATA Version is:   ACS-2, ATA8-ACS T13/1699-D revision 4c
 SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
-Local Time is:    Tue Mar 31 23:23:46 2026 CEST
+Local Time is:    Wed Apr 15 18:45:48 2026 CEST
 SMART support is: Available - device has SMART capability.
 SMART support is: Enabled
 
@@ -260,9 +260,9 @@ SMART Attributes Data Structure revision number: 1
 Vendor Specific SMART Attributes with Thresholds:
 ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
   5 Reallocated_Sector_Ct   0x0033   098   098   010    Pre-fail  Always       -       64
-  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71075
+  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71431
  12 Power_Cycle_Count       0x0032   099   099   000    Old_age   Always       -       25
-177 Wear_Leveling_Count     0x0013   092   092   005    Pre-fail  Always       -       593
+177 Wear_Leveling_Count     0x0013   091   091   005    Pre-fail  Always       -       601
 179 Used_Rsvd_Blk_Cnt_Tot   0x0013   098   098   010    Pre-fail  Always       -       64
 180 Unused_Rsvd_Blk_Cnt_Tot 0x0013   098   098   010    Pre-fail  Always       -       3170
 181 Program_Fail_Cnt_Total  0x0032   100   100   010    Old_age   Always       -       0
@@ -270,21 +270,21 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 183 Runtime_Bad_Block       0x0013   098   098   010    Pre-fail  Always       -       64
 184 End-to-End_Error        0x0033   100   100   097    Pre-fail  Always       -       0
 187 Uncorrectable_Error_Cnt 0x0032   099   099   000    Old_age   Always       -       26
-190 Airflow_Temperature_Cel 0x0032   069   041   000    Old_age   Always       -       31
-194 Temperature_Celsius     0x0022   069   041   000    Old_age   Always       -       31 (Min/Max 22/59)
+190 Airflow_Temperature_Cel 0x0032   066   041   000    Old_age   Always       -       34
+194 Temperature_Celsius     0x0022   066   041   000    Old_age   Always       -       34 (Min/Max 22/59)
 195 ECC_Error_Rate          0x001a   199   199   000    Old_age   Always       -       26
 197 Current_Pending_Sector  0x0032   100   100   000    Old_age   Always       -       0
 199 CRC_Error_Count         0x003e   100   100   000    Old_age   Always       -       0
 202 Exception_Mode_Status   0x0033   100   100   010    Pre-fail  Always       -       0
 235 POR_Recovery_Count      0x0012   099   099   000    Old_age   Always       -       9
-241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       505741565249
-242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       607253949463
+241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       514350837441
+242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       610874474599
 243 SATA_Downshift_Ct       0x0032   100   100   000    Old_age   Always       -       0
 244 Thermal_Throttle_St     0x0032   100   100   000    Old_age   Always       -       0
 245 Timed_Workld_Media_Wear 0x0032   100   100   000    Old_age   Always       -       65535
 246 Timed_Workld_RdWr_Ratio 0x0032   100   100   000    Old_age   Always       -       65535
 247 Timed_Workld_Timer      0x0032   100   100   000    Old_age   Always       -       65535
-251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1268958649344
+251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1286582774784
 
 SMART Error Log Version: 1
 ATA Error Count: 26 (device log contains only the most recent five errors)
@@ -389,27 +389,27 @@ Error 22 occurred at disk power-on lifetime: 56853 hours (2368 days + 21 hours)
 
 SMART Self-test log structure revision number 1
 Num  Test_Description    Status                  Remaining  LifeTime(hours)  LBA_of_first_error
-# 1  Short offline       Completed without error       00%      5518         -
-# 2  Short offline       Completed without error       00%      5494         -
-# 3  Short offline       Completed without error       00%      5447         -
-# 4  Short offline       Completed without error       00%      5423         -
-# 5  Short offline       Completed without error       00%      5399         -
-# 6  Short offline       Completed without error       00%      5375         -
-# 7  Short offline       Completed without error       00%      5351         -
-# 8  Short offline       Completed without error       00%      5327         -
-# 9  Short offline       Completed without error       00%      5303         -
-#10  Short offline       Completed without error       00%      5279         -
-#11  Short offline       Completed without error       00%      5255         -
-#12  Short offline       Completed without error       00%      5231         -
-#13  Short offline       Completed without error       00%      5207         -
-#14  Short offline       Completed without error       00%      5183         -
-#15  Short offline       Completed without error       00%      5159         -
-#16  Short offline       Completed without error       00%      5135         -
-#17  Short offline       Completed without error       00%      5111         -
-#18  Short offline       Completed without error       00%      5087         -
-#19  Short offline       Completed without error       00%      5063         -
-#20  Short offline       Completed without error       00%      5039         -
-#21  Short offline       Completed without error       00%      5015         -
+# 1  Short offline       Completed without error       00%      5878         -
+# 2  Short offline       Completed without error       00%      5854         -
+# 3  Short offline       Completed without error       00%      5830         -
+# 4  Short offline       Completed without error       00%      5806         -
+# 5  Short offline       Completed without error       00%      5782         -
+# 6  Short offline       Completed without error       00%      5758         -
+# 7  Short offline       Completed without error       00%      5734         -
+# 8  Short offline       Completed without error       00%      5710         -
+# 9  Short offline       Completed without error       00%      5686         -
+#10  Short offline       Completed without error       00%      5662         -
+#11  Short offline       Completed without error       00%      5638         -
+#12  Short offline       Completed without error       00%      5614         -
+#13  Short offline       Completed without error       00%      5590         -
+#14  Short offline       Completed without error       00%      5566         -
+#15  Short offline       Completed without error       00%      5542         -
+#16  Short offline       Completed without error       00%      5518         -
+#17  Short offline       Completed without error       00%      5494         -
+#18  Short offline       Completed without error       00%      5447         -
+#19  Short offline       Completed without error       00%      5423         -
+#20  Short offline       Completed without error       00%      5399         -
+#21  Short offline       Completed without error       00%      5375         -
 
 SMART Selective self-test log data structure revision number 1
  SPAN  MIN_LBA  MAX_LBA  CURRENT_TEST_STATUS
@@ -444,7 +444,7 @@ TRIM Command:     Available, deterministic, zeroed
 Device is:        In smartctl database 7.3/5528
 ATA Version is:   ACS-2, ATA8-ACS T13/1699-D revision 4c
 SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
-Local Time is:    Tue Mar 31 23:23:46 2026 CEST
+Local Time is:    Wed Apr 15 18:45:48 2026 CEST
 SMART support is: Available - device has SMART capability.
 SMART support is: Enabled
 
@@ -487,9 +487,9 @@ SMART Attributes Data Structure revision number: 1
 Vendor Specific SMART Attributes with Thresholds:
 ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
   5 Reallocated_Sector_Ct   0x0033   097   097   010    Pre-fail  Always       -       68
-  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71076
+  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71431
  12 Power_Cycle_Count       0x0032   099   099   000    Old_age   Always       -       25
-177 Wear_Leveling_Count     0x0013   092   092   005    Pre-fail  Always       -       582
+177 Wear_Leveling_Count     0x0013   092   092   005    Pre-fail  Always       -       591
 179 Used_Rsvd_Blk_Cnt_Tot   0x0013   097   097   010    Pre-fail  Always       -       68
 180 Unused_Rsvd_Blk_Cnt_Tot 0x0013   097   097   010    Pre-fail  Always       -       3177
 181 Program_Fail_Cnt_Total  0x0032   100   100   010    Old_age   Always       -       0
@@ -497,21 +497,21 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 183 Runtime_Bad_Block       0x0013   097   097   010    Pre-fail  Always       -       68
 184 End-to-End_Error        0x0033   100   100   097    Pre-fail  Always       -       0
 187 Uncorrectable_Error_Cnt 0x0032   099   099   000    Old_age   Always       -       197
-190 Airflow_Temperature_Cel 0x0032   070   042   000    Old_age   Always       -       30
-194 Temperature_Celsius     0x0022   070   042   000    Old_age   Always       -       30 (Min/Max 20/58)
+190 Airflow_Temperature_Cel 0x0032   067   042   000    Old_age   Always       -       33
+194 Temperature_Celsius     0x0022   067   042   000    Old_age   Always       -       33 (Min/Max 20/58)
 195 ECC_Error_Rate          0x001a   199   199   000    Old_age   Always       -       197
 197 Current_Pending_Sector  0x0032   100   100   000    Old_age   Always       -       0
 199 CRC_Error_Count         0x003e   100   100   000    Old_age   Always       -       0
 202 Exception_Mode_Status   0x0033   100   100   010    Pre-fail  Always       -       0
 235 POR_Recovery_Count      0x0012   099   099   000    Old_age   Always       -       9
-241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       511695022020
-242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       600520566181
+241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       521134288860
+242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       604256537941
 243 SATA_Downshift_Ct       0x0032   100   100   000    Old_age   Always       -       0
 244 Thermal_Throttle_St     0x0032   100   100   000    Old_age   Always       -       0
 245 Timed_Workld_Media_Wear 0x0032   100   100   000    Old_age   Always       -       65535
 246 Timed_Workld_RdWr_Ratio 0x0032   100   100   000    Old_age   Always       -       65535
 247 Timed_Workld_Timer      0x0032   100   100   000    Old_age   Always       -       65535
-251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1245663477760
+251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1264859017216
 
 SMART Error Log Version: 1
 ATA Error Count: 197 (device log contains only the most recent five errors)
@@ -616,27 +616,27 @@ Error 193 occurred at disk power-on lifetime: 56900 hours (2370 days + 20 hours)
 
 SMART Self-test log structure revision number 1
 Num  Test_Description    Status                  Remaining  LifeTime(hours)  LBA_of_first_error
-# 1  Short offline       Completed without error       00%      5518         -
-# 2  Short offline       Completed without error       00%      5494         -
-# 3  Short offline       Completed without error       00%      5447         -
-# 4  Short offline       Completed without error       00%      5423         -
-# 5  Short offline       Completed without error       00%      5399         -
-# 6  Short offline       Completed without error       00%      5375         -
-# 7  Short offline       Completed without error       00%      5351         -
-# 8  Short offline       Completed without error       00%      5327         -
-# 9  Short offline       Completed without error       00%      5303         -
-#10  Short offline       Completed without error       00%      5279         -
-#11  Short offline       Completed without error       00%      5255         -
-#12  Short offline       Completed without error       00%      5231         -
-#13  Short offline       Completed without error       00%      5207         -
-#14  Short offline       Completed without error       00%      5183         -
-#15  Short offline       Completed without error       00%      5159         -
-#16  Short offline       Completed without error       00%      5135         -
-#17  Short offline       Completed without error       00%      5111         -
-#18  Short offline       Completed without error       00%      5087         -
-#19  Short offline       Completed without error       00%      5063         -
-#20  Short offline       Completed without error       00%      5039         -
-#21  Short offline       Completed without error       00%      5015         -
+# 1  Short offline       Completed without error       00%      5878         -
+# 2  Short offline       Completed without error       00%      5854         -
+# 3  Short offline       Completed without error       00%      5830         -
+# 4  Short offline       Completed without error       00%      5806         -
+# 5  Short offline       Completed without error       00%      5782         -
+# 6  Short offline       Completed without error       00%      5758         -
+# 7  Short offline       Completed without error       00%      5734         -
+# 8  Short offline       Completed without error       00%      5710         -
+# 9  Short offline       Completed without error       00%      5686         -
+#10  Short offline       Completed without error       00%      5662         -
+#11  Short offline       Completed without error       00%      5638         -
+#12  Short offline       Completed without error       00%      5614         -
+#13  Short offline       Completed without error       00%      5590         -
+#14  Short offline       Completed without error       00%      5566         -
+#15  Short offline       Completed without error       00%      5542         -
+#16  Short offline       Completed without error       00%      5518         -
+#17  Short offline       Completed without error       00%      5494         -
+#18  Short offline       Completed without error       00%      5447         -
+#19  Short offline       Completed without error       00%      5423         -
+#20  Short offline       Completed without error       00%      5399         -
+#21  Short offline       Completed without error       00%      5375         -
 
 SMART Selective self-test log data structure revision number 1
  SPAN  MIN_LBA  MAX_LBA  CURRENT_TEST_STATUS
@@ -671,7 +671,7 @@ TRIM Command:     Available, deterministic, zeroed
 Device is:        In smartctl database 7.3/5528
 ATA Version is:   ACS-2, ATA8-ACS T13/1699-D revision 4c
 SATA Version is:  SATA 3.1, 6.0 Gb/s (current: 6.0 Gb/s)
-Local Time is:    Tue Mar 31 23:23:46 2026 CEST
+Local Time is:    Wed Apr 15 18:45:48 2026 CEST
 SMART support is: Available - device has SMART capability.
 SMART support is: Enabled
 
@@ -714,9 +714,9 @@ SMART Attributes Data Structure revision number: 1
 Vendor Specific SMART Attributes with Thresholds:
 ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
   5 Reallocated_Sector_Ct   0x0033   098   098   010    Pre-fail  Always       -       44
-  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71076
+  9 Power_On_Hours          0x0032   085   085   000    Old_age   Always       -       71431
  12 Power_Cycle_Count       0x0032   099   099   000    Old_age   Always       -       25
-177 Wear_Leveling_Count     0x0013   091   091   005    Pre-fail  Always       -       617
+177 Wear_Leveling_Count     0x0013   091   091   005    Pre-fail  Always       -       626
 179 Used_Rsvd_Blk_Cnt_Tot   0x0013   098   098   010    Pre-fail  Always       -       44
 180 Unused_Rsvd_Blk_Cnt_Tot 0x0013   098   098   010    Pre-fail  Always       -       3244
 181 Program_Fail_Cnt_Total  0x0032   100   100   010    Old_age   Always       -       0
@@ -724,21 +724,21 @@ ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_
 183 Runtime_Bad_Block       0x0013   098   098   010    Pre-fail  Always       -       44
 184 End-to-End_Error        0x0033   100   100   097    Pre-fail  Always       -       0
 187 Uncorrectable_Error_Cnt 0x0032   099   099   000    Old_age   Always       -       69
-190 Airflow_Temperature_Cel 0x0032   069   041   000    Old_age   Always       -       31
-194 Temperature_Celsius     0x0022   069   041   000    Old_age   Always       -       31 (Min/Max 20/59)
+190 Airflow_Temperature_Cel 0x0032   066   041   000    Old_age   Always       -       34
+194 Temperature_Celsius     0x0022   066   041   000    Old_age   Always       -       34 (Min/Max 20/59)
 195 ECC_Error_Rate          0x001a   199   199   000    Old_age   Always       -       69
 197 Current_Pending_Sector  0x0032   100   100   000    Old_age   Always       -       0
 199 CRC_Error_Count         0x003e   100   100   000    Old_age   Always       -       0
 202 Exception_Mode_Status   0x0033   100   100   010    Pre-fail  Always       -       0
 235 POR_Recovery_Count      0x0012   099   099   000    Old_age   Always       -       9
-241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       557961505412
-242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       609327857420
+241 Total_LBAs_Written      0x0032   099   099   000    Old_age   Always       -       568440627940
+242 Total_LBAs_Read         0x0032   099   099   000    Old_age   Always       -       612857216884
 243 SATA_Downshift_Ct       0x0032   100   100   000    Old_age   Always       -       0
 244 Thermal_Throttle_St     0x0032   100   100   000    Old_age   Always       -       0
 245 Timed_Workld_Media_Wear 0x0032   100   100   000    Old_age   Always       -       65535
 246 Timed_Workld_RdWr_Ratio 0x0032   100   100   000    Old_age   Always       -       65535
 247 Timed_Workld_Timer      0x0032   100   100   000    Old_age   Always       -       65535
-251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1319866485760
+251 NAND_Writes             0x0032   100   100   000    Old_age   Always       -       1340448062464
 
 SMART Error Log Version: 1
 ATA Error Count: 69 (device log contains only the most recent five errors)
@@ -843,27 +843,27 @@ Error 65 occurred at disk power-on lifetime: 56882 hours (2370 days + 2 hours)
 
 SMART Self-test log structure revision number 1
 Num  Test_Description    Status                  Remaining  LifeTime(hours)  LBA_of_first_error
-# 1  Short offline       Completed without error       00%      5518         -
-# 2  Short offline       Completed without error       00%      5494         -
-# 3  Short offline       Completed without error       00%      5447         -
-# 4  Short offline       Completed without error       00%      5423         -
-# 5  Short offline       Completed without error       00%      5399         -
-# 6  Short offline       Completed without error       00%      5375         -
-# 7  Short offline       Completed without error       00%      5351         -
-# 8  Short offline       Completed without error       00%      5327         -
-# 9  Short offline       Completed without error       00%      5303         -
-#10  Short offline       Completed without error       00%      5279         -
-#11  Short offline       Completed without error       00%      5255         -
-#12  Short offline       Completed without error       00%      5231         -
-#13  Short offline       Completed without error       00%      5207         -
-#14  Short offline       Completed without error       00%      5183         -
-#15  Short offline       Completed without error       00%      5159         -
-#16  Short offline       Completed without error       00%      5135         -
-#17  Short offline       Completed without error       00%      5111         -
-#18  Short offline       Completed without error       00%      5087         -
-#19  Short offline       Completed without error       00%      5063         -
-#20  Short offline       Completed without error       00%      5039         -
-#21  Short offline       Completed without error       00%      5015         -
+# 1  Short offline       Completed without error       00%      5878         -
+# 2  Short offline       Completed without error       00%      5854         -
+# 3  Short offline       Completed without error       00%      5830         -
+# 4  Short offline       Completed without error       00%      5806         -
+# 5  Short offline       Completed without error       00%      5782         -
+# 6  Short offline       Completed without error       00%      5758         -
+# 7  Short offline       Completed without error       00%      5734         -
+# 8  Short offline       Completed without error       00%      5710         -
+# 9  Short offline       Completed without error       00%      5686         -
+#10  Short offline       Completed without error       00%      5662         -
+#11  Short offline       Completed without error       00%      5638         -
+#12  Short offline       Completed without error       00%      5614         -
+#13  Short offline       Completed without error       00%      5590         -
+#14  Short offline       Completed without error       00%      5566         -
+#15  Short offline       Completed without error       00%      5542         -
+#16  Short offline       Completed without error       00%      5518         -
+#17  Short offline       Completed without error       00%      5494         -
+#18  Short offline       Completed without error       00%      5447         -
+#19  Short offline       Completed without error       00%      5423         -
+#20  Short offline       Completed without error       00%      5399         -
+#21  Short offline       Completed without error       00%      5375         -
 
 SMART Selective self-test log data structure revision number 1
  SPAN  MIN_LBA  MAX_LBA  CURRENT_TEST_STATUS

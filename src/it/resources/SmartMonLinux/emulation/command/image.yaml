@@ -1,20 +1,40 @@
 ---
 image:
-- command: 'sh ${file::smartctlAll.sh} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\"'
-  result: 82e4bc67-4eb3-451b-bca0-ef1113d55617.txt
-- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}'
-  result: c130eb55-7279-45a5-be5d-95d92debb619.txt
-- command: '/bin/sh ${file::physicalDiskStatusInformation.sh} ${attribute::id}'
-  result: bb3aabd9-5790-4219-a395-448143949264.txt
-- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}'
-  result: 8f78e655-f3c9-4194-9dbc-c0e51678834b.txt
-- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}'
-  result: da42cb19-cb5a-46c5-87fe-62f8968e95b6.txt
-- command: '/bin/ls /usr/sbin/smartd'
-  result: 6ccb9e07-aa9f-417a-932f-94650250db35.txt
-- command: '/bin/ls /usr/sbin/smartctl'
-  result: 771db352-7a78-47c3-af93-73e6c8e9997c.txt
-- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck'
-  result: df32520e-2a4b-4c37-a3a6-e15d7726f7a7.txt
-- command: '%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck'
-  result: 7bac818d-df46-44a2-914c-70c2e5cdde1e.txt
+- command: /bin/ls /usr/sbin/smartd
+  result: d1cbf5c9-2a83-4ec8-a006-9dfd7537918b.txt
+- command: /bin/ls /usr/sbin/smartctl
+  result: 9403f486-11ba-4522-91c3-3051610c0e8f.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd -q onecheck"
+  result: c8885c82-8088-4b76-9cea-d98a918383a8.txt
+- command: "sh ${file::1} \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartd\" \"%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl\""
+  result: 63526942-7d62-4473-ac29-e3ea8cf9cc58.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a /dev/sda  "
+  result: 618f20ae-54b0-4fa5-b15f-05992dc82cb0.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H /dev/sda  "
+  result: f1c306ed-58ca-4690-843d-87909e313661.txt
+- command: "/bin/sh ${file::4} /dev/sda"
+  result: 6fb94e3f-4696-4154-ace7-867af20b7f4e.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a /dev/sdd -d sat"
+  result: 13004e34-cae1-4aba-ae44-f496b38c5c00.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H /dev/sdd -d sat"
+  result: 1071a3b1-13c8-4d7e-980c-6b61f7e5fdaf.txt
+- command: "/bin/sh ${file::4} /dev/sdd"
+  result: eb9c3f3f-9fc0-4587-bd5f-e828b7844762.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a /dev/sde -d sat"
+  result: 49b782bf-7382-4c3b-93d5-0b48e101b4e7.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H /dev/sde -d sat"
+  result: dcc65c10-9d2e-45ad-9fd3-3c26a17a8fd8.txt
+- command: "/bin/sh ${file::4} /dev/sde"
+  result: 3fffa41c-b8fd-44e7-aee3-5f8108c6c31a.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a /dev/sdb -d sat"
+  result: 1dc6e26c-1546-4167-b10e-bfc7bd1765f0.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H /dev/sdb -d sat"
+  result: 1df98858-dbf1-4850-be79-67bb7c8fa439.txt
+- command: "/bin/sh ${file::4} /dev/sdb"
+  result: 8a6133a0-4a1d-45ad-84e9-b1406fbd2fe3.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a /dev/sdc -d sat"
+  result: cbe18779-50a0-44fe-a418-d8fc08110285.txt
+- command: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H /dev/sdc -d sat"
+  result: 152e9924-76cb-45cf-a153-82d7a1ea9a57.txt
+- command: "/bin/sh ${file::4} /dev/sdc"
+  result: ba5006eb-381d-4b47-beb8-444896819ea4.txt

@@ -1,8 +1,0 @@
----
-table:
-- - 1
-  - OK
-  - Working
-headers: []
-rawData: 1;OK;Working
-empty: false

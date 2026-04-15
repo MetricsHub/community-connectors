@@ -1,4 +1,4 @@
-smartctl 7.4 2023-08-01 r5530 [x86_64-linux-6.17.4-2-pve] (local build)
+smartctl 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
 Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
 
 === START OF INFORMATION SECTION ===
@@ -14,7 +14,7 @@ Logical Unit id:      0x50000397b85235d1
 Serial number:        47S0A01RF8KC
 Device type:          disk
 Transport protocol:   SAS (SPL-4)
-Local Time is:        Fri Mar 27 08:59:21 2026 CET
+Local Time is:        Wed Apr 15 18:45:55 2026 CEST
 SMART support is:     Available - device has SMART capability.
 SMART support is:     Enabled
 Temperature Warning:  Enabled
@@ -22,10 +22,10 @@ Temperature Warning:  Enabled
 === START OF READ SMART DATA SECTION ===
 SMART Health Status: OK
 
-Current Drive Temperature:     25 C
+Current Drive Temperature:     28 C
 Drive Trip Temperature:        65 C
 
-Accumulated power on time, hours:minutes 70964:19
+Accumulated power on time, hours:minutes 71429:05
 Manufactured in week 17 of year 2017
 Specified cycle count over device lifetime:  50000
 Accumulated start-stop cycles:  23
@@ -37,8 +37,8 @@ Error counter log:
            Errors Corrected by           Total   Correction     Gigabytes    Total
                ECC          rereads/    errors   algorithm      processed    uncorrected
            fast | delayed   rewrites  corrected  invocations   [10^9 bytes]  errors
-read:          0    12669         0         0          0    1150612.137           0
-write:         0        0         0         0          0     428378.412           0
+read:          0    12701         0         0          0    1156002.160           0
+write:         0        0         0         0          0     433045.525           0
 
 Non-medium error count:       24
 
@@ -67,3 +67,4 @@ Num  Test              Status                 segment  LifeTime  LBA_first_err [
 #20  Background short  Completed                   -   65535                 - [-   -    -]
 
 Long (extended) Self-test duration: 2487 seconds [41.5 minutes]
+

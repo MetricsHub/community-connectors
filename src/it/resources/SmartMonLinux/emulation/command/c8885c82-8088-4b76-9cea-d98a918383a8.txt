@@ -74,6 +74,8 @@ Device: /dev/sda, SMART health: passed
 Device: /dev/sdb [SAT], opened ATA device
 Device: /dev/sdb [SAT], previous self-test completed without error
 Device: /dev/sdc [SAT], opened ATA device
+Device: /dev/sdc [SAT], SMART Usage Attribute: 190 Airflow_Temperature_Cel changed from 65 to 66
+Device: /dev/sdc [SAT], SMART Usage Attribute: 194 Temperature_Celsius changed from 65 to 66
 Device: /dev/sdc [SAT], previous self-test completed without error
 Device: /dev/sdd [SAT], opened ATA device
 Device: /dev/sdd [SAT], previous self-test completed without error

@@ -1,0 +1,6 @@
+smartctl 7.4 2024-10-15 r5620 [x86_64-linux-6.17.4-2-pve] (local build)
+Copyright (C) 2002-23, Bruce Allen, Christian Franke, www.smartmontools.org
+
+=== START OF READ SMART DATA SECTION ===
+SMART Health Status: OK
+

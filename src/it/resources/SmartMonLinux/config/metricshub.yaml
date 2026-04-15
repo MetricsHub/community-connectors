@@ -1,7 +1,7 @@
 #MetricsHub Configuration
 otel:
   otel.exporter.otlp.metrics.protocol: noop
-patchDirectory: "src/main/connector"
+patchDirectory: src/main/connector
 resources:
   anyHost:
     attributes:
@@ -11,4 +11,4 @@ resources:
       emulation:
         ssh:
           directory: src/it/resources/SmartMonLinux/emulation/command
-    connectors: ["+SmartMonLinux"]
+    connectors: [ +SmartMonLinux ]

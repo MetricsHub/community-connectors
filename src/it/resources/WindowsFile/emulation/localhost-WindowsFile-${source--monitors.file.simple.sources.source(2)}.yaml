@@ -1,7 +1,0 @@
----
-table:
-- - C:\Users\Administrator\Desktop\file.txt
-  - "14\r"
-headers: []
-rawData: "C:\\Users\\Administrator\\Desktop\\file.txt;14\r"
-empty: false

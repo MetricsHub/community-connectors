@@ -21,7 +21,6 @@ class ConnectorReplayIT {
 	 */
 	private void testConnectorReplay(String connectorId) throws Exception {
 		new EmulationITBase(connectorId)
-			.withServerRecordData()
 			.executeStrategies()
 			.verifyExpected(connectorId + "/expected/expected.json");
 	}
@@ -36,7 +35,6 @@ class ConnectorReplayIT {
 		final Path outputPath = Paths.get("src/it/resources/" + connectorId + "/expected/expected-gen.json");
 		outputPath.getParent().toFile().mkdirs();
 		new EmulationITBase(connectorId)
-			.withServerRecordData()
 			.executeStrategies()
 			.saveTelemetryManagerJson(outputPath);
 	}
@@ -122,7 +120,6 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testSmartMonLinux() throws Exception {
 		testConnectorReplay("SmartMonLinux");
 	}
@@ -134,7 +131,6 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testWindowsFile() throws Exception {
 		testConnectorReplay("WindowsFile");
 	}
