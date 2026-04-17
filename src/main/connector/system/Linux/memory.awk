@@ -46,6 +46,5 @@ END {
         memCachedUtilization = 0
     }
 
-    print memTotal, memFree, memUsed, memBuffers, memCached, \
-          memFreeUtilization, memUsedUtilization, memBuffersUtilization, memCachedUtilization
+    print memTotal, memFree, memUsed, memBuffers, memCached, memFreeUtilization, memUsedUtilization, memBuffersUtilization, memCachedUtilization
 }
