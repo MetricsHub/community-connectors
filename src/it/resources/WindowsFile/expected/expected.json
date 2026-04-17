@@ -25,7 +25,7 @@
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult:\nWindows\r\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult: Windows\r\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult:\nWindows\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult: Windows\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
     },
     "alertRules" : { },
     "discoveryTime" : 1766010580914,

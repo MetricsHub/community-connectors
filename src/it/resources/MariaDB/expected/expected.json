@@ -25,7 +25,7 @@
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed SqlCriterion Criterion:\n- Query SELECT @@version LIKE '%MariaDB%' AS is_mariadb;\n- ExpectedResult: 1\n- ErrorMessage: Not a MariaDB Server\n\nResult:\n1;\n\nMessage:\n====================================\nHostname HOSTNAME - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      "StatusInformation" : "Executed SqlCriterion Criterion:\n- Query SELECT @@version LIKE '%MariaDB%' AS is_mariadb;\n- ExpectedResult: 1\n- ErrorMessage: Not a MariaDB Server\n\nResult:\n1;\n\nMessage:\n====================================\nHostname localhost - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
     },
     "alertRules" : { },
     "discoveryTime" : 1766571979250,
@@ -38,12 +38,12 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.host.up{protocol=\"jdbc\"}" : {
-        "name" : "metricshub.host.up{protocol=\"jdbc\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1766571979535,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "jdbc"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -51,12 +51,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"jdbc\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"jdbc\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1766571979535,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "jdbc"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,

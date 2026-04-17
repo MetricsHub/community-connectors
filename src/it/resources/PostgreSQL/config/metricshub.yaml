@@ -8,7 +8,7 @@ resources:
       host.name: localhost
       host.type: linux
     protocols:
-      jdbc:
-        timeout: 300
-        type: postgresql
-    connectors: ["+PostgreSQL"]
+      emulation:
+        jdbc:
+          directory: src/it/resources/PostgreSQL/emulation/jdbc
+    connectors: [ +PostgreSQL ]

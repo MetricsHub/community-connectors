@@ -87,7 +87,6 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testMariaDB() throws Exception {
 		testConnectorReplay("MariaDB");
 	}
@@ -103,13 +102,11 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testMySQL() throws Exception {
 		testConnectorReplay("MySQL");
 	}
 
 	@Test
-	@Disabled
 	void testPostgreSQL() throws Exception {
 		testConnectorReplay("PostgreSQL");
 	}

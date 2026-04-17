@@ -38,12 +38,12 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.host.up{protocol=\"jdbc\"}" : {
-        "name" : "metricshub.host.up{protocol=\"jdbc\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1771499555365,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "jdbc"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
