@@ -7,8 +7,7 @@ resources:
       host.name: anyHost
       host.type: oob
     protocols:
-      ipmi:
-        username: username
-        password: password
-        timeout: 300
-    connectors: ["+IpmiTool"]
+      emulation:
+        ipmi:
+          directory: src/it/resources/IpmiTool/emulation/ipmi
+    connectors: [ +IpmiTool ]

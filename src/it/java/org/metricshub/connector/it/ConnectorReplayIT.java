@@ -51,7 +51,6 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testIpmiTool() throws Exception {
 		testConnectorReplay("IpmiTool");
 	}
