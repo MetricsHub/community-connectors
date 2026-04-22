@@ -270,6 +270,7 @@
                     </includes>
                     <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                     <trimStackTrace>false</trimStackTrace>
+					<reportFormat>plain</reportFormat>
                 </configuration>
             </plugin>
 		</plugins>
