@@ -45,7 +45,6 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testCassandra() throws Exception {
 		testConnectorReplay("Cassandra");
 	}

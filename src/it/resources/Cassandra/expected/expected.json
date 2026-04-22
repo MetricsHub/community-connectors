@@ -54,7 +54,6 @@
     "attributes" : {
       "db.version" : "5.0.4",
       "db.system" : "cassandra",
-      "db.server.port" : "7199",
       "connector_id" : "Cassandra",
       "db.cluster.name" : "Test Cluster",
       "db.server.name" : "110bae754392",
@@ -125,7 +124,6 @@
     "attributes" : {
       "db.version" : "5.0.4",
       "db.system" : "cassandra",
-      "db.server.port" : "7199",
       "connector_id" : "Cassandra",
       "db.cluster.name" : "Test Cluster",
       "db.server.name" : "110bae754392",
@@ -196,7 +194,6 @@
     "attributes" : {
       "db.version" : "5.0.4",
       "db.system" : "cassandra",
-      "db.server.port" : "7199",
       "connector_id" : "Cassandra",
       "db.cluster.name" : "Test Cluster",
       "db.server.name" : "110bae754392",
@@ -395,7 +392,6 @@
     "attributes" : {
       "db.version" : "5.0.4",
       "db.system" : "cassandra",
-      "db.server.port" : "7199",
       "connector_id" : "Cassandra",
       "db.cluster.name" : "Test Cluster",
       "db.server.name" : "110bae754392"
@@ -482,7 +478,6 @@
     "attributes" : {
       "db.version" : "5.0.4",
       "db.system" : "cassandra",
-      "db.server.port" : "7199",
       "connector_id" : "Cassandra",
       "db.cluster.name" : "Test Cluster",
       "db.server.name" : "110bae754392"
@@ -523,7 +518,7 @@
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed JmxCriterion Criterion:\n- ObjectName=org.apache.cassandra.metrics:type=Storage,name=Load\n- Attributes=[Count]\n- ExpectedResult=^[0-9]\n\nResult:\n125954;\n\nMessage:\n====================================\nHostname nb-docker - JMX test succeeded. Returned result: 125954;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      "StatusInformation" : "Executed JmxCriterion Criterion:\n- ObjectName=org.apache.cassandra.metrics:type=Storage,name=Load\n- Attributes=[Count]\n- ExpectedResult=^[0-9]\n\nResult:\n125954;\n\nMessage:\n====================================\nHostname localhost - JMX test succeeded. Returned result: 125954;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
     },
     "alertRules" : { },
     "discoveryTime" : 1771500708347,
@@ -536,12 +531,12 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.host.response_time{protocol=\"jmx\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"jmx\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1771500713559,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "jmx"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -560,12 +555,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.up{protocol=\"jmx\"}" : {
-        "name" : "metricshub.host.up{protocol=\"jmx\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1771500713559,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "jmx"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -636,7 +631,6 @@
       "db.cassandra.thread.role" : "MutationStage",
       "db.version" : "5.0.4",
       "db.system" : "cassandra",
-      "db.server.port" : "7199",
       "connector_id" : "Cassandra",
       "db.cluster.name" : "Test Cluster",
       "db.thread.pool" : "request",
@@ -699,7 +693,6 @@
       "db.cassandra.thread.role" : "ReadStage",
       "db.version" : "5.0.4",
       "db.system" : "cassandra",
-      "db.server.port" : "7199",
       "connector_id" : "Cassandra",
       "db.cluster.name" : "Test Cluster",
       "db.thread.pool" : "request",

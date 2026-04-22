@@ -154,6 +154,12 @@
             <version>${metricshub-community.version}</version>
             <scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.metricshub</groupId>
+			<artifactId>metricshub-jmx-extension</artifactId>
+            <version>${metricshub-community.version}</version>
+            <scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.metricshub</groupId>
             <artifactId>metricshub-internaldb-extension</artifactId>

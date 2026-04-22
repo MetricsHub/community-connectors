@@ -8,7 +8,7 @@ resources:
       host.name: localhost
       host.type: linux
     protocols:
-      jmx:
-        timeout: 120
-        port: 7199
+      emulation:
+        jmx:
+          directory: src/it/resources/Cassandra/emulation/jmx
     connectors: [ +Cassandra ]
