@@ -120,9 +120,8 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
-	void testWbemGenDiskNT() throws Exception {
-		testConnectorReplay("WbemGenDiskNT");
+	void testWBEMGenDiskNT() throws Exception {
+		testConnectorReplay("WBEMGenDiskNT");
 	}
 
 	@Test
@@ -131,13 +130,11 @@ class ConnectorReplayIT {
 	}
 
 	@Test
-	@Disabled
 	void testWindowsIpmiTool() throws Exception {
 		testConnectorReplay("WindowsIpmiTool");
 	}
 
 	@Test
-	@Disabled
 	void testWinStorageSpaces() throws Exception {
 		testConnectorReplay("WinStorageSpaces");
 	}

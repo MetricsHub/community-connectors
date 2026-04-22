@@ -1,0 +1,9 @@
+Win32_SCSIController.DeviceID="PCI\\VEN_8086&DEV_A77F&SUBSYS_0C021028&REV_00\\3&11583659&1&70";Intel RST VMD Controller A77F;
+Win32_USBController.DeviceID="PCI\\VEN_8086&DEV_51ED&SUBSYS_0C021028&REV_01\\3&11583659&1&A0";Intel(R) USB 3.10 eXtensible Host Controller - 1.20 (Microsoft);
+Win32_SCSIController.DeviceID="ROOT\\SPACEPORT\\0000";Microsoft Storage Spaces Controller;
+Win32_USBController.DeviceID="PCI\\VEN_8086&DEV_A73E&SUBSYS_0C021028&REV_00&USB4_MS_CM\\3&11583659&1&6A";USB4(TM) Host Router (Microsoft);
+Win32_SCSIController.DeviceID="PCI\\VEN_8086&DEV_09AB&SUBSYS_00000000&REV_00\\3&11583659&1&30";Intel RST VMD Managed Controller 09AB;
+Win32_USBController.DeviceID="PCI\\VEN_8086&DEV_A71E&SUBSYS_0C021028&REV_00\\3&11583659&1&68";Intel(R) USB 3.20 eXtensible Host Controller - 1.20 (Microsoft);
+Win32_VideoController.DeviceID="VideoController1";Intel(R) Iris(R) Xe Graphics;
+Win32_VideoController.DeviceID="VideoController2";NVIDIA RTX A500 Laptop GPU;
+Win32_SerialPort.DeviceID="COM3";Intel(R) Active Management Technology - SOL (COM3);

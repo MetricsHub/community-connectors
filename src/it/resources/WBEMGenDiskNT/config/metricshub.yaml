@@ -10,5 +10,5 @@ resources:
     protocols:
       emulation:
         wmi:
-          directory: src/it/resources/WinStorageSpaces/emulation/wmi
-    connectors: [ +WinStorageSpaces ]
+          directory: src/it/resources/WBEMGenDiskNT/emulation/wmi
+    connectors: [ +WBEMGenDiskNT ]
