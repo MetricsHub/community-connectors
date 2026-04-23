@@ -1,6 +1,5 @@
 package org.metricshub.connector.it;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
