@@ -1,0 +1,3 @@
+KeyCache;104857600
+CounterCache;52428800
+RowCache;0

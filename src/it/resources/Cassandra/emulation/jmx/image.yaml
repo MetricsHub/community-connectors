@@ -1,0 +1,178 @@
+image:
+# Detection criterion
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Storage,name=Load"
+    attributes:
+      - Count
+  response: b298c0b4-2caa-4446-8ba1-7fc496d879a4.txt
+# beforeAll.dbServerName
+- request:
+    objectName: "java.lang:type=Runtime"
+    attributes:
+      - Name
+  response: cb0b2baa-ab23-42b7-999b-015fad2bbbe6.txt
+# beforeAll.dbClusterName
+- request:
+    objectName: "org.apache.cassandra.db:type=StorageService"
+    attributes:
+      - ClusterName
+  response: 7cba1814-70e4-4186-9a8b-238f912ee46b.txt
+# beforeAll.dbReleaseVersion
+- request:
+    objectName: "org.apache.cassandra.db:type=StorageService"
+    attributes:
+      - ReleaseVersion
+  response: 3673b0e6-b403-4a36-a727-4d3d05f32f67.txt
+# monitors.cassandra.simple.sources.totalHints
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Storage,name=TotalHints"
+    attributes:
+      - Count
+  response: d1fbc80a-64e4-42e0-b419-534d94966f62.txt
+# monitors.cassandra.simple.sources.storageLoad
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Storage,name=Load"
+    attributes:
+      - Count
+  response: 807050c2-4ab1-471a-b493-5898509c90a4.txt
+# monitors.cassandra.simple.sources.readLatency
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency"
+    attributes:
+      - Count
+  response: 286fa300-9ea1-4a2a-b64e-7ebb8cfe02b8.txt
+# monitors.cassandra.simple.sources.writeLatency
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency"
+    attributes:
+      - Count
+  response: a9a32cf9-1eda-492b-99fe-39c60fa3a331.txt
+# monitors.cassandra.simple.sources.tableBytesFlushed
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Table,name=BytesFlushed"
+    attributes:
+      - Value
+  response: a9876e28-4845-4ab7-bd35-81e11fba3923.txt
+# monitors.cassandra.simple.sources.pendingTasks (compaction)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Compaction,name=PendingTasks"
+    attributes:
+      - Value
+  response: 962bd2ff-9fad-480b-b3be-eaaa1739d840.txt
+# monitors.cassandra.simple.sources.memtableOnHeapSize
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Table,name=MemtableOnHeapSize"
+    attributes:
+      - Value
+  response: 224d4e6a-b939-4740-8bb6-7a5cff243e62.txt
+# monitors.cassandra.simple.sources.memtableOffHeapSize
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Table,name=MemtableOffHeapSize"
+    attributes:
+      - Value
+  response: dfc27e99-5f9c-4086-aa78-03e98e0f931d.txt
+# monitors.cassandra.simple.sources.readTimeouts
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Timeouts"
+    attributes:
+      - Count
+  response: 47023302-3482-413a-9739-cb27387868e0.txt
+# monitors.cassandra.simple.sources.writeTimeouts
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Timeouts"
+    attributes:
+      - Count
+  response: e01b010f-2e6f-42bf-a7a8-0dfb7a4b61c3.txt
+# monitors.cassandra.simple.sources.readUnavailable
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Unavailables"
+    attributes:
+      - Count
+  response: 08974576-07c8-45ea-ab18-9b96af83bab9.txt
+# monitors.cassandra.simple.sources.writeUnavailable
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Unavailables"
+    attributes:
+      - Count
+  response: 8a300c9b-9885-4d81-8197-0d504750fc5c.txt
+# monitors.cassandra.simple.sources.uptime
+- request:
+    objectName: "java.lang:type=Runtime"
+    attributes:
+      - Uptime
+  response: d72d3df9-e9f2-4c02-929b-fdd8f24ecc6e.txt
+# monitors.cassandra.simple.sources.connectedNativeClients
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Client,name=connectedNativeClients"
+    attributes:
+      - Value
+  response: 9d36a9ce-c011-4864-a8f0-e1f19b5c07cd.txt
+# monitors.cache.simple.sources.cacheSize (wildcard scope)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Cache,scope=*,name=Capacity"
+    attributes:
+      - Value
+    keyProperties:
+      - scope
+  response: 1bd567ce-65b5-47e0-99b8-784f449831be.txt
+# monitors.cache.simple.sources.cacheHits (wildcard scope)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Cache,scope=*,name=Hits"
+    attributes:
+      - Count
+    keyProperties:
+      - scope
+  response: 8619f591-bce0-42e4-89e9-d6d56ff2d007.txt
+# monitors.cache.simple.sources.cacheMisses (wildcard scope)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Cache,scope=*,name=Misses"
+    attributes:
+      - Count
+    keyProperties:
+      - scope
+  response: 8192a2e7-4570-48c0-9d17-83ce872e73ad.txt
+# monitors.cache.simple.sources.cacheRequests (wildcard scope)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=Cache,scope=*,name=Requests"
+    attributes:
+      - Count
+    keyProperties:
+      - scope
+  response: b4899d9a-da99-4b30-86ad-09b602f05840.txt
+# monitors.thread.simple.sources.pendingTasks (wildcard scope, path=request)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ThreadPools,scope=*,path=request,name=PendingTasks"
+    attributes:
+      - Value
+    keyProperties:
+      - scope
+      - path
+  response: 4cee9ec4-8ad3-42cd-bd2f-9139b4e172ea.txt
+# monitors.thread.simple.sources.activeTasks (wildcard scope, path=request)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ThreadPools,scope=*,path=request,name=ActiveTasks"
+    attributes:
+      - Value
+    keyProperties:
+      - scope
+      - path
+  response: 19f40f8e-0053-4021-b54c-1ed3dcf4298d.txt
+# monitors.thread.simple.sources.currentlyBlockedTasks (wildcard scope, path=request)
+- request:
+    objectName: "org.apache.cassandra.metrics:type=ThreadPools,scope=*,path=request,name=CurrentlyBlockedTasks"
+    attributes:
+      - Count
+    keyProperties:
+      - scope
+      - path
+  response: bb526f35-54fa-41e2-8f1c-856a74bc097c.txt
+# monitors.cassandra_cluster.simple.sources.clusterNodes
+- request:
+    objectName: "org.apache.cassandra.db:type=StorageService"
+    attributes:
+      - LiveNodes
+      - UnreachableNodes
+      - JoiningNodes
+      - LeavingNodes
+      - MovingNodes
+  response: 08d595c2-b0c2-4e65-b56a-d61d5a8fee68.txt

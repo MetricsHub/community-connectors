@@ -146,6 +146,20 @@ monitors:
             concatMethod: list
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,ReadErrorsTotal,Wear,WriteErrorsTotal,Temperature,TemperatureMax FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter
+        source(11):
+          # Source(11) = Table join of DiskController.Discovery.Source(7) and DiskController.Discovery.Source(8)
+          # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
+          type: tableJoin
+          leftTable: ${source::monitors.disk_controller.discovery.sources.source(7)}
+          rightTable: ${source::monitors.disk_controller.discovery.sources.source(8)}
+          leftKeyColumn: 8
+          rightKeyColumn: 1
+          keyType: Wbem
+          computes:
+            # Keep only the necessary columns
+            # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Controller;
+          - type: keepColumns
+            columnNumbers: 1,2,3,4,5,6,8
       mapping:
         # InstanceTable: Source(9) (not Source(10)!)
         # __PATH_Controller;ControllerName;__PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;
@@ -161,32 +175,18 @@ monitors:
     discovery:
       sources:
         source(1):
-          # Source(1) = jointure of DiskController.Discovery.Source(7) and DiskController.Discovery.Source(8)
-          # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
-          type: tableJoin
-          leftTable: ${source::monitors.disk_controller.discovery.sources.source(7)}
-          rightTable: ${source::monitors.disk_controller.discovery.sources.source(8)}
-          leftKeyColumn: 8
-          rightKeyColumn: 1
-          keyType: Wbem
-          computes:
-            # Keep only the necessary columns
-            # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Controller;
-          - type: keepColumns
-            columnNumbers: 1,2,3,4,5,6,8
-        source(2):
-          # Source(2) = Table joint of Source(1) with DiskController.Discovery.Source(10)
+          # Source(1) = Table join of DiskController.Discovery.Source(11) with DiskController.Discovery.Source(10)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Controller;DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
           type: tableJoin
-          leftTable: ${source::monitors.physical_disk.discovery.sources.source(1)}
+          leftTable: ${source::monitors.disk_controller.discovery.sources.source(11)}
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(10)}
           leftKeyColumn: 2
           rightKeyColumn: 1
           defaultRightLine: ;;;;;;
       mapping:
-        # The instance table = Source(2)
+        # The instance table = Source(1)
         # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Controller;DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
-        source: ${source::monitors.physical_disk.discovery.sources.source(2)}
+        source: ${source::monitors.physical_disk.discovery.sources.source(1)}
         attributes:
           id: $2
           vendor: $3
@@ -384,7 +384,7 @@ monitors:
           # DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;__PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
           type: tableJoin
           leftTable: ${source::monitors.temperature.discovery.sources.source(1)}
-          rightTable: ${source::monitors.physical_disk.discovery.sources.source(1)}
+          rightTable: ${source::monitors.disk_controller.discovery.sources.source(11)}
           leftKeyColumn: 1
           rightKeyColumn: 2
           computes:
@@ -420,7 +420,7 @@ monitors:
           # DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
           type: wmi
           executeForEachEntryOf:
-            source: ${source::monitors.physical_disk.discovery.sources.source(1)}
+            source: ${source::monitors.disk_controller.discovery.sources.source(11)}
             concatMethod: list
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,Temperature FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter

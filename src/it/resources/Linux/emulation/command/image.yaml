@@ -1,0 +1,30 @@
+---
+image:
+- command: 'cat /proc/stat'
+  result: 70897853-ee96-4cf5-ad8a-0e8959bcd27d.txt
+- command: '/usr/bin/df -B1 --output=source,target,fstype,used,avail,size'
+  result: 39c4c8d9-d1c1-4810-b331-fa1c491fe7b1.txt
+- command: '/usr/bin/lsmem -b ; cat /proc/meminfo'
+  result: cb0419cd-4b63-44f3-88c8-a74f18d50152.txt
+- command: '/usr/sbin/ip -s link'
+  result: 477adbf6-18fe-4325-a685-aff898eb2069.txt
+- command: |
+    for iface in `ls /sys/class/net`; do
+      speed=$(cat /sys/class/net/$iface/speed 2>/dev/null || echo 0)
+      echo "$iface;$speed"
+    done
+  result: e9479502-a6e9-4b60-b414-a24c06af180d.txt
+- command: for p in /sys/class/net/*; do [ -e "$p/device" ] && printf '%s\n' "${p##*/}"; done
+  result: 067db678-00b0-402c-b6ed-011c3b67a827.txt
+- command: 'cat /proc/swaps'
+  result: a752dd69-17a7-4f49-aa9a-c053ca8f8ebc.txt
+- command: 'cat /proc/vmstat'
+  result: 0af81b95-9653-46ad-bec7-a177f54218d5.txt
+- command: 'cat /proc/diskstats'
+  result: c5c75220-bb58-4925-aae0-a044f21222aa.txt
+- command: |
+    . /etc/os-release
+    echo "$NAME;$VERSION;`uname -r`;`cut -d. -f1 /proc/uptime`"
+  result: 5d1251d4-e19d-4975-adf5-fb6d39ccbf23.txt
+- command: '/usr/bin/uname -o || /bin/uname -o'
+  result: ed93b84a-bdff-42b6-9cd5-7b464f1442a6.txt

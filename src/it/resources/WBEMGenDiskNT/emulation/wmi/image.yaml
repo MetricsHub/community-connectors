@@ -1,0 +1,46 @@
+image:
+# Service criterion: WINMGMT (internally converted to WMI query)
+- request:
+    wql: SELECT Name, State FROM Win32_Service WHERE Name = 'WINMGMT'
+    namespace: root\cimv2
+  response: 9e160731-4703-41a1-a79f-2f698ca00310.csv
+# Detection criterion: MSStorageDriver_FailurePredictStatus
+- request:
+    wql: SELECT InstanceName FROM MSStorageDriver_FailurePredictStatus WHERE Active=TRUE
+    namespace: root\WMI
+  response: 9c3b3bae-154a-411f-b4fc-c8722848ea4d.csv
+# disk_controller.discovery.source(1): MSStorageDriver_FailurePredictStatus
+- request:
+    wql: SELECT InstanceName FROM MSStorageDriver_FailurePredictStatus WHERE Active=TRUE
+    namespace: root\WMI
+  response: 63c8d846-4ca7-46e4-b57c-12ea068129c2.csv
+# disk_controller.discovery.source(2): MSWMI_PnPInstanceNames
+- request:
+    wql: SELECT InstanceName,InstanceNameList FROM MSWMI_PnPInstanceNames
+    namespace: root\WMI
+  response: 40ee7957-ce44-4c1a-b696-688f425b2d6b.csv
+# disk_controller.discovery.source(4): CIM_ControlledBy
+- request:
+    wql: SELECT Antecedent,Dependent FROM CIM_ControlledBy
+    namespace: root\cimv2
+  response: 4a45aa20-245b-4dc1-87ba-f285fea42a64.csv
+# disk_controller.discovery.source(6): CIM_Controller
+- request:
+    wql: SELECT Name,PNPDeviceID FROM CIM_Controller
+    namespace: root\cimv2
+  response: 50562e91-a006-43bc-b620-aa65a157270c.csv
+# physical_disk.discovery.source(1): Win32_DiskDrive
+- request:
+    wql: SELECT Index,Manufacturer,Model,PNPDeviceID,Size FROM Win32_DiskDrive
+    namespace: root\cimv2
+  response: e22300d2-8f60-43ee-99dd-71080537f0fb.csv
+# physical_disk.collect.source(1): Win32_DiskDrive (status)
+- request:
+    wql: SELECT PnPDeviceID,Status FROM Win32_DiskDrive
+    namespace: root\cimv2
+  response: 1ac8eaf6-737f-43e7-b33e-7b9e1fc24aa3.csv
+# physical_disk.collect.source(3): MSStorageDriver_FailurePredictStatus
+- request:
+    wql: SELECT InstanceName,PredictFailure FROM MSStorageDriver_FailurePredictStatus WHERE Active=TRUE
+    namespace: root\WMI
+  response: ed41fa2a-6850-46b1-8d27-a7b776b0474a.csv

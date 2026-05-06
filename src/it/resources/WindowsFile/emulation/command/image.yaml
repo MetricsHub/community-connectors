@@ -1,0 +1,12 @@
+---
+image:
+- command: PowerShell.exe -ExecutionPolicy Bypass -File "${file::1}" "C:\Users\Administrator\Desktop\*.txt"
+  result: f4439260-c9c7-45d7-9235-5ff1f48d19f3.txt
+- command: PowerShell.exe -ExecutionPolicy Bypass -Command "$file='C:\Users\Administrator\Desktop\file.txt'; if (Test-Path -Path $file -PathType Leaf) { $item = Get-Item -Path $file; $name = $item.Name; $size = $item.Length; $atime = [DateTimeOffset]::new($item.LastAccessTime).ToUnixTimeSeconds(); $mtime = [DateTimeOffset]::new($item.LastWriteTime).ToUnixTimeSeconds(); $ctime = [DateTimeOffset]::new($item.CreationTime).ToUnixTimeSeconds(); Write-Output \"$file;$name;$size;$atime;$mtime;$ctime\" }"
+  result: 89a0bc5d-1163-4a1e-97b4-ff6369be7150.txt
+- command: PowerShell.exe -ExecutionPolicy Bypass -Command "$file='C:\Users\Administrator\Desktop\file.txt'; if (Test-Path -Path $file -PathType Leaf) { $lines = (Get-Content -Path $file -ErrorAction SilentlyContinue | Measure-Object -Line).Lines; Write-Output \"$file;$lines\" }"
+  result: 60e4eed3-1eb2-40b5-bf66-2195b1a39333.txt
+- command: PowerShell.exe -ExecutionPolicy Bypass -File "${file::2}" "C:\Users\Administrator\Desktop\file.txt" "Exception|Error|Failed|ec-win-01"
+  result: 0651732c-612b-4b13-86e8-0dfd20ac1757.txt
+- command: PowerShell.exe -ExecutionPolicy Bypass -Command "if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }"
+  result: 6b0e3707-b816-447e-ac4d-8a8a396d7a0f.txt

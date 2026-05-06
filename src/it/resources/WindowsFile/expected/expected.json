@@ -25,7 +25,7 @@
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult:\nWindows\r\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult: Windows\r\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult:\nWindows\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: PowerShell.exe -ExecutionPolicy Bypass -Command \"if ($env:OS -eq 'Windows_NT') { 'Windows' } else { 'Not Windows' }\"\n- ExecuteLocally: false\n- ExpectedResult: Windows\n\nResult: Windows\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
     },
     "alertRules" : { },
     "discoveryTime" : 1766010580914,
@@ -113,12 +113,12 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.host.up{protocol=\"ssh\"}" : {
-        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1766010586015,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ssh"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -126,12 +126,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"ssh\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1766010586015,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ssh"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,

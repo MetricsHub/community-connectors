@@ -1,0 +1,35 @@
+# dmidecode 3.2
+Getting SMBIOS data from sysfs.
+SMBIOS 2.7 present.
+
+Handle 0x0000, DMI type 0, 24 bytes
+BIOS Information
+	Vendor: FUJITSU // American Megatrends Inc.
+	Version: V4.6.5.3 R1.32.0 for D2939-A1x
+	Release Date: 06/24/2019
+	Address: 0xF0000
+	Runtime Size: 64 kB
+	ROM Size: 8192 kB
+	Characteristics:
+		PCI is supported
+		BIOS is upgradeable
+		BIOS shadowing is allowed
+		Boot from CD is supported
+		Selectable boot is supported
+		EDD is supported
+		Print screen service is supported (int 5h)
+		Serial services are supported (int 14h)
+		Printer services are supported (int 17h)
+		ACPI is supported
+		USB legacy is supported
+		BIOS boot specification is supported
+		Targeted content distribution is supported
+		UEFI is supported
+	BIOS Revision: 1.32
+
+Handle 0x0077, DMI type 13, 22 bytes
+BIOS Language Information
+	Language Description Format: Long
+	Installable Languages: 1
+		en|US|iso8859-1
+	Currently Installed Language: en|US|iso8859-1

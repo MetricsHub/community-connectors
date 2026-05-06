@@ -1,0 +1,8 @@
+---
+image:
+- command: 'PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open fru'
+  result: 942f2f94-eec9-42cb-a4d5-328b7b196404.txt
+- command: 'PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open -v sdr elist all'
+  result: 23dd11c6-7005-49f6-b371-8870d6b624c1.txt
+- command: 'PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info'
+  result: cb8b78c3-cf8f-4734-8d2c-efc3b00e82a0.txt

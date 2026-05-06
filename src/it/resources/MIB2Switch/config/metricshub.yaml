@@ -8,6 +8,7 @@ resources:
       host.name: localhost
       host.type: network
     protocols:
-      snmp:
-        timeout: 120s
-    connectors: ["+MIB2Switch"]
+      emulation:
+        snmp:
+          directory: src/it/resources/MIB2Switch/emulation/snmp
+    connectors: [ +MIB2Switch ]

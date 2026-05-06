@@ -82,8 +82,7 @@
       "model" : "H300E",
       "serial_number" : "221808001652 - PIO-H300E-2X4-NA011",
       "id" : "IPMI",
-      "info" : "Monitored by sensors: ",
-      "__id_count" : "1"
+      "info" : "Monitored by sensors: "
     },
     "conditionalCollection" : {
       "hw.status{hw.type=\"enclosure\"}" : "",
@@ -176,8 +175,7 @@
       "connector_id" : "IpmiTool",
       "name" : "FAN1 (Fan Device 1)",
       "id" : "09b3",
-      "info" : "",
-      "__id_count" : "2"
+      "info" : ""
     },
     "conditionalCollection" : {
       "hw.status{hw.type=\"fan\"}" : "",
@@ -270,8 +268,7 @@
       "connector_id" : "IpmiTool",
       "name" : "FAN2 (Fan Device 2)",
       "id" : "09f6",
-      "info" : "",
-      "__id_count" : "1"
+      "info" : ""
     },
     "conditionalCollection" : {
       "hw.status{hw.type=\"fan\"}" : "",
@@ -441,12 +438,12 @@
         "type" : "NumberMetric",
         "updated" : false
       },
-      "metricshub.host.up{protocol=\"ipmi\"}" : {
-        "name" : "metricshub.host.up{protocol=\"ipmi\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1768296443907,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ipmi"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -495,12 +492,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"ipmi\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"ipmi\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1768296443907,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ipmi"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -678,8 +675,7 @@
       "name" : "1",
       "connector_id" : "IpmiTool",
       "id" : "1",
-      "info" : "Monitored by sensors: PS1 Status SerialNumber:  Model: ",
-      "__id_count" : "1"
+      "info" : "Monitored by sensors: PS1 Status SerialNumber:  Model: "
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -731,8 +727,7 @@
       "name" : "2",
       "connector_id" : "IpmiTool",
       "id" : "2",
-      "info" : "Monitored by sensors: PS2 Status SerialNumber:  Model: ",
-      "__id_count" : "2"
+      "info" : "Monitored by sensors: PS2 Status SerialNumber:  Model: "
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -795,8 +790,7 @@
       "sensor_location" : "Processor 1",
       "name" : "CPU1 Temp (Processor 1)",
       "connector_id" : "IpmiTool",
-      "id" : "0004",
-      "__id_count" : "19"
+      "id" : "0004"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -857,8 +851,7 @@
       "sensor_location" : "Processor 2",
       "name" : "CPU2 Temp (Processor 2)",
       "connector_id" : "IpmiTool",
-      "id" : "0047",
-      "__id_count" : "31"
+      "id" : "0047"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -919,8 +912,7 @@
       "sensor_location" : "System Board 1",
       "name" : "PCH Temp (System Board 1)",
       "connector_id" : "IpmiTool",
-      "id" : "008a",
-      "__id_count" : "30"
+      "id" : "008a"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -981,8 +973,7 @@
       "sensor_location" : "System Board 2",
       "name" : "System Temp (System Board 2)",
       "connector_id" : "IpmiTool",
-      "id" : "00cd",
-      "__id_count" : "37"
+      "id" : "00cd"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1043,8 +1034,7 @@
       "sensor_location" : "System Board 3",
       "name" : "Peripheral Temp (System Board 3)",
       "connector_id" : "IpmiTool",
-      "id" : "0110",
-      "__id_count" : "16"
+      "id" : "0110"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1105,8 +1095,7 @@
       "sensor_location" : "System Board 3",
       "name" : "Inlet Temp (System Board 3)",
       "connector_id" : "IpmiTool",
-      "id" : "0153",
-      "__id_count" : "26"
+      "id" : "0153"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1167,8 +1156,7 @@
       "sensor_location" : "Processor 3",
       "name" : "Vcpu1VRM Temp (Processor 3)",
       "connector_id" : "IpmiTool",
-      "id" : "0196",
-      "__id_count" : "36"
+      "id" : "0196"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1229,8 +1217,7 @@
       "sensor_location" : "Processor 4",
       "name" : "Vcpu2VRM Temp (Processor 4)",
       "connector_id" : "IpmiTool",
-      "id" : "01d9",
-      "__id_count" : "25"
+      "id" : "01d9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1291,8 +1278,7 @@
       "sensor_location" : "Memory Device 49",
       "name" : "VDIMMABVRM Temp (Memory Device 49)",
       "connector_id" : "IpmiTool",
-      "id" : "021c",
-      "__id_count" : "14"
+      "id" : "021c"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1353,8 +1339,7 @@
       "sensor_location" : "Memory Device 50",
       "name" : "VDIMMCDVRM Temp (Memory Device 50)",
       "connector_id" : "IpmiTool",
-      "id" : "025f",
-      "__id_count" : "29"
+      "id" : "025f"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1415,8 +1400,7 @@
       "sensor_location" : "Memory Device 51",
       "name" : "VDIMMEFVRM Temp (Memory Device 51)",
       "connector_id" : "IpmiTool",
-      "id" : "02a2",
-      "__id_count" : "21"
+      "id" : "02a2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1477,8 +1461,7 @@
       "sensor_location" : "Memory Device 52",
       "name" : "VDIMMGHVRM Temp (Memory Device 52)",
       "connector_id" : "IpmiTool",
-      "id" : "02e5",
-      "__id_count" : "2"
+      "id" : "02e5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1539,8 +1522,7 @@
       "sensor_location" : "Memory Device 1",
       "name" : "P1-DIMMA1 Temp (Memory Device 1)",
       "connector_id" : "IpmiTool",
-      "id" : "0328",
-      "__id_count" : "17"
+      "id" : "0328"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1601,8 +1583,7 @@
       "sensor_location" : "Memory Device 2",
       "name" : "P1-DIMMA2 Temp (Memory Device 2)",
       "connector_id" : "IpmiTool",
-      "id" : "036b",
-      "__id_count" : "22"
+      "id" : "036b"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1663,8 +1644,7 @@
       "sensor_location" : "Memory Device 1",
       "name" : "P1-DIMMA3 Temp (Memory Device 1)",
       "connector_id" : "IpmiTool",
-      "id" : "03ae",
-      "__id_count" : "7"
+      "id" : "03ae"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1725,8 +1705,7 @@
       "sensor_location" : "Memory Device 4",
       "name" : "P1-DIMMB1 Temp (Memory Device 4)",
       "connector_id" : "IpmiTool",
-      "id" : "03f1",
-      "__id_count" : "1"
+      "id" : "03f1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1787,8 +1766,7 @@
       "sensor_location" : "Memory Device 5",
       "name" : "P1-DIMMB2 Temp (Memory Device 5)",
       "connector_id" : "IpmiTool",
-      "id" : "0434",
-      "__id_count" : "12"
+      "id" : "0434"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1849,8 +1827,7 @@
       "sensor_location" : "Memory Device 5",
       "name" : "P1-DIMMB3 Temp (Memory Device 5)",
       "connector_id" : "IpmiTool",
-      "id" : "0477",
-      "__id_count" : "13"
+      "id" : "0477"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1911,8 +1888,7 @@
       "sensor_location" : "Memory Device 8",
       "name" : "P1-DIMMC1 Temp (Memory Device 8)",
       "connector_id" : "IpmiTool",
-      "id" : "04ba",
-      "__id_count" : "20"
+      "id" : "04ba"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -1973,8 +1949,7 @@
       "sensor_location" : "Memory Device 9",
       "name" : "P1-DIMMC2 Temp (Memory Device 9)",
       "connector_id" : "IpmiTool",
-      "id" : "04fd",
-      "__id_count" : "3"
+      "id" : "04fd"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2035,8 +2010,7 @@
       "sensor_location" : "Memory Device 9",
       "name" : "P1-DIMMC3 Temp (Memory Device 9)",
       "connector_id" : "IpmiTool",
-      "id" : "0540",
-      "__id_count" : "11"
+      "id" : "0540"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2097,8 +2071,7 @@
       "sensor_location" : "Memory Device 12",
       "name" : "P1-DIMMD1 Temp (Memory Device 12)",
       "connector_id" : "IpmiTool",
-      "id" : "0583",
-      "__id_count" : "28"
+      "id" : "0583"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2159,8 +2132,7 @@
       "sensor_location" : "Memory Device 13",
       "name" : "P1-DIMMD2 Temp (Memory Device 13)",
       "connector_id" : "IpmiTool",
-      "id" : "05c6",
-      "__id_count" : "33"
+      "id" : "05c6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2221,8 +2193,7 @@
       "sensor_location" : "Memory Device 13",
       "name" : "P1-DIMMD3 Temp (Memory Device 13)",
       "connector_id" : "IpmiTool",
-      "id" : "0609",
-      "__id_count" : "15"
+      "id" : "0609"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2283,8 +2254,7 @@
       "sensor_location" : "Memory Device 16",
       "name" : "P2-DIMME1 Temp (Memory Device 16)",
       "connector_id" : "IpmiTool",
-      "id" : "064c",
-      "__id_count" : "5"
+      "id" : "064c"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2345,8 +2315,7 @@
       "sensor_location" : "Memory Device 17",
       "name" : "P2-DIMME2 Temp (Memory Device 17)",
       "connector_id" : "IpmiTool",
-      "id" : "068f",
-      "__id_count" : "35"
+      "id" : "068f"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2407,8 +2376,7 @@
       "sensor_location" : "Memory Device 13",
       "name" : "P2-DIMME3 Temp (Memory Device 13)",
       "connector_id" : "IpmiTool",
-      "id" : "06d2",
-      "__id_count" : "32"
+      "id" : "06d2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2469,8 +2437,7 @@
       "sensor_location" : "Memory Device 20",
       "name" : "P2-DIMMF1 Temp (Memory Device 20)",
       "connector_id" : "IpmiTool",
-      "id" : "0715",
-      "__id_count" : "24"
+      "id" : "0715"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2531,8 +2498,7 @@
       "sensor_location" : "Memory Device 21",
       "name" : "P2-DIMMF2 Temp (Memory Device 21)",
       "connector_id" : "IpmiTool",
-      "id" : "0758",
-      "__id_count" : "6"
+      "id" : "0758"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2593,8 +2559,7 @@
       "sensor_location" : "Memory Device 13",
       "name" : "P2-DIMMF3 Temp (Memory Device 13)",
       "connector_id" : "IpmiTool",
-      "id" : "079b",
-      "__id_count" : "27"
+      "id" : "079b"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2655,8 +2620,7 @@
       "sensor_location" : "Memory Device 24",
       "name" : "P2-DIMMG1 Temp (Memory Device 24)",
       "connector_id" : "IpmiTool",
-      "id" : "07de",
-      "__id_count" : "10"
+      "id" : "07de"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2717,8 +2681,7 @@
       "sensor_location" : "Memory Device 25",
       "name" : "P2-DIMMG2 Temp (Memory Device 25)",
       "connector_id" : "IpmiTool",
-      "id" : "0821",
-      "__id_count" : "9"
+      "id" : "0821"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2779,8 +2742,7 @@
       "sensor_location" : "Memory Device 25",
       "name" : "P2-DIMMG3 Temp (Memory Device 25)",
       "connector_id" : "IpmiTool",
-      "id" : "0864",
-      "__id_count" : "18"
+      "id" : "0864"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2841,8 +2803,7 @@
       "sensor_location" : "Memory Device 28",
       "name" : "P2-DIMMH1 Temp (Memory Device 28)",
       "connector_id" : "IpmiTool",
-      "id" : "08a7",
-      "__id_count" : "23"
+      "id" : "08a7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2903,8 +2864,7 @@
       "sensor_location" : "Memory Device 29",
       "name" : "P2-DIMMH2 Temp (Memory Device 29)",
       "connector_id" : "IpmiTool",
-      "id" : "08ea",
-      "__id_count" : "8"
+      "id" : "08ea"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -2965,8 +2925,7 @@
       "sensor_location" : "Memory Device 29",
       "name" : "P2-DIMMH3 Temp (Memory Device 29)",
       "connector_id" : "IpmiTool",
-      "id" : "092d",
-      "__id_count" : "38"
+      "id" : "092d"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3027,8 +2986,7 @@
       "sensor_location" : "Other 1",
       "name" : "M.2_ARTx Temp (Other 1)",
       "connector_id" : "IpmiTool",
-      "id" : "0970",
-      "__id_count" : "34"
+      "id" : "0970"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3082,15 +3040,14 @@
       }
     },
     "attributes" : {
-      "__display_id" : "AOC_NIC2_Temp\u0000\u0000",
+      "__display_id" : "AOC_NIC2_Temp",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "__is_cpu_sensor" : "false",
       "sensor_location" : "System Board 2",
-      "name" : "AOC_NIC2_Temp\u0000\u0000 (System Board 2)",
+      "name" : "AOC_NIC2_Temp (System Board 2)",
       "connector_id" : "IpmiTool",
-      "id" : "1213",
-      "__id_count" : "4"
+      "id" : "1213"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3150,8 +3107,7 @@
       "sensor_location" : "System Board 17",
       "name" : "12V (System Board 17)",
       "connector_id" : "IpmiTool",
-      "id" : "0abf",
-      "__id_count" : "11"
+      "id" : "0abf"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3211,8 +3167,7 @@
       "sensor_location" : "System Board 18",
       "name" : "5VCC (System Board 18)",
       "connector_id" : "IpmiTool",
-      "id" : "0b02",
-      "__id_count" : "12"
+      "id" : "0b02"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3272,8 +3227,7 @@
       "sensor_location" : "System Board 19",
       "name" : "3.3VCC (System Board 19)",
       "connector_id" : "IpmiTool",
-      "id" : "0b45",
-      "__id_count" : "16"
+      "id" : "0b45"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3333,8 +3287,7 @@
       "sensor_location" : "System Board 20",
       "name" : "VBAT (System Board 20)",
       "connector_id" : "IpmiTool",
-      "id" : "0b88",
-      "__id_count" : "14"
+      "id" : "0b88"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3394,8 +3347,7 @@
       "sensor_location" : "Processor 5",
       "name" : "Vcpu1 (Processor 5)",
       "connector_id" : "IpmiTool",
-      "id" : "0bcb",
-      "__id_count" : "1"
+      "id" : "0bcb"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3455,8 +3407,7 @@
       "sensor_location" : "Processor 6",
       "name" : "Vcpu2 (Processor 6)",
       "connector_id" : "IpmiTool",
-      "id" : "0c0e",
-      "__id_count" : "4"
+      "id" : "0c0e"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3516,8 +3467,7 @@
       "sensor_location" : "Memory Device 33",
       "name" : "VDIMMAB (Memory Device 33)",
       "connector_id" : "IpmiTool",
-      "id" : "0c51",
-      "__id_count" : "5"
+      "id" : "0c51"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3577,8 +3527,7 @@
       "sensor_location" : "Memory Device 34",
       "name" : "VDIMMCD (Memory Device 34)",
       "connector_id" : "IpmiTool",
-      "id" : "0c94",
-      "__id_count" : "2"
+      "id" : "0c94"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3638,8 +3587,7 @@
       "sensor_location" : "Memory Device 35",
       "name" : "VDIMMEF (Memory Device 35)",
       "connector_id" : "IpmiTool",
-      "id" : "0cd7",
-      "__id_count" : "8"
+      "id" : "0cd7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3699,8 +3647,7 @@
       "sensor_location" : "Memory Device 36",
       "name" : "VDIMMGH (Memory Device 36)",
       "connector_id" : "IpmiTool",
-      "id" : "0d1a",
-      "__id_count" : "13"
+      "id" : "0d1a"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3760,8 +3707,7 @@
       "sensor_location" : "System Board 21",
       "name" : "12VSB (System Board 21)",
       "connector_id" : "IpmiTool",
-      "id" : "0d5d",
-      "__id_count" : "6"
+      "id" : "0d5d"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3821,8 +3767,7 @@
       "sensor_location" : "System Board 34",
       "name" : "5VSB (System Board 34)",
       "connector_id" : "IpmiTool",
-      "id" : "0da0",
-      "__id_count" : "10"
+      "id" : "0da0"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3882,8 +3827,7 @@
       "sensor_location" : "System Board 22",
       "name" : "3.3VSB (System Board 22)",
       "connector_id" : "IpmiTool",
-      "id" : "0de3",
-      "__id_count" : "7"
+      "id" : "0de3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -3943,8 +3887,7 @@
       "sensor_location" : "System Board 23",
       "name" : "1.5V PCH (System Board 23)",
       "connector_id" : "IpmiTool",
-      "id" : "0e26",
-      "__id_count" : "15"
+      "id" : "0e26"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -4004,8 +3947,7 @@
       "sensor_location" : "System Board 24",
       "name" : "1.2V BMC (System Board 24)",
       "connector_id" : "IpmiTool",
-      "id" : "0e69",
-      "__id_count" : "9"
+      "id" : "0e69"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
@@ -4065,8 +4007,7 @@
       "sensor_location" : "System Board 25",
       "name" : "1.05V PCH (System Board 25)",
       "connector_id" : "IpmiTool",
-      "id" : "0eac",
-      "__id_count" : "3"
+      "id" : "0eac"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },

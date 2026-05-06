@@ -1,14 +1,13 @@
 otel:
   otel.exporter.otlp.metrics.protocol: noop
-patchDirectory: "src/main/connector"
+patchDirectory: src/main/connector
 resources:
   anyHost:
     attributes:
       host.name: anyHost
       host.type: windows
     protocols:
-      wmi:
-        username: username
-        password: password
-        timeout: 300
-    connectors: ["+WindowsIpmiTool"]
+      emulation:
+        wmi:
+          directory: src/it/resources/WindowsIpmiTool/emulation/wmi
+    connectors: [ +WindowsIpmiTool ]

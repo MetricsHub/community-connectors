@@ -8,7 +8,7 @@ resources:
       host.name: localhost
       host.type: linux
     protocols:
-      jdbc:
-        timeout: 300
-        type: mysql
-    connectors: ["+MySql"]
+      emulation:
+        jdbc:
+          directory: src/it/resources/MySQL/emulation/jdbc
+    connectors: [ +MySQL ]

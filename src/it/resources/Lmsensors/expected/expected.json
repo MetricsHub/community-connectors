@@ -29,7 +29,7 @@
       },
       "conditionalCollection": {},
       "legacyTextParameters": {
-        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [LINUX]\n- Exclude: []\n\nResult:\nConfigured OS type : LINUX\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: %{SUDO:/usr/bin/sensors} /usr/bin/sensors -h\n- ExecuteLocally: false\n- ExpectedResult: Usage: sensors \n\nResult:\nUsage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine:  /usr/bin/sensors -h\n- ExecuteLocally: false\n- ExpectedResult: Usage: sensors \n\nResult: Usage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+        "StatusInformation": "Executed DeviceTypeCriterion Criterion:\n- Keep: [LINUX]\n- Exclude: []\n\nResult:\nConfigured OS type : LINUX\n\nMessage:\n====================================\nSuccessful OS detection operation\n====================================\n\n\nExecuted CommandLineCriterion Criterion:\n- CommandLine: %{SUDO:/usr/bin/sensors} /usr/bin/sensors -h\n- ExecuteLocally: false\n- ExpectedResult: Usage: sensors \n\nResult:\nUsage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: %{SUDO:/usr/bin/sensors} /usr/bin/sensors -h\n- ExecuteLocally: false\n- ExpectedResult: Usage: sensors \n\nResult: Usage: sensors [OPTION]... [CHIP]...\n  -c, --config-file      Specify a config file\n  -h, --help             Display this help text\n  -s, --set              Execute `set' statements (root only)\n  -f, --fahrenheit       Show temperatures in degrees fahrenheit\n  -A, --no-adapter       Do not show adapter for each chip\n      --bus-list         Generate bus statements for sensors.conf\n  -u                     Raw output\n  -v, --version          Display the program version\n  -n, --allow-no-sensors Do not fail if no sensors found\n\nUse `-' after `-c' to read the config file from stdin.\nIf no chips are specified, all chip info will be printed.\nExample chip names:\n\tlm78-i2c-0-2d\t*-i2c-0-2d\n\tlm78-i2c-0-*\t*-i2c-0-*\n\tlm78-i2c-*-2d\t*-i2c-*-2d\n\tlm78-i2c-*-*\t*-i2c-*-*\n\tlm78-isa-0290\t*-isa-0290\n\tlm78-isa-*\t*-isa-*\n\tlm78-*\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
       },
       "alertRules": {},
       "discoveryTime": 1757939688266,
@@ -87,12 +87,12 @@
     },
     {
       "metrics": {
-        "metricshub.host.up{protocol=\"ssh\"}": {
-          "name": "metricshub.host.up{protocol=\"ssh\"}",
+        "metricshub.host.up{protocol=\"emulation\"}": {
+          "name": "metricshub.host.up{protocol=\"emulation\"}",
           "collectTime": 1757939695809,
           "previousCollectTime": null,
           "attributes": {
-            "protocol": "ssh"
+            "protocol": "emulation"
           },
           "resetMetricTime": false,
           "value": 1.0,
@@ -100,12 +100,12 @@
           "type": "NumberMetric",
           "updated": true
         },
-        "metricshub.host.response_time{protocol=\"ssh\"}" : {
-          "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+        "metricshub.host.response_time{protocol=\"emulation\"}" : {
+          "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
           "collectTime" : 1761830693520,
           "previousCollectTime" : null,
           "attributes" : {
-            "protocol" : "ssh"
+            "protocol" : "emulation"
           },
           "resetMetricTime" : false,
           "value" : 1.0,

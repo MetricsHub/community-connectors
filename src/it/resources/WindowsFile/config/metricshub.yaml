@@ -8,10 +8,9 @@ resources:
       host.name: localhost
       host.type: win
     protocols:
-      ssh:
-        username: user
-        password: pass
-        timeout: 240
+      emulation:
+        ssh:
+          directory: src/it/resources/WindowsFile/emulation/command
     additionalConnectors:
       WindowsFile:
         variables:

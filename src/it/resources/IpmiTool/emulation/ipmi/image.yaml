@@ -1,0 +1,5 @@
+image:
+- request: IpmiDetection
+  response: 17a9caa1-9019-476e-b8c2-92ba5f1fbeec.txt
+- request: GetSensors
+  response: 9f490081-c568-40eb-9e3c-94d6528fdafa.txt

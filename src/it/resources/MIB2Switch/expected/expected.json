@@ -489,12 +489,12 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.host.up{protocol=\"snmp\"}" : {
-        "name" : "metricshub.host.up{protocol=\"snmp\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1762469108842,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "snmp"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -502,12 +502,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"snmp\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"snmp\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1762469108842,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "snmp"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,

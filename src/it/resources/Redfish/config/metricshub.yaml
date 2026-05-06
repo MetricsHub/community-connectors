@@ -8,9 +8,7 @@ resources:
       host.name: anyhost
       host.type: oob
     protocols:
-      http:
-        https: true
-        username: user
-        password: pass
-        timeout: 120
-    connectors: ["+Redfish"]
+      emulation:
+        http:
+          directory: src/it/resources/Redfish/emulation/http
+    connectors: [ +Redfish ]

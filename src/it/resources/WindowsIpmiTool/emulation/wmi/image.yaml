@@ -1,0 +1,21 @@
+image:
+# Detection criterion: ComputerSystem
+- request:
+    wql: SELECT Description FROM ComputerSystem
+    namespace: root\hardware
+  response: 9d5ff73c-df83-4f41-9624-4ef9b96fc59f.csv
+# enclosure.simple.sources.computerSystems: Win32_ComputerSystemProduct
+- request:
+    wql: SELECT IdentifyingNumber,Name,Vendor FROM Win32_ComputerSystemProduct
+    namespace: root\cimv2
+  response: a4515c9d-74af-44a7-aa3d-2c4b7e01896d.csv
+# enclosure.simple.sources.numericSensors: NumericSensor
+- request:
+    wql: SELECT BaseUnits,CurrentReading,Description,LowerThresholdCritical,LowerThresholdNonCritical,SensorType,UnitModifier,UpperThresholdCritical,UpperThresholdNonCritical FROM NumericSensor
+    namespace: root\hardware
+  response: c4833504-603a-46e7-acac-2043f53f1f18.csv
+# enclosure.simple.sources.discreteSensors: Sensor
+- request:
+    wql: SELECT CurrentState,Description FROM Sensor
+    namespace: root\hardware
+  response: 1e53381b-09c5-4b9b-becb-e0a88dd2f190.csv

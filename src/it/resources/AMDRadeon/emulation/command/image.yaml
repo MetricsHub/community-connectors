@@ -1,0 +1,6 @@
+---
+image:
+- command: rocm-smi
+  result: 26a82c1e-105c-4358-9487-7ea52f1a8e19.txt
+- command: rocm-smi -a --csv
+  result: 2b6d9941-b985-4f74-90eb-e658954ba18b.txt

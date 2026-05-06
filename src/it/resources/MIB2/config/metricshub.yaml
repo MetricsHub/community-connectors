@@ -8,6 +8,7 @@ resources:
       host.name: localhost
       host.type: oob
     protocols:
-      snmp:
-        timeout: 300
-    connectors: ["+Mib2"]
+      emulation:
+        snmp:
+          directory: src/it/resources/MIB2/emulation/snmp
+    connectors: [ +MIB2 ]

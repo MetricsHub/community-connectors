@@ -1,0 +1,3 @@
+/opt/metricshub/config/metricshub.yaml;metricshub.yaml;Error;2
+/opt/metricshub/config/metricshub.yaml;metricshub.yaml;Exception;1
+/opt/metricshub/config/metricshub.yaml;metricshub.yaml;Failed;1

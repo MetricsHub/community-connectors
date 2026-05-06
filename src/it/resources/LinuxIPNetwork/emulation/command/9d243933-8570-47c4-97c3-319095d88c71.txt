@@ -1,0 +1,6 @@
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:19:99:c5:7b:dd brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    893457329811 6281134244 0       2314    0       3077886 
+    TX: bytes  packets  errors  dropped carrier collsns 
+    947282002862 5438973106 0       0       0       0       

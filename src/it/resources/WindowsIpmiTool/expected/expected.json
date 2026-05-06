@@ -186,12 +186,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.up{protocol=\"wmi\"}" : {
-        "name" : "metricshub.host.up{protocol=\"wmi\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "wmi"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -229,12 +229,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"wmi\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"wmi\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "wmi"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,

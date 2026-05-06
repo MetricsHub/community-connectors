@@ -7,18 +7,12 @@ import org.metricshub.agent.service.task.MonitoringTask;
 import org.metricshub.agent.service.task.MonitoringTaskInfo;
 import org.metricshub.configuration.YamlConfigurationProvider;
 import org.metricshub.engine.extension.ExtensionManager;
+import org.metricshub.engine.extension.ICompositeSourceScriptExtension;
 import org.metricshub.engine.extension.IProtocolExtension;
-import org.metricshub.extension.http.HttpExtension;
-import org.metricshub.extension.ipmi.IpmiExtension;
-import org.metricshub.extension.jdbc.JdbcExtension;
-import org.metricshub.extension.jmx.JmxExtension;
-import org.metricshub.extension.oscommand.OsCommandExtension;
-import org.metricshub.extension.ping.PingExtension;
-import org.metricshub.extension.snmp.SnmpExtension;
-import org.metricshub.extension.snmpv3.SnmpV3Extension;
-import org.metricshub.extension.wbem.WbemExtension;
-import org.metricshub.extension.winrm.WinRmExtension;
-import org.metricshub.extension.wmi.WmiExtension;
+import org.metricshub.engine.extension.ISourceComputationExtension;
+import org.metricshub.extension.emulation.EmulationExtension;
+import org.metricshub.extension.internaldb.InternalDbExtension;
+import org.metricshub.extension.jawk.JawkSourceExtension;
 import org.metricshub.it.job.AbstractITJob;
 import org.metricshub.it.job.ITJob;
 
@@ -35,9 +29,6 @@ import java.util.NoSuchElementException;
  */
 public class EmulationITBase extends AbstractITJob {
 
-	private static final ExtensionManager EXTENSION_MANAGER = createExtensionManger();
-
-	private final String connectorId;
 	private MonitoringTaskInfo monitoringTaskInfo;
 
 	/**
@@ -48,7 +39,6 @@ public class EmulationITBase extends AbstractITJob {
 	 */
 	public EmulationITBase(final String connectorId, final MonitoringTaskInfo monitoringTaskInfo) {
 		super(monitoringTaskInfo.getTelemetryManager());
-		this.connectorId = connectorId;
 		this.monitoringTaskInfo = monitoringTaskInfo;
 	}
 
@@ -73,8 +63,11 @@ public class EmulationITBase extends AbstractITJob {
 		// Set the connector emulation files, expected result and config directory
 		final String configFileDirectory = Paths.get("src", "it", "resources", connectorId, "config").toString();
 
+		// Create the extension manager with all required extensions for the IT tests
+		final ExtensionManager extensionManager = createExtensionManger();
+
 		// Initialize the application context
-		final var agentContext = new AgentContext(configFileDirectory, EXTENSION_MANAGER);
+		final var agentContext = new AgentContext(configFileDirectory, extensionManager);
 
 		// Get the first resource group entry
 		final var firstGroupEntry = agentContext
@@ -105,7 +98,7 @@ public class EmulationITBase extends AbstractITJob {
 			.resourceConfig(resourceConfig)
 			.resourceKey(resourceKey)
 			.resourceGroupKey(resourceGroupKey)
-			.extensionManager(EXTENSION_MANAGER)
+			.extensionManager(extensionManager)
 			.metricsExporter(MetricsExporter.builder().build())
 			.hostMetricDefinitions(new MetricDefinitions(new HashMap<>()))
 			.build();
@@ -118,33 +111,29 @@ public class EmulationITBase extends AbstractITJob {
 	 */
 	private static ExtensionManager createExtensionManger() {
 		final List<IProtocolExtension> extensions = new ArrayList<>();
-		extensions.add(new HttpExtension());
-		extensions.add(new IpmiExtension());
-		extensions.add(new JdbcExtension());
-		extensions.add(new JmxExtension());
-		extensions.add(new OsCommandExtension());
-		extensions.add(new PingExtension());
-		extensions.add(new SnmpExtension());
-		extensions.add(new SnmpV3Extension());
-		extensions.add(new WbemExtension());
-		extensions.add(new WinRmExtension());
-		extensions.add(new WmiExtension());
+		extensions.add(new EmulationExtension());
+
+		final List<ICompositeSourceScriptExtension> compositeExtensions = List.of(
+			new JawkSourceExtension()
+		);
+
+		final List<ISourceComputationExtension> sourceComputationExtensions = List.of(
+			new InternalDbExtension()
+		);
 
 		return ExtensionManager.builder()
 			.withProtocolExtensions(extensions)
 			.withConfigurationProviderExtensions(
 				Collections.singletonList(new YamlConfigurationProvider())
 			)
+			.withCompositeSourceScriptExtensions(compositeExtensions)
+			.withSourceComputationExtensions(sourceComputationExtensions)
 			.build();
 
 	}
 
 	@Override
 	public EmulationITBase withServerRecordData(String... strings) throws Exception {
-
-		telemetryManager.setEmulationInputDirectory(
-			Paths.get("src", "it", "resources", connectorId, "emulation").toString()
-		);
 
 		return this;
 	}
@@ -170,5 +159,3 @@ public class EmulationITBase extends AbstractITJob {
 	}
 
 }
-
-

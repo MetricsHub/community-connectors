@@ -25,7 +25,7 @@
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: ${file::1} \"/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml\"\n- ExecuteLocally: false\n- ExpectedResult: .+\n\nResult:\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log\n/opt/metricshub/config/metricshub.yaml\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: C:\\Users\\ELYESC~1\\AppData\\Local\\Temp\\metricshub_embedded_detection15803086741945325003.sh \"/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml\"\n- ExecuteLocally: false\n- ExpectedResult: .+\n\nResult: /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log\n/opt/metricshub/config/metricshub.yaml\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: ${file::1} \"/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml\"\n- ExecuteLocally: false\n- ExpectedResult: .+\n\nResult:\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log\n/opt/metricshub/config/metricshub.yaml\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: ${file::1} \"/opt/metricshub/lib/logs/*,/opt/metricshub/config/metricshub.yaml\"\n- ExecuteLocally: false\n- ExpectedResult: .+\n\nResult: /opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-32.log\n/opt/metricshub/lib/logs/metricshub-agent-localhost-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-08.log\n/opt/metricshub/lib/logs/metricshub-agent-global-2025-11-28-06-05-32.log\n/opt/metricshub/config/metricshub.yaml\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
     },
     "alertRules" : { },
     "discoveryTime" : 1764585924951,
@@ -413,12 +413,12 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.host.up{protocol=\"ssh\"}" : {
-        "name" : "metricshub.host.up{protocol=\"ssh\"}",
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
         "collectTime" : 1764585929852,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ssh"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
@@ -426,12 +426,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.host.response_time{protocol=\"ssh\"}" : {
-        "name" : "metricshub.host.response_time{protocol=\"ssh\"}",
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
         "collectTime" : 1764585929852,
         "previousCollectTime" : null,
         "attributes" : {
-          "protocol" : "ssh"
+          "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "value" : 1.0,
