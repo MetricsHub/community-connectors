@@ -102,13 +102,24 @@ For protocol-specific emulation directories, configure each protocol under the `
 
 The `ConnectorReplayIT` class provides a helper method `writeExpectedJson` to generate the expected JSON output for your connector. Follow these steps:
 
-* Call the `writeExpectedJson` method via Maven to generate the expected JSON file:
+* Add a temporary test method in `ConnectorReplayIT.java` that calls `writeExpectedJson` with your connector identifier:
+
+```java
+@Test
+void generateExpectedMyConnector() throws Exception {
+  writeExpectedJson("MyConnector");
+}
+```
+
+* Run that test via Maven:
 
 ```bash
-mvn clean verify -Dtest=ConnectorReplayIT#writeExpectedJson
+mvn clean verify -Dtest=ConnectorReplayIT#generateExpectedMyConnector
 ```
 
 This will generate `expected-gen.json` in `src/it/resources/<MyConnectorId>/expected/`.
+
+* Remove the temporary generation test method once `expected.json` has been updated.
 
 * Review the generated file to ensure it captures the correct telemetry data.
 
