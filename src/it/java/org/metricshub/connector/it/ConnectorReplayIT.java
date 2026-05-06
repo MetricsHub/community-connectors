@@ -1,6 +1,9 @@
 package org.metricshub.connector.it;
 
+import static org.junit.jupiter.api.condition.OS.WINDOWS;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -119,7 +122,10 @@ class ConnectorReplayIT {
 	}
 
 	@Test
+	@EnabledOnOs(WINDOWS)
 	void testWBEMGenDiskNT() throws Exception {
+		// WBEMGenDiskNT has a service criterion that only runs on Windows
+		// and thus is only included in the Windows test suite to avoid unnecessary test failures on other OSes
 		testConnectorReplay("WBEMGenDiskNT");
 	}
 
