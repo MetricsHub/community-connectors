@@ -147,7 +147,7 @@ monitors:
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,ReadErrorsTotal,Wear,WriteErrorsTotal,Temperature,TemperatureMax FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter
         source(11):
-          # Source(1) = jointure of DiskController.Discovery.Source(7) and DiskController.Discovery.Source(8)
+          # Source(11) = Table join of DiskController.Discovery.Source(7) and DiskController.Discovery.Source(8)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
           type: tableJoin
           leftTable: ${source::monitors.disk_controller.discovery.sources.source(7)}
