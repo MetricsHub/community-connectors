@@ -172,7 +172,7 @@ resources:
 > [!NOTE]
 > Depending on the connector behavior and how MetricsHub executes requests in parallel, you may end up with a recording where the same request is executed twice but returns different results — for example, a temperature value changing between the first and second execution. In such cases, the expected output may randomly differ from one execution to another because requests are not executed in the exact same order that they were recorded.
 > If this is the case for now, keep only unique requests in the image. We plan to enhance the framework to add an identifier (optional) to the recorded requests in order to be able to distinguish them during the replay and match them with the expected output, even if they are executed in a different order or multiple times.
- 
+
 > [!NOTE]
 > Another scenario can also happen due to race conditions: a connector may reference sources that are only available during the second collection cycle. Since MetricsHub runs monitor jobs in parallel, a referenced source might not yet be available during the very first collection. In that case, the integration test may fail even if the expected output was generated successfully at a given execution time T.
 > When this happens, the connector design itself should really be reconsidered to avoid such behavior. A source being unavailable for another dependent source is not considered normal, even during the first collection cycle.
