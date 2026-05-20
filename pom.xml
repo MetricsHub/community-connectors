@@ -63,7 +63,7 @@
 		<metricshub-community.version>3.9.04</metricshub-community.version>
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-		<project.build.outputTimestamp>2026-03-30T15:12:32Z</project.build.outputTimestamp>
+		<project.build.outputTimestamp>2026-05-19T15:25:24Z</project.build.outputTimestamp>
 	</properties>
 
 	<dependencyManagement>
@@ -71,7 +71,7 @@
 			<dependency>
 				<groupId>org.junit</groupId>
 				<artifactId>junit-bom</artifactId>
-				<version>6.0.3</version>
+				<version>6.1.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
