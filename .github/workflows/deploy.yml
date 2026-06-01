@@ -12,5 +12,5 @@ jobs:
   deploy:
     uses: metricshub/workflows/.github/workflows/maven-central-deploy.yml@v6
     with:
-      jdkVersion: "17"
+      jdkVersion: "25"
     secrets: inherit

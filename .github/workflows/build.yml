@@ -20,6 +20,6 @@ jobs:
   build:
     uses: metricshub/workflows/.github/workflows/maven-build.yml@v6
     with:
-      jdkVersion: "17"
+      jdkVersion: "25"
       debug: ${{ github.event_name == 'workflow_dispatch' && inputs.debug }}
       ssh: ${{ github.event_name == 'workflow_dispatch' && inputs.ssh }}

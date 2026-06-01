@@ -23,5 +23,5 @@ jobs:
       releaseVersion: ${{ inputs.releaseVersion }}
       developmentVersion: ${{ inputs.developmentVersion }}
       autoRelease: false
-      jdkVersion: "17"
+      jdkVersion: "25"
     secrets: inherit
