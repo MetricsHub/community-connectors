@@ -201,3 +201,66 @@ ${esc.d}{awk::<script>}
             attributes:
               name: ${esc.d}{awk::sprintf("%s (%s)", "Cisco", $1)}
 ```
+
+## References in compute attributes
+
+### Format
+
+A first possible format is to reference a resource attribute:
+
+```yaml
+${esc.d}{resource.attribute::<attribute-key>}
+```
+
+Another possible format is to reference a protocol property:
+
+```yaml
+${esc.d}{protocol::<protocol-type>.<property>}
+```
+
+Also, there is a possibility to reference a source content:
+
+```yaml
+${esc.d}{source::<source-name>}
+```
+
+### Example
+
+We can replace an existing value in a column with a protocol property:
+
+```yaml
+    sources:
+      source(1):
+        type: http
+        path: /api/device
+        computes:
+        - type: replace
+          column: 1
+          existingValue: "PORT"
+          newValue: ${esc.d}{protocol::http.port}
+```
+
+Here is another example that appends referenced source content to the compute attributes of a source:
+
+```yaml
+    sources:
+      source(1):
+        type: http
+        path: /api/device
+        computes:
+        - type: append
+          column: 1
+          value: " - ${esc.d}{source::monitors.enclosure.simple.sources.source_discovery}"
+```
+Here is another example that references a resource attribute:
+
+```yaml
+    sources:
+      source(1):
+        type: http
+        path: /api/hosts
+        computes:
+        - type: keepOnlyMatchingLines
+          column: 3
+          valueList: "https://${esc.d}{resource.attribute::host.name}"
+```
