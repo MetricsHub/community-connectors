@@ -202,65 +202,74 @@ ${esc.d}{awk::<script>}
               name: ${esc.d}{awk::sprintf("%s (%s)", "Cisco", $1)}
 ```
 
-## References in compute attributes
+## References in Compute Attributes
 
 ### Format
 
-A first possible format is to reference a resource attribute:
+A compute attribute can reference:
+
+#### A resource attribute
 
 ```yaml
 ${esc.d}{resource.attribute::<attribute-key>}
 ```
 
-Another possible format is to reference a protocol property:
+#### A protocol property
 
 ```yaml
 ${esc.d}{protocol::<protocol-type>.<property>}
 ```
 
-Also, there is a possibility to reference a source content:
+#### A source content
 
 ```yaml
 ${esc.d}{source::<source-name>}
 ```
 
-### Example
+### Examples
 
-We can replace an existing value in a column with a protocol property:
+#### Replace a value with a protocol property
+
+The following example replaces the value `PORT` in column `1` with the HTTP port configured for the protocol:
 
 ```yaml
-    sources:
-      source(1):
-        type: http
-        path: /api/device
-        computes:
-        - type: replace
-          column: 1
-          existingValue: "PORT"
-          newValue: ${esc.d}{protocol::http.port}
+sources:
+  source(1):
+    type: http
+    path: /api/device
+    computes:
+      - type: replace
+        column: 1
+        existingValue: "PORT"
+        newValue: ${esc.d}{protocol::http.port}
 ```
 
-Here is another example that appends referenced source content to the compute attributes of a source:
+#### Append content from another source
+
+The following example appends the content of another source to the value in column `1`:
 
 ```yaml
-    sources:
-      source(1):
-        type: http
-        path: /api/device
-        computes:
-        - type: append
-          column: 1
-          value: " - ${esc.d}{source::monitors.enclosure.simple.sources.source_discovery}"
+sources:
+  source(1):
+    type: http
+    path: /api/device
+    computes:
+      - type: append
+        column: 1
+        value: " - ${esc.d}{source::monitors.enclosure.simple.sources.source_discovery}"
 ```
-Here is another example that references a resource attribute:
+
+#### Reference a resource attribute
+
+The following example keeps only the lines whose value in column `3` matches the URL built from the `host.name` resource attribute:
 
 ```yaml
-    sources:
-      source(1):
-        type: http
-        path: /api/hosts
-        computes:
-        - type: keepOnlyMatchingLines
-          column: 3
-          valueList: "https://${esc.d}{resource.attribute::host.name}"
+sources:
+  source(1):
+    type: http
+    path: /api/hosts
+    computes:
+      - type: keepOnlyMatchingLines
+        column: 3
+        valueList: "https://${esc.d}{resource.attribute::host.name}"
 ```
