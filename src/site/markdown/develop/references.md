@@ -201,3 +201,75 @@ ${esc.d}{awk::<script>}
             attributes:
               name: ${esc.d}{awk::sprintf("%s (%s)", "Cisco", $1)}
 ```
+
+## References in Compute Attributes
+
+### Format
+
+A compute attribute can reference:
+
+#### A resource attribute
+
+```yaml
+${esc.d}{resource.attribute::<attribute-key>}
+```
+
+#### A protocol property
+
+```yaml
+${esc.d}{protocol::<protocol-type>.<property>}
+```
+
+#### A source content
+
+```yaml
+${esc.d}{source::<source-name>}
+```
+
+### Examples
+
+#### Replace a value with a protocol property
+
+The following example replaces the value `PORT` in column `1` with the HTTP port configured for the protocol:
+
+```yaml
+sources:
+  source(1):
+    type: http
+    path: /api/device
+    computes:
+      - type: replace
+        column: 1
+        existingValue: "PORT"
+        newValue: ${esc.d}{protocol::http.port}
+```
+
+#### Append content from another source
+
+The following example appends the content of another source to the value in column `1`:
+
+```yaml
+sources:
+  source(1):
+    type: http
+    path: /api/device
+    computes:
+      - type: append
+        column: 1
+        value: " - ${esc.d}{source::monitors.enclosure.simple.sources.source_discovery}"
+```
+
+#### Reference a resource attribute
+
+The following example keeps only the lines whose value in column `3` matches the URL built from the `host.name` resource attribute:
+
+```yaml
+sources:
+  source(1):
+    type: http
+    path: /api/hosts
+    computes:
+      - type: keepOnlyMatchingLines
+        column: 3
+        valueList: "https://${esc.d}{resource.attribute::host.name}"
+```
