@@ -1,0 +1,98 @@
+# ╦ ╦╔═╗  ╔═╗┬─┐┬┌┐┌┌┬┐┌─┐┬─┐
+# ╠═╣╠═╝  ╠═╝├┬┘││││ │ ├┤ ├┬┘
+# ╩ ╩╩    ╩  ┴└─┴┘└┘ ┴ └─┘┴└─
+# https://manytools.org/hacker-tools/ascii-banner/ (Calvin S)
+
+# We're implementing the OpenTelemetry semantic conventions for system metrics.
+extends:
+- ../../semconv/Hardware
+
+# Connector properties
+connector:
+  displayName: HP Printer (Embedded Web Server)
+  platforms: HP, Printers
+  reliesOn: Embedded Web Server
+  information: Collects hardware metrics from HP printers using the Embedded Web Server, including overall status, ink cartridge levels, and paper tray status.
+  detection:
+    appliesTo:
+    - other
+    criteria:
+    - type: http
+      url: http://${HOSTNAME}/DevMgmt/ProductStatusDyn.xml
+    tags: [ hp, printer ]
+
+beforeAll:
+  ProductUsageDyn:
+    type: http
+    url: http://${HOSTNAME}/DevMgmt/ProductUsageDyn.xml
+    method: get
+
+
+
+monitors:
+  printer:
+    keys: [hw.id]
+    simple:
+      sources:
+        ProductStatusDyn:
+          type: http
+          url: http://${HOSTNAME}/DevMgmt/ProductStatusDyn.xml
+          method: get
+          computes:
+            - type: xml2Csv
+              recordTag: /psdyn:ProductStatusDyn/psdyn:Status
+              properties: pscat:StatusCategory
+            - type: duplicateColumn
+              column: 1
+            - type: translate
+              column: 1
+              translationTable:
+                default: UNKNOWN
+                inPowerSave: ok
+                idle: ok
+                ready: ok
+                processing: ok
+                printing: ok
+                busy: ok
+                error: failed
+                attention: degraded
+                alert: failed
+
+      mapping:
+        source: ${source::ProductStatusDyn}
+        attributes:
+          hw.printer.state: $2
+          hw.id: printer
+        metrics:
+          hw.status: $1
+
+  media:
+    keys: [hw.printer.media_size]
+    simple:
+      sources:
+        printedPages:
+          type: copy
+          from: ${source::beforeAll.ProductUsageDyn}
+          computes:
+            - type: xml2Csv
+              recordTag: /pudyn:PrinterSubunit/pudyn:UsageByMedia
+              properties: dd:MediaSizeName;dd:TotalImpressions;dd:MonochromeImpressions;dd:ColorImpressions
+            - type: excludeMatchingLines
+              column: 2
+              valueList: "0"
+      mapping:
+        source: ${source::printedPages}
+        attributes:
+          hw.printer.media_size: $1
+        metrics:
+          hw.printer.printed_pages{hw.printer.color="monochrome"}: $3
+          hw.printer.printed_pages{hw.printer.color="color"}: $4
+
+  ink:
+    keys: [hw.printer.color]
+    simple:
+      sources:
+        inkLevels:
+          type: copy
+          from: ${source::beforeAll.ProductUsageDyn}
+          computes:

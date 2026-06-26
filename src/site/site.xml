@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="${project.name}">
+<site
+	xmlns="http://maven.apache.org/SITE/2.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd"
+	name="Community Connectors">
 
 	<skin>
 		<groupId>org.sentrysoftware.maven</groupId>
 		<artifactId>sentry-maven-skin</artifactId>
-		<version>6.4.01</version>
+		<version>8.0.00</version>
 	</skin>
 
 	<custom>
@@ -48,15 +52,12 @@
 		</additionalLinks>
 	</custom>
 
-	<bannerLeft>
-		<name>MetricsHub</name>
-		<src>images/metricshub-logo.png</src>
-		<href>https://metricshub.com</href>
-		<alt>MetricsHub Official Website</alt>
+	<bannerLeft name="MetricsHub" href="https://metricshub.com">
+		<image src="images/metricshub-logo.png" alt="MetricsHub Official Website" />
 	</bannerLeft>
 
 	<body>
-	
+
 		<links>
 			<item name="Open MetricsHub" href="https://metricshub.org" />
 			<item name="&lt;i class='fa-brands fa-github'&gt;&lt;/i&gt; GitHub" href="https://github.com/metricshub/community-connectors" />
@@ -73,76 +74,78 @@
 			<item name="Connectors Directory" href="connectors-directory.html" />
 		</menu>
 
-		<menu name="Connector Design Guide &lt;span class='fa-solid fa-person-digging'&gt;&lt;/span&gt;">
-			<item name="Introduction" href="develop/index.html" />
-			<item name="Connector" href="develop/connector.html" />
-			<item name="Detection" href="develop/detection/index.html">
-				<item name="Engine Requirements" href="develop/detection/engine-requirements.html" />
-				<item name="Resource Type" href="develop/detection/resource-type.html" />
-				<item name="HTTP" href="develop/detection/http.html" />
-				<item name="IPMI" href="develop/detection/ipmi.html" />
-				<item name="Command Line" href="develop/detection/command-line.html" />
-				<item name="Process" href="develop/detection/process.html" />
-				<item name="Service" href="develop/detection/service.html" />
-				<item name="SNMP GetNext" href="develop/detection/snmp-getnext.html" />
-				<item name="SNMP Get" href="develop/detection/snmp-get.html" />
-				<item name="WBEM" href="develop/detection/wbem.html" />
-				<item name="WMI (WQL)" href="develop/detection/wmi.html" />
-				<item name="SQL" href="develop/detection/sql.html" />
+		<menu name="Official Connector Developer Guide">
+			<item name="Guide Home" href="developer-guide/index.html" />
+			<item name="Quick Start" href="developer-guide/quick-start.html" />
+			<item name="YAML Structure" href="developer-guide/yaml-structure.html" />
+			<item name="Design Principles" href="developer-guide/design-principles.html" />
+			<item name="Mapping, Metrics, and Semconv" href="developer-guide/mapping-metrics-semconv.html" />
+			<item name="References and Expressions" href="developer-guide/references-and-expressions.html" />
+			<item name="Detection" href="developer-guide/detection/index.html">
+				<item name="Command Line" href="developer-guide/detection/command-line.html" />
+				<item name="Device Type" href="developer-guide/detection/device-type.html" />
+				<item name="HTTP" href="developer-guide/detection/http.html" />
+				<item name="IPMI" href="developer-guide/detection/ipmi.html" />
+				<item name="JMX" href="developer-guide/detection/jmx.html" />
+				<item name="Process" href="developer-guide/detection/process.html" />
+				<item name="Product Requirements" href="developer-guide/detection/product-requirements.html" />
+				<item name="Service" href="developer-guide/detection/service.html" />
+				<item name="SNMP Get" href="developer-guide/detection/snmp-get.html" />
+				<item name="SNMP GetNext" href="developer-guide/detection/snmp-getnext.html" />
+				<item name="SQL" href="developer-guide/detection/sql.html" />
+				<item name="WBEM" href="developer-guide/detection/wbem.html" />
+				<item name="WMI" href="developer-guide/detection/wmi.html" />
 			</item>
-			<item name="Monitors" href="develop/monitors.html" />
-			<item name="Sources" href="develop/sources/index.html" >
-				<item name="BeforeAll Sources" href="develop/sources/before-all.html" />
-				<item name="AfterAll Sources" href="develop/sources/after-all.html" />
-				<item name="Awk" href="develop/sources/awk.html" />
-				<item name="Command Line" href="develop/sources/command-line.html" />
-				<item name="Copy (Duplicate)" href="develop/sources/copy.html" />
-				<item name="Event Log" href="develop/sources/event-log.html" />
-				<item name="File" href="develop/sources/file.html" />
-				<item name="HTTP" href="develop/sources/http.html" />
-				<item name="Internal DB Query" href="develop/sources/internal-db-query.html" />
-				<item name="IPMI" href="develop/sources/ipmi.html" />
-				<item name="JMX" href="develop/sources/jmx.html" />
-				<item name="SNMP Get" href="develop/sources/snmp-get.html" />
-				<item name="SNMP Table" href="develop/sources/snmp-table.html" />
-				<item name="SQL" href="develop/sources/sql.html" />
-				<item name="Static (Constant)" href="develop/sources/static.html" />
-				<item name="Table Join" href="develop/sources/table-join.html" />
-				<item name="Table Union" href="develop/sources/table-union.html" />
-				<item name="WBEM" href="develop/sources/wbem.html" />
-				<item name="WMI" href="develop/sources/wmi.html" />
+			<item name="Sources" href="developer-guide/sources/index.html">
+				<item name="beforeAll" href="developer-guide/sources/before-all.html" />
+				<item name="afterAll" href="developer-guide/sources/after-all.html" />
+				<item name="AWK" href="developer-guide/sources/awk.html" />
+				<item name="Command Line" href="developer-guide/sources/command-line.html" />
+				<item name="Copy" href="developer-guide/sources/copy.html" />
+				<item name="Event Log" href="developer-guide/sources/event-log.html" />
+				<item name="File" href="developer-guide/sources/file.html" />
+				<item name="HTTP" href="developer-guide/sources/http.html" />
+				<item name="Internal DB Query" href="developer-guide/sources/internal-db-query.html" />
+				<item name="IPMI" href="developer-guide/sources/ipmi.html" />
+				<item name="JMX" href="developer-guide/sources/jmx.html" />
+				<item name="SNMP Get" href="developer-guide/sources/snmp-get.html" />
+				<item name="SNMP Table" href="developer-guide/sources/snmp-table.html" />
+				<item name="SQL" href="developer-guide/sources/sql.html" />
+				<item name="Static" href="developer-guide/sources/static.html" />
+				<item name="Table Join" href="developer-guide/sources/table-join.html" />
+				<item name="Table Union" href="developer-guide/sources/table-union.html" />
+				<item name="WBEM" href="developer-guide/sources/wbem.html" />
+				<item name="WMI" href="developer-guide/sources/wmi.html" />
 			</item>
-			<item name="Computes" href="develop/computes/index.html" >
-				<item name="Add" href="develop/computes/add.html" />
-				<item name="And" href="develop/computes/and.html" />
-				<item name="Append" href="develop/computes/append.html" />
-				<item name="Array Translate" href="develop/computes/array-translate.html" />
-				<item name="AWK" href="develop/computes/awk.html" />
-				<item name="Convert" href="develop/computes/convert.html" />
-				<item name="Decode" href="develop/computes/decode.html" />
-				<item name="Divide" href="develop/computes/divide.html" />
-				<item name="Duplicate Column" href="develop/computes/duplicate-column.html" />
-				<item name="Encode" href="develop/computes/encode.html" />
-				<item name="Exclude Matching Lines" href="develop/computes/exclude-matching-lines.html" />
-				<item name="Extract" href="develop/computes/extract.html" />
-				<item name="Extract WBEM Property" href="develop/computes/extract-wbem-property.html" />
-				<item name="JSON to CSV" href="develop/computes/json2csv.html" />
-				<item name="Keep Columns" href="develop/computes/keep-columns.html" />
-				<item name="Keep Only Matching Lines" href="develop/computes/keep-only-matching-lines.html" />
-			    <item name="Multiply" href="develop/computes/multiply.html" />
-				<item name="Prepend" href="develop/computes/prepend.html" />
-				<item name="Replace" href="develop/computes/replace.html" />
-				<item name="Substring" href="develop/computes/substring.html" />
-				<item name="Subtract" href="develop/computes/subtract.html" />
-				<item name="Translate" href="develop/computes/translate.html" />
-				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
-				<item name="XML to CSV" href="develop/computes/xml2csv.html" />
+			<item name="Computes" href="developer-guide/computes/index.html">
+				<item name="Add" href="developer-guide/computes/add.html" />
+				<item name="And" href="developer-guide/computes/and.html" />
+				<item name="Append" href="developer-guide/computes/append.html" />
+				<item name="Array Translate" href="developer-guide/computes/array-translate.html" />
+				<item name="AWK" href="developer-guide/computes/awk.html" />
+				<item name="Convert" href="developer-guide/computes/convert.html" />
+				<item name="Decode" href="developer-guide/computes/decode.html" />
+				<item name="Divide" href="developer-guide/computes/divide.html" />
+				<item name="Duplicate Column" href="developer-guide/computes/duplicate-column.html" />
+				<item name="Encode" href="developer-guide/computes/encode.html" />
+				<item name="Exclude Matching Lines" href="developer-guide/computes/exclude-matching-lines.html" />
+				<item name="Extract" href="developer-guide/computes/extract.html" />
+				<item name="Extract WBEM Property" href="developer-guide/computes/extract-wbem-property.html" />
+				<item name="JSON to CSV" href="developer-guide/computes/json2csv.html" />
+				<item name="Keep Columns" href="developer-guide/computes/keep-columns.html" />
+				<item name="Keep Only Matching Lines" href="developer-guide/computes/keep-only-matching-lines.html" />
+				<item name="Multiply" href="developer-guide/computes/multiply.html" />
+				<item name="Prepend" href="developer-guide/computes/prepend.html" />
+				<item name="Replace" href="developer-guide/computes/replace.html" />
+				<item name="Substring" href="developer-guide/computes/substring.html" />
+				<item name="Subtract" href="developer-guide/computes/subtract.html" />
+				<item name="Translate" href="developer-guide/computes/translate.html" />
+				<item name="Translate per Bit" href="developer-guide/computes/translate-per-bit.html" />
+				<item name="XML to CSV" href="developer-guide/computes/xml2csv.html" />
 			</item>
-			<item name="References" href="develop/references.html" />
-		</menu>
-		<menu name="Develop">
-			<item name="Writing Integration Tests" href="develop/integration-tests.html" />
+			<item name="Integration Testing" href="developer-guide/integration-testing.html" />
+			<item name="Legacy and Compatibility" href="developer-guide/legacy-and-compatibility.html" />
 		</menu>
 	</body>
 
-</project>
+</site>

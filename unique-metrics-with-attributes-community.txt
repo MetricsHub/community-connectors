@@ -1,0 +1,385 @@
+db.server.cache.io{db.io.direction="read", db.cache.state="hit", db.postgresql.cache.type="shared_buffer"}
+db.server.cache.io{db.io.direction="read", db.cache.state="miss", db.postgresql.cache.type="shared_buffer"}
+db.server.cache.operations{db.cache.state="hit", db.mariadb.cache.type="binlog_statement"}
+db.server.cache.operations{db.cache.state="hit"}
+db.server.cache.operations{db.cache.state="miss", db.mariadb.cache.type="binlog"}
+db.server.cache.operations{db.cache.state="miss", db.mariadb.cache.type="binlog_statement"}
+db.server.cache.operations{db.cache.state="miss"}
+db.server.cache.operations{db.io.direction="read", db.cache.state="hit", db.mariadb.engine="innodb"}
+db.server.cache.operations{db.io.direction="read", db.cache.state="hit", db.mysql.engine="innodb"}
+db.server.cache.operations{db.io.direction="read", db.cache.state="miss", db.mariadb.engine="innodb"}
+db.server.cache.operations{db.io.direction="read", db.cache.state="miss", db.mysql.engine="innodb"}
+db.server.cache.operations{db.io.direction="read", db.mariadb.engine="aria", db.cache.state="hit"}
+db.server.cache.operations{db.io.direction="read", db.mariadb.engine="aria", db.cache.state="miss"}
+db.server.cache.operations{db.io.direction="write", db.cache.state="miss", db.postgresql.cache.type="wal_buffer"}
+db.server.cache.operations{db.io.direction="write", db.mariadb.engine="aria"}
+db.server.cache.operations{db.io.direction="write", db.mariadb.engine="innodb"}
+db.server.cache.operations{db.io.direction="write", db.mysql.engine="innodb"}
+db.server.cache.read_ahead.operations{db.cache.read_ahead.state="random", db.mariadb.engine="innodb"}
+db.server.cache.read_ahead.operations{db.cache.read_ahead.state="random", db.mysql.engine="innodb"}
+db.server.cache.read_ahead{db.mariadb.engine="innodb"}
+db.server.cache.read_ahead{db.mysql.engine="innodb"}
+db.server.cache.read_head.evicted{db.mariadb.engine="innodb"}
+db.server.cache.read_head.evicted{db.mysql.engine="innodb"}
+db.server.cache.requests
+db.server.cache.requests{db.cache.request.type="flushed", db.mariadb.engine="innodb"}
+db.server.cache.requests{db.cache.request.type="flushed", db.mysql.engine="innodb"}
+db.server.cache.size
+db.server.cache.size{db.postgresql.cache.type="shared_buffer"}
+db.server.cache.usage{db.cache.state="data_clean", db.mariadb.engine="aria"}
+db.server.cache.usage{db.cache.state="data_clean", db.mariadb.engine="innodb"}
+db.server.cache.usage{db.cache.state="data_clean", db.mysql.engine="innodb"}
+db.server.cache.usage{db.cache.state="data_dirty", db.mariadb.engine="aria"}
+db.server.cache.usage{db.cache.state="data_dirty", db.mariadb.engine="innodb"}
+db.server.cache.usage{db.cache.state="data_dirty", db.mysql.engine="innodb"}
+db.server.cache.usage{db.cache.state="free", db.mariadb.engine="aria"}
+db.server.cache.usage{db.cache.state="free", db.mariadb.engine="innodb"}
+db.server.cache.usage{db.cache.state="free", db.mysql.engine="innodb"}
+db.server.cache.usage{db.cache.state="off_heap", db.cassandra.cache.type="memtable"}
+db.server.cache.usage{db.cache.state="on_heap", db.cassandra.cache.type="memtable"}
+db.server.cassandra.hints
+db.server.cassandra.nodes
+db.server.cassandra.nodes{db.node.state="joining"}
+db.server.cassandra.nodes{db.node.state="leaving"}
+db.server.cassandra.nodes{db.node.state="live"}
+db.server.cassandra.nodes{db.node.state="moving"}
+db.server.cassandra.nodes{db.node.state="unreachable"}
+db.server.commits
+db.server.connections
+db.server.connections.limit
+db.server.connections{db.connection.state="success"}
+db.server.connections{error.type="client_disconnected", db.connection.state="aborted"}
+db.server.connections{error.type="failed_attempt", db.connection.state="aborted"}
+db.server.current_connections
+db.server.current_connections{db.connection.state="active"}
+db.server.current_connections{db.connection.state="idle"}
+db.server.errors{error.type="deadlocks"}
+db.server.errors{error.type="lost_account_insert", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_account_insert", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_condition_instrument", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_condition_instrument", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_digest_instance", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_digest_instance", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_file_handle", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_file_handle", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_file_instance", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_file_instance", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_file_instrument", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_file_instrument", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_hosts_insert", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_hosts_insert", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_index_statistic", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_index_statistic", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_locker", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_locker", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_memory_instrument", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_memory_instrument", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_metadata_lock", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_metadata_lock", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_mutex_instance", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_mutex_instance", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="lost_mutex_instrument", db.mariadb.engine="performance_schema"}
+db.server.errors{error.type="lost_mutex_instrument", db.mysql.engine="performance_schema"}
+db.server.errors{error.type="read_timeout"}
+db.server.errors{error.type="read_unavailable"}
+db.server.errors{error.type="session_abandoned"}
+db.server.errors{error.type="session_fatal_error"}
+db.server.errors{error.type="session_killed"}
+db.server.errors{error.type="write_timeout"}
+db.server.errors{error.type="write_unavailable"}
+db.server.files{db.file.state="open", db.mariadb.engine="innodb"}
+db.server.files{db.file.state="open", db.mysql.engine="innodb"}
+db.server.io{db.io.direction="receive"}
+db.server.io{db.io.direction="transmit"}
+db.server.locks
+db.server.mariadb.cache.operations{db.cache.state="hit", db.mariadb.cache.type="binlog"}
+db.server.mariadb.commands
+db.server.mariadb.commands{db.mariadb.command.type="begin"}
+db.server.mariadb.commands{db.mariadb.command.type="close_statement"}
+db.server.mariadb.commands{db.mariadb.command.type="commit"}
+db.server.mariadb.commands{db.mariadb.command.type="delete"}
+db.server.mariadb.commands{db.mariadb.command.type="execute_statement"}
+db.server.mariadb.commands{db.mariadb.command.type="insert"}
+db.server.mariadb.commands{db.mariadb.command.type="insert_select"}
+db.server.mariadb.commands{db.mariadb.command.type="prepare_statement"}
+db.server.mariadb.commands{db.mariadb.command.type="replace"}
+db.server.mariadb.commands{db.mariadb.command.type="reprepare_statement"}
+db.server.mariadb.commands{db.mariadb.command.type="rollback"}
+db.server.mariadb.commands{db.mariadb.command.type="rollback_to_savepoint"}
+db.server.mariadb.commands{db.mariadb.command.type="savepoint"}
+db.server.mariadb.commands{db.mariadb.command.type="select"}
+db.server.mariadb.commands{db.mariadb.command.type="update"}
+db.server.mariadb.doublewrite_buffer.operations
+db.server.mariadb.doublewrite_buffer.operations{db.mariadb.engine="innodb"}
+db.server.mariadb.doublewrite_buffer.usage
+db.server.mariadb.doublewrite_buffer.usage{db.mariadb.engine="innodb"}
+db.server.mariadb.galera_cluster.nodes
+db.server.mariadb.galera_replication.flow_control.utilisation
+db.server.mariadb.galera_replication.parallel_transactions.limit
+db.server.mariadb.galera_replication.queue_size
+db.server.mariadb.galera_replication.queue_size{db.server.write-sets="receive"}
+db.server.mariadb.galera_replication.queue_size{db.server.write-sets="send"}
+db.server.mariadb.galera_replication.status
+db.server.mariadb.galera_replication.up
+db.server.mariadb.handlers
+db.server.mariadb.handlers{db.mariadb.handler.type="commit"}
+db.server.mariadb.handlers{db.mariadb.handler.type="delete"}
+db.server.mariadb.handlers{db.mariadb.handler.type="discover"}
+db.server.mariadb.handlers{db.mariadb.handler.type="external_lock"}
+db.server.mariadb.handlers{db.mariadb.handler.type="icp_attempts"}
+db.server.mariadb.handlers{db.mariadb.handler.type="icp_match"}
+db.server.mariadb.handlers{db.mariadb.handler.type="multi_range_read_init"}
+db.server.mariadb.handlers{db.mariadb.handler.type="multi_range_read_key_refills"}
+db.server.mariadb.handlers{db.mariadb.handler.type="multi_range_read_rowid_refills"}
+db.server.mariadb.handlers{db.mariadb.handler.type="prepare"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_"random"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_"random_next"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_first"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_key"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_last"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_next"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_previous"}
+db.server.mariadb.handlers{db.mariadb.handler.type="read_random_deleted"}
+db.server.mariadb.handlers{db.mariadb.handler.type="rollback"}
+db.server.mariadb.handlers{db.mariadb.handler.type="savepoint"}
+db.server.mariadb.handlers{db.mariadb.handler.type="savepoint_rollback"}
+db.server.mariadb.handlers{db.mariadb.handler.type="tmp_delete"}
+db.server.mariadb.handlers{db.mariadb.handler.type="tmp_update"}
+db.server.mariadb.handlers{db.mariadb.handler.type="tmp_write"}
+db.server.mariadb.handlers{db.mariadb.handler.type="update"}
+db.server.mariadb.handlers{db.mariadb.handler.type="write"}
+db.server.mariadb.replication.galera_cluster.status
+db.server.mysql.doublewrite_buffer.operations
+db.server.mysql.doublewrite_buffer.operations{db.mysql.engine="innodb"}
+db.server.mysql.doublewrite_buffer.usage
+db.server.mysql.doublewrite_buffer.usage{db.mysql.engine="innodb"}
+db.server.operation_time{db.operation.type="sql"}
+db.server.operations{db.io.direction="read"}
+db.server.operations{db.io.direction="write"}
+db.server.page.size{db.mariadb.engine="innodb"}
+db.server.page.size{db.mysql.engine="innodb"}
+db.server.pending_operations{db.io.direction="read", db.mariadb.engine="innodb"}
+db.server.pending_operations{db.io.direction="read", db.mysql.engine="innodb"}
+db.server.pending_operations{db.io.direction="write", db.mariadb.engine="innodb"}
+db.server.pending_operations{db.io.direction="write", db.mysql.engine="innodb"}
+db.server.pending_operations{db.operation.type="compaction"}
+db.server.postgresql.bgwriter.buffers
+db.server.postgresql.bgwriter.buffers{db.buffer.state="allocated"}
+db.server.postgresql.bgwriter.buffers{db.buffer.state="clean"}
+db.server.postgresql.bgwriter.clean_stops
+db.server.postgresql.checkpointer.buffers
+db.server.postgresql.checkpointer.operations
+db.server.postgresql.checkpointer.operations{db.operation.trigger_type="requested"}
+db.server.postgresql.checkpointer.operations{db.operation.trigger_type="scheduled"}
+db.server.postgresql.checkpointer.sync_time
+db.server.postgresql.checkpointer.write_time
+db.server.postgresql.index.row_operations
+db.server.postgresql.index.row_operations{db.row_operation.type="fetch"}
+db.server.postgresql.replication.flush_lag.time
+db.server.postgresql.replication.lag
+db.server.postgresql.replication.replay_lag.time
+db.server.postgresql.replication.status
+db.server.postgresql.replication.write_lag.time
+db.server.postgresql.session_time
+db.server.postgresql.transaction_time
+db.server.postgresql.transaction_time{db.transaction.state="idle"}
+db.server.postgresql.wal.io
+db.server.postgresql.wal.io{db.io.direction="write"}
+db.server.queries{db.query.state="failed", error.type="set_timeout_failed"}
+db.server.queries{db.query.state="failed", error.type="timeout"}
+db.server.queries{db.query.state="normal"}
+db.server.queries{db.query.state="slow"}
+db.server.rollbacks
+db.server.row_lock.current_waits{db.mariadb.engine="innodb"}
+db.server.row_lock.current_waits{db.mysql.engine="innodb"}
+db.server.row_lock.time{db.mariadb.engine="innodb"}
+db.server.row_lock.time{db.mysql.engine="innodb"}
+db.server.row_lock.waits{db.mariadb.engine="innodb"}
+db.server.row_lock.waits{db.mysql.engine="innodb"}
+db.server.row_operations{db.row_operation.type="delete", db.mariadb.engine="innodb"}
+db.server.row_operations{db.row_operation.type="delete", db.mysql.engine="innodb"}
+db.server.row_operations{db.row_operation.type="delete"}
+db.server.row_operations{db.row_operation.type="insert", db.mariadb.engine="innodb"}
+db.server.row_operations{db.row_operation.type="insert", db.mysql.engine="innodb"}
+db.server.row_operations{db.row_operation.type="insert"}
+db.server.row_operations{db.row_operation.type="read", db.mariadb.engine="innodb"}
+db.server.row_operations{db.row_operation.type="read", db.mysql.engine="innodb"}
+db.server.row_operations{db.row_operation.type="read"}
+db.server.row_operations{db.row_operation.type="update", db.mariadb.engine="innodb"}
+db.server.row_operations{db.row_operation.type="update", db.mysql.engine="innodb"}
+db.server.row_operations{db.row_operation.type="update"}
+db.server.sessions
+db.server.size
+db.server.storage.io{db.io.direction="read", db.mariadb.engine="innodb"}
+db.server.storage.io{db.io.direction="read", db.mysql.engine="innodb"}
+db.server.storage.io{db.io.direction="write", db.mariadb.engine="aria"}
+db.server.storage.io{db.io.direction="write", db.mariadb.engine="innodb"}
+db.server.storage.io{db.io.direction="write", db.mysql.engine="innodb"}
+db.server.storage.io{db.io.direction="write"}
+db.server.storage.operations{db.io.direction="read", db.mariadb.engine="innodb"}
+db.server.storage.operations{db.io.direction="read", db.mysql.engine="innodb"}
+db.server.storage.operations{db.io.direction="write", db.mariadb.engine="innodb"}
+db.server.storage.operations{db.io.direction="write", db.mysql.engine="innodb"}
+db.server.storage.size
+db.server.table_cache.operations{db.cache.state="hit"}
+db.server.table_cache.operations{db.cache.state="miss"}
+db.server.table_cache.operations{db.cache.state="overflow"}
+db.server.table_locks{db.lock.state="immediate"}
+db.server.table_locks{db.lock.state="waited"}
+db.server.tables
+db.server.temp_tables{db.temp_table.storage="disk"}
+db.server.temp_tables{db.temp_table.storage="memory"}
+db.server.threads{db.thread.state="active"}
+db.server.threads{db.thread.state="blocked"}
+db.server.threads{db.thread.state="cached"}
+db.server.threads{db.thread.state="connected"}
+db.server.threads{db.thread.state="created"}
+db.server.threads{db.thread.state="pending"}
+db.server.threads{db.thread.state="running"}
+db.server.uptime
+hw.battery.charge
+hw.battery.time_left
+hw.cpu.speed
+hw.cpu.speed.limit{limit_type="max"}
+hw.enclosure.energy
+hw.enclosure.power
+hw.energy{hw.type="cpu"}
+hw.energy{hw.type="gpu"}
+hw.errors{hw.type="network"}
+hw.errors{hw.type="physical_disk"}
+hw.fan.speed
+hw.fan.speed.limit{limit_type="low.critical"}
+hw.fan.speed.limit{limit_type="low.degraded"}
+hw.fan.speed_ratio
+hw.fan.speed_ratio.limit{limit_type="low.critical"}
+hw.fan.speed_ratio.limit{limit_type="low.degraded"}
+hw.gpu.io{direction="receive"}
+hw.gpu.io{direction="transmit"}
+hw.gpu.memory.bandwidth
+hw.gpu.memory.limit
+hw.gpu.memory.utilization
+hw.gpu.speed
+hw.gpu.utilization
+hw.gpu.utilization{task="decoder"}
+hw.gpu.utilization{task="encoder"}
+hw.gpu.utilization{task="general"}
+hw.logical_disk.limit
+hw.logical_disk.usage{state="free"}
+hw.logical_disk.usage{state="used"}
+hw.lun.paths
+hw.memory.limit
+hw.network.bandwidth.limit
+hw.network.dropped{network.io.direction="receive"}
+hw.network.dropped{network.io.direction="transmit"}
+hw.network.full_duplex
+hw.network.io{direction="receive"}
+hw.network.io{direction="transmit"}
+hw.network.packets{direction="receive"}
+hw.network.packets{direction="transmit"}
+hw.network.up
+hw.physical_disk.endurance_utilization{state="remaining"}
+hw.physical_disk.size
+hw.power.limit{hw.type="gpu"}
+hw.power_state{hw.type="vm"}
+hw.power_supply.limit
+hw.power{hw.type="cpu"}
+hw.power{hw.type="gpu"}
+hw.printer.printed_pages{hw.printer.color="color"}
+hw.printer.printed_pages{hw.printer.color="monochrome"}
+hw.status
+hw.status{hw.type="battery"}
+hw.status{hw.type="blade"}
+hw.status{hw.type="cpu"}
+hw.status{hw.type="enclosure"}
+hw.status{hw.type="fan"}
+hw.status{hw.type="led"}
+hw.status{hw.type="logical_disk"}
+hw.status{hw.type="memory"}
+hw.status{hw.type="network"}
+hw.status{hw.type="other_device"}
+hw.status{hw.type="physical_disk", state="predicted_failure"}
+hw.status{hw.type="physical_disk"}
+hw.status{hw.type="power_supply"}
+hw.status{hw.type="temperature"}
+hw.status{hw.type="voltage"}
+hw.temperature
+hw.temperature.limit{limit_type="high.critical"}
+hw.temperature.limit{limit_type="high.degraded"}
+hw.vm.power_ratio
+hw.voltage
+hw.voltage.limit{limit_type="high.critical"}
+hw.voltage.limit{limit_type="low.critical"}
+process.cpu.time
+process.cpu.utilization
+process.disk.io{disk.io.direction="read"}
+process.disk.io{disk.io.direction="write"}
+process.disk.operations{disk.io.direction="read"}
+process.disk.operations{disk.io.direction="write"}
+process.handle.count
+process.memory.usage
+process.memory.utilization
+process.memory.virtual
+process.paging.faults
+process.thread.count
+process.time
+system.cpu.time{system.cpu.state="idle"}
+system.cpu.time{system.cpu.state="io_wait"}
+system.cpu.time{system.cpu.state="nice"}
+system.cpu.time{system.cpu.state="system"}
+system.cpu.time{system.cpu.state="user"}
+system.cpu.utilization{system.cpu.state="idle"}
+system.cpu.utilization{system.cpu.state="io_wait"}
+system.cpu.utilization{system.cpu.state="nice"}
+system.cpu.utilization{system.cpu.state="system"}
+system.cpu.utilization{system.cpu.state="user"}
+system.disk.io_time
+system.disk.io{disk.io.direction="read"}
+system.disk.io{disk.io.direction="write"}
+system.disk.merged{disk.io.direction="read"}
+system.disk.merged{disk.io.direction="write"}
+system.disk.operation_time{disk.io.direction="read"}
+system.disk.operation_time{disk.io.direction="write"}
+system.disk.operations{disk.io.direction="read"}
+system.disk.operations{disk.io.direction="write"}
+system.file.atime
+system.file.ctime
+system.file.keywords
+system.file.lines
+system.file.mtime
+system.file.size
+system.filesystem.usage{system.filesystem.state="free"}
+system.filesystem.usage{system.filesystem.state="reserved"}
+system.filesystem.usage{system.filesystem.state="used"}
+system.filesystem.utilization{system.filesystem.state="free"}
+system.filesystem.utilization{system.filesystem.state="reserved"}
+system.filesystem.utilization{system.filesystem.state="used"}
+system.memory.limit
+system.memory.usage{system.memory.state="buffers"}
+system.memory.usage{system.memory.state="cached"}
+system.memory.usage{system.memory.state="free"}
+system.memory.usage{system.memory.state="used"}
+system.memory.utilization{system.memory.state="buffers"}
+system.memory.utilization{system.memory.state="cached"}
+system.memory.utilization{system.memory.state="free"}
+system.memory.utilization{system.memory.state="used"}
+system.network.bandwidth.limit
+system.network.dropped{network.io.direction="receive"}
+system.network.dropped{network.io.direction="transmit"}
+system.network.errors{network.io.direction="receive"}
+system.network.errors{network.io.direction="transmit"}
+system.network.io{network.io.direction="receive"}
+system.network.io{network.io.direction="transmit"}
+system.network.packets{network.io.direction="receive"}
+system.network.packets{network.io.direction="transmit"}
+system.paging.faults{system.paging.type="major"}
+system.paging.faults{system.paging.type="minor"}
+system.paging.operations{system.paging.direction="in"}
+system.paging.operations{system.paging.direction="out"}
+system.paging.usage{system.paging.state="free"}
+system.paging.usage{system.paging.state="used"}
+system.paging.utilization{system.paging.state="free"}
+system.paging.utilization{system.paging.state="used"}
+system.service.status
+system.service.status{state="active"}
+system.service.status{state="loaded"}
+system.uptime
