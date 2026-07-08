@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.metricshub</groupId>
 		<artifactId>oss-parent</artifactId>
-		<version>4</version>
+		<version>5</version>
 	</parent>
 
 	<artifactId>community-connectors</artifactId>
@@ -195,23 +195,6 @@
 
 		<!-- Tell the maven-source-plugin where to find the sources -->
 		<sourceDirectory>${basedir}/src/main/connector</sourceDirectory>
-
-		<pluginManagement>
-			<plugins>
-				<!-- Override central-publishing-maven-plugin version inherited from oss-parent v4.
-				     Version 0.7.0 fails with:
-				       UnrecognizedPropertyException: Unrecognized field "warnings"
-				       (class org.sonatype.central.publisher.client.model.DeploymentApiResponse)
-				     because the Sonatype Central API now returns a "warnings" field that the
-				     0.7.0 client's Jackson mapper rejects. Fixed in 0.8.0 ("Improvement to
-				     Jackson usage"). Pinning to the latest 0.11.0 from Maven Central. -->
-				<plugin>
-					<groupId>org.sonatype.central</groupId>
-					<artifactId>central-publishing-maven-plugin</artifactId>
-					<version>0.11.0</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 
 		<plugins>
 			<!-- site -->
