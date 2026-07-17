@@ -79,6 +79,7 @@
 			<item name="Quick Start" href="developer-guide/quick-start.html" />
 			<item name="YAML Structure" href="developer-guide/yaml-structure.html" />
 			<item name="Monitors and Jobs" href="developer-guide/monitors-and-jobs.html" />
+			<item name="Reuse and Configuration" href="developer-guide/reuse-and-configuration.html" />
 			<item name="Design Principles" href="developer-guide/design-principles.html" />
 			<item name="Mapping, Metrics, and Semconv" href="developer-guide/mapping-metrics-semconv.html" />
 			<item name="References and Expressions" href="developer-guide/references-and-expressions.html" />

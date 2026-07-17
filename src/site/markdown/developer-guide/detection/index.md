@@ -34,6 +34,33 @@ A connector is considered applicable only if all of the following are true:
 - every criterion in `connector.detection.criteria` succeeds
 - the connector is not superseded by another applicable connector through `connector.detection.supersedes`
 
+## Detection Properties Reference
+
+```yaml
+connector:
+  detection:
+    connectionTypes: [ remote, local ]
+    appliesTo: [ Linux ]
+    supersedes: [ GenericConnector ]
+    disableAutoDetection: false
+    onLastResort: temperature
+    tags: [ hardware, linux ]
+    criteria:
+    - type: ...
+```
+
+| Property | Required | Description |
+| --- | --- | --- |
+| `connectionTypes` | Yes | `remote`, `local`, or both: whether the connector works against a remote host, the local machine MetricsHub runs on, or either. |
+| `appliesTo` | Yes | Resource `host.type` values the connector supports (e.g. `Linux`, `Windows`, `Network`, `Storage`, `OOB`). |
+| `criteria` | Yes | Ordered list of checks; all must succeed. |
+| `supersedes` | No | Connector IDs this connector replaces: when both match, the superseded one is dropped. |
+| `disableAutoDetection` | No | `true` excludes the connector from automatic detection entirely; users must select it explicitly (`connectors: [ +YourConnector ]`). Use for connectors that depend on user-configured [variables](../reuse-and-configuration.html) or are intrusive. |
+| `onLastResort` | No | A monitor type (e.g. `temperature`, `enclosure`). The connector is activated only if no other detected connector already discovers that monitor type — the fallback pattern for generic connectors (see [lmsensors](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/lmsensors/lmsensors.yaml)). |
+| `tags` | No | Free-form labels (`hardware`, `linux`, `database`, ...). Users can include/exclude connectors in bulk with `#tag` / `!#tag` in their `connectors:` configuration; the `hardware` tag also drives the engine's hardware-specific post-processing. |
+
+Individual criteria additionally accept `forceSerialization: true` — see the `forceSerialization` section of [Sources](../sources/index.html) for semantics.
+
 ## Execution Semantics
 
 - No detection block, or an empty criteria list: connector does not match.

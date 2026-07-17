@@ -63,7 +63,7 @@ For each configured resource, MetricsHub executes connectors in three phases:
    - all monitor `collect` jobs, or `simple` jobs when no discovery/collect split is defined
    - `afterAll` if defined
 
-Sources within discovery and collect jobs can run in parallel. See [Detection](detection/index.html) for connector selection rules, [Monitors and Jobs](monitors-and-jobs.html) for the job model, and [Sources](sources/index.html) for source execution details.
+Monitor jobs within a phase can run in parallel; the sources inside one job run sequentially, in dependency order. See [Detection](detection/index.html) for connector selection rules, [Monitors and Jobs](monitors-and-jobs.html) for the job model, and [Sources](sources/index.html) for source execution details.
 
 ## Core Mental Model: Connectors Are Table Pipelines
 

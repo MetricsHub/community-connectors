@@ -49,6 +49,8 @@ Discovery runs less often and is the right place for heavy inventory work. Colle
 | `translations` | No | Central status/code translation tables. |
 | `afterAll` | No | Cleanup/logout sources executed after monitor jobs in discovery and collect phases. |
 
+`extends`, `constants`, `connector.variables`, `translations`, and `sudoCommands` are covered in depth in [Reuse and Configuration](reuse-and-configuration.html).
+
 ## `connector` Object (Core Metadata)
 
 ```yaml

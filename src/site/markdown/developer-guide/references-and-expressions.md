@@ -7,6 +7,14 @@ description: Complete reference syntax for source/file/translation/constants/pro
 
 Connectors use references to wire data across sections and runtime contexts.
 
+## When References Are Resolved
+
+| Family | Syntax | Resolved |
+| --- | --- | --- |
+| Load-time references | `${source::}`, `${file::}`, `${translation::}`, `${constant::}`, `${var::}` | Once, when the connector is parsed and loaded. |
+| Job-time references | `$1`/`$2` column refs, `${attribute::}`, `${protocol::}`, `${resource.attribute::}`, `${awk::}` | During job execution, per row or per instance. |
+| Runtime credential macros | `%{USERNAME}`, `%{PASSWORD}`, `%{BASIC_AUTH_BASE64}`, ... | At execution time, per request, from the resource's configured credentials. |
+
 ## Source References
 
 Use `${source::...}` to reference a source output table.
@@ -82,6 +90,16 @@ Use `${constant::<constantName>}` for reusable literal values.
 hw.parent.id: ${constant::_DEVICE_ID}
 ```
 
+## Connector Variable References
+
+Use `${var::<variableName>}` for user-configurable values declared under `connector.variables` (each with a `description` and a `defaultValue`):
+
+```yaml
+commandLine: /usr/bin/ps -e -o comm,args | grep -E "${var::matchName}"
+```
+
+Variables are substituted at connector load time, from the `defaultValue` or from the user's `additionalConnectors` configuration. Always declare a `defaultValue`: with neither a default nor a configured value, the literal `${var::name}` survives unresolved. See [Reuse and Configuration](reuse-and-configuration.html) for declaration and configuration details.
+
 ## Protocol and Resource Attribute References
 
 ```yaml
@@ -107,6 +125,107 @@ Use `${awk::...}` for concise expression-level formatting.
 ```yaml
 name: ${awk::sprintf("%s (%s)", $2, $3)}
 ```
+
+## References in Compute Attributes
+
+### Format
+
+A compute attribute can reference:
+
+#### A resource attribute
+
+```yaml
+${resource.attribute::<attribute-key>}
+```
+
+#### A protocol property
+
+```yaml
+${protocol::<protocol-type>.<property>}
+```
+
+#### A source content
+
+```yaml
+${source::<source-name>}
+```
+
+### Examples
+
+#### Replace a value with a protocol property
+
+The following example replaces the value `PORT` in column `1` with the HTTP port configured for the protocol:
+
+```yaml
+sources:
+  source(1):
+    type: http
+    path: /api/device
+    computes:
+      - type: replace
+        column: 1
+        existingValue: "PORT"
+        newValue: ${protocol::http.port}
+```
+
+#### Append content from another source
+
+The following example appends the content of another source to the value in column `1`:
+
+```yaml
+sources:
+  source(1):
+    type: http
+    path: /api/device
+    computes:
+      - type: append
+        column: 1
+        value: " - ${source::monitors.enclosure.simple.sources.source_discovery}"
+```
+
+#### Reference a resource attribute
+
+The following example keeps only the lines whose value in column `3` matches the URL built from the `host.name` resource attribute:
+
+```yaml
+sources:
+  source(1):
+    type: http
+    path: /api/hosts
+    computes:
+      - type: keepOnlyMatchingLines
+        column: 3
+        valueList: "https://${resource.attribute::host.name}"
+```
+
+## Runtime Credential Macros (`%{...}`)
+
+`%{...}` macros inject the resource's configured credentials at **execution time**. They work in HTTP sources and criteria (`url`, `path`, `header`, `body`, `authenticationToken`) and in command lines (SSH/local/WMI):
+
+| Macro | Resolves to |
+| --- | --- |
+| `%{USERNAME}` | The configured username. |
+| `%{PASSWORD}` | The configured password. |
+| `%{HOSTNAME}` | The hostname of the resource being monitored. |
+| `%{AUTHENTICATIONTOKEN}` | The configured authentication token. |
+| `%{PASSWORD_BASE64}` | Base64-encoded password. |
+| `%{BASIC_AUTH_BASE64}` | Base64 of `username:password` — ready for `Authorization: Basic %{BASIC_AUTH_BASE64}`. |
+| `%{SHA256_AUTH}` | SHA-256 hex digest of the authentication token. |
+
+```yaml
+header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+```
+
+To escape the injected value for the surrounding syntax, wrap the macro as `%{esc(TYPE)::MACRO}` where `TYPE` is one of `json`, `xml`, `url`, `regex`, `windows`, `cmd`, `powershell`, `linux`, `bash`, `sql`:
+
+```yaml
+body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" }'
+```
+
+> [!WARNING]
+> Macro names must be written in full and in uppercase. A misspelled or unknown macro (e.g. `%{BASICAUTH}`) is silently replaced with an **empty string**. Token-based macros (`%{AUTHENTICATIONTOKEN}`, `%{SHA256_AUTH}`) resolve to empty in command lines.
+
+The related `%{SUDO:command}` macro (command elevation) is tied to the connector's `sudoCommands` list — see [Reuse and Configuration](reuse-and-configuration.html).
 
 ## Serialization Side Effects (Advanced but Important)
 
