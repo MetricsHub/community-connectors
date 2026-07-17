@@ -94,7 +94,7 @@ header: "Authorization: Bearer ${resource.attribute::api.token}"
 
 ## Mono-Instance Attribute References
 
-Use `${attribute::<key>}` in mono-instance contexts.
+Use `${attribute::<key>}` in mono-instance contexts: `monoInstance` collect jobs run once per discovered instance, and this reference injects that instance's attributes (as mapped during discovery) into the source. See [Monitors and Jobs](monitors-and-jobs.html).
 
 ```yaml
 commandLine: /bin/sh ${file::detail.sh} ${attribute::id}

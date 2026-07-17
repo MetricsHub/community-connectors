@@ -63,7 +63,7 @@ For each configured resource, MetricsHub executes connectors in three phases:
    - all monitor `collect` jobs, or `simple` jobs when no discovery/collect split is defined
    - `afterAll` if defined
 
-Sources within discovery and collect jobs can run in parallel. See [Detection](detection/index.html) for connector selection rules and [Sources](sources/index.html) for source execution details.
+Sources within discovery and collect jobs can run in parallel. See [Detection](detection/index.html) for connector selection rules, [Monitors and Jobs](monitors-and-jobs.html) for the job model, and [Sources](sources/index.html) for source execution details.
 
 ## Core Mental Model: Connectors Are Table Pipelines
 
@@ -152,20 +152,21 @@ monitors:
           path: /api/fans
           computes:
           # One post-processing step: convert the JSON result to a table
+          # (json2Csv prepends an entry column, so /id lands in column 2)
           - type: json2Csv
             entryKey: /records
-            properties: id;name;status;rpm
+            properties: /id;/name;/status;/rpm
       # How we map results to OpenTelemetry Resources, Metrics, and Attributes
       mapping:
         source: ${source::fans} # Each row of this table will create a separate Otel Resource
         # This defines the Otel Attributes of each Otel Resource (from each line in the table)
         attributes:
-          id: $1
-          name: $2
+          id: $2
+          name: $3
         # This defines the Otel Metrics associated to the Otel Resources (from each line in the table)
         metrics:
-          hw.status{hw.type="fan"}: $3 # hw.type="fan" is a Metric Attribute
-          hw.fan.speed: $4
+          hw.status{hw.type="fan"}: $4 # hw.type="fan" is a Metric Attribute
+          hw.fan.speed: $5
 
 # This is executed after the entire discovery or collect phase is completed
 afterAll:
