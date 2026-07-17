@@ -22,7 +22,8 @@ sources:
     resultContent: body
     computes:
     - type: json2Csv
-      properties: Members[*].@odata.id
+      entryKey: /Members
+      properties: /@odata.id
       separator: ;
 ```
 
@@ -62,7 +63,6 @@ sources:
 ## Community Examples
 
 - [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml)
-- [HPPrinter](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/HPPrinter/HPPrinter.yaml)
 
 > [!NOTE]
 > `resultContent: http_status` is the preferred pattern for cheap status-only calls. Keep `resultContent: body` for payload extraction.

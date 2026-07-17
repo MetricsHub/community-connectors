@@ -48,7 +48,6 @@ beforeAll:
 
 ## Community Examples
 
-- [HPPrinter](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/HPPrinter/HPPrinter.yaml)
 - [Cassandra](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/Cassandra/Cassandra.yaml)
 - [LinuxFile](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/LinuxFile/LinuxFile.yaml)
 - [WindowsFile](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/WindowsFile/WindowsFile.yaml)

@@ -90,20 +90,21 @@ monitors:
           computes:
           - type: json2Csv
             entryKey: /records
-            properties: id;name;model;serial;status
+            properties: /id;/name;/model;/serial;/status
       # Mapping: one enclosure instance per row in ${source::inventory}
       # Each enclosure instance is exported as an OpenTelemetry Resource
       mapping:
         source: ${source::inventory}
         # Attributes attached to each resource
+        # (json2Csv prepends an entry column, so the first property is $2)
         attributes:
-          id: $1
-          name: $2
-          model: $3
-          serial_number: $4
+          id: $2
+          name: $3
+          model: $4
+          serial_number: $5
         # Metrics attached to the resource
         metrics:
-          hw.status{hw.type="enclosure"}: $5
+          hw.status{hw.type="enclosure"}: $6
 
 # This is executed after monitor jobs in a discovery or collect cycle
 # Useful for session close and cleanup
