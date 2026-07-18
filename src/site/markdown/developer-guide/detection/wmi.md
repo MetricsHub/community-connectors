@@ -41,7 +41,7 @@ connector:
 - No `expectedResult`: success if serialized result is non-empty.
 - With `expectedResult`: case-insensitive, multiline regex.
 
-See below example on how a result table of a WBEM query is converted to text before matching with `expectedResult`:
+See below example on how a result table of a WMI query is converted to text before matching with `expectedResult`:
 
 > [!TABS]
 >

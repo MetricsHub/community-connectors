@@ -3,6 +3,8 @@ description: Reference for the Windows service detection criterion.
 
 # Detection by Windows Service (Deprecated)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 > [!WARNING]
 > The `service` detection criterion is deprecated. Use WMI or SSH instead as applicable.
 

@@ -3,6 +3,8 @@ description: Reference for the process detection criterion, including locality c
 
 # Detection by Process (Deprecated)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 > [!WARNING]
 > The `process` detection criterion is deprecated. Use WMI or SSH instead as applicable.
 

@@ -3,6 +3,8 @@ description: Reference for the awk source type (JAWK) and when to prefer compute
 
 # awk (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use source-level `awk` when your source itself is a script computation, usually consuming an explicit `input` string or source reference.

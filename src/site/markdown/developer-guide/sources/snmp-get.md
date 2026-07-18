@@ -3,6 +3,8 @@ description: Reference for snmpGet source used for scalar SNMP values.
 
 # snmpGet (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `snmpGet` for scalar OIDs (single-value fetches), especially for host-level metadata or simple gauges.

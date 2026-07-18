@@ -3,6 +3,8 @@ description: Reference for copy source, used to branch a source table without re
 
 # copy (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `copy` to duplicate an existing source table and apply a different compute pipeline.

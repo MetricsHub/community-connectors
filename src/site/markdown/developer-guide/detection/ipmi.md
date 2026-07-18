@@ -3,6 +3,8 @@ description: Reference for the IPMI detection criterion.
 
 # Detection of IPMI
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When to Use
 
 Use `ipmi` to verify the responsiveness of the IPMI-over-LAN protocol for the targeted host, in connectors that rely on the IPMI protocol and data source.

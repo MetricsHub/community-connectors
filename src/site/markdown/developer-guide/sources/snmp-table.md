@@ -3,6 +3,8 @@ description: Reference for snmpTable source and table-first design patterns.
 
 # snmpTable (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `snmpTable` for indexed SNMP data. It is usually more efficient than issuing many `snmpGet` calls.

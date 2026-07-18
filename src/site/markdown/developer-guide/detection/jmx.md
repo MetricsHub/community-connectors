@@ -3,6 +3,8 @@ description: Reference for the JMX detection criterion.
 
 # Detection by JMX
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When to Use
 
 Use `jmx` when connector eligibility is tied to a specific MBean/object name and attribute set.

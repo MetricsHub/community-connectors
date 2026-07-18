@@ -3,6 +3,8 @@ description: Reference for IPMI source usage and normalization patterns.
 
 # ipmi (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `ipmi` when metrics are exposed through IPMI sensor outputs and your target platform supports IPMI collection.

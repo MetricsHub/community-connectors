@@ -3,6 +3,8 @@ description: Reference for internalDbQuery source used for SQL-like joins and ag
 
 # internalDbQuery (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `internalDbQuery` when table pipelines become too complex for plain compute chains.

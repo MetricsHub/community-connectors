@@ -3,6 +3,8 @@ description: Reference for the file source definition and compatibility notes.
 
 # file (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `file` to ingest file contents directly when available in your runtime version.

@@ -3,6 +3,8 @@ description: Reference for the deviceType detection criterion in MetricsHub conn
 
 # Detection by Host Type
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When to Use
 
 For each host to monitor with MetricsHub, the user will provide 2 critical attributes:

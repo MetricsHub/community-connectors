@@ -9,7 +9,7 @@ description: The keepColumns compute keeps only the listed columns of the table,
 
 Use `keepColumns` to project a wide source table down to just the columns your mapping (or the next compute) needs. It is typically applied after a query or command that returns more fields than necessary, or after computes such as `duplicateColumn` and `tableJoin` have widened the table. Every column not listed in `columnNumbers` is discarded; rows are never removed.
 
-`keepColumns` filters columns; to filter rows, use [`keepOnlyMatchingLines`](keep-only-matching-lines.md) or [`excludeMatchingLines`](exclude-matching-lines.md).
+`keepColumns` filters columns; to filter rows, use [`keepOnlyMatchingLines`](keep-only-matching-lines.html) or [`excludeMatchingLines`](exclude-matching-lines.html).
 
 ## Syntax
 

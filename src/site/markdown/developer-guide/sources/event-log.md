@@ -3,6 +3,8 @@ description: Reference for the eventLog source type used to query Windows Event 
 
 # eventLog (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `eventLog` to collect Windows Event Log entries directly (system/application/security-style logs).

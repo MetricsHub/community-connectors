@@ -1,7 +1,7 @@
 keywords: detection, sql, database, table serialization
 description: Reference for SQL detection criterion and matching behavior on serialized result tables.
 
-# sql (Detection Criterion)
+# Detection by SQL
 
 <!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 

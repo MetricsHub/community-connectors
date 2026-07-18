@@ -3,6 +3,8 @@ description: Reference for the snmpGetNext detection criterion.
 
 # Detection by SNMP GetNext
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When to Use
 
 Use `snmpGetNext` to verify that an SNMP subtree/table exists.

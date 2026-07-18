@@ -3,6 +3,8 @@ description: How to use afterAll to run teardown or cleanup actions after monito
 
 # afterAll (Section)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `afterAll` for teardown work that should run once at the end of the connector cycle.

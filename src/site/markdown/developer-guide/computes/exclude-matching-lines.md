@@ -9,7 +9,7 @@ description: The excludeMatchingLines compute removes the table rows whose selec
 
 Use `excludeMatchingLines` to drop unwanted rows from a source table: aggregate rows such as `_Total` in Windows performance counters, removable media in a disk listing, sensors reporting `N/A`, or devices with a size of `0`. It is the table equivalent of `grep -v`: rows that match are discarded, all other rows pass through unchanged.
 
-To do the opposite (keep only matching rows), use [`keepOnlyMatchingLines`](keep-only-matching-lines.md).
+To do the opposite (keep only matching rows), use [`keepOnlyMatchingLines`](keep-only-matching-lines.html).
 
 ## Syntax
 

@@ -3,6 +3,8 @@ description: Reference for static source type used to inject constant or inline 
 
 # static (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `static` to inject fixed values into a source pipeline.

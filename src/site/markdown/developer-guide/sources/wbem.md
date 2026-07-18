@@ -3,6 +3,8 @@ description: Reference for WBEM source with query and namespace guidance.
 
 # wbem (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `wbem` when the target exposes CIM/WBEM endpoints and you need structured CIM query results.

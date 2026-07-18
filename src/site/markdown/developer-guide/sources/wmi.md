@@ -3,6 +3,8 @@ description: Full reference for WMI source with query design and join-ready tabl
 
 # wmi (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `wmi` for Windows system/hardware/application monitoring via WMI classes.

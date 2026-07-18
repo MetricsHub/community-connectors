@@ -3,6 +3,8 @@ description: How to use beforeAll to prepare shared data for monitor mappings.
 
 # beforeAll (Section)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `beforeAll` when several monitor sources need the same pre-fetched data.

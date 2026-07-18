@@ -3,6 +3,8 @@ description: Reference for the snmpGet detection criterion.
 
 # Detection by SNMP Get
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When to Use
 
 Use `snmpGet` if the monitored target responds in SNMP to the specified precise OID, typically an OID in a private MIB (`1.3.6.1.4.*`).

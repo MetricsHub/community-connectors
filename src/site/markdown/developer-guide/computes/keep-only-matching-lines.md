@@ -9,7 +9,7 @@ description: The keepOnlyMatchingLines compute keeps only the table rows whose s
 
 Use `keepOnlyMatchingLines` to filter a source table down to the rows you actually want to monitor: keep only the sensors of a given type, only the services whose name matches a connector variable, only the rows with a valid status. It is the table equivalent of `grep`: rows that do not match are discarded, rows that match pass through unchanged.
 
-To do the opposite (discard matching rows), use [`excludeMatchingLines`](exclude-matching-lines.md). To drop columns instead of rows, use [`keepColumns`](keep-columns.md).
+To do the opposite (discard matching rows), use [`excludeMatchingLines`](exclude-matching-lines.html). To drop columns instead of rows, use [`keepColumns`](keep-columns.html).
 
 ## Syntax
 

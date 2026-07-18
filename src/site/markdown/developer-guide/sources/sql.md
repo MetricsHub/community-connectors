@@ -3,6 +3,8 @@ description: Reference for SQL source usage in JDBC-based connectors.
 
 # sql (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `sql` when metrics come from relational databases (MySQL, PostgreSQL, MariaDB, and similar).

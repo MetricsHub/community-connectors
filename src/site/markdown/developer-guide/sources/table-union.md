@@ -3,6 +3,8 @@ description: Reference for tableUnion source used to concatenate multiple source
 
 # tableUnion (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `tableUnion` to append rows from multiple tables into one table.

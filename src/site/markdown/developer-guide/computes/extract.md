@@ -9,7 +9,7 @@ description: The extract compute splits one column's value on separator characte
 
 Use `extract` when a single column packs several pieces of information into one string — `Model|Size`, `2.5 GHz`, `Name,Instance` — and you only need one of them. The compute splits the column value into sub-columns using the `subSeparators` characters and replaces the column, in place, with the sub-column selected by `subColumn`. All other columns and all rows are untouched.
 
-For extracting a fixed-position slice of a string, see `substring`; for extracting a `key="value"` property from a WBEM object path, see [`extractPropertyFromWbemPath`](extract-wbem-property.md).
+For extracting a fixed-position slice of a string, see `substring`; for extracting a `key="value"` property from a WBEM object path, see [`extractPropertyFromWbemPath`](extract-wbem-property.html).
 
 ## Syntax
 

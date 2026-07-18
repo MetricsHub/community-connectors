@@ -3,6 +3,8 @@ description: Reference for JMX source usage, including wildcard ObjectName and k
 
 # jmx (Source)
 
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
 ## When To Use
 
 Use `jmx` for Java-based products exposing metrics through MBeans.
