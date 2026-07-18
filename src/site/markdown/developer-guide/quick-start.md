@@ -175,17 +175,21 @@ produces two fan instances (`fan01`, `fan02`), one per row. For each row, the ma
 
 ## Step 5 - Add Replay Integration Test Resources
 
+Before recording test resources, run the connector for real against your device or an emulator — see [Run and Debug Locally](run-and-debug.html).
+
 Create:
 
 ```text
 src/it/resources/<ConnectorId>/config/metricshub.yaml
 src/it/resources/<ConnectorId>/emulation/
-src/it/resources/<ConnectorId>/expected/expected.json
 ```
 
-Then add `<ConnectorId>` to the parameterized values in:
+Then:
 
-- `src/it/java/org/metricshub/connector/it/ConnectorReplayIT.java`
+- add `<ConnectorId>` to the parameterized values in `src/it/java/org/metricshub/connector/it/ConnectorReplayIT.java`
+- generate `expected/expected-gen.json` with the `writeExpectedJson` helper, review it, and rename it to `expected.json`
+
+See [Integration Testing](integration-testing.html) for the full recording and generation workflow.
 
 ## Step 6 - Review Checklist
 

@@ -5,7 +5,9 @@ description: Replay integration testing workflow for MetricsHub connectors using
 
 <!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-Replay integration tests are the primary safety net for connector changes.
+This page assumes your connector already works when run interactively — the CLI workflow, including `--record` and the emulation options used below, is covered in [Run and Debug Locally](run-and-debug.html).
+
+To create a new integration test, follow these steps:
 
 ## Test Resource Layout
 

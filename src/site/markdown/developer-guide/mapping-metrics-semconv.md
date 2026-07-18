@@ -169,6 +169,8 @@ metrics:
 - Do not create ad-hoc labels that explode cardinality.
 - Use existing key conventions before introducing new ones.
 
+The full naming rules — domains, attribute-driven dimensions, vendor handling — are on [Metric and Attribute Naming](metric-naming.html).
+
 ## Recommended Pattern
 
 - Normalize and filter in computes first.

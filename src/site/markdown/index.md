@@ -44,8 +44,11 @@ If you are new to connector development, read in this order:
 8. [Sources](developer-guide/sources/index.html)
 9. [Computes](developer-guide/computes/index.html)
 10. [Mapping, Metrics, and Semconv](developer-guide/mapping-metrics-semconv.html)
-11. [Integration Testing](developer-guide/integration-testing.html)
-12. [Legacy and Compatibility](developer-guide/legacy-and-compatibility.html)
+11. [Metric and Attribute Naming](developer-guide/metric-naming.html)
+12. [Run and Debug Locally](developer-guide/run-and-debug.html)
+13. [Integration Testing](developer-guide/integration-testing.html)
+14. [Contributing](developer-guide/contributing.html)
+15. [Legacy and Compatibility](developer-guide/legacy-and-compatibility.html)
 
 ## Repository Layout (Developer View)
 
