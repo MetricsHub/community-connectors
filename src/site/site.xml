@@ -78,14 +78,11 @@
 		<menu name="Official Connector Developer Guide">
 			<item name="Guide Home" href="develop/index.html" />
 			<item name="Quick Start" href="develop/quick-start.html" />
-			<item name="General Principles" href="develop/yaml-structure.html">
-				<item name="YAML Structure" href="develop/yaml-structure.html" />
+			<item name="Connector Structure" href="develop/connector-structure.html">
 				<item name="Monitors and Jobs" href="develop/monitors-and-jobs.html" />
 				<item name="Reuse and Configuration" href="develop/reuse-and-configuration.html" />
 				<item name="References and Expressions" href="develop/references-and-expressions.html" />
 				<item name="Design Principles" href="develop/design-principles.html" />
-			</item>
-			<item name="Mapping and Metrics" href="develop/mapping-metrics-semconv.html">
 				<item name="Mapping, Metrics, and Semconv" href="develop/mapping-metrics-semconv.html" />
 				<item name="Metric and Attribute Naming" href="develop/metric-naming.html" />
 			</item>
@@ -151,7 +148,7 @@
 				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
 				<item name="XML to CSV" href="develop/computes/xml2csv.html" />
 			</item>
-			<item name="Testing and Contributing" href="develop/run-and-debug.html">
+			<item name="Testing and Contributing" href="develop/testing-and-contributing.html">
 				<item name="Run and Debug Locally" href="develop/run-and-debug.html" />
 				<item name="Integration Testing" href="develop/integration-testing.html" />
 				<item name="Contributing" href="develop/contributing.html" />

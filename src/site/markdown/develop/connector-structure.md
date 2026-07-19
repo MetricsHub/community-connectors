@@ -1,7 +1,7 @@
-keywords: yaml structure, connector schema, connector anatomy
+keywords: connector structure, yaml structure, connector schema, connector anatomy
 description: Full connector YAML anatomy with top-level sections, responsibilities, and recommended ordering for maintainable MetricsHub connectors.
 
-# YAML Structure
+# Connector Structure
 
 <!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 

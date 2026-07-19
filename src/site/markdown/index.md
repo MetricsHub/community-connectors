@@ -36,7 +36,7 @@ If you are new to connector development, read in this order:
 
 1. [Developer Guide Home](develop/index.html)
 2. [Quick Start](develop/quick-start.html)
-3. [YAML Structure](develop/yaml-structure.html)
+3. [Connector Structure](develop/connector-structure.html)
 4. [Monitors and Jobs](develop/monitors-and-jobs.html)
 5. [Reuse and Configuration](develop/reuse-and-configuration.html)
 6. [References and Expressions](develop/references-and-expressions.html)
