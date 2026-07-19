@@ -14,7 +14,7 @@ It is the entry point for developers who want to:
 - learn the connector model used by MetricsHub
 
 > [!IMPORTANT]
-> The **official implementation guide** is the [Connector Developer Guide](developer-guide/index.html).
+> The **official implementation guide** is the [Connector Developer Guide](develop/index.html).
 > Use it as the single source of truth for connector structure, detection, sources, computes, mapping, and testing.
 
 ## Who This Site Is For
@@ -25,7 +25,7 @@ It is the entry point for developers who want to:
 
 ## What You Will Find Here
 
-- A complete developer guide in `developer-guide/...`
+- A complete developer guide in `develop/...`
 - Generated library views:
   - [Supported Platforms](supported-platforms.html)
   - [Connectors Directory](connectors-directory.html)
@@ -34,22 +34,22 @@ It is the entry point for developers who want to:
 
 If you are new to connector development, read in this order:
 
-1. [Developer Guide Home](developer-guide/index.html)
-2. [Quick Start](developer-guide/quick-start.html)
-3. [YAML Structure](developer-guide/yaml-structure.html)
-4. [Monitors and Jobs](developer-guide/monitors-and-jobs.html)
-5. [Reuse and Configuration](developer-guide/reuse-and-configuration.html)
-6. [References and Expressions](developer-guide/references-and-expressions.html)
-7. [Design Principles](developer-guide/design-principles.html)
-8. [Detection](developer-guide/detection/index.html)
-9. [Sources](developer-guide/sources/index.html)
-10. [Computes](developer-guide/computes/index.html)
-11. [Mapping, Metrics, and Semconv](developer-guide/mapping-metrics-semconv.html)
-12. [Metric and Attribute Naming](developer-guide/metric-naming.html)
-13. [Run and Debug Locally](developer-guide/run-and-debug.html)
-14. [Integration Testing](developer-guide/integration-testing.html)
-15. [Contributing](developer-guide/contributing.html)
-16. [Legacy and Compatibility](developer-guide/legacy-and-compatibility.html)
+1. [Developer Guide Home](develop/index.html)
+2. [Quick Start](develop/quick-start.html)
+3. [YAML Structure](develop/yaml-structure.html)
+4. [Monitors and Jobs](develop/monitors-and-jobs.html)
+5. [Reuse and Configuration](develop/reuse-and-configuration.html)
+6. [References and Expressions](develop/references-and-expressions.html)
+7. [Design Principles](develop/design-principles.html)
+8. [Detection](develop/detection/index.html)
+9. [Sources](develop/sources/index.html)
+10. [Computes](develop/computes/index.html)
+11. [Mapping, Metrics, and Semconv](develop/mapping-metrics-semconv.html)
+12. [Metric and Attribute Naming](develop/metric-naming.html)
+13. [Run and Debug Locally](develop/run-and-debug.html)
+14. [Integration Testing](develop/integration-testing.html)
+15. [Contributing](develop/contributing.html)
+16. [Legacy and Compatibility](develop/legacy-and-compatibility.html)
 
 ## Repository Layout (Developer View)
 
