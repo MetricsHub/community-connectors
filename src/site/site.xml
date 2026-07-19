@@ -59,9 +59,10 @@
 	<body>
 
 		<links>
-			<item name="Open MetricsHub" href="https://metricshub.org" />
+			<item name="MetricsHub" href="https://metricshub.com" />
+			<item name="Download" href="https://metricshub.com/download" />
+			<item name="Support Desk" href="https://support.metricshub.com" />
 			<item name="&lt;i class='fa-brands fa-github'&gt;&lt;/i&gt; GitHub" href="https://github.com/metricshub/community-connectors" />
-			<item name="OpenTelemetry" href="https://opentelemetry.io" />
 		</links>
 
 		<breadcrumbs>
@@ -77,13 +78,17 @@
 		<menu name="Official Connector Developer Guide">
 			<item name="Guide Home" href="develop/index.html" />
 			<item name="Quick Start" href="develop/quick-start.html" />
-			<item name="YAML Structure" href="develop/yaml-structure.html" />
-			<item name="Monitors and Jobs" href="develop/monitors-and-jobs.html" />
-			<item name="Reuse and Configuration" href="develop/reuse-and-configuration.html" />
-			<item name="Design Principles" href="develop/design-principles.html" />
-			<item name="Mapping, Metrics, and Semconv" href="develop/mapping-metrics-semconv.html" />
-			<item name="Metric and Attribute Naming" href="develop/metric-naming.html" />
-			<item name="References and Expressions" href="develop/references-and-expressions.html" />
+			<item name="General Principles" href="develop/yaml-structure.html">
+				<item name="YAML Structure" href="develop/yaml-structure.html" />
+				<item name="Monitors and Jobs" href="develop/monitors-and-jobs.html" />
+				<item name="Reuse and Configuration" href="develop/reuse-and-configuration.html" />
+				<item name="References and Expressions" href="develop/references-and-expressions.html" />
+				<item name="Design Principles" href="develop/design-principles.html" />
+			</item>
+			<item name="Mapping and Metrics" href="develop/mapping-metrics-semconv.html">
+				<item name="Mapping, Metrics, and Semconv" href="develop/mapping-metrics-semconv.html" />
+				<item name="Metric and Attribute Naming" href="develop/metric-naming.html" />
+			</item>
 			<item name="Detection" href="develop/detection/index.html">
 				<item name="Command Line" href="develop/detection/command-line.html" />
 				<item name="Device Type" href="develop/detection/device-type.html" />
@@ -146,10 +151,12 @@
 				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
 				<item name="XML to CSV" href="develop/computes/xml2csv.html" />
 			</item>
-			<item name="Run and Debug Locally" href="develop/run-and-debug.html" />
-			<item name="Integration Testing" href="develop/integration-testing.html" />
-			<item name="Contributing" href="develop/contributing.html" />
-			<item name="Legacy and Compatibility" href="develop/legacy-and-compatibility.html" />
+			<item name="Testing and Contributing" href="develop/run-and-debug.html">
+				<item name="Run and Debug Locally" href="develop/run-and-debug.html" />
+				<item name="Integration Testing" href="develop/integration-testing.html" />
+				<item name="Contributing" href="develop/contributing.html" />
+				<item name="Legacy and Compatibility" href="develop/legacy-and-compatibility.html" />
+			</item>
 		</menu>
 	</body>
 
