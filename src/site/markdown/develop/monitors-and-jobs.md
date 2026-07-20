@@ -7,7 +7,7 @@ description: How monitors, jobs, and instance identity work: simple vs discovery
 
 A **monitor** defines how MetricsHub discovers and collects metrics for one type of component: `fan`, `disk`, `battery`, `enclosure`, `network`, etc. Each monitor produces **instances** — one per physical or logical component found — and each instance is exported as one OpenTelemetry Resource.
 
-This page explains the job models (`simple` vs `discovery` + `collect`), instance identity (`keys`), collect modes (`multiInstance` vs `monoInstance`), and the collect-only mapping features (`conditionalCollection`, `legacyTextParameters`).
+This page explains the job models (`simple` vs `discovery` + `collect`), instance identity (`keys`), collect modes (`multiInstance` vs `monoInstance`), and two additional mapping features (`conditionalCollection`, `legacyTextParameters`).
 
 ## Monitor Anatomy
 
@@ -206,24 +206,39 @@ Every attribute listed in `keys` must be mapped in the discovery (or `simple`) `
 | `type` | `simple`, `collect` | Yes for `collect` | `multiInstance` or `monoInstance`. Required on `collect` jobs; optional on `simple` jobs (many connectors declare `type: multiInstance` there for clarity). |
 | `executionOrder` | all | No | Array of source names forcing a specific order. By default the engine runs a job's sources sequentially, ordered by their `${source::...}` dependencies; use `executionOrder` only when a dependency is invisible to the engine, and list **every** source of the job. |
 
-## Collect-Only Mapping Features
+## Additional Mapping Features
 
 ### `conditionalCollection`
 
-Only collect a metric when the referenced value is non-empty. Typical when a device reports some sensors only under certain conditions:
+Only collect a metric when the referenced value is non-empty — typical when a device reports some sensors or counters only under certain conditions.
+
+Declare it in the **`discovery`** (or `simple`) mapping: the availability check happens while discovering the instance, so the engine knows which metrics to collect for it. The metric's actual value stays in the `collect` mapping:
 
 ```yaml
-mapping:
-  source: ${source::monitors.temperature.collect.sources.source(1)}
-  metrics:
-    hw.temperature: $5
-  conditionalCollection:
-    hw.temperature: $5   # skip hw.temperature when column 5 is empty
+    discovery:
+      mapping:
+        source: ${source::monitors.physical_disk.discovery.sources.source(1)}
+        attributes:
+          id: $1
+        metrics:
+          hw.physical_disk.size: $6
+        conditionalCollection:
+          hw.errors{hw.type="physical_disk"}: $9   # collect hw.errors only for disks reporting an error counter
+    collect:
+      type: multiInstance
+      mapping:
+        source: ${source::monitors.physical_disk.collect.sources.source(1)}
+        attributes:
+          id: $1
+        metrics:
+          hw.errors{hw.type="physical_disk"}: $9
 ```
+
+See [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml) for a real two-phase example, or [LinuxIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LinuxIpmiTool/LinuxIpmiTool.yaml) for the `simple`-job form.
 
 ### `legacyTextParameters`
 
-Free-text values attached to the instance, inherited from the legacy hardware connector model — most commonly `StatusInformation`, the human-readable explanation of the current status:
+Free-text values attached to the instance, inherited from the legacy hardware connector model — most commonly `StatusInformation`, the human-readable explanation of the current status. Declared in the **`collect`** (or `simple`) mapping, alongside the metrics it explains:
 
 ```yaml
 mapping:
