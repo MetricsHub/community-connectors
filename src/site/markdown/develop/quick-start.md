@@ -60,7 +60,7 @@ For each configured resource, MetricsHub executes connectors in three phases:
 
 Monitor jobs within a phase can run in parallel; the sources inside one job run sequentially, in dependency order. See [Detection](detection/index.html) for connector selection rules, [Monitors and Jobs](monitors-and-jobs.html) for the job model, and [Sources](sources/index.html) for source execution details.
 
-## Core Mental Model: Connectors Are Table Pipelines
+## Connectors Are Table Pipelines
 
 Most connector logic is table-oriented:
 
