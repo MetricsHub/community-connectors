@@ -25,7 +25,7 @@ beforeAll:
     type: http
     method: post
     path: /rest/login-sessions
-    body: '{"username":"${username}","password":"${password}"}'
+    body: '{"username":"%{esc(json)::USERNAME}","password":"%{esc(json)::PASSWORD}"}'
     resultContent: body
 ```
 
