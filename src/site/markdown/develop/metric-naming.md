@@ -149,9 +149,9 @@ Strict semantic meanings — do not mix them:
 
 | Metric | Meaning |
 | --- | --- |
-| `*.limit` | Maximum allowed value |
+| `*.limit` | Upper bound of the corresponding metric: a total capacity (`system.memory.limit`, `system.filesystem.limit`), a link/design speed (`hw.network.bandwidth.limit`), or an alerting threshold qualified by `limit_type` (`hw.temperature.limit{limit_type="high.critical"}`) |
 | `*.usage` | Absolute used value |
-| `*.utilization` | Ratio (0–1) or percentage |
+| `*.utilization` | Ratio between 0 and 1 (unit `1`) — always convert percentages, e.g. with `percent2Ratio($n)` |
 | `*.size` | Total size |
 | `*.operations` | Count of operations |
 | `*.operation_time` | Time spent performing operations |
