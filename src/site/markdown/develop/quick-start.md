@@ -271,7 +271,7 @@ src/it/resources/<ConnectorId>/emulation/
 
 Then:
 
-- add `<ConnectorId>` to the parameterized values in `src/it/java/org/metricshub/connector/it/ConnectorReplayIT.java`
+- add a test method for your connector in `src/it/java/org/metricshub/connector/it/ConnectorReplayIT.java` that calls `testConnectorReplay("<ConnectorId>")`
 - generate `expected/expected-gen.json` with the `writeExpectedJson` helper, review it, and rename it to `expected.json`
 
 See [Integration Testing](integration-testing.html) for the full recording and generation workflow.
