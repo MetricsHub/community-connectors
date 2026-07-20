@@ -11,8 +11,8 @@ Connectors use references to wire data across sections and runtime contexts.
 
 | Family | Syntax | Resolved |
 | --- | --- | --- |
-| Load-time references | `${source::}`, `${file::}`, `${translation::}`, `${constant::}`, `${var::}` | Once, when the connector is parsed and loaded. |
-| Job-time references | `$1`/`$2` column refs, `${attribute::}`, `${protocol::}`, `${resource.attribute::}`, `${awk::}` | During job execution, per row or per instance. |
+| Load-time substitutions | `${constant::}`, `${var::}` | Inlined once, when the connector is parsed and loaded. |
+| Job-time references | `${source::}`, `${file::}`, `${translation::}`, `$1`/`$2` column refs, `${attribute::}`, `${protocol::}`, `${resource.attribute::}`, `${awk::}` | Evaluated during job execution — e.g. `${source::...}` yields the referenced source's current output for that cycle. Relative `${source::}` paths are normalized to their absolute form at load time. |
 | Runtime credential macros | `%{USERNAME}`, `%{PASSWORD}`, `%{BASIC_AUTH_BASE64}`, ... | At execution time, per request, from the resource's configured credentials. |
 
 ## Source References

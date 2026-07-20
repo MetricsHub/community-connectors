@@ -51,7 +51,7 @@ connector:
 
 | Property | Required | Description |
 | --- | --- | --- |
-| `connectionTypes` | Yes | `remote`, `local`, or both: whether the connector works against a remote host, the local machine MetricsHub runs on, or either. |
+| `connectionTypes` | No | `remote`, `local`, or both: whether the connector works against a remote host, the local machine MetricsHub runs on, or either. When omitted, defaults to **both**. |
 | `appliesTo` | Yes | Resource `host.type` values the connector supports (e.g. `Linux`, `Windows`, `Network`, `Storage`, `OOB`). |
 | `criteria` | Yes | Ordered list of checks; all must succeed. |
 | `supersedes` | No | Connector IDs this connector replaces: when both match, the superseded one is dropped. |
