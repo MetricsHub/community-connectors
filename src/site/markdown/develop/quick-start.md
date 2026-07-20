@@ -1,17 +1,104 @@
-keywords: quick start, connector workflow, new connector
-description: End-to-end quick start to create a new MetricsHub connector with modern structure, mapping, and replay test validation.
+keywords: quick start, connector developer guide, connector yaml, new connector, connector workflow
+description: The starting point for developing a MetricsHub connector: what a connector is, how MetricsHub runs it, and the shortest reliable path from idea to validated connector.
 
 # Quick Start
 
 <!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-This page gives the shortest reliable path from idea to validated connector.
+This is the starting point of the **Connector Developer Guide**, the canonical reference for contributing connectors to `metricshub-community-connectors`. This page explains what a connector is, how MetricsHub executes it, and the shortest reliable path from idea to validated connector.
 
-## Step 0 - Understand the Runtime Model
+**Audience:** new contributors adding a first connector, maintainers extending existing ones, reviewers, and AI coding agents.
 
-The connector YAML you write in this repository is compiled when the project is built. The compiled connectors are shipped with MetricsHub and loaded at runtime.
+**Prerequisites:** comfort with YAML and regular expressions, basic understanding of monitoring pipelines and OpenTelemetry metric concepts, and the ability to run Maven builds and the `metricshub` CLI locally.
 
-Users usually configure a resource and its protocols, not a connector name. MetricsHub then selects the applicable connectors automatically during detection, runs discovery less often for heavy inventory, and runs collect repeatedly for ongoing metric collection.
+> [!IMPORTANT]
+> Treat this guide as implementation documentation, not conceptual marketing content.
+> It is intentionally opinionated toward patterns that scale in real connector libraries.
+
+## What a Connector Is
+
+A connector is a **single YAML file**. It lives in its own directory, and **the file is named after that directory**:
+
+```text
+src/main/connector/<category>/<ConnectorId>/<ConnectorId>.yaml
+```
+
+The file name (without `.yaml`) is the **connector ID** — the identifier used everywhere else: to force the connector on the command line (`-c +DiskPart`), to name its integration-test resources (`src/it/resources/DiskPart/`), and in `supersedes` lists. Typical categories are `hardware`, `system`, and `database`.
+
+The connector directory can also hold **additional resources** used by the connector — AWK scripts, HTTP header files, embedded shell scripts or command input files — referenced from the YAML with `${file::<name>}` and shipped with the connector:
+
+```text
+src/main/connector/hardware/DiskPart/
+├── DiskPart.yaml       # the connector itself (file name = directory name = connector ID)
+├── diskPart.awk        # AWK script, referenced as ${file::diskPart.awk}
+└── listVolume.txt      # command input file, referenced as ${file::listVolume.txt}
+```
+
+Connector YAML is source material: it is compiled when the project is built, shipped with MetricsHub, and loaded by the runtime. During development, the `metricshub` CLI can also load it directly from your source tree (see [Run and Debug Locally](run-and-debug.html)).
+
+## How MetricsHub Runs Connectors
+
+To monitor a host or resource, users configure a _resource_ and its protocols — usually not a connector name:
+
+```yaml
+resources:
+  myHost:
+    attributes:
+      host.name: my-host
+      host.type: Windows
+    protocols:
+      wmi:
+        username: Administrator
+        password: encryptedPassword
+```
+
+For each configured resource, MetricsHub executes connectors in three phases:
+
+1. **Detection**: MetricsHub evaluates the loaded connectors and keeps only the applicable ones.
+2. **Discovery**: the expensive inventory logic, run less often — `beforeAll` (if defined), all monitor `discovery` jobs (or `simple` jobs), then `afterAll` (if defined).
+3. **Collect**: the frequent metric collection logic, run repeatedly — `beforeAll`, all monitor `collect` jobs (or `simple` jobs), then `afterAll`.
+
+Monitor jobs within a phase can run in parallel; the sources inside one job run sequentially, in dependency order. See [Detection](detection/index.html) for connector selection rules, [Monitors and Jobs](monitors-and-jobs.html) for the job model, and [Sources](sources/index.html) for source execution details.
+
+## Core Mental Model: Connectors Are Table Pipelines
+
+Most connector logic is table-oriented:
+
+- most sources output a **table**
+- most computes transform a **table**
+- mapping consumes a **table**
+- each mapped row becomes one monitor instance exported as one OpenTelemetry Resource
+
+Internally, tables are represented as a **list of lists of strings**. The example below shows the same data in its internal form, as a table, and as serialized text:
+
+> [!TABS]
+>
+> - <span class="fa-solid fa-table-list"></span> Table View
+>
+>   | id | name | status | rpm |
+>   | --- | --- | --- | --- |
+>   | fan01 | Fan 1 | ok | 12500 |
+>   | fan02 | Fan 2 | failed | 0 |
+>
+> - <span class="fa-solid fa-code"></span> Internal
+>
+>   ```json
+>   [
+>     ["fan01", "Fan 1", "ok", "12500"],
+>     ["fan02", "Fan 2", "failed", "0"]
+>   ]
+>   ```
+>
+> - <span class="fa-regular fa-file-lines"></span> Serialized Text
+>
+>   When serialization is needed, the engine uses one row per line and semicolon-separated columns:
+>
+>   ```text
+>   fan01;Fan 1;ok;12500
+>   fan02;Fan 2;failed;0
+>   ```
+
+This is why many compute operations are column-based (`column: N`).
 
 ## Step 1 - Define Scope First
 
@@ -26,19 +113,15 @@ Before writing YAML, lock these decisions:
 > Start with one monitor and one high-value metric path.
 > Expand only after first replay test passes.
 
-## Step 2 - Create Connector Folder
+## Step 2 - Create the Connector Directory and YAML File
 
-Create a connector folder under:
+Create the connector directory and its main YAML file, both named after your connector ID:
 
 ```text
-src/main/connector/<scope>/<ConnectorId>/
+src/main/connector/<category>/<ConnectorId>/<ConnectorId>.yaml
 ```
 
-Typical scopes:
-
-- `hardware`
-- `system`
-- `database`
+Add supporting files (AWK scripts, header files, ...) to the same directory as you need them.
 
 ## Step 3 - Write a Minimal Connector Skeleton
 
@@ -54,11 +137,13 @@ connector:
   displayName: Example Device (REST)
   platforms: Example Platform
   reliesOn: Example REST API
+  version: 1.0
   information: Monitors device sensors through REST endpoints.
 
   # Detection criteria must all match for the connector to be
   # activated on the targeted platform
   detection:
+    connectionTypes: [ remote ]
     appliesTo: [ Storage ]
     criteria:
     - type: http
@@ -205,3 +290,11 @@ See [Integration Testing](integration-testing.html) for the full recording and g
 - using unstable display strings as resource `id`
 - overusing custom AWK when built-in computes are enough
 - adding legacy aliases in new connector code
+
+## Where to Go Next
+
+- [Connector Structure](connector-structure.html) — the full YAML anatomy
+- [Monitors and Jobs](monitors-and-jobs.html) — the job model in depth
+- [Reuse and Configuration](reuse-and-configuration.html) — `extends`, constants, variables, translations
+- [Detection](detection/index.html), [Sources](sources/index.html), [Computes](computes/index.html) — per-type references
+- [Testing and Contributing](testing-and-contributing.html) — from local runs to a merged pull request

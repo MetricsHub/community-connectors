@@ -75,8 +75,7 @@
 			<item name="Connectors Directory" href="connectors-directory.html" />
 		</menu>
 
-		<menu name="Official Connector Developer Guide">
-			<item name="Guide Home" href="develop/index.html" />
+		<menu name="Connector Developer Guide">
 			<item name="Quick Start" href="develop/quick-start.html" />
 			<item name="Connector Structure" href="develop/connector-structure.html">
 				<item name="Monitors and Jobs" href="develop/monitors-and-jobs.html" />
