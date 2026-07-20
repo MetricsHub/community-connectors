@@ -98,7 +98,7 @@ Conventions observed across the connector library:
 
 ## The `collect` Job
 
-Collect gathers the frequently-changing metrics for the instances that discovery created. It must declare its mode with `type`:
+Collect gathers the frequently-changing metrics for the instances that discovery created. Its mode is selected with `type`:
 
 ```yaml
     collect:
@@ -106,6 +106,8 @@ Collect gathers the frequently-changing metrics for the instances that discovery
       sources: {}
       mapping: {}
 ```
+
+When `type` is omitted, the engine defaults to **`monoInstance`**. Always declare it explicitly: an accidental `monoInstance` on a multi-instance monitor silently changes how (and how often) the job runs.
 
 ### `multiInstance`: one run for all instances
 
@@ -203,7 +205,7 @@ Every attribute listed in `keys` must be mapped in the discovery (or `simple`) `
 | --- | --- | --- | --- |
 | `sources` | all | Yes | Named sources forming the job's table pipeline. See [Sources](sources/index.html). |
 | `mapping` | all | Yes | Turns the final table into instances, attributes, and metrics. See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
-| `type` | `simple`, `collect` | Yes for `collect` | `multiInstance` or `monoInstance`. Required on `collect` jobs; optional on `simple` jobs (many connectors declare `type: multiInstance` there for clarity). |
+| `type` | `simple`, `collect` | No | `multiInstance` or `monoInstance`. When omitted on a `collect` job, defaults to `monoInstance` — declare it explicitly in new connectors. |
 | `executionOrder` | all | No | Array of source names forcing a specific order. By default the engine runs a job's sources sequentially, ordered by their `${source::...}` dependencies; use `executionOrder` only when a dependency is invisible to the engine, and list **every** source of the job. |
 
 ## Additional Mapping Features
@@ -252,7 +254,7 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 
 ## Common Mistakes
 
-- Declaring a `collect` job without `type` — always state `multiInstance` or `monoInstance`.
+- Omitting `type` on the `collect` job of a multi-instance monitor — the engine then defaults to `monoInstance`, silently changing the execution model. State `multiInstance` or `monoInstance` explicitly.
 - Forgetting to re-map `id` (or the other `keys`) in a `multiInstance` collect mapping, so no row matches any instance and no metric is ever collected.
 - Mapping an unstable value (rotating index, display label) as `id`, which creates duplicate instances at every discovery cycle.
 - Using `monoInstance` with expensive sources on monitors that can have dozens of instances.
