@@ -84,13 +84,6 @@ See below example on how a result table of a WMI query is converted to text befo
 
 ## Examples
 
-Community example (`system/WindowsService/WindowsService.yaml`):
+Community example — the `wmi` criterion of `system/WindowsService/WindowsService.yaml`, included directly from the connector source:
 
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: wmi
-      namespace: root\\CIMv2
-      query: SELECT * FROM Win32_OperatingSystem
-```
+<!-- MACRO{snippet|id=wmiCriterion|file=src/main/connector/system/WindowsService/WindowsService.yaml} -->

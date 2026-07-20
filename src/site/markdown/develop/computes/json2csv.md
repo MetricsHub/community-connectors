@@ -88,13 +88,7 @@ Equivalent serialized output:
 
 - [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml)
 
-```yaml
-          computes:
-          - type: json2csv
-            entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
-```
+<!-- MACRO{snippet|id=json2CsvCompute|file=src/main/connector/hardware/Redfish/Redfish.yaml} -->
 
 > [!NOTE]
 > Redfish still uses the legacy lowercase alias `json2csv`. Use the canonical `json2Csv` casing in new connectors (see [Legacy and Compatibility](../legacy-and-compatibility.html)).

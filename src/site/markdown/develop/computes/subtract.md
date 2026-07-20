@@ -80,11 +80,6 @@ original total remains available for the mapping.
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 - [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml)
 
-From `Windows.yaml`, deriving used memory from total and free:
+From `Windows.yaml`, deriving used memory from total and free, included directly from the connector source:
 
-```yaml
-          # Finding used memory and making a copy for utilization
-          - type: subtract
-            column: 5
-            value: $1
-```
+<!-- MACRO{snippet|id=subtractUsedMemoryCompute|file=src/main/connector/system/Windows/Windows.yaml} -->

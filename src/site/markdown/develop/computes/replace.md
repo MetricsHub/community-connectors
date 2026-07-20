@@ -75,13 +75,6 @@ With `column: 1`, `existingValue: '"'`, and `newValue: ""`:
 - [MIB2](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2/MIB2.yaml)
 - [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)
 
-From MIB2 (filling a blank placeholder column from another column):
+From MIB2 (filling a blank placeholder column from another column), included directly from the connector source:
 
-```yaml
-    # Replace "MSHWMSHW", i.e. a blank column with the ifTable value.
-    # PortID;Description;PortType;MacAddress;AdminStatus;ID;Name;Alias;
-  - type: replace
-    column: 7
-    existingValue: MSHWMSHW
-    newValue: $2
-```
+<!-- MACRO{snippet|id=replaceBlankColumnCompute|file=src/main/connector/hardware/MIB2/MIB2.yaml} -->

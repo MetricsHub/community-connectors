@@ -88,10 +88,6 @@ With the `physicalDiskStatuses` table above applied to column 3:
 - [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
 - [MariaDB](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/MariaDB/MariaDB.yaml)
 
-From `LinuxService`:
+From `LinuxService`, included directly from the connector source:
 
-```yaml
-          - type: translate
-            column: 2
-            translationTable: ${translation::serviceLoadedTranslationTable}
-```
+<!-- MACRO{snippet|id=translateCompute|file=src/main/connector/system/LinuxService/LinuxService.yaml} -->

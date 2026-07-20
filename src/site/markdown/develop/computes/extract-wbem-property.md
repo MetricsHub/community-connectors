@@ -78,15 +78,6 @@ With `column: 2` and `property: Name`:
 
 - [WindowsProcess](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/WindowsProcess/WindowsProcess.yaml)
 
-From `WindowsProcess` (the only community connector using this compute):
+From `WindowsProcess` (the only community connector using this compute), included directly from the connector source:
 
-```yaml
-          - type: duplicateColumn
-            column: 21
-          - type: extractPropertyFromWbemPath
-            column: 21
-            property: Domain
-          - type: extractPropertyFromWbemPath
-            column: 22
-            property: Name
-```
+<!-- MACRO{snippet|id=extractWbemProperty|file=src/main/connector/system/WindowsProcess/WindowsProcess.yaml} -->

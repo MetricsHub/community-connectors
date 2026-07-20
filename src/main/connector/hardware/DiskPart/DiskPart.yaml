@@ -34,6 +34,7 @@ monitors:
           commandLine: CHCP 437&&DISKPART.EXE /S ${file::listVolume.txt}
           timeout: 120
           computes:
+          # START SNIPPET: awkCompute
             # Run Source(1) through an AWK script
             # ID;Label;Letter;VolumeType;FileSystem;Size;Status;MoreInformation
           - type: awk
@@ -41,6 +42,7 @@ monitors:
             separators: ;
             keep: ^MSHW;
             selectColumns: 2,3,4,5,6,7,8,9
+          # END SNIPPET: awkCompute
             # Exclude DVDs and stupid stuff
             # ID;Label;Letter;VolumeType;FileSystem;Size;Status;MoreInformation
           - type: excludeMatchingLines

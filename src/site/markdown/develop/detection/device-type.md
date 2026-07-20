@@ -61,13 +61,6 @@ Evaluation rule is:
 
 ## Examples
 
-Community example (`hardware/WinStorageSpaces/WinStorageSpaces.yaml`):
+Community example (`hardware/WinStorageSpaces/WinStorageSpaces.yaml`), included directly from the connector source — note that this connector uses `NT`, the legacy host kind identifier for Windows:
 
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: deviceType
-      keep:
-      - Windows
-```
+<!-- MACRO{snippet|id=deviceTypeCriterion|file=src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml} -->

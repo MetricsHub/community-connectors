@@ -74,11 +74,6 @@ With `column: 2`:
 - [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)
 - [DiskPart](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/DiskPart/DiskPart.yaml)
 
-From Windows (duplicating a value so one copy becomes a ratio):
+From Windows (duplicating the allocated pagefile size so one copy can be turned into free space), included directly from the connector source:
 
-```yaml
-    # Duplicate AllocatedBaseSize to calculate free space
-    # PageFileName;AllocatedBaseSizeMB;AllocatedBaseSizeMB;UsedMB
-    - type: duplicateColumn
-      column: 2
-```
+<!-- MACRO{snippet|id=duplicatePagefileColumnCompute|file=src/main/connector/system/Windows/Windows.yaml} -->

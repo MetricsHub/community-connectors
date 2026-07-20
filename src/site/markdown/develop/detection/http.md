@@ -96,16 +96,6 @@ See below example on how the selected HTTP response content is matched with `exp
 
 ## Examples
 
-Community example (`hardware/Redfish/Redfish.yaml`):
+Community example — the `http` criterion of [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml), included directly from the connector source (`resultContent` is not set, so it defaults to `body`):
 
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: http
-      method: GET
-      path: /redfish/v1/Systems
-      header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
-      resultContent: body
-      expectedResult: redfish
-```
+<!-- MACRO{snippet|id=httpCriterion|file=src/main/connector/hardware/Redfish/Redfish.yaml} -->

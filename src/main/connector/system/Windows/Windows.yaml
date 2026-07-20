@@ -37,9 +37,11 @@ monitors:
           namespace: root\CIMv2
           query: SELECT Name,PercentUserTime,PercentPrivilegedTime,PercentIdleTime FROM Win32_PerfRawData_Counters_ProcessorInformation
           computes:
+          # START SNIPPET: excludeTotalLineCompute
           - type: excludeMatchingLines
             column: 1
             regExp: _Total
+          # END SNIPPET: excludeTotalLineCompute
           - type: extract
             column: 1
             subSeparators: ","
@@ -83,22 +85,27 @@ monitors:
           namespace: root\CIMv2
           query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
           computes:
+          # START SNIPPET: prependMemorySourceCompute
           # Combining both sources for calculations
           - type: prepend
             column: 1
             value: ${source::memoryInformation}
+          # END SNIPPET: prependMemorySourceCompute
           # Converting total to bytes and making a copy for used memory
           - type: multiply
             column: 5
             value: 1024
           - type: duplicateColumn
             column: 5
+          # START SNIPPET: subtractUsedMemoryCompute
           # Finding used memory and making a copy for utilization
           - type: subtract
             column: 5
             value: $1
+          # END SNIPPET: subtractUsedMemoryCompute
           - type: duplicateColumn
             column: 5
+          # START SNIPPET: divideByTotalMemoryCompute
           # Calculate utilization by dividing usage by total memory
           - type: divide
             column: 2
@@ -109,6 +116,7 @@ monitors:
           - type: divide
             column: 6
             value: $7
+          # END SNIPPET: divideByTotalMemoryCompute
       mapping:
         source: ${source::calculatedMemoryInformation}
         attributes:
@@ -168,10 +176,12 @@ monitors:
           query: SELECT Name,AllocatedBaseSize,CurrentUsage FROM Win32_PageFileUsage
           computes:
 
+          # START SNIPPET: duplicatePagefileColumnCompute
           # Duplicate AllocatedBaseSize to calculate free space
           # PageFileName;AllocatedBaseSizeMB;AllocatedBaseSizeMB;UsedMB
           - type: duplicateColumn
             column: 2
+          # END SNIPPET: duplicatePagefileColumnCompute
 
           # Subtracting current usage from allocated base size to get free space
           # PageFileName;AllocatedBaseSizeMB;FreeMB;UsedMB

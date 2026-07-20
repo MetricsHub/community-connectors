@@ -85,15 +85,6 @@ See below example on how a JMX result is converted to text before matching with 
 
 ## Examples
 
-Community example (`database/Cassandra/Cassandra.yaml`):
+Community example — the `jmx` criterion of [Cassandra](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/Cassandra/Cassandra.yaml), included directly from the connector source:
 
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: jmx
-      objectName: org.apache.cassandra.metrics:type=Storage,name=Load
-      attributes:
-      - Count
-      expectedResult: ^[0-9]
-```
+<!-- MACRO{snippet|id=jmxCriterion|file=src/main/connector/database/Cassandra/Cassandra.yaml} -->

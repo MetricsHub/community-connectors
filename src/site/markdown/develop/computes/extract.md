@@ -78,11 +78,6 @@ Serialized, `disk0;Seagate;ZC11ABC;ok;ST4000NM|4000` becomes `disk0;Seagate;ZC11
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 - [WBEMGenDiskNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WBEMGenDiskNT/WBEMGenDiskNT.yaml)
 
-From `IpmiTool` (column 5 contains `Model|Size`; keep the model, then the size from a duplicated column):
+From `IpmiTool` (column 5 contains `Model|Size`; duplicate the column, then keep the model from the original and the size from the copy):
 
-```yaml
-          - type: extract
-            column: 5
-            subColumn: 1
-            subSeparators: '|'
-```
+<!-- MACRO{snippet|id=extractSubColumnCompute|file=src/main/connector/hardware/IpmiTool/IpmiTool.yaml} -->

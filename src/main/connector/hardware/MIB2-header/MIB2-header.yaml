@@ -120,6 +120,7 @@ monitors:
           oid: 1.3.6.1.2.1.31.1.1.1
           selectColumns: ID,15,6,7,8,9,10,11,12,13
           computes:
+          # START SNIPPET: addPacketCountersCompute
             # Add MulticastPkts and BroadcastPkts to UnicastPackets
             # PortID;SpeedMBs;ReceivedBytes64;ReceivedUnicastPackets64;ifHCInMulticastPkts64;ifHCInBroadcastPkts64;TransmittedBytes64;TransmittedPackets64;ifHCOutMulticastPkts;ifHCOutBroadcastPkts;
           - type: add
@@ -128,6 +129,7 @@ monitors:
           - type: add
             column: 4
             value: $6
+          # END SNIPPET: addPacketCountersCompute
           - type: add
             column: 8
             value: $9

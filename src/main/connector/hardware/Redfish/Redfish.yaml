@@ -21,12 +21,14 @@ connector:
     - type: productRequirements
       kmVersion: 10.2.00
     # DETECTION
+    # START SNIPPET: httpCriterion
     - type: http
       method: GET
       header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
       path: /redfish/v1/Systems
       expectedResult: redfish
       errorMessage: Invalid credentials / not a redfish system
+    # END SNIPPET: httpCriterion
     tags: [ hardware, network, storage, raid ]
 monitors:
   enclosure:
@@ -41,11 +43,13 @@ monitors:
           path: /redfish/v1/Systems
           header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
           resultContent: body
+          # START SNIPPET: json2CsvCompute
           computes:
           - type: json2csv
             entryKey: /Members
             properties: /@odata.id;
             separator: ;
+          # END SNIPPET: json2CsvCompute
         source(2):
           type: copy
           from: "${source::monitors.enclosure.discovery.sources.source(1)}"

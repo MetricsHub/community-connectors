@@ -76,10 +76,6 @@ With `column: 4` and `valueList: CD-ROM,DVD-ROM,Removable`:
 - [LibreHardwareMonitor](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LibreHardwareMonitor/LibreHardwareMonitor.yaml)
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 
-From `Windows` (drops the `_Total` aggregate row of a performance counter table):
+From `Windows` (drops the `_Total` aggregate row of a performance counter table), included directly from the connector source:
 
-```yaml
-          - type: excludeMatchingLines
-            column: 1
-            regExp: _Total
-```
+<!-- MACRO{snippet|id=excludeTotalLineCompute|file=src/main/connector/system/Windows/Windows.yaml} -->

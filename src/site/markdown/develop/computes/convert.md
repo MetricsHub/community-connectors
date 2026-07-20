@@ -81,11 +81,6 @@ With `conversion: hex2Dec`, a cell containing `0x1F` becomes `31`, and `1A:2B` b
 - [LinuxIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LinuxIpmiTool/LinuxIpmiTool.yaml)
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
 
-From `WinStorageSpaces`:
+From `WinStorageSpaces`, included directly from the connector source:
 
-```yaml
-          # Convert the array of status to a simple status (keep the worse one)
-          - type: convert
-            column: 3
-            conversion: array2SimpleStatus
-```
+<!-- MACRO{snippet|id=convertArray2SimpleStatus|file=src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml} -->

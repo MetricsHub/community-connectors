@@ -91,14 +91,6 @@ With `executeLocally: true`, you can use the following macros in the command lin
 
 ## Examples
 
-Community example (`system/Linux/Linux.yaml`):
+Community example — the `commandLine` criterion of [Linux](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Linux/Linux.yaml), included directly from the connector source:
 
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: commandLine
-      commandLine: uname
-      expectedResult: GNU/Linux
-      errorMessage: Not a Linux host.
-```
+<!-- MACRO{snippet|id=commandLineCriterion|file=src/main/connector/system/Linux/Linux.yaml} -->

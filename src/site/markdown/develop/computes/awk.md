@@ -91,12 +91,6 @@ The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` rem
 - [lmsensors](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/lmsensors/lmsensors.yaml)
 - [LinuxService](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/LinuxService/LinuxService.yaml) (inline script)
 
-From `DiskPart`:
+From `DiskPart`, included directly from the connector source:
 
-```yaml
-          - type: awk
-            script: ${file::diskPart.awk}
-            separators: ;
-            keep: ^MSHW;
-            selectColumns: 2,3,4,5,6,7,8,9
-```
+<!-- MACRO{snippet|id=awkCompute|file=src/main/connector/hardware/DiskPart/DiskPart.yaml} -->

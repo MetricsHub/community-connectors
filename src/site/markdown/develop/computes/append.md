@@ -83,10 +83,4 @@ which re-parses as 4 columns — two new empty columns now follow column 2. Real
 
 From IpmiTool (adding empty columns with the semicolon trick):
 
-```yaml
-    # Add empty Status and StatusInformation columns
-    # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;
-  - type: append
-    column: 3
-    value: ;;
-```
+<!-- MACRO{snippet|id=appendEmptyColumnsCompute|file=src/main/connector/hardware/IpmiTool/IpmiTool.yaml} -->

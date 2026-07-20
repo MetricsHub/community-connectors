@@ -82,8 +82,4 @@ Note that `Temperature` is kept: `valueList` comparison is case-insensitive.
 
 From `IpmiTool`:
 
-```yaml
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: temperature
-```
+<!-- MACRO{snippet|id=keepOnlyMatchingLinesCompute|file=src/main/connector/hardware/IpmiTool/IpmiTool.yaml} -->

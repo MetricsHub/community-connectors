@@ -30,12 +30,14 @@ monitors:
           - type: append
             column: 7
             value: MSHW
+          # START SNIPPET: replaceBlankColumnCompute
             # Replace "MSHWMSHW", i.e. a blank column with the ifTable value.
             # PortID;Description;PortType;MacAddress;AdminStatus;ID;Name;Alias;
           - type: replace
             column: 7
             existingValue: MSHWMSHW
             newValue: $2
+          # END SNIPPET: replaceBlankColumnCompute
             # Now get rid of any remaining MSHWs
             # PortID;Description;PortType;MacAddress;AdminStatus;ID;Name;Alias;
           - type: replace

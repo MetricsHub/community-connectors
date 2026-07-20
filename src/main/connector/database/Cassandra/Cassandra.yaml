@@ -17,11 +17,13 @@ connector:
     - linux
     - windows
     criteria:
+    # START SNIPPET: jmxCriterion
     - type: jmx
       objectName: org.apache.cassandra.metrics:type=Storage,name=Load
       attributes:
       - Count
       expectedResult: ^[0-9]
+    # END SNIPPET: jmxCriterion
 
 metrics:
   db.server.cassandra.hints:
@@ -337,8 +339,10 @@ monitors:
           rightKeyColumn: 1
           # Optimization to reduce the number of columns
           computes:
+          # START SNIPPET: keepColumnsCompute
           - type: keepColumns
             columnNumbers: 1,2,4,6,8
+          # END SNIPPET: keepColumnsCompute
   
       mapping:
         # Mapping for cache metrics

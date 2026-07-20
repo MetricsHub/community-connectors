@@ -16,10 +16,12 @@ connector:
     - WBEMGenDiskNT
     - DiskPart
     criteria:
+    # START SNIPPET: deviceTypeCriterion
     # Must be Windows
     - type: deviceType
       keep:
       - NT
+    # END SNIPPET: deviceTypeCriterion
     # Must be Hardware Sentry KM 11.3 at least
     - type: productRequirements
       kmVersion: 11.3.00
@@ -222,16 +224,20 @@ monitors:
           - type: arrayTranslate
             column: 3
             translationTable: ${translation::OperationalStatusTranslationTable}
+          # START SNIPPET: convertArray2SimpleStatus
           # Convert the array of status to a simple status (keep the worse one)
           - type: convert
             column: 3
             conversion: array2SimpleStatus
+          # END SNIPPET: convertArray2SimpleStatus
+          # START SNIPPET: arrayTranslateStatusInfo
             # Translate the 2nd OperationalStatus field into a more readable string
             # __PATH;DeviceId;Status;StatusInformation;OperationalStatus
           - type: arrayTranslate
             column: 4
             translationTable: ${translation::OperationalStatusInformationTranslationTable}
             resultSeparator: ' - '
+          # END SNIPPET: arrayTranslateStatusInfo
             # Translate the 3rd OperationalStatus field into the PredictiveFailure parameter
             # __PATH;DeviceId;Status;StatusInformation;PredictedFailure
           - type: translate
@@ -254,6 +260,7 @@ monitors:
           - type: add
             column: 2
             value: $4
+          # START SNIPPET: wearToEnduranceRemaining
             # Convert Wear into EnduranceRemaing (Endurance Remaining = 100 - Wear)
             # DeviceId;TotalErrors;EnduranceRemaing;WriteErrors;
           - type: multiply
@@ -262,6 +269,7 @@ monitors:
           - type: add
             column: 3
             value: 100
+          # END SNIPPET: wearToEnduranceRemaining
         source(3):
           # Source(3) = Table join of Source(1) and Source(2)
           # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaing;WriteErrors;

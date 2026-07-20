@@ -82,13 +82,6 @@ longer needed.
 - [WindowsProcess](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/WindowsProcess/WindowsProcess.yaml)
 - [MIB2-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2-header/MIB2-header.yaml)
 
-From `MIB2-header.yaml`, accumulating two counter columns into one:
+From `MIB2-header.yaml`, accumulating the multicast and broadcast packet counters into the unicast packets column, included directly from the connector source:
 
-```yaml
-          - type: add
-            column: 4
-            value: $5
-          - type: add
-            column: 4
-            value: $6
-```
+<!-- MACRO{snippet|id=addPacketCountersCompute|file=src/main/connector/hardware/MIB2-header/MIB2-header.yaml} -->

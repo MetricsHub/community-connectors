@@ -83,12 +83,6 @@ which re-parses as **2 columns**: the `;` inside the value split the old column 
 - [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 
-From Windows (prepending the content of another source to combine both tables for calculations):
+From Windows (prepending the content of another source to combine both tables for calculations), included directly from the connector source:
 
-```yaml
-    computes:
-    # Combining both sources for calculations
-    - type: prepend
-      column: 1
-      value: ${source::memoryInformation}
-```
+<!-- MACRO{snippet|id=prependMemorySourceCompute|file=src/main/connector/system/Windows/Windows.yaml} -->

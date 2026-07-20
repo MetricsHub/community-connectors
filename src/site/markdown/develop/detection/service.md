@@ -44,12 +44,6 @@ connector:
 
 ## Examples
 
-Community example (`hardware/GenBatteryNT/GenBatteryNT.yaml`):
+Community example — the `service` criterion of `hardware/GenBatteryNT/GenBatteryNT.yaml`, included directly from the connector source:
 
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: service
-      name: WINMGMT
-```
+<!-- MACRO{snippet|id=serviceCriterion|file=src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml} -->

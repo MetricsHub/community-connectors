@@ -80,14 +80,6 @@ With `column: 1` and `value: 1024`, then `column: 2` and `value: 1024`:
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
 
-From `WinStorageSpaces.yaml`, computing `100 - Wear` with a negation followed by an addition:
+From `WinStorageSpaces.yaml`, computing `100 - Wear` with a negation followed by an addition, included directly from the connector source:
 
-```yaml
-          # Convert Wear into EnduranceRemaining (Endurance Remaining = 100 - Wear)
-          - type: multiply
-            column: 3
-            value: -1
-          - type: add
-            column: 3
-            value: 100
-```
+<!-- MACRO{snippet|id=wearToEnduranceRemaining|file=src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml} -->

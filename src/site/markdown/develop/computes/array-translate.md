@@ -85,11 +85,6 @@ On the first row, `2` translates to an empty string and is silently dropped, lea
 
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
 
-From `WinStorageSpaces`:
+From `WinStorageSpaces`, included directly from the connector source:
 
-```yaml
-          - type: arrayTranslate
-            column: 4
-            translationTable: ${translation::OperationalStatusInformationTranslationTable}
-            resultSeparator: ' - '
-```
+<!-- MACRO{snippet|id=arrayTranslateStatusInfo|file=src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml} -->
