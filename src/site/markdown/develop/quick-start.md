@@ -210,7 +210,7 @@ In source computes:
 
 This keeps mapping declarative and easier to review.
 
-## Step 4.1 - Validate the Table You Expect
+## Step 5 - Validate the Table You Expect
 
 Your `mapping.source` is a table. For each row, MetricsHub creates one monitor instance, and that instance is exported as one OpenTelemetry Resource.
 
@@ -258,7 +258,7 @@ mapping:
 
 produces two fan instances (`fan01`, `fan02`), one per row. For each row, the mapping reads `$1`, `$2`, `$3`, and `$4` from that row only, exports the mapped attributes on the corresponding OpenTelemetry Resource, and attaches the mapped metrics to that Resource.
 
-## Step 5 - Add Replay Integration Test Resources
+## Step 6 - Add Replay Integration Test Resources
 
 Before recording test resources, run the connector for real against your device or an emulator — see [Run and Debug Locally](run-and-debug.html).
 
@@ -276,7 +276,7 @@ Then:
 
 See [Integration Testing](integration-testing.html) for the full recording and generation workflow.
 
-## Step 6 - Review Checklist
+## Step 7 - Review Checklist
 
 - detection is deterministic and cheap-first
 - no avoidable duplicate remote calls
