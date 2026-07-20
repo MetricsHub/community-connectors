@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="${project.name}">
+<site
+	xmlns="http://maven.apache.org/SITE/2.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd"
+	name="Community Connectors">
 
 	<skin>
 		<groupId>org.sentrysoftware.maven</groupId>
 		<artifactId>sentry-maven-skin</artifactId>
-		<version>6.4.01</version>
+		<version>8.0.00</version>
 	</skin>
 
 	<custom>
@@ -48,19 +52,17 @@
 		</additionalLinks>
 	</custom>
 
-	<bannerLeft>
-		<name>MetricsHub</name>
-		<src>images/metricshub-logo.png</src>
-		<href>https://metricshub.com</href>
-		<alt>MetricsHub Official Website</alt>
+	<bannerLeft name="MetricsHub" href="https://metricshub.com">
+		<image src="images/metricshub-logo.png" alt="MetricsHub Official Website" />
 	</bannerLeft>
 
 	<body>
-	
+
 		<links>
-			<item name="Open MetricsHub" href="https://metricshub.org" />
+			<item name="MetricsHub" href="https://metricshub.com" />
+			<item name="Download" href="https://metricshub.com/download" />
+			<item name="Support Desk" href="https://support.metricshub.com" />
 			<item name="&lt;i class='fa-brands fa-github'&gt;&lt;/i&gt; GitHub" href="https://github.com/metricshub/community-connectors" />
-			<item name="OpenTelemetry" href="https://opentelemetry.io" />
 		</links>
 
 		<breadcrumbs>
@@ -73,30 +75,37 @@
 			<item name="Connectors Directory" href="connectors-directory.html" />
 		</menu>
 
-		<menu name="Connector Design Guide &lt;span class='fa-solid fa-person-digging'&gt;&lt;/span&gt;">
-			<item name="Introduction" href="develop/index.html" />
-			<item name="Connector" href="develop/connector.html" />
+		<menu name="Connector Developer Guide">
+			<item name="Quick Start" href="develop/quick-start.html" />
+			<item name="Connector Structure" href="develop/connector-structure.html">
+				<item name="Monitors and Jobs" href="develop/monitors-and-jobs.html" />
+				<item name="Reuse and Configuration" href="develop/reuse-and-configuration.html" />
+				<item name="References and Expressions" href="develop/references-and-expressions.html" />
+				<item name="Design Principles" href="develop/design-principles.html" />
+				<item name="Mapping, Metrics, and Semconv" href="develop/mapping-metrics-semconv.html" />
+				<item name="Metric and Attribute Naming" href="develop/metric-naming.html" />
+			</item>
 			<item name="Detection" href="develop/detection/index.html">
-				<item name="Engine Requirements" href="develop/detection/engine-requirements.html" />
-				<item name="Resource Type" href="develop/detection/resource-type.html" />
+				<item name="Command Line" href="develop/detection/command-line.html" />
+				<item name="Device Type" href="develop/detection/device-type.html" />
 				<item name="HTTP" href="develop/detection/http.html" />
 				<item name="IPMI" href="develop/detection/ipmi.html" />
-				<item name="Command Line" href="develop/detection/command-line.html" />
+				<item name="JMX" href="develop/detection/jmx.html" />
 				<item name="Process" href="develop/detection/process.html" />
+				<item name="Product Requirements" href="develop/detection/product-requirements.html" />
 				<item name="Service" href="develop/detection/service.html" />
-				<item name="SNMP GetNext" href="develop/detection/snmp-getnext.html" />
 				<item name="SNMP Get" href="develop/detection/snmp-get.html" />
-				<item name="WBEM" href="develop/detection/wbem.html" />
-				<item name="WMI (WQL)" href="develop/detection/wmi.html" />
+				<item name="SNMP GetNext" href="develop/detection/snmp-getnext.html" />
 				<item name="SQL" href="develop/detection/sql.html" />
+				<item name="WBEM" href="develop/detection/wbem.html" />
+				<item name="WMI" href="develop/detection/wmi.html" />
 			</item>
-			<item name="Monitors" href="develop/monitors.html" />
-			<item name="Sources" href="develop/sources/index.html" >
-				<item name="BeforeAll Sources" href="develop/sources/before-all.html" />
-				<item name="AfterAll Sources" href="develop/sources/after-all.html" />
-				<item name="Awk" href="develop/sources/awk.html" />
+			<item name="Sources" href="develop/sources/index.html">
+				<item name="beforeAll" href="develop/sources/before-all.html" />
+				<item name="afterAll" href="develop/sources/after-all.html" />
+				<item name="AWK" href="develop/sources/awk.html" />
 				<item name="Command Line" href="develop/sources/command-line.html" />
-				<item name="Copy (Duplicate)" href="develop/sources/copy.html" />
+				<item name="Copy" href="develop/sources/copy.html" />
 				<item name="Event Log" href="develop/sources/event-log.html" />
 				<item name="File" href="develop/sources/file.html" />
 				<item name="HTTP" href="develop/sources/http.html" />
@@ -106,13 +115,13 @@
 				<item name="SNMP Get" href="develop/sources/snmp-get.html" />
 				<item name="SNMP Table" href="develop/sources/snmp-table.html" />
 				<item name="SQL" href="develop/sources/sql.html" />
-				<item name="Static (Constant)" href="develop/sources/static.html" />
+				<item name="Static" href="develop/sources/static.html" />
 				<item name="Table Join" href="develop/sources/table-join.html" />
 				<item name="Table Union" href="develop/sources/table-union.html" />
 				<item name="WBEM" href="develop/sources/wbem.html" />
 				<item name="WMI" href="develop/sources/wmi.html" />
 			</item>
-			<item name="Computes" href="develop/computes/index.html" >
+			<item name="Computes" href="develop/computes/index.html">
 				<item name="Add" href="develop/computes/add.html" />
 				<item name="And" href="develop/computes/and.html" />
 				<item name="Append" href="develop/computes/append.html" />
@@ -129,7 +138,7 @@
 				<item name="JSON to CSV" href="develop/computes/json2csv.html" />
 				<item name="Keep Columns" href="develop/computes/keep-columns.html" />
 				<item name="Keep Only Matching Lines" href="develop/computes/keep-only-matching-lines.html" />
-			    <item name="Multiply" href="develop/computes/multiply.html" />
+				<item name="Multiply" href="develop/computes/multiply.html" />
 				<item name="Prepend" href="develop/computes/prepend.html" />
 				<item name="Replace" href="develop/computes/replace.html" />
 				<item name="Substring" href="develop/computes/substring.html" />
@@ -138,11 +147,13 @@
 				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
 				<item name="XML to CSV" href="develop/computes/xml2csv.html" />
 			</item>
-			<item name="References" href="develop/references.html" />
-		</menu>
-		<menu name="Develop">
-			<item name="Writing Integration Tests" href="develop/integration-tests.html" />
+			<item name="Testing and Contributing" href="develop/testing-and-contributing.html">
+				<item name="Run and Debug Locally" href="develop/run-and-debug.html" />
+				<item name="Integration Testing" href="develop/integration-testing.html" />
+				<item name="Contributing" href="develop/contributing.html" />
+				<item name="Legacy and Compatibility" href="develop/legacy-and-compatibility.html" />
+			</item>
 		</menu>
 	</body>
 
-</project>
+</site>

@@ -1,35 +1,69 @@
-keywords: develop, criteria
-description: This page defines the detection’s criteria that are defined in a connector.
+keywords: detection, snmpGet, snmp scalar
+description: Reference for the snmpGet detection criterion.
 
-# SNMP Get (Detection)
+# Detection by SNMP Get
 
-The goal of this part is to see how to define SNMP Get criteria.
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-```yaml
-connector:
-  # ...
-  detection: # <object>
-    # ...
-    criteria: # <object-array>
-    - type: snmpGet
-      oid: # <string>
-      expectedResult: # <string>
-```
+## When to Use
 
-### Input Properties
+Use `snmpGet` if the monitored target responds in SNMP to the specified precise OID, typically an OID in a private MIB (`1.3.6.1.4.*`).
 
-| Input Property | Description |
-| -------------- | ----------- |
-| `oid` | Object Identifier (OID) used to perform the SNMP request. The request must be successful |
-| `expectedResult` | Regular expression that is expected to match the result of the SNMP request. If not specified, a successful SNMP request will be sufficient for the criteria to be met |
-
-### Example
+## Syntax
 
 ```yaml
 connector:
   detection:
     criteria:
     - type: snmpGet
-      oid: 1.3.6.1.4.1.318.1.1.26.2.1.3.1
-      expectedResult: PDU
+      oid: 1.3.6.1.4.1.318.1.1.1.1.1.1.0
+      expectedResult: UPS
 ```
+
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | - | `snmpGet`. |
+| `oid` | Yes | - | Scalar OID to read. Must be non-blank. |
+| `expectedResult` | No | none | Regex matched against returned value. |
+| `forceSerialization` | No | `false` | Guarantees operations are performed sequentially against one host. |
+
+## Runtime Behavior
+
+- Performs an SNMP Get on the specified OID.
+- No `expectedResult`: success when SNMP value is non-null and non-blank.
+- With `expectedResult`: case-insensitive, regex match.
+- Returned value is treated as plain text for matching.
+
+See below example on how the returned SNMP value is matched with `expectedResult`:
+
+> [!TABS]
+>
+> - <span class="fa-regular fa-circle-check"></span> Criterion
+>
+>   ```yaml
+>   - type: snmpGet
+>     oid: 1.3.6.1.2.1.1.1.0
+>     expectedResult: Linux
+>   ```
+>
+> - <span class="fa-solid fa-sitemap"></span> Result
+>
+>   ```text
+>   Linux my-server 6.8.0-52-generic #53-Ubuntu SMP
+>   ```
+>
+>   ✅ The criterion passes because the returned value matches `expectedResult: Linux`.
+
+## Recommended Pattern
+
+- Pick a stable vendor/product OID with low latency.
+- Use `snmpGetNext` for table-existence probing, `snmpGet` for scalar identity.
+- Keep this criterion early in SNMP connector detection.
+
+## Common Mistakes
+
+- Querying table OIDs with `snmpGet`.
+- Matching volatile values (uptime, counters) for product identity.
+- Using weak regex such as `.` for strict product filtering.

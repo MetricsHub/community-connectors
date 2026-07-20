@@ -1,32 +1,69 @@
-keywords: develop, criteria
-description: This page defines the detection’s criteria that are defined in a connector.
+keywords: detection, process, local host
+description: Reference for the process detection criterion, including locality constraints.
 
-## Process (Detection)
+# Detection by Process (Deprecated)
 
-The goal of this part is to see how to define process criteria.
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-```yaml
-connector:
-  # ...
-  detection: # <object>
-    # ...
-    criteria: # <object-array>
-    - type: process
-      commandLine: # <string>
-```
+> [!WARNING]
+> The `process` detection criterion is deprecated. Use WMI or SSH instead as applicable.
 
-### Input Properties
+## When to Use
 
-| Input Property | Description |
-| -------------- | ----------- |
-| `commandLine` | Regular expression that should match the command line of a process currently running on the monitored system |
+Use `process` only when local process presence is the intended detection signal for detecting a specific instrumentation software (like a vendor-specific server agent) **running on the same system as MetricsHub**. This detection criterion is only supported running Linux, UNIX, or Windows.
 
-### Example
+## Syntax
 
 ```yaml
 connector:
   detection:
     criteria:
     - type: process
-      processCommandLine: naviseccli -help
+      commandLine: cimserver
+```
+
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | - | `process`. |
+| `commandLine` | Yes | - | Regex for process command line matching. Must be non-blank. |
+| `forceSerialization` | No | `false` | Guarantees operations are performed sequentially against one host. |
+
+## Runtime Behavior
+
+- Criterion is effectively local-only.
+- If target is not localhost, runtime returns success with "no remote test performed" behavior.
+- On localhost, process checks are delegated per local OS implementation.
+
+## Recommended Pattern
+
+This connector is deprecated.
+
+## Common Mistakes
+
+- Assuming `process` validates remote hosts.
+- Using process names that match helper commands or wrappers.
+- Building critical detection logic around `process` in distributed setups.
+
+## Examples
+
+Enterprise example (`hardware/Director5Linux/Director5Linux.yaml`):
+
+```yaml
+connector:
+  detection:
+    criteria:
+    - type: process
+      commandLine: cimserver
+```
+
+Enterprise example (`hardware/Director52Linux/Director52Linux.yaml`):
+
+```yaml
+connector:
+  detection:
+    criteria:
+    - type: process
+      commandLine: cimserver
 ```

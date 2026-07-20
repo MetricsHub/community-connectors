@@ -1,27 +1,56 @@
-keywords: wmi, wql, cim, win32, windows
-description: The "WMI" source type queries the WINMGMT service on a Windows system with a WQL query in MetricsHub.
+keywords: wmi source, windows management instrumentation, namespace
+description: Full reference for WMI source with query design and join-ready table patterns.
 
-# WMI (Source)
+# wmi (Source)
+
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
+## When To Use
+
+Use `wmi` for Windows system/hardware/application monitoring via WMI classes.
+
+This is one of the highest-usage source types in community connectors.
+
+## Syntax
 
 ```yaml
-connector:
-  # ...
-beforeAll: # <object>
-  <sourceKey>: # <source-object>
-
-monitors:
-  <monitorType>: # <object>
-    <job>: # <object>
-      sources: # <object>
-        <sourceKey>:
-          type: wmi
-          query: # <string>
-          namespace: # <string>
-          forceSerialization: # <boolean>
-          executeForEachEntryOf: # <object>
-            source: # <string>
-            concatMethod: # oneOf [ <enum>, <object> ] | possible values for <enum> : [ list, json_array, json_array_extended ]
-              concatStart: # <string>
-              concatEnd: # <string>
-          computes: # <compute-object-array>
+sources:
+  logicalDisks:
+    type: wmi
+    namespace: root\CIMv2
+    query: SELECT DeviceID,FreeSpace,Size FROM Win32_LogicalDisk WHERE DriveType = 3
+    computes:
+    - type: duplicateColumn
+      column: 3
 ```
+
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | None | `wmi`. |
+| `query` | Yes | None | WMI query string. |
+| `namespace` | No | Provider default | WMI namespace (`root\CIMv2`, `root\Microsoft\Windows\Storage`, ...). |
+| `executeForEachEntryOf` | No | None | Fan-out query execution context. |
+| `computes` | No | `[]` | Post-processing pipeline. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+
+## Recommended Pattern
+
+- Keep namespaces explicit for readability and compatibility.
+- Select stable key columns (`__PATH`, IDs) when later joins are required.
+- Filter and normalize early with computes before mapping.
+- Use `tableJoin` with `keyType: Wbem` when joining path-like keys.
+
+## Common Mistakes
+
+- Overusing `SELECT *`.
+- Joining on display names instead of technical identifiers.
+- Dropping identity columns too early in the pipeline.
+
+## Community Examples
+
+- [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
+- [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
+- [LibreHardwareMonitor](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LibreHardwareMonitor/LibreHardwareMonitor.yaml)
+- [WindowsProcess](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/WindowsProcess/WindowsProcess.yaml)

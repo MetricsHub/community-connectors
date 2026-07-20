@@ -20,10 +20,12 @@ connector:
     appliesTo:
     - linux
     criteria:
+    # START SNIPPET: commandLineCriterion
     - type: commandLine
       commandLine: /usr/bin/uname -o || /bin/uname -o
       expectedResult: GNU/Linux
       errorMessage: Not a Linux host.
+    # END SNIPPET: commandLineCriterion
     tags: [ system, linux ]
 
 # Linux monitors

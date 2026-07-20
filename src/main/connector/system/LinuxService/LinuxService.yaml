@@ -50,9 +50,11 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ${var::serviceNames} # In metricshub.yaml, the regex should be set this way "serviceNames: cron\|PatrolAgent\|snmp"
+          # START SNIPPET: translateCompute
           - type: translate
             column: 2
             translationTable: ${translation::serviceLoadedTranslationTable}
+          # END SNIPPET: translateCompute
           - type: translate
             column: 3
             translationTable: ${translation::serviceActiveTranslationTable}

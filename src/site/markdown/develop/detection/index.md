@@ -1,40 +1,112 @@
-keywords: develop, detection
-description: This page defines the connector’s detection section.
+keywords: detection, criteria, connector matching, developer guide
+description: Detection lifecycle, execution semantics, and criterion selection strategy for MetricsHub connectors.
 
-# Detection
+# Detection Criteria
 
-<div class="alert alert-warning"><span class="fa-solid fa-person-digging"></span> Documentation under construction...</div>
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-The detection's goal is to see if the connector will be of use, given the specified system type and the protocol enabled in your configuration.
+## Detection in the Runtime Lifecycle
 
-## Format
+Detection is the first phase of monitoring one resource. Connectors have already been compiled and loaded by MetricsHub; detection decides which of them actually apply to the configured resource.
+
+Users usually configure a resource and its protocols, not a connector name. For example:
+
+```yaml
+resources:
+  myHost:
+    attributes:
+      host.name: my-host
+      host.type: Windows
+    protocols:
+      wmi:
+        username: Administrator
+        password: encryptedPassword
+```
+
+MetricsHub evaluates the loaded connectors against that resource and keeps only the applicable ones.
+
+## How Connector Selection Works
+
+A connector is considered applicable only if all of the following are true:
+
+- the runtime can execute the connector with the protocols configured on the resource (for example, `commandLine` requires SSH, WMI, or WinRM, while `http` requires HTTP)
+- `connector.detection.appliesTo` contains the resource `host.type` configured by the user
+- every criterion in `connector.detection.criteria` succeeds
+- the connector is not superseded by another applicable connector through `connector.detection.supersedes`
+
+## Detection Properties Reference
 
 ```yaml
 connector:
-  # ...
   detection:
-    connectionTypes: # <enum-array> | possible values: [ remote, local ] | default: local
-    disableAutoDetection: # <boolean> | default: false
-    onLastResort: # <string>
-    appliesTo: # <enum-array> | possible values: [ vms, osf1, hp, rs6000, linux, oob, nt, network, storage, solaris, sunos ]
-    supersedes: # <string-array>
-    criteria: # <criteria-object-array>
-    - #...
+    connectionTypes: [ remote, local ]
+    appliesTo: [ Linux ]
+    supersedes: [ GenericConnector ]
+    disableAutoDetection: false
+    onLastResort: temperature
+    tags: [ hardware, linux ]
+    criteria:
+    - type: ...
 ```
 
-## Properties
+| Property | Required | Description |
+| --- | --- | --- |
+| `connectionTypes` | No | `remote`, `local`, or both: whether the connector works against a remote host, the local machine MetricsHub runs on, or either. When omitted, defaults to **both**. |
+| `appliesTo` | Yes | Resource `host.type` values the connector supports (e.g. `Linux`, `Windows`, `Network`, `Storage`, `OOB`). |
+| `criteria` | Yes | Ordered list of checks; all must succeed. |
+| `supersedes` | No | Connector IDs this connector replaces: when both match, the superseded one is dropped. |
+| `disableAutoDetection` | No | `true` excludes the connector from automatic detection entirely; users must select it explicitly (`connectors: [ +YourConnector ]`). Use for connectors that depend on user-configured [variables](../reuse-and-configuration.html) or are intrusive. |
+| `onLastResort` | No | A monitor type (e.g. `temperature`, `enclosure`). The connector is activated only if no other detected connector already discovers that monitor type — the fallback pattern for generic connectors (see [lmsensors](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/lmsensors/lmsensors.yaml)). |
+| `tags` | No | Free-form labels (`hardware`, `linux`, `database`, ...). Users can include/exclude connectors in bulk with `#tag` / `!#tag` in their `connectors:` configuration; the `hardware` tag also drives the engine's hardware-specific post-processing. |
 
-| Property              | Description       |
-| --------------------- | ----------------- |
-| `connectionTypes` | The types of the connection `local` and/or `remote`:<br /><ul><li> `remote` the connector can be used to monitor a remote system</li><li> `local` the connector can be used to monitor the system the agent is running on.</li></ul><br />If the connector cannot be used locally (because the targeted system is something which you cannot install an agent on) use only `remote`. |
-| `appliesTo` | Comma-separated list of OSes the connector can be used on.<br />Possible values:<br /><ul><li> HP = HP-UX</li><li> NT = Microsoft Windows</li><li> Linux = Linux</li><li> OSF1 = HP Tru64</li><li> Solaris = Sun Solaris</li><li> SunOS = Sun Solaris</li><li> SOLARIS = Sun Solaris</li><li> RS6000 = IBM AIX</li><li> Storage = Storage Device</li><li> VMS = HP OpenVMS</li><li> OOB = Out-of-band, management cards, etc.</li></ul> |
-| `supersedes` | Comma-separated list of connectors that are superseded by this connector. In automatic detection, this connector will prevail on the listed connectors if they happen to be detected too. |
-| `disableAutoDetection` | When set to true prevent the connector from running a detection. |
-| `onLastResort` | Specifies that the connector is to be used as “last resort” only. The connector may be applied to monitor the system if no other connectors discovering the specified device type matches the system.<br />Example:<br />`onLastResort: enclosure`<br /> The connector will be activated if and only if no other connector matches and has an `$monitors.enclosure.discovery.mapping.source` or `$monitors.enclosure.simple.mapping.source`. |
-| `criteria` | Array of criterion objects that the engine executes to decide whether the connector should be staged to monitor the host or not. These criteria are also executed by the engine if the user selects specific connectors. See specification in the [Criteria Section](criteria.md). |
+Individual criteria additionally accept `forceSerialization: true` — see the `forceSerialization` section of [Sources](../sources/index.html) for semantics.
 
-## Criteria
+## Execution Semantics
 
-In order for a connector to match a system, some criterion must be met. They are defined in the [Detection Section](detection.md) of the connector and checked during the discovery. If all criterion are met, the connector matches and will be used to monitor the system. If a criteria is not met, MetricsHub stops processing the detection and as far as the target system is concerned, the connector will not be used.
+- No detection block, or an empty criteria list: connector does not match.
+- At least one criterion failed: connector does not match.
+- All criteria succeeded: connector matches.
+- Criterion order matters for cost and troubleshooting readability.
 
-A maximum number of 99 detection criterion may be defined in a connector.
+## Result Matching Basics
+
+Most criteria support `expectedResult`.
+When present, it is evaluated as a regular expression.
+
+When `expectedResult` is not provided, behavior depends on criterion type, but usually means "non-empty result is enough".
+
+## Table Serialization Model
+
+Several criteria (`wmi`, `wbem`, `sql`) evaluate query results as a serialized table:
+
+- Internal table shape: `List<List<String>>`
+- Serialization: one row per line, columns separated by semicolons (`;`)
+
+`jmx` is the exception: its results are name-value pairs, serialized as `=`-separated lines — see [Detection by JMX](jmx.html).
+
+For example, the below table:
+
+| id | state | value |
+| --- | --- | --- |
+| disk0 | ok | 42 |
+| disk1 | failed | 0 |
+
+Will be serialized as the below text form, for evaluating the regular expression in `expectedResult`:
+
+```text
+disk0;ok;42
+disk1;failed;0
+```
+
+This model is shared with source/compute pipelines, so semicolon manipulations can change effective columns when data is rematerialized as a table.
+
+> [!TIP]
+> Prefer regexes that explicitly account for semicolon separators and line boundaries when matching table-backed criteria.
+
+## Ordering Strategy (Cheap to Expensive)
+
+Recommended order inside `connector.detection.criteria`:
+
+1. `deviceType` / `productRequirements`
+2. Very cheap protocol probes (`snmpGetNext`, lightweight `http` status check)
+3. Deeper semantic checks (`wmi`, `wbem`, `sql`, `jmx`, heavy `commandLine`)

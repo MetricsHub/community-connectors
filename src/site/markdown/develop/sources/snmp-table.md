@@ -1,28 +1,49 @@
-keywords: snmp, mib, oid
-description: The "snmpTable" source type polls an entire table from an SNMP agent to process it with MetricsHub.
+keywords: snmpTable source, snmp index table, selectColumns
+description: Reference for snmpTable source and table-first design patterns.
 
-# SNMP Table (Source)
+# snmpTable (Source)
+
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
+## When To Use
+
+Use `snmpTable` for indexed SNMP data. It is usually more efficient than issuing many `snmpGet` calls.
+
+## Syntax
 
 ```yaml
-connector:
-  # ...
-beforeAll: # <object>
-  <sourceKey>: # <source-object>
-
-monitors:
-  <monitorType>: # <object>
-    <job>: # <object>
-      sources: # <object>
-        <sourceKey>:
-          type: snmpTable
-          oid: # <string>
-          selectColumns: # <string> | comma separated values
-          forceSerialization: # <boolean>
-          executeForEachEntryOf: # <object>
-            source: # <string>
-            concatMethod: # oneOf [ <enum>, <object> ] | possible values for <enum> : [ list, json_array, json_array_extended ]
-              concatStart: # <string>
-              concatEnd: # <string>
-          computes: # <compute-object-array>
+sources:
+  batteryInfo:
+    type: snmpTable
+    oid: 1.3.6.1.2.1.33.1.2.3
+    selectColumns: ID,1,2,3,4
 ```
 
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | None | `snmpTable`. |
+| `oid` | Yes | None | Base table OID to walk. |
+| `selectColumns` | Yes | None | Columns/indexes to keep (`ID` commonly preserves table index). |
+| `executeForEachEntryOf` | No | None | Fan-out execution context. |
+| `computes` | No | `[]` | Post-processing pipeline. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+
+## Recommended Pattern
+
+- Start with one `snmpTable` and shape downstream with computes.
+- Preserve stable join keys (`ID` or explicit index columns).
+- Use `tableJoin` to enrich with complementary tables.
+
+## Common Mistakes
+
+- Dropping index columns too early.
+- Joining on translated labels instead of stable IDs.
+- Overusing scalar `snmpGet` where one table walk is enough.
+
+## Community Examples
+
+- [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
+- [GenericSwitchEnclosure](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericSwitchEnclosure/GenericSwitchEnclosure.yaml)
+- [MIB2-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2-header/MIB2-header.yaml)

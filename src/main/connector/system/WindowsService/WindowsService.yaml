@@ -26,9 +26,11 @@ connector:
     - nt
     disableAutoDetection: true
     criteria:
+    # START SNIPPET: wmiCriterion
     - type: wmi
       namespace: root\CIMv2
       query: SELECT * FROM Win32_OperatingSystem
+    # END SNIPPET: wmiCriterion
     tags: [ system, windows ]
   variables:
     serviceNames:

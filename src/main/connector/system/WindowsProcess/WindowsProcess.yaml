@@ -116,6 +116,7 @@ monitors:
           rightKeyColumn: 2
           isWbemKey: true
           computes:
+          # START SNIPPET: extractWbemProperty
           - type: duplicateColumn
             column: 21
           - type: extractPropertyFromWbemPath
@@ -124,6 +125,7 @@ monitors:
           - type: extractPropertyFromWbemPath
             column: 22
             property: Name
+          # END SNIPPET: extractWbemProperty
           - type: keepOnlyMatchingLines
             column: 21
             regExp: ${var::matchDomain}

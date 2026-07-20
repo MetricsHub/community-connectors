@@ -46,3 +46,6 @@ buildNumber.properties
 *.iws
 *.ipr
 
+# Claude Code local configuration
+.claude/
+

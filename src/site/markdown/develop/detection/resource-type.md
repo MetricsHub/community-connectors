@@ -1,49 +1,8 @@
-keywords: develop, criteria
-description: This page defines the detection’s criteria that are defined in a connector.
+keywords: moved, developer guide
+description: This page has moved within the Connector Developer Guide.
 
-# Device Type (Detection)
+# This Page Has Moved
 
-The goal of this part is to see how to define Device Type criteria.
+<meta http-equiv="refresh" content="0; url=device-type.html" />
 
-```yaml
-connector:
-  # ...
-  detection: # <object>
-    # ...
-    criteria: # <object-array>
-    - type: deviceType
-      keep: # <enum-array> | possible values: [ vms, osf1, hp, rs6000, linux, oob, nt, network, storage, solaris, sunos ]
-      exclude: # <enum-array> | possible values: [ vms, osf1, hp, rs6000, linux, oob, nt, network, storage, solaris, sunos ]
-```
-
-### Input Properties
-
-| Input Property | Description |
-| -------------- | ----------- |
-| `exclude` | List of operating systems, separated by commas, that should not match the monitored system |
-| `keep` | List of operating systems, separated by commas. The monitored system's OS must match one of the listed item |
-
-### Supported OS List
-
-| Operating System | OS Type |
-| -------------- | ------------------ |
-| HP OpenVMS | `VMS` |
-| HP Tru64 UNIX | `OSF1`, `tru64` |
-| HP-UX | `HP`, `hpux` |
-| IBM AIX | `RS600` |
-| Linux (RedHat, SuSe, ESX) | `Linux` |
-| Management Card/Chip, Blade Chassis, ESXi | `OOB` (Out-of Band) |
-| Network | `Network` |
-| Storage | `Storage` |
-| Sun Solaris | `Solaris` |
-| Microsoft Windows | `NT`, `win` |
-
-### Example
-
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: deviceTYpe
-      keep: [ vms, osf1, hp, rs6000, linux, oob, nt, network, storage, solaris, sunos ]
-```
+This page is now **[Detection by Host Type](device-type.html)**.

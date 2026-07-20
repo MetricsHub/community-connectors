@@ -20,8 +20,10 @@ connector:
     - lmsensors
     criteria:
     # Let the KM/PM validate whether IPMI is available or not
+    # START SNIPPET: ipmiCriterion
     - type: ipmi
       forceSerialization: true
+    # END SNIPPET: ipmiCriterion
     tags: [ hardware, linux, solaris, windows ]
 monitors:
   enclosure:
@@ -119,11 +121,13 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
+          # START SNIPPET: appendEmptyColumnsCompute
             # Add empty Status and StatusInformation columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;
           - type: append
             column: 3
             value: ;;
+          # END SNIPPET: appendEmptyColumnsCompute
             # Add empty AdditionalInformation1 column at the very end
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
           - type: append
@@ -250,10 +254,12 @@ monitors:
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
             # Keep only fans
+          # START SNIPPET: keepOnlyMatchingLinesCompute
             # Temperature;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
           - type: keepOnlyMatchingLines
             column: 1
             valueList: temperature
+          # END SNIPPET: keepOnlyMatchingLinesCompute
       mapping:
         # The instance table
         source: ${source::monitors.temperature.discovery.sources.source(1)}
@@ -469,6 +475,7 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: Memory module,Memory Device
+          # START SNIPPET: extractSubColumnCompute
             # Duplicate the "Model" column because it is in the form of Model|Speed
             # Memory module;DeviceID;Entity ID;Vendor;Model|Speed;Model|Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: duplicateColumn
@@ -485,6 +492,7 @@ monitors:
             column: 6
             subColumn: 2
             subSeparators: '|'
+          # END SNIPPET: extractSubColumnCompute
       mapping:
         # InstanceTable = Source(1)
         source: ${source::monitors.memory.discovery.sources.source(1)}

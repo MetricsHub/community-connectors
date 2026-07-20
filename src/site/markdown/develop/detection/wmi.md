@@ -1,37 +1,89 @@
-keywords: develop, criteria
-description: This page defines the detection’s criteria that are defined in a connector.
+keywords: detection, wmi, wql, windows, namespace
+description: Reference for WMI detection criterion, including namespace handling and serialized-table matching.
 
-# WMI (Detection)
+# Detection by WMI
 
-The goal of this part is to see how to define WMI criteria.
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-```yaml
-connector:
-  # ...
-  detection: # <object>
-    # ...
-    criteria: # <object-array>
-    - type: wmi
-      query: # <string>
-      namespace: # <string>
-      expectedResult: # <string>
-```
+## When to Use
 
-## Input Properties
+Use `wmi` for any connector that relies on WMI (Windows Management Instrumentation) or WINMGMT to retrieve Windows-specific information.
 
-| Input Property | Description |
-| -------------- | ----------- |
-| `query` | WMI query to be executed |
-| `namespace` | WMI namespace providing the context for the WMI query. Use `automatic` so that the namespace is automatically determined |
-| `expectedResult` | Regular expression that is expected to match the result of the WMI query |
+The `wmi` detection criteria will work when the `wmi` or the `winrm` protocols are configured by the user for a given resource.
 
-### Example
+## Syntax
 
 ```yaml
 connector:
   detection:
     criteria:
     - type: wmi
-      query: SELECT Name FROM WMINET_InstrumentedAssembly
-      namespace: root\LibreHardwareMonitor
+      namespace: root/cimv2
+      query: SELECT Name FROM Win32_LogicalDisk
+      expectedResult: .+
 ```
+
+## Properties
+
+| Property             | Required | Default      | Description                                                        |
+| -------------------- | -------- | ------------ | ------------------------------------------------------------------ |
+| `type`               | Yes      | -            | `wmi`.                                                            |
+| `query`              | Yes      | -            | WQL query. Must be non-blank.                                      |
+| `namespace`          | No       | `root/cimv2` | CIM namespace. Can also be `automatic` for namespace discovery.   |
+| `expectedResult`     | No       | none         | Regex matched against serialized query result.                     |
+| `errorMessage`       | No       | none         | Connector-authored failure context (for logs/reporting).           |
+| `forceSerialization` | No       | `false`      | Guarantees operations are performed sequentially against one host. |
+
+## Runtime Behavior
+
+- With `namespace: automatic`, runtime probes candidate namespaces, selects one matching the criterion, then caches it per connector/host.
+- Result tables are serialized with semicolons/newlines before regex matching.
+- No `expectedResult`: success if serialized result is non-empty.
+- With `expectedResult`: case-insensitive, multiline regex.
+
+See below example on how a result table of a WMI query is converted to text before matching with `expectedResult`:
+
+> [!TABS]
+>
+> - <span class="fa-regular fa-circle-check"></span> Criterion
+>
+>   ```yaml
+>   - type: wmi
+>     query: SELECT Name, DriveType, FreeSpace FROM Win32_LogicalDisk
+>     expectedResult: ^[C-Z]:;3;[1-9]
+>   ```
+>
+> - <span class="fa-solid fa-table-list"></span> Result
+>
+>   | Name | DriveType | FreeSpace |
+>   | --- | --- | --- |
+>   | C: | 3 | 1406479736832 |
+>   | D: | 3 | 703239868416 |
+>
+> - <span class="fa-regular fa-file-lines"></span> Result As Text
+>
+>   ```text
+>   C:;3;1406479736832;
+>   D:;3;703239868416;
+>   ```
+>
+>   ✅ The criterion passes because both lines of the text result match `expectedResult: ^[C-Z]:;3;[1-9]`. **One single matching line is enough for the criterion to pass.**
+
+## Recommended Pattern
+
+- Prefer explicit namespace when known and stable.
+- Use `automatic` namespace only for heterogeneous environments where namespace varies and when the WQL query is specific enough to identify the namespace that hosts the necessary classes for the connector to work.
+- Keep detection query minimal and deterministic (single class/property).
+- Follow with additional criteria when one class existence is too broad.
+
+## Common Mistakes
+
+- Running deep inventory queries in detection.
+- Using broad expected regexes that match unrelated class values.
+- Relying on `automatic` when a fixed namespace is already known.
+
+## Examples
+
+Community example — the `wmi` criterion of `system/WindowsService/WindowsService.yaml`, included directly from the connector source:
+
+<!-- MACRO{snippet|id=wmiCriterion|file=src/main/connector/system/WindowsService/WindowsService.yaml} -->

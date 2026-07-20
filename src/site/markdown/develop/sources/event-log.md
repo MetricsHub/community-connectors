@@ -1,30 +1,61 @@
-keywords: event log, windows
-description: The "eventLog" source retrieves data from Windows Event Logs for MetricsHub.
+keywords: eventLog source, windows events, log monitoring
+description: Reference for the eventLog source type used to query Windows Event Logs.
 
-# Event Log (Source)
+# eventLog (Source)
+
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
+## When To Use
+
+Use `eventLog` to collect Windows Event Log entries directly (system/application/security-style logs).
+
+This source is useful for event-driven monitors and error counters when WMI/Perf counters are not enough.
+
+## Syntax
 
 ```yaml
-connector:
-  # ...
-beforeAll: # <object>
-  <sourceKey>: # <source-object>
-
-monitors:
-  <monitorType>: # <object>
-    <job>: # <object>
-      sources: # <object>
-        <sourceKey>:
-          type: eventLog
-          logName: # <string>
-          eventIds: # <string-array>
-          sources: # <string-array>
-          levels: # <enum-array> | possible values: [ Error, Warning, Information, Audit Success, Audit Failure ] or codes 1-5
-          maxEventsPerPoll: # <integer>
-          forceSerialization: # <boolean>
-          executeForEachEntryOf: # <object>
-            source: # <string>
-            concatMethod: # oneOf [ <enum>, <object> ] | possible values for <enum> : [ list, json_array, json_array_extended ]
-              concatStart: # <string>
-              concatEnd: # <string>
-          computes: # <compute-object-array>
+sources:
+  windowsErrors:
+    type: eventLog
+    logName: System
+    levels:
+    - error
+    - warning
+    eventIds:
+    - "41"
+    - "6008"
+    maxEventsPerPoll: 50
 ```
+
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | None | `eventLog`. |
+| `logName` | No | Provider/runtime default | Event log channel name (for example `System`, `Application`). |
+| `eventIds` | No | `[]` | Event IDs to include. |
+| `sources` | No | `[]` | Event providers/sources to include. |
+| `levels` | No | `[]` | Level filters: names with aliases — `error`/`err`, `warning`/`warn`, `information`/`info`, `success`, `failure`/`fail` (case-insensitive) — or numeric `1..5`. |
+| `maxEventsPerPoll` | No | `50` | Maximum events per cycle. Use `-1` for unlimited. |
+| `executeForEachEntryOf` | No | None | Execute with fan-out context from another source. |
+| `computes` | No | `[]` | Post-processing computes. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+
+## Recommended Pattern
+
+- Set `logName` explicitly.
+- Filter early with `levels`, `eventIds`, and `sources`.
+- Keep `maxEventsPerPoll` bounded for predictable polling time.
+
+## Common Mistakes
+
+- Using unlimited events on noisy logs.
+- Filtering only in computes after pulling huge event sets.
+- Mixing numeric and textual levels inconsistently across connectors.
+
+## Examples
+
+No current community connector uses `eventLog`.
+
+> [!NOTE]
+> `eventLog` is supported by the runtime but currently low-usage in community connectors.

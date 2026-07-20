@@ -59,7 +59,7 @@
 	--heading-font: "Poppins", sans-serif;
 	--content-font: "Poppins", sans-serif;
 
-	--content-font-size: medium;
+	--content-font-size: 15px;
 	--banner-font-size: 40px;
 	--banner-font-weight: 800;
 
@@ -70,50 +70,16 @@ body {
 	--main-fgcolor: #212529;
 	--banner-bgcolor: #266fd0;
 	--link-color: #266fd0;
-	--alternate-bgcolor: #266fd0;
-	--alternate-fgcolor: #fff;
+	--alternate-bgcolor: #c8ddf1;
+	--alternate-fgcolor: #266fd0;
 }
 
 body.dark {
 	--link-color: #7cb6ff;
 	--main-bgcolor: #262626;
 	--main-fgcolor: #e9ecef;
-}
-
-/* Special PrismJS colors for <code> element containing JSON */
-body.community-connector-class code[class*=language-js] {
-	color: #606060;
-}
-body.community-connector-class.dark code[class*=language-js] {
-	color: #d9d9d9;
-}
-
-body.community-connector-class code[class*=language-js] .token.punctuation {
-	color: #0046a4;
-}
-body.community-connector-class.dark code[class*=language-js] .token.punctuation {
-	color: #1bdbf3
-}
-
-.community-connector-class code[class*=language-js] .token.operator {
-	color: #00660b;
-}
-.community-connector-class.dark code[class*=language-js] .token.operator {
-	color: #5ffc6f;
-}
-.community-connector-class code[class*=language-js] .token.string {
-	color: #a40627;
-}
-.community-connector-class.dark code[class*=language-js] .token.string {
-	color: #ff9e9e;
-}
-
-.community-connector-class code[class*=language-js]::selection,
-.community-connector-class code[class*=language-js] ::selection
-{
-	text-shadow: none;
-	background: var(--banner-bgcolor);
-	color: var(--banner-fgcolor);
+    --alternate-bgcolor: #9fcdfc;
+    --alternate-fgcolor: #27333f;
 }
 
 .community-connector-class .metricshub-tag a {

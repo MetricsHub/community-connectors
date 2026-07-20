@@ -1,24 +1,77 @@
+keywords: metricshub, community connectors, connector development, yaml, opentelemetry
+description: Start here to build, test, and contribute MetricsHub community connectors. Includes the official connector developer guide and generated connector reference pages.
+title: MetricsHub Community Connectors
+
 # MetricsHub Community Connectors
 
-This project houses connectors developed for **MetricsHub**, organized by the type of source they interact with:
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-- **database** – Connectors that gather metrics from databases.
-- **hardware** – Connectors that interface with physical devices to collect hardware-related metrics.
-- **system** – Connectors designed to extract metrics from various operating systems.
+This repository contains **MetricsHub community connectors** and their documentation.
+It is the entry point for developers who want to:
 
-## Getting Started with Connector Development
+- create a new connector
+- improve an existing connector
+- learn the connector model used by MetricsHub
 
-To start building your own connectors for **MetricsHub**, please refer to the [Connector Design Guide](develop/index.md) to understand the architecture, models, and best practices.
+> [!IMPORTANT]
+> The **official implementation guide** is the [Connector Developer Guide](develop/quick-start.html).
+> Use it as the single source of truth for connector structure, detection, sources, computes, mapping, and testing.
 
-## Contributing
+## Who This Site Is For
 
-We welcome contributions from the community! To contribute:
+- Developers adding monitoring support for new platforms
+- Contributors maintaining existing connectors
+- Reviewers validating connector quality, consistency, and compatibility
 
-- Follow the guidelines outlined in the [Contributing Guide](https://metricshub.org/contributing.html).
-- Ensure your contributions adhere to the coding and testing standards.
+## What You Will Find Here
 
-If you're unsure where to start, feel free to browse through the open issues and discussions.
+- A complete developer guide in `develop/...`
+- Generated library views:
+  - [Supported Platforms](supported-platforms.html)
+  - [Connectors Directory](connectors-directory.html)
 
-## Additional Resources
+## Recommended Learning Path
 
-For general information about **MetricsHub**, visit the [MetricsHub website](https://metricshub.com).
+If you are new to connector development, read in this order:
+
+1. [Quick Start](develop/quick-start.html)
+2. [Connector Structure](develop/connector-structure.html)
+3. [Monitors and Jobs](develop/monitors-and-jobs.html)
+4. [Reuse and Configuration](develop/reuse-and-configuration.html)
+5. [References and Expressions](develop/references-and-expressions.html)
+6. [Design Principles](develop/design-principles.html)
+7. [Detection](develop/detection/index.html)
+8. [Sources](develop/sources/index.html)
+9. [Computes](develop/computes/index.html)
+10. [Mapping, Metrics, and Semconv](develop/mapping-metrics-semconv.html)
+11. [Metric and Attribute Naming](develop/metric-naming.html)
+12. [Run and Debug Locally](develop/run-and-debug.html)
+13. [Integration Testing](develop/integration-testing.html)
+14. [Contributing](develop/contributing.html)
+15. [Legacy and Compatibility](develop/legacy-and-compatibility.html)
+
+## Repository Layout (Developer View)
+
+```text
+src/main/connector/           Connector YAML files and embedded scripts/files
+src/site/markdown/            Documentation source (this site)
+src/it/resources/             Replay integration test resources
+src/it/java/                  Replay integration test code
+```
+
+## Contribution Workflow (High Level)
+
+1. Implement or update connector YAML under `src/main/connector/...`
+2. Add or update replay test data under `src/it/resources/<ConnectorId>/...`
+3. Register/update IT execution in `src/it/java/...`
+4. Validate locally (`mvn clean site`, then `mvn verify` when relevant)
+5. Open a PR with clear behavior changes and evidence
+
+> [!TIP]
+> For new work, prefer modern patterns documented in the guide:
+> explicit source names, reusable `beforeAll` data, deterministic detection, and clear normalization pipelines.
+
+## External Links
+
+- Repository: [metricshub/community-connectors](https://github.com/metricshub/community-connectors)
+- MetricsHub Website: [metricshub.com](https://metricshub.com)

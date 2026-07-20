@@ -1,34 +1,88 @@
-keywords: develop, criteria
-description: This page defines the detection’s criteria that are defined in a connector.
+keywords: detection, snmpGetNext, snmp table probe
+description: Reference for the snmpGetNext detection criterion.
 
-# SNMP GetNext (Detection)
+# Detection by SNMP GetNext
 
-The goal of this part is to see how to define SNMP GetNext criteria.
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-```yaml
-connector:
-  # ...
-  detection: # <object>
-    # ...
-    criteria: # <object-array>
-    - type: snmpGetNext
-      oid: # <string>
-      expectedResult: # <string>
-```
+## When to Use
 
-## Input Properties
+Use `snmpGetNext` to verify that an SNMP subtree/table exists.
+This is the preferred lightweight detection for many SNMP connector families. The SNMP GetNext operation verifies that the proper SNMP sub-agent is responding, and therefore that the expected instrumentation layer is available (typically a vendor agent).
 
-| Input Property | Description |
-| -------------- | ----------- |
-| `oid` | Object Identifier (OID) used to perform the SNMP get next request. The value returned is the content of the variable that is lexicographically next in the MIB. The request must be successful and the result OID must be a child of the provided OID. |
-| `expectedResult` | Regular expression that is expected to match the result of the SNMP request . If not specified, a successful SNMP request will be sufficient for the criteria to be met |
-
-### Example
+## Syntax
 
 ```yaml
 connector:
   detection:
     criteria:
     - type: snmpGetNext
-      oid: 1.3.6.1.4.1.674.10892.5.5.1.20.130.4
+      oid: 1.3.6.1.2.1.2.2.1
+```
+
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | - | `snmpGetNext`. |
+| `oid` | Yes | - | Base OID subtree expected to return at least one row. |
+| `expectedResult` | No | none | Regex matched against extracted value from GETNEXT response. |
+| `forceSerialization` | No | `false` | Guarantees operations are performed sequentially against one host. |
+
+## Runtime Behavior
+
+- An SNMP GetNext operation is attempted for the specified SNMP OID.
+- Returned OID must stay under requested subtree.
+- With no `expectedResult`, response must be non-empty.
+- With `expectedResult`, response must match the specified regular expression (case insensitive).
+
+See below example on how the value returned by SNMP GetNext is matched with `expectedResult`:
+
+> [!TABS]
+>
+> - <span class="fa-regular fa-circle-check"></span> Criterion
+>
+>   ```yaml
+>   - type: snmpGetNext
+>     oid: 1.3.6.1.2.1.2.2.1
+>     expectedResult: ^eth
+>   ```
+>
+> - <span class="fa-solid fa-sitemap"></span> Result
+>
+>   ```text
+>   eth0
+>   ```
+>
+>   ✅ The criterion passes because the returned OID stays under `1.3.6.1.2.1.2.2.1` **and** the extracted value matches `expectedResult: ^eth`.
+
+## Recommended Pattern
+
+- Use table root OID for quick capability detection.
+- Use `expectedResult` only when subtree existence alone is not selective enough.
+
+## Common Mistakes
+
+- Pointing to a too-specific OID that may not exist across firmware variants.
+
+## Examples
+
+In `hardware/MIB2-header/MIB2-header.yaml`:
+
+```yaml
+connector:
+  detection:
+    criteria:
+    - type: snmpGetNext
+      oid: 1.3.6.1.2.1.2.2.1
+```
+
+In `hardware/GenericUPS/GenericUPS.yaml`:
+
+```yaml
+connector:
+  detection:
+    criteria:
+    - type: snmpGetNext
+      oid: 1.3.6.1.2.1.33
 ```

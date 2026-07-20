@@ -1,43 +1,96 @@
-keywords: develop, criteria
-description: This page defines the detection’s criteria that are defined in a connector.
+keywords: detection, commandLine, os command
+description: Reference for the commandLine detection criterion in MetricsHub connectors.
 
-## Command Line (Detection)
+# Detection by Command Line
 
-The goal of this part is to see how to define OS commands criteria.
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-```yaml
-connector:
-  # ...
-  detection: # <object>
-    # ...
-    criteria: # <object-array>
-    - type: commandLine
-      commandLine: # <string>
-      errorMessage: # <string>
-      expectedResult: # <string>
-      executeLocally: # <boolean>
-      timeout: # <number>
-```
+## When to Use
 
-### Input Properties
+Use `commandLine` when the most reliable fingerprint is available through a shell command output.
+Typical cases are Unix/Linux tools (`uname`, `ipmitool`, vendor CLIs) and host-side utility checks.
 
-| Input Property | Description |
-| -------------- | ----------- |
-| `commandLine` | Command-line to be executed. Macros such as `%{USERNAME}`, `%{PASSWORD}` or `%{HOSTNAME}` may be used |
-| `timeout` | Time in seconds after which the command is stopped is considered failed. If not provided, the default OS command timeout will  be used |
-| `errorMessage` | The message to display if the detection criteria fails |
-| `executeLocally` | Specifies if the command must be executed locally even when monitoring a remote system (`0`, `false`, `1`, `true`) |
-| `expectedResult` | Regular expression that is expected to match the result of the OS command |
-
-### Example
+## Syntax
 
 ```yaml
 connector:
   detection:
     criteria:
     - type: commandLine
-      commandLine: naviseccli -help
-      expectedResult: Navisphere
-      executeLocally: true
-      errorMessage: Not a Navisphere system
+      commandLine: /usr/bin/uname
+      expectedResult: Linux
+      errorMessage: Not a Linux host
 ```
+
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | - | `commandLine` |
+| `commandLine` | Yes | - | Command string to execute. Must be non-blank. |
+| `expectedResult` | No | none | Regex used to validate command output. |
+| `executeLocally` | No | `false` | Run on the agent host instead of remote target. |
+| `timeout` | No | protocol default | Timeout in seconds. Must be `> 0` when provided. |
+| `errorMessage` | No | none | Connector-authored failure context (for logs/reporting). |
+| `forceSerialization` | No | `false` | Guarantees operations are performed sequentially against one host. |
+
+## Runtime Behavior
+
+- Command is executed on the targeted system through the configured protocols (SSH, WMI, or WinRM).
+- The output (_stdout_ and _stderr_) of the command is captured. Result matching is case-insensitive and multiline.
+- If regex matches: criterion succeeds.
+- If regex does not match: criterion fails.
+
+See below example on how command output is matched with `expectedResult`:
+
+> [!TABS]
+>
+> - <span class="fa-regular fa-circle-check"></span> Criterion
+>
+>   ```yaml
+>   - type: commandLine
+>     commandLine: uname
+>     expectedResult: Linux
+>   ```
+>
+> - <span class="fa-solid fa-terminal"></span> Result
+>
+>   ```text
+>   Linux
+>   ```
+>
+>   ✅ The criterion passes because the command output matches `expectedResult: Linux`.
+
+### Executing the command on the agent with `executeLocally`
+
+When `executeLocally` is set to true, the command is not executed on the targeted host, but on the monitoring agent, where MetricsHub is running. This is useful for executing a specific utility to gather information from a system that doesn't have a proper shell (like the `SMCli` utility to connect to old IBM storage systems).
+
+> [!IMPORTANT]
+> Indicate clearly in the description and in the `reliesOn` field the prerequisites: the binary the command is referring to must be installed on the system where MetricsHub is running.
+
+With `executeLocally: true`, you can use the following macros in the command line, to specify the targeted system:
+
+| Macro | Description |
+|-------|-------------|
+| `${HOSTNAME}` or `%{HOSTNAME}` | Will be replaced by the actual hostname configured by the user. |
+| `${USERNAME}` or `%{USERNAME}`| Will be replaced by the username configured with the `osCommand` protocol in the MetricsHub configuration. |
+| `${PASSWORD}` or `%{PASSWORD}`| Will be replaced by the password configured with the `osCommand` protocol in the MetricsHub configuration. |
+
+## Recommended Pattern
+
+- Keep detection commands lightweight and deterministic.
+- Prefer explicit binary paths when possible (`/usr/bin/uname`) to avoid side effects of `$PATH`.
+- Keep the regex specific enough to avoid false positives, but flexible enough to handle future versions of the targeted platform (don't be too strict by expecting a specific version number in the command output).
+- Set a timeout for tools that can block (`ipmitool`, vendor CLIs).
+
+## Common Mistakes
+
+- Using a heavy discovery command as detection.
+- Using an over-broad regex like `.*` or too restrictive like `version: 3\.5\..*$`.
+- Depending on locale-dependent output without normalization.
+
+## Examples
+
+Community example — the `commandLine` criterion of [Linux](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Linux/Linux.yaml), included directly from the connector source:
+
+<!-- MACRO{snippet|id=commandLineCriterion|file=src/main/connector/system/Linux/Linux.yaml} -->

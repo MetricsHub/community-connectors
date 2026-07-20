@@ -1,34 +1,8 @@
-keywords: develop, criteria
-description: This page defines the detection’s criteria that are defined in a connector.
+keywords: moved, developer guide
+description: This page has moved within the Connector Developer Guide.
 
-# Product Requirements (Detection)
+# This Page Has Moved
 
-The goal of this part is to see how to define Product Requirements criteria.
+<meta http-equiv="refresh" content="0; url=product-requirements.html" />
 
-```yaml
-connector:
-  # ...
-  detection: # <object>
-    # ...
-    criteria: # <object-array>
-    - type: productRequirements
-      engineVersion: # <string>
-      kmVersion: # <string>
-```
-
-### Input Properties
-
-| Input Property | Description |
-| -------------- | ----------- |
-| `kmVersion` | Minimum required KM version, using this format: x.y.z (ex: 3.1.01) |
-| `engineVersion` | Minimum required engine version, using this format: x.y.z (ex: 3.1.01) |
-
-### Example
-
-```yaml
-connector:
-  detection:
-    criteria:
-    - type: productRequirements
-      engineVersion: 4.1.00
-```
+This page is now **[Detection by Product Requirements](product-requirements.html)**.

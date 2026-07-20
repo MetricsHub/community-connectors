@@ -1,66 +1,67 @@
-keywords: awk, gawk, jawk
-description: The Awk source allows to execute awk scripts using MetricsHub's internal jawk engine.
+keywords: awk source, jawk, scripting source
+description: Reference for the awk source type (JAWK) and when to prefer compute-level AWK.
 
-# Awk (Source)
+# awk (Source)
 
-The *Awk* source enables the execution of awk scripts using **MetricsHub**'s internal jawk engine. This source is particularly useful for executing algorithmic operations. **MetricsHub**'s internal jawk engine allows to use all awk operations and also to execute various queries using any protocol **MetricsHub** Sources can use, as well as Json2Csv computes to parse the results of those queries.
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
-```yaml
-connector:
-  # ...
-beforeAll: # <object>
-  <sourceKey>: # <source-object>
+## When To Use
 
-monitors:
-  <monitorType>: # <object>
-    <job>: # <object>
-      sources: # <object>
-        <sourceKey>:
-          type: awk
-          script: # <string>
-          input: # <string>
-          separators: # <string>
-          forceSerialization: # <boolean>
-          computes: # <compute-object-array>
-```
+Use source-level `awk` when your source itself is a script computation, usually consuming an explicit `input` string or source reference.
 
-## Example of Awk source
+For most connectors, it is cleaner to:
 
-In this example, we will process an Awk script using another source as an input.
+1. collect with `commandLine`, `http`, `wmi`, or `snmp*`,
+2. then transform with compute-level `awk`.
+
+## Syntax
 
 ```yaml
-          - type: awk
-            script: "${esc.d}{file::my-script.awk}" # The script can be either an external file or directly in the connector.
-            input: "${esc.d}{source::source(1)}"
+sources:
+  normalizeInventory:
+    type: awk
+    input: ${source::beforeAll.inventoryRaw}
+    script: |
+      BEGIN { FS=";"; OFS=";" }
+      NF >= 3 { print $1, $2, tolower($3) }
 ```
 
-## Example of Awk script
+## Properties
 
-In this example, we will see how to implement an HTTP query and a Json2Csv operation using the input from another source in the **MetricsHub**'s Jawk engine.
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | None | `awk`. |
+| `script` | Yes | None | Inline AWK script or `${file::...}` reference. |
+| `input` | No | Empty | Input text or source reference consumed by the script. |
+| `separators` | No | None | Compatibility property; usually unnecessary for source-level AWK. |
+| `keep` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |
+| `exclude` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |
+| `selectColumns` | No | None | Schema-compatibility selection property; prefer compute-level selection. |
+| `executeForEachEntryOf` | No | None | Run once per row from another source table. |
+| `computes` | No | `[]` | Optional post-processing computes. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
-```awk
-BEGIN {
-    FS=";"  # Set the field separator to handle ";" characters
-    OFS=";" # Set the output field separator to ";"
-}
+> [!TIP]
+> If you need `keep`, `exclude`, `separators`, or `selectColumns` behavior, prefer compute-level `awk` in the source `computes` pipeline.
 
-{
-    storageSystemId = $2 # The script will be executed for each line of the input source, and in this case will use the second column from these lines as the storageSystemId.
+## Recommended Pattern
 
-    requestArguments["method"] = "get" # Operations arguments are to be put in a map. The arguments are the same as in the equivalent sources.
-    requestArguments["header"] = "Accept: application/json"
-    requestArguments["resultContent"] = "body"
-    requestArguments["path"] = "/rest/api/storageSystem/" storageSystemId "/disks"
+- Emit semicolon-separated rows from the script.
+- Keep source-level AWK focused on one transformation concern.
+- Move complex business logic to dedicated `.awk` files with `${file::...}`.
 
-    httpResult = executeHttpRequest(requestArguments) # The keywords used to execute protocol queries are "executeHttpRequest", "executeIpmiReqest", "executeSnmpGet", "executeSnmpTable", "executeWbemRequest" and "executeWmiRequest".
+## Common Mistakes
 
-    json2csvArguments["entryKey"] = "/disk"
-    json2csvArguments["properties"] = "diskId;diskType;totalCapacity;usedCapacity"
-    json2csvArguments["separator"] = ";"
-    json2csvArguments["jsonSource"] = httpResult
+- Mixing source acquisition and heavy parsing into one unreadable AWK script.
+- Returning irregular row widths that break mapping.
+- Using source-level `awk` where a simple `commandLine` + compute `awk` would be clearer.
 
-    json2csvResult = json2csv(json2csvArguments) # Additionally, json2csv operations can be executed to easily parse queries results.
+## Community Examples
 
-    print storageSystemId, json2csvResult
-}
-```
+No current community connector uses source-level `awk` directly.
+
+Relevant AWK-heavy connectors (compute-level AWK patterns):
+
+- [Linux](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Linux/Linux.yaml)
+- [DiskPart](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/DiskPart/DiskPart.yaml)
+- [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)

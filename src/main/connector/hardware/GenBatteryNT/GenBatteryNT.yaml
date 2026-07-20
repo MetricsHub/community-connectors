@@ -17,8 +17,10 @@ connector:
     - type: deviceType
       keep:
       - NT
+    # START SNIPPET: serviceCriterion
     - type: service
       name: WINMGMT
+    # END SNIPPET: serviceCriterion
     - type: wmi
       namespace: root\cimv2
       query: SELECT DeviceID FROM Win32_Battery
