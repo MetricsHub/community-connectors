@@ -41,7 +41,7 @@ sources:
 | `resultContent` | No | `body` | Response part: `body`, `header`, `all`, `http_status`. |
 | `executeForEachEntryOf` | No | None | Execute request once per input row (`$1`, `$2`, ... placeholders). |
 | `computes` | No | `[]` | Post-processing pipeline (often `json2Csv`/`xml2Csv`). |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 > [!IMPORTANT]
 > Define at least one of `path` or `url`. New connectors should generally prefer `path` with protocol configuration.

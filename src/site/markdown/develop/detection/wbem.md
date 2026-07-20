@@ -70,7 +70,7 @@ See below example on how a result table of a WBEM query is converted to text bef
 >   default;Default provider;
 >   ```
 >
->   ✅ The criterion passes because the **second line** of the text result matches with `expectedResult: ^ibmsd;`.
+>   ✅ The criterion passes because the **first line** of the text result matches `expectedResult: ^ibmsd;`.
 
 ## Recommended Pattern
 

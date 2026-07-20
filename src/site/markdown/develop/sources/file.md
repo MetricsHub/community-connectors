@@ -37,7 +37,7 @@ sources:
 | `maxSizePerPoll` | No | `5242880` | Max bytes read per cycle (`-1` for unlimited). |
 | `executeForEachEntryOf` | No | None | Fan-out execution context. |
 | `computes` | No | `[]` | Post-processing computes. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Recommended Pattern
 

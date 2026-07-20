@@ -261,8 +261,8 @@ monitors:
             column: 2
             value: $4
           # START SNIPPET: wearToEnduranceRemaining
-            # Convert Wear into EnduranceRemaing (Endurance Remaining = 100 - Wear)
-            # DeviceId;TotalErrors;EnduranceRemaing;WriteErrors;
+            # Convert Wear into EnduranceRemaining (Endurance Remaining = 100 - Wear)
+            # DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
           - type: multiply
             column: 3
             value: -1
@@ -272,7 +272,7 @@ monitors:
           # END SNIPPET: wearToEnduranceRemaining
         source(3):
           # Source(3) = Table join of Source(1) and Source(2)
-          # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaing;WriteErrors;
+          # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
           type: tableJoin
           leftTable: ${source::monitors.physical_disk.collect.sources.source(1)}
           rightTable: ${source::monitors.physical_disk.collect.sources.source(2)}
@@ -281,7 +281,7 @@ monitors:
           defaultRightLine: ;;;;
       mapping:
         # ValueTable = Source(3)
-        # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaing;WriteErrors;
+        # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
         source: ${source::monitors.physical_disk.collect.sources.source(3)}
         attributes:
           id: $2

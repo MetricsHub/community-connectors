@@ -37,7 +37,7 @@ sources:
 | `type` | Yes | None | `copy`. |
 | `from` | Yes | None | Source reference or inline serialized table to duplicate. |
 | `computes` | No | `[]` | Additional transforms applied after copy. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Recommended Pattern
 

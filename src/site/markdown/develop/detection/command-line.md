@@ -80,7 +80,7 @@ With `executeLocally: true`, you can use the following macros in the command lin
 
 - Keep detection commands lightweight and deterministic.
 - Prefer explicit binary paths when possible (`/usr/bin/uname`) to avoid side effects of `$PATH`.
-- Keep regex specific enough to avoid false positives but try to make use to handle future versions of the targeted platform (don't be too strict by expecting a specific version number in the command output).
+- Keep the regex specific enough to avoid false positives, but flexible enough to handle future versions of the targeted platform (don't be too strict by expecting a specific version number in the command output).
 - Set a timeout for tools that can block (`ipmitool`, vendor CLIs).
 
 ## Common Mistakes

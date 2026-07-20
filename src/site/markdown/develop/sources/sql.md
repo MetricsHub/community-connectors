@@ -31,7 +31,7 @@ sources:
 | `database` | No | Connector/JDBC default | Optional database/schema target when supported by runtime. |
 | `executeForEachEntryOf` | No | None | Fan-out execution context. |
 | `computes` | No | `[]` | Post-processing pipeline. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Recommended Pattern
 

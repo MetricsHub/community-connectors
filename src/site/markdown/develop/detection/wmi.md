@@ -7,7 +7,7 @@ description: Reference for WMI detection criterion, including namespace handling
 
 ## When to Use
 
-Use `wmi` for any connector that relies on WMI (Windows Management Instrumentation) or WINMGMT for retrieve Windows-specific information.
+Use `wmi` for any connector that relies on WMI (Windows Management Instrumentation) or WINMGMT to retrieve Windows-specific information.
 
 The `wmi` detection criteria will work when the `wmi` or the `winrm` protocols are configured by the user for a given resource.
 
@@ -67,7 +67,7 @@ See below example on how a result table of a WMI query is converted to text befo
 >   D:;3;703239868416;
 >   ```
 >
->   ✅ The criterion passes because the both lines of the text result matches with `expectedResult: ^[C-Z]:;3;[1-9]`. **One single matching line is enough for the criterion to pass.**
+>   ✅ The criterion passes because both lines of the text result match `expectedResult: ^[C-Z]:;3;[1-9]`. **One single matching line is enough for the criterion to pass.**
 
 ## Recommended Pattern
 

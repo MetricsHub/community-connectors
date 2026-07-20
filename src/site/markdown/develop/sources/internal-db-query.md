@@ -52,7 +52,7 @@ sources:
 | `query` | Yes | None | SQL query executed on internal in-memory tables. |
 | `parameters` | No | `[]` | Optional query parameters (schema-level support). |
 | `computes` | No | `[]` | Post-processing pipeline. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Recommended Pattern
 

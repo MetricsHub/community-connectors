@@ -57,16 +57,16 @@ Suppose `diskPart.awk` prints one `MSHW;`-prefixed line per volume; `keep`, `sep
 >
 > - <span class="fa-solid fa-table-list"></span> Result
 >
->   | ID | Label | Letter | FileSystem | Size | Status |
->   | --- | --- | --- | --- | --- | --- |
->   | 0 | System | C | NTFS | 254568116160 | Healthy |
->   | 1 | Data | D | NTFS | 999784378368 | Healthy |
+>   | ID | Label | Letter | VolumeType | FileSystem | Size | Status |
+>   | --- | --- | --- | --- | --- | --- | --- |
+>   | 0 | System | C | Partition | NTFS | 254568116160 | Healthy |
+>   | 1 | Data | D | Partition | NTFS | 999784378368 | Healthy |
 
 Between the two, the script's serialized output looked like:
 
 ```text
-MSHW;0;System;C;NTFS;254568116160;Healthy
-MSHW;1;Data;D;NTFS;999784378368;Healthy
+MSHW;0;System;C;Partition;NTFS;254568116160;Healthy
+MSHW;1;Data;D;Partition;NTFS;999784378368;Healthy
 ```
 
 The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` removes the `MSHW` marker column.

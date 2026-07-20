@@ -39,7 +39,7 @@ sources:
 | `selectColumns` | No | None | Schema-compatibility selection property; prefer compute-level selection. |
 | `executeForEachEntryOf` | No | None | Run once per row from another source table. |
 | `computes` | No | `[]` | Optional post-processing computes. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 > [!TIP]
 > If you need `keep`, `exclude`, `separators`, or `selectColumns` behavior, prefer compute-level `awk` in the source `computes` pipeline.

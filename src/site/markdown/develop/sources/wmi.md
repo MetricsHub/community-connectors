@@ -17,7 +17,7 @@ This is one of the highest-usage source types in community connectors.
 sources:
   logicalDisks:
     type: wmi
-    namespace: root\\CIMV2
+    namespace: root\CIMv2
     query: SELECT DeviceID,FreeSpace,Size FROM Win32_LogicalDisk WHERE DriveType = 3
     computes:
     - type: duplicateColumn
@@ -30,10 +30,10 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `wmi`. |
 | `query` | Yes | None | WMI query string. |
-| `namespace` | No | Provider default | WMI namespace (`root\\CIMV2`, `root\\Microsoft\\Windows\\Storage`, ...). |
+| `namespace` | No | Provider default | WMI namespace (`root\CIMv2`, `root\Microsoft\Windows\Storage`, ...). |
 | `executeForEachEntryOf` | No | None | Fan-out query execution context. |
 | `computes` | No | `[]` | Post-processing pipeline. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Recommended Pattern
 

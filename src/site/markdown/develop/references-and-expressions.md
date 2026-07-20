@@ -62,7 +62,7 @@ The example below shows the same row as a table and as serialized text:
 > - <span class="fa-regular fa-file-lines"></span> Serialized Text
 >
 >   ```text
->   disk01;SSD;ok;
+>   disk01;SSD;ok
 >   ```
 
 ## File References

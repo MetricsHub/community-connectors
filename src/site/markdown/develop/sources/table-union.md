@@ -29,7 +29,7 @@ sources:
 | `type` | Yes | None | `tableUnion`. |
 | `tables` | Yes | None | Ordered list of source tables to concatenate. |
 | `computes` | No | `[]` | Post-union processing pipeline. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Recommended Pattern
 

@@ -9,7 +9,7 @@ description: Full reference for the commandLine source with parsing, filtering, 
 
 Use `commandLine` when the target data is easiest to obtain from a command line, shell script, or batch. When relying on command lines, the connector requires the user to configure a protocol in MetricsHub that supports remote command line execution, like SSH or WMI and WinRM for Windows systems.
 
-It if often preferred to use actual APIs, like REST APIs or SNMP, to extract metrics from a system. But command line utilies remain a strong source of data, especially on Linux-based systems.
+It is often preferred to use actual APIs, like REST APIs or SNMP, to extract metrics from a system. But command line utilities remain a strong source of data, especially on Linux-based systems.
 
 The specified command line is executed on the monitored host (typically a remote system) through the protocol configured by the user in MetricsHub, unless the `executeLocally` property is set to `true`.
 
@@ -45,7 +45,7 @@ sources:
 | `selectColumns` | No | None | Column selection expression (`1,2,4`, ranges, `ID` for SNMP-style indexes). |
 | `executeForEachEntryOf` | No | None | Run once per row of another source table. |
 | `computes` | No | `[]` | Post-processing pipeline. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Recommended Pattern
 

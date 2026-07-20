@@ -77,10 +77,12 @@ When `expectedResult` is not provided, behavior depends on criterion type, but u
 
 ## Table Serialization Model
 
-Several criteria (`wmi`, `wbem`, `sql`, `jmx`) evaluate query results as a serialized table:
+Several criteria (`wmi`, `wbem`, `sql`) evaluate query results as a serialized table:
 
 - Internal table shape: `List<List<String>>`
 - Serialization: one row per line, columns separated by semicolons (`;`)
+
+`jmx` is the exception: its results are name-value pairs, serialized as `=`-separated lines — see [Detection by JMX](jmx.html).
 
 For example, the below table:
 

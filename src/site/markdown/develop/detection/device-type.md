@@ -14,7 +14,7 @@ For each host to monitor with MetricsHub, the user will provide 2 critical attri
 
 Use `deviceType` as an early guardrail to avoid expensive protocol tests on incompatible hosts, where `host.type` is clearly not a possible target of this connector. This is usually the first criterion in a detection block.
 
-For example, it is inept to try using Windows-specific connectors on non-Windows systems, so you specify `Windows` for the `deviceType` property of the connector, as in the below example.
+For example, it is pointless to try using Windows-specific connectors on non-Windows systems, so you specify `Windows` for the `deviceType` property of the connector, as in the below example.
 
 ## Syntax
 

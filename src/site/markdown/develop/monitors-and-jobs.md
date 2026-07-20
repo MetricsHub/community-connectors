@@ -203,7 +203,7 @@ Every attribute listed in `keys` must be mapped in the discovery (or `simple`) `
 | --- | --- | --- | --- |
 | `sources` | all | Yes | Named sources forming the job's table pipeline. See [Sources](sources/index.html). |
 | `mapping` | all | Yes | Turns the final table into instances, attributes, and metrics. See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
-| `type` | `collect` | Yes | `multiInstance` or `monoInstance`. |
+| `type` | `simple`, `collect` | Yes for `collect` | `multiInstance` or `monoInstance`. Required on `collect` jobs; optional on `simple` jobs (many connectors declare `type: multiInstance` there for clarity). |
 | `executionOrder` | all | No | Array of source names forcing a specific order. By default the engine runs a job's sources sequentially, ordered by their `${source::...}` dependencies; use `executionOrder` only when a dependency is invisible to the engine, and list **every** source of the job. |
 
 ## Collect-Only Mapping Features

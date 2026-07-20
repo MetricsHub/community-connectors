@@ -21,7 +21,7 @@ sources:
     rightTable: ${source::monitors.disk.collect.sources.diskHealth}
     leftKeyColumn: 1
     rightKeyColumn: 1
-    defaultRightLine: ;unknown;
+    defaultRightLine: ;unknown
 ```
 
 ## Properties
@@ -37,7 +37,7 @@ sources:
 | `keyType` | No | None | Key comparison mode. Use `Wbem` for WBEM/WMI path keys. |
 | `isWbemKey` | No | None | Legacy compatibility flag in older connectors. Prefer `keyType: Wbem`. |
 | `computes` | No | `[]` | Post-join compute pipeline. |
-| `forceSerialization` | No | `false` | Force raw serialization before next stages. |
+| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Table Shape Example
 

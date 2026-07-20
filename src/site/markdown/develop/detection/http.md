@@ -77,7 +77,7 @@ See below example on how the selected HTTP response content is matched with `exp
 >
 >   ✅ The criterion passes because the selected response content matches `expectedResult: RedfishVersion`.
 
-> [!WARNING] Warning
+> [!WARNING]
 > `expectedResult` only needs to match one line of the selected result content. In HTTP responses, line breaks in JSON, HTML, or similar text are often incidental and may change over time. Avoid regular expressions that rely on exact line boundaries or formatting unless that structure is known to be stable.
 
 ## Recommended Pattern
