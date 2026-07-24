@@ -141,11 +141,13 @@ monitors:
   network:
     simple:
       sources:
-        # Use the ip command to get network interface information
+        # Use the ip command to get network interface information.
+        # Older Red Hat-like systems, including Oracle Linux 6/RHEL 6/CentOS 6,
+        # commonly provide ip under /sbin instead of /usr/sbin.
         ipLink:
           # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns;
           type: commandLine
-          commandLine: /usr/sbin/ip -s link
+          commandLine: /sbin/ip -s link 2>/dev/null || /usr/sbin/ip -s link 2>/dev/null || ip -s link
           computes:
           - type: awk
             script: ${file::network.awk}
@@ -247,12 +249,14 @@ monitors:
       type: multiInstance
       sources:
         fileSystemInfo:
-          # filesystem;mountpoint;type;used;available
+          # New Linux df input: source;target;type;used-bytes;available-bytes;size-bytes
+          # Legacy Linux df input: source;type;size-KiB;used-KiB;available-KiB;capacity;target
+          # Normalized output: id;target;type;used;available;used%;available%;reserved;reserved%
           type: commandLine
-          commandLine: /usr/bin/df -B1 --output=source,target,fstype,used,avail,size
+          commandLine: /usr/bin/df -B1 --output=source,target,fstype,used,avail,size 2>/dev/null || df -P -T -k
           computes:
           - type: awk
-            script: NR > 1 && $1 ~ /\/dev/ {print $1 "(" $2 ")" ";" $2 ";" $3 ";" $4 ";" $5 ";" $4 / $6 ";" $5 / $6 ";" $6 - ($4 + $5) ";" ($6 - ($4 + $5)) / $6}
+            script: ${file::fileSystemInfo.awk}
       mapping:
         source: ${source::fileSystemInfo}
         attributes:
