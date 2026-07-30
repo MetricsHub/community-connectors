@@ -35,6 +35,21 @@ metrics:
     type: Gauge
     unit: 1
 
+  storage.data_reduction.ratio:
+    description: Ratio of logical data size to physical storage consumed after data reduction technologies are applied.
+    type: Gauge
+    unit: 1
+
+  storage.data_reduction.logical_usage:
+    description: Logical size of the data before data reduction technologies are applied.
+    type: UpDownCounter
+    unit: By
+
+  storage.data_reduction.physical_usage:
+    description: Physical storage consumed after data reduction technologies are applied.
+    type: UpDownCounter
+    unit: By
+
   storage.operation_time:
     description: Sum of the time each storage operation took to complete.
     type: Counter
