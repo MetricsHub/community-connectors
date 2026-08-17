@@ -59,7 +59,7 @@
 
 	<properties>
 		<maven.compiler.release>25</maven.compiler.release>
-		<metricshub-community.version>3.9.04</metricshub-community.version>
+		<metricshub-community.version>3.9.06</metricshub-community.version>
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
 		<project.build.outputTimestamp>2026-08-13T08:21:35Z</project.build.outputTimestamp>
