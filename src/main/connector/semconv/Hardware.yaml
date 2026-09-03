@@ -118,6 +118,16 @@ metrics:
     type: Gauge
     unit: 1
 
+  hw.gpu.clock:
+    description: GPU clock frequency for the requested clock domain.
+    type: Gauge
+    unit: Hz
+
+  hw.gpu.clock.limit:
+    description: Maximum supported GPU clock frequency for the requested clock domain.
+    type: Gauge
+    unit: Hz
+
   hw.gpu.io:
     description: Received and transmitted bytes by the GPU.
     type: Counter
@@ -267,6 +277,11 @@ metrics:
   hw.power_supply.limit:
     description: Maximum power output of the power supply.
     type: Gauge
+    unit: W
+
+  hw.power_supply.usage:
+    description: Current power output of the power supply.
+    type: UpDownCounter
     unit: W
 
   hw.power_supply.utilization:
