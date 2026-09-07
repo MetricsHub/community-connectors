@@ -9,7 +9,7 @@
         "attributes" : {
           "hw.type" : "battery"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -113,7 +113,7 @@
         "attributes" : {
           "hw.type" : "enclosure"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -136,7 +136,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 105.0,
         "previousValue" : 105.0,
         "type" : "NumberMetric",
@@ -478,7 +478,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -533,7 +533,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -588,7 +588,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -643,7 +643,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -698,7 +698,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -753,7 +753,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -808,7 +808,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -863,7 +863,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -918,7 +918,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -973,7 +973,7 @@
         "attributes" : {
           "hw.type" : "other_device"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1027,7 +1027,7 @@
         "attributes" : {
           "hw.type" : "physical_disk"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1096,7 +1096,7 @@
         "attributes" : {
           "hw.type" : "physical_disk"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1152,7 +1152,7 @@
         "attributes" : {
           "hw.type" : "power_supply"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1203,7 +1203,7 @@
         "attributes" : {
           "hw.type" : "power_supply"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1254,7 +1254,7 @@
         "attributes" : {
           "hw.type" : "power_supply"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1318,7 +1318,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 60.0,
         "previousValue" : 60.0,
         "type" : "NumberMetric",
@@ -1329,7 +1329,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 35.0,
         "previousValue" : 35.0,
         "type" : "NumberMetric",
@@ -1379,7 +1379,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 105.0,
         "previousValue" : 105.0,
         "type" : "NumberMetric",
@@ -1390,7 +1390,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 39.0,
         "previousValue" : 39.0,
         "type" : "NumberMetric",
@@ -1425,7 +1425,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 28.0,
         "previousValue" : 28.0,
         "type" : "NumberMetric",
@@ -1460,7 +1460,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 31.0,
         "previousValue" : 31.0,
         "type" : "NumberMetric",
@@ -1510,7 +1510,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 115.0,
         "previousValue" : 115.0,
         "type" : "NumberMetric",
@@ -1521,7 +1521,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 36.0,
         "previousValue" : 36.0,
         "type" : "NumberMetric",
@@ -1571,7 +1571,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 115.0,
         "previousValue" : 115.0,
         "type" : "NumberMetric",
@@ -1582,7 +1582,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 36.0,
         "previousValue" : 36.0,
         "type" : "NumberMetric",
@@ -1632,7 +1632,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 115.0,
         "previousValue" : 115.0,
         "type" : "NumberMetric",
@@ -1643,7 +1643,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 30.0,
         "previousValue" : 30.0,
         "type" : "NumberMetric",
@@ -1693,7 +1693,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 115.0,
         "previousValue" : 115.0,
         "type" : "NumberMetric",
@@ -1704,7 +1704,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 29.0,
         "previousValue" : 29.0,
         "type" : "NumberMetric",
@@ -1754,7 +1754,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 115.0,
         "previousValue" : 115.0,
         "type" : "NumberMetric",
@@ -1765,7 +1765,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 32.0,
         "previousValue" : 32.0,
         "type" : "NumberMetric",
@@ -1815,7 +1815,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 115.0,
         "previousValue" : 115.0,
         "type" : "NumberMetric",
@@ -1826,7 +1826,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 31.0,
         "previousValue" : 31.0,
         "type" : "NumberMetric",
@@ -1861,7 +1861,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 40.0,
         "previousValue" : 40.0,
         "type" : "NumberMetric",
@@ -1896,7 +1896,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 40.0,
         "previousValue" : 40.0,
         "type" : "NumberMetric",
@@ -1946,7 +1946,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 100.0,
         "previousValue" : 100.0,
         "type" : "NumberMetric",
@@ -1957,7 +1957,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 56.0,
         "previousValue" : 56.0,
         "type" : "NumberMetric",
@@ -2007,7 +2007,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 100.0,
         "previousValue" : 100.0,
         "type" : "NumberMetric",
@@ -2018,7 +2018,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 40.0,
         "previousValue" : 40.0,
         "type" : "NumberMetric",
@@ -2068,7 +2068,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 100.0,
         "previousValue" : 100.0,
         "type" : "NumberMetric",
@@ -2079,7 +2079,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 47.0,
         "previousValue" : 47.0,
         "type" : "NumberMetric",
@@ -2129,7 +2129,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 65.0,
         "previousValue" : 65.0,
         "type" : "NumberMetric",
@@ -2140,7 +2140,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 26.0,
         "previousValue" : 26.0,
         "type" : "NumberMetric",
@@ -2190,7 +2190,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 42.0,
         "previousValue" : 42.0,
         "type" : "NumberMetric",
@@ -2201,7 +2201,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 22.0,
         "previousValue" : 22.0,
         "type" : "NumberMetric",
@@ -2251,7 +2251,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 75.0,
         "previousValue" : 75.0,
         "type" : "NumberMetric",
@@ -2262,7 +2262,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 32.0,
         "previousValue" : 32.0,
         "type" : "NumberMetric",
@@ -2312,7 +2312,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 75.0,
         "previousValue" : 75.0,
         "type" : "NumberMetric",
@@ -2323,7 +2323,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 34.0,
         "previousValue" : 34.0,
         "type" : "NumberMetric",
@@ -2373,7 +2373,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 90.0,
         "previousValue" : 90.0,
         "type" : "NumberMetric",
@@ -2384,7 +2384,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 40.0,
         "previousValue" : 40.0,
         "type" : "NumberMetric",
@@ -2434,7 +2434,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 70.0,
         "previousValue" : 70.0,
         "type" : "NumberMetric",
@@ -2445,7 +2445,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 37.0,
         "previousValue" : 37.0,
         "type" : "NumberMetric",
@@ -2495,7 +2495,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 70.0,
         "previousValue" : 70.0,
         "type" : "NumberMetric",
@@ -2506,7 +2506,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 35.0,
         "previousValue" : 35.0,
         "type" : "NumberMetric",
@@ -2556,7 +2556,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 70.0,
         "previousValue" : 70.0,
         "type" : "NumberMetric",
@@ -2567,7 +2567,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 34.0,
         "previousValue" : 34.0,
         "type" : "NumberMetric",
@@ -2617,7 +2617,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 75.0,
         "previousValue" : 75.0,
         "type" : "NumberMetric",
@@ -2628,7 +2628,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 32.0,
         "previousValue" : 32.0,
         "type" : "NumberMetric",
@@ -2678,7 +2678,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 60.0,
         "previousValue" : 60.0,
         "type" : "NumberMetric",
@@ -2689,7 +2689,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 26.0,
         "previousValue" : 26.0,
         "type" : "NumberMetric",
@@ -2739,7 +2739,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 100.0,
         "previousValue" : 100.0,
         "type" : "NumberMetric",
@@ -2750,7 +2750,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 32.0,
         "previousValue" : 32.0,
         "type" : "NumberMetric",
@@ -2800,7 +2800,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 70.0,
         "previousValue" : 70.0,
         "type" : "NumberMetric",
@@ -2811,7 +2811,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 40.0,
         "previousValue" : 40.0,
         "type" : "NumberMetric",
@@ -2861,7 +2861,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 70.0,
         "previousValue" : 70.0,
         "type" : "NumberMetric",
@@ -2872,7 +2872,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 40.0,
         "previousValue" : 40.0,
         "type" : "NumberMetric",
@@ -2922,7 +2922,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 89.0,
         "previousValue" : 89.0,
         "type" : "NumberMetric",
@@ -2933,7 +2933,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 28.0,
         "previousValue" : 28.0,
         "type" : "NumberMetric",
@@ -2983,7 +2983,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 89.0,
         "previousValue" : 89.0,
         "type" : "NumberMetric",
@@ -2994,7 +2994,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 28.0,
         "previousValue" : 28.0,
         "type" : "NumberMetric",
@@ -3044,7 +3044,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 89.0,
         "previousValue" : 89.0,
         "type" : "NumberMetric",
@@ -3055,7 +3055,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 29.0,
         "previousValue" : 29.0,
         "type" : "NumberMetric",
@@ -3105,7 +3105,7 @@
         "attributes" : {
           "limit_type" : "high.critical"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 89.0,
         "previousValue" : 89.0,
         "type" : "NumberMetric",
@@ -3116,7 +3116,7 @@
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 29.0,
         "previousValue" : 29.0,
         "type" : "NumberMetric",

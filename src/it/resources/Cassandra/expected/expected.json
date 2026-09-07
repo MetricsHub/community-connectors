@@ -7,7 +7,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -20,7 +20,7 @@
         "attributes" : {
           "db.cache.state" : "hit"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -33,7 +33,7 @@
         "attributes" : {
           "db.cache.state" : "miss"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -44,7 +44,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 5.24288E7,
         "previousValue" : 5.24288E7,
         "type" : "NumberMetric",
@@ -77,7 +77,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 1000.0,
         "previousValue" : 1000.0,
         "type" : "NumberMetric",
@@ -90,7 +90,7 @@
         "attributes" : {
           "db.cache.state" : "hit"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 84.0,
         "previousValue" : 84.0,
         "type" : "NumberMetric",
@@ -103,7 +103,7 @@
         "attributes" : {
           "db.cache.state" : "miss"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 916.0,
         "previousValue" : 916.0,
         "type" : "NumberMetric",
@@ -114,7 +114,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 1.048576E8,
         "previousValue" : 1.048576E8,
         "type" : "NumberMetric",
@@ -147,7 +147,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -160,7 +160,7 @@
         "attributes" : {
           "db.cache.state" : "hit"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -173,7 +173,7 @@
         "attributes" : {
           "db.cache.state" : "miss"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -184,7 +184,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -219,7 +219,7 @@
         "attributes" : {
           "error.type" : "write_timeout"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -230,7 +230,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 2.1239753451E7,
         "previousValue" : 2.1239753451E7,
         "type" : "NumberMetric",
@@ -243,7 +243,7 @@
         "attributes" : {
           "error.type" : "read_timeout"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -257,7 +257,7 @@
           "db.cache.state" : "on_heap",
           "db.cassandra.cache.type" : "memtable"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 710336.0,
         "previousValue" : 710336.0,
         "type" : "NumberMetric",
@@ -270,7 +270,7 @@
         "attributes" : {
           "error.type" : "read_unavailable"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -281,7 +281,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 125954.0,
         "previousValue" : 125954.0,
         "type" : "NumberMetric",
@@ -294,7 +294,7 @@
         "attributes" : {
           "db.io.direction" : "write"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 4.33583892E8,
         "previousValue" : 4.33583892E8,
         "type" : "NumberMetric",
@@ -305,7 +305,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -318,7 +318,7 @@
         "attributes" : {
           "error.type" : "write_unavailable"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -329,7 +329,7 @@
         "collectTime" : 1771500713559,
         "previousCollectTime" : 1771500708347,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -343,7 +343,7 @@
           "db.cache.state" : "off_heap",
           "db.cassandra.cache.type" : "memtable"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 710336.0,
         "previousValue" : 710336.0,
         "type" : "NumberMetric",
@@ -356,7 +356,7 @@
         "attributes" : {
           "db.io.direction" : "read"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 10.0,
         "previousValue" : 10.0,
         "type" : "NumberMetric",
@@ -369,7 +369,7 @@
         "attributes" : {
           "db.io.direction" : "write"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 2.0,
         "previousValue" : 2.0,
         "type" : "NumberMetric",
@@ -382,7 +382,7 @@
         "attributes" : {
           "db.operation.type" : "compaction"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -416,7 +416,7 @@
         "attributes" : {
           "db.node.state" : "unreachable"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -429,7 +429,7 @@
         "attributes" : {
           "db.node.state" : "live"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -442,7 +442,7 @@
         "attributes" : {
           "db.node.state" : "moving"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -455,7 +455,7 @@
         "attributes" : {
           "db.node.state" : "leaving"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -468,7 +468,7 @@
         "attributes" : {
           "db.node.state" : "joining"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -594,7 +594,7 @@
         "attributes" : {
           "db.thread.state" : "active"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -607,7 +607,7 @@
         "attributes" : {
           "db.thread.state" : "blocked"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -620,7 +620,7 @@
         "attributes" : {
           "db.thread.state" : "pending"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -656,7 +656,7 @@
         "attributes" : {
           "db.thread.state" : "active"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -669,7 +669,7 @@
         "attributes" : {
           "db.thread.state" : "blocked"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -682,7 +682,7 @@
         "attributes" : {
           "db.thread.state" : "pending"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
