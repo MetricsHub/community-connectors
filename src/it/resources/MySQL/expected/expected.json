@@ -111,7 +111,7 @@
           "attributes": {
             "db.io.direction": "receive"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 998216322.0,
           "previousValue": 998216322.0,
           "type": "NumberMetric",
@@ -124,7 +124,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 269713408.0,
           "previousValue": 269713408.0,
           "type": "NumberMetric",
@@ -138,7 +138,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_metadata_lock"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -151,7 +151,7 @@
           "attributes": {
             "db.connection.state": "active"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 2.0,
           "previousValue": 2.0,
           "type": "NumberMetric",
@@ -164,7 +164,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 16384.0,
           "previousValue": 16384.0,
           "type": "NumberMetric",
@@ -178,7 +178,7 @@
             "error.type": "failed_attempt",
             "db.connection.state": "aborted"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 20.0,
           "previousValue": 20.0,
           "type": "NumberMetric",
@@ -189,7 +189,7 @@
           "collectTime": 1757941641935,
           "previousCollectTime": 1757941635101,
           "attributes": {},
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 101.0,
           "previousValue": 101.0,
           "type": "NumberMetric",
@@ -203,7 +203,7 @@
             "error.type": "set_timeout_failed",
             "db.query.state": "failed"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -217,7 +217,7 @@
             "db.mysql.engine": "innodb",
             "db.file.state": "open"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 15.0,
           "previousValue": 15.0,
           "type": "NumberMetric",
@@ -231,7 +231,7 @@
             "db.mysql.engine": "innodb",
             "db.io.direction": "read"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 32950784.0,
           "previousValue": 32950784.0,
           "type": "NumberMetric",
@@ -245,7 +245,7 @@
             "db.mysql.engine": "innodb",
             "db.cache.state": "data_clean"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 23674880.0,
           "previousValue": 23674880.0,
           "type": "NumberMetric",
@@ -259,7 +259,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_mutex_instance"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -270,7 +270,7 @@
           "collectTime": 1757941641935,
           "previousCollectTime": 1757941635101,
           "attributes": {},
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 8915308.0,
           "previousValue": 8915308.0,
           "type": "NumberMetric",
@@ -283,7 +283,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -297,7 +297,7 @@
             "error.type": "client_disconnected",
             "db.connection.state": "aborted"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -310,7 +310,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -324,7 +324,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_file_instance"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -337,7 +337,7 @@
           "attributes": {
             "db.query.state": "normal"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 2507035.0,
           "previousValue": 2507035.0,
           "type": "NumberMetric",
@@ -351,7 +351,7 @@
             "db.mysql.engine": "innodb",
             "db.cache.request.type": "flushed"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 176884.0,
           "previousValue": 176884.0,
           "type": "NumberMetric",
@@ -365,7 +365,7 @@
             "db.mysql.engine": "innodb",
             "db.io.direction": "write"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 2903241728.0,
           "previousValue": 2903241728.0,
           "type": "NumberMetric",
@@ -379,7 +379,7 @@
             "db.mysql.engine": "innodb",
             "db.io.direction": "write"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -392,7 +392,7 @@
           "attributes": {
             "db.thread.state": "created"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 2.0,
           "previousValue": 2.0,
           "type": "NumberMetric",
@@ -407,7 +407,7 @@
             "db.io.direction": "read",
             "db.cache.state": "miss"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 1106.0,
           "previousValue": 1106.0,
           "type": "NumberMetric",
@@ -420,7 +420,7 @@
           "attributes": {
             "db.thread.state": "running"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 2.0,
           "previousValue": 2.0,
           "type": "NumberMetric",
@@ -433,7 +433,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -447,7 +447,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_index_statistic"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -462,7 +462,7 @@
             "db.io.direction": "read",
             "db.cache.state": "hit"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 185426712.0,
           "previousValue": 185426712.0,
           "type": "NumberMetric",
@@ -476,7 +476,7 @@
             "db.mysql.engine": "innodb",
             "db.row_operation.type": "read"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 4713874.0,
           "previousValue": 4713874.0,
           "type": "NumberMetric",
@@ -490,7 +490,7 @@
             "db.mysql.engine": "innodb",
             "db.io.direction": "read"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -504,7 +504,7 @@
             "db.mysql.engine": "innodb",
             "db.cache.state": "free"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 110477312.0,
           "previousValue": 110477312.0,
           "type": "NumberMetric",
@@ -517,7 +517,7 @@
           "attributes": {
             "db.query.state": "slow"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -531,7 +531,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_account_insert"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -545,7 +545,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_memory_instrument"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -559,7 +559,7 @@
             "error.type": "timeout",
             "db.query.state": "failed"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -573,7 +573,7 @@
             "db.mysql.engine": "innodb",
             "db.io.direction": "write"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 499159.0,
           "previousValue": 499159.0,
           "type": "NumberMetric",
@@ -587,7 +587,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_mutex_instrument"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -600,7 +600,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 221.0,
           "previousValue": 221.0,
           "type": "NumberMetric",
@@ -614,7 +614,7 @@
             "db.mysql.engine": "innodb",
             "db.row_operation.type": "delete"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -628,7 +628,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_digest_instance"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -641,7 +641,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -655,7 +655,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_condition_instrument"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -668,7 +668,7 @@
           "attributes": {
             "db.thread.state": "connected"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 1.0,
           "previousValue": 1.0,
           "type": "NumberMetric",
@@ -682,7 +682,7 @@
             "db.mysql.engine": "innodb",
             "db.io.direction": "read"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 2028.0,
           "previousValue": 2028.0,
           "type": "NumberMetric",
@@ -696,7 +696,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_file_instrument"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -710,7 +710,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_hosts_insert"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -724,7 +724,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_locker"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -738,7 +738,7 @@
             "db.mysql.engine": "innodb",
             "db.row_operation.type": "update"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -752,7 +752,7 @@
             "db.mysql.engine": "performance_schema",
             "error.type": "lost_file_handle"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -766,7 +766,7 @@
             "db.mysql.engine": "innodb",
             "db.io.direction": "write"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 12367123.0,
           "previousValue": 12367123.0,
           "type": "NumberMetric",
@@ -780,7 +780,7 @@
             "db.mysql.engine": "innodb",
             "db.cache.read_ahead.state": "random"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -794,7 +794,7 @@
             "db.mysql.engine": "innodb",
             "db.cache.state": "data_dirty"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 65536.0,
           "previousValue": 65536.0,
           "type": "NumberMetric",
@@ -807,7 +807,7 @@
           "attributes": {
             "db.mysql.engine": "innodb"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 0.0,
           "previousValue": 0.0,
           "type": "NumberMetric",
@@ -820,7 +820,7 @@
           "attributes": {
             "db.connection.state": "success"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 281361.0,
           "previousValue": 281361.0,
           "type": "NumberMetric",
@@ -834,7 +834,7 @@
             "db.mysql.engine": "innodb",
             "db.row_operation.type": "insert"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 4713874.0,
           "previousValue": 4713874.0,
           "type": "NumberMetric",
@@ -847,7 +847,7 @@
           "attributes": {
             "db.thread.state": "cached"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 1.0,
           "previousValue": 1.0,
           "type": "NumberMetric",
@@ -860,7 +860,7 @@
           "attributes": {
             "db.io.direction": "transmit"
           },
-          "resetMetricTime": true,
+          "resetMetricTime": false,
           "value": 5027804601.0,
           "previousValue": 5027804601.0,
           "type": "NumberMetric",
@@ -871,7 +871,7 @@
         "collectTime" : 1766495186470,
         "previousCollectTime" : 1766495186270,
         "attributes" : { },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 151.0,
         "previousValue" : 151.0,
         "type" : "NumberMetric",
@@ -884,7 +884,7 @@
         "attributes" : {
           "db.cache.state" : "miss"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 192.0,
         "previousValue" : 192.0,
         "type" : "NumberMetric",
@@ -897,7 +897,7 @@
         "attributes" : {
           "db.cache.state" : "overflow"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
@@ -910,7 +910,7 @@
         "attributes" : {
           "db.cache.state" : "hit"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 3491.0,
         "previousValue" : 3491.0,
         "type" : "NumberMetric",
@@ -923,7 +923,7 @@
         "attributes" : {
           "db.temp_table.storage" : "disk"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 26.0,
         "previousValue" : 26.0,
         "type" : "NumberMetric",
@@ -936,7 +936,7 @@
         "attributes" : {
           "db.temp_table.storage" : "memory"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 15.0,
         "previousValue" : 15.0,
         "type" : "NumberMetric",
@@ -949,7 +949,7 @@
         "attributes" : {
           "db.lock.state" : "immediate"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 55.0,
         "previousValue" : 55.0,
         "type" : "NumberMetric",
@@ -962,7 +962,7 @@
         "attributes" : {
           "db.lock.state" : "waited"
         },
-        "resetMetricTime" : true,
+        "resetMetricTime" : false,
         "value" : 0.0,
         "previousValue" : 0.0,
         "type" : "NumberMetric",
