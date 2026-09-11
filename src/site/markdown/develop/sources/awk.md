@@ -22,9 +22,8 @@ sources:
     type: awk
     input: ${source::beforeAll.inventoryRaw}
     script: |
-      split($0, fields, ";") >= 3 {
-        print fields[1] ";" fields[2] ";" tolower(fields[3])
-      }
+      BEGIN { FS=";"; OFS=";" }
+      NF >= 3 { print $1, $2, tolower($3) }
 ```
 
 ## Properties
