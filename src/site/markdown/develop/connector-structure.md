@@ -64,17 +64,19 @@ connector:
   information: Monitors enclosure and network ports.
   variables: {}
   detection: {}
+  healthChecks: {}
 ```
 
-| Property | Required | Notes |
-| --- | --- | --- |
-| `displayName` | Yes | Human-facing connector name. |
-| `platforms` | Yes | Platform grouping used in generated docs. |
-| `reliesOn` | Recommended | Main instrumentation layer. |
-| `version` | Recommended | Connector version. |
-| `information` | Recommended | What is monitored and constraints. |
-| `variables` | No | Optional defaults configurable by users. |
-| `detection` | Yes | Criteria used to select connector. |
+| Property       | Required    | Notes                                                                |
+| -------------- | ----------- | -------------------------------------------------------------------- |
+| `displayName`  | Yes         | Human-facing connector name.                                         |
+| `platforms`    | Yes         | Platform grouping used in generated docs.                            |
+| `reliesOn`     | Recommended | Main instrumentation layer.                                          |
+| `version`      | Recommended | Connector version.                                                   |
+| `information`  | Recommended | What is monitored and constraints.                                   |
+| `variables`    | No          | Optional defaults configurable by users.                             |
+| `detection`    | Yes         | Criteria used to select connector.                                   |
+| `healthChecks` | No          | Lightweight health checks used for periodic connector re-validation. |
 
 ## `detection` Object
 
@@ -86,6 +88,16 @@ detection:
   criteria:
   - type: snmpGetNext
     oid: 1.3.6.1.2.1.2.2.1
+```
+
+## `healthChecks` Object
+
+```yaml
+healthChecks:
+  - type: commandLine
+    commandLine: test -r /proc/version && echo PROC_OK
+    expectedResult: PROC_OK
+    errorMessage: Linux procfs is not accessible.
 ```
 
 ## `monitors` Object
