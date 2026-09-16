@@ -1,5 +1,5 @@
-keywords: awk, compute, JAWK, script, parsing, keep, selectColumns
-description: Runs an AWK script over the source result and rebuilds the table from the script's output, with optional line filtering and column selection.
+keywords: awk, compute, JAWK, script, parsing, variables, arrays, keep, selectColumns
+description: Runs an AWK script over the source result with optional scalar and source-table variables, then rebuilds the table with line filtering and column selection.
 
 # awk (Compute)
 
@@ -37,10 +37,35 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `awk`. |
 | `script` | Yes | None | The AWK script: an embedded-file reference `${file::script.awk}` (a file next to the connector), or the script text itself, typically as a YAML block scalar (`script: \|`). |
+| `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows; other values become scalars. See [Variables](#variables). |
 | `keep` | No | None | Regular expression; only **output** lines of the script that match are kept. |
 | `exclude` | No | None | Regular expression; matching **output** lines are discarded. |
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
+
+## Variables
+
+AWK computes accept the same `variables` map as [AWK sources](../sources/awk.html#variables): literals and resolved resource/monitor attributes or protocol properties become scalars, while source references become arrays accessed as `aTable[row][column]` with **zero-based** indexes. Variables are available before `BEGIN` runs and work with both inline scripts and embedded `.awk` files.
+
+For example, append the hostname and a scaled value to each semicolon-separated input row:
+
+```yaml
+computes:
+  - type: awk
+    variables:
+      hostname: ${resource.attribute::host.name}
+      scale: "2"
+    script: |
+      {
+        split($0, fields, ";")
+        print fields[1] ";" (fields[2] * scale) ";" hostname
+      }
+    separators: ;
+```
+
+For input `disk0;100` and hostname `server01`, the output table contains `disk0`, `200`, and `server01`. The script uses `split()` to read the input fields and prints semicolon-separated values; `separators` splits the printed output into table columns.
+
+To access another source's table, add a variable such as `aTable: ${source::monitors.disk.discovery.sources.raw}` and read `aTable[0][0]` for its first cell or `length(aTable)` for its row count. Ensure that source has already run. The compute still receives its current source result as normal AWK input; variables provide additional data. See the [source-table example and empty-source behavior](../sources/awk.html#variables).
 
 ## Table Transformation Example
 
@@ -84,6 +109,7 @@ The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` rem
 - Setting `selectColumns` without `separators`: the lines are never split, so the selection does nothing.
 - Expecting `keep`/`exclude` to filter the script's *input* — they filter its *output*. Filter input inside the script itself.
 - A script that prints nothing empties the table, and every downstream compute and mapping silently gets no rows.
+- Confusing zero-based source-table array indexes (`aTable[0][0]`) with one-based AWK record fields (`$1`) or `selectColumns` numbers.
 
 ## Community Examples
 
