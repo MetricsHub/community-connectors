@@ -94,10 +94,11 @@ detection:
 
 ```yaml
 healthChecks:
-  - type: commandLine
-    commandLine: test -r /proc/version && echo PROC_OK
-    expectedResult: PROC_OK
-    errorMessage: Linux procfs is not accessible.
+- type: http
+  method: GET
+  path: /redfish/v1/
+  expectedResult: ILO [5]
+  errorMessage: Not an HP iLO 5
 ```
 
 ## `monitors` Object
