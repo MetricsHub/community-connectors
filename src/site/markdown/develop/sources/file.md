@@ -32,7 +32,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `file`. |
-| `paths` | Yes | None | File path patterns to read. |
+| `paths` | Yes | None | File path patterns to read. Wildcards (`*` and `?`) are supported in any segment, directory or filename (one segment at a time, `**` is not supported). A path ending with a delimiter (`/var/log/`, `C:\logs\`) lists all files of the directory. An invalid path is skipped without discarding the other paths. |
 | `mode` | No | `LOG` | `LOG` (cursor/incremental) or `FLAT` (read full file each cycle). |
 | `maxSizePerPoll` | No | `5242880` | Max bytes read per cycle (`-1` for unlimited). |
 | `executeForEachEntryOf` | No | None | Fan-out execution context. |
