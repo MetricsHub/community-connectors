@@ -37,6 +37,7 @@ beforeAll:
     type: commandLine
     forceSerialization: true
     commandLine: |
+      export LC_ALL=C
       echo '##NET##'
       if ipLinkOutput=$(/usr/sbin/ip -s link 2>/dev/null); then
         printf '%s\n' "$ipLinkOutput"

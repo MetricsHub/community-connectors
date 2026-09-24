@@ -3,6 +3,7 @@ image:
 - command: '/usr/bin/uname -o 2>/dev/null || /bin/uname -o 2>/dev/null || { s=`/usr/bin/uname -s 2>/dev/null || /bin/uname -s 2>/dev/null || uname -s`; [ "$s" = "Linux" ] && echo GNU/Linux; }'
   result: ed93b84a-bdff-42b6-9cd5-7b464f1442a6.txt
 - command: |
+    export LC_ALL=C
     echo '##NET##'
     if ipLinkOutput=$(/usr/sbin/ip -s link 2>/dev/null); then
       printf '%s\n' "$ipLinkOutput"
