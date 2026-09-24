@@ -1,0 +1,295 @@
+##NET##
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    RX: bytes  packets  errors  dropped overrun mcast   
+    4052022203790 6537644028 0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    4052022203790 6537644028 0       0       0       0       
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:19:99:c5:7b:dd brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    268189060994 1938209175 0       743     0       715814  
+    TX: bytes  packets  errors  dropped carrier collsns 
+    331895897388 1751981465 0       0       0       0       
+3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 00:19:99:c5:7b:de brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    16650051559 246424510 0       9382866 0       115167  
+    TX: bytes  packets  errors  dropped carrier collsns 
+    3822       91       0       0       0       0       
+4: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    0          0        0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    0          0        0       0       0       0       
+5: virbr0-nic: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast master virbr0 state DOWN mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:38:1e:f3 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    0          0        0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    0          0        0       0       0       0       
+6: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default 
+    link/ether 02:42:d2:66:06:b2 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    0          0        0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    0          0        0       0       0       0       
+7: en03: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:21:5e:db:17:92 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    0          0        0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    0          0        0       0       0       0       
+##CPU##
+cpu  668364249 4836836 282814310 17068621721 103839385 0 12293509 0 0 0
+cpu0 36878547 244661 10888869 694697209 5531323 0 1294456 0 0 0
+cpu1 37114811 215997 10878563 696568637 7293666 0 475632 0 0 0
+cpu2 40017395 212835 12659529 694601817 3690362 0 786688 0 0 0
+cpu3 29529553 246419 11224571 704724259 6360752 0 465866 0 0 0
+cpu4 30985204 243379 11828041 701890368 6081610 0 791950 0 0 0
+cpu5 38907209 228979 11590712 695958242 5404601 0 603450 0 0 0
+cpu6 22843394 629857 11210686 715817335 4261473 0 444260 0 0 0
+cpu7 22712021 580717 11084818 716618955 4139843 0 418652 0 0 0
+cpu8 23458572 471790 11543106 715098434 4019666 0 548539 0 0 0
+cpu9 38625828 420615 14025093 697103324 3996370 0 500349 0 0 0
+cpu10 24957971 499919 11944270 713162249 4116233 0 471881 0 0 0
+cpu11 24458587 520215 11861852 713251730 4186632 0 642131 0 0 0
+cpu12 19252598 16482 6023288 694876196 37123473 0 356994 0 0 0
+cpu13 43107897 10135 27652438 685027363 630859 0 693517 0 0 0
+cpu14 26427159 10952 13352363 717951199 456880 0 148935 0 0 0
+cpu15 20043543 14692 7968684 729708861 668911 0 122904 0 0 0
+cpu16 16604302 17329 5478382 735637831 784646 0 123016 0 0 0
+cpu17 15192957 19658 4675206 737745393 865883 0 123575 0 0 0
+cpu18 13284952 59091 5934610 737834854 1529881 0 297203 0 0 0
+cpu19 32170956 28400 21075137 703453524 285244 0 689949 0 0 0
+cpu20 73050260 13772 27847341 650836002 1930075 0 1896662 0 0 0
+cpu21 14966933 34612 9718965 733704783 111471 0 181635 0 0 0
+cpu22 12279576 46751 6528558 740466515 153941 0 105464 0 0 0
+cpu23 11494015 49567 5819219 741886627 215579 0 109790 0 0 0
+intr 37987735442 94 0 0 0 0 0 0 0 1 2 0 0 0 0 0 0 783 0 0 0 0 0 0 123 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 378329872 1 585527580 321884442 328218638 382923183 378914152 371391312 391110055 1110234509 10627337 41 231623520 7734795 5336027 6478796 5459141 5623314 6124826 8498684 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ctxt 169809063689
+btime 1749708143
+processes 506714409
+procs_running 2
+procs_blocked 0
+softirq 79062871558 714 3916362481 2973150 2084014646 277973195 0 1283305785 242800237 0 2535964614
+##MEM##
+RANGE                                        SIZE  STATE REMOVABLE  BLOCK
+0x0000000000000000-0x000000007fffffff  2147483648 online        no   0-15
+0x0000000100000000-0x000000047fffffff 15032385536 online        no 32-143
+
+Memory block size:            134217728
+Total online memory:        17179869184
+Total offline memory:                 0
+MemTotal:       16228744 kB
+MemFree:          288148 kB
+MemAvailable:    6115128 kB
+Buffers:            2288 kB
+Cached:          4448920 kB
+SwapCached:        97736 kB
+Active:          6996844 kB
+Inactive:        5706372 kB
+Active(anon):    4977412 kB
+Inactive(anon):  4130400 kB
+Active(file):    2019432 kB
+Inactive(file):  1575972 kB
+Unevictable:       18848 kB
+Mlocked:           18848 kB
+SwapTotal:       4194300 kB
+SwapFree:        1652468 kB
+Dirty:              1176 kB
+Writeback:             0 kB
+AnonPages:       8184016 kB
+Mapped:           316332 kB
+Shmem:            847072 kB
+Slab:            2834480 kB
+SReclaimable:    2631600 kB
+SUnreclaim:       202880 kB
+KernelStack:       37792 kB
+PageTables:        66892 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    12308672 kB
+Committed_AS:   19184016 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      314708 kB
+VmallocChunk:   34350426108 kB
+Percpu:             8704 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:   4481024 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      166504 kB
+DirectMap2M:     6090752 kB
+DirectMap1G:    12582912 kB
+##SWAPS##
+Filename             Type      Size   Used   Priority
+/dev/dm-1                               partition   4194300    2541832    -2
+##VMSTAT##
+nr_free_pages 70609
+nr_alloc_batch 4348
+nr_inactive_anon 1032600
+nr_active_anon 1245773
+nr_inactive_file 393993
+nr_active_file 504858
+nr_unevictable 4712
+nr_mlock 4712
+nr_anon_pages 927550
+nr_mapped 78977
+nr_file_pages 1137236
+nr_dirty 294
+nr_writeback 0
+nr_slab_reclaimable 657900
+nr_slab_unreclaimable 50720
+nr_page_table_pages 16935
+nr_kernel_stack 2362
+nr_unstable 0
+nr_bounce 0
+nr_vmscan_write 762765
+nr_vmscan_immediate_reclaim 3433
+nr_writeback_temp 0
+nr_isolated_anon 0
+nr_isolated_file 0
+nr_shmem 211768
+nr_dirtied 1309625309
+nr_written 1261780445
+numa_hit 75124054208
+numa_miss 1860807233
+numa_foreign 1860807233
+numa_interleave 1926225403
+numa_local 74189229082
+numa_other 2795632359
+workingset_refault 497426
+workingset_activate 42499
+workingset_nodereclaim 0
+nr_anon_transparent_hugepages 2188
+nr_free_cma 0
+nr_dirty_threshold 180647
+nr_dirty_background_threshold 90323
+pgpgin 36448053
+pgpgout 5741819088
+pswpin 116883
+pswpout 762765
+pgalloc_dma 604114
+pgalloc_dma32 3584104969
+pgalloc_normal 76425990567
+pgalloc_movable 0
+pgfree 80011277626
+pgactivate 389870076
+pgdeactivate 24384343
+pgfault 232443686029
+pgmajfault 57242
+pglazyfreed 0
+pgrefill_dma 0
+pgrefill_dma32 1020265
+pgrefill_normal 14368525
+pgrefill_movable 0
+pgsteal_kswapd_dma 0
+pgsteal_kswapd_dma32 300764
+pgsteal_kswapd_normal 9428814
+pgsteal_kswapd_movable 0
+pgsteal_direct_dma 0
+pgsteal_direct_dma32 0
+pgsteal_direct_normal 16265
+pgsteal_direct_movable 0
+pgscan_kswapd_dma 0
+pgscan_kswapd_dma32 320799
+pgscan_kswapd_normal 10398649
+pgscan_kswapd_movable 0
+pgscan_direct_dma 0
+pgscan_direct_dma32 1
+pgscan_direct_normal 18065
+pgscan_direct_movable 0
+pgscan_direct_throttle 0
+zone_reclaim_failed 0
+pginodesteal 0
+slabs_scanned 191784192
+kswapd_inodesteal 620
+kswapd_low_wmark_hit_quickly 2573
+kswapd_high_wmark_hit_quickly 1204
+pageoutrun 7403
+allocstall 206
+pgrotated 742755
+drop_pagecache 0
+drop_slab 0
+numa_pte_updates 100994279535
+numa_huge_pte_updates 135016891
+numa_hint_faults 28564820224
+numa_hint_faults_local 25765054418
+numa_pages_migrated 286860114
+pgmigrate_success 287262551
+pgmigrate_fail 666263020
+compact_migrate_scanned 2230943
+compact_free_scanned 24546292
+compact_isolated 909998
+compact_stall 620
+compact_fail 114
+compact_success 506
+htlb_buddy_alloc_success 0
+htlb_buddy_alloc_fail 0
+unevictable_pgs_culled 2915
+unevictable_pgs_scanned 0
+unevictable_pgs_rescued 1480
+unevictable_pgs_mlocked 12498
+unevictable_pgs_munlocked 1475
+unevictable_pgs_cleared 7844
+unevictable_pgs_stranded 7839
+thp_fault_alloc 27991
+thp_fault_fallback 2307815
+thp_collapse_alloc 1637
+thp_collapse_alloc_failed 142210
+thp_split 12224
+thp_zero_page_alloc 1
+thp_zero_page_alloc_failed 0
+balloon_inflate 0
+balloon_deflate 0
+balloon_migrate 0
+swap_ra 81855
+swap_ra_hit 72184
+##SYSCLASSNET##
+eno1
+eno2
+##LINKSPEED##
+docker0;0
+eno1;1000
+eno2;1000
+lo;0
+virbr0;0
+virbr0-nic;0
+en03;1000
+##DISK##
+     8       0 sda 218290 79535 13668075 1678317 207556959 7049286 11483638136 356522893 2 1033650970 357946199
+     8       1 sda1 298 0 57273 4530 14 0 4200 1221 0 3371 5750
+     8       2 sda2 217959 79535 13606946 1673668 207556945 7049286 11483633936 356521672 2 1033650884 357939628
+    11       0 sr0 0 0 0 0 0 0 0 0 0 0 0
+   253       0 dm-0 180638 0 12646769 1560228 207998522 0 11232190800 830484960 2 1010321123 832212399
+   253       1 dm-1 116974 0 939496 287113 762765 0 6102120 48445780 0 160958 48740615
+   253       2 dm-2 224 0 15617 2585 5844946 0 245341056 74995508 0 30136840 74999066
+     8      32 sdc 32479 0 1488200 268198 0 0 0 0 0 261298 268177
+     8      16 sdb 12053 0 552280 78757 0 0 0 0 0 75638 78751
+     8      48 sdd 1163919 0 53338480 937212 0 0 0 0 0 655003 936534
+     8      64 sde 480794 0 3849072 311976 0 0 0 0 0 311614 311624
+   253       3 dm-3 49 0 2120 37 0 0 0 0 0 27 37
+   179       0 mmcblk0 84512 1200 3921040 281450 61290 8421 1189936 220330 0 84210 501780
+   179       1 mmcblk0p1 1024 0 8192 620 8 0 16 12 0 80 632
+   179       2 mmcblk0p2 83120 1200 3910000 280830 61282 8421 1189920 220318 0 84130 501148
+##DF##
+Filesystem                 Mounted on     Type             Used       Avail    1B-blocks
+devtmpfs                   /dev           devtmpfs            0  8296923136   8296923136
+tmpfs                      /dev/shm       tmpfs          307200  8308809728   8309116928
+tmpfs                      /run           tmpfs       849166336  7459950592   8309116928
+tmpfs                      /sys/fs/cgroup tmpfs               0  8309116928   8309116928
+/dev/mapper/rootvg-lv_root /              xfs      140291854336 10011029504 150302883840
+/dev/sda1                  /boot          xfs         266874880  1870123008   2136997888
+/dev/mapper/rootvg-lv_tmp  /tmp           xfs         514158592  3770322944   4284481536
+tmpfs                      /run/user/0    tmpfs               0  1661825024   1661825024
+##OS##
+CentOS Linux;7 (Core);3.10.0-1160.119.1.el7.x86_64;7613796
+

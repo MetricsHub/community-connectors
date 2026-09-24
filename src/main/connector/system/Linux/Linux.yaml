@@ -22,11 +22,90 @@ connector:
     criteria:
     # START SNIPPET: commandLineCriterion
     - type: commandLine
-      commandLine: /usr/bin/uname -o || /bin/uname -o
+      commandLine: /usr/bin/uname -o 2>/dev/null || /bin/uname -o 2>/dev/null || { s=`/usr/bin/uname -s 2>/dev/null || /bin/uname -s 2>/dev/null || uname -s`; [ "$s" = "Linux" ] && echo GNU/Linux; }
       expectedResult: GNU/Linux
       errorMessage: Not a Linux host.
     # END SNIPPET: commandLineCriterion
     tags: [ system, linux ]
+
+# Run the collection commands once per cycle. Commands that are common to
+# modern and legacy Linux are executed once. Where the legacy command differs,
+# the modern command is tried first and the legacy command is executed only if
+# the modern command fails.
+beforeAll:
+  systemSnapshot:
+    type: commandLine
+    forceSerialization: true
+    commandLine: |
+      echo '##NET##'
+      if ipLinkOutput=$(/usr/sbin/ip -s link 2>/dev/null); then
+        printf '%s\n' "$ipLinkOutput"
+      else
+        cat /proc/net/dev
+      fi
+
+      echo '##CPU##'; cat /proc/stat
+
+      echo '##MEM##'
+      if lsmemOutput=$(/usr/bin/lsmem -b 2>/dev/null); then
+        printf '%s\n' "$lsmemOutput"
+      fi
+      cat /proc/meminfo
+
+      echo '##SWAPS##'; cat /proc/swaps
+
+      echo '##VMSTAT##'; cat /proc/vmstat
+
+      echo '##SYSCLASSNET##'
+      for p in /sys/class/net/*; do [ -e "$p/device" ] && printf '%s\n' "${p##*/}"; done
+
+      echo '##LINKSPEED##'
+      for iface in `ls /sys/class/net`; do
+        speed=$(cat "/sys/class/net/$iface/speed" 2>/dev/null)
+
+        # Legacy fallback: some old kernels/drivers do not expose
+        # /sys/class/net/<iface>/speed.
+        case "$speed" in
+          ''|-1|*[!0-9]*)
+            ethtoolOutput=""
+
+            if [ -x /sbin/ethtool ]; then
+              ethtoolOutput=$(/sbin/ethtool "$iface" 2>/dev/null)
+            elif [ -x /usr/sbin/ethtool ]; then
+              ethtoolOutput=$(/usr/sbin/ethtool "$iface" 2>/dev/null)
+            fi
+
+            speed=$(printf '%s\n' "$ethtoolOutput" | sed -n 's/^[[:space:]]*Speed:[[:space:]]*\([0-9][0-9]*\)Mb\/s.*$/\1/p')
+            ;;
+        esac
+
+        [ -n "$speed" ] || speed=0
+
+        echo "$iface;$speed"
+      done
+
+      echo '##DISK##'; cat /proc/diskstats
+
+      echo '##DF##'
+      if dfOutput=$(/usr/bin/df -B1 --output=source,target,fstype,used,avail,size 2>/dev/null) ||
+         dfOutput=$(/usr/bin/df -k -P -T 2>/dev/null) ||
+         dfOutput=$(/bin/df -k -P -T 2>/dev/null) ||
+         dfOutput=$(df -k -P -T); then
+        printf '%s\n' "$dfOutput"
+      fi
+
+      echo '##OS##'
+      n=""
+      v=""
+      if [ -r /etc/os-release ]; then
+        . /etc/os-release
+        n="$NAME"
+        v="$VERSION"
+      fi
+      [ -z "$n" ] && n=`head -n1 /etc/redhat-release 2>/dev/null`
+      k=`/usr/bin/uname -r 2>/dev/null || /bin/uname -r 2>/dev/null || uname -r`
+      u=`cut -d. -f1 /proc/uptime`
+      echo "$n;$v;$k;$u"
 
 # Linux monitors
 monitors:
@@ -38,15 +117,18 @@ monitors:
       sources:
         cpuInfo:
           # cpuId;user;nice;system;idle;iowait
-          type: commandLine
-          commandLine: cat /proc/stat
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
             script: |
-              /cpu[0-9]/ {
+              /^##CPU##$/ { insec = 1; next }
+              /^##[A-Z_]+##$/ { if (insec) exit; next }
+              insec && /^cpu[0-9]/ {
                 sub("cpu","");
                 print $1 ";" $2 / 100 ";" $3 / 100 ";" $4 / 100 ";" $5 / 100 ";" $6 / 100
               }
+            separators: ;
       mapping:
         source: ${source::cpuInfo}
         attributes:
@@ -71,11 +153,12 @@ monitors:
       sources:
         memoryInfo:
           # memSystem
-          type: commandLine
-          commandLine: /usr/bin/lsmem -b ; cat /proc/meminfo
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
             script: ${file::memory.awk}
+            separators: ;
       mapping:
         source: ${source::memoryInfo}
         attributes:
@@ -98,12 +181,13 @@ monitors:
       sources:
         # Get swap usage from /proc/swaps
         swaps:
-          type: commandLine
-          commandLine: cat /proc/swaps
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           # Output: Path;Free;Used;%Free;%Used
           - type: awk
             script: ${file::swap.awk}
+            separators: ;
       mapping:
         source: ${source::swaps}
         attributes:
@@ -121,12 +205,13 @@ monitors:
       sources:
         # Get swap activity from /proc/vmstat
         swapActivity:
-          type: commandLine
-          commandLine: cat /proc/vmstat
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           # Output: pgfault;pgmajfault;pswpin;pswpout
           - type: awk
             script: ${file::swap-activity.awk}
+            separators: ;
       mapping:
         source: ${source::swapActivity}
         attributes:
@@ -141,39 +226,44 @@ monitors:
   network:
     simple:
       sources:
-        # Use the ip command to get network interface information.
-        # Older Red Hat-like systems, including Oracle Linux 6/RHEL 6/CentOS 6,
-        # commonly provide ip under /sbin instead of /usr/sbin.
+        # Parse either ip -s link or /proc/net/dev from the network section.
         ipLink:
           # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns;
-          type: commandLine
-          commandLine: /sbin/ip -s link 2>/dev/null || /usr/sbin/ip -s link 2>/dev/null || ip -s link
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
             script: ${file::network.awk}
+            separators: ;
 
         # Use the sysfs filesystem to filter out virtual interfaces
         sysClassNet:
           # Interface;
-          type: commandLine
-          commandLine: for p in /sys/class/net/*; do [ -e "$p/device" ] && printf '%s\n' "${p##*/}"; done
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
+          computes:
+          - type: awk
+            script: |
+              /^##SYSCLASSNET##$/ { insec = 1; next }
+              /^##[A-Z_]+##$/ { if (insec) exit; next }
+              insec { print }
+            separators: ;
 
         # Use the sysfs filesystem to get the link speed of each interface
         linkSpeed:
           # Interface;SpeedMbps
           # Note: The speed is in Mbps, so we need to convert it to bytes per second
-          type: commandLine
-          commandLine: |
-            for iface in `ls /sys/class/net`; do
-              speed=$(cat /sys/class/net/$iface/speed 2>/dev/null || echo 0)
-              echo "$iface;$speed"
-            done
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
           # Replace Network interfaces with a negative value by an empty string.
-            script: 
+            script: |
               BEGIN { FS=";"; OFS=";" }
-              { if (($2 + 0) == -1) $2 = ""; print }
+              /^##LINKSPEED##$/ { insec = 1; next }
+              /^##[A-Z_]+##$/ { if (insec) exit; next }
+              insec { if (($2 + 0) == -1) $2 = ""; print }
+            separators: ;
           # Convert speed from Mbps to bytes per second
           # Interface;SpeedBytesPerSecond
           - type: multiply
@@ -219,14 +309,17 @@ monitors:
       sources:
         physicalDiskActivity:
         #OperationsIORead;OperationsIOWrite;OperationsRead;OperationsWrite;MergedRead;MergedWrite;OperationTimeRead;OperationTimeWrite;IOTime
-          type: commandLine
-          commandLine: cat /proc/diskstats
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
             script: |
-              $3 ~ /^(?:[shv]d[a-z]|nvme[0-9]+n[0-9]+|mmcblk[0-9]+(?:p[0-9]+)?)$/ {
+              /^##DISK##$/ { insec = 1; next }
+              /^##[A-Z_]+##$/ { if (insec) exit; next }
+              insec && $3 ~ /^([shv]d[a-z]|xvd[a-z]+|nvme[0-9]+n[0-9]+|mmcblk[0-9]+(p[0-9]+)?)$/ {
                 print $3 ";" $6*512 ";" $10*512 ";" $4 ";" $8 ";" $5 ";" $9 ";" $7/1000 ";" $11/1000 ";" $13/1000
               }
+            separators: ;
       mapping:
         source: ${source::physicalDiskActivity}
         attributes:
@@ -249,14 +342,13 @@ monitors:
       type: multiInstance
       sources:
         fileSystemInfo:
-          # New Linux df input: source;target;type;used-bytes;available-bytes;size-bytes
-          # Legacy Linux df input: source;type;size-KiB;used-KiB;available-KiB;capacity;target
-          # Normalized output: id;target;type;used;available;used%;available%;reserved;reserved%
-          type: commandLine
-          commandLine: /usr/bin/df -B1 --output=source,target,fstype,used,avail,size 2>/dev/null || df -P -T -k
+          # filesystem;mountpoint;type;used;available
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
-            script: ${file::fileSystemInfo.awk}
+            script: ${file::filesystem.awk}
+            separators: ;
       mapping:
         source: ${source::fileSystemInfo}
         attributes:
@@ -278,10 +370,15 @@ monitors:
       sources:
         # Distribution;Version;Kernel
         osInformation:
-          type: commandLine
-          commandLine: |
-            . /etc/os-release
-            echo "$NAME;$VERSION;`uname -r`;`cut -d. -f1 /proc/uptime`"
+          type: copy
+          from: "${source::beforeAll.systemSnapshot}"
+          computes:
+          - type: awk
+            script: |
+              /^##OS##$/ { insec = 1; next }
+              /^##[A-Z_]+##$/ { if (insec) exit; next }
+              insec { print }
+            separators: ;
       mapping:
         source: ${source::osInformation}
         attributes:
