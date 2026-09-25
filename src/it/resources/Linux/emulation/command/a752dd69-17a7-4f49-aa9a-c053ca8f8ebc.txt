@@ -1,2 +1,0 @@
-Filename				Type		Size	Used	Priority
-/dev/dm-1                               partition	4194300	2541832	-2

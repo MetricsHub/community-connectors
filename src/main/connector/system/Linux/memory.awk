@@ -11,23 +11,26 @@ BEGIN {
     OFS = ";"
 }
 
-/^Total online memory:/ {
+/^##MEM##$/ { insec = 1; next }
+/^##[A-Z_]+##$/ { if (insec) exit; next }
+
+insec && /^Total online memory:/ {
     memTotal = $NF
 }
 
-/^MemTotal:/ && memTotal == 0 {
+insec && /^MemTotal:/ && memTotal == 0 {
     memTotal = $2 * 1024
 }
 
-/^MemFree:/ {
+insec && /^MemFree:/ {
     memFree = $2 * 1024
 }
 
-/^Buffers:/ {
+insec && /^Buffers:/ {
     memBuffers = $2 * 1024
 }
 
-/^Cached:/ {
+insec && /^Cached:/ {
     memCached = $2 * 1024
 }
 
