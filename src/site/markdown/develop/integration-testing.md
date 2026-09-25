@@ -133,7 +133,7 @@ This will generate `expected-gen.json` in `src/it/resources/<MyConnectorId>/expe
 mv src/it/resources/<MyConnectorId>/expected/expected-gen.json src/it/resources/<MyConnectorId>/expected/expected.json
 ```
 
-* Remove dynamic attributes such as `agent.host.name` from the `expected.json` to avoid test failures due to environment differences.
+The helper already omits the `agent.host.name` attribute, which holds the generating machine's host name and would fail the test on any other machine (including CI).
 
 > [!IMPORTANT]
 > The generate-then-rename workflow above is for the **initial** creation of `expected.json`. When later modifying an existing connector, avoid regenerating the file with the `writeExpectedJson` helper. Instead, manually update the expected file to reflect the specific connector changes. This keeps the expected file stable and ensures it changes only for intentional connector behavior updates. It also allows reviewers to clearly identify and validate the exact expected changes, without noise introduced by the recording process.

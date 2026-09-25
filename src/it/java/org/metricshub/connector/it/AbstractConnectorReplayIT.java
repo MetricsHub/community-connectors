@@ -2,6 +2,7 @@ package org.metricshub.connector.it;
 
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -35,6 +36,7 @@ abstract class AbstractConnectorReplayIT {
 
 	/**
 	 * Writes the generated expected JSON output to a file for the specified connector.
+	 * Omits the machine-specific agent host name and uses LF line endings for portability.
 	 *
 	 * @param connectorId The identifier of the connector to generate expected JSON for
 	 * @throws Exception In case of any errors during JSON generation or file writing
@@ -42,8 +44,10 @@ abstract class AbstractConnectorReplayIT {
 	static void writeExpectedJson(final String connectorId) throws Exception {
 		final Path outputPath = Paths.get("src/it/resources/" + connectorId + "/expected/expected-gen.json");
 		outputPath.getParent().toFile().mkdirs();
-		new EmulationITBase(connectorId)
-			.executeStrategies()
-			.saveTelemetryManagerJson(outputPath);
+		final var job = new EmulationITBase(connectorId);
+		job.executeStrategies();
+		job.getTelemetryManager().getMonitors().get("host").values()
+			.forEach(monitor -> monitor.getAttributes().remove("agent.host.name"));
+		Files.writeString(outputPath, job.getTelemetryManager().toJson().replace("\r\n", "\n"));
 	}
 }
