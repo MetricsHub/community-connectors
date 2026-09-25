@@ -104,21 +104,21 @@ For protocol-specific emulation directories, configure each protocol under the `
 
 ## 4. Generate the Expected Output
 
-The `ConnectorReplayIT` class provides a helper method `writeExpectedJson` to generate the expected JSON output for your connector. Follow these steps:
+The `AbstractConnectorReplayIT` base class provides a helper method `writeExpectedJson` to generate the expected JSON output for your connector. Follow these steps:
 
-* Add a temporary test method in `ConnectorReplayIT.java` that calls `writeExpectedJson` with your connector identifier:
+* Create your connector's test class as described in section 5 below, and add a temporary test method to it that calls `writeExpectedJson` with your connector identifier:
 
 ```java
 @Test
-void generateExpectedMyConnector() throws Exception {
-  writeExpectedJson("MyConnector");
+void generateExpected() throws Exception {
+	writeExpectedJson("MyConnector");
 }
 ```
 
 * Run that test via Maven:
 
 ```bash
-mvn clean verify -Dtest=ConnectorReplayIT#generateExpectedMyConnector
+mvn clean verify -DfailIfNoTests=false -Dit.test=MyConnectorIT#generateExpected
 ```
 
 This will generate `expected-gen.json` in `src/it/resources/<MyConnectorId>/expected/`.
@@ -140,31 +140,43 @@ mv src/it/resources/<MyConnectorId>/expected/expected-gen.json src/it/resources/
 
 ## 5. Add the Connector to the IT Tests
 
-In `ConnectorReplayIT.java`, add a new test method for your connector, replacing `MyConnector` with your connector identifier:
+Create `src/it/java/org/metricshub/connector/it/MyConnectorIT.java`, replacing `MyConnector` with your connector identifier:
 
 ```java
-@Test
-void testMyConnector() throws Exception {
-	testConnectorReplay("MyConnector");
+package org.metricshub.connector.it;
+
+class MyConnectorIT extends AbstractConnectorReplayIT {
+
+	MyConnectorIT() {
+		super("MyConnector");
+	}
 }
 ```
 
-Each test method corresponds to a single connector to minimize merge conflicts and provide clear JUnit output per connector.
+The class inherits the replay test from `AbstractConnectorReplayIT`. Each connector has its own test class to minimize merge conflicts and provide clear JUnit output per connector.
 
-For connectors that have specific service criteria (e.g., Windows-only), add the appropriate condition annotation:
+For connectors that have specific service criteria (e.g., Windows-only), add the appropriate condition annotation to the class:
 
 ```java
-@Test
 @EnabledOnOs(WINDOWS)
-void testMyWindowsConnector() throws Exception {
-	testConnectorReplay("MyWindowsConnector");
+class MyWindowsConnectorIT extends AbstractConnectorReplayIT {
+
+	MyWindowsConnectorIT() {
+		super("MyWindowsConnector");
+	}
 }
+```
+
+Run your connector's test alone with:
+
+```bash
+mvn verify -DfailIfNoTests=false -Dit.test=MyConnectorIT
 ```
 
 ## 6. Debugging and Troubleshooting
 
 > [!TIP]
-> To debug the integration test, you can run the `ConnectorReplayIT` class in debug mode from your IDE. If you want to generate log files during the test execution, set the `loggerLevel` system property to `debug`, and specify a log directory using `outputDirectory`:
+> To debug the integration test, you can run your connector's `<ConnectorId>IT` class in debug mode from your IDE. If you want to generate log files during the test execution, set the `loggerLevel` system property to `debug`, and specify a log directory using `outputDirectory`:
 
 ```yaml
 otel:
