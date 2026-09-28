@@ -280,16 +280,6 @@ en03;1000
    179       0 mmcblk0 84512 1200 3921040 281450 61290 8421 1189936 220330 0 84210 501780
    179       1 mmcblk0p1 1024 0 8192 620 8 0 16 12 0 80 632
    179       2 mmcblk0p2 83120 1200 3910000 280830 61282 8421 1189920 220318 0 84130 501148
-##DF##
-Filesystem                 Mounted on     Type             Used       Avail    1B-blocks
-devtmpfs                   /dev           devtmpfs            0  8296923136   8296923136
-tmpfs                      /dev/shm       tmpfs          307200  8308809728   8309116928
-tmpfs                      /run           tmpfs       849166336  7459950592   8309116928
-tmpfs                      /sys/fs/cgroup tmpfs               0  8309116928   8309116928
-/dev/mapper/rootvg-lv_root /              xfs      140291854336 10011029504 150302883840
-/dev/sda1                  /boot          xfs         266874880  1870123008   2136997888
-/dev/mapper/rootvg-lv_tmp  /tmp           xfs         514158592  3770322944   4284481536
-tmpfs                      /run/user/0    tmpfs               0  1661825024   1661825024
 ##OS##
 CentOS Linux;7 (Core);3.10.0-1160.119.1.el7.x86_64;7613796
 

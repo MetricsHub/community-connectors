@@ -60,14 +60,6 @@ image:
 
     echo '##DISK##'; cat /proc/diskstats
 
-    echo '##DF##'
-    if dfOutput=$(/usr/bin/df -B1 --output=source,target,fstype,used,avail,size 2>/dev/null) ||
-       dfOutput=$(/usr/bin/df -k -P -T 2>/dev/null) ||
-       dfOutput=$(/bin/df -k -P -T 2>/dev/null) ||
-       dfOutput=$(df -k -P -T); then
-      printf '%s\n' "$dfOutput"
-    fi
-
     echo '##OS##'
     n=""
     v=""
@@ -81,3 +73,10 @@ image:
     u=`cut -d. -f1 /proc/uptime`
     echo "$n;$v;$k;$u"
   result: system-snapshot.txt
+- command: |
+    export LC_ALL=C
+    /usr/bin/df -B1 --output=source,target,fstype,used,avail,size 2>/dev/null ||
+    /usr/bin/df -k -P -T 2>/dev/null ||
+    /bin/df -k -P -T 2>/dev/null ||
+    df -k -P -T
+  result: filesystem.txt

@@ -94,14 +94,6 @@ beforeAll:
 
       echo '##DISK##'; cat /proc/diskstats
 
-      echo '##DF##'
-      if dfOutput=$(/usr/bin/df -B1 --output=source,target,fstype,used,avail,size 2>/dev/null) ||
-         dfOutput=$(/usr/bin/df -k -P -T 2>/dev/null) ||
-         dfOutput=$(/bin/df -k -P -T 2>/dev/null) ||
-         dfOutput=$(df -k -P -T); then
-        printf '%s\n' "$dfOutput"
-      fi
-
       echo '##OS##'
       n=""
       v=""
@@ -351,8 +343,13 @@ monitors:
       sources:
         fileSystemInfo:
           # filesystem;mountpoint;type;used;available
-          type: copy
-          from: "${source::beforeAll.systemSnapshot}"
+          type: commandLine
+          commandLine: |
+            export LC_ALL=C
+            /usr/bin/df -B1 --output=source,target,fstype,used,avail,size 2>/dev/null ||
+            /usr/bin/df -k -P -T 2>/dev/null ||
+            /bin/df -k -P -T 2>/dev/null ||
+            df -k -P -T
           computes:
           - type: awk
             script: ${file::filesystem.awk}

@@ -1,13 +1,13 @@
-/^##DF##$/ { insec = 1; next }
-/^##[A-Z_]+##$/ { if (insec) exit; next }
-
 # LC_ALL=C in the snapshot makes the df header independent of the host locale.
 # Modern: Filesystem Mounted on Type Used Avail 1B-blocks
 # Legacy: Filesystem Type 1024-blocks Used Available Capacity Mounted on
-insec && /^Filesystem[ \t]/ { legacy = ($2 == "Type"); next }
+/^Filesystem[ \t]/ {
+    legacy = ($2 == "Type")
+    next
+}
 
-# Exclude pseudo/temporary and remote filesystems.
-insec && $1 ~ /\/dev/ {
+# Exclude pseudo and remote filesystems.
+$1 ~ /\/dev/ {
 	if (!legacy) {
 		# Modern: df -B1 --output=source,target,fstype,used,avail,size
 		size = $6
