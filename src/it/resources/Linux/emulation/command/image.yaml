@@ -29,6 +29,7 @@ image:
     echo '##LINKSPEED##'
     for iface in `ls /sys/class/net`; do
       speed=$(cat "/sys/class/net/$iface/speed" 2>/dev/null)
+      sysfsSpeed="$speed"
 
       # Legacy fallback: some old kernels/drivers do not expose
       # /sys/class/net/<iface>/speed.
@@ -43,10 +44,16 @@ image:
           fi
 
           speed=$(printf '%s\n' "$ethtoolOutput" | sed -n 's/^[[:space:]]*Speed:[[:space:]]*\([0-9][0-9]*\)Mb\/s.*$/\1/p')
-          ;;
+          
+          if [ -z "$speed" ]; then
+            if [ "$sysfsSpeed" = "-1" ]; then
+              speed=-1
+            else
+              # Preserve unknown speed when neither sysfs nor ethtool provides a valid value.
+              speed=""
+            fi
+          fi
       esac
-
-      [ -n "$speed" ] || speed=0
 
       echo "$iface;$speed"
     done
