@@ -20,7 +20,7 @@ This page describes how a connector change travels from your machine to the rele
 Keep the scope tight: only the files required for the connector change.
 
 - The connector YAML under `src/main/connector/<category>/<ConnectorId>/<ConnectorId>.yaml`, plus its embedded files (`.awk` scripts, header files, ...) in the same folder.
-- Integration-test resources under `src/it/resources/<ConnectorId>/` (`config/metricshub.yaml`, `emulation/`, `expected/expected.json`) and the connector's registration in `src/it/java/org/metricshub/connector/it/ConnectorReplayIT.java` — see [Integration Testing](integration-testing.html).
+- Integration-test resources under `src/it/resources/<ConnectorId>/` (`config/metricshub.yaml`, `emulation/`, `expected/expected.json`) and the connector's test class `src/it/java/org/metricshub/connector/it/<ConnectorId>IT.java` — see [Integration Testing](integration-testing.html).
 - Any emulator or script used to develop and test the connector, committed alongside the test resources so reviewers and future maintainers can reproduce your results.
 
 Do **not** commit transient artifacts: emulator logs, `__pycache__/`, temporary captures, or working notes.
@@ -31,7 +31,7 @@ Do **not** commit transient artifacts: emulator logs, `__pycache__/`, temporary 
 mvn verify
 ```
 
-This compiles every connector, runs static analysis (PMD, configured by `pmd.xml`), and executes the replay integration tests (`ConnectorReplayIT`, via Failsafe). Run it before opening the PR — it is what CI runs.
+This compiles every connector, runs static analysis (PMD, configured by `pmd.xml`), and executes the replay integration tests (the `<ConnectorId>IT` classes, via Failsafe). Run it before opening the PR — it is what CI runs.
 
 Java source files must carry the AGPL-3 license header (the build fails otherwise). If you add or modify Java files:
 
