@@ -6,7 +6,7 @@
 # Legacy: Filesystem Type 1024-blocks Used Available Capacity Mounted on
 insec && /^Filesystem[ \t]/ { legacy = ($2 == "Type"); next }
 
-# Exclude pseudo and remote filesystems.
+# Exclude pseudo/temporary and remote filesystems.
 insec && $1 ~ /\/dev/ {
 	if (!legacy) {
 		# Modern: df -B1 --output=source,target,fstype,used,avail,size
