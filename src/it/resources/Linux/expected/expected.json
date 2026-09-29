@@ -26,7 +26,7 @@
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: /usr/bin/uname -o || /bin/uname -o\n- ExecuteLocally: false\n- ExpectedResult: GNU/Linux\n\nResult:\nGNU/Linux\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /usr/bin/uname -o || /bin/uname -o\n- ExecuteLocally: false\n- ExpectedResult: GNU/Linux\n\nResult: GNU/Linux\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: /usr/bin/uname -o 2>/dev/null || /bin/uname -o 2>/dev/null || { s=`/usr/bin/uname -s 2>/dev/null || /bin/uname -s 2>/dev/null || uname -s`; [ \"$s\" = \"Linux\" ] && echo GNU/Linux; }\n- ExecuteLocally: false\n- ExpectedResult: GNU/Linux\n\nResult:\nGNU/Linux\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /usr/bin/uname -o 2>/dev/null || /bin/uname -o 2>/dev/null || { s=`/usr/bin/uname -s 2>/dev/null || /bin/uname -s 2>/dev/null || uname -s`; [ \"$s\" = \"Linux\" ] && echo GNU/Linux; }\n- ExecuteLocally: false\n- ExpectedResult: GNU/Linux\n\nResult: GNU/Linux\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
     },
     "alertRules" : { },
     "discoveryTime" : 1776263311436,
