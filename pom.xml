@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>community-connectors</artifactId>
-	<version>1.0.23-SNAPSHOT</version>
+	<version>1.0.23</version>
 
 	<name>MetricsHub Community Connectors</name>
 	<description>MetricsHub Community Connector Repository</description>
@@ -37,7 +37,7 @@
 	<scm>
 		<connection>scm:git:https://github.com/metricshub/community-connectors.git</connection>
 		<url>https://github.com/metricshub/community-connectors</url>
-		<tag>HEAD</tag>
+		<tag>v1.0.23</tag>
 	</scm>
 
 	<developers>
@@ -62,7 +62,7 @@
 		<metricshub-community.version>3.9.06</metricshub-community.version>
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
-		<project.build.outputTimestamp>2026-08-13T08:21:35Z</project.build.outputTimestamp>
+		<project.build.outputTimestamp>2026-09-30T12:48:00Z</project.build.outputTimestamp>
 	</properties>
 
 	<dependencyManagement>
