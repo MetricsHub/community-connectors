@@ -20,10 +20,7 @@ mvn verify
 
 The artifact is deployed to Sonatype's [Maven Central](https://central.sonatype.com/).
 
-The actual repository URL is https://s01.oss.sonatype.org/, with server Id `ossrh` and requires credentials to deploy
-artifacts manually.
-
-But it is strongly recommended to only use [GitHub Actions "Release to Maven Central"](actions/workflows/release.yml) to perform a release:
+It is strongly recommended to only use [GitHub Actions "Release to Maven Central"](actions/workflows/release.yml) to perform a release:
 
 * Manually trigger the "Release" workflow
 * Specify the version being released and the next version number (SNAPSHOT)
