@@ -1,0 +1,24 @@
+---
+image:
+- request:
+    wql: SELECT * FROM Win32_OperatingSystem
+    namespace: root\CIMv2
+  response: 6ec75ca6-6e0c-4501-b949-b74608db2028.csv
+- request:
+    wql: |
+      SELECT
+        Name,
+        State,
+        StartMode,
+        DisplayName,
+        StartName,
+        PathName,
+        ProcessId
+      FROM
+        Win32_Service
+    namespace: root\CIMv2
+  response: 19985263-714e-4946-b6d0-a1755dc106bc.csv
+- request:
+    wql: SELECT Name FROM Win32_ComputerSystem
+    namespace: root\cimv2
+  response: 0fc68729-68c8-43f6-b429-a582e803b4c7.csv

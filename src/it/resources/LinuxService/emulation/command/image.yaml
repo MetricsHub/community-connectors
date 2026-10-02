@@ -1,0 +1,6 @@
+---
+image:
+- command: /usr/bin/systemctl
+  result: a904db54-f8ee-4e82-a2f6-980dcbf73783.txt
+- command: /usr/bin/systemctl list-units --type=service --all
+  result: 0992b20b-e215-4b8d-a2f1-f4e9843f677c.txt

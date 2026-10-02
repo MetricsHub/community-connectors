@@ -1,13 +1,5 @@
 extends:
 - ../../semconv/System
-metrics:
-  system.service.status:
-    description: Service Status
-    type:
-      stateSet:
-        - running
-        - dead
-        - exited
 connector:
   displayName: Linux - Service (systemctl)
   platforms: Linux

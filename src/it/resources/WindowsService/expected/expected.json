@@ -1,0 +1,430 @@
+{
+  "total" : 10,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "WindowsService.yaml",
+      "name" : "Windows - Services (WMI)",
+      "connector_id" : "WindowsService",
+      "applies_to_os" : "windows",
+      "parent.id" : "localhost",
+      "id" : "WindowsService"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed WmiCriterion Criterion:\n- WQL Query: SELECT * FROM Win32_OperatingSystem\n- Namespace: root\\CIMv2\n\nResult:\nWin32_OperatingSystem;CIM_OperatingSystem|CIM_LogicalElement|CIM_ManagedSystemElement|;CIM_ManagedSystemElement;2;root\\CIMv2;Win32_OperatingSystem=@;64;Win32_OperatingSystem=@;PC-01;CIM_OperatingSystem;\\Device\\HarddiskVolume1;26200;Multiprocessor Free;Microsoft Windows 11 Business;1252;44;Win32_OperatingSystem;Win32_ComputerSystem;;PC-01;120;True;True;True;2;False;;False;256;2;625344;25728832;13974816;1739778800;;1790580220;1790868985;0809;Microsoft Corporation;4294967295;137438953344;fr-FR|en-GB|en-US|;Microsoft Windows 11 Business|C:\\WINDOWS|\\Device\\Harddisk0\\Partition3;;331;2;48;HP Inc.;64 bits;1036;256;18;;;;;False;True;1;HP Inc.;00355-63246-59290-AAOEM;0;0;29360128;OK;272;\\Device\\HarddiskVolume3;C:\\WINDOWS\\system32;C:;;45417492;16057364;10.0.26200;C:\\WINDOWS;\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT * FROM Win32_OperatingSystem\n- Namespace: root\\CIMv2\n\nResult: Win32_OperatingSystem;CIM_OperatingSystem|CIM_LogicalElement|CIM_ManagedSystemElement|;CIM_ManagedSystemElement;2;root\\CIMv2;Win32_OperatingSystem=@;64;Win32_OperatingSystem=@;PC-01;CIM_OperatingSystem;\\Device\\HarddiskVolume1;26200;Multiprocessor Free;Microsoft Windows 11 Business;1252;44;Win32_OperatingSystem;Win32_ComputerSystem;;PC-01;120;True;True;True;2;False;;False;256;2;625344;25728832;13974816;1739778800;;1790580220;1790868985;0809;Microsoft Corporation;4294967295;137438953344;fr-FR|en-GB|en-US|;Microsoft Windows 11 Business|C:\\WINDOWS|\\Device\\Harddisk0\\Partition3;;331;2;48;HP Inc.;64 bits;1036;256;18;;;;;False;True;1;HP Inc.;00355-63246-59290-AAOEM;0;0;29360128;OK;272;\\Device\\HarddiskVolume3;C:\\WINDOWS\\system32;C:;;45417492;16057364;10.0.26200;C:\\WINDOWS;\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1790931559614,
+    "type" : "connector",
+    "id" : "connector_WindowsService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : true,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WindowsService\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WindowsService\"}",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "WindowsService",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.001,
+        "previousValue" : 0.024,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"service\", connector_id=\"WindowsService\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"service\", connector_id=\"WindowsService\"}",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "WindowsService",
+          "monitor.type" : "service"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.005,
+        "previousValue" : 0.049,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.002,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.observed" : {
+        "name" : "metricshub.host.observed",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "windows",
+      "host.name" : "localhost",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "connector" : false,
+    "endpointHost" : true,
+    "endpoint" : true,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "continue_pending",
+        "previousValue" : "continue_pending",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Manual",
+      "system.service.name" : "Continue Pending Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\continue-pending.exe",
+      "id" : "ContinuePendingService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_ContinuePendingService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "pause_pending",
+        "previousValue" : "pause_pending",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Manual",
+      "system.service.name" : "Pause Pending Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\pause-pending.exe",
+      "id" : "PausePendingService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_PausePendingService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "paused",
+        "previousValue" : "paused",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Manual",
+      "system.service.name" : "Paused Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\paused.exe",
+      "id" : "PausedService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_PausedService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "running",
+        "previousValue" : "running",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Auto",
+      "system.service.name" : "Running Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\running.exe",
+      "id" : "RunningService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_RunningService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "start_pending",
+        "previousValue" : "start_pending",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Auto",
+      "system.service.name" : "Start Pending Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\start-pending.exe",
+      "id" : "StartPendingService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_StartPendingService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "stop_pending",
+        "previousValue" : "stop_pending",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Manual",
+      "system.service.name" : "Stop Pending Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\stop-pending.exe",
+      "id" : "StopPendingService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_StopPendingService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "stopped",
+        "previousValue" : "stopped",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Manual",
+      "system.service.name" : "Stopped Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\stopped.exe",
+      "id" : "StoppedService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_StoppedService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931565842,
+        "previousCollectTime" : 1790931559614,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "unknown",
+        "previousValue" : "unknown",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "system.service.start" : "Manual",
+      "system.service.name" : "Unknown Service",
+      "connector_id" : "WindowsService",
+      "system.service.command" : "C:\\Services\\unknown.exe",
+      "id" : "UnknownService",
+      "system.service.username" : "LocalSystem"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931565842,
+    "type" : "service",
+    "id" : "WindowsService_service_UnknownService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  } ]
+}
