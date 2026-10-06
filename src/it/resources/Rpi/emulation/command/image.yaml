@@ -1,0 +1,32 @@
+---
+image:
+- command: |
+    test -r /sys/firmware/devicetree/base/model && tr -d '\000' < /sys/firmware/devicetree/base/model
+  result: detection.txt
+- command: |-
+    grep -a . /sys/firmware/devicetree/base/model /sys/firmware/devicetree/base/serial-number 2>/dev/null | tr -d '\000'
+  result: enclosure-board.txt
+- command: |-
+    for input in /sys/devices/platform/cooling_fan/hwmon/*/fan1_input /sys/class/hwmon/hwmon*/fan1_input; do
+      test -r "$input" || continue;
+      value=$(cat "$input");
+      case "$value" in
+        ''|*[!0-9]*) continue ;;
+      esac;
+      printf 'cooling-fan;Cooling fan;%s\n' "$value";
+      break;
+    done
+  result: fan-coolingFan.txt
+- command: |-
+    for zone in /sys/class/thermal/thermal_zone*; do
+      test -r "$zone/type" && test -r "$zone/temp" || continue;
+      type=$(cat "$zone/type");
+      case "$type" in
+        cpu-thermal|soc_thermal)
+          value=$(cat "$zone/temp");
+          printf 'cpu;%s;%s\n' "$type" "$value";
+          break
+          ;;
+      esac;
+    done
+  result: temperature-cpuTemperature.txt
