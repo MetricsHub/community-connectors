@@ -1,0 +1,157 @@
+---
+# MetricsHub Community Connector proposal
+#
+# Target path in the community-connectors repository:
+#   src/main/connector/hardware/RaspberryPi/RaspberryPi.yaml
+#
+# Design notes:
+# - Uses Linux sysfs only: no extra package and no sudo rule are required.
+# - Temperature is read from the thermal zone named cpu-thermal or soc_thermal.
+# - Fan RPM is optional. It is exported only when the kernel exposes fan1_input,
+#   notably for the Raspberry Pi 5 cooling_fan hwmon device.
+# - Commands emit semicolon-separated tables to keep mappings declarative.
+
+extends:
+- ../../semconv/Hardware
+
+connector:
+  displayName: Raspberry Pi Hardware
+  platforms: Raspberry Pi
+  reliesOn: Linux thermal and hwmon sysfs interfaces
+  information: >
+    Monitors Raspberry Pi board temperature and, when a tachometer is exposed
+    by the kernel, cooling fan speed in RPM.
+  version: 1.0
+
+  detection:
+    connectionTypes:
+    - remote
+    - local
+    appliesTo:
+    - Linux
+    criteria:
+    # /sys/firmware/devicetree/base/model is supplied by the Raspberry Pi
+    # device tree. Removing NUL bytes makes its value safe for text matching.
+    - type: commandLine
+      commandLine: >
+        test -r /sys/firmware/devicetree/base/model &&
+        tr -d '\000' < /sys/firmware/devicetree/base/model
+      expectedResult: ^Raspberry Pi
+      errorMessage: The target does not appear to be a Raspberry Pi.
+    tags: [ hardware, linux, raspberry-pi ]
+
+monitors:
+  # Create one stable parent resource for all board-level sensors.
+  enclosure:
+    simple:
+      sources:
+        board:
+          type: commandLine
+          # Output columns:
+          # id;model;serial_number
+          #
+          # The serial number can be absent on unusual kernels. An empty value
+          # is intentionally allowed; the constant id remains stable.
+          commandLine: >-
+            model=$(tr -d '\000' < /sys/firmware/devicetree/base/model);
+            serial=$(awk -F: '/^Serial[[:space:]]*:/ {
+              gsub(/[[:space:]]/, "", $2); print $2; exit
+            }' /proc/cpuinfo);
+            printf 'raspberry-pi;%s;%s\n' "$model" "$serial"
+          computes:
+          - type: awk
+            # Prefix the already-delimited row for filtering. Do not add CSV
+            # quotes: MetricsHub would retain them in mapped attributes.
+            script: 'BEGIN { FS=";" } { printf "MSHW;%s;%s;%s;\n", $1, $2, $3 }'
+            separators: ;
+            keep: ^MSHW;
+            selectColumns: 2,3,4
+      mapping:
+        source: ${source::board}
+        attributes:
+          id: $1
+          __display_id: $2
+          model: $2
+          serial_number: $3
+          type: Computer
+
+  temperature:
+    keys:
+    - id
+    simple:
+      sources:
+        cpuTemperature:
+          type: commandLine
+          # Output columns:
+          # id;sensor_name;temperature_millicelsius
+          #
+          # Thermal-zone numbering is not stable across kernel versions.
+          # Match the zone by its documented type instead of assuming zone0.
+          commandLine: >-
+            for zone in /sys/class/thermal/thermal_zone*; do
+              test -r "$zone/type" && test -r "$zone/temp" || continue;
+              type=$(cat "$zone/type");
+              case "$type" in
+                cpu-thermal|soc_thermal)
+                  value=$(cat "$zone/temp");
+                  printf 'cpu;%s;%s\n' "$type" "$value";
+                  break
+                  ;;
+              esac;
+            done
+          computes:
+          # Linux thermal sysfs reports millidegrees Celsius.
+          - type: divide
+            column: 3
+            value: 1000
+      mapping:
+        source: ${source::cpuTemperature}
+        attributes:
+          id: $1
+          __display_id: CPU temperature
+          name: CPU temperature
+          sensor_location: CPU
+          hw.parent.type: enclosure
+          hw.parent.id: raspberry-pi
+        metrics:
+          hw.temperature: $3
+          # Raspberry Pi boards start thermal throttling at 80 °C and apply
+          # stronger throttling at the 85 °C maximum operating temperature.
+          hw.temperature.limit{limit_type="high.degraded"}: 80
+          hw.temperature.limit{limit_type="high.critical"}: 85
+
+  fan:
+    keys:
+    - id
+    simple:
+      sources:
+        coolingFan:
+          type: commandLine
+          # Output columns:
+          # id;fan_name;speed_rpm
+          #
+          # fan1_input is the standard Linux hwmon tachometer attribute.
+          # The glob deliberately allows the kernel-assigned hwmon index to
+          # change between boots. If no readable tachometer exists, this
+          # command returns no row and MetricsHub creates no fan instance.
+          commandLine: >-
+            for input in /sys/devices/platform/cooling_fan/hwmon/*/fan1_input /sys/class/hwmon/hwmon*/fan1_input; do
+              test -r "$input" || continue;
+              value=$(cat "$input");
+              case "$value" in
+                ''|*[!0-9]*) continue ;;
+              esac;
+              printf 'cooling-fan;Cooling fan;%s\n' "$value";
+              break;
+            done
+      mapping:
+        source: ${source::coolingFan}
+        attributes:
+          id: $1
+          __display_id: $2
+          name: $2
+          sensor_location: Board
+          hw.parent.type: enclosure
+          hw.parent.id: raspberry-pi
+        metrics:
+          hw.fan.speed: $3
