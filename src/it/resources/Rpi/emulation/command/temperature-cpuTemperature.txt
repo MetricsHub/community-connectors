@@ -1,0 +1,1 @@
+cpu;cpu-thermal;55650

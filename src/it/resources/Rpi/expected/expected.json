@@ -1,0 +1,457 @@
+{
+  "total" : 5,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "Rpi.yaml",
+      "name" : "Raspberry Pi Hardware",
+      "connector_id" : "Rpi",
+      "applies_to_os" : "linux",
+      "parent.id" : "localhost",
+      "id" : "Rpi"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: test -r /sys/firmware/devicetree/base/model && tr -d '\\000' < /sys/firmware/devicetree/base/model\n\n- ExecuteLocally: false\n- ExpectedResult: ^Raspberry Pi\n\nResult:\nRaspberry Pi 5 Model B Rev 1.0\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: test -r /sys/firmware/devicetree/base/model && tr -d '\\000' < /sys/firmware/devicetree/base/model\n\n- ExecuteLocally: false\n- ExpectedResult: ^Raspberry Pi\n\nResult: Raspberry Pi 5 Model B Rev 1.0\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1791276579939,
+    "type" : "connector",
+    "id" : "connector_Rpi",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "vendor" : "Raspberry Pi",
+      "connector_id" : "Rpi",
+      "name" : "Computer: Raspberry Pi 5 Model B Rev 1.0",
+      "model" : "Raspberry Pi 5 Model B Rev 1.0",
+      "serial_number" : "0123456789abcdef",
+      "id" : "raspberry-pi",
+      "type" : "Computer",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791276580341,
+    "type" : "enclosure",
+    "id" : "Rpi_enclosure_raspberry-pi",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.fan.speed" : {
+        "name" : "hw.fan.speed",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 3087.0,
+        "previousValue" : 3087.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.degraded\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.degraded\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.degraded"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 500.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 3.087,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.fan.speed.limit{limit_type=\"low.critical\"}" : {
+        "name" : "hw.fan.speed.limit{limit_type=\"low.critical\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "limit_type" : "low.critical"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Cooling fan",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "raspberry-pi",
+      "sensor_location" : "Board",
+      "name" : "Cooling fan",
+      "connector_id" : "Rpi",
+      "id" : "cooling-fan",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791276580341,
+    "type" : "fan",
+    "id" : "Rpi_fan_cooling-fan",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"Rpi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"Rpi\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "Rpi",
+          "monitor.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : 0.002,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.host.average_warning_threshold" : {
+        "name" : "__hw.host.average_warning_threshold",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 80.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"Rpi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"Rpi\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "Rpi",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.001,
+        "previousValue" : 0.002,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.heating_margin" : {
+        "name" : "hw.host.heating_margin",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 24.35,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.observed" : {
+        "name" : "metricshub.host.observed",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.host.average_cpu_temperature" : {
+        "name" : "__hw.host.average_cpu_temperature",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 55.65,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"Rpi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"Rpi\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "Rpi",
+          "monitor.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.001,
+        "previousValue" : 0.128,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"Rpi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"Rpi\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "Rpi",
+          "monitor.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : 0.005,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.host.cpu.thermal_dissipation_rate" : {
+        "name" : "__hw.host.cpu.thermal_dissipation_rate",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 0.46,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.host.power{quality=\"estimated\"}" : {
+        "name" : "hw.host.power{quality=\"estimated\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "quality" : "estimated"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 3.43,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.002,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "linux",
+      "host.name" : "localhost",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791276580341,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 80.0,
+        "previousValue" : 80.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 85.0,
+        "previousValue" : 85.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.temperature" : {
+        "name" : "hw.temperature",
+        "collectTime" : 1791276580341,
+        "previousCollectTime" : 1791276579939,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 55.65,
+        "previousValue" : 55.65,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "CPU temperature",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "raspberry-pi",
+      "__is_cpu_sensor" : "true",
+      "sensor_location" : "CPU",
+      "name" : "CPU temperature",
+      "connector_id" : "Rpi",
+      "id" : "cpu",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791276580341,
+    "type" : "temperature",
+    "id" : "Rpi_temperature_cpu",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

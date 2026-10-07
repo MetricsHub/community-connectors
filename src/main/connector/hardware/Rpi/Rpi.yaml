@@ -1,15 +1,14 @@
----
-# MetricsHub Community Connector proposal
-#
-# Target path in the community-connectors repository:
-#   src/main/connector/hardware/RaspberryPi/RaspberryPi.yaml
-#
 # Design notes:
-# - Uses Linux sysfs only: no extra package and no sudo rule are required.
-# - Temperature is read from the thermal zone named cpu-thermal or soc_thermal.
-# - Fan RPM is optional. It is exported only when the kernel exposes fan1_input,
-#   notably for the Raspberry Pi 5 cooling_fan hwmon device.
-# - Commands emit semicolon-separated tables to keep mappings declarative.
+# - Reads Linux sysfs only (device tree, thermal and hwmon): no extra package
+#   and no sudo rule are required.
+# - The board model and serial number come from the device tree that the
+#   Raspberry Pi firmware populates.
+# - The CPU temperature comes from the thermal zone named cpu-thermal or
+#   soc_thermal.
+# - The fan speed is optional: it is reported only when the kernel exposes a
+#   fan1_input tachometer, as the Raspberry Pi 5 cooling_fan device does.
+# - The temperature and fan commands print semicolon-separated rows. The board
+#   command prints raw device-tree values that a Jawk compute parses.
 
 extends:
 - ../../semconv/Hardware
@@ -17,10 +16,11 @@ extends:
 connector:
   displayName: Raspberry Pi Hardware
   platforms: Raspberry Pi
-  reliesOn: Linux thermal and hwmon sysfs interfaces
+  reliesOn: Linux device tree, thermal and hwmon sysfs interfaces
   information: >
-    Monitors Raspberry Pi board temperature and, when a tachometer is exposed
-    by the kernel, cooling fan speed in RPM.
+    Monitors the Raspberry Pi board (model and serial number), its CPU
+    temperature and, when the kernel exposes a tachometer, the cooling fan
+    speed in RPM.
   version: 1.0
 
   detection:
@@ -30,8 +30,8 @@ connector:
     appliesTo:
     - Linux
     criteria:
-    # /sys/firmware/devicetree/base/model is supplied by the Raspberry Pi
-    # device tree. Removing NUL bytes makes its value safe for text matching.
+    # The Raspberry Pi firmware stores the board model in the device tree as a
+    # NUL-terminated string. tr strips the NUL byte before the match.
     - type: commandLine
       commandLine: >
         test -r /sys/firmware/devicetree/base/model &&
@@ -41,52 +41,57 @@ connector:
     tags: [ hardware, linux, raspberry-pi ]
 
 monitors:
-  # Create one stable parent resource for all board-level sensors.
+  # The board is the parent of the temperature and fan monitors.
   enclosure:
     simple:
       sources:
         board:
           type: commandLine
+          # Prints one "<device-tree path>:<value>" line per property. grep -a
+          # reads the NUL-terminated values as text and ends each line with a
+          # newline, then tr strips the NUL bytes. A missing property is
+          # skipped silently. The firmware sets serial-number whatever the
+          # kernel, unlike the Serial line of /proc/cpuinfo, which only
+          # Raspberry Pi kernels print.
+          commandLine: >-
+            grep -a . /sys/firmware/devicetree/base/model
+            /sys/firmware/devicetree/base/serial-number 2>/dev/null | tr -d '\000'
+          computes:
           # Output columns:
           # id;model;serial_number
           #
-          # The serial number can be absent on unusual kernels. An empty value
-          # is intentionally allowed; the constant id remains stable.
-          commandLine: >-
-            model=$(tr -d '\000' < /sys/firmware/devicetree/base/model);
-            serial=$(awk -F: '/^Serial[[:space:]]*:/ {
-              gsub(/[[:space:]]/, "", $2); print $2; exit
-            }' /proc/cpuinfo);
-            printf 'raspberry-pi;%s;%s\n' "$model" "$serial"
-          computes:
+          # The id is a constant, since a host has a single board. The
+          # temperature and fan monitors use it as hw.parent.id. The trailing
+          # separator keeps an empty serial_number column when the property is
+          # missing. Nothing is printed without a model, so a failed command
+          # does not blank the attributes of the existing enclosure.
           - type: awk
-            # Prefix the already-delimited row for filtering. Do not add CSV
-            # quotes: MetricsHub would retain them in mapped attributes.
-            script: 'BEGIN { FS=";" } { printf "MSHW;%s;%s;%s;\n", $1, $2, $3 }'
-            separators: ;
-            keep: ^MSHW;
-            selectColumns: 2,3,4
+            script: |
+              BEGIN { FS = ":" }
+              $1 ~ /\/model$/ { model = $2 }
+              $1 ~ /\/serial-number$/ { serial = $2 }
+              END { if (model != "") print "raspberry-pi;" model ";" serial ";" }
       mapping:
         source: ${source::board}
         attributes:
           id: $1
-          __display_id: $2
+          # The model already includes the vendor name, so the engine names
+          # the enclosure "Computer: <model>" without repeating it.
+          vendor: Raspberry Pi
           model: $2
           serial_number: $3
           type: Computer
 
   temperature:
-    keys:
-    - id
     simple:
       sources:
         cpuTemperature:
           type: commandLine
           # Output columns:
-          # id;sensor_name;temperature_millicelsius
+          # id;thermal_zone_type;temperature_millicelsius
           #
-          # Thermal-zone numbering is not stable across kernel versions.
-          # Match the zone by its documented type instead of assuming zone0.
+          # Thermal-zone numbering is not stable across kernels, so the zone
+          # is matched by its type rather than assumed to be thermal_zone0.
           commandLine: >-
             for zone in /sys/class/thermal/thermal_zone*; do
               test -r "$zone/type" && test -r "$zone/temp" || continue;
@@ -100,7 +105,7 @@ monitors:
               esac;
             done
           computes:
-          # Linux thermal sysfs reports millidegrees Celsius.
+          # sysfs reports millidegrees Celsius: convert to degrees Celsius.
           - type: divide
             column: 3
             value: 1000
@@ -109,20 +114,20 @@ monitors:
         attributes:
           id: $1
           __display_id: CPU temperature
+          # The engine counts a sensor whose name contains "CPU" in the host
+          # CPU temperature average and heating margin.
           name: CPU temperature
           sensor_location: CPU
           hw.parent.type: enclosure
           hw.parent.id: raspberry-pi
         metrics:
           hw.temperature: $3
-          # Raspberry Pi boards start thermal throttling at 80 °C and apply
-          # stronger throttling at the 85 °C maximum operating temperature.
+          # The firmware throttles the ARM cores from 80 °C, and both the ARM
+          # cores and the GPU above 85 °C.
           hw.temperature.limit{limit_type="high.degraded"}: 80
           hw.temperature.limit{limit_type="high.critical"}: 85
 
   fan:
-    keys:
-    - id
     simple:
       sources:
         coolingFan:
@@ -130,10 +135,11 @@ monitors:
           # Output columns:
           # id;fan_name;speed_rpm
           #
-          # fan1_input is the standard Linux hwmon tachometer attribute.
-          # The glob deliberately allows the kernel-assigned hwmon index to
-          # change between boots. If no readable tachometer exists, this
-          # command returns no row and MetricsHub creates no fan instance.
+          # fan1_input is the standard hwmon tachometer attribute. The
+          # Raspberry Pi 5 cooling_fan device is tried first, then any hwmon
+          # device. The globs tolerate the hwmon index changing between boots.
+          # Non-numeric readings are skipped. Without a readable tachometer,
+          # the command prints nothing and no fan monitor is created.
           commandLine: >-
             for input in /sys/devices/platform/cooling_fan/hwmon/*/fan1_input /sys/class/hwmon/hwmon*/fan1_input; do
               test -r "$input" || continue;
