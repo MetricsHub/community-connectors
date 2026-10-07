@@ -1,0 +1,458 @@
+metrics:
+
+  k8s.node.cpu.allocatable:
+    description: Amount of CPU allocatable on the node.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  k8s.node.memory.allocatable:
+    description: Amount of memory allocatable on the node.
+    type: UpDownCounter
+    unit: By
+
+  k8s.node.ephemeral_storage.allocatable:
+    description: Amount of ephemeral-storage allocatable on the node.
+    type: UpDownCounter
+    unit: By
+
+  k8s.node.pod.allocatable:
+    description: Amount of pods allocatable on the node.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.node.condition.status:
+    description: Describes the condition of a particular Node.
+    type: UpDownCounter
+    unit: "{node}"
+
+  k8s.node.cpu.usage:
+    description: Node's CPU usage, measured in CPUs. Range from 0 to the number of allocatable CPUs.
+    type: Gauge
+    unit: "{cpu}"
+
+  k8s.node.memory.working_set:
+    description: Node memory working set.
+    type: UpDownCounter
+    unit: By
+
+  k8s.namespace.phase:
+    description: 'Phase of the K8s namespace: 1 for the current phase, 0 for the others.'
+    type:
+      stateSet:
+      - active
+      - terminating
+
+  k8s.pod.status.phase:
+    description: 'Phase of the K8s Pod: 1 for the current phase, 0 for the others.'
+    type:
+      stateSet:
+      - Pending
+      - Running
+      - Succeeded
+      - Failed
+      - Unknown
+
+  k8s.pod.status.reason:
+    description: 'Reason of the current state of the K8s Pod: 1 for the current reason, 0 for the others.'
+    type:
+      stateSet:
+      - Evicted
+      - NodeAffinity
+      - NodeLost
+      - Shutdown
+      - UnexpectedAdmissionError
+
+  k8s.pod.cpu.usage:
+    description: Pod's CPU usage, measured in CPUs. Range from 0 to the number of allocatable CPUs.
+    type: Gauge
+    unit: "{cpu}"
+
+  k8s.pod.memory.working_set:
+    description: Pod memory working set.
+    type: UpDownCounter
+    unit: By
+
+  k8s.container.status.state:
+    description: 'State of the K8s container: 1 for the current state, 0 for the others.'
+    type:
+      stateSet:
+      - running
+      - waiting
+      - terminated
+
+  k8s.container.status.reason:
+    description: 'Reason of the current state of the K8s container: 1 for the current reason, 0 for the others.'
+    type:
+      stateSet:
+      - ContainerCreating
+      - CrashLoopBackOff
+      - CreateContainerConfigError
+      - ErrImagePull
+      - ImagePullBackOff
+      - OOMKilled
+      - Completed
+      - Error
+      - ContainerCannotRun
+
+  k8s.container.restart.count:
+    description: Describes how many times the container has restarted (since the last counter reset).
+    type: UpDownCounter
+    unit: "{restart}"
+
+  k8s.container.ready:
+    description: Indicates whether the container is currently marked as ready to accept traffic, based on its readiness probe (1 = ready, 0 = not ready).
+    type: UpDownCounter
+    unit: "{container}"
+
+  k8s.container.cpu.limit.desired:
+    description: Maximum CPU resource limit as defined by the container spec.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  k8s.container.cpu.request.desired:
+    description: CPU resource requested as defined by the container spec.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  k8s.container.cpu.limit.utilization:
+    description: The ratio of container CPU usage to its current CPU limit.
+    type: Gauge
+    unit: "1"
+
+  k8s.container.cpu.request.utilization:
+    description: The ratio of container CPU usage to its current CPU request.
+    type: Gauge
+    unit: "1"
+
+  k8s.container.memory.limit.desired:
+    description: Maximum memory resource limit as defined by the container spec.
+    type: UpDownCounter
+    unit: By
+
+  k8s.container.memory.request.desired:
+    description: Memory resource requested as defined by the container spec.
+    type: UpDownCounter
+    unit: By
+
+  k8s.deployment.pod.desired:
+    description: Number of desired replica pods in this deployment.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.deployment.pod.available:
+    description: Total number of available replica pods (ready for at least minReadySeconds) targeted by this deployment.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.statefulset.pod.desired:
+    description: Number of desired replica pods in this statefulset.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.statefulset.pod.ready:
+    description: The number of replica pods created for this statefulset with a Ready Condition.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.statefulset.pod.current:
+    description: The number of replica pods created by the statefulset controller from the statefulset version indicated by currentRevision.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.statefulset.pod.updated:
+    description: Number of replica pods created by the statefulset controller from the statefulset version indicated by updateRevision.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.daemonset.node.current_scheduled:
+    description: Number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod.
+    type: UpDownCounter
+    unit: "{node}"
+
+  k8s.daemonset.node.desired_scheduled:
+    description: Number of nodes that should be running the daemon pod (including nodes currently running the daemon pod).
+    type: UpDownCounter
+    unit: "{node}"
+
+  k8s.daemonset.node.misscheduled:
+    description: Number of nodes that are running the daemon pod, but are not supposed to run the daemon pod.
+    type: UpDownCounter
+    unit: "{node}"
+
+  k8s.daemonset.node.ready:
+    description: Number of nodes that should be running the daemon pod and have one or more of the daemon pod running and ready.
+    type: UpDownCounter
+    unit: "{node}"
+
+  k8s.job.pod.active:
+    description: The number of pending and actively running pods for a job.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.job.pod.failed:
+    description: The number of pods which reached phase Failed for a job.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.job.pod.successful:
+    description: The number of pods which reached phase Succeeded for a job.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.job.pod.desired_successful:
+    description: The desired number of successfully finished pods the job should be run with.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.job.pod.max_parallel:
+    description: The max desired number of pods the job should run at any given time.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.cronjob.job.active:
+    description: The number of actively running jobs for a cronjob.
+    type: UpDownCounter
+    unit: "{job}"
+
+  k8s.hpa.pod.desired:
+    description: Desired number of replica pods managed by this horizontal pod autoscaler, as last calculated by the autoscaler.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.hpa.pod.current:
+    description: Current number of replica pods managed by this horizontal pod autoscaler, as last seen by the autoscaler.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.hpa.pod.max:
+    description: The upper limit for the number of replica pods to which the autoscaler can scale up.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.hpa.pod.min:
+    description: The lower limit for the number of replica pods to which the autoscaler can scale down.
+    type: UpDownCounter
+    unit: "{pod}"
+
+  k8s.service.endpoint.count:
+    description: Number of endpoints for a service by condition and address type.
+    type: Gauge
+    unit: "{endpoint}"
+
+  k8s.service.load_balancer.ingress.count:
+    description: Number of load balancer ingress points (external IPs/hostnames) assigned to the service.
+    type: Gauge
+    unit: "{ingress}"
+
+  k8s.persistentvolume.status.phase:
+    description: 'Phase of the K8s PersistentVolume: 1 for the current phase, 0 for the others.'
+    type:
+      stateSet:
+      - Available
+      - Bound
+      - Failed
+      - Pending
+      - Released
+
+  k8s.persistentvolume.storage.capacity:
+    description: The storage capacity of the PersistentVolume.
+    type: UpDownCounter
+    unit: By
+
+  k8s.persistentvolumeclaim.status.phase:
+    description: 'Phase of the K8s PersistentVolumeClaim: 1 for the current phase, 0 for the others.'
+    type:
+      stateSet:
+      - Bound
+      - Lost
+      - Pending
+
+  k8s.persistentvolumeclaim.storage.request:
+    description: The storage requested by the PersistentVolumeClaim.
+    type: UpDownCounter
+    unit: By
+
+  k8s.persistentvolumeclaim.storage.capacity:
+    description: The actual storage capacity provisioned for the PersistentVolumeClaim.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.cpu.request.hard:
+    description: The CPU requests in a specific namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  k8s.resourcequota.cpu.request.used:
+    description: The CPU requests in a specific namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  k8s.resourcequota.cpu.limit.hard:
+    description: The CPU limits in a specific namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  k8s.resourcequota.cpu.limit.used:
+    description: The CPU limits in a specific namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  k8s.resourcequota.memory.request.hard:
+    description: The memory requests in a specific namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.memory.request.used:
+    description: The memory requests in a specific namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.memory.limit.hard:
+    description: The memory limits in a specific namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.memory.limit.used:
+    description: The memory limits in a specific namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.ephemeral_storage.request.hard:
+    description: The sum of local ephemeral storage requests in the namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.ephemeral_storage.request.used:
+    description: The sum of local ephemeral storage requests in the namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.ephemeral_storage.limit.hard:
+    description: The sum of local ephemeral storage limits in the namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.ephemeral_storage.limit.used:
+    description: The sum of local ephemeral storage limits in the namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.storage.request.hard:
+    description: The storage requests in a specific namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.storage.request.used:
+    description: The storage requests in a specific namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: By
+
+  k8s.resourcequota.persistentvolumeclaim_count.hard:
+    description: The total number of PersistentVolumeClaims that can exist in the namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{persistentvolumeclaim}"
+
+  k8s.resourcequota.persistentvolumeclaim_count.used:
+    description: The total number of PersistentVolumeClaims that can exist in the namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{persistentvolumeclaim}"
+
+  k8s.resourcequota.object_count.hard:
+    description: The object count limits in a specific namespace. The value represents the configured quota limit of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{object}"
+
+  k8s.resourcequota.object_count.used:
+    description: The object count limits in a specific namespace. The value represents the current observed total usage of the resource in the namespace.
+    type: UpDownCounter
+    unit: "{object}"
+
+  openshift.clusterquota.cpu.request.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  openshift.clusterquota.cpu.request.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  openshift.clusterquota.cpu.limit.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  openshift.clusterquota.cpu.limit.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: "{cpu}"
+
+  openshift.clusterquota.memory.request.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.memory.request.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.memory.limit.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.memory.limit.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.ephemeral_storage.request.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.ephemeral_storage.request.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.ephemeral_storage.limit.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.ephemeral_storage.limit.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.storage.request.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.storage.request.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: By
+
+  openshift.clusterquota.persistentvolumeclaim_count.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: "{persistentvolumeclaim}"
+
+  openshift.clusterquota.persistentvolumeclaim_count.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: "{persistentvolumeclaim}"
+
+  openshift.clusterquota.object_count.hard:
+    description: The enforced hard limit of the resource across all projects.
+    type: UpDownCounter
+    unit: "{object}"
+
+  openshift.clusterquota.object_count.used:
+    description: The current observed total usage of the resource across all projects.
+    type: UpDownCounter
+    unit: "{object}"
