@@ -1,4 +1,4 @@
-keywords: json2Csv, compute, json, csv, rest api, entryKey
+keywords: json2Csv, compute, json, csv, rest api, entryKey, parsingMode
 description: json2Csv flattens a JSON payload into a semicolon-separated table, producing one row per JSON entry plus a leading entry-path column.
 
 # json2Csv (Compute)
@@ -35,6 +35,7 @@ sources:
 | `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
 | `properties` | Yes | None | Semicolon-separated list of JSON pointers, each resolved **relative to one entry** (`/id;/name;/operationalStatus`). Nested values use full pointer paths, including array indexes (`/Links/Storage[0]/@odata.id`). The list order defines the column order. |
 | `separator` | No | `;` | Column separator of the generated rows. Keep the default `;` so the output matches the engine table serialization. |
+| `parsingMode` | No | `tree` | How the JSON document is read: `tree` loads the whole document in memory, `events` reads it as a stream and keeps only one entry at a time. The rows are the same. See [Large Payloads](#large-payloads). |
 
 > [!IMPORTANT]
 > `json2Csv` prepends one extra column identifying the JSON entry each row was built from (its path in the document). Your first property therefore lands in **column 2**: reference it as `$2` in `mapping` and in subsequent computes.
@@ -70,11 +71,42 @@ Equivalent serialized output:
 /switches[1];sw-02;core-01;degraded
 ```
 
+## Large Payloads
+
+With the default `parsingMode: tree`, `json2Csv` builds a map of every node of the document before it writes the rows. This takes about 20 times the size of the payload in memory, even when only a few values are read per entry.
+
+For a REST API that returns large lists (thousands of objects, several MB), set `parsingMode: events`:
+
+```yaml
+    computes:
+    - type: json2Csv
+      entryKey: /items
+      properties: /metadata/name;/metadata/namespace;/status/phase
+      separator: ;
+      parsingMode: events
+```
+
+The document is then read as a stream of JSON events:
+
+- Only one element of the array at the start of `entryKey` (`/items` above) is flattened at a time.
+- The nodes that neither `entryKey` nor `properties` can reach are skipped.
+
+Memory stays close to the size of the payload and the conversion is faster. The rows are the same as with `tree`, in the same order.
+
+Some documents cannot be read this way and are processed as with `tree`, with the same memory usage:
+
+- the payload is an array, `entryKey` is `/`, or the first element of `entryKey` is `*` or contains an index (`/items[0]/...`);
+- a property refers to a node above the array element, for example `../kind` with `entryKey: /items` (`../../metadata/name` with `entryKey: /items/status/conditions` stays inside the element and is fine);
+- an object of an element has a duplicate key.
+
+`parsingMode` is available from MetricsHub Community 3.9.08. Earlier versions ignore it and read the document as a tree, so the connector still works.
+
 ## Recommended Pattern
 
 - Set `resultContent: body` on the HTTP source and put `json2Csv` first in its `computes` pipeline.
 - Point `entryKey` at the array of records and keep every property pointer relative to a single record.
 - Account for the leading entry column: the first property is `$2`, not `$1`.
+- Add `parsingMode: events` when the payload can be large (a list of all the objects of a kind).
 - Quote the `properties` value when a pointer contains YAML-sensitive characters such as `[0]` (for example `properties: "/@odata.id;/Links/Storage[0]/@odata.id"`).
 
 ## Common Mistakes
