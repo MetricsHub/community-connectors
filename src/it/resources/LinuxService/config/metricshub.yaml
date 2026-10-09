@@ -1,0 +1,14 @@
+#MetricsHub Configuration
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
+patchDirectory: "src/main/connector"
+resources:
+  anyHost:
+    attributes:
+      host.name: anyHost
+      host.type: linux
+    protocols:
+      emulation:
+        ssh:
+          directory: src/it/resources/LinuxService/emulation/command
+    connectors: ["+LinuxService"]

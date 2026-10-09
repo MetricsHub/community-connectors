@@ -1,18 +1,5 @@
 extends:
 - ../../semconv/System
-metrics:
-  system.service.status:
-    description: Service Status
-    type:
-      stateSet:
-        - Running
-        - Stopped
-        - Paused
-        - Start Pending
-        - Stop Pending
-        - Pause Pending
-        - Continue Pending
-        - Unknown
 connector:
   displayName: Windows - Services (WMI)
   platforms: Microsoft Windows
@@ -59,6 +46,9 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ${var::serviceNames} # In metricshub.yaml, the regex should be set this way "serviceNames: UserDataSvc\|ConsentUxUserSvc"
+          - type: translate
+            column: 2
+            translationTable: ${translation::serviceStateTranslationTable}
       mapping:
         source: ${source::serviceInformation}
         attributes:
@@ -69,3 +59,14 @@ monitors:
           system.service.command: $6
         metrics:
           system.service.status: $2
+translations:
+  serviceStateTranslationTable:
+    Running: running
+    Stopped: stopped
+    Paused: paused
+    Start Pending: start_pending
+    Stop Pending: stop_pending
+    Pause Pending: pause_pending
+    Continue Pending: continue_pending
+    Unknown: unknown
+    Default: unknown

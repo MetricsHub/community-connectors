@@ -1,0 +1,5 @@
+UNIT LOAD ACTIVE SUB DESCRIPTION
+running.service loaded active running Running test service
+dead.service loaded inactive dead Dead test service
+exited.service loaded active exited Exited test service
+failed.service loaded failed failed Failed test service

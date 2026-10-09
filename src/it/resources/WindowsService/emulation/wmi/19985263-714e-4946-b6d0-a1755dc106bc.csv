@@ -1,0 +1,8 @@
+RunningService;Running;Auto;Running Service;LocalSystem;C:\Services\running.exe;1001;
+StoppedService;Stopped;Manual;Stopped Service;LocalSystem;C:\Services\stopped.exe;0;
+PausedService;Paused;Manual;Paused Service;LocalSystem;C:\Services\paused.exe;1002;
+StartPendingService;Start Pending;Auto;Start Pending Service;LocalSystem;C:\Services\start-pending.exe;1003;
+StopPendingService;Stop Pending;Manual;Stop Pending Service;LocalSystem;C:\Services\stop-pending.exe;1004;
+PausePendingService;Pause Pending;Manual;Pause Pending Service;LocalSystem;C:\Services\pause-pending.exe;1005;
+ContinuePendingService;Continue Pending;Manual;Continue Pending Service;LocalSystem;C:\Services\continue-pending.exe;1006;
+UnknownService;Unknown;Manual;Unknown Service;LocalSystem;C:\Services\unknown.exe;0;

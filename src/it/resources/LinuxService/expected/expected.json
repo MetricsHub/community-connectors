@@ -1,0 +1,274 @@
+{
+  "total" : 6,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "LinuxService.yaml",
+      "name" : "Linux - Service (systemctl)",
+      "connector_id" : "LinuxService",
+      "applies_to_os" : "linux",
+      "parent.id" : "anyHost",
+      "id" : "LinuxService"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: /usr/bin/systemctl\n- ExecuteLocally: false\n- ExpectedResult: UNIT\n\nResult:\nUNIT LOAD ACTIVE SUB DESCRIPTION\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: /usr/bin/systemctl\n- ExecuteLocally: false\n- ExpectedResult: UNIT\n\nResult: UNIT LOAD ACTIVE SUB DESCRIPTION\n\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1790931541433,
+    "type" : "connector",
+    "id" : "connector_LinuxService",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "connector" : true,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"service\", connector_id=\"LinuxService\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"service\", connector_id=\"LinuxService\"}",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxService",
+          "monitor.type" : "service"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : 0.106,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"LinuxService\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"LinuxService\"}",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "LinuxService",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.001,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.observed" : {
+        "name" : "metricshub.host.observed",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "host.name" : "anyHost",
+      "os.type" : "linux",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931549434,
+    "type" : "host",
+    "id" : "endpoint_host_anyHost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "connector" : false,
+    "endpoint" : true,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "dead",
+        "previousValue" : "dead",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "connector_id" : "LinuxService",
+      "id" : "dead"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931549434,
+    "type" : "service",
+    "id" : "LinuxService_service_dead",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "connector" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "exited",
+        "previousValue" : "exited",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "connector_id" : "LinuxService",
+      "id" : "exited"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931549434,
+    "type" : "service",
+    "id" : "LinuxService_service_exited",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "connector" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "connector_id" : "LinuxService",
+      "id" : "failed"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931549434,
+    "type" : "service",
+    "id" : "LinuxService_service_failed",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "connector" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "running",
+        "previousValue" : "running",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "connector_id" : "LinuxService",
+      "id" : "running"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931549434,
+    "type" : "service",
+    "id" : "LinuxService_service_running",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "connector" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  } ]
+}

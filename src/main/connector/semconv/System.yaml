@@ -131,6 +131,21 @@ metrics:
     description: Total number of processes created over uptime of the host
     type: Counter
     unit: "{process}"
+  system.service.status:
+    description: Service Status
+    type:
+      stateSet:
+        - running
+        - stopped
+        - paused
+        - start_pending
+        - stop_pending
+        - pause_pending
+        - continue_pending
+        - exited
+        - dead
+        - failed
+        - unknown
   process.cpu.utilization:
     description: CPU utilization of the process
     type: Gauge
