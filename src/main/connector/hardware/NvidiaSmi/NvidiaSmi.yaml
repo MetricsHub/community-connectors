@@ -19,7 +19,7 @@ connector:
     criteria:
     - type: commandLine
       commandLine: nvidia-smi
-      expectedResult: Driver Version
+      expectedResult: \(Driver\|KMD\) Version
       errorMessage: nvidia-smi not found at target host.
     tags: [ hardware , nvidia, windows, linux ]
 monitors:
@@ -62,6 +62,9 @@ monitors:
           name: ${awk::sprintf("%s (%s - %s - %s)", $2, "NVIDIA", $14, mebiBytes2HumanFormat($20))}
         metrics:
           hw.gpu.memory.limit: mebiByte2Byte($20)
+          # Only alert when the memory is completely full: inference engines (e.g. vLLM) pre-allocate most of the GPU memory
+          hw.gpu.memory.utilization.limit{limit_type="degraded"}: 1
+          hw.gpu.memory.utilization.limit{limit_type="critical"}: 1
     collect:
       type: multiInstance
       sources:
@@ -82,6 +85,7 @@ monitors:
         metrics:
           hw.gpu.utilization{task="general"}: percent2Ratio($5)
           hw.gpu.memory.utilization: percent2Ratio($6)
+          hw.gpu.memory.usage: mebiByte2Byte($21)
           hw.gpu.utilization{task="encoder"}: percent2Ratio($7)
           hw.gpu.utilization{task="decoder"}: percent2Ratio($8)
           hw.gpu.io{direction="transmit"}: fakeCounter($3)
@@ -140,6 +144,9 @@ monitors:
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
           - type: keepOnlyMatchingLines
+            column: 1
+            regExp: ^MSHW_VOLTAGE
+          - type: keepOnlyMatchingLines
             column: 3
             regExp: .
       mapping:
@@ -181,6 +188,9 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_FAN
+          - type: keepOnlyMatchingLines
+            column: 3
+            regExp: .
       mapping:
         source: ${source::monitors.fan.discovery.sources.source(1)}
         attributes:

@@ -25,6 +25,13 @@ BEGIN {
 	correctable = ""
 	uncorrectable = ""
 	totalMemory = ""
+	usedMemory = ""
+}
+
+#Remember the current top-level section of the card, to tell apart the fields that share the same label
+#(e.g. "GPU Power Readings" vs. "GPU Memory Power Readings", "FB Memory Usage" vs. "BAR1 Memory Usage").
+/^    [^ ]/ {
+	section = $0
 }
 
 #Discovery related values and informative fields.
@@ -49,22 +56,31 @@ BEGIN {
 	vBios = " VBIOS Version: " $2
 }
 
-/Driver Version/ {
+#Since v595, "Driver Version" and "CUDA Version" are deprecated (with a "[Deprecated; ...]" suffix that would break our ";" output)
+#in favor of "KMD Version" and "CUDA UMD Version". Keep only the version number.
+/^(Driver|KMD) Version/ {
 	driverVersion = $2
+	sub(/ .*/, "", driverVersion)
 }
 
-/CUDA Version/ {
-	cudaVersion = "CUDA Version: " $2
+/^CUDA (UMD )?Version/ {
+	cudaVersion = $2
+	sub(/ .*/, "", cudaVersion)
+	cudaVersion = "CUDA Version: " cudaVersion
 }
 
 /Firmware Version/ && /[0-9]/ {
 	firmwareVersion = $2
 }
 
-/FB Memory Usage/ {
-	getline
+section ~ /^    FB Memory Usage/ && /^ +Total +:/ {
 	totalMemory = $2
 	gsub(/ MiB/, "", totalMemory)
+}
+
+section ~ /^    FB Memory Usage/ && /^ +Used +:/ {
+	usedMemory = $2
+	gsub(/ MiB/, "", usedMemory)
 }
 
 #Collection related values and removal of units of measurement.
@@ -78,14 +94,10 @@ BEGIN {
 	gsub(/ KB\/s/, "", receivedBytes)
 }
 
-/Gpu/ && /%/ {
+#"Gpu" in older versions, "GPU" in newer ones.
+/^ *(Gpu|GPU) +:/ && /%/ {
 	gpuUtilization = $2
 	gsub(/ %/, "", gpuUtilization)
-}
-
-/Memory/ && /%/ {
-	memoryUtilization = $2
-	gsub(/ %/, "", memoryUtilization)
 }
 
 /Encoder/ && /%/ {
@@ -103,7 +115,7 @@ BEGIN {
 #/Uncorrectable/ && /[0-9]/  { uncorrectable+=$2; }
 
 #We will now extract the power consumption.
-/Power Draw/ && /[0-9]/ {
+section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 	powerConsumption = $2
 	gsub(/ W/, "", powerConsumption)
 }
@@ -159,9 +171,13 @@ BEGIN {
 }
 
 #We will now print all the relevant information, separated by classes. Processes being the last category, this will allow us to print these at the end of each card.
-#We then reset all variables to empty values for the next card.
+#We then reset all variables to empty values for the next card, except the driver and CUDA versions which are global to all cards.
 /Processes/ {
-	print "MSHW_GPU;" "GPU" gpuID ";" (transferredBytes * 1024) ";" (receivedBytes * 1024) ";" gpuUtilization ";" memoryUtilization ";" encoderUtilization ";" decoderUtilization ";" powerConsumption ";" minPowerLimit ";" maxPowerLimit ";" correctable ";" uncorrectable ";" model ";" serialNumber ";" gpuUuid vBios ";" driverVersion ";" cudaVersion ";" firmwareVersion ";" totalMemory
+	#Memory utilization is the fraction of the frame buffer in use (not the "Utilization > Memory" bandwidth activity).
+	if (totalMemory > 0 && usedMemory != "") {
+		memoryUtilization = usedMemory * 100 / totalMemory
+	}
+	print "MSHW_GPU;" "GPU" gpuID ";" (transferredBytes * 1024) ";" (receivedBytes * 1024) ";" gpuUtilization ";" memoryUtilization ";" encoderUtilization ";" decoderUtilization ";" powerConsumption ";" minPowerLimit ";" maxPowerLimit ";" correctable ";" uncorrectable ";" model ";" serialNumber ";" gpuUuid vBios ";" driverVersion ";" cudaVersion ";" firmwareVersion ";" totalMemory ";" usedMemory
 	print "MSHW_TEMP;" "GPU" gpuID ";" temperature ";" warnTemperature ";" critTemperature
 	print "MSHW_VOLTAGE;" "GPU" gpuID ";" voltage
 	print "MSHW_FAN;" "GPU" gpuID ";" fanSpeed
@@ -170,8 +186,6 @@ BEGIN {
 	serialNumber = ""
 	gpuUuid = ""
 	vBios = ""
-	driverVersion = ""
-	cudaVersion = ""
 	firmwareVersion = ""
 	transferredBytes = ""
 	receivedBytes = ""
@@ -190,5 +204,6 @@ BEGIN {
 	correctable = ""
 	uncorrectable = ""
 	totalMemory = ""
+	usedMemory = ""
 }
 
