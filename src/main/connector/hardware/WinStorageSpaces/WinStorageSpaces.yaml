@@ -238,11 +238,18 @@ monitors:
             translationTable: ${translation::OperationalStatusInformationTranslationTable}
             resultSeparator: ' - '
           # END SNIPPET: arrayTranslateStatusInfo
-            # Translate the 3rd OperationalStatus field into the PredictiveFailure parameter
+            # Translate the 3rd OperationalStatus field into the PredictiveFailure parameter:
+            # True when any element of the array reports a predicted failure, empty otherwise
+            # The table has no Default: the other elements are dropped, leaving "", "True" or "True|True"
             # __PATH;DeviceId;Status;StatusInformation;PredictedFailure
-          - type: translate
+          - type: arrayTranslate
             column: 5
             translationTable: ${translation::PredictedFailureTranslationTable}
+            # Collapse "True|True" (both 5 and 53285) into "True", which boolean() understands
+          - type: extract
+            column: 5
+            subColumn: 1
+            subSeparators: '|'
         source(2):
           # Source(2) = ASSOCIATORS of each MSFT_PhysicalDisk, from the MSFT_StorageReliabilityCounter table
           # Use DiskController.Discovery.Source(7) for the list of instances instead of PhysicalDisk.Collect.Source(1)
@@ -443,7 +450,6 @@ translations:
   PredictedFailureTranslationTable:
     "53285": "True"
     "5": "True"
-    Default: "False"
   OperationalStatusInformationTranslationTable:
     "53261": Scan Needed
     "53286": Abnormal Latency
