@@ -4,8 +4,8 @@
     "metrics" : {
       "metricshub.connector.status" : {
         "name" : "metricshub.connector.status",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : { },
         "resetMetricTime" : false,
         "metricType" : "UpDownCounter",
@@ -29,7 +29,7 @@
       "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: nvidia-smi\n- ExecuteLocally: false\n- ExpectedResult: \\(Driver\\|KMD\\) Version\n\nResult:\nSat Oct 10 21:55:25 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 610.43.02              KMD Version: 610.43.02     CUDA UMD Version: 13.3     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA A40                     On  |   00000000:8D:00.0 Off |                    0 |\n|  0%   57C    P0            113W /  300W |   44373MiB /  46068MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|    0   N/A  N/A         1258151      C   VLLM::EngineCore                      44364MiB |\n+-----------------------------------------------------------------------------------------+\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: nvidia-smi\n- ExecuteLocally: false\n- ExpectedResult: \\(Driver\\|KMD\\) Version\n\nResult: Sat Oct 10 21:55:25 2026       \n+-----------------------------------------------------------------------------------------+\n| NVIDIA-SMI 610.43.02              KMD Version: 610.43.02     CUDA UMD Version: 13.3     |\n+-----------------------------------------+------------------------+----------------------+\n| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |\n| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |\n|                                         |                        |               MIG M. |\n|=========================================+========================+======================|\n|   0  NVIDIA A40                     On  |   00000000:8D:00.0 Off |                    0 |\n|  0%   57C    P0            113W /  300W |   44373MiB /  46068MiB |      0%      Default |\n|                                         |                        |                  N/A |\n+-----------------------------------------+------------------------+----------------------+\n\n+-----------------------------------------------------------------------------------------+\n| Processes:                                                                              |\n|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |\n|        ID   ID                                                               Usage      |\n|=========================================================================================|\n|    0   N/A  N/A         1258151      C   VLLM::EngineCore                      44364MiB |\n+-----------------------------------------------------------------------------------------+\n\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
     },
     "alertRules" : { },
-    "discoveryTime" : 1791662266943,
+    "discoveryTime" : 1791674815543,
     "type" : "connector",
     "id" : "connector_NvidiaSmi",
     "identifyingAttributeKeys" : [ "id" ],
@@ -41,8 +41,8 @@
     "metrics" : {
       "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "limit_type" : "low.degraded"
         },
@@ -56,8 +56,8 @@
       },
       "hw.status{hw.type=\"fan\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "state" : "present",
           "hw.type" : "fan"
@@ -72,7 +72,7 @@
       },
       "hw.fan.speed_ratio" : {
         "name" : "hw.fan.speed_ratio",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
@@ -85,8 +85,8 @@
       },
       "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
         "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "limit_type" : "low.critical"
         },
@@ -100,7 +100,7 @@
       },
       "hw.power{hw.type=\"fan\"}" : {
         "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "fan"
@@ -126,7 +126,7 @@
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1791662266943,
+    "discoveryTime" : 1791674815543,
     "type" : "fan",
     "id" : "NvidiaSmi_fan_GPU8D",
     "identifyingAttributeKeys" : [ "id" ],
@@ -138,12 +138,12 @@
     "metrics" : {
       "hw.gpu.memory.utilization" : {
         "name" : "hw.gpu.memory.utilization",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.963207,
+        "value" : 0.9757750000000001,
         "previousValue" : null,
         "rate" : null,
         "type" : "NumberMetric",
@@ -151,8 +151,8 @@
       },
       "hw.gpu.memory.limit" : {
         "name" : "hw.gpu.memory.limit",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : { },
         "resetMetricTime" : true,
         "metricType" : "UpDownCounter",
@@ -164,7 +164,7 @@
       },
       "__hw.gpu.io{direction=\"transmit\"}.fake_counter_from" : {
         "name" : "__hw.gpu.io{direction=\"transmit\"}.fake_counter_from",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "direction" : "transmit"
@@ -179,7 +179,7 @@
       },
       "hw.gpu.utilization{task=\"decoder\"}" : {
         "name" : "hw.gpu.utilization{task=\"decoder\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "task" : "decoder"
@@ -194,7 +194,7 @@
       },
       "hw.gpu.utilization{task=\"general\"}" : {
         "name" : "hw.gpu.utilization{task=\"general\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "task" : "general"
@@ -209,8 +209,8 @@
       },
       "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}" : {
         "name" : "hw.gpu.memory.utilization.limit{limit_type=\"critical\"}",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "limit_type" : "critical"
         },
@@ -224,7 +224,7 @@
       },
       "hw.power{hw.type=\"gpu\"}" : {
         "name" : "hw.power{hw.type=\"gpu\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "gpu"
@@ -239,8 +239,8 @@
       },
       "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}" : {
         "name" : "hw.gpu.memory.utilization.limit{limit_type=\"degraded\"}",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "limit_type" : "degraded"
         },
@@ -254,7 +254,7 @@
       },
       "hw.gpu.memory.usage" : {
         "name" : "hw.gpu.memory.usage",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
@@ -267,7 +267,7 @@
       },
       "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
         "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "degraded"
@@ -282,7 +282,7 @@
       },
       "__hw.energy{hw.type=\"gpu\"}.fake_counter_from" : {
         "name" : "__hw.energy{hw.type=\"gpu\"}.fake_counter_from",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "gpu"
@@ -297,7 +297,7 @@
       },
       "__hw.gpu.io{direction=\"receive\"}.fake_counter_from" : {
         "name" : "__hw.gpu.io{direction=\"receive\"}.fake_counter_from",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "direction" : "receive"
@@ -312,8 +312,8 @@
       },
       "hw.status{hw.type=\"gpu\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"gpu\", state=\"present\"}",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "state" : "present",
           "hw.type" : "gpu"
@@ -328,7 +328,7 @@
       },
       "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
         "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "critical"
@@ -343,7 +343,7 @@
       },
       "hw.gpu.utilization{task=\"encoder\"}" : {
         "name" : "hw.gpu.utilization{task=\"encoder\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "task" : "encoder"
@@ -374,7 +374,7 @@
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1791662266943,
+    "discoveryTime" : 1791674815543,
     "type" : "gpu",
     "id" : "NvidiaSmi_gpu_GPU8D",
     "identifyingAttributeKeys" : [ "id" ],
@@ -386,8 +386,8 @@
     "metrics" : {
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662266943,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674815543,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "job.type" : "discovery",
           "connector_id" : "NvidiaSmi",
@@ -395,16 +395,16 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.009,
-        "previousValue" : 0.009,
+        "value" : 0.001,
+        "previousValue" : 0.001,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : false
       },
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662266943,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674815543,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "job.type" : "discovery",
           "connector_id" : "NvidiaSmi",
@@ -412,15 +412,15 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.009,
-        "previousValue" : 0.009,
+        "value" : 0.002,
+        "previousValue" : 0.002,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : false
       },
       "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "job.type" : "collect",
@@ -437,7 +437,7 @@
       },
       "metricshub.job.duration{job.type=\"collect\", monitor.type=\"gpu\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"gpu\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "job.type" : "collect",
@@ -446,7 +446,7 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.07,
+        "value" : 0.065,
         "previousValue" : null,
         "rate" : null,
         "type" : "NumberMetric",
@@ -454,7 +454,7 @@
       },
       "hw.host.heating_margin" : {
         "name" : "hw.host.heating_margin",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
@@ -467,8 +467,8 @@
       },
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662266943,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674815543,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "job.type" : "discovery",
           "connector_id" : "NvidiaSmi",
@@ -476,15 +476,15 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.001,
-        "previousValue" : 0.001,
+        "value" : 0.002,
+        "previousValue" : 0.002,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : false
       },
       "metricshub.host.up{protocol=\"emulation\"}" : {
         "name" : "metricshub.host.up{protocol=\"emulation\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "protocol" : "emulation"
@@ -499,7 +499,7 @@
       },
       "metricshub.host.observed" : {
         "name" : "metricshub.host.observed",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
@@ -512,8 +512,8 @@
       },
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"voltage\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"voltage\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662266943,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674815543,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "job.type" : "discovery",
           "connector_id" : "NvidiaSmi",
@@ -521,15 +521,15 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.004,
-        "previousValue" : 0.004,
+        "value" : 0.001,
+        "previousValue" : 0.001,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : false
       },
       "metricshub.job.duration{job.type=\"collect\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "job.type" : "collect",
@@ -538,7 +538,7 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.067,
+        "value" : 0.065,
         "previousValue" : null,
         "rate" : null,
         "type" : "NumberMetric",
@@ -546,8 +546,8 @@
       },
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"gpu\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"gpu\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662266943,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674815543,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "job.type" : "discovery",
           "connector_id" : "NvidiaSmi",
@@ -555,16 +555,16 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.016,
-        "previousValue" : 0.016,
+        "value" : 0.002,
+        "previousValue" : 0.002,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : false
       },
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"enclosure\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"enclosure\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662266943,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674815543,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "job.type" : "discovery",
           "connector_id" : "NvidiaSmi",
@@ -572,15 +572,15 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.163,
-        "previousValue" : 0.163,
+        "value" : 0.031,
+        "previousValue" : 0.031,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : false
       },
       "metricshub.job.duration{job.type=\"collect\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "job.type" : "collect",
@@ -589,7 +589,7 @@
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.039,
+        "value" : 0.064,
         "previousValue" : null,
         "rate" : null,
         "type" : "NumberMetric",
@@ -597,7 +597,7 @@
       },
       "hw.host.power{quality=\"estimated\"}" : {
         "name" : "hw.host.power{quality=\"estimated\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "quality" : "estimated"
@@ -612,8 +612,8 @@
       },
       "metricshub.host.configured" : {
         "name" : "metricshub.host.configured",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : { },
         "resetMetricTime" : false,
         "metricType" : "UpDownCounter",
@@ -625,14 +625,14 @@
       },
       "metricshub.host.response_time{protocol=\"emulation\"}" : {
         "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "protocol" : "emulation"
         },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.002,
+        "value" : 0.0,
         "previousValue" : null,
         "rate" : null,
         "type" : "NumberMetric",
@@ -647,7 +647,7 @@
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1791662271963,
+    "discoveryTime" : 1791674820558,
     "type" : "host",
     "id" : "endpoint_host_localhost",
     "identifyingAttributeKeys" : [ "host.name" ],
@@ -659,7 +659,7 @@
     "metrics" : {
       "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : {
           "limit_type" : "high.degraded"
@@ -674,8 +674,8 @@
       },
       "hw.temperature.limit{limit_type=\"high.critical\"}" : {
         "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
-        "collectTime" : 1791662271963,
-        "previousCollectTime" : 1791662266943,
+        "collectTime" : 1791674820558,
+        "previousCollectTime" : 1791674815543,
         "attributes" : {
           "limit_type" : "high.critical"
         },
@@ -689,7 +689,7 @@
       },
       "hw.temperature" : {
         "name" : "hw.temperature",
-        "collectTime" : 1791662271963,
+        "collectTime" : 1791674820558,
         "previousCollectTime" : null,
         "attributes" : { },
         "resetMetricTime" : false,
@@ -714,7 +714,7 @@
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
-    "discoveryTime" : 1791662266943,
+    "discoveryTime" : 1791674815543,
     "type" : "temperature",
     "id" : "NvidiaSmi_temperature_GPU8D",
     "identifyingAttributeKeys" : [ "id" ],

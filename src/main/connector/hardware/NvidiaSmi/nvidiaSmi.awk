@@ -26,6 +26,7 @@ BEGIN {
 	uncorrectable = ""
 	totalMemory = ""
 	usedMemory = ""
+	freeMemory = ""
 }
 
 #Remember the current top-level section of the card, to tell apart the fields that share the same label
@@ -81,6 +82,11 @@ section ~ /^    FB Memory Usage/ && /^ +Total +:/ {
 section ~ /^    FB Memory Usage/ && /^ +Used +:/ {
 	usedMemory = $2
 	gsub(/ MiB/, "", usedMemory)
+}
+
+section ~ /^    FB Memory Usage/ && /^ +Free +:/ {
+	freeMemory = $2
+	gsub(/ MiB/, "", freeMemory)
 }
 
 #Collection related values and removal of units of measurement.
@@ -173,9 +179,10 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 #We will now print all the relevant information, separated by classes. Processes being the last category, this will allow us to print these at the end of each card.
 #We then reset all variables to empty values for the next card, except the driver and CUDA versions which are global to all cards.
 /Processes/ {
-	#Memory utilization is the fraction of the frame buffer in use (not the "Utilization > Memory" bandwidth activity).
-	if (totalMemory > 0 && usedMemory != "") {
-		memoryUtilization = usedMemory * 100 / totalMemory
+	#Memory utilization is the fraction of the frame buffer that is no longer available (not the "Utilization > Memory" bandwidth activity).
+	#Based on Free rather than Used, as Total = Used + Reserved + Free: it reaches 100% when the frame buffer is exhausted.
+	if (totalMemory > 0 && freeMemory != "") {
+		memoryUtilization = (totalMemory - freeMemory) * 100 / totalMemory
 	}
 	print "MSHW_GPU;" "GPU" gpuID ";" (transferredBytes * 1024) ";" (receivedBytes * 1024) ";" gpuUtilization ";" memoryUtilization ";" encoderUtilization ";" decoderUtilization ";" powerConsumption ";" minPowerLimit ";" maxPowerLimit ";" correctable ";" uncorrectable ";" model ";" serialNumber ";" gpuUuid vBios ";" driverVersion ";" cudaVersion ";" firmwareVersion ";" totalMemory ";" usedMemory
 	print "MSHW_TEMP;" "GPU" gpuID ";" temperature ";" warnTemperature ";" critTemperature
@@ -205,5 +212,6 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 	uncorrectable = ""
 	totalMemory = ""
 	usedMemory = ""
+	freeMemory = ""
 }
 
