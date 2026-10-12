@@ -1,0 +1,5 @@
+image:
+- command: nvidia-smi
+  result: nvidia-smi.txt
+- command: nvidia-smi -q
+  result: nvidia-smi-q.txt
