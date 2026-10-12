@@ -149,7 +149,7 @@ metrics:
     unit: 1
 
   hw.gpu.memory.usage:
-    description: GPU memory used.
+    description: GPU memory usage, by state (hw.memory.state = used, reserved or free).
     type: UpDownCounter
     unit: By
 

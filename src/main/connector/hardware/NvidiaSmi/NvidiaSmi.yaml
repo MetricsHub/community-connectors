@@ -85,7 +85,9 @@ monitors:
         metrics:
           hw.gpu.utilization{task="general"}: percent2Ratio($5)
           hw.gpu.memory.utilization: percent2Ratio($6)
-          hw.gpu.memory.usage: mebiByte2Byte($21)
+          hw.gpu.memory.usage{hw.memory.state="used"}: mebiByte2Byte($21)
+          hw.gpu.memory.usage{hw.memory.state="reserved"}: mebiByte2Byte($22)
+          hw.gpu.memory.usage{hw.memory.state="free"}: mebiByte2Byte($23)
           hw.gpu.utilization{task="encoder"}: percent2Ratio($7)
           hw.gpu.utilization{task="decoder"}: percent2Ratio($8)
           hw.gpu.io{direction="transmit"}: fakeCounter($3)

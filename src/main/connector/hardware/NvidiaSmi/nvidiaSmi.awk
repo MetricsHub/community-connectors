@@ -26,6 +26,7 @@ BEGIN {
 	uncorrectable = ""
 	totalMemory = ""
 	usedMemory = ""
+	reservedMemory = ""
 	freeMemory = ""
 }
 
@@ -82,6 +83,11 @@ section ~ /^    FB Memory Usage/ && /^ +Total +:/ {
 section ~ /^    FB Memory Usage/ && /^ +Used +:/ {
 	usedMemory = $2
 	gsub(/ MiB/, "", usedMemory)
+}
+
+section ~ /^    FB Memory Usage/ && /^ +Reserved +:/ {
+	reservedMemory = $2
+	gsub(/ MiB/, "", reservedMemory)
 }
 
 section ~ /^    FB Memory Usage/ && /^ +Free +:/ {
@@ -184,7 +190,7 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 	if (totalMemory > 0 && freeMemory != "") {
 		memoryUtilization = (totalMemory - freeMemory) * 100 / totalMemory
 	}
-	print "MSHW_GPU;" "GPU" gpuID ";" (transferredBytes * 1024) ";" (receivedBytes * 1024) ";" gpuUtilization ";" memoryUtilization ";" encoderUtilization ";" decoderUtilization ";" powerConsumption ";" minPowerLimit ";" maxPowerLimit ";" correctable ";" uncorrectable ";" model ";" serialNumber ";" gpuUuid vBios ";" driverVersion ";" cudaVersion ";" firmwareVersion ";" totalMemory ";" usedMemory
+	print "MSHW_GPU;" "GPU" gpuID ";" (transferredBytes * 1024) ";" (receivedBytes * 1024) ";" gpuUtilization ";" memoryUtilization ";" encoderUtilization ";" decoderUtilization ";" powerConsumption ";" minPowerLimit ";" maxPowerLimit ";" correctable ";" uncorrectable ";" model ";" serialNumber ";" gpuUuid vBios ";" driverVersion ";" cudaVersion ";" firmwareVersion ";" totalMemory ";" usedMemory ";" reservedMemory ";" freeMemory
 	print "MSHW_TEMP;" "GPU" gpuID ";" temperature ";" warnTemperature ";" critTemperature
 	print "MSHW_VOLTAGE;" "GPU" gpuID ";" voltage
 	print "MSHW_FAN;" "GPU" gpuID ";" fanSpeed
@@ -212,6 +218,7 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 	uncorrectable = ""
 	totalMemory = ""
 	usedMemory = ""
+	reservedMemory = ""
 	freeMemory = ""
 }
 
