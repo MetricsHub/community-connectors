@@ -1,5 +1,34 @@
-UNIT LOAD ACTIVE SUB DESCRIPTION
 running.service loaded active running Running test service
 dead.service loaded inactive dead Dead test service
 exited.service loaded active exited Exited test service
 failed.service loaded failed failed Failed test service
+UNIT-FILES
+Id=dead.service
+LoadState=loaded
+ActiveState=inactive
+SubState=dead
+
+Id=exited.service
+LoadState=loaded
+ActiveState=active
+SubState=exited
+
+Id=failed.service
+LoadState=loaded
+ActiveState=failed
+SubState=failed
+
+Id=running.service
+LoadState=loaded
+ActiveState=active
+SubState=running
+
+Id=running.service
+LoadState=loaded
+ActiveState=active
+SubState=running
+
+Id=stopped.service
+LoadState=loaded
+ActiveState=inactive
+SubState=dead

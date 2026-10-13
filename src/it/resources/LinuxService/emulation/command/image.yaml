@@ -2,5 +2,5 @@
 image:
 - command: /usr/bin/systemctl
   result: a904db54-f8ee-4e82-a2f6-980dcbf73783.txt
-- command: /usr/bin/systemctl list-units --type=service --all
+- command: /usr/bin/systemctl list-units --type=service --all --no-legend && echo UNIT-FILES && /usr/bin/systemctl show -p Id,LoadState,ActiveState,SubState $(/usr/bin/systemctl list-unit-files --type=service --no-legend | grep -v '@\.service' | cut -d' ' -f1)
   result: 0992b20b-e215-4b8d-a2f1-f4e9843f677c.txt

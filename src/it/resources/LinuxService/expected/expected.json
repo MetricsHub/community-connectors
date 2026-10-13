@@ -1,5 +1,5 @@
 {
-  "total" : 6,
+  "total" : 7,
   "monitors" : [ {
     "metrics" : {
       "metricshub.connector.status" : {
@@ -265,6 +265,37 @@
     "discoveryTime" : 1790931549434,
     "type" : "service",
     "id" : "LinuxService_service_running",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "connector" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "system.service.status" : {
+        "name" : "system.service.status",
+        "collectTime" : 1790931549434,
+        "previousCollectTime" : 1790931541433,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "dead",
+        "previousValue" : "dead",
+        "stateSet" : [ "running", "stopped", "paused", "start_pending", "continue_pending", "pause_pending", "exited", "dead", "failed", "stop_pending", "unknown" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "connector_id" : "LinuxService",
+      "id" : "stopped"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1790931549434,
+    "type" : "service",
+    "id" : "LinuxService_service_stopped",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
     "connector" : false,
