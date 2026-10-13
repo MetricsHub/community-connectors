@@ -1,14 +1,28 @@
 BEGIN {
 	FS = ": "
 	vmName = ""
-	UUID = ""
+	uuid = ""
 	powerState = ""
 	powerShare = ""
 }
 
-/Name/ {
-	vmName = $2
+# One row per domain of virsh list, even when its virsh dominfo failed (no state, no CPU count):
+# a missing row would remove the vm monitor
+function printDomain() {
+	if (vmName != "") {
+		print vmName ";" powerState ";" powerShare ";" (uuid == "" ? "" : "UUID: " uuid)
+	}
+	vmName = ""
+	uuid = ""
+	powerState = ""
+	powerShare = ""
+}
+
+/^Domain / {
+	printDomain()
+	vmName = substr($0, 8)
 	gsub(/ /, "", vmName)
+	next
 }
 
 /UUID/ {
@@ -24,10 +38,9 @@ BEGIN {
 /CPU\(s\)/ {
 	powerShare = $2
 	gsub(/ /, "", powerShare)
-	print vmName ";" powerState ";" powerShare ";UUID: " uuid
-	vmName = ""
-	powerState = ""
-	powerShare = ""
-	uuid = ""
+}
+
+END {
+	printDomain()
 }
 

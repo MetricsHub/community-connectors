@@ -1,0 +1,6 @@
+---
+image:
+- command: virsh list
+  result: 51d7a852-3e40-41f0-856a-f3b45f50fa45.txt
+- command: virsh list --all --name | while read -r name; do [ -z "$name" ] || { echo "Domain $name"; virsh dominfo "$name"; }; done
+  result: 954c08ae-0e03-4a8f-a316-eb088d727241.txt

@@ -1,0 +1,50 @@
+Domain web01
+Id:             1
+Name:           web01
+UUID:           6f3c2b9e-8d41-4b7a-9f0e-2a5c7d1e4b83
+OS Type:        hvm
+State:          running
+CPU(s):         2
+CPU time:       18342.7s
+Max memory:     4194304 KiB
+Used memory:    4194304 KiB
+Persistent:     yes
+Autostart:      enable
+Managed save:   no
+Security model: apparmor
+Security DOI:   0
+Security label: libvirt-6f3c2b9e-8d41-4b7a-9f0e-2a5c7d1e4b83 (enforcing)
+
+Domain db01
+Id:             2
+Name:           db01
+UUID:           0b9e7d24-51c3-4f6a-8e2d-93a1c5f7b604
+OS Type:        hvm
+State:          paused
+CPU(s):         4
+CPU time:       52710.3s
+Max memory:     8388608 KiB
+Used memory:    8388608 KiB
+Persistent:     yes
+Autostart:      enable
+Managed save:   no
+Security model: apparmor
+Security DOI:   0
+Security label: libvirt-0b9e7d24-51c3-4f6a-8e2d-93a1c5f7b604 (enforcing)
+
+Domain backup01
+Id:             -
+Name:           backup01
+UUID:           c4a81f3e-27d9-4b05-a6e1-58f2d903b7ca
+OS Type:        hvm
+State:          shut off
+CPU(s):         1
+Max memory:     2097152 KiB
+Used memory:    2097152 KiB
+Persistent:     yes
+Autostart:      disable
+Managed save:   no
+Security model: apparmor
+Security DOI:   0
+
+Domain build01
