@@ -47,6 +47,9 @@ sources:
 - Filter early with `levels`, `eventIds`, and `sources`.
 - Keep `maxEventsPerPoll` bounded for predictable polling time.
 
+> [!NOTE]
+> A `discovery` or `simple` job that reads an `eventLog` source, directly or through `${source::...}` references, never removes its instances: the source only returns the events added since the previous poll, so a missing row does not mean a missing entity (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
+
 ## Common Mistakes
 
 - Using unlimited events on noisy logs.

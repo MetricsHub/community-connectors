@@ -1,0 +1,428 @@
+{
+  "total" : 6,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : 1791821802308,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "Virsh.yaml",
+      "name" : "libvirt (virsh)",
+      "connector_id" : "Virsh",
+      "applies_to_os" : "linux",
+      "parent.id" : "anyHost",
+      "id" : "Virsh"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed CommandLineCriterion Criterion:\n- CommandLine: virsh list\n- ExecuteLocally: false\n- ExpectedResult: Name\n\nResult:\n Id   Name    State\n-----------------------\n 1    web01   running\n 2    db01    paused\n\n\n\nMessage:\n====================================\nCommandLineCriterion test succeeded:\n- CommandLine: virsh list\n- ExecuteLocally: false\n- ExpectedResult: Name\n\nResult:  Id   Name    State\n-----------------------\n 1    web01   running\n 2    db01    paused\n\n\n====================================\n\nConclusion:\nTest on anyHost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1791821802308,
+    "type" : "connector",
+    "id" : "connector_Virsh",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"Virsh\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"connector\", connector_id=\"Virsh\"}",
+        "collectTime" : 1791821802308,
+        "previousCollectTime" : 1791821802308,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Virsh",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.002,
+        "previousValue" : 0.002,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"vm\", connector_id=\"Virsh\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"vm\", connector_id=\"Virsh\"}",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Virsh",
+          "monitor.type" : "vm"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.022,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"vm\", connector_id=\"Virsh\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"vm\", connector_id=\"Virsh\"}",
+        "collectTime" : 1791821802308,
+        "previousCollectTime" : 1791821802308,
+        "attributes" : {
+          "job.type" : "discovery",
+          "connector_id" : "Virsh",
+          "monitor.type" : "vm"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.115,
+        "previousValue" : 0.115,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : false
+      },
+      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"Virsh\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"connector\", connector_id=\"Virsh\"}",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "job.type" : "collect",
+          "connector_id" : "Virsh",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.004,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : 1791821802308,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.observed" : {
+        "name" : "metricshub.host.observed",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "linux",
+      "host.name" : "anyHost",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791821805345,
+    "type" : "host",
+    "id" : "endpoint_host_anyHost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.power_state{hw.type=\"vm\"}" : {
+        "name" : "hw.power_state{hw.type=\"vm\"}",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "vm"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "off",
+        "previousValue" : null,
+        "stateSet" : [ "off", "suspended", "on" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.vm.power_ratio" : {
+        "name" : "hw.vm.power_ratio",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.vm.power_ratio.raw_power_share" : {
+        "name" : "__hw.vm.power_ratio.raw_power_share",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "backup01",
+      "hw.parent.type" : "enclosure",
+      "vm.host.name" : "backup01",
+      "name" : "backup01 (backup01)",
+      "connector_id" : "Virsh",
+      "id" : "backup01",
+      "__power_source_id" : "endpoint_host_anyHost",
+      "info" : "UUID: c4a81f3e-27d9-4b05-a6e1-58f2d903b7ca",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : {
+      "hw.power{hw.type=\"vm\"}" : "0"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791821802308,
+    "type" : "vm",
+    "id" : "Virsh_vm_backup01",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.vm.power_ratio" : {
+        "name" : "hw.vm.power_ratio",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "build01",
+      "hw.parent.type" : "enclosure",
+      "vm.host.name" : "build01",
+      "name" : "build01 (build01)",
+      "connector_id" : "Virsh",
+      "id" : "build01",
+      "__power_source_id" : "endpoint_host_anyHost",
+      "info" : "",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : {
+      "hw.power{hw.type=\"vm\"}" : "0"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791821802308,
+    "type" : "vm",
+    "id" : "Virsh_vm_build01",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.power_state{hw.type=\"vm\"}" : {
+        "name" : "hw.power_state{hw.type=\"vm\"}",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "vm"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "suspended",
+        "previousValue" : null,
+        "stateSet" : [ "off", "suspended", "on" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.vm.power_ratio" : {
+        "name" : "hw.vm.power_ratio",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.vm.power_ratio.raw_power_share" : {
+        "name" : "__hw.vm.power_ratio.raw_power_share",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 4.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "db01",
+      "hw.parent.type" : "enclosure",
+      "vm.host.name" : "db01",
+      "name" : "db01 (db01)",
+      "connector_id" : "Virsh",
+      "id" : "db01",
+      "__power_source_id" : "endpoint_host_anyHost",
+      "info" : "UUID: 0b9e7d24-51c3-4f6a-8e2d-93a1c5f7b604",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : {
+      "hw.power{hw.type=\"vm\"}" : "0"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791821802308,
+    "type" : "vm",
+    "id" : "Virsh_vm_db01",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.power_state{hw.type=\"vm\"}" : {
+        "name" : "hw.power_state{hw.type=\"vm\"}",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "vm"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "on",
+        "previousValue" : null,
+        "stateSet" : [ "off", "suspended", "on" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.vm.power_ratio" : {
+        "name" : "hw.vm.power_ratio",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__hw.vm.power_ratio.raw_power_share" : {
+        "name" : "__hw.vm.power_ratio.raw_power_share",
+        "collectTime" : 1791821805345,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 2.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "web01",
+      "hw.parent.type" : "enclosure",
+      "vm.host.name" : "web01",
+      "name" : "web01 (web01)",
+      "connector_id" : "Virsh",
+      "id" : "web01",
+      "__power_source_id" : "endpoint_host_anyHost",
+      "info" : "UUID: 6f3c2b9e-8d41-4b7a-9f0e-2a5c7d1e4b83",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : {
+      "hw.power{hw.type=\"vm\"}" : "0"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1791821802308,
+    "type" : "vm",
+    "id" : "Virsh_vm_web01",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

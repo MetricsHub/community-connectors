@@ -34,7 +34,7 @@ monitors:
       sources:
         source(1):
           type: commandLine
-          commandLine: virsh list | awk '{print $$1}' | grep -oIE "[0-9]*" | while read word; do virsh dominfo ${word} ; done
+          commandLine: virsh list --all --name | while read -r name; do [ -z "$name" ] || { echo "Domain $name"; virsh dominfo "$name"; }; done
           computes:
           - type: awk
             script: ${file::vm.awk}
@@ -54,10 +54,14 @@ monitors:
       sources:
         source(1):
           type: commandLine
-          commandLine: virsh list | awk '{print $$1}' | grep -oIE "[0-9]*" | while read word; do virsh dominfo ${word} ; done
+          commandLine: virsh list --all --name | while read -r name; do [ -z "$name" ] || { echo "Domain $name"; virsh dominfo "$name"; }; done
           computes:
           - type: awk
             script: ${file::vm.awk}
+          # No state: virsh dominfo failed for this domain, collect nothing rather than report it off
+          - type: keepOnlyMatchingLines
+            column: 2
+            regExp: .
           - type: translate
             column: 2
             translationTable: ${translation::stateTranslationTable}

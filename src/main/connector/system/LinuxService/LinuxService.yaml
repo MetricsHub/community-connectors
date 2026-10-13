@@ -29,16 +29,45 @@ monitors:
       sources:
         serviceInfo:
           # serviceName;load;active;sub
+          # list-units only shows the units that systemd keeps in memory, and systemd unloads an inactive unit that nothing references.
+          # systemctl show on the unit files (templates aside) completes the inventory, so a stopped service keeps its monitor,
+          # and resolves an alias to its unit (older systemd versions list an alias as enabled or static, not as alias).
+          # Chained with &&: when list-units fails, the source returns nothing instead of a partial inventory.
           type: commandLine
-          commandLine: /usr/bin/systemctl list-units --type=service --all
+          commandLine: /usr/bin/systemctl list-units --type=service --all --no-legend && echo UNIT-FILES && /usr/bin/systemctl show -p Id,LoadState,ActiveState,SubState $(/usr/bin/systemctl list-unit-files --type=service --no-legend | grep -v '@\.service' | cut -d' ' -f1)
           computes:
           - type: awk
             script: |
-              /\.service/ {
-                sub(/^[^a-zA-Z0-9]+/, "");
-                sub("\.service", "");
-                printf($1 ";" $2 ";" $3 ";" $4 "\n")
+              function addUnitFile() {
+                # An alias resolves to the Id of its unit, which is already listed: keep the first row
+                if (id != "" && !(id in row)) {
+                  row[id] = id ";" load ";" active ";" state
                 }
+                id = ""
+              }
+              /^UNIT-FILES$/ { unitFiles = 1; next }
+              !unitFiles {
+                if ($0 ~ /\.service/) {
+                  sub(/^[^a-zA-Z0-9]+/, "");
+                  sub("\.service", "");
+                  row[$1] = $1 ";" $2 ";" $3 ";" $4
+                }
+                next
+              }
+              # systemctl show prints Id, LoadState, ActiveState and SubState of each unit file, one Key=value line each
+              /^Id=/ { addUnitFile(); id = substr($0, 4); sub(/\.service$/, "", id); shown = 1 }
+              /^LoadState=/ { load = substr($0, 11) }
+              /^ActiveState=/ { active = substr($0, 13) }
+              /^SubState=/ { state = substr($0, 10) }
+              END {
+                addUnitFile()
+                # No unit file shown: list-unit-files or show failed, report nothing rather than a partial inventory
+                if (shown) {
+                  for (name in row) {
+                    print row[name]
+                  }
+                }
+              }
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ${var::serviceNames} # In metricshub.yaml, the regex should be set this way "serviceNames: cron\|PatrolAgent\|snmp"

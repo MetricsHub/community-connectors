@@ -1,0 +1,5 @@
+ Id   Name    State
+-----------------------
+ 1    web01   running
+ 2    db01    paused
+

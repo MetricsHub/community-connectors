@@ -138,6 +138,9 @@ The helper already omits the `agent.host.name` attribute, which holds the genera
 > [!IMPORTANT]
 > The generate-then-rename workflow above is for the **initial** creation of `expected.json`. When later modifying an existing connector, avoid regenerating the file with the `writeExpectedJson` helper. Instead, manually update the expected file to reflect the specific connector changes. This keeps the expected file stable and ensures it changes only for intentional connector behavior updates. It also allows reviewers to clearly identify and validate the exact expected changes, without noise introduced by the recording process.
 
+> [!NOTE]
+> The replay runs one discovery cycle: the `discovery` jobs once, and the `simple` jobs twice (at discovery, then at collect). Once the ITs run on MetricsHub Community 3.9.08 or later (`metricshub-community.version` in `pom.xml`), the second `simple` run removes the instances that the first run created and the second run no longer returns (see [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed)). A recording that answers the two runs with different rows therefore removes instances from the expected output: update `expected.json` surgically.
+
 ## 5. Add the Connector to the IT Tests
 
 Create `src/it/java/org/metricshub/connector/it/MyConnectorIT.java`, replacing `MyConnector` with your connector identifier:
