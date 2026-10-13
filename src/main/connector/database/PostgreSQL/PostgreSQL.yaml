@@ -212,6 +212,9 @@ monitors:
   #Replication
   replication:
     keys: [ db.user.name, db.server.application_name ]
+    # Stopgap: pg_stat_replication only lists the connected standbys, so a disconnected standby would lose its monitor
+    # at the next collect. Keep it for 1 hour through short outages (an older engine ignores this property).
+    removalDelay: 1h
     simple:
       sources:
         replication:
