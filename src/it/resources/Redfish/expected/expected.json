@@ -1,5 +1,5 @@
 {
-  "total" : 39,
+  "total" : 41,
   "monitors" : [ {
     "metrics" : {
       "metricshub.connector.status" : {
@@ -1993,7 +1993,7 @@
       "name" : "CPU Temp",
       "connector_id" : "Redfish",
       "id" : "0",
-      "__id_count" : "3"
+      "__id_count" : "12"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2245,7 +2245,7 @@
       "name" : "DIMMD1 Temp",
       "connector_id" : "Redfish",
       "id" : "13",
-      "__id_count" : "7"
+      "__id_count" : "9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2413,7 +2413,7 @@
       "name" : "Peripheral Temp",
       "connector_id" : "Redfish",
       "id" : "3",
-      "__id_count" : "9"
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2497,7 +2497,7 @@
       "name" : "VcpuVRM Temp",
       "connector_id" : "Redfish",
       "id" : "4",
-      "__id_count" : "10"
+      "__id_count" : "4"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2581,7 +2581,7 @@
       "name" : "VmemABVRM Temp",
       "connector_id" : "Redfish",
       "id" : "5",
-      "__id_count" : "5"
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2665,7 +2665,7 @@
       "name" : "VmemCDVRM Temp",
       "connector_id" : "Redfish",
       "id" : "6",
-      "__id_count" : "4"
+      "__id_count" : "10"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2749,7 +2749,7 @@
       "name" : "DIMMA1 Temp",
       "connector_id" : "Redfish",
       "id" : "7",
-      "__id_count" : "2"
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2833,7 +2833,7 @@
       "name" : "DIMMB1 Temp",
       "connector_id" : "Redfish",
       "id" : "9",
-      "__id_count" : "8"
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2886,7 +2886,7 @@
       "name" : "12V",
       "connector_id" : "Redfish",
       "id" : "0",
-      "__id_count" : "6"
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2939,7 +2939,7 @@
       "name" : "5VCC",
       "connector_id" : "Redfish",
       "id" : "1",
-      "__id_count" : "9"
+      "__id_count" : "10"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -2992,7 +2992,7 @@
       "name" : "1.2V BMC",
       "connector_id" : "Redfish",
       "id" : "10",
-      "__id_count" : "7"
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3045,7 +3045,7 @@
       "name" : "1.05V PCH",
       "connector_id" : "Redfish",
       "id" : "11",
-      "__id_count" : "10"
+      "__id_count" : "11"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3098,7 +3098,7 @@
       "name" : "3.3VCC",
       "connector_id" : "Redfish",
       "id" : "2",
-      "__id_count" : "4"
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3151,7 +3151,7 @@
       "name" : "VBAT",
       "connector_id" : "Redfish",
       "id" : "3",
-      "__id_count" : "1"
+      "__id_count" : "13"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3257,7 +3257,7 @@
       "name" : "VDIMMAB",
       "connector_id" : "Redfish",
       "id" : "5",
-      "__id_count" : "8"
+      "__id_count" : "9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3310,7 +3310,7 @@
       "name" : "VDIMMCD",
       "connector_id" : "Redfish",
       "id" : "6",
-      "__id_count" : "5"
+      "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3363,7 +3363,7 @@
       "name" : "5VSB",
       "connector_id" : "Redfish",
       "id" : "7",
-      "__id_count" : "2"
+      "__id_count" : "4"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3416,7 +3416,7 @@
       "name" : "3.3VSB",
       "connector_id" : "Redfish",
       "id" : "8",
-      "__id_count" : "3"
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3469,7 +3469,7 @@
       "name" : "1.5V PCH",
       "connector_id" : "Redfish",
       "id" : "9",
-      "__id_count" : "11"
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3479,6 +3479,116 @@
     "discoveryTime" : 1775757864259,
     "type" : "voltage",
     "id" : "Redfish_voltage_9",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.temperature.limit{limit_type=\"high.degraded\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.degraded\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "limit_type" : "high.degraded"
+        },
+        "resetMetricTime" : true,
+        "metricType" : "Gauge",
+        "value" : 88.0,
+        "previousValue" : 88.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"temperature\"}" : {
+        "name" : "hw.status{hw.type=\"temperature\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "temperature"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "unknown",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.temperature.limit{limit_type=\"high.critical\"}" : {
+        "name" : "hw.temperature.limit{limit_type=\"high.critical\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : 1775757864259,
+        "attributes" : {
+          "limit_type" : "high.critical"
+        },
+        "resetMetricTime" : true,
+        "metricType" : "Gauge",
+        "value" : 93.0,
+        "previousValue" : 93.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "GPU1 Temp",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "GPU1 Temp",
+      "connector_id" : "Redfish",
+      "id" : "15",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "State: StandbyOffline"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1775757864259,
+    "type" : "temperature",
+    "id" : "Redfish_temperature_15",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"voltage\"}" : {
+        "name" : "hw.status{hw.type=\"voltage\"}",
+        "collectTime" : 1775757867404,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "voltage"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "unknown",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "12V GPU1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "/redfish/v1/Systems/1",
+      "name" : "12V GPU1",
+      "connector_id" : "Redfish",
+      "id" : "12",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "State: StandbyOffline"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1775757864259,
+    "type" : "voltage",
+    "id" : "Redfish_voltage_12",
     "identifyingAttributeKeys" : [ "id" ],
     "endpointHost" : false,
     "endpoint" : false,

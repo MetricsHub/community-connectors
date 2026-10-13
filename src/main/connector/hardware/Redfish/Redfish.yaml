@@ -720,14 +720,11 @@ monitors:
             entryKey: /Entry/Value/Temperatures
             properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;/ReadingCelsius;
             separator: ;
-          # Keep only Temperature Sensors marked as "Enabled
-          - type: keepOnlyMatchingLines
-            column: 5
-            regExp: Enabled
-          # exclude negative Temperature Sensors
+          # Exclude only the unpopulated slots: a sensor that is not Enabled (StandbyOffline while the host is off, ...)
+          # or has no valid reading still exists, and keeps its monitor
           - type: excludeMatchingLines
-            column: 8
-            regExp: "-"
+            column: 5
+            regExp: Absent
       mapping:
         # Temperature Instance Table
         # JSONID;<System>;MemberId;Name;State;UpperThresholdNoncritical;UpperThresholdCritical;
@@ -757,7 +754,7 @@ monitors:
           computes:
           - type: json2csv
             entryKey: /Temperatures
-            properties: /MemberId;/Status/Health;/Status/Health;/ReadingCelsius;
+            properties: /MemberId;/Status/Health;/Status/Health;/ReadingCelsius;/Status/State;
             separator: ;
           - type: translate
             column: 3
@@ -765,9 +762,16 @@ monitors:
           - type: translate
             column: 4
             translationTable: "${translation::StatusInformationTranslationTable}"
+          # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
+          - type: awk
+            script: |
+              BEGIN { FS=";"; OFS=";" }
+              $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
+              { print }
+            separators: ;
       mapping:
         # Temperature Value Table
-        # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingCelsius;
+        # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingCelsius;State;
         source: "${source::monitors.temperature.collect.sources.source(1)}"
         attributes:
           id: $2
@@ -795,10 +799,10 @@ monitors:
             entryKey: /Entry/Value/Voltages
             properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;
             separator: ;
-          # Keep only Voltage Sensors marked as "Enabled
-          - type: keepOnlyMatchingLines
+          # Exclude only the unpopulated slots: a sensor that is not Enabled (StandbyOffline while the host is off, ...) still exists
+          - type: excludeMatchingLines
             column: 5
-            regExp: Enabled
+            regExp: Absent
       mapping:
         # Voltage Instance Table
         # JSONID;<System>;MemberId;Name;State;UpperThresholdNoncritical;UpperThresholdCritical;
@@ -825,7 +829,7 @@ monitors:
           computes:
           - type: json2csv
             entryKey: /Voltages
-            properties: /MemberId;/Status/Health;/Status/Health;/ReadingVolts;
+            properties: /MemberId;/Status/Health;/Status/Health;/ReadingVolts;/Status/State;
             separator: ;
           - type: translate
             column: 3
@@ -836,9 +840,16 @@ monitors:
           - type: multiply
             column: 5
             value: 1000
+          # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
+          - type: awk
+            script: |
+              BEGIN { FS=";"; OFS=";" }
+              $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
+              { print }
+            separators: ;
       mapping:
         # Voltage Value Table
-        # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingCelsius;
+        # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingVolts;State;
         source: "${source::monitors.voltage.collect.sources.source(1)}"
         attributes:
           id: $2
