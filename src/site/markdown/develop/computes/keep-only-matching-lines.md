@@ -7,7 +7,7 @@ description: The keepOnlyMatchingLines compute keeps only the table rows whose s
 
 ## When To Use
 
-Use `keepOnlyMatchingLines` to filter a source table down to the rows you actually want to monitor: keep only the sensors of a given type, only the services whose name matches a connector variable, only the rows with a valid status. It is the table equivalent of `grep`: rows that do not match are discarded, rows that match pass through unchanged.
+Use `keepOnlyMatchingLines` to filter a source table down to the rows you actually want to monitor: keep only the sensors of a given type, or only the services whose name matches a connector variable. It is the table equivalent of `grep`: rows that do not match are discarded, rows that match pass through unchanged.
 
 To do the opposite (discard matching rows), use [`excludeMatchingLines`](exclude-matching-lines.html). To drop columns instead of rows, use [`keepColumns`](keep-columns.html).
 
@@ -65,9 +65,11 @@ Note that `Temperature` is kept: `valueList` comparison is case-insensitive.
 - Filter as early as possible in the `computes` pipeline so subsequent computes process fewer rows.
 - Drive `regExp` from a connector variable (`regExp: ${var::serviceNames}`) when the user should choose what to monitor, as done in `LinuxService` and `WindowsProcess`.
 - Anchor the regex (`^value$`) when you need an exact match with regex features; otherwise `abc` also keeps `xabcy`.
+- In a `discovery` or `simple` job, whose rows create the instances, keep on a type, a class or a name, never on a state (`Enabled`, `up`, `running`) or a value. An instance whose row is filtered out is removed (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)), which hides the very failure the state should report. Keep every row and map the state as a metric.
 
 ## Common Mistakes
 
+- Keeping only the `Enabled`, `up` or `running` rows in a `discovery` or `simple` job: the instance is removed as soon as its state changes. Map the state instead.
 - Forgetting that `regExp` is unanchored: `regExp: 5` keeps every row whose column merely *contains* `5` — use `valueList: 5` or `regExp: ^5$` for an exact match.
 - Expecting `valueList` to support patterns; it is a list of literal values only.
 - Combining `regExp` and `valueList` and expecting an OR: the two criteria are ANDed.

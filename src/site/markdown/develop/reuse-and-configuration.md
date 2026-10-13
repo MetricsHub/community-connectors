@@ -39,7 +39,7 @@ Parents are merged in list order, then the child is merged last — **the child 
 | Objects (maps: `monitors`, `metrics`, `translations`, `sources`, `mapping.attributes`, ...) | Deep-merged **key by key**. Redefining one key overrides that entry only; sibling keys survive. |
 | Arrays of objects (`detection.criteria`, `computes`, ...) | Child items are **appended after** the parent's items. |
 | Arrays of scalars (`keys`, `appliesTo`, `sudoCommands`, ...) | Child array **replaces** the parent's array entirely. |
-| Scalars | Child value overrides the parent's. |
+| Scalars (`connector.displayName`, a monitor's `removalDelay`, ...) | Child value overrides the parent's. |
 
 > [!WARNING]
 > Arrays of objects are **appended, never replaced**: if a parent source defines `computes`, your child's `computes` run *in addition to* the parent's — you cannot remove or reorder inherited criteria or computes, only add after them. If you need a genuinely different pipeline, do not inherit that subtree.

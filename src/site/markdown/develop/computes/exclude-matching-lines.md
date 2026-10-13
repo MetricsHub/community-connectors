@@ -7,7 +7,7 @@ description: The excludeMatchingLines compute removes the table rows whose selec
 
 ## When To Use
 
-Use `excludeMatchingLines` to drop unwanted rows from a source table: aggregate rows such as `_Total` in Windows performance counters, removable media in a disk listing, sensors reporting `N/A`, or devices with a size of `0`. It is the table equivalent of `grep -v`: rows that match are discarded, all other rows pass through unchanged.
+Use `excludeMatchingLines` to drop unwanted rows from a source table: aggregate rows such as `_Total` in Windows performance counters, removable media in a disk listing, or, in a `collect` job, `N/A` readings on rows that carry nothing else. It is the table equivalent of `grep -v`: rows that match are discarded, all other rows pass through unchanged.
 
 To do the opposite (keep only matching rows), use [`keepOnlyMatchingLines`](keep-only-matching-lines.html).
 
@@ -59,12 +59,15 @@ With `column: 4` and `valueList: CD-ROM,DVD-ROM,Removable`:
 
 ## Recommended Pattern
 
-- Exclude noise early in the `computes` pipeline (aggregate rows, `N/A` readings, zero-sized devices) so later computes and the mapping only see real hardware.
-- Prefer `valueList` when the unwanted values are a fixed set of literals; use `regExp` for actual patterns, e.g. `regExp: ^[0.]+$` in `LibreHardwareMonitor` to drop all-zero readings.
+- Exclude noise early in the `computes` pipeline (aggregate rows, removable media, rows of another class) so later computes and the mapping only see real hardware.
+- In a `discovery` or `simple` job, whose rows create the instances, exclude on a type or a class only. A value or a state that can change (`N/A` or all-zero readings, a size of `0`, `Disabled`) removes the instance as soon as it matches (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Blank such a value instead of dropping the row, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) on the monitor.
+- In a `collect` job, dropping a row also drops the status and the other metrics it carries. When the row holds more than the unwanted value, blank the value instead: an [`awk`](awk.html) compute that empties the reading column, or a [`replace`](replace.html) compute when the exact value is known. Exclude the row only when it carries nothing but that value.
+- Prefer `valueList` when the unwanted values are a fixed set of literals; use `regExp` for actual patterns, e.g. `regExp: ^[0.]+$` to drop all-zero readings from rows that carry nothing else.
 - Chain one `excludeMatchingLines` per column when you need to filter on several columns.
 
 ## Common Mistakes
 
+- Excluding a value or a state (`N/A`, `0`, `Disabled`) in a `discovery` or `simple` job: the instance is removed when the value matches, and comes back with fresh counters when it no longer does.
 - Forgetting that `regExp` is unanchored: `regExp: 5` removes every row whose column merely *contains* `5` — use `valueList: 5` or `regExp: ^5$` to remove exact values only.
 - Expecting `valueList` entries to support wildcards; they are literal values only (the comparison is case-insensitive, though).
 - Using `excludeMatchingLines` with a long value list when an anchored `keepOnlyMatchingLines` on the wanted values would be shorter and safer.

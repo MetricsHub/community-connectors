@@ -115,6 +115,9 @@ For each row of the referenced table, the engine clones the enclosing source, re
 - `json_array_extended` — like `json_array`, but merges the driving row's own columns into each JSON entry, so downstream computes can correlate result and origin.
 - custom object `{ concatStart: "...", concatEnd: "..." }` — wrap each entry's raw result; both wrappers may themselves use `$n`.
 
+> [!WARNING]
+> A failed entry adds nothing to the result: `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source looks answered, so when it feeds the mapping of a `discovery` or `simple` job, the run is trusted and the instances of the failed entity are removed (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Join the result back onto the inventory with a [`tableJoin`](./table-join.html) and a `defaultRightLine`, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) when no inventory exists.
+
 See [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml) for extensive real usage of `json_array` and `json_array_extended`.
 
 ## `forceSerialization`

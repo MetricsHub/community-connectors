@@ -15,6 +15,7 @@ This page explains the job models (`simple` vs `discovery` + `collect`), instanc
 monitors:
   <monitorType>:            # e.g. fan, disk, battery
     keys: [ id ]            # optional, default: [ id ]
+    # removalDelay: 15m     # optional, default: 0; only when no inventory exists (see removalDelay)
     metrics: {}             # optional, monitor-level metric metadata overrides
     simple: {}              # EITHER a simple job...
     discovery: {}           # ...OR a discovery job
@@ -23,7 +24,8 @@ monitors:
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `keys` | No | `[ id ]` | Attributes that uniquely identify each instance. See [Instance Identity](#Instance_Identity:_keys). |
+| `keys` | No | `[ id ]` | Attributes that uniquely identify each instance. See [Instance Identity](#instance-identity-keys). |
+| `removalDelay` | No | `0` | How long an instance is kept after the last run that returned it: a duration (`30s`, `15m`, `1h`, `1d`) or a number of seconds. See [`removalDelay`](#removaldelay). |
 | `metrics` | No | None | Metric metadata (unit, description, type) overriding connector-level definitions for this monitor. |
 | `simple` | One of | None | Single job executed in both the discovery and collect phases. |
 | `discovery` / `collect` | One of | None | Two-phase model: inventory runs less often, metric collection runs on every cycle. |
@@ -35,6 +37,7 @@ monitors:
 | One request returns attributes **and** metrics together (typical REST APIs, SQL queries) | `simple` |
 | Inventory is expensive (full SNMP table walk, WMI enumeration) but metrics are cheap to fetch separately | `discovery` + `collect` |
 | Collection requires running a command **per instance** (e.g. `smartctl -H /dev/sda`) | `discovery` + `collect` with `type: monoInstance` |
+| The source that returns the metrics omits some instances (idle, disconnected, not reporting) | `discovery` (inventory) + `collect` (metrics): a row missing from a `collect` job never removes the instance |
 
 > [!TIP]
 > Prefer `simple` unless you have a concrete reason to split. A `simple` job is easier to read, and MetricsHub still runs it at both discovery and collect frequencies.
@@ -42,6 +45,8 @@ monitors:
 ## The `simple` Job
 
 One pipeline produces both attributes and metrics; each mapped row creates (or refreshes) one instance and collects its metrics at the same time.
+
+Because the job runs on every collect, an instance that disappears is removed at the next collect, when a trusted run no longer returns it. See [When Instances Are Removed](#when-instances-are-removed).
 
 ```yaml
 monitors:
@@ -68,6 +73,8 @@ monitors:
 ## The `discovery` Job
 
 Discovery inventories the components: it identifies instances and sets their **attributes** (identity, model, topology). It runs less often than collect.
+
+An instance that disappears is removed at the next discovery cycle (every 30 collects by default, about 1 hour), when a trusted discovery run no longer returns it. The `collect` job never removes instances. See [When Instances Are Removed](#when-instances-are-removed).
 
 ```yaml
 monitors:
@@ -199,6 +206,60 @@ monitors:
 
 Every attribute listed in `keys` must be mapped in the discovery (or `simple`) `mapping.attributes`, and re-mapped in a `multiInstance` collect `mapping.attributes`.
 
+### When Instances Are Removed
+
+From MetricsHub Community 3.9.08, a `discovery` or `simple` job removes the instances it no longer returns. At the end of each **trusted** run, the engine removes the instances of the job's monitor type, created by this connector, that the run did not create or refresh:
+
+| Job | An instance that disappears is removed |
+| --- | --- |
+| `simple` | at the next collect |
+| `discovery` | at the next discovery cycle (every 30 collects by default, about 1 hour) |
+| `collect` | never: a missing row only leaves the instance without new values |
+
+A run is trusted only when all of these hold:
+
+- **Every source answered.** A source that had data and comes back empty (most failures return an empty result too) is retried once; if it is still empty, it has not answered for this run. This only covers the run in which the source first comes back empty: the next run finds no previous data, does not retry, and counts the empty result as answered. Sources read through `${source::...}` references (from `beforeAll` or another job) count too: one that did not answer the last time it ran makes the job untrusted.
+- **At least one instance was mapped.** A job whose table is empty, or whose rows all lack the `keys` attributes, removes nothing.
+- **The connector status is OK.**
+- **The run finished in time**: no job timeout (`jobTimeout`), no interruption, and every job of the parallel pool completed.
+- **No source is incremental**: a job that reads an [`eventLog`](sources/event-log.html) source or a [`file`](sources/file.html) source in `LOG` mode, directly, through its mapping source, or through source references, never removes its instances.
+
+Otherwise the run only creates and refreshes instances, as before: a source that has just stopped answering, a job that maps nothing, a failing or stopped connector, or a timed-out run never removes anything. Neither does a monitor type excluded from the resource's monitors, since its job does not run.
+
+A source that stays empty or keeps failing is only covered for one run. From the next run, it counts as answered: if the job still maps other rows (from another source of a [`tableUnion`](sources/table-union.html), for example), the instances built from the rows of that source are removed. When a source can stay empty for long, keep the rows of the instances with a [`defaultRightLine`](sources/table-join.html#writing-defaultrightline), or set [`removalDelay`](#removaldelay).
+
+These instances are never removed:
+
+- the endpoint host
+- the `connector` monitors
+- on connectors tagged `hardware`, the types that take part in missing-device detection: `battery`, `blade`, `cpu`, `disk_controller`, `enclosure`, `fan`, `gpu`, `memory`, `network`, `other_device`, `physical_disk`, `power_supply`, `robotics`, `tape_drive`. A vanished instance of these types is kept and reported missing (`hw.status{hw.type="<type>", state="present"}` = `0`). The other types of a `hardware` connector (`temperature`, `voltage`, `led`, `lun`, `logical_disk`, `vm`, ...) are removed like any other.
+
+What this means for connector authors:
+
+- The rules above only catch whole failures. A row dropped for any other reason looks exactly like an entity that disappeared, and its instance is removed: a filter on a state or a value, an inner `tableJoin` against a source that misses some entities, a failed fan-out entry. Build the rows that create the instances from an inventory: see [Build Instances from an Inventory](design-principles.html#9-build-instances-from-an-inventory).
+- An unstable `id` no longer only duplicates instances: the old instance is removed and a new one is created at every run, which restarts its counters and `rate()` state.
+- A removed instance is no longer exported; its series ends without a final data point. If the entity comes back, it is created again with fresh counters.
+
+### `removalDelay`
+
+`removalDelay` (monitor level, next to `keys`) keeps an instance for a given time after the last run that returned it:
+
+```yaml
+monitors:
+  replication:
+    keys: [ id ]
+    removalDelay: 15m
+    simple:
+      # ...
+```
+
+- The value is a duration (`30s`, `15m`, `1h`, `1d`, or combined such as `1h30m`) or a number of seconds. The default `0` removes the instance at the first trusted run that misses it. A negative value is rejected when the connector is loaded.
+- A trusted run removes the instance once the time since the last run that returned it exceeds the delay. The delay is wall-clock time, checked only at the end of a trusted run: a `discovery` job runs about once an hour by default, so a delay shorter than one discovery cycle keeps nothing. Use two discovery cycles or more (for example `2h`) to survive one missed cycle.
+- It is inherited and can be overridden through [`extends`](reuse-and-configuration.html), and it is also available for the custom monitors of `metricshub.yaml`.
+- MetricsHub versions older than 3.9.08 ignore it, so declaring it does not break a connector on an older agent.
+
+Use `removalDelay` only when no inventory exists: entities defined by their activity (sessions, connected replicas, running queries), or as a stopgap until the connector reads an inventory.
+
 ## Job Properties Reference
 
 | Property | Jobs | Required | Description |
@@ -256,9 +317,12 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 
 - Omitting `type` on the `collect` job of a multi-instance monitor — the engine then defaults to `monoInstance`, silently changing the execution model. State `multiInstance` or `monoInstance` explicitly.
 - Forgetting to re-map `id` (or the other `keys`) in a `multiInstance` collect mapping, so no row matches any instance and no metric is ever collected.
-- Mapping an unstable value (rotating index, display label) as `id`, which creates duplicate instances at every discovery cycle.
+- Mapping an unstable value (rotating index, display label) as `id`, which creates a new instance at every discovery cycle (from MetricsHub Community 3.9.08, the previous one is removed, so its counters restart every time).
 - Using `monoInstance` with expensive sources on monitors that can have dozens of instances.
 - Putting heavy inventory work in `collect` instead of `discovery` — collect runs on every cycle.
+- Filtering on a state or a value (`Enabled` only, `up` only, non-zero readings only, `virsh list` without `--all`) in a `discovery` or `simple` job. The instance is removed as soon as its state changes, which hides the very failure the state should report. Keep every row and map the state.
+- Joining the inventory with an inner `tableJoin` (no `defaultRightLine`) against a per-entity or optional source: an entity missing from the right table is removed. Keep the inventory on the left and add a `defaultRightLine`.
+- Building the instances from a fan-out (`executeForEachEntryOf`) whose failed entry drops the row: the source still answers, the run is trusted, and the instances of that entity are removed. Join the result back onto the inventory.
 
 ## Community Examples
 

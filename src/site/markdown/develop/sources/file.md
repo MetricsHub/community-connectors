@@ -33,7 +33,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `file`. |
 | `paths` | Yes | None | File path patterns to read. Wildcards (`*` and `?`) are supported in any segment, directory or filename (one segment at a time, `**` is not supported). A path ending with a delimiter (`/var/log/`, `C:\logs\`) lists all files of the directory. An invalid path is skipped without discarding the other paths. |
-| `mode` | No | `LOG` | `LOG` (cursor/incremental) or `FLAT` (read full file each cycle). |
+| `mode` | No | `LOG` | `LOG` (cursor/incremental) or `FLAT` (read full file each cycle). A job that reads a `LOG` source never removes its instances (see below). |
 | `maxSizePerPoll` | No | `5242880` | Max bytes read per cycle (`-1` for unlimited). |
 | `executeForEachEntryOf` | No | None | Fan-out execution context. |
 | `computes` | No | `[]` | Post-processing computes. |
@@ -44,6 +44,9 @@ sources:
 - Prefer `LOG` mode for real log files.
 - Keep `maxSizePerPoll` bounded to avoid long polling delays.
 - Normalize lines with computes before mapping.
+
+> [!NOTE]
+> A `discovery` or `simple` job that reads a `file` source in `LOG` mode, directly or through `${source::...}` references, never removes its instances: the source only returns the lines added since the previous poll, so a missing row does not mean a missing entity. `FLAT` mode is not incremental: a rotated or truncated file that returns fewer rows removes the instances of the missing rows (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
 
 ## Common Mistakes
 

@@ -112,6 +112,7 @@ Each monitor can define either:
 monitors:
   network:
     keys: [ id ]
+    # removalDelay: 15m     # optional, default: 0; only when no inventory exists (see removalDelay)
     simple:
       type: multiInstance
       sources: {}
@@ -121,7 +122,7 @@ monitors:
 > [!TIP]
 > Prefer `simple` unless you need a true two-phase model with separate discovery semantics.
 
-See [Monitors and Jobs](monitors-and-jobs.html) for the complete job model: `discovery`/`collect` splits, `multiInstance` vs `monoInstance`, instance identity (`keys`), `conditionalCollection`, and `legacyTextParameters`.
+See [Monitors and Jobs](monitors-and-jobs.html) for the complete job model: `discovery`/`collect` splits, `multiInstance` vs `monoInstance`, instance identity (`keys`), instance removal (`removalDelay`), `conditionalCollection`, and `legacyTextParameters`.
 
 ## Table Data Model (Important)
 
