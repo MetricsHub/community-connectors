@@ -267,21 +267,6 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "hw.gpu.utilization.limit{limit_type=\"degraded\"}" : {
-        "name" : "hw.gpu.utilization.limit{limit_type=\"degraded\"}",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "degraded"
-        },
-        "resetMetricTime" : false,
-        "metricType" : "Gauge",
-        "value" : 0.8,
-        "previousValue" : null,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
       "hw.gpu.memory.usage{hw.memory.state=\"reserved\"}" : {
         "name" : "hw.gpu.memory.usage{hw.memory.state=\"reserved\"}",
         "collectTime" : 1791830134224,
@@ -339,21 +324,6 @@
         "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.gpu.utilization.limit{limit_type=\"critical\"}" : {
-        "name" : "hw.gpu.utilization.limit{limit_type=\"critical\"}",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "limit_type" : "critical"
-        },
-        "resetMetricTime" : false,
-        "metricType" : "Gauge",
-        "value" : 0.9,
-        "previousValue" : null,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
