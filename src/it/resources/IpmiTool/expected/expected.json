@@ -700,7 +700,7 @@
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
-        "value" : "ok",
+        "value" : "failed",
         "previousValue" : null,
         "stateSet" : [ "failed", "degraded", "ok" ],
         "type" : "StateSetMetric",
@@ -727,11 +727,11 @@
       "name" : "2",
       "connector_id" : "IpmiTool",
       "id" : "2",
-      "info" : "Monitored by sensors: PS2 Status SerialNumber:  Model: "
+      "info" : "Monitored by sensors: PS2 Status, PS2 Temp SerialNumber:  Model: "
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
-      "StatusInformation" : ""
+      "StatusInformation" : "PS2 Temp: Upper Critical going high - "
     },
     "alertRules" : { },
     "discoveryTime" : 1768296434718,
