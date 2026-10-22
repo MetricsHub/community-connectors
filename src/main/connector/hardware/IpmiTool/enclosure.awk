@@ -664,38 +664,41 @@ BEGIN {
 				status = status "ok|"
 			}
 			########### Threshold states
-			if (lcaseSensorReading == "lower non-critical going low") {
+			# ipmitool says "Upper Non-critical going high", ipmi-java "Upper Non Critical Going High"
+			lcaseThresholdReading = lcaseSensorReading
+			sub(/ non /, " non-", lcaseThresholdReading)
+			if (lcaseThresholdReading == "lower non-critical going low") {
 				status = status "degraded|"
 				statusInformation = statusInformation sensorName ": Lower Non-critical going low - "
-			} else if (lcaseSensorReading == "lower non-critical going high") {
+			} else if (lcaseThresholdReading == "lower non-critical going high") {
 				status = status "ok|"
-			} else if (lcaseSensorReading == "lower critical going low") {
+			} else if (lcaseThresholdReading == "lower critical going low") {
 				status = status "failed|"
 				statusInformation = statusInformation sensorName ": Lower Critical going low - "
-			} else if (lcaseSensorReading == "lower critical going high") {
+			} else if (lcaseThresholdReading == "lower critical going high") {
 				status = status "degraded|"
 				statusInformation = statusInformation sensorName ": Lower Critical going high - "
-			} else if (lcaseSensorReading == "lower non-recoverable going low") {
+			} else if (lcaseThresholdReading == "lower non-recoverable going low") {
 				status = status "failed|"
 				statusInformation = statusInformation sensorName ": Lower Non-recoverable going low - "
-			} else if (lcaseSensorReading == "lower non-recoverable going high") {
+			} else if (lcaseThresholdReading == "lower non-recoverable going high") {
 				status = status "failed|"
 				statusInformation = statusInformation sensorName ": Lower Non-recoverable going high - "
-			} else if (lcaseSensorReading == "upper non-critical going low") {
+			} else if (lcaseThresholdReading == "upper non-critical going low") {
 				status = status "ok|"
-			} else if (lcaseSensorReading == "upper non-critical going high") {
+			} else if (lcaseThresholdReading == "upper non-critical going high") {
 				status = status "degraded|"
 				statusInformation = statusInformation sensorName ": Upper Non-critical going high - "
-			} else if (lcaseSensorReading == "upper critical going low") {
+			} else if (lcaseThresholdReading == "upper critical going low") {
 				status = status "degraded|"
 				statusInformation = statusInformation sensorName ": Upper Critical going low - "
-			} else if (lcaseSensorReading == "upper critical going high") {
+			} else if (lcaseThresholdReading == "upper critical going high") {
 				status = status "failed|"
 				statusInformation = statusInformation sensorName ": Upper Critical going high - "
-			} else if (lcaseSensorReading == "upper non-recoverable going low") {
+			} else if (lcaseThresholdReading == "upper non-recoverable going low") {
 				status = status "failed|"
 				statusInformation = statusInformation sensorName ": Upper Non-recoverable going low - "
-			} else if (lcaseSensorReading == "upper non-recoverable going high") {
+			} else if (lcaseThresholdReading == "upper non-recoverable going high") {
 				status = status "failed|"
 				statusInformation = statusInformation sensorName ": Upper Non-recoverable going high - "
 			}
