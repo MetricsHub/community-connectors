@@ -38,6 +38,20 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
+      "hw.status{hw.type=\"enclosure\"}" : {
+        "name" : "hw.status{hw.type=\"enclosure\"}",
+        "collectTime" : 1768296443907,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "hw.type" : "enclosure"
+        },
+        "resetMetricTime" : false,
+        "value" : "failed",
+        "previousValue" : null,
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
       "hw.status{hw.type=\"enclosure\", state=\"present\"}" : {
         "name" : "hw.status{hw.type=\"enclosure\", state=\"present\"}",
         "collectTime" : 1768296443907,
@@ -85,11 +99,11 @@
       "info" : "Monitored by sensors: "
     },
     "conditionalCollection" : {
-      "hw.status{hw.type=\"enclosure\"}" : "",
+      "hw.status{hw.type=\"enclosure\"}" : "failed|failed|",
       "hw.enclosure.power" : "2.0"
     },
     "legacyTextParameters" : {
-      "StatusInformation" : ""
+      "StatusInformation" : "Cooling fault - Chassis intrusion - Power restore policy: PoweredUp - "
     },
     "alertRules" : { },
     "discoveryTime" : 1768296434718,

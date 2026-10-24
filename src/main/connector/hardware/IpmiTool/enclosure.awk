@@ -84,6 +84,59 @@ BEGIN {
 	}
 }
 
+($1 == "Chassis") {
+	# Chassis status line (Get Chassis Status), emitted first by the ipmi source of the IPMI extension:
+	# Chassis;powerOn;powerFault;powerOverload;interlock;powerControlFault;coolingFault;driveFault;intrusion;frontPanelLockout;powerRestorePolicy;identifyState;lastPowerEvents
+	# Faults and intrusion fail the enclosure; the rest is informational only.
+	if ($2 == 0) {
+		machineStatus = "OFF"
+		systemStatusInformation = systemStatusInformation "Powered off - "
+	}
+	if ($3 == 1) {
+		systemStatus = systemStatus "failed|"
+		systemStatusInformation = systemStatusInformation "Power fault - "
+	}
+	if ($4 == 1) {
+		systemStatus = systemStatus "failed|"
+		systemStatusInformation = systemStatusInformation "Power overload - "
+	}
+	if ($5 == 1) {
+		systemStatus = systemStatus "failed|"
+		systemStatusInformation = systemStatusInformation "Interlock - "
+	}
+	if ($6 == 1) {
+		systemStatus = systemStatus "failed|"
+		systemStatusInformation = systemStatusInformation "Power control fault - "
+	}
+	if ($7 == 1) {
+		systemStatus = systemStatus "failed|"
+		systemStatusInformation = systemStatusInformation "Cooling fault - "
+	}
+	if ($8 == 1) {
+		systemStatus = systemStatus "failed|"
+		systemStatusInformation = systemStatusInformation "Drive fault - "
+	}
+	if ($9 == 1) {
+		systemStatus = systemStatus "failed|"
+		systemStatusInformation = systemStatusInformation "Chassis intrusion - "
+	}
+	if ($10 == 1) {
+		systemStatusInformation = systemStatusInformation "Front panel locked - "
+	}
+	if ($11 != "" && $11 != "Unknown") {
+		systemStatusInformation = systemStatusInformation "Power restore policy: " $11 " - "
+	}
+	if ($12 == "TemporaryOn" || $12 == "IndefiniteOn") {
+		systemStatusInformation = systemStatusInformation "Identify LED on - "
+	}
+	if ($13 != "") {
+		lastPowerEvents = $13
+		gsub(/\|/, ", ", lastPowerEvents)
+		systemStatusInformation = systemStatusInformation "Last power event: " lastPowerEvents " - "
+	}
+	next
+}
+
 {
 	# Read the device characteristics
 	deviceType = $1
