@@ -84,6 +84,12 @@ BEGIN {
 	}
 }
 
+# Prints a front-panel LED derived from the Chassis status line
+# LED;DeviceID;Name;EntityID;Color;OnStatus;OffStatus;BlinkingStatus;State
+function chassisLed(name, color, onStatus, state) {
+	print "MSHW;LED;" name ";" name ";Chassis;" color ";" onStatus ";ok;" onStatus ";" state
+}
+
 ($1 == "Chassis") {
 	# Chassis status line (Get Chassis Status), emitted first by the ipmi source of the IPMI extension:
 	# Chassis;powerOn;powerFault;powerOverload;interlock;powerControlFault;coolingFault;driveFault;intrusion;frontPanelLockout;powerRestorePolicy;identifyState;lastPowerEvents
@@ -133,6 +139,23 @@ BEGIN {
 		lastPowerEvents = $13
 		gsub(/\|/, ", ", lastPowerEvents)
 		systemStatusInformation = systemStatusInformation "Last power event: " lastPowerEvents " - "
+	}
+	# Expose the same states as front-panel LEDs
+	chassisLed("Power", "Green", "ok", ($2 == 1) ? "On" : "Off")
+	chassisLed("Power Fault", "Red", "failed", ($3 == 1) ? "On" : "Off")
+	chassisLed("Power Overload", "Red", "failed", ($4 == 1) ? "On" : "Off")
+	chassisLed("Interlock", "Red", "failed", ($5 == 1) ? "On" : "Off")
+	chassisLed("Power Control Fault", "Red", "failed", ($6 == 1) ? "On" : "Off")
+	chassisLed("Cooling Fault", "Red", "failed", ($7 == 1) ? "On" : "Off")
+	chassisLed("Drive Fault", "Red", "failed", ($8 == 1) ? "On" : "Off")
+	chassisLed("Chassis Intrusion", "Red", "failed", ($9 == 1) ? "On" : "Off")
+	chassisLed("Front Panel Lockout", "Amber", "ok", ($10 == 1) ? "On" : "Off")
+	if ($12 == "IndefiniteOn") {
+		chassisLed("Identify", "Blue", "ok", "On")
+	} else if ($12 == "TemporaryOn") {
+		chassisLed("Identify", "Blue", "ok", "Blinking")
+	} else if ($12 == "Off") {
+		chassisLed("Identify", "Blue", "ok", "Off")
 	}
 	next
 }
