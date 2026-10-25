@@ -673,14 +673,15 @@
       "__display_id" : "Chassis Intrusion",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Red",
+      "hw.led.state" : "on",
+      "hw.led.color" : "Red",
       "__on_status" : "failed",
       "name" : "Chassis Intrusion (Red)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "failed",
       "id" : "Chassis Intrusion",
       "__off_status" : "ok",
-      "__id_count" : "2"
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -716,14 +717,15 @@
       "__display_id" : "Cooling Fault",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Red",
+      "hw.led.state" : "on",
+      "hw.led.color" : "Red",
       "__on_status" : "failed",
       "name" : "Cooling Fault (Red)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "failed",
       "id" : "Cooling Fault",
       "__off_status" : "ok",
-      "__id_count" : "3"
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -759,14 +761,15 @@
       "__display_id" : "Drive Fault",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Red",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
       "__on_status" : "failed",
       "name" : "Drive Fault (Red)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "failed",
       "id" : "Drive Fault",
       "__off_status" : "ok",
-      "__id_count" : "8"
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -802,14 +805,15 @@
       "__display_id" : "Front Panel Lockout",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Amber",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Amber",
       "__on_status" : "ok",
       "name" : "Front Panel Lockout (Amber)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "ok",
       "id" : "Front Panel Lockout",
       "__off_status" : "ok",
-      "__id_count" : "9"
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -845,14 +849,15 @@
       "__display_id" : "Identify",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Blue",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Blue",
       "__on_status" : "ok",
       "name" : "Identify (Blue)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "ok",
       "id" : "Identify",
       "__off_status" : "ok",
-      "__id_count" : "6"
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -888,14 +893,15 @@
       "__display_id" : "Interlock",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Red",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
       "__on_status" : "failed",
       "name" : "Interlock (Red)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "failed",
       "id" : "Interlock",
       "__off_status" : "ok",
-      "__id_count" : "10"
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -931,14 +937,15 @@
       "__display_id" : "Power",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Green",
+      "hw.led.state" : "on",
+      "hw.led.color" : "Green",
       "__on_status" : "ok",
       "name" : "Power (Green)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "ok",
       "id" : "Power",
       "__off_status" : "ok",
-      "__id_count" : "1"
+      "__id_count" : "9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -974,14 +981,15 @@
       "__display_id" : "Power Control Fault",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Red",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
       "__on_status" : "failed",
       "name" : "Power Control Fault (Red)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "failed",
       "id" : "Power Control Fault",
       "__off_status" : "ok",
-      "__id_count" : "5"
+      "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -1017,14 +1025,15 @@
       "__display_id" : "Power Fault",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Red",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
       "__on_status" : "failed",
       "name" : "Power Fault (Red)",
       "connector_id" : "IpmiTool",
       "__blinking_status" : "failed",
       "id" : "Power Fault",
       "__off_status" : "ok",
-      "__id_count" : "7"
+      "__id_count" : "10"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -1060,7 +1069,8 @@
       "__display_id" : "Power Overload",
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "color" : "Red",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
       "__on_status" : "failed",
       "name" : "Power Overload (Red)",
       "connector_id" : "IpmiTool",
