@@ -80,7 +80,7 @@ which re-parses as **2 columns**: the `;` inside the value split the old column 
 ## Community Examples
 
 - [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml)
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 
 From Windows (prepending the content of another source to combine both tables for calculations), included directly from the connector source:

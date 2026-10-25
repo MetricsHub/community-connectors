@@ -78,10 +78,10 @@ Note that `Temperature` is kept: `valueList` comparison is case-insensitive.
 
 ## Community Examples
 
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml)
 - [WindowsProcess](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/WindowsProcess/WindowsProcess.yaml)
 - [LinuxService](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/LinuxService/LinuxService.yaml)
 
 From `IpmiTool`:
 
-<!-- MACRO{snippet|id=keepOnlyMatchingLinesCompute|file=src/main/connector/hardware/IpmiTool/IpmiTool.yaml} -->
+<!-- MACRO{snippet|id=keepOnlyMatchingLinesCompute|file=src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml} -->

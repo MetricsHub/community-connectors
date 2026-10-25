@@ -68,7 +68,7 @@ Serialized, `fan1;front;Delta F1;1.02;ok` becomes `fan1;Delta F1;ok`.
 ## Community Examples
 
 - [Cassandra](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/Cassandra/Cassandra.yaml)
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml)
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
 
 From `Cassandra` (trimming a chain of `tableJoin` results before mapping), included directly from the connector source:

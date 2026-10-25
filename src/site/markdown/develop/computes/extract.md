@@ -74,10 +74,10 @@ Serialized, `disk0;Seagate;ZC11ABC;ok;ST4000NM|4000` becomes `disk0;Seagate;ZC11
 
 ## Community Examples
 
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml)
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 - [WBEMGenDiskNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WBEMGenDiskNT/WBEMGenDiskNT.yaml)
 
 From `IpmiTool` (column 5 contains `Model|Size`; duplicate the column, then keep the model from the original and the size from the copy):
 
-<!-- MACRO{snippet|id=extractSubColumnCompute|file=src/main/connector/hardware/IpmiTool/IpmiTool.yaml} -->
+<!-- MACRO{snippet|id=extractSubColumnCompute|file=src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml} -->

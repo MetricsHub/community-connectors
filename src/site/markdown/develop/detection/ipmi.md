@@ -51,6 +51,6 @@ connector:
 
 ## Examples
 
-Community example — the `ipmi` criterion of [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml), included directly from the connector source:
+Community example — the `ipmi` criterion of [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml), included directly from the connector source:
 
-<!-- MACRO{snippet|id=ipmiCriterion|file=src/main/connector/hardware/IpmiTool/IpmiTool.yaml} -->
+<!-- MACRO{snippet|id=ipmiCriterion|file=src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml} -->

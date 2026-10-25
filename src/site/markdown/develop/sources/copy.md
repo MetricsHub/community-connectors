@@ -53,5 +53,5 @@ sources:
 
 ## Community Examples
 
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiTool/IpmiTool.yaml)
 - [AMDRadeon](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/AMDRadeon/AMDRadeon.yaml)
