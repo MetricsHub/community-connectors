@@ -9,5 +9,5 @@ resources:
     protocols:
       emulation:
         wmi:
-          directory: src/it/resources/WindowsIpmiTool/emulation/wmi
-    connectors: [ +WindowsIpmiTool ]
+          directory: src/it/resources/WmiIpmi/emulation/wmi
+    connectors: [ +WmiIpmi ]
