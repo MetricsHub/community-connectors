@@ -78,7 +78,7 @@ With `conversion: hex2Dec`, a cell containing `0x1F` becomes `31`, and `1A:2B` b
 ## Community Examples
 
 - [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
-- [LinuxIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/LinuxIpmiTool/LinuxIpmiTool.yaml)
+- [Ipmi-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/Ipmi-header.yaml) (shared by LinuxIpmiTool and WmiIpmi)
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
 
 From `WinStorageSpaces`, included directly from the connector source:

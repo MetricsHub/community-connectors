@@ -69,6 +69,8 @@ connector:
 
 Headers are best **parameterized with constants**: the header references `${constant::...}` placeholders and each child supplies the values (see below). This is cleaner than overriding inherited sources.
 
+A header can also leave one source for the child to define: `Ipmi-header` holds every monitor of the in-band IPMI connectors and reads `${source::monitors.enclosure.simple.sources.interpretedSensors}`, which `LinuxIpmiTool` builds from `ipmitool` and `WmiIpmi` from WMI. The `extends` merge adds the child's sources next to the header's, so the header never needs to know how the table was obtained.
+
 Community examples: [MIB2-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2-header/MIB2-header.yaml) with [MIB2](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2/MIB2.yaml); [LinuxNetwork-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LinuxNetwork/LinuxNetwork-header/LinuxNetwork-header.yaml) with [LinuxIPNetwork](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LinuxNetwork/LinuxIPNetwork/LinuxIPNetwork.yaml).
 
 ## `constants`
