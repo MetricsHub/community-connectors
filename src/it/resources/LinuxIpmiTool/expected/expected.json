@@ -1,5 +1,5 @@
 {
-  "total" : 41,
+  "total" : 50,
   "monitors" : [ {
     "metrics" : {
       "metricshub.connector.status" : {
@@ -240,7 +240,7 @@
       "hw.enclosure.power" : "116"
     },
     "legacyTextParameters" : {
-      "StatusInformation" : ""
+      "StatusInformation" : "Power restore policy: PowerRestored - Last power event: AC_FAILED - "
     },
     "alertRules" : { },
     "discoveryTime" : 1769439815631,
@@ -1184,6 +1184,393 @@
     "endpoint" : true,
     "connector" : false,
     "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
+      "__on_status" : "failed",
+      "name" : "Chassis Intrusion (Red)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "failed",
+      "id" : "Chassis Intrusion",
+      "__off_status" : "ok",
+      "__id_count" : "9"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_ChassisIntrusion",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
+      "__on_status" : "failed",
+      "name" : "Cooling Fault (Red)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "failed",
+      "id" : "Cooling Fault",
+      "__off_status" : "ok",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_CoolingFault",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
+      "__on_status" : "failed",
+      "name" : "Drive Fault (Red)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "failed",
+      "id" : "Drive Fault",
+      "__off_status" : "ok",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_DriveFault",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Amber",
+      "__on_status" : "ok",
+      "name" : "Front Panel Lockout (Amber)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "ok",
+      "id" : "Front Panel Lockout",
+      "__off_status" : "ok",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_FrontPanelLockout",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
+      "__on_status" : "failed",
+      "name" : "Interlock (Red)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "failed",
+      "id" : "Interlock",
+      "__off_status" : "ok",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_Interlock",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "on",
+      "hw.led.color" : "Green",
+      "__on_status" : "ok",
+      "name" : "Power (Green)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "ok",
+      "id" : "Power",
+      "__off_status" : "ok",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "On"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_Power",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
+      "__on_status" : "failed",
+      "name" : "Power Control Fault (Red)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "failed",
+      "id" : "Power Control Fault",
+      "__off_status" : "ok",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_PowerControlFault",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
+      "__on_status" : "failed",
+      "name" : "Power Fault (Red)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "failed",
+      "id" : "Power Fault",
+      "__off_status" : "ok",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_PowerFault",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"led\"}" : {
+        "name" : "hw.status{hw.type=\"led\"}",
+        "collectTime" : 1769439815631,
+        "previousCollectTime" : 1769439794271,
+        "attributes" : {
+          "hw.type" : "led"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "hw.led.state" : "off",
+      "hw.led.color" : "Red",
+      "__on_status" : "failed",
+      "name" : "Power Overload (Red)",
+      "connector_id" : "LinuxIpmiTool",
+      "__blinking_status" : "failed",
+      "id" : "Power Overload",
+      "__off_status" : "ok",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Off"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769439815631,
+    "type" : "led",
+    "id" : "LinuxIpmiTool_led_PowerOverload",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
   }, {
     "metrics" : {
       "hw.status{hw.type=\"other_device\", state=\"present\"}" : {

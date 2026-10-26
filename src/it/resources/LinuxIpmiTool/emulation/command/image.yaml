@@ -6,3 +6,5 @@ image:
   result: 23dd11c6-7005-49f6-b371-8870d6b624c1.txt
 - command: 'PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info'
   result: cb8b78c3-cf8f-4734-8d2c-efc3b00e82a0.txt
+- command: 'PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open chassis status'
+  result: 5e2c9b47-0d61-4a8e-9f3a-7c1b2d6e8a90.txt
