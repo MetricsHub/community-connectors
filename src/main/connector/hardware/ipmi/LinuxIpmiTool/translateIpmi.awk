@@ -3,7 +3,7 @@
 #
 # - Correlates SDR sensors with FRU inventory data
 # - Normalizes heterogeneous IPMI outputs into fixed column layouts
-# - Ensures Chassis FRU is emitted first (required by enclosure.awk)
+# - Ensures Chassis FRU is emitted first (required by interpret_sensors.awk)
 # - Emits numeric sensors immediately; buffers discrete sensors until FRU mapping
 #
 # Notes:
@@ -211,7 +211,7 @@ function emit_device_for_entity(entity_key,    device_key,fru_id,vendor,model,se
   delete device_key_by_entity[entity_key]
 }
 
-# Flush buffered FRUs, ensuring Chassis is first (so enclosure.awk picks the right one)
+# Flush buffered FRUs, ensuring Chassis is first (so interpret_sensors.awk picks the right one)
 function flush_fru_lines(    i,id){
   if (fru_flushed) return
   fru_flushed = 1
