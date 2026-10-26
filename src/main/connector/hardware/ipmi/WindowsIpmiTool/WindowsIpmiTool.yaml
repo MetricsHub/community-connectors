@@ -2,7 +2,7 @@
 extends:
 - ../../../semconv/Hardware
 - ../../../semconv/System
-- ../Ipmi-header/Ipmi-header
+- ../Ipmi-header
 
 connector:
   displayName: Windows IPMI (WMI)
