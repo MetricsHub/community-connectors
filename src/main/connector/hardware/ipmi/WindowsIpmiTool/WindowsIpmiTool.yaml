@@ -130,17 +130,22 @@ monitors:
             value: ;
 
         source(2):
-          # Handle "Fan Device" format
+          # Handle the "Fan Device" and "Fan/cooling device" (HP through WMI) formats: status only
           type: copy
           from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
           - type: keepOnlyMatchingLines
             column: 1
-            valueList: Fan Device
+            valueList: Fan Device,Fan/cooling device
             # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: keepColumns
             columnNumbers: 1,2,3,7,8,9
             # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;AdditionalInformation1;
+            # Convert StatusArray to a simple (unique) PATROLStatus
+          - type: convert
+            column: 4
+            conversion: array2SimpleStatus
+            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;AdditionalInformation1;
           - type: append
             column: 5
             value: ;;;;
@@ -242,28 +247,40 @@ monitors:
     simple:
       sources:
         powerSupplySensors:
+          # powerSupplySensors = copy of Enclosure.Simple.sensorsUnion
           type: copy
           from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
+            # Keep only power supply lines
+            # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: keepOnlyMatchingLines
             column: 1
-            valueList: "Power Supply"
-          - type: excludeMatchingLines
-            column: 8
-            valueList: N/A
+            valueList: Power supply
+          - type: prepend
+            column: 6
+            value: "SerialNumber: "
+          - type: prepend
+            column: 5
+            value: "Model: "
+            # Convert StatusArray to a simple (unique) PATROLStatus
+            # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation;AdditionalInformation1;
           - type: convert
             column: 7
             conversion: array2SimpleStatus
       mapping:
+        # InstanceTable = powerSupplySensors
         source: ${source::powerSupplySensors}
         attributes:
           id: $2
           name: ${awk::sprintf("%s %s", $1, $2)}
           sensor_location: $3
+          info: ${awk::join(" ", $9, $6, $5)}
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
         metrics:
           hw.status{hw.type="power_supply"}: $7
         legacyTextParameters:
-          StatusInformation: $5
+          StatusInformation: $8
   cpu:
     simple:
       # Collect type is: multi-instance
@@ -449,7 +466,7 @@ monitors:
             # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: excludeMatchingLines
             column: 1
-            valueList: Battery,Disk or Disk Bay,Disk or disk bay,Disk Drive Bay,Memory module,Memory Device,LED,Temperature,Voltage,Power supply,Fan,Fan Device,Enclosure,FRU,Processor,Current,PowerConsumption,EnergyUsage,Blade,Processing Blade
+            valueList: Battery,Disk or Disk Bay,Disk or disk bay,Disk Drive Bay,Memory module,Memory Device,LED,Temperature,Voltage,Power supply,Fan,Fan Device,Fan/cooling device,Enclosure,FRU,Processor,Current,PowerConsumption,EnergyUsage,Blade,Processing Blade
           - type: prepend
             column: 6
             value: "Serial Number: "

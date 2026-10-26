@@ -479,446 +479,6 @@
           "hw.type" : "other_device"
         },
         "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 1",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 1",
-      "info" : "Monitored by sensors: Fan 1, Fan 1 Presence",
-      "__id_count" : "3"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice1",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 2",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 2",
-      "info" : "Monitored by sensors: Fan 2, Fan 2 Presence",
-      "__id_count" : "8"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice2",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 3",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 3",
-      "info" : "Monitored by sensors: Fan 3, Fan 3 Presence",
-      "__id_count" : "7"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice3",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 4",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 4",
-      "info" : "Monitored by sensors: Fan 4, Fan 4 Presence",
-      "__id_count" : "5"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice4",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 5",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 5",
-      "info" : "Monitored by sensors: Fan 5, Fan 5 Presence",
-      "__id_count" : "6"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice5",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 6",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 6",
-      "info" : "Monitored by sensors: Fan 6, Fan 6 Presence",
-      "__id_count" : "10"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice6",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 7",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 7",
-      "info" : "Monitored by sensors: Fan 7, Fan 7 Presence",
-      "__id_count" : "4"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice7",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 8",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 8",
-      "info" : "Monitored by sensors: Fans",
-      "__id_count" : "2"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice8",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -961,6 +521,7 @@
           "hw.type" : "other_device"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -974,6 +535,7 @@
           "hw.type" : "other_device"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -990,7 +552,7 @@
       "device_type" : "System chassis",
       "id" : "System chassis 2",
       "info" : "Monitored by sensors: Sys Health LED",
-      "__id_count" : "9"
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -1010,13 +572,12 @@
       "hw.power{hw.type=\"physical_disk\"}" : {
         "name" : "hw.power{hw.type=\"physical_disk\"}",
         "collectTime" : 1769775685912,
-        "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "physical_disk"
         },
         "resetMetricTime" : false,
-        "value" : 52.5,
-        "previousValue" : null,
+        "metricType" : "Gauge",
+        "value" : 18.63,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -1028,6 +589,7 @@
           "hw.type" : "physical_disk"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1043,6 +605,7 @@
           "hw.type" : "physical_disk"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -1079,13 +642,12 @@
       "hw.power{hw.type=\"physical_disk\"}" : {
         "name" : "hw.power{hw.type=\"physical_disk\"}",
         "collectTime" : 1769775685912,
-        "previousCollectTime" : null,
         "attributes" : {
           "hw.type" : "physical_disk"
         },
         "resetMetricTime" : false,
-        "value" : 52.5,
-        "previousValue" : null,
+        "metricType" : "Gauge",
+        "value" : 18.63,
         "type" : "NumberMetric",
         "updated" : true
       },
@@ -1097,6 +659,7 @@
           "hw.type" : "physical_disk"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "UNKNOWN",
         "previousValue" : "UNKNOWN",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1112,6 +675,7 @@
           "hw.type" : "physical_disk"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -1153,6 +717,7 @@
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1168,6 +733,7 @@
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -1175,10 +741,13 @@
       }
     },
     "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
       "sensor_location" : "Power supply 1",
       "name" : "Power supply 1",
       "connector_id" : "WindowsIpmiTool",
       "id" : "1",
+      "info" : "Monitored by sensors: Power Supply 1, PS 1 Presence SerialNumber:  Model: ",
       "__id_count" : "3"
     },
     "conditionalCollection" : { },
@@ -1204,6 +773,7 @@
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1219,6 +789,7 @@
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -1226,11 +797,14 @@
       }
     },
     "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
       "sensor_location" : "Power supply 2",
       "name" : "Power supply 2",
       "connector_id" : "WindowsIpmiTool",
       "id" : "2",
-      "__id_count" : "1"
+      "info" : "Monitored by sensors: Power Supply 2, PS 2 Presence SerialNumber:  Model: ",
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -1255,6 +829,7 @@
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : "ok",
         "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
@@ -1270,6 +845,7 @@
           "hw.type" : "power_supply"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -1277,11 +853,14 @@
       }
     },
     "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
       "sensor_location" : "Power supply 3",
       "name" : "Power supply 3",
       "connector_id" : "WindowsIpmiTool",
       "id" : "3",
-      "__id_count" : "2"
+      "info" : "Monitored by sensors: Power Supplies SerialNumber:  Model: ",
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -3139,6 +2718,582 @@
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
     "id" : "WindowsIpmiTool_temperature_9.0.32",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 1",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 1",
+      "id" : "1",
+      "info" : "Monitored by sensors: Fan 1, Fan 1 Presence",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 2",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 2",
+      "id" : "2",
+      "info" : "Monitored by sensors: Fan 2, Fan 2 Presence",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 3",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 3",
+      "id" : "3",
+      "info" : "Monitored by sensors: Fan 3, Fan 3 Presence",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_3",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 4",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 4",
+      "id" : "4",
+      "info" : "Monitored by sensors: Fan 4, Fan 4 Presence",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 5",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 5",
+      "id" : "5",
+      "info" : "Monitored by sensors: Fan 5, Fan 5 Presence",
+      "__id_count" : "7"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_5",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 6",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 6",
+      "id" : "6",
+      "info" : "Monitored by sensors: Fan 6, Fan 6 Presence",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_6",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 7",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 7",
+      "id" : "7",
+      "info" : "Monitored by sensors: Fan 7, Fan 7 Presence",
+      "__id_count" : "3"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"fan\"}" : {
+        "name" : "hw.status{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.power{hw.type=\"fan\"}" : {
+        "name" : "hw.power{hw.type=\"fan\"}",
+        "collectTime" : 1769775685912,
+        "attributes" : {
+          "hw.type" : "fan"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.47,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "__display_id" : "Fan/cooling device 8",
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "sensor_location" : "",
+      "connector_id" : "WindowsIpmiTool",
+      "name" : "Fan/cooling device 8",
+      "id" : "8",
+      "info" : "Monitored by sensors: Fans",
+      "__id_count" : "5"
+    },
+    "conditionalCollection" : {
+      "hw.status{hw.type=\"fan\"}" : "ok",
+      "hw.fan.speed" : ""
+    },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "fan",
+    "id" : "WindowsIpmiTool_fan_8",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
