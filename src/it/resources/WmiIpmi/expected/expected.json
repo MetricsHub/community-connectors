@@ -34,7 +34,7 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "name" : "1",
       "model" : "",
       "id" : "1",
@@ -48,7 +48,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "battery",
-    "id" : "WindowsIpmiTool_battery_1",
+    "id" : "WmiIpmi_battery_1",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -70,12 +70,12 @@
       }
     },
     "attributes" : {
-      "filename" : "WindowsIpmiTool.yaml",
+      "filename" : "WmiIpmi.yaml",
       "name" : "Windows IPMI (WMI)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "applies_to_os" : "windows",
       "parent.id" : "anyHost",
-      "id" : "WindowsIpmiTool"
+      "id" : "WmiIpmi"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -84,7 +84,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775512204,
     "type" : "connector",
-    "id" : "connector_WindowsIpmiTool",
+    "id" : "connector_WmiIpmi",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -145,7 +145,7 @@
     },
     "attributes" : {
       "vendor" : "HP",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "name" : "enclosure: HP ProLiant DL360 Gen9",
       "model" : "ProLiant DL360 Gen9",
       "serial_number" : "CZJ619086Z",
@@ -163,7 +163,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "enclosure",
-    "id" : "WindowsIpmiTool_enclosure_IPMI",
+    "id" : "WmiIpmi_enclosure_IPMI",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -171,13 +171,13 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"blade\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"blade\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"blade\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"blade\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "blade"
         },
         "resetMetricTime" : false,
@@ -199,13 +199,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"fan\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "fan"
         },
         "resetMetricTime" : false,
@@ -214,13 +214,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"led\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"led\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"led\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"led\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "led"
         },
         "resetMetricTime" : false,
@@ -253,13 +253,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"battery\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"battery\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"battery\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"battery\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "battery"
         },
         "resetMetricTime" : false,
@@ -268,13 +268,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"other_device\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"other_device\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"other_device\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"other_device\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "other_device"
         },
         "resetMetricTime" : false,
@@ -296,13 +296,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"memory\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"memory\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"memory\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"memory\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "memory"
         },
         "resetMetricTime" : false,
@@ -311,13 +311,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"temperature\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "temperature"
         },
         "resetMetricTime" : false,
@@ -326,13 +326,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"enclosure\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "enclosure"
         },
         "resetMetricTime" : false,
@@ -341,13 +341,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"cpu\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"cpu\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"cpu\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"cpu\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "cpu"
         },
         "resetMetricTime" : false,
@@ -356,13 +356,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"voltage\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"voltage\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"voltage\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"voltage\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "voltage"
         },
         "resetMetricTime" : false,
@@ -371,13 +371,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"power_supply\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"power_supply\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"power_supply\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"power_supply\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "power_supply"
         },
         "resetMetricTime" : false,
@@ -386,13 +386,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "connector"
         },
         "resetMetricTime" : false,
@@ -401,13 +401,13 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"physical_disk\", connector_id=\"WindowsIpmiTool\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"physical_disk\", connector_id=\"WindowsIpmiTool\"}",
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"physical_disk\", connector_id=\"WmiIpmi\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"physical_disk\", connector_id=\"WmiIpmi\"}",
         "collectTime" : 1769775685912,
         "previousCollectTime" : 1769775512204,
         "attributes" : {
           "job.type" : "simple",
-          "connector_id" : "WindowsIpmiTool",
+          "connector_id" : "WmiIpmi",
           "monitor.type" : "physical_disk"
         },
         "resetMetricTime" : false,
@@ -489,12 +489,122 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "name" : "Fan/cooling device: Fan/cooling device 1",
       "additional_label" : "",
       "device_type" : "Fan/cooling device",
       "id" : "Fan/cooling device 1",
       "info" : "Monitored by sensors: Fan 1, Fan 1 Presence",
+      "__id_count" : "4"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "other_device",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "WmiIpmi",
+      "name" : "Fan/cooling device: Fan/cooling device 2",
+      "additional_label" : "",
+      "device_type" : "Fan/cooling device",
+      "id" : "Fan/cooling device 2",
+      "info" : "Monitored by sensors: Fan 2, Fan 2 Presence",
+      "__id_count" : "2"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "other_device",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice2",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "WmiIpmi",
+      "name" : "Fan/cooling device: Fan/cooling device 3",
+      "additional_label" : "",
+      "device_type" : "Fan/cooling device",
+      "id" : "Fan/cooling device 3",
+      "info" : "Monitored by sensors: Fan 3, Fan 3 Presence",
       "__id_count" : "3"
     },
     "conditionalCollection" : { },
@@ -504,7 +614,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice1",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice3",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -544,67 +654,12 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 2",
+      "connector_id" : "WmiIpmi",
+      "name" : "Fan/cooling device: Fan/cooling device 4",
       "additional_label" : "",
       "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 2",
-      "info" : "Monitored by sensors: Fan 2, Fan 2 Presence",
-      "__id_count" : "8"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice2",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 3",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 3",
-      "info" : "Monitored by sensors: Fan 3, Fan 3 Presence",
+      "id" : "Fan/cooling device 4",
+      "info" : "Monitored by sensors: Fan 4, Fan 4 Presence",
       "__id_count" : "7"
     },
     "conditionalCollection" : { },
@@ -614,7 +669,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice3",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice4",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -654,12 +709,12 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 4",
+      "connector_id" : "WmiIpmi",
+      "name" : "Fan/cooling device: Fan/cooling device 5",
       "additional_label" : "",
       "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 4",
-      "info" : "Monitored by sensors: Fan 4, Fan 4 Presence",
+      "id" : "Fan/cooling device 5",
+      "info" : "Monitored by sensors: Fan 5, Fan 5 Presence",
       "__id_count" : "5"
     },
     "conditionalCollection" : { },
@@ -669,7 +724,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice4",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice5",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -709,62 +764,7 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 5",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 5",
-      "info" : "Monitored by sensors: Fan 5, Fan 5 Presence",
-      "__id_count" : "6"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice5",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "name" : "Fan/cooling device: Fan/cooling device 6",
       "additional_label" : "",
       "device_type" : "Fan/cooling device",
@@ -779,7 +779,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice6",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice6",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -819,177 +819,12 @@
     "attributes" : {
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "name" : "Fan/cooling device: Fan/cooling device 7",
       "additional_label" : "",
       "device_type" : "Fan/cooling device",
       "id" : "Fan/cooling device 7",
       "info" : "Monitored by sensors: Fan 7, Fan 7 Presence",
-      "__id_count" : "4"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice7",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "ok",
-        "previousValue" : "ok",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "Fan/cooling device: Fan/cooling device 8",
-      "additional_label" : "",
-      "device_type" : "Fan/cooling device",
-      "id" : "Fan/cooling device 8",
-      "info" : "Monitored by sensors: Fans",
-      "__id_count" : "2"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Fan/coolingdevice8",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "UNKNOWN",
-        "previousValue" : "UNKNOWN",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "System chassis: System chassis 1",
-      "additional_label" : "",
-      "device_type" : "System chassis",
-      "id" : "System chassis 1",
-      "info" : "Monitored by sensors: UID",
-      "__id_count" : "1"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : {
-      "StatusInformation" : ""
-    },
-    "alertRules" : { },
-    "discoveryTime" : 1769775685912,
-    "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Systemchassis1",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpoint" : false,
-    "endpointHost" : false,
-    "connector" : false,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"other_device\"}" : {
-        "name" : "hw.status{hw.type=\"other_device\"}",
-        "collectTime" : 1769775685912,
-        "previousCollectTime" : 1769775512204,
-        "attributes" : {
-          "hw.type" : "other_device"
-        },
-        "resetMetricTime" : false,
-        "value" : "UNKNOWN",
-        "previousValue" : "UNKNOWN",
-        "stateSet" : [ "failed", "degraded", "ok" ],
-        "type" : "StateSetMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "hw.parent.type" : "enclosure",
-      "hw.parent.id" : "IPMI",
-      "connector_id" : "WindowsIpmiTool",
-      "name" : "System chassis: System chassis 2",
-      "additional_label" : "",
-      "device_type" : "System chassis",
-      "id" : "System chassis 2",
-      "info" : "Monitored by sensors: Sys Health LED",
       "__id_count" : "9"
     },
     "conditionalCollection" : { },
@@ -999,7 +834,172 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "other_device",
-    "id" : "WindowsIpmiTool_other_device_Systemchassis2",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice7",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "WmiIpmi",
+      "name" : "Fan/cooling device: Fan/cooling device 8",
+      "additional_label" : "",
+      "device_type" : "Fan/cooling device",
+      "id" : "Fan/cooling device 8",
+      "info" : "Monitored by sensors: Fans",
+      "__id_count" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "other_device",
+    "id" : "WmiIpmi_other_device_Fan/coolingdevice8",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : "UNKNOWN",
+        "previousValue" : "UNKNOWN",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "WmiIpmi",
+      "name" : "System chassis: System chassis 1",
+      "additional_label" : "",
+      "device_type" : "System chassis",
+      "id" : "System chassis 1",
+      "info" : "Monitored by sensors: UID",
+      "__id_count" : "8"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "other_device",
+    "id" : "WmiIpmi_other_device_Systemchassis1",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpoint" : false,
+    "endpointHost" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "hw.status{hw.type=\"other_device\", state=\"present\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\", state=\"present\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "state" : "present",
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "hw.status{hw.type=\"other_device\"}" : {
+        "name" : "hw.status{hw.type=\"other_device\"}",
+        "collectTime" : 1769775685912,
+        "previousCollectTime" : 1769775512204,
+        "attributes" : {
+          "hw.type" : "other_device"
+        },
+        "resetMetricTime" : false,
+        "value" : "UNKNOWN",
+        "previousValue" : "UNKNOWN",
+        "stateSet" : [ "failed", "degraded", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "hw.parent.type" : "enclosure",
+      "hw.parent.id" : "IPMI",
+      "connector_id" : "WmiIpmi",
+      "name" : "System chassis: System chassis 2",
+      "additional_label" : "",
+      "device_type" : "System chassis",
+      "id" : "System chassis 2",
+      "info" : "Monitored by sensors: Sys Health LED",
+      "__id_count" : "6"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : ""
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1769775685912,
+    "type" : "other_device",
+    "id" : "WmiIpmi_other_device_Systemchassis2",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1053,7 +1053,7 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "vendor" : "",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "name" : "1",
       "model" : "",
       "serial_number" : "",
@@ -1068,7 +1068,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "physical_disk",
-    "id" : "WindowsIpmiTool_physical_disk_1",
+    "id" : "WmiIpmi_physical_disk_1",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1122,7 +1122,7 @@
       "hw.parent.type" : "enclosure",
       "hw.parent.id" : "IPMI",
       "vendor" : "",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "name" : "2",
       "model" : "",
       "serial_number" : "",
@@ -1137,7 +1137,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "physical_disk",
-    "id" : "WindowsIpmiTool_physical_disk_2",
+    "id" : "WmiIpmi_physical_disk_2",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1177,9 +1177,9 @@
     "attributes" : {
       "sensor_location" : "Power supply 1",
       "name" : "Power supply 1",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "1",
-      "__id_count" : "3"
+      "__id_count" : "2"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -1188,7 +1188,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "power_supply",
-    "id" : "WindowsIpmiTool_power_supply_1",
+    "id" : "WmiIpmi_power_supply_1",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1228,9 +1228,9 @@
     "attributes" : {
       "sensor_location" : "Power supply 2",
       "name" : "Power supply 2",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "2",
-      "__id_count" : "1"
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -1239,7 +1239,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "power_supply",
-    "id" : "WindowsIpmiTool_power_supply_2",
+    "id" : "WmiIpmi_power_supply_2",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1279,9 +1279,9 @@
     "attributes" : {
       "sensor_location" : "Power supply 3",
       "name" : "Power supply 3",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "3",
-      "__id_count" : "2"
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : {
@@ -1290,7 +1290,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "power_supply",
-    "id" : "WindowsIpmiTool_power_supply_3",
+    "id" : "WmiIpmi_power_supply_3",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1342,16 +1342,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Disk or disk bay 1",
       "name" : "08-HD Max (Disk or disk bay 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "10.0.32",
-      "__id_count" : "32"
+      "__id_count" : "3"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_10.0.32",
+    "id" : "WmiIpmi_temperature_10.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1403,16 +1403,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 1",
       "name" : "10-Chipset (OEM System Integrator defined entity 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "12.0.32",
-      "__id_count" : "17"
+      "__id_count" : "5"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_12.0.32",
+    "id" : "WmiIpmi_temperature_12.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1438,16 +1438,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power supply 1",
       "name" : "11-PS 1 Inlet (Power supply 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "13.0.32",
-      "__id_count" : "7"
+      "__id_count" : "27"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_13.0.32",
+    "id" : "WmiIpmi_temperature_13.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1473,16 +1473,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power supply 2",
       "name" : "12-PS 2 Inlet (Power supply 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "14.0.32",
-      "__id_count" : "27"
+      "__id_count" : "19"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_14.0.32",
+    "id" : "WmiIpmi_temperature_14.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1534,16 +1534,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power module 1",
       "name" : "13-VR P1 (Power module 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "15.0.32",
-      "__id_count" : "1"
+      "__id_count" : "18"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_15.0.32",
+    "id" : "WmiIpmi_temperature_15.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1595,16 +1595,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power module 2",
       "name" : "14-VR P2 (Power module 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "16.0.32",
-      "__id_count" : "30"
+      "__id_count" : "14"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_16.0.32",
+    "id" : "WmiIpmi_temperature_16.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1656,16 +1656,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power module 3",
       "name" : "15-VR P1 Mem (Power module 3)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "17.0.32",
-      "__id_count" : "19"
+      "__id_count" : "31"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_17.0.32",
+    "id" : "WmiIpmi_temperature_17.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1717,16 +1717,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power module 4",
       "name" : "16-VR P1 Mem (Power module 4)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "18.0.32",
-      "__id_count" : "9"
+      "__id_count" : "4"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_18.0.32",
+    "id" : "WmiIpmi_temperature_18.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1778,16 +1778,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power module 5",
       "name" : "17-VR P2 Mem (Power module 5)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "19.0.32",
-      "__id_count" : "25"
+      "__id_count" : "9"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_19.0.32",
+    "id" : "WmiIpmi_temperature_19.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1839,16 +1839,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power module 6",
       "name" : "18-VR P2 Mem (Power module 6)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "20.0.32",
-      "__id_count" : "18"
+      "__id_count" : "25"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_20.0.32",
+    "id" : "WmiIpmi_temperature_20.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1874,16 +1874,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power supply 1",
       "name" : "19-PS 1 Internal (Power supply 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "21.0.32",
-      "__id_count" : "20"
+      "__id_count" : "13"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_21.0.32",
+    "id" : "WmiIpmi_temperature_21.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1909,16 +1909,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power supply 2",
       "name" : "20-PS 2 Internal (Power supply 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "22.0.32",
-      "__id_count" : "21"
+      "__id_count" : "8"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_22.0.32",
+    "id" : "WmiIpmi_temperature_22.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -1970,7 +1970,7 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Add-in card 4",
       "name" : "24-HD Controller (Add-in card 4)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "26.0.32",
       "__id_count" : "2"
     },
@@ -1979,7 +1979,7 @@
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_26.0.32",
+    "id" : "WmiIpmi_temperature_26.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2031,16 +2031,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Add-in card 5",
       "name" : "25-LOM Card (Add-in card 5)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "27.0.32",
-      "__id_count" : "14"
+      "__id_count" : "7"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_27.0.32",
+    "id" : "WmiIpmi_temperature_27.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2092,16 +2092,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 2",
       "name" : "26-LOM (OEM System Integrator defined entity 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "28.0.32",
-      "__id_count" : "6"
+      "__id_count" : "15"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_28.0.32",
+    "id" : "WmiIpmi_temperature_28.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2153,16 +2153,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 2",
       "name" : "27-Front Ambient (OEM System Integrator defined entity 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "29.0.32",
-      "__id_count" : "13"
+      "__id_count" : "1"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_29.0.32",
+    "id" : "WmiIpmi_temperature_29.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2214,16 +2214,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 1",
       "name" : "01-Inlet Ambient (OEM System Integrator defined entity 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "3.0.32",
-      "__id_count" : "28"
+      "__id_count" : "23"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_3.0.32",
+    "id" : "WmiIpmi_temperature_3.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2275,16 +2275,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 3",
       "name" : "28-P/S 2 Zone (OEM System Integrator defined entity 3)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "30.0.32",
-      "__id_count" : "24"
+      "__id_count" : "32"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_30.0.32",
+    "id" : "WmiIpmi_temperature_30.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2336,16 +2336,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Battery 1",
       "name" : "29-Battery Zone (Battery 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "31.0.32",
-      "__id_count" : "26"
+      "__id_count" : "22"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_31.0.32",
+    "id" : "WmiIpmi_temperature_31.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2397,16 +2397,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "System management module 1",
       "name" : "30-iLO Zone (System management module 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "32.0.32",
-      "__id_count" : "15"
+      "__id_count" : "29"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_32.0.32",
+    "id" : "WmiIpmi_temperature_32.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2458,16 +2458,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "System internal expansion board 1",
       "name" : "31-PCI 1 Zone (System internal expansion board 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "33.0.32",
-      "__id_count" : "22"
+      "__id_count" : "10"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_33.0.32",
+    "id" : "WmiIpmi_temperature_33.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2519,16 +2519,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "System internal expansion board 2",
       "name" : "32-PCI 2 Zone (System internal expansion board 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "34.0.32",
-      "__id_count" : "16"
+      "__id_count" : "20"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_34.0.32",
+    "id" : "WmiIpmi_temperature_34.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2580,16 +2580,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Add-in card 6",
       "name" : "34-HD Cntlr Zone (Add-in card 6)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "36.0.32",
-      "__id_count" : "29"
+      "__id_count" : "21"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_36.0.32",
+    "id" : "WmiIpmi_temperature_36.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2641,16 +2641,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 4",
       "name" : "35-I/O Zone (OEM System Integrator defined entity 4)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "37.0.32",
-      "__id_count" : "23"
+      "__id_count" : "24"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_37.0.32",
+    "id" : "WmiIpmi_temperature_37.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2702,16 +2702,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Battery 2",
       "name" : "36-Storage Batt (Battery 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "38.0.32",
-      "__id_count" : "8"
+      "__id_count" : "30"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_38.0.32",
+    "id" : "WmiIpmi_temperature_38.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2763,16 +2763,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Power supply 3",
       "name" : "37-Fuse (Power supply 3)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "39.0.32",
-      "__id_count" : "31"
+      "__id_count" : "26"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_39.0.32",
+    "id" : "WmiIpmi_temperature_39.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2824,16 +2824,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 1",
       "name" : "02-CPU 1 (OEM System Integrator defined entity 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "4.0.32",
-      "__id_count" : "11"
+      "__id_count" : "16"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_4.0.32",
+    "id" : "WmiIpmi_temperature_4.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2885,16 +2885,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "OEM System Integrator defined entity 2",
       "name" : "03-CPU 2 (OEM System Integrator defined entity 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "5.0.32",
-      "__id_count" : "4"
+      "__id_count" : "17"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_5.0.32",
+    "id" : "WmiIpmi_temperature_5.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -2946,16 +2946,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Memory device 1",
       "name" : "04-P1 DIMM 1-6 (Memory device 1)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "6.0.32",
-      "__id_count" : "12"
+      "__id_count" : "28"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_6.0.32",
+    "id" : "WmiIpmi_temperature_6.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -3007,16 +3007,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Memory device 2",
       "name" : "05-P1 DIMM 7-12 (Memory device 2)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "7.0.32",
-      "__id_count" : "3"
+      "__id_count" : "12"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_7.0.32",
+    "id" : "WmiIpmi_temperature_7.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -3068,16 +3068,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Memory device 3",
       "name" : "06-P2 DIMM 1-6 (Memory device 3)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "8.0.32",
-      "__id_count" : "10"
+      "__id_count" : "6"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_8.0.32",
+    "id" : "WmiIpmi_temperature_8.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,
@@ -3129,16 +3129,16 @@
       "__is_cpu_sensor" : "false",
       "sensor_location" : "Memory device 4",
       "name" : "07-P2 DIMM 7-12 (Memory device 4)",
-      "connector_id" : "WindowsIpmiTool",
+      "connector_id" : "WmiIpmi",
       "id" : "9.0.32",
-      "__id_count" : "5"
+      "__id_count" : "11"
     },
     "conditionalCollection" : { },
     "legacyTextParameters" : { },
     "alertRules" : { },
     "discoveryTime" : 1769775685912,
     "type" : "temperature",
-    "id" : "WindowsIpmiTool_temperature_9.0.32",
+    "id" : "WmiIpmi_temperature_9.0.32",
     "identifyingAttributeKeys" : [ "id" ],
     "endpoint" : false,
     "endpointHost" : false,

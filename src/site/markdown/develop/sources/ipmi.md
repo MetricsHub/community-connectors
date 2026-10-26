@@ -48,4 +48,4 @@ sources:
 
 - [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
 - [LinuxIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/LinuxIpmiTool/LinuxIpmiTool.yaml)
-- [WindowsIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/WindowsIpmiTool/WindowsIpmiTool.yaml)
+- [WmiIpmi](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/WmiIpmi/WmiIpmi.yaml)

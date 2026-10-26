@@ -55,7 +55,7 @@ Serialized, `fan1;front;Delta F1;1.02;ok` becomes `fan1;Delta F1;ok`.
 ## Recommended Pattern
 
 - Apply `keepColumns` as the **last** compute of the pipeline whenever possible: earlier computes reference columns by index, and dropping columns mid-pipeline renumbers everything after it.
-- Add a comment listing the kept column names right next to the compute (as `IpmiTool` and `WindowsIpmiTool` do), so the mapping's `$1`, `$2`, ... references stay understandable.
+- Add a comment listing the kept column names right next to the compute (as `IpmiTool` and `WmiIpmi` do), so the mapping's `$1`, `$2`, ... references stay understandable.
 - Trim `tableJoin` results with `keepColumns` to remove the duplicated key columns before mapping.
 
 ## Common Mistakes
