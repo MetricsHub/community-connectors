@@ -183,6 +183,7 @@
           "hw.type" : "enclosure"
         },
         "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
         "value" : 1.0,
         "previousValue" : 1.0,
         "type" : "NumberMetric",
@@ -196,8 +197,9 @@
           "hw.type" : "enclosure"
         },
         "resetMetricTime" : false,
-        "value" : "UNKNOWN",
-        "previousValue" : "UNKNOWN",
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
         "stateSet" : [ "failed", "degraded", "ok" ],
         "type" : "StateSetMetric",
         "updated" : true
@@ -219,6 +221,7 @@
         "previousCollectTime" : 1769439794271,
         "attributes" : { },
         "resetMetricTime" : false,
+        "metricType" : "Gauge",
         "value" : 116.0,
         "previousValue" : 116.0,
         "type" : "NumberMetric",
@@ -236,7 +239,7 @@
       "__id_count" : "1"
     },
     "conditionalCollection" : {
-      "hw.status{hw.type=\"enclosure\"}" : "UNKNOWN",
+      "hw.status{hw.type=\"enclosure\"}" : "ok",
       "hw.enclosure.power" : "116"
     },
     "legacyTextParameters" : {
@@ -247,9 +250,9 @@
     "type" : "enclosure",
     "id" : "LinuxIpmiTool_enclosure_IPMI",
     "identifyingAttributeKeys" : [ "id" ],
+    "connector" : false,
     "endpointHost" : false,
     "endpoint" : false,
-    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {

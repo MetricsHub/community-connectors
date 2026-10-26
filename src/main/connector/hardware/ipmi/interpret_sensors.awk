@@ -126,6 +126,10 @@ function chassisLed(name, color, onStatus, state) {
 		systemStatus = systemStatus "failed|"
 		systemStatusInformation = systemStatusInformation "Chassis intrusion - "
 	}
+	if ($3 != 1 && $4 != 1 && $5 != 1 && $6 != 1 && $7 != 1 && $8 != 1 && $9 != 1) {
+		# No fault or intrusion reported: the chassis is fine, say so, otherwise an earlier failure could never clear
+		systemStatus = systemStatus "ok|"
+	}
 	if ($10 == 1) {
 		systemStatusInformation = systemStatusInformation "Front panel locked - "
 	}
