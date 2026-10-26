@@ -297,7 +297,7 @@ Declare it in the **`discovery`** (or `simple`) mapping: the availability check 
           hw.errors{hw.type="physical_disk"}: $9
 ```
 
-See [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml) for a real two-phase example, or [Ipmi-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/Ipmi-header.yaml) (the monitors shared by LinuxIpmiTool and WindowsIpmiTool) for the `simple`-job form.
+See [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml) for a real two-phase example, or [Ipmi-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/Ipmi-header.yaml) (the monitors shared by LinuxIpmiTool and WmiIpmi) for the `simple`-job form.
 
 ### `legacyTextParameters`
 

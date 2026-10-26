@@ -232,6 +232,9 @@ function flush_fru_lines(    i,id){
   record_type=$1
   record_text=strip_record_prefix($0)
 
+  # ---- Chassis status line (chassis_status.awk): already in the final format ----
+  if(record_type=="Chassis"){ print; next }
+
   # ---- FRU ----
   if(record_type=="FRU"){
     if(record_text ~ /^Unknown FRU header version/) next

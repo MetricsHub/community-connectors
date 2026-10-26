@@ -15,7 +15,7 @@ connector:
     supersedes:
     - IpmiTool
     - LinuxIpmiTool
-    - WindowsIpmiTool
+    - WmiIpmi
     criteria:
     # Hardware Sentry v10.2.00+
     - type: productRequirements

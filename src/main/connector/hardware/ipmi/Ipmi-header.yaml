@@ -1,5 +1,5 @@
 ---
-# Monitors shared by the in-band IPMI connectors (LinuxIpmiTool, WindowsIpmiTool).
+# Monitors shared by the in-band IPMI connectors (LinuxIpmiTool, WmiIpmi).
 # Not a connector by itself: each connector extends it and provides
 # monitors.enclosure.simple.sources.interpretedSensors, the device table printed by interpret_sensors.awk
 # (DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation
