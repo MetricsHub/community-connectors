@@ -46,6 +46,6 @@ sources:
 
 ## Community Examples
 
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
-- [LinuxIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LinuxIpmiTool/LinuxIpmiTool.yaml)
-- [WindowsIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WindowsIpmiTool/WindowsIpmiTool.yaml)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
+- [LinuxIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/LinuxIpmiTool/LinuxIpmiTool.yaml)
+- [WindowsIpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/WindowsIpmiTool/WindowsIpmiTool.yaml)

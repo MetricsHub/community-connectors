@@ -3,7 +3,7 @@
 #
 # Purpose:
 #   Parse discrete sensor data (WMI / IPMI) and aggregate sensor states
-#   by hardware entity (device) for further processing by enclosure.awk.
+#   by hardware entity (device) for further processing by interpret_sensors.awk.
 #
 # Input format:
 #   CurrentState;Description
@@ -14,14 +14,14 @@
 #   - Description is expected to contain:
 #       "<Sensor Name>(<Sensor ID>): ... for <Device Type> <Device ID>"
 #
-# Output format (7 fields, expected by enclosure.awk):
+# Output format (7 fields, expected by interpret_sensors.awk):
 #   deviceType;deviceID;entityID;vendor;model;serial;sensorList
 #
 # Notes:
 #   - OEM state values are byte-swapped and converted to hexadecimal
 #     (XXXX -> 0xYYXX).
 #   - No normalization of sensor states (OK/FAILED/DEGRADED) is done here;
-#     interpretation is delegated to enclosure.awk.
+#     interpretation is delegated to interpret_sensors.awk.
 #   - This script is intentionally generic and vendor-agnostic.
 #
 ###############################################################################
@@ -104,7 +104,7 @@ NF >= 2 {
 
 END {
   for (deviceKey in deviceSensor) {
-    # Output 7 fields expected by enclosure.awk:
+    # Output 7 fields expected by interpret_sensors.awk:
     # deviceType;deviceID;entityID;vendor;model;serial;sensorList
     print deviceTypeByKey[deviceKey], \
           deviceIdByKey[deviceKey], \

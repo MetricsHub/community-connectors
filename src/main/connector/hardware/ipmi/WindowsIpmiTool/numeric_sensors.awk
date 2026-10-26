@@ -4,7 +4,7 @@
 # Purpose:
 #   Parse numeric sensor rows (typically from WMI NumericSensor / IPMI numeric
 #   equivalents) and normalize them into the simplified format expected by
-#   enclosure.awk.
+#   interpret_sensors.awk.
 #
 # Input format (9 fields, ';' separated):
 #   BaseUnits;CurrentReading;Description;LowerThresholdCritical;

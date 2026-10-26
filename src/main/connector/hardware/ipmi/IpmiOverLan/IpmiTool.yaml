@@ -1,6 +1,6 @@
 ---
 extends:
-- ../../semconv/Hardware
+- ../../../semconv/Hardware
 connector:
   displayName: IPMI Over-Lan
   platforms: IPMI
@@ -38,7 +38,7 @@ monitors:
           computes:
           # Process IPMI result througn an AWK script to interpret what can be interpreted
           - type: awk
-            script: ${file::enclosure.awk}
+            script: ${file::../interpret_sensors.awk}
             keep: ^MSHW;
             separators: ;
             selectColumns: 2,3,4,5,6,7,8,9,10,11
@@ -75,7 +75,7 @@ monitors:
           computes:
           # Post-processing of the IPMI mess (which has already been greatly sorted out!)
           - type: awk
-            script: ${file::enclosure.awk}
+            script: ${file::../interpret_sensors.awk}
             keep: ^MSHW;
             separators: ;
             selectColumns: 2,3,4,5,6,7,8,9,10,11
@@ -591,36 +591,12 @@ monitors:
         legacyTextParameters:
           StatusInformation: $8
   led:
-    keys:
-    - id
-    discovery:
-      sources:
-        source(1):
-          # Source(1) = copy of Enclosure.Discovery.Source(1)
-          type: copy
-          from: ${source::monitors.enclosure.discovery.sources.source(1)}
-          computes:
-            # Keep only LED lines
-            # LED;DeviceID;Name;EntityID;Color;OnStatus;OffStatus;BlinkingStatus;Status;
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: led
-      mapping:
-        # InstanceTable = Source(1)
-        source: ${source::monitors.led.discovery.sources.source(1)}
-        attributes:
-          id: $2
-          __display_id: $3
-          color: $5
-          __on_status: $6
-          __off_status: $7
-          __blinking_status: $8
-          hw.parent.type: enclosure
-          hw.parent.id: IPMI
-          name: ${awk::sprintf("%s (%s)", $3, $5)}
-    collect:
+    simple:
+      # Simple job (re-run every cycle) so that hw.led.state and hw.led.color follow the LED
       # Collect type is: multi-instance
       type: multiInstance
+      keys:
+      - id
       sources:
         source(1):
           # Source(1) = copy of Enclosure.Collect.Source(1)
@@ -628,22 +604,28 @@ monitors:
           from: ${source::monitors.enclosure.collect.sources.source(1)}
           computes:
             # Keep only LED lines
-            # LED;DeviceID;Name;EntityID;Color;OnStatus;OffStatus;BlinkingStatus;Status;
+            # LED;DeviceID;Name;EntityID;Color;OnStatus;OffStatus;BlinkingStatus;State;
           - type: keepOnlyMatchingLines
             column: 1
             valueList: led
-          # Duplicate the Status column
-          - type: duplicateColumn
-            column: 9
       mapping:
-        # ValueTable = Source(1)
-        source: ${source::monitors.led.collect.sources.source(1)}
+        # InstanceTable = Source(1)
+        source: ${source::monitors.led.simple.sources.source(1)}
         attributes:
           id: $2
+          __display_id: $3
+          hw.led.color: $5
+          hw.led.state: ${awk::tolower($9)}
+          __on_status: $6
+          __off_status: $7
+          __blinking_status: $8
+          hw.parent.type: enclosure
+          hw.parent.id: IPMI
+          name: ${awk::sprintf("%s (%s)", $3, $5)}
         metrics:
           hw.status{hw.type="led"}: legacyLedStatus($9)
         legacyTextParameters:
-          StatusInformation: $10
+          StatusInformation: $9
   other_device:
     keys:
     - id

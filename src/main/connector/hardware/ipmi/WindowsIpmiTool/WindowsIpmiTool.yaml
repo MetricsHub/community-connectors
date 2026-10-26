@@ -1,9 +1,10 @@
 ---
 extends:
-- ../../semconv/Hardware
-- ../../semconv/System
+- ../../../semconv/Hardware
+- ../../../semconv/System
+
 connector:
-  displayName: Linux IPMI (ipmitool)
+  displayName: Windows IPMI (WMI)
   platforms: IPMI
   reliesOn: IPMI
   information: This connector provides environmental information on several IPMI-enabled servers in-band and out-of-band (temperatures, fans, etc.).
@@ -13,49 +14,69 @@ connector:
     - remote
     - local
     appliesTo:
-    - Linux
+    - Windows
     supersedes:
     - IpmiTool
     criteria:
-    - type: commandline
-      commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info
-      expectedResult: IPMI Version
-      errorMessage: Did not get the expected result from the IPMI tool command
-    tags: [ hardware, linux ]
+    - type: wmi
+      query: SELECT Description FROM ComputerSystem
+      namespace: root\hardware
+    tags: [ hardware, windows ]
 
 monitors:
   enclosure:
     simple:
       sources:
-        allFrus:
-          type: commandLine
-          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open fru
+        computerSystems:
+          type: wmi
+          query: SELECT IdentifyingNumber,Name,Vendor FROM Win32_ComputerSystemProduct
+          namespace: root\cimv2
           computes:
-          - type: awk
-            script: ${file::frus_formatter.awk}
-        sdr:
-          type: commandLine
-          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open -v sdr elist all
+            - type: awk
+              script: |
+                BEGIN { FS=";"; OFS=";" }
+
+                # Expect: IdentifyingNumber;Name;Vendor
+                NF >= 3 {
+                  print "FRU", $3, $2, $1
+                }
+
+              separators: ;
+
+        numericSensors:
+          type: wmi
+          query: SELECT BaseUnits,CurrentReading,Description,LowerThresholdCritical,LowerThresholdNonCritical,SensorType,UnitModifier,UpperThresholdCritical,UpperThresholdNonCritical FROM NumericSensor
+          namespace: root\hardware
           computes:
-          - type: awk
-            script: ${file::sdr_formatter.awk}
-        fruUnionSdr:
+            - type: awk
+              script: ${file::numeric_sensors.awk}
+              separators: ;
+
+        discreteSensors:
+          type: wmi
+          query: SELECT CurrentState,Description FROM Sensor
+          namespace: root\hardware
+          computes:
+            - type: awk
+              script: ${file::discrete_sensors.awk}
+              separators: ;
+
+        sensorsUnion:
           type: tableUnion
           tables:
-            - ${source::allFrus}
-            - ${source::sdr}
+            - ${source::computerSystems}
+            - ${source::numericSensors}
+            - ${source::discreteSensors}
           computes:
-          - type: awk
-            script: ${file::translateIpmi.awk}
-          - type: awk
-            script: ${file::../IpmiTool/enclosure.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11
+            - type: awk
+              script: ${file::../interpret_sensors.awk}
+              keep: ^MSHW;
+              separators: ;
+              selectColumns: 2,3,4,5,6,7,8,9,10,11
         enclosures:
-          # enclosures = copy of fruUnionSdr
+          # enclosures = copy of sensorsUnion
           type: copy
-          from: ${source::fruUnionSdr}
+          from: ${source::sensorsUnion}
           computes:
             # Keep only the enclosure line
             # Enclosure;Vendor;Model;SerialNumber;Status;StatusInformation;PowerConsumption;AdditionalInformation
@@ -68,7 +89,6 @@ monitors:
             column: 5
             conversion: array2SimpleStatus
       mapping:
-        # InstanceTable = enclosures
         source: ${source::enclosures}
         attributes:
           id: IPMI
@@ -85,7 +105,6 @@ monitors:
           hw.enclosure.energy: fakeCounter($7)
         legacyTextParameters:
           StatusInformation: $6
-
   fan:
     simple:
       type: multiInstance
@@ -93,10 +112,10 @@ monitors:
       - id
       sources:
         source(1):
-          # Copy of Enclosure.Simple.fruUnionSdr
+          # Copy of Enclosure.Simple.sensorsUnion
           # SensorType;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
           - type: keepOnlyMatchingLines
             column: 1
@@ -113,7 +132,7 @@ monitors:
         source(2):
           # Handle "Fan Device" format
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
           - type: keepOnlyMatchingLines
             column: 1
@@ -163,10 +182,10 @@ monitors:
       - id
       sources:
         temperatures:
-          # temperature = copy of Enclosure.Simple.fruUnionSdr
+          # temperature = copy of Enclosure.Simple.sensorsUnion
           # SensorType;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only temperatures
             # Temperature;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
@@ -195,10 +214,10 @@ monitors:
       - id
       sources:
         voltages:
-          # voltages = copy of Enclosure.Simple.fruUnionSdr
+          # voltages = copy of Enclosure.Simple.sensorsUnion
           # SensorType;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only fans
             # Voltage;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
@@ -224,7 +243,7 @@ monitors:
       sources:
         powerSupplySensors:
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
           - type: keepOnlyMatchingLines
             column: 1
@@ -253,9 +272,9 @@ monitors:
       - id
       sources:
         processors:
-          # processors = copy of Enclosure.Simple.fruUnionSdr
+          # processors = copy of Enclosure.Simple.sensorsUnion
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only processor lines
             # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
@@ -293,9 +312,9 @@ monitors:
       - id
       sources:
         memories:
-          # memories = copy of Enclosure.Simple.fruUnionSdr
+          # memories = copy of Enclosure.Simple.sensorsUnion
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only memory lines
             # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
@@ -349,9 +368,9 @@ monitors:
       - id
       sources:
         physicalDisks:
-          # physicalDisks = copy of Enclosure.Simple.fruUnionSdr
+          # physicalDisks = copy of Enclosure.Simple.sensorsUnion
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only disk lines
             # Disk or disk bay;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
@@ -387,9 +406,9 @@ monitors:
       - id
       sources:
         leds:
-          # leds = copy of Enclosure.Simple.fruUnionSdr
+          # leds = copy of Enclosure.Simple.sensorsUnion
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only LED lines
             # LED;DeviceID;Name;EntityID;Color;OnStatus;OffStatus;BlinkingStatus;Status;
@@ -401,7 +420,8 @@ monitors:
         source: ${source::leds}
         attributes:
           id: $2
-          color: $5
+          hw.led.color: $5
+          hw.led.state: ${awk::tolower($9)}
           __on_status: $6
           __off_status: $7
           __blinking_status: $8
@@ -421,9 +441,9 @@ monitors:
       - id
       sources:
         otherDevices:
-          # otherDevices = copy of Enclosure.Simple.fruUnionSdr
+          # otherDevices = copy of Enclosure.Simple.sensorsUnion
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Exclude what we know already
             # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
@@ -461,9 +481,9 @@ monitors:
       - id
       sources:
         blades:
-          # blades = copy of Enclosure.Simple.fruUnionSdr
+          # blades = copy of Enclosure.Simple.sensorsUnion
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only blade lines
             # Blade;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
@@ -499,9 +519,9 @@ monitors:
       - id
       sources:
         batteries:
-          # batteries = copy of Enclosure.Simple.fruUnionSdr
+          # batteries = copy of Enclosure.Simple.sensorsUnion
           type: copy
-          from: ${source::monitors.enclosure.simple.sources.fruUnionSdr}
+          from: ${source::monitors.enclosure.simple.sources.sensorsUnion}
           computes:
             # Keep only battery lines
             # Battery;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;

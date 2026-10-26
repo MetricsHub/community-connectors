@@ -78,9 +78,9 @@ which re-parses as 4 columns — two new empty columns now follow column 2. Real
 ## Community Examples
 
 - [WBEMGenLUN](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WBEMGenLUN/WBEMGenLUN.yaml)
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/IpmiTool/IpmiTool.yaml)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
 - [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)
 
 From IpmiTool (adding empty columns with the semicolon trick):
 
-<!-- MACRO{snippet|id=appendEmptyColumnsCompute|file=src/main/connector/hardware/IpmiTool/IpmiTool.yaml} -->
+<!-- MACRO{snippet|id=appendEmptyColumnsCompute|file=src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml} -->
