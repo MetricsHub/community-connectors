@@ -27,6 +27,13 @@ monitors:
   enclosure:
     simple:
       sources:
+        chassisStatus:
+          # Chassis;powerOn;powerFault;powerOverload;interlock;powerControlFault;coolingFault;driveFault;intrusion;frontPanelLockout;powerRestorePolicy;identifyState;lastPowerEvents
+          type: commandLine
+          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open chassis status
+          computes:
+          - type: awk
+            script: ${file::chassis_status.awk}
         allFrus:
           type: commandLine
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open fru
@@ -42,6 +49,7 @@ monitors:
         fruUnionSdr:
           type: tableUnion
           tables:
+            - ${source::chassisStatus}
             - ${source::allFrus}
             - ${source::sdr}
           computes:
