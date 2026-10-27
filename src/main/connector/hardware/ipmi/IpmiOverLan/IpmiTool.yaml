@@ -41,7 +41,7 @@ monitors:
             script: ${file::../interpret_sensors.awk}
             keep: ^MSHW;
             separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11
+            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
@@ -78,7 +78,7 @@ monitors:
             script: ${file::../interpret_sensors.awk}
             keep: ^MSHW;
             separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11
+            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
@@ -415,7 +415,7 @@ monitors:
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
             # Keep only processor lines
-            # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
+            # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
           - type: keepOnlyMatchingLines
             column: 1
             valueList: Processor
@@ -427,11 +427,14 @@ monitors:
         source: ${source::monitors.cpu.discovery.sources.source(1)}
         attributes:
           id: $2
+          __display_id: $3
           vendor: $4
           model: $5
-          info: ${awk::join(" ", $9, $6)}
+          info: ${awk::join(" ", $9, $6, $13)}
           hw.parent.type: enclosure
           hw.parent.id: IPMI
+        metrics:
+          hw.cpu.speed.limit{limit_type="max"}: megaHertz2Hertz($12)
     collect:
       # Collect type is: multi-instance
       type: multiInstance
@@ -471,30 +474,40 @@ monitors:
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
             # Keep only memory lines
-            # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
+            # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
           - type: keepOnlyMatchingLines
             column: 1
             valueList: Memory module,Memory Device
           # START SNIPPET: extractSubColumnCompute
-            # Duplicate the "Model" column because it is in the form of Model|Speed
-            # Memory module;DeviceID;Entity ID;Vendor;Model|Speed;Model|Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+            # Duplicate the "Model" column because it may be in the form of Model|Size
+            # Memory module;DeviceID;Entity ID;Vendor;Model|Size;Model|Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
           - type: duplicateColumn
             column: 5
             # Now extract "Model" from "Model|Size"
-            # Memory module;DeviceID;Entity ID;Vendor;Model;Model|Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+            # Memory module;DeviceID;Entity ID;Vendor;Model;Model|Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
           - type: extract
             column: 5
             subColumn: 1
             subSeparators: '|'
             # Now extract "Size" from "Model|Size"
-            # Memory module;DeviceID;Entity ID;Vendor;Model;Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+            # Memory module;DeviceID;Entity ID;Vendor;Model;Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
           - type: extract
             column: 6
             subColumn: 2
             subSeparators: '|'
           # END SNIPPET: extractSubColumnCompute
+            # Fall back to the legacy "Size" when the BMC provides no SPD data, and build the description
+            # from the vendor, the type and the size that are known
+            # Memory module;DeviceID;Entity ID;Vendor;Model;Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo;Description
+          - type: awk
+            script: |
+              BEGIN { FS=";"; OFS=";" }
+              $11 == "" { $11 = $6 }
+              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print }
+            separators: ;
       mapping:
         # InstanceTable = Source(1)
+        # The size and the type come from the SPD data of the memory module FRU, when the BMC provides it
         source: ${source::monitors.memory.discovery.sources.source(1)}
         attributes:
           id: $2
@@ -502,12 +515,13 @@ monitors:
           vendor: $4
           model: $5
           serial_number: $7
+          type: $12
           info: $10
           hw.parent.type: enclosure
           hw.parent.id: IPMI
-          name: ${awk::sprintf("%s (%s - %s MB)", $3, $4, $6)}
+          name: ${awk::sprintf("%s (%s)", $3, $15)}
         metrics:
-          hw.memory.limit: mebiByte2Byte($6)
+          hw.memory.limit: mebiByte2Byte($11)
     collect:
       # Collect type is: multi-instance
       type: multiInstance

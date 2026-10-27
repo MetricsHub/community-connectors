@@ -856,8 +856,8 @@ function chassisLed(name, color, onStatus, state) {
 	if (length(sensorNameList) > 2) {
 		sensorNameList = substr(sensorNameList, 1, length(sensorNameList) - 2)
 	}
-	# Good!
-	print "MSHW;" deviceType ";" deviceID ";" entityID ";" vendor ";" model ";" serialNumber ";" status ";" statusInformation ";Monitored by sensors: " sensorNameList
+	# Good! The FRU details of the IPMI extension (memory size and type, CPU speed and info) follow, when provided
+	print "MSHW;" deviceType ";" deviceID ";" entityID ";" vendor ";" model ";" serialNumber ";" status ";" statusInformation ";Monitored by sensors: " sensorNameList ";" $8 ";" $9 ";" $10 ";" $11
 }
 
 END {
