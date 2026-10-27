@@ -496,6 +496,15 @@ monitors:
             subColumn: 2
             subSeparators: '|'
           # END SNIPPET: extractSubColumnCompute
+            # Fall back to the legacy "Size" when the BMC provides no SPD data, and build the description
+            # from the vendor, the type and the size that are known
+            # Memory module;DeviceID;Entity ID;Vendor;Model;Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo;Description
+          - type: awk
+            script: |
+              BEGIN { FS=";"; OFS=";" }
+              $11 == "" { $11 = $6 }
+              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print }
+            separators: ;
       mapping:
         # InstanceTable = Source(1)
         # The size and the type come from the SPD data of the memory module FRU, when the BMC provides it
@@ -510,7 +519,7 @@ monitors:
           info: $10
           hw.parent.type: enclosure
           hw.parent.id: IPMI
-          name: ${awk::sprintf("%s (%s - %s - %s MB)", $3, $4, $12, $11)}
+          name: ${awk::sprintf("%s (%s)", $3, $15)}
         metrics:
           hw.memory.limit: mebiByte2Byte($11)
     collect:

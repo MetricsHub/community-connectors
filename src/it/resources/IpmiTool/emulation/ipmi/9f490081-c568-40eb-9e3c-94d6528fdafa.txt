@@ -3,6 +3,7 @@ FRU;NetApp;H300E;221808001652 - PIO-H300E-2X4-NA011
 Power Supply;1;Power Supply 1;;;;PS1 Status=Presence detected
 Power Supply;2;Power Supply 2;;;;PS2 Status=Presence detected|PS2 Temp=Upper Critical Going High
 Memory Device;1;Memory Device 1;Samsung;M393A2K43BB1-CTD;409F3CA2;DIMM 1=Device Present;16384;DDR4 RDIMM ECC;;
+Memory Device;2;Memory Device 2;Micron;18ASF2G72PDZ-2G6|16384;1A2B3C4D;DIMM 2=Device Present;;;;
 Processor;1;Processor 1;Intel;SR3GH;634AFBC3354D3C6D;CPU 1=Device Present;;;3000;8 cores with Hyper-Threading, 2100-3000 MHz, L2 1024 KB per core, L3 11264 KB, TDP 85 W, Part number 37608DC00416530
 Temperature;0004;CPU1 Temp;Processor 1;0.0;85;90
 Temperature;0047;CPU2 Temp;Processor 2;0.0;85;90
