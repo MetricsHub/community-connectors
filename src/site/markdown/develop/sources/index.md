@@ -173,6 +173,8 @@ Official schema: <https://www.schemastore.org/metricshub-connector.json>
 - [http](./http.html)
 - [internalDbQuery](./internal-db-query.html)
 - [ipmi](./ipmi.html)
+- [ipmiRaw](./ipmi-raw.html)
+- [ipmiSel](./ipmi-sel.html)
 - [jmx](./jmx.html)
 - [snmpGet](./snmp-get.html)
 - [snmpTable](./snmp-table.html)
