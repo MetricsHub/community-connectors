@@ -29,7 +29,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `ipmi`. |
 | `computes` | No | `[]` | Post-processing pipeline, typically required for shaping. |
-| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `forceSerialization` | No | `true` | Always on: the IPMI requests of a connector to a host are serialized whatever the value, since a BMC accepts few simultaneous sessions. |
 | `executeForEachEntryOf` | No | None | Fan-out context when needed. |
 
 ## Recommended Pattern

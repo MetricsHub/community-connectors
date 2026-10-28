@@ -38,7 +38,7 @@ sources:
 | `data` | No | None | The request bytes, separated with spaces. |
 | `executeForEachEntryOf` | No | None | Execute with fan-out context from another source. |
 | `computes` | No | `[]` | Post-processing computes. |
-| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `forceSerialization` | No | `true` | Always on: the IPMI requests of a connector to a host are serialized whatever the value, since a BMC accepts few simultaneous sessions. |
 
 `netFn`, `command` and each `data` byte are decimal, or hexadecimal with the `0x` prefix. Macros (`${esc.d}`, `${source::...}`, attributes) apply to the three properties.
 

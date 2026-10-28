@@ -29,7 +29,7 @@ connector:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | - | `ipmi`. |
-| `forceSerialization` | No | `false` | Guarantees operations are performed sequentially against one host. **Strongly recommended for IPMI** |
+| `forceSerialization` | No | `true` | Always on: the IPMI requests of a connector to a host are serialized whatever the value, since a BMC accepts few simultaneous sessions. |
 
 ## Runtime Behavior
 

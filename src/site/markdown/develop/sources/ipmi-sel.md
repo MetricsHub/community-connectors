@@ -28,7 +28,7 @@ sources:
 | `maxEventsPerPoll` | No | `50` | Maximum entries returned by one poll; the entries left out come with the next poll. Use `-1` for unlimited. |
 | `executeForEachEntryOf` | No | None | Execute with fan-out context from another source. |
 | `computes` | No | `[]` | Post-processing computes. |
-| `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `forceSerialization` | No | `true` | Always on: the IPMI requests of a connector to a host are serialized whatever the value, since a BMC accepts few simultaneous sessions. |
 
 ## Output
 
