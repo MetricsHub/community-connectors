@@ -9,7 +9,7 @@ description: Reference for the ipmiSel source, which returns the IPMI System Eve
 
 Use `ipmiSel` to report the hardware events a BMC logged in its System Event Log (SEL) between two polls: a power supply failure, a memory ECC error, an intrusion, a fan failure... even when the sensor is back to normal by the time the `ipmi` source reads it.
 
-The source only returns the entries added since its previous poll, one row per entry. The first poll sets the cursor and returns nothing; a restart of the agent starts again with an empty first poll. When the log is cleared on the BMC, the entries logged after the clear are returned from the first one.
+The source only returns the entries added since its previous poll, one row per entry. The first poll locates the end of the log without reading it and returns nothing; a restart of the agent starts again with an empty first poll. When the log is cleared on the BMC, the entries logged after the clear are returned from the first one.
 
 ## Syntax
 
@@ -71,7 +71,7 @@ Example:
 
 ## Common Mistakes
 
-- Expecting the backlog of the log on the first poll: it is skipped by design.
+- Expecting the backlog of the log on the first poll: it is skipped by design (the `ExecuteIpmiQuery` MCP tool reads the whole log, or the last `since` duration).
 - Reading the sensor name of an OEM record: only system events (record type `02h`) carry a sensor.
 - Comparing `timestamp` with the agent clock on a BMC whose SEL clock is in local time, or not set (`timestamp` empty).
 
