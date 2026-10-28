@@ -111,6 +111,8 @@
 				<item name="HTTP" href="develop/sources/http.html" />
 				<item name="Internal DB Query" href="develop/sources/internal-db-query.html" />
 				<item name="IPMI" href="develop/sources/ipmi.html" />
+				<item name="IPMI Raw" href="develop/sources/ipmi-raw.html" />
+				<item name="IPMI SEL" href="develop/sources/ipmi-sel.html" />
 				<item name="JMX" href="develop/sources/jmx.html" />
 				<item name="SNMP Get" href="develop/sources/snmp-get.html" />
 				<item name="SNMP Table" href="develop/sources/snmp-table.html" />
