@@ -16,7 +16,7 @@ This is a simple Maven project. Build with:
 mvn verify
 ```
 
-The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the tests, and the MetricsHub Connector Maven Plugin) from `https://repo.metricshub.com/repository/maven-public/`, which requires credentials. Declare this repository and your credentials in your `~/.m2/settings.xml` (the plugin repository is already declared in `pom.xml`):
+The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the tests, and the MetricsHub Connector Maven Plugin) from `https://repo.metricshub.com/repository/maven-public/`, which requires credentials. Declare this repository (for dependencies and plugins) and your credentials in your `~/.m2/settings.xml`:
 
 ```xml
 <settings>
@@ -39,6 +39,12 @@ The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the
           </snapshots>
         </repository>
       </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>metricshub</id>
+          <url>https://repo.metricshub.com/repository/maven-public/</url>
+        </pluginRepository>
+      </pluginRepositories>
     </profile>
   </profiles>
   <activeProfiles>

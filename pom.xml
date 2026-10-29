@@ -51,15 +51,6 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<!-- MetricsHub Connector Maven Plugin (the build workflows only declare repo.metricshub.com for dependencies) -->
-	<!-- Requires the credentials of repo.metricshub.com in the "metricshub" server of settings.xml -->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>metricshub</id>
-			<url>https://repo.metricshub.com/repository/maven-public/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<developers>
 		<developer>
 			<name>Bertrand Martin (@bertysentry)</name>
