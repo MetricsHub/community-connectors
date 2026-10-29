@@ -64,7 +64,7 @@ tools:
 | `required` | No | `false` | Whether the assistant must supply the value. A parameter without `default` and not `required` is simply absent. |
 | `default` | No | None | The value used when the assistant does not supply one. |
 
-The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. Validate what reaches a query or a command body: a `keepOnlyMatchingLines` compute on the value, or a parameter whose description leaves no room for anything but the expected form.
+The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. The values are substituted verbatim: there is no escaping, allow-list or validation facility, and a parameter description is advisory only. Keep parameters out of command lines and queries whenever possible: fetch the data with a fixed source, then use the parameter in a compute, as `matchName` filters the process list above. A tool that interpolates a parameter into a command or a query lets the caller run arbitrary input on the host, so declare it `destructive: true`.
 
 ## References and Order
 
@@ -110,10 +110,10 @@ tools:
         path: /redfish/v1/Systems/1/Actions/ComputerSystem.Reset
         header: "Content-Type: application/json"
         body: '{"ResetType": "${param::resetType}"}'
-        resultContent: httpStatus
+        resultContent: http_status
     result:
       source: ${source::reset}
-      columns: [ httpStatus ]
+      columns: [ http_status ]
 ```
 
 ## Recommended Pattern
