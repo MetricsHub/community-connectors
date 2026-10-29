@@ -40,6 +40,17 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<distributionManagement>
+		<repository>
+			<id>metricshub</id>
+			<url>https://repo.metricshub.com/repository/maven-oss-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>metricshub</id>
+			<url>https://repo.metricshub.com/repository/maven-oss-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<developers>
 		<developer>
 			<name>Bertrand Martin (@bertysentry)</name>
@@ -303,7 +314,7 @@
 			<plugin>
 				<groupId>org.metricshub.maven</groupId>
 				<artifactId>metricshub-connector-maven-plugin</artifactId>
-				<version>1.0.15</version>
+				<version>1.0.16</version>
 				<configuration>
 					<defaultPlatformIconFilename>default.png</defaultPlatformIconFilename>
 				</configuration>
