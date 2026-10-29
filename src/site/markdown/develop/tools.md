@@ -118,7 +118,7 @@ tools:
 
 ## Recommended Pattern
 
-- Name tools as verbs: `listProcesses`, `readLog`, `reboot`.
+- Name tools as verbs, without dots: `listProcesses`, `readLog`, `reboot`. A dotted name is refused when the connector loads, since the dot separates the segments of a source reference.
 - Write the description for the assistant: what the tool returns, what the parameters mean, when not to use it.
 - Give every parameter a `default` or `required: true`, and an example value in its description.
 - Keep the result small and tabular: filter with computes, name the columns.
