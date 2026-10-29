@@ -79,6 +79,7 @@
 			<item name="Quick Start" href="develop/quick-start.html" />
 			<item name="Connector Structure" href="develop/connector-structure.html">
 				<item name="Monitors and Jobs" href="develop/monitors-and-jobs.html" />
+				<item name="Tools" href="develop/tools.html" />
 				<item name="Reuse and Configuration" href="develop/reuse-and-configuration.html" />
 				<item name="References and Expressions" href="develop/references-and-expressions.html" />
 				<item name="Design Principles" href="develop/design-principles.html" />

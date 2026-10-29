@@ -19,6 +19,7 @@ sudoCommands: []
 metrics: {}
 beforeAll: {}
 monitors: {}
+tools: {}
 translations: {}
 afterAll: {}
 ```
@@ -46,6 +47,7 @@ Discovery runs less often and is the right place for heavy inventory work. Colle
 | `metrics` | No | Metric metadata defaults used by mappings. |
 | `beforeAll` | No | Shared setup/login/prefetch sources executed before monitor jobs in discovery and collect phases. |
 | `monitors` | Yes | Discovery/collection logic and mappings executed after the connector has passed detection. |
+| `tools` | No | Operations an AI assistant can run on the host through the MetricsHub MCP server: sources, computes and a result table, no monitor. |
 | `translations` | No | Central status/code translation tables. |
 | `afterAll` | No | Cleanup/logout sources executed after monitor jobs in discovery and collect phases. |
 
@@ -186,8 +188,9 @@ mapping:
 4. optional `metrics`
 5. optional `beforeAll`
 6. `monitors`
-7. optional `translations`
-8. optional `afterAll`
+7. optional `tools`
+8. optional `translations`
+9. optional `afterAll`
 
 This ordering improves review speed and consistency.
 
