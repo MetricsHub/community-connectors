@@ -51,17 +51,8 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<!-- MetricsHub artifacts (including the SNAPSHOTs used by the tests and the connector Maven plugin) -->
+	<!-- MetricsHub Connector Maven Plugin (the build workflows only declare repo.metricshub.com for dependencies) -->
 	<!-- Requires the credentials of repo.metricshub.com in the "metricshub" server of settings.xml -->
-	<repositories>
-		<repository>
-			<id>metricshub</id>
-			<url>https://repo.metricshub.com/repository/maven-public/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>metricshub</id>
@@ -332,7 +323,7 @@
 			<plugin>
 				<groupId>org.metricshub.maven</groupId>
 				<artifactId>metricshub-connector-maven-plugin</artifactId>
-				<version>1.0.15</version>
+				<version>1.0.16</version>
 				<configuration>
 					<defaultPlatformIconFilename>default.png</defaultPlatformIconFilename>
 				</configuration>

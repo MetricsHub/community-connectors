@@ -27,7 +27,7 @@ Do **not** commit transient artifacts: emulator logs, `__pycache__/`, temporary 
 
 ## Local Build and Quality Gates
 
-The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the integration tests, and the MetricsHub Connector Maven Plugin) from `https://repo.metricshub.com/repository/maven-public/`. Declare your credentials for this repository in the `metricshub` server of your `~/.m2/settings.xml`:
+The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the integration tests, and the MetricsHub Connector Maven Plugin) from `https://repo.metricshub.com/repository/maven-public/`, which requires credentials. Declare this repository and your credentials in your `~/.m2/settings.xml` (the plugin repository is already declared in `pom.xml`):
 
 ```xml
 <settings>
@@ -38,6 +38,23 @@ The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the
       <password>your-token</password>
     </server>
   </servers>
+  <profiles>
+    <profile>
+      <id>metricshub</id>
+      <repositories>
+        <repository>
+          <id>metricshub</id>
+          <url>https://repo.metricshub.com/repository/maven-public/</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>metricshub</activeProfile>
+  </activeProfiles>
 </settings>
 ```
 
