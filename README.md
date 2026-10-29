@@ -16,16 +16,34 @@ This is a simple Maven project. Build with:
 mvn verify
 ```
 
+The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the tests, and the MetricsHub Connector Maven Plugin) from `https://repo.metricshub.com/repository/maven-public/`, which requires credentials. Declare them in the `metricshub` server of your `~/.m2/settings.xml`:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>metricshub</id>
+      <username>your-username</username>
+      <password>your-token</password>
+    </server>
+  </servers>
+</settings>
+```
+
 ## Release instructions
 
-The artifact is deployed to Sonatype's [Maven Central](https://central.sonatype.com/).
+The artifact is deployed to the MetricsHub Maven repository:
 
-It is strongly recommended to only use [GitHub Actions "Release to Maven Central"](../../actions/workflows/release.yml) to perform a release:
+* Releases: https://repo.metricshub.com/repository/maven-oss-releases/
+* Snapshots: https://repo.metricshub.com/repository/maven-oss-snapshots/
+
+It is strongly recommended to only use [GitHub Actions "Release to repo.metricshub.com"](../../actions/workflows/release.yml) to perform a release:
 
 * Manually trigger the "Release" workflow
 * Specify the version being released and the next version number (SNAPSHOT)
-* Release the corresponding staging repository on [Maven Central](https://central.sonatype.com/)
 * Merge the PR that has been created to prepare the next version
+
+The release is published immediately: there is no staging repository to release. A version that has been partially deployed can't be deployed again: delete its components on https://repo.metricshub.com before restarting the workflow, or release the next version instead.
 
 ## License
 

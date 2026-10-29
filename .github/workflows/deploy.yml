@@ -1,6 +1,6 @@
 # When main branch is updated:
 # - Build
-# - Deploy the artifacts to Maven Central
+# - Deploy the artifacts to repo.metricshub.com
 # - Update the dependency graph
 name: Maven Deploy
 
@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    uses: metricshub/workflows/.github/workflows/maven-central-deploy.yml@v8
+    uses: metricshub/workflows/.github/workflows/maven-metricshub-deploy.yml@v9
     with:
       jdkVersion: "25"
     secrets: inherit
