@@ -90,9 +90,12 @@ The rules apply where a value becomes code: the fields of the sources (a command
 |  | `xml` | In XML text or an attribute | `&`, `<`, `>`, `"`, `'` as entities. |
 |  | `url` | In a form (`a=b&c=d`) | Percent-encoded. |
 | Any other source field (an OID, an object name, a line filter...) | `json`, `xml`, `url` or `regex` | As above; `regex` in a regular expression (`keep`, `exclude`), to match the value literally | `regex`: `\` before `^ $ . * + ? [ ] \`, the special characters of the connectors' regular expressions (`( ) \| { }` are literal there) |
+| `paths` of a `file` source | None | | No escape keeps a value from climbing with `../` or starting at `/`: only an `enum` or a number. |
 | `awk` script | None | | No escape is reliable in code: constrain the parameter. |
 
 **A constrained parameter may be inserted as is.** A parameter with an `enum` or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted anywhere. A `string` parameter constrained by a `pattern` only is accepted as is in a command line, an `awk` script or the other source fields, and its value then also refuses the shell metacharacters, whatever its pattern: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A value such as `sshd.service` passes, `x; reboot` does not. In a SQL or WQL query and in an HTTP request, refusing these characters is not enough (`1--` comments out the rest of a query, `../` climbs a URL): a `string` must be escaped there, or restricted to an `enum`.
+
+**An argument may not hold a control character** other than a tab or a line break: no source takes them, and XML forbids them even escaped. A `pattern` that takes more than 200 ms to match an argument refuses it.
 
 **An argument may not form a macro.** The credential macros (`%{PASSWORD}`) are expanded once every reference is replaced, so an argument forming one would reveal its value to the assistant. An argument containing `%{` or `${` is refused, whatever the parameter. A value that would form one with the text around it, such as `{PASSWORD}` after a `%`, is not inserted, and a source whose fields end up with more macros than the connector wrote, whatever brought them (an argument, an attribute, another source), does not run.
 
@@ -189,5 +192,6 @@ tools:
 - Leaving `destructive` unset on a tool that acts on the host.
 - Inserting a free-text parameter with `${param::...}` in a source or an `awk` script: the tool is refused. Use `${esc(<type>)::param::...}` or constrain the parameter.
 - Writing a comment, a here-document or backquotes before `${esc(bash)::param::...}` in a command line: the tool is refused, MetricsHub cannot tell how the reference is quoted.
+- Using `${esc(bash)::param::...}` in arithmetic (`$((...))`, `((...))`, `[[ ... -eq ... ]]`, `let`, or after `declare`, `typeset` or `local`): the tool is refused, as bash evaluates the value again there. Declare an `integer` parameter instead.
 - Using `esc(bash)` in a connector that also applies to Windows: the tool is refused, the command may run in `cmd.exe`.
 - Returning raw command output without a parsing compute: the assistant gets a single-column table of lines.
