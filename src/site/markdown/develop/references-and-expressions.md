@@ -121,9 +121,11 @@ commandLine: /bin/sh ${file::detail.sh} ${attribute::id}
 An attribute comes from the monitored host and may hold spaces or quotes, like a file or process name. Escape it for the syntax around it with the same `esc(TYPE)::` prefix as the credential macros, `${esc(TYPE)::attribute::<key>}`, which also applies to `${esc(TYPE)::resource.attribute::<key>}` and to the tool parameters, `${esc(TYPE)::param::<name>}`:
 
 ```yaml
-commandLine: /bin/sh ${file::detail.sh} '${esc(bash)::attribute::id}'
+commandLine: /bin/sh ${file::detail.sh} ${esc(bash)::attribute::id}
 query: SELECT Name FROM Win32_Service WHERE Name = '${esc(wql)::attribute::name}'
 ```
+
+In a `commandLine`, `${esc(bash)::attribute::<key>}` and `${esc(bash)::param::<name>}` are not escaped in place: the value is assigned to a shell variable at the start of the command, and the reference becomes `"$variable"`, so write them as a whole word, without quotes. This assumes a POSIX shell: do not use them in a command run by `cmd.exe`. A value that would form a credential macro (`%{...}`) with the text around it is not inserted.
 
 ## Inline AWK Expressions
 
@@ -230,7 +232,7 @@ body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" 
 commandLine: mytool --password '%{esc(bash)::PASSWORD}'
 ```
 
-Each type escapes the **inside** of a string of its syntax, the quotes being written in the connector: `bash`/`linux` and `powershell` escape for a single-quoted string (`'...'`), `sql` for a single-quoted SQL string, `json` for a double-quoted JSON string. The [tools](tools.html#escaping-and-validation) section lists what each type escapes.
+Each type escapes the **inside** of a string of its syntax, the quotes being written in the connector: `bash`/`linux` and `powershell` escape for a single-quoted string (`'...'`), `sql` for a single-quoted SQL string, `json` for a double-quoted JSON string. (The `${esc(bash)::...}` references to attributes and parameters work differently in a command line: see [Mono-Instance Attribute References](#mono-instance-attribute-references).) The [tools](tools.html#escaping-and-validation) section lists what each type escapes.
 
 > [!WARNING]
 > Macro names must be written in full and in uppercase. A misspelled or unknown macro (e.g. `%{BASICAUTH}`) is silently replaced with an **empty string**. Token-based macros (`%{AUTHENTICATIONTOKEN}`, `%{SHA256_AUTH}`) resolve to empty in command lines.
