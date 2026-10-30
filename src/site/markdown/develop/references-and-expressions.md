@@ -232,6 +232,8 @@ body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" 
 commandLine: mytool --password '%{esc(bash)::PASSWORD}'
 ```
 
+The same types escape the `${esc(TYPE)::...}` references to attributes and parameters, which are replaced in every field. The credential macros, expanded in HTTP fields and command lines only, are not expanded in a SQL or WQL query nor in the regular expressions of a source: the `sql`, `wql` and `regex` types serve the references there.
+
 Most types escape the **inside** of a string of their syntax, the quotes being written in the connector:
 
 | Type | Write the macro | Escaping |
@@ -239,12 +241,12 @@ Most types escape the **inside** of a string of their syntax, the quotes being w
 | `bash` (or `linux`) | Between single quotes of a POSIX shell command: `'%{esc(bash)::PASSWORD}'` | `'` becomes `'\''` |
 | `powershell` | Between single quotes of a PowerShell command | `'` (and `‘ ’ ‚ ‛`) doubled |
 | `cmd` (or `windows`) | In a `cmd.exe` command, **outside** of double quotes | `^` before `^ & \| < > ( ) % "`. Inside double quotes, `cmd.exe` keeps the `^` and still expands `%VAR%`: prefer a PowerShell command with `powershell` |
-| `sql` | Between single quotes of a SQL query | `\` and `'` doubled |
-| `wql` | Between single or double quotes of a WQL query | `\`, `'` and `"` preceded with `\` |
+| `sql` | Between single quotes of a SQL query (references only) | `\` and `'` doubled |
+| `wql` | Between single or double quotes of a WQL query (references only) | `\`, `'` and `"` preceded with `\` |
 | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped |
-| `xml` | In XML text or an attribute | `&`, `<`, `>`, `"`, `'` as entities |
-| `url` | In a URL, a header or a form | Percent-encoded, `/` included |
-| `regex` | In a regular expression of the connector (`keep`, `exclude`, `keepOnlyMatchingLines`...) | `\` before `^ $ . * + ? [ ] \` |
+| `xml` | In XML character data or a quoted attribute value | `&`, `<`, `>`, `"`, `'` as entities |
+| `url` | In a URL, a header or a form | Percent-encoded, `/` included, and a value of dots only |
+| `regex` | In a regular expression of the connector (`keep`, `exclude`, `keepOnlyMatchingLines`...), **outside** of a `[...]` character class, where `-` would still form a range (references only) | `\` before `^ $ . * + ? [ ] \` |
 
 The `${esc(bash)::...}` references to attributes and parameters work differently in a command line: see [Mono-Instance Attribute References](#mono-instance-attribute-references). The [tools](tools.html#escaping-and-validation) section lists which escape each field of a tool takes.
 
