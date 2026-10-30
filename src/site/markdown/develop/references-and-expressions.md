@@ -118,6 +118,13 @@ Use `${attribute::<key>}` in mono-instance contexts: `monoInstance` collect jobs
 commandLine: /bin/sh ${file::detail.sh} ${attribute::id}
 ```
 
+An attribute comes from the monitored host and may hold spaces or quotes, like a file or process name. Escape it for the syntax around it with the same `esc(TYPE)::` prefix as the credential macros, `${esc(TYPE)::attribute::<key>}`, which also applies to `${esc(TYPE)::resource.attribute::<key>}` and to the tool parameters, `${esc(TYPE)::param::<name>}`:
+
+```yaml
+commandLine: /bin/sh ${file::detail.sh} '${esc(bash)::attribute::id}'
+query: SELECT Name FROM Win32_Service WHERE Name = '${esc(wql)::attribute::name}'
+```
+
 ## Inline AWK Expressions
 
 Use `${awk::...}` for concise expression-level formatting.
@@ -216,11 +223,14 @@ sources:
 header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
 ```
 
-To escape the injected value for the surrounding syntax, wrap the macro as `%{esc(TYPE)::MACRO}` where `TYPE` is one of `json`, `xml`, `url`, `regex`, `windows`, `cmd`, `powershell`, `linux`, `bash`, `sql`:
+To escape the injected value for the surrounding syntax, wrap the macro as `%{esc(TYPE)::MACRO}` where `TYPE` is one of `json`, `xml`, `url`, `regex`, `windows`, `cmd`, `powershell`, `linux`, `bash`, `sql`, `wql`:
 
 ```yaml
 body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" }'
+commandLine: mytool --password '%{esc(bash)::PASSWORD}'
 ```
+
+Each type escapes the **inside** of a string of its syntax, the quotes being written in the connector: `bash`/`linux` and `powershell` escape for a single-quoted string (`'...'`), `sql` for a single-quoted SQL string, `json` for a double-quoted JSON string. The [tools](tools.html#escaping-and-validation) section lists what each type escapes.
 
 > [!WARNING]
 > Macro names must be written in full and in uppercase. A misspelled or unknown macro (e.g. `%{BASICAUTH}`) is silently replaced with an **empty string**. Token-based macros (`%{AUTHENTICATIONTOKEN}`, `%{SHA256_AUTH}`) resolve to empty in command lines.

@@ -26,8 +26,10 @@ tools:
     parameters:
       matchName:
         type: string
-        description: Regular expression on the process name
+        description: Regular expression on the process name, e.g. ^java
         default: .*
+        # Any value: a regular expression the compute applies, never a command or a query
+        pattern: '.*'
     sources:
       processes:
         type: wmi
@@ -59,12 +61,62 @@ tools:
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `type` | No | `string` | `string`, `integer`, `number` or `boolean`. The value is always substituted as text. |
+| `type` | No | `string` | `string`, `integer`, `number` or `boolean`. Enforced: `integer` accepts `-?[0-9]+` only, `boolean` accepts `true` or `false`. The value is substituted as text. |
 | `description` | No | None | What the value is for. Give an example. |
 | `required` | No | `false` | Whether the assistant must supply the value. A parameter without `default` and not `required` is simply absent. |
-| `default` | No | None | The value used when the assistant does not supply one. |
+| `default` | No | None | The value used when the assistant does not supply one. It must satisfy the `type`, `pattern` and `enum`. |
+| `pattern` | No | None | A regular expression the **whole** value must match, e.g. `[\w@.-]+`. |
+| `enum` | No | None | The only values accepted, e.g. `[ TERM, KILL, HUP ]`. |
 
-The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. The values are substituted verbatim: there is no escaping, allow-list or validation facility, and a parameter description is advisory only. Keep parameters out of command lines and queries whenever possible: fetch the data with a fixed source, then use the parameter in a compute, as `matchName` filters the process list above. A tool that interpolates a parameter into a command or a query lets the caller run arbitrary input on the host, so declare it `destructive: true`.
+The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. `pattern` and `enum` are advertised to the assistant in the tool's JSON schema, and every argument is checked against `type`, `pattern` and `enum` before the tool runs: an invalid argument is reported to the assistant and nothing runs.
+
+## Escaping and Validation
+
+An argument comes from an AI assistant, and through it from whatever the assistant read: treat it as untrusted. Inserted as is into a command line, a value such as `sshd; reboot` runs a command of its own, and `' OR 1=1 --` rewrites a query. MetricsHub therefore enforces three rules.
+
+**A free-text parameter must be inserted escaped.** A `string` parameter with neither `pattern` nor `enum` is free text. Insert it with `${esc(<type>)::param::<name>}`, which escapes the value for the syntax around it. Otherwise the tool is refused when the agent loads it, and a warning names the parameter.
+
+| Escape | Insert the value | Escaping |
+| --- | --- | --- |
+| `bash` (or `linux`) | Between single quotes of a POSIX shell command: `'${esc(bash)::param::x}'` | `'` becomes `'\''` |
+| `powershell` | Between single quotes of a PowerShell command: `'${esc(powershell)::param::x}'` | `'` (and `‘ ’ ‚ ‛`) doubled |
+| `sql` | Between single quotes of a SQL query | `\` doubled, `'` doubled |
+| `wql` | Between quotes of a WQL query | `\`, `'` and `"` preceded with `\` |
+| `json` | Between double quotes of a JSON string | `\`, `"`, newlines and tabs escaped |
+| `xml` | In XML text or an attribute | `&`, `<`, `>`, `"`, `'` as entities |
+| `url` | In a URL path or query string | Percent-encoded, `/` included |
+| `regex` | In a regular expression, to match the value literally | `\Q...\E` |
+| `cmd` (or `windows`) | In a `cmd.exe` command | `^` before `& \| < > ( ) % "`: not reliable inside quotes, prefer `powershell` or a `pattern` |
+
+The escape only covers the inside of the quotes: the quotes themselves are written in the connector, as in `'${esc(bash)::param::service}'`. Without them, `esc(bash)` protects nothing.
+
+**A constrained parameter may be inserted as is.** A parameter with an `enum`, a `pattern`, or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted. Write a `pattern` that excludes the characters that matter where the value lands, for example `[\w@.-]+` for a systemd unit. A `pattern: '.*'` explicitly accepts any value: use it only where the value is data, like the regular expression of a `keepOnlyMatchingLines` compute, never in a command line, a query or an `awk` script.
+
+**An argument may not contain `%{` or `${`.** The credential macros (`%{PASSWORD}`), the source references and the other `${...}` references are resolved after the arguments are inserted, so an argument holding one would reveal its value to the assistant. Such an argument is refused, whatever the parameter.
+
+```yaml
+tools:
+  serviceLogs:
+    description: Returns the last lines of the journal of a systemd service. Use it when a service fails or restarts.
+    parameters:
+      service:
+        description: The systemd unit, e.g. sshd.service
+        required: true
+      lines:
+        type: integer
+        description: How many lines to return
+        default: 100
+      priority:
+        description: The lowest priority to return
+        default: info
+        enum: [ emerg, alert, crit, err, warning, notice, info, debug ]
+    sources:
+      journal:
+        type: commandLine
+        commandLine: journalctl --no-pager -n ${param::lines} -p ${param::priority} -u '${esc(bash)::param::service}'
+    result:
+      source: ${source::journal}
+```
 
 ## References and Order
 
@@ -103,6 +155,7 @@ tools:
       resetType:
         description: GracefulRestart (default) or ForceRestart
         default: GracefulRestart
+        enum: [ GracefulRestart, ForceRestart ]
     sources:
       reset:
         type: http
@@ -121,6 +174,7 @@ tools:
 - Name tools as verbs, without dots: `listProcesses`, `readLog`, `reboot`. A dotted name is refused when the connector loads, since the dot separates the segments of a source reference.
 - Write the description for the assistant: what the tool returns, what the parameters mean, when not to use it.
 - Give every parameter a `default` or `required: true`, and an example value in its description.
+- Constrain every parameter you can with an `enum`, a `pattern` or a numeric type; escape the others with `esc(...)`.
 - Keep the result small and tabular: filter with computes, name the columns.
 - Mark anything that writes as `destructive: true`, even a harmless-looking `identify` LED.
 
@@ -129,4 +183,6 @@ tools:
 - Using `${param::...}` in a `mapping`: tools have no mapping.
 - Forgetting `result`: the tool has nothing to return.
 - Leaving `destructive` unset on a tool that acts on the host.
+- Inserting a free-text parameter with `${param::...}`: the tool is refused. Use `${esc(<type>)::param::...}` or constrain the parameter.
+- Writing `${esc(bash)::param::...}` without the single quotes around it, or inside double quotes: the value is not protected.
 - Returning raw command output without a parsing compute: the assistant gets a single-column table of lines.
