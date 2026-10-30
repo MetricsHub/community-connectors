@@ -63,47 +63,48 @@ tools:
 | `description` | No | None | What the value is for. Give an example. |
 | `required` | No | `false` | Whether the assistant must supply the value. A parameter the sources reference must be `required` or have a `default` (`''` for an optional text), or the tool is refused. |
 | `default` | No | None | The value used when the assistant does not supply one. It must satisfy the `type`, `pattern` and `enum`. |
-| `pattern` | No | None | A Java regular expression the **whole** value must match, e.g. `[\w@.-]+`. |
+| `pattern` | No | Default pattern for a `string` without `enum` | A Java regular expression the **whole** value must match. A `string` declaring neither a `pattern` nor an `enum` takes the default pattern: letters, digits and `_ . @ : -` (see Validation and Review). |
 | `enum` | No | None | The only values accepted, each of the parameter's `type`, e.g. `[ TERM, KILL, HUP ]`. |
 
 The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. The `enum` is advertised in the tool's JSON schema and the `pattern` in the parameter's description. Every argument is checked against `type`, `pattern` and `enum` before the tool runs: an invalid argument is reported to the assistant and nothing runs.
 
-## Escaping and Validation
+## Validation and Review
 
-An argument comes from an AI assistant, and through it from whatever the assistant read: treat it as untrusted. Inserted as is into a command line, a value such as `sshd; reboot` runs a command of its own, and `' OR 1=1 --` rewrites a query. MetricsHub therefore enforces the rules below. When the agent loads a tool that breaks one, the tool is refused and a warning explains why; the connector's other tools are still exposed.
+An argument comes from an AI assistant, and through it from whatever the assistant read: treat it as untrusted. Inserted as is into a command line, a value such as `sshd; reboot` would run a command of its own, and `' OR 1=1 --` would rewrite a query. MetricsHub validates every argument before the tool runs. Where the sources insert it, and what the command does with it, is checked when the connector is reviewed.
 
-The rules apply to every field of the sources and the computes. A compute field that is data takes any declared parameter as is: the `value` of `append` and `prepend`, the `existingValue` and `newValue` of `replace`, the `valueList` of the matching-lines computes, the `variables` of `awk`. A string in the first four also refuses `;`, `,`, `$` and line breaks, which the table would read as a new column, a new entry, a column reference (`$2`) or a new row. The `regExp` of `keepOnlyMatchingLines` and `excludeMatchingLines` takes `${esc(regex)::param::...}` like `matchName` above, or an `enum` or an `integer`: a value used as a regular expression could backtrack without end, and the `.` of a `number` (`1.5`) would match any character. The `arraySeparator` of `arrayTranslate` (a Java regular expression) and the `separators` of `awk` (an awk one), which no escape fits, take only an `enum` or an `integer`. Any other compute field (a JSON or XML path...) takes only an `enum` or a number, and the `encoding` of `encode` and `decode`, never replaced, takes no parameter.
+### What MetricsHub Checks
 
-**A free-text parameter must be inserted escaped.** Insert a `string` parameter with `${esc(<type>)::param::<name>}`, which protects the value where it lands, unless it is constrained as described below. Each field takes the escapes of its language only:
+An invalid argument is reported to the assistant, and nothing runs.
 
-| Field | Escape | Write | What happens |
-| --- | --- | --- | --- |
-| `commandLine` of a connector applying to Linux, AIX, HP-UX, Solaris or Tru64 only (with `executeLocally: true`, of an agent not running on Windows, whose shell runs it) | `bash` (or `linux`) | `${esc(bash)::param::x}`, in or out of quotes | The value is assigned to a shell variable at the start of the command, and the reference becomes that variable, quoted for where it lands (`"${v}"` outside of quotes, `${v}` inside double quotes, `'"${v}"'` inside single quotes): the shell expands it as one word, neither parsed, split nor globbed. The tool is refused if a comment, a here-document or backquotes come before the reference, as its quoting cannot be told, and if the reference is inside `$(...)`, whose output the shell splits and globs again. The value stays one word, but a command would still read a value starting with `-` as an option (`find ... -delete`): such a value is refused. One word still chooses what a service, package or container manager does (`systemctl stop`, `service sshd stop`, `docker rm`): before the connector has written that action (after `systemctl`, `docker`, `kubectl`, `apt`, `yum`..., or the name and the action after `service`, `ip`, `nmcli`, or the two nested subcommands after `docker`, `podman`, `kubectl`: `docker container logs`, not `docker logs`), the tool is refused, unless the parameter is an `enum`. So it is after a command running programs from its options (`tar`, `rsync`, `scp`, `git`, `make`, `man`, `less`, `vi`...), and as the value of an option naming a program (`--checkpoint-action=exec=`, `--rsh-command`, `-o ProxyCommand=`). |
-| `commandLine` of any other connector (Windows..., or with `executeLocally: true` on a Windows agent) | None | | No escape is reliable in `cmd.exe`, and nothing tells whether a word is a command there: only an `enum` or a number. |
-| `query` of a `sql` source | `sql` | Between single quotes, e.g. `WHERE name = '${esc(sql)::param::x}'` | `'` doubled, which every dialect reads back. A query holding a comment (`--`, `#`, `/*`) or a backslash before the reference is refused, as dialects disagree on them. For the same reason the value refuses `\`, `"`, line breaks and tabs (an `enum` holding one refuses the tool): MySQL and MariaDB read `\` as an escape by default, PostgreSQL (with its default `standard_conforming_strings`), SQL Server and Oracle as a character. In a `LIKE` pattern, `%` and `_` stay wildcards: the escape does not make them literal. |
-| `query` of a `wmi` or `wbem` source | `wql` | Between single or double quotes of a comparison, e.g. `WHERE Name = '${esc(wql)::param::x}'`, not in a `LIKE` pattern | `\`, `'` and `"` preceded with `\`. In a `LIKE` pattern, WQL does not read `\` as an escape, so a quote would close the string: the tool is refused there. Use `=`, or an `enum`. |
-| `url` or `path` of an `http` source | `url` | In the path or the query, not in the scheme or the host of an absolute URL (the `url` and the `path` joined, as requested), which only take an `enum`: the assistant would choose where the request, and the credentials, go | Percent-encoded, `/` included, and a value of dots only (`.`, `..`) too: the value adds no path segment or parameter. A server decoding `%2F` before routing may still climb with `..%2F`: give a path parameter a `pattern` refusing `.` and `/` (such as `[\w-]+`), or an `enum`. |
-| `header` of an `http` source | None | | A header value is not URL-decoded, so percent-encoding would change it, and no other escape keeps a line out: only an `enum` or a number. |
-| `authenticationToken` of an `http` source | None | | It names the source holding the token, looked up before any parameter is replaced: no parameter there. |
-| `body` of an `http` source | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped. |
-|  | `xml` | In XML character data or a quoted attribute value, not in a tag name, a comment or a CDATA section | `&`, `<`, `>`, `"`, `'` as entities. |
-|  | `url` | In a form (`a=b&c=d`) | Percent-encoded. |
-| `keep` and `exclude` of a `commandLine` source, `regExp` of a matching-lines compute | `regex` | In the regular expression, outside of a `[...]` character class, to match the value literally | `\` before `^ $ . * + ? [ ] \`, the special characters of the connectors' regular expressions (`( ) \| { }` are literal there). A `number` must be escaped too: its `.` would match any character. |
-| Any other source field (an OID, a JMX object name, a static value...) | None | | No escape covers their syntax (the `*` of a JMX pattern...): only an `enum` or a number. |
-| `paths` of a `file` source | None | | No escape keeps a value from climbing with `../` or starting at `/`: only an `enum` or a number. |
-| `awk` script | None | | No escape is reliable in code, and the characters a pattern lets through (`/ + - =`) are operators: only an `enum` or a number. The `variables` of an `awk` compute or source are passed as data: any declared parameter goes there as is. |
+- **Type, enum and pattern.** Every argument must satisfy the `type`, `enum` and `pattern` of its parameter. A `pattern` taking more than 200 ms to match an argument refuses it.
+- **The default pattern.** A `string` parameter declaring neither an `enum` nor a `pattern` only takes letters, digits and `_ . @ : -`, starting with a letter, a digit or `_`, or nothing: `sshd.service`, `getty@tty1.service`, `db-01.example.com`, `10.0.0.1`, `fe80::1`. Such a value cannot leave a string or a word, in a shell, a query or a URL, nor be read as an option, nor climb a path: `sshd; reboot`, `a b`, `$(id)`, `-delete` and `../etc` are refused. It suits most parameters: names, identifiers, addresses.
+- **No macro, no control character.** No argument may contain `%{` or `${`, which would reveal a credential macro such as `%{PASSWORD}`, nor a control character other than a tab or a line break. A value that would form a macro with the text around it, such as `{PASSWORD}` after a `%`, is not inserted.
+- **Declared references.** When the agent loads the connector, every reference must name a declared parameter, `required` or with a `default` (`''` for an optional text), and a known escape type: the tool is refused otherwise, rather than run with the reference left in. In a tool, `${attribute::<name>}` is the same as `${param::<name>}`, the arguments being the tool's attributes.
 
-**A constrained parameter may be inserted as is.** A parameter with an `enum` or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted anywhere. A `string` parameter constrained by a `pattern` only is accepted as is in a POSIX command line only (as a mere argument, see below), and its value then also refuses the shell metacharacters, whatever its pattern: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``, and a leading `-`, which the command would read as an option. A value such as `sshd.service` passes, `x; reboot` and `-v` do not. In a SQL or WQL query and in an HTTP request, refusing these characters is not enough (`1--` comments out the rest of a query, `../` climbs a URL): a `string` must be escaped there, or restricted to an `enum`.
+### Wider Values
 
-**An argument may not hold a control character** other than a tab or a line break: no source takes them, and XML forbids them even escaped. A `pattern` that takes more than 200 ms to match an argument refuses it.
+A parameter that needs more characters (a path, free text, a search pattern) declares its own `pattern`, as narrow as possible, or an `enum`. Insert it with the escape of the field, inside the quotes the connector writes:
 
-**An argument may not form a macro.** The credential macros (`%{PASSWORD}`) are expanded once every reference is replaced, so an argument forming one would reveal its value to the assistant. An argument containing `%{` or `${` is refused, whatever the parameter. A value that would form one with the text around it, such as `{PASSWORD}` after a `%`, is not inserted, and a source whose fields end up with more macros than the connector wrote, whatever brought them (an argument, an attribute, another source), does not run.
+| Field | Write | Escaping |
+| --- | --- | --- |
+| `commandLine` run by a POSIX shell | Between single quotes: `'${esc(bash)::param::x}'` | `'` becomes `'\''`: nothing is expanded between single quotes |
+| A PowerShell command | Between single quotes: `'${esc(powershell)::param::x}'` | `'` and the typographic quotes doubled. The command reaches PowerShell through `cmd.exe`: keep `"` and `%` out of the `pattern` |
+| `query` of a `sql` source | Between single quotes: `'${esc(sql)::param::x}'` | `\` and `'` doubled, as MySQL and MariaDB read `\` as an escape. Elsewhere (PostgreSQL, SQL Server, Oracle), keep `\` out of the `pattern`. In a `LIKE` pattern, `%` and `_` stay wildcards |
+| `query` of a `wmi` or `wbem` source | Between single or double quotes of a comparison: `'${esc(wql)::param::x}'` | `\`, `'` and `"` preceded with `\`. Not in a `LIKE` pattern, where WQL does not read `\` as an escape |
+| `url` or `path` of an `http` source | In the path or the query: `/api/${esc(url)::param::x}` | Percent-encoded, `/` included, the dots of a `.` or `..` segment too |
+| `body` of an `http` source | `"${esc(json)::param::x}"` in JSON, `${esc(xml)::param::x}` in XML character data or a quoted attribute, `${esc(url)::param::x}` in a form | `\`, `"` and the control characters for JSON; `& < > " '` as entities for XML; percent-encoding for a form |
+| `keep`, `exclude`, `regExp` | `${esc(regex)::param::x}`, outside of a `[...]` character class | `\` before `^ $ . * + ? [ ] \`, so that the value matches literally |
 
-**A reference must name a declared parameter.** A misspelled `${param::...}` makes the tool refused, rather than run with the reference left in. In a tool, `${attribute::<name>}` is the same as `${param::<name>}` (the arguments are the tool's attributes), and follows the same rules. A field where references are never replaced, or looked up before they are, takes none, or the tool is refused: the `source` of `executeForEachEntryOf`, the `authenticationToken` of an `http` source, the `database` of a `sql` source, the `bitList` of `perBitTranslation`, the `encoding` of `encode` and `decode`, the script of an `awk` source, the `source` and the `columns` of the tool's `result`, its `executionOrder`...
+### What the Review Checks
 
-**Host data does not go into code as is.** A `${source::...}`, `${protocol::...}` or unescaped `${resource.attribute::...}` reference, or a column (`$1`, `$2`...) of the entry of `executeForEachEntryOf`, inserts what the host returned, which an argument could have steered through an earlier source (a command echoing it, a query selecting it). In a command line, its `keep` and `exclude`, a query, a file path, an HTTP request, or the code of a compute (an `awk` script, a regular expression, a separator), the tool is refused. An escaped `${esc(<type>)::resource.attribute::...}` takes the escapes of the field and their placement, as a parameter does.
+MetricsHub does not read the commands, queries and requests of a connector. The review of every tool checks that each parameter, whatever its pattern, is only data where it lands:
 
-**An escaped reference may not follow a backslash**, which would escape the first character of the escaped value.
+- **Not a command.** Never the name of a command (`${param::x} --version`, after `;`, `|`, `&&`, `if`, `{`, an assignment such as `MODE=x`, a redirection such as `2>&1`), the script of a shell (`sh ${param::x}`), the target of a redirection (`> ${param::x}`), nor a function or alias of the command line.
+- **Not code.** Never an argument of a command that runs its arguments as code or as another command: `eval`, `sh -c`, `sudo`, `su`, `ssh`, `env`, `xargs`, `nohup`, `timeout`, `nice`, `chroot`, `prlimit`, `find -exec`, `docker exec`, `awk`, `perl`, `python`, `sed` (whose script runs `e` and writes `w`), `dd` (whose `of=` writes), `tar`, `rsync`, `git`, `man`, `less`... nor the value of an option naming a program (`--to-command=`, `--rsh-command`, `-o ProxyCommand=`). Never inside arithmetic (`$((...))`, `let`, `[[ ... -eq ... ]]`), a variable name (`read`, `printf -v`, `export`), `$(...)`, backquotes, a here-document or a comment.
+- **Not an option or an action.** Never completing an option (`-${param::x}` makes `-delete`), and never choosing what a service, package or container manager does: write the action (`systemctl status ${param::x}`, `docker container logs ${param::x}`), or make the parameter an `enum`.
+- **Not a destination.** Never the scheme or the host of a URL, which would send the request and its credentials elsewhere: an `enum` only. Never a `file` source path, unless its `pattern` keeps it in a directory without `..`.
+- **Escaped where it is wider.** A parameter whose `pattern` lets more than the default through is inserted with the escape of its field, inside the quotes the connector writes, as in the table above. A SQL or WQL value sits inside a quoted string, never as a column, a table or a clause.
+- **Destructive when it acts.** Anything that changes the host is `destructive: true`.
 
 ```yaml
 tools:
@@ -111,6 +112,7 @@ tools:
     description: Returns the last lines of the journal of a systemd service. Use it when a service fails or restarts.
     parameters:
       service:
+        # The default pattern takes unit names: sshd.service, getty@tty1.service
         description: The systemd unit, e.g. sshd.service
         required: true
       lines:
@@ -126,7 +128,7 @@ tools:
     sources:
       journal:
         type: commandLine
-        commandLine: journalctl --no-pager -n ${param::lines} -p ${param::priority} -u ${esc(bash)::param::service}
+        commandLine: journalctl --no-pager -n ${param::lines} -p ${param::priority} -u ${param::service}
     result:
       source: ${source::journal}
 ```
@@ -187,7 +189,7 @@ tools:
 - Name tools as verbs, without dots: `listProcesses`, `readLog`, `reboot`. A dotted name is refused when the connector loads, since the dot separates the segments of a source reference.
 - Write the description for the assistant: what the tool returns, what the parameters mean, when not to use it.
 - Give every parameter a `default` or `required: true`, and an example value in its description.
-- Constrain every parameter you can with an `enum`, a `pattern` or a numeric type; escape the others with `esc(...)`.
+- Keep the default pattern for names and identifiers; use an `enum` or a numeric type where you can; give a wider `pattern` only where needed, with the escape of the field.
 - Bound the numbers that size the work or the result (a line count, a time range) with a `pattern` such as `[1-9][0-9]{0,3}`: the type alone accepts any integer.
 - Keep the result small and tabular: filter with computes, name the columns.
 - Mark anything that writes as `destructive: true`, even a harmless-looking `identify` LED.
@@ -197,9 +199,6 @@ tools:
 - Using `${param::...}` in a `mapping`: tools have no mapping.
 - Forgetting `result`: the tool has nothing to return.
 - Leaving `destructive` unset on a tool that acts on the host.
-- Inserting a free-text parameter with `${param::...}` in a source or an `awk` script: the tool is refused. Use `${esc(<type>)::param::...}` or constrain the parameter.
-- Writing a comment, a here-document or backquotes before `${esc(bash)::param::...}` in a command line: the tool is refused, MetricsHub cannot tell how the reference is quoted.
-- Using `${esc(bash)::param::...}` in arithmetic (`$((...))`, `((...))`, `[[ ... -eq ... ]]`, `let`, or after `declare`, `typeset` or `local`): the tool is refused, as bash evaluates the value again there. Declare an `integer` parameter instead.
-- Using a string parameter where it would not be a mere argument in a POSIX command line: as the name of a command (`${esc(bash)::param::x} --version`, after `;`, `|`, `if`, an assignment such as `MODE=x`, `find -exec`...), as the script of a shell (`sh ${...}`), as the target of a redirection (`> ${...}`), or anywhere in a command that runs its arguments as code or as another command (`eval`, `sh -c`, `sudo`, `ssh`, `xargs`, `env`, `awk`, `perl`, `python`, `dd` whose `of=` writes, `sed` whose script runs or writes...), however its name is quoted or escaped (`'eval'`, `e\val`). A shell running a script (`sh ${file::check.sh} ${...}`) passes its arguments to the script: accepted. The data flowing between commands is not followed either: do not pipe a parameter into a shell or an interpreter (`echo ${...} | sh`). The tool is refused, escaped or not: MetricsHub keeps the shell from parsing a value, not the command that receives it. Any other command that interprets an argument as code is the connector's responsibility: do not pass it a parameter, or restrict the parameter to an `enum`.
-- Using `esc(bash)` in a connector that also applies to Windows: the tool is refused, the command may run in `cmd.exe`.
+- Widening a `pattern` (spaces, quotes, `/`) and inserting the parameter without the escape of its field, or outside the quotes the connector writes.
+- Passing a parameter where it is not mere data: see What the Review Checks above.
 - Returning raw command output without a parsing compute: the assistant gets a single-column table of lines.

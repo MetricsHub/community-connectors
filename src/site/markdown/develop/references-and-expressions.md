@@ -121,11 +121,11 @@ commandLine: /bin/sh ${file::detail.sh} ${attribute::id}
 An attribute comes from the monitored host and may hold spaces or quotes, like a file or process name. Escape it for the syntax around it with the same `esc(TYPE)::` prefix as the credential macros, `${esc(TYPE)::attribute::<key>}`, which also applies to `${esc(TYPE)::resource.attribute::<key>}` and to the tool parameters, `${esc(TYPE)::param::<name>}`:
 
 ```yaml
-commandLine: /bin/sh ${file::detail.sh} ${esc(bash)::attribute::id}
+commandLine: /bin/sh ${file::detail.sh} '${esc(bash)::attribute::id}'
 query: SELECT Name FROM Win32_Service WHERE Name = '${esc(wql)::attribute::name}'
 ```
 
-In a `commandLine`, `${esc(bash)::attribute::<key>}`, `${esc(bash)::resource.attribute::<key>}` and `${esc(bash)::param::<name>}` are not escaped in place: the value is assigned to a shell variable at the start of the command, and the reference becomes that variable, quoted for where it lands (in or out of single or double quotes), so that the shell expands it as one word, neither parsed, split nor globbed. One word does not protect a value from a command that parses it again: where the value would not be a mere argument (after `eval`, `sh -c`, `sudo`, `ssh`, `xargs`, `sed`, `dd`, an interpreter such as `awk`, `perl` or `python`, as a command name or a redirection target, in arithmetic, inside `$(...)` whose output the shell splits again, in a here-document, a comment or backquotes), the reference is replaced with nothing and an error is logged. This assumes a POSIX shell: do not use them in a command run by `cmd.exe`. A value that would form a credential macro (`%{...}`) with the text around it is not inserted. One word still reaches the command as is: an attribute starting with `-` (a file named `-rf`) would be read as an option, so write `--` before a positional attribute where the command supports it (`rm -- ${esc(bash)::attribute::path}`). Tool parameters refuse such a value.
+Each type escapes the inside of a string of its syntax, the quotes being written in the connector (see the table under Credential Macros below): `bash` is for the inside of single quotes, `'${esc(bash)::attribute::id}'`, where the shell expands nothing. The value then stays one word, but the command receiving it still reads it: an attribute starting with `-` (a file named `-rf`) would be an option, so write `--` before a positional value where the command supports it (`rm -- '${esc(bash)::attribute::path}'`), and never pass a value to a command that runs it as code (`eval`, `sh -c`, `find -exec`...). A value that would form a credential macro (`%{...}`) with the text around it is not inserted.
 
 ## Inline AWK Expressions
 
@@ -229,17 +229,17 @@ To escape the injected value for the surrounding syntax, wrap the macro as `%{es
 
 ```yaml
 body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" }'
-commandLine: mytool --password %{esc(bash)::PASSWORD}
+commandLine: mytool --password '%{esc(bash)::PASSWORD}'
 ```
 
-The same types escape the `${esc(TYPE)::...}` references to attributes and parameters, which are replaced in the fields of sources and computes that take references. In a tool, a field where they are never replaced, or looked up before they are, refuses the tool: see [Tools](tools.html). The credential macros, expanded in HTTP fields and command lines only, are not expanded in a SQL or WQL query nor in the regular expressions of a source: the `sql`, `wql` and `regex` types serve the references there.
+The same types escape the `${esc(TYPE)::...}` references to attributes and parameters, wherever these references are replaced. The credential macros, expanded in HTTP fields and command lines only, are not expanded in a SQL or WQL query nor in the regular expressions of a source: the `sql`, `wql` and `regex` types serve the references there.
 
 Most types escape the **inside** of a string of their syntax, the quotes being written in the connector:
 
 | Type | Write the macro | Escaping |
 | --- | --- | --- |
-| `bash` (or `linux`) | As an argument of a POSIX shell command: `--password %{esc(bash)::PASSWORD}` | Quoted for where the macro lands: a whole single-quoted word outside of quotes, `'` becoming `'\''` inside single quotes, `\` before `\ " $ `` ` `` inside double quotes. Where the value would not be a mere argument (in arithmetic, after `eval` or `sh -c`, as a command name, inside `$(...)`...), the macro is replaced with nothing and an error is logged |
-| `powershell` | Never | A PowerShell command reaches PowerShell through `cmd.exe`, where a `"` then a `&` chains a command or `%NAME%` expands, and its comments and double-quoted strings make any single quote uncertain: a credential macro or a reference escaped with `powershell` is always replaced with nothing and an error is logged |
+| `bash` (or `linux`) | Between single quotes of a POSIX shell command: `--password '%{esc(bash)::PASSWORD}'` | `'` becomes `'\''`: nothing is expanded between single quotes |
+| `powershell` | Between single quotes of a PowerShell command: `-Password '%{esc(powershell)::PASSWORD}'` | `'` and the typographic quotes (‘ ’ ‚ ‛) doubled. A PowerShell command reaches PowerShell through `cmd.exe`, which reads `"` and `%` first: a value holding them is not protected |
 | `cmd` (or `windows`) | Not as a general escape | `^` before `^ & \| < > ( ) % "`, which keeps a value from chaining commands outside of double quotes, but leaves its spaces splitting it into several arguments, and inside double quotes `cmd.exe` keeps the `^` and still expands `%VAR%`. Use a credential without spaces or quotes |
 | `sql` | Between single quotes of a SQL query (references only) | `\` and `'` doubled. Doubling backslashes suits a server reading `\` as an escape (MySQL and MariaDB by default); elsewhere (PostgreSQL with its default `standard_conforming_strings`, SQL Server, Oracle, MySQL or MariaDB in `NO_BACKSLASH_ESCAPES` mode) a value holding a `\` no longer matches: give such a parameter a `pattern` refusing `\` as well |
 | `wql` | Between single or double quotes of a WQL comparison (references only), not in a `LIKE` pattern, where WQL does not read `\` as an escape | `\`, `'` and `"` preceded with `\` |
