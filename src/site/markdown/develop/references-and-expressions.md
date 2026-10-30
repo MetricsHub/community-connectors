@@ -125,7 +125,7 @@ commandLine: /bin/sh ${file::detail.sh} ${esc(bash)::attribute::id}
 query: SELECT Name FROM Win32_Service WHERE Name = '${esc(wql)::attribute::name}'
 ```
 
-In a `commandLine`, `${esc(bash)::attribute::<key>}` and `${esc(bash)::param::<name>}` are not escaped in place: the value is assigned to a shell variable at the start of the command, and the reference becomes `"$variable"`, so write them as a whole word, without quotes. This assumes a POSIX shell: do not use them in a command run by `cmd.exe`. A value that would form a credential macro (`%{...}`) with the text around it is not inserted.
+In a `commandLine`, `${esc(bash)::attribute::<key>}`, `${esc(bash)::resource.attribute::<key>}` and `${esc(bash)::param::<name>}` are not escaped in place: the value is assigned to a shell variable at the start of the command, and the reference becomes `"$variable"`, so write them as a word of their own. Single quotes right around the reference, `'${esc(bash)::attribute::id}'`, are replaced along with it. This assumes a POSIX shell: do not use them in a command run by `cmd.exe`. A value that would form a credential macro (`%{...}`) with the text around it is not inserted.
 
 ## Inline AWK Expressions
 

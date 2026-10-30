@@ -78,17 +78,20 @@ The rules apply where a value becomes code: the fields of the sources (a command
 
 | Field | Escape | Write | What happens |
 | --- | --- | --- | --- |
-| `commandLine` of a connector applying to Linux, AIX, HP-UX or Solaris only | `bash` (or `linux`) | `${esc(bash)::param::x}` as a whole word, **without quotes** | The value is assigned to a shell variable at the start of the command, and the reference becomes `"$variable"`: the shell never parses the value, whatever quotes, comments or here-documents surround it. |
+| Field | Escape | Write | What happens |
+| --- | --- | --- | --- |
+| `commandLine` of a connector applying to Linux, AIX, HP-UX or Solaris only | `bash` (or `linux`) | `${esc(bash)::param::x}` as a whole word (or `'${esc(bash)::param::x}'`) | The value is assigned to a shell variable at the start of the command, and the reference (with its quotes) becomes `"$variable"`: the shell never parses the value, whatever quotes, comments or here-documents surround it. |
 | `commandLine` of any other connector (Windows...) | None | | No escape is reliable in `cmd.exe`: constrain the parameter. |
 | `query` of a `sql` source | `sql` | Between single quotes, e.g. `LIKE '%${esc(sql)::param::x}%'` | `\` and `'` doubled. A query holding a comment (`--`, `#`, `/*`) or a backslash before the reference is refused, as dialects disagree on them. |
 | `query` of a `wmi` or `wbem` source | `wql` | Between single or double quotes | `\`, `'` and `"` preceded with `\`. |
-| Any other source field (URL, header, body...) | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped. |
+| `url`, `path`, `header` or `authenticationToken` of an `http` source | `url` | Anywhere | Percent-encoded, `/` and line breaks included: the value adds no path segment, parameter or header line. |
+| `body` of an `http` source | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped. |
 |  | `xml` | In XML text or an attribute | `&`, `<`, `>`, `"`, `'` as entities. |
-|  | `url` | In a URL path or query string | Percent-encoded, `/` included. |
-|  | `regex` | In a regular expression, to match the value literally | `\Q...\E` |
+|  | `url` | In a form (`a=b&c=d`) | Percent-encoded. |
+| Any other source field (an OID, an object name, a line filter...) | `json`, `xml`, `url` or `regex` | As above; `regex` in a regular expression, to match the value literally | `regex`: `\Q...\E` |
 | `awk` script | None | | No escape is reliable in code: constrain the parameter. |
 
-**A constrained parameter may be inserted as is.** A parameter with an `enum`, an `integer`, `number` or `boolean` type, or a `pattern` is validated before it is inserted, so `${param::<name>}` is accepted. Whatever its pattern, a `string` parameter inserted as is into a source or an `awk` script also refuses the shell and query metacharacters: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A value such as `sshd.service` passes, `x; reboot` does not.
+**A constrained parameter may be inserted as is.** A parameter with an `enum` or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted anywhere. A `string` parameter constrained by a `pattern` only is accepted as is in a command line, an `awk` script or the other source fields, and its value then also refuses the shell metacharacters, whatever its pattern: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A value such as `sshd.service` passes, `x; reboot` does not. In a SQL or WQL query and in an HTTP request, refusing these characters is not enough (`1--` comments out the rest of a query, `../` climbs a URL): a `string` must be escaped there, or restricted to an `enum`.
 
 **An argument may not form a macro.** The credential macros (`%{PASSWORD}`) are expanded once every reference is replaced, so an argument forming one would reveal its value to the assistant. An argument containing `%{` or `${` is refused, whatever the parameter. A value that would form one with the text around it, such as `{PASSWORD}` after a `%`, is not inserted, and a source whose fields end up with more macros than the connector wrote, whatever brought them (an argument, an attribute, another source), does not run.
 
@@ -184,6 +187,6 @@ tools:
 - Forgetting `result`: the tool has nothing to return.
 - Leaving `destructive` unset on a tool that acts on the host.
 - Inserting a free-text parameter with `${param::...}` in a source or an `awk` script: the tool is refused. Use `${esc(<type>)::param::...}` or constrain the parameter.
-- Writing `'${esc(bash)::param::...}'` between quotes, as for the credential macros: in a `commandLine`, the reference becomes `"$variable"`, which single quotes would keep as is.
+- Writing `${esc(bash)::param::...}` inside a longer quoted string, such as `'unit=${esc(bash)::param::x}'`: the reference becomes `"$variable"`, which the single quotes keep as is. Write it as a word of its own, quoted or not.
 - Using `esc(bash)` in a connector that also applies to Windows: the tool is refused, the command may run in `cmd.exe`.
 - Returning raw command output without a parsing compute: the assistant gets a single-column table of lines.
