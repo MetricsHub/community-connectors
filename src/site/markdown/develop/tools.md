@@ -26,8 +26,8 @@ tools:
     parameters:
       matchName:
         type: string
-        description: Regular expression on the process name, e.g. ^java
-        default: .*
+        description: Text in the process name, e.g. java (empty for all processes)
+        default: ''
     sources:
       processes:
         type: wmi
@@ -36,7 +36,7 @@ tools:
         computes:
         - type: keepOnlyMatchingLines
           column: 2
-          regExp: ${param::matchName}
+          regExp: ${esc(regex)::param::matchName}
     result:
       source: ${source::processes}
       columns: [ pid, name, workingSetBytes, kernelTime ]
@@ -61,7 +61,7 @@ tools:
 | --- | --- | --- | --- |
 | `type` | No | `string` | `string`, `integer`, `number` or `boolean`. Enforced: an `integer` is a whole number (`5`, `5.0` and `5e0` are all `5`), a `boolean` is `true` or `false`. The value is substituted as text. |
 | `description` | No | None | What the value is for. Give an example. |
-| `required` | No | `false` | Whether the assistant must supply the value. A parameter without `default` and not `required` is simply absent. |
+| `required` | No | `false` | Whether the assistant must supply the value. A parameter the sources reference must be `required` or have a `default` (`''` for an optional text), or the tool is refused. |
 | `default` | No | None | The value used when the assistant does not supply one. It must satisfy the `type`, `pattern` and `enum`. |
 | `pattern` | No | None | A Java regular expression the **whole** value must match, e.g. `[\w@.-]+`. |
 | `enum` | No | None | The only values accepted, each of the parameter's `type`, e.g. `[ TERM, KILL, HUP ]`. |
@@ -72,7 +72,7 @@ The invocation arguments replace `${param::<name>}` in the tool's sources and co
 
 An argument comes from an AI assistant, and through it from whatever the assistant read: treat it as untrusted. Inserted as is into a command line, a value such as `sshd; reboot` runs a command of its own, and `' OR 1=1 --` rewrites a query. MetricsHub therefore enforces the rules below. When the agent loads a tool that breaks one, the tool is refused and a warning explains why; the connector's other tools are still exposed.
 
-The rules apply where a value becomes code: the fields of the sources (a command line, a query, a request) and the `awk` scripts. The other computes only transform the table the sources returned, so a parameter may be used there as is, like `matchName` filtering the processes above.
+The rules apply where a value becomes code: the fields of the sources (a command line, a query, a request) and the `awk` scripts. The other computes only transform the table the sources returned, so a parameter may be used there as is, except in the regular expression of `keepOnlyMatchingLines` and `excludeMatchingLines`, which takes `${esc(regex)::param::...}` like `matchName` above, or an `enum` or a number: a value used as a regular expression could backtrack without end.
 
 **A free-text parameter must be inserted escaped.** Insert a `string` parameter with `${esc(<type>)::param::<name>}`, which protects the value where it lands, unless it is constrained as described below. Each field takes the escapes of its language only:
 
@@ -88,12 +88,12 @@ The rules apply where a value becomes code: the fields of the sources (a command
 | `body` of an `http` source | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped. |
 |  | `xml` | In XML character data or a quoted attribute value, not in a tag name, a comment or a CDATA section | `&`, `<`, `>`, `"`, `'` as entities. |
 |  | `url` | In a form (`a=b&c=d`) | Percent-encoded. |
-| `keep` and `exclude` of a `commandLine` source | `regex` | In the regular expression, outside of a `[...]` character class, to match the value literally | `\` before `^ $ . * + ? [ ] \`, the special characters of the connectors' regular expressions (`( ) \| { }` are literal there) |
+| `keep` and `exclude` of a `commandLine` source, `regExp` of a matching-lines compute | `regex` | In the regular expression, outside of a `[...]` character class, to match the value literally | `\` before `^ $ . * + ? [ ] \`, the special characters of the connectors' regular expressions (`( ) \| { }` are literal there) |
 | Any other source field (an OID, a JMX object name, a static value...) | None | | No escape covers their syntax (the `*` of a JMX pattern...): only an `enum` or a number. |
 | `paths` of a `file` source | None | | No escape keeps a value from climbing with `../` or starting at `/`: only an `enum` or a number. |
 | `awk` script | None | | No escape is reliable in code, and the characters a pattern lets through (`/ + - =`) are operators: only an `enum` or a number. |
 
-**A constrained parameter may be inserted as is.** A parameter with an `enum` or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted anywhere. A `string` parameter constrained by a `pattern` only is accepted as is in a POSIX command line (as a mere argument, see below) or the `keep` and `exclude` filters of a `commandLine` source, and its value then also refuses the shell metacharacters, whatever its pattern: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A value such as `sshd.service` passes, `x; reboot` does not. In a SQL or WQL query and in an HTTP request, refusing these characters is not enough (`1--` comments out the rest of a query, `../` climbs a URL): a `string` must be escaped there, or restricted to an `enum`.
+**A constrained parameter may be inserted as is.** A parameter with an `enum` or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted anywhere. A `string` parameter constrained by a `pattern` only is accepted as is in a POSIX command line only (as a mere argument, see below), and its value then also refuses the shell metacharacters, whatever its pattern: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A value such as `sshd.service` passes, `x; reboot` does not. In a SQL or WQL query and in an HTTP request, refusing these characters is not enough (`1--` comments out the rest of a query, `../` climbs a URL): a `string` must be escaped there, or restricted to an `enum`.
 
 **An argument may not hold a control character** other than a tab or a line break: no source takes them, and XML forbids them even escaped. A `pattern` that takes more than 200 ms to match an argument refuses it.
 

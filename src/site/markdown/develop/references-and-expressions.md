@@ -229,7 +229,7 @@ To escape the injected value for the surrounding syntax, wrap the macro as `%{es
 
 ```yaml
 body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" }'
-commandLine: mytool --password '%{esc(bash)::PASSWORD}'
+commandLine: mytool --password %{esc(bash)::PASSWORD}
 ```
 
 The same types escape the `${esc(TYPE)::...}` references to attributes and parameters, which are replaced in every field. The credential macros, expanded in HTTP fields and command lines only, are not expanded in a SQL or WQL query nor in the regular expressions of a source: the `sql`, `wql` and `regex` types serve the references there.
@@ -238,7 +238,7 @@ Most types escape the **inside** of a string of their syntax, the quotes being w
 
 | Type | Write the macro | Escaping |
 | --- | --- | --- |
-| `bash` (or `linux`) | Between single quotes of a POSIX shell command: `'%{esc(bash)::PASSWORD}'` | `'` becomes `'\''` |
+| `bash` (or `linux`) | Anywhere in a POSIX shell command: `--password %{esc(bash)::PASSWORD}` | Quoted for where the macro lands: a whole single-quoted word outside of quotes, `'` becoming `'\''` inside single quotes, `\` before `\ " $ `` ` `` inside double quotes |
 | `powershell` | Between single quotes of a PowerShell command | `'` (and `‘ ’ ‚ ‛`) doubled |
 | `cmd` (or `windows`) | In a `cmd.exe` command, **outside** of double quotes | `^` before `^ & \| < > ( ) % "`. Inside double quotes, `cmd.exe` keeps the `^` and still expands `%VAR%`: prefer a PowerShell command with `powershell` |
 | `sql` | Between single quotes of a SQL query (references only) | `\` and `'` doubled |
