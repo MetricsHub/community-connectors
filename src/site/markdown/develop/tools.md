@@ -92,7 +92,7 @@ The agent adds two parameters to every tool: `hostname`, a list of configured ho
 
 ## Destructive Tools
 
-A tool that changes the host (power control, a command, a configuration write) must declare `destructive: true`. The agent prefixes its description with `DESTRUCTIVE:` and advertises it only when it runs with the JVM flag `-Dmetricshub.mcp.tool.destructive.enabled=true`.
+A tool that changes the host (power control, a command, a configuration write) must declare `destructive: true`. The agent prefixes its description with `DESTRUCTIVE:`; its own MCP server and chat advertise it only when the agent runs with the JVM flag `-Dmetricshub.mcp.tool.destructive.enabled=true`, while MetricsHub Central receives every tool and applies its own approval policy.
 
 ```yaml
 tools:
