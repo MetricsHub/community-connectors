@@ -78,13 +78,12 @@ The rules apply where a value becomes code: the fields of the sources (a command
 
 | Field | Escape | Write | What happens |
 | --- | --- | --- | --- |
-| Field | Escape | Write | What happens |
-| --- | --- | --- | --- |
-| `commandLine` of a connector applying to Linux, AIX, HP-UX or Solaris only | `bash` (or `linux`) | `${esc(bash)::param::x}`, in or out of quotes | The value is assigned to a shell variable at the start of the command, and the reference becomes that variable, quoted for where it lands (`"${v}"` outside of quotes, `${v}` inside double quotes, `'"${v}"'` inside single quotes): the shell expands it as one word, neither parsed, split nor globbed. The tool is refused if a comment, a here-document or backquotes come before the reference, as its quoting cannot be told. |
+| `commandLine` of a connector applying to Linux, AIX, HP-UX or Solaris only | `bash` (or `linux`) | `${esc(bash)::param::x}`, in or out of quotes | The value is assigned to a shell variable at the start of the command, and the reference becomes that variable, quoted for where it lands (`"${v}"` outside of quotes, `${v}` inside double quotes, `'"${v}"'` inside single quotes): the shell expands it as one word, neither parsed, split nor globbed. The tool is refused if a comment, a here-document or backquotes come before the reference, as its quoting cannot be told. The value stays one word, but the command may still read a value starting with `-` as an option: write `--` before a positional parameter where the command supports it (`rm -- ${esc(bash)::param::file}`), or constrain the parameter. |
 | `commandLine` of any other connector (Windows...) | None | | No escape is reliable in `cmd.exe`, and nothing tells whether a word is a command there: only an `enum` or a number. |
-| `query` of a `sql` source | `sql` | Between single quotes, e.g. `LIKE '%${esc(sql)::param::x}%'` | `\` and `'` doubled. A query holding a comment (`--`, `#`, `/*`) or a backslash before the reference is refused, as dialects disagree on them. |
+| `query` of a `sql` source | `sql` | Between single quotes, e.g. `WHERE name = '${esc(sql)::param::x}'` | `\` and `'` doubled. A query holding a comment (`--`, `#`, `/*`) or a backslash before the reference is refused, as dialects disagree on them. In a `LIKE` pattern, `%` and `_` stay wildcards: the escape does not make them literal. |
 | `query` of a `wmi` or `wbem` source | `wql` | Between single or double quotes | `\`, `'` and `"` preceded with `\`. |
-| `url`, `path` or `header` of an `http` source | `url` | Anywhere | Percent-encoded, `/` and line breaks included, and a value of dots only (`.`, `..`) too: the value adds no path segment, parameter or header line, nor climbs the path. |
+| `url` or `path` of an `http` source | `url` | Anywhere | Percent-encoded, `/` included, and a value of dots only (`.`, `..`) too: the value adds no path segment or parameter, nor climbs the path. |
+| `header` of an `http` source | None | | A header value is not URL-decoded, so percent-encoding would change it, and no other escape keeps a line out: only an `enum` or a number. |
 | `authenticationToken` of an `http` source | None | | It names the source holding the token, looked up before any parameter is replaced: no parameter there. |
 | `body` of an `http` source | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped. |
 |  | `xml` | In XML character data or a quoted attribute value, not in a tag name, a comment or a CDATA section | `&`, `<`, `>`, `"`, `'` as entities. |
@@ -92,9 +91,9 @@ The rules apply where a value becomes code: the fields of the sources (a command
 | `keep` and `exclude` of a `commandLine` source | `regex` | In the regular expression, outside of a `[...]` character class, to match the value literally | `\` before `^ $ . * + ? [ ] \`, the special characters of the connectors' regular expressions (`( ) \| { }` are literal there) |
 | Any other source field (an OID, a JMX object name, a static value...) | None | | No escape covers their syntax (the `*` of a JMX pattern...): only an `enum` or a number. |
 | `paths` of a `file` source | None | | No escape keeps a value from climbing with `../` or starting at `/`: only an `enum` or a number. |
-| `awk` script | None | | No escape is reliable in code: constrain the parameter. |
+| `awk` script | None | | No escape is reliable in code, and the characters a pattern lets through (`/ + - =`) are operators: only an `enum` or a number. |
 
-**A constrained parameter may be inserted as is.** A parameter with an `enum` or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted anywhere. A `string` parameter constrained by a `pattern` only is accepted as is in a POSIX command line (as a mere argument, see below), an `awk` script or the line filters of a `commandLine` source, and its value then also refuses the shell metacharacters, whatever its pattern: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A value such as `sshd.service` passes, `x; reboot` does not. In a SQL or WQL query and in an HTTP request, refusing these characters is not enough (`1--` comments out the rest of a query, `../` climbs a URL): a `string` must be escaped there, or restricted to an `enum`.
+**A constrained parameter may be inserted as is.** A parameter with an `enum` or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted anywhere. A `string` parameter constrained by a `pattern` only is accepted as is in a POSIX command line (as a mere argument, see below) or the `keep` and `exclude` filters of a `commandLine` source, and its value then also refuses the shell metacharacters, whatever its pattern: the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A value such as `sshd.service` passes, `x; reboot` does not. In a SQL or WQL query and in an HTTP request, refusing these characters is not enough (`1--` comments out the rest of a query, `../` climbs a URL): a `string` must be escaped there, or restricted to an `enum`.
 
 **An argument may not hold a control character** other than a tab or a line break: no source takes them, and XML forbids them even escaped. A `pattern` that takes more than 200 ms to match an argument refuses it.
 
@@ -114,8 +113,10 @@ tools:
         required: true
       lines:
         type: integer
-        description: How many lines to return
+        description: How many lines to return, 1 to 9999
         default: 100
+        # A bound: an unbounded count could return the whole journal
+        pattern: '[1-9][0-9]{0,3}'
       priority:
         description: The lowest priority to return
         default: info
@@ -185,6 +186,7 @@ tools:
 - Write the description for the assistant: what the tool returns, what the parameters mean, when not to use it.
 - Give every parameter a `default` or `required: true`, and an example value in its description.
 - Constrain every parameter you can with an `enum`, a `pattern` or a numeric type; escape the others with `esc(...)`.
+- Bound the numbers that size the work or the result (a line count, a time range) with a `pattern` such as `[1-9][0-9]{0,3}`: the type alone accepts any integer.
 - Keep the result small and tabular: filter with computes, name the columns.
 - Mark anything that writes as `destructive: true`, even a harmless-looking `identify` LED.
 
