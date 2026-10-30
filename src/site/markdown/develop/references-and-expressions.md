@@ -248,7 +248,7 @@ Most types escape the **inside** of a string of their syntax, the quotes being w
 | `url` | In the path or the query of a URL, or in a form body; not in the scheme or the host of an absolute URL, where a value would send the request, credentials included, elsewhere (`localhost` needs no encoding); not in a header: a header value is not URL-decoded, so a token would change (`+`, `/`, `=`) | Percent-encoded, `/` included, and a value of dots only. A server decoding `%2F` before routing may still climb with `..%2F` |
 | `regex` | In a regular expression of the connector (`keep`, `exclude`, `keepOnlyMatchingLines`...), **outside** of a `[...]` character class, where `-` would still form a range (references only) | `\` before `^ $ . * + ? [ ] \` |
 
-The `${esc(bash)::...}` references to attributes and parameters work differently in a command line: see [Mono-Instance Attribute References](#mono-instance-attribute-references). The [tools](tools.html#escaping-and-validation) section lists which escape each field of a tool takes.
+The [tools](tools.html#validation-and-review) section lists which escape each field of a tool takes, and what the review of a tool checks.
 
 > [!WARNING]
 > Macro names must be written in full and in uppercase. A misspelled or unknown macro (e.g. `%{BASICAUTH}`) is silently replaced with an **empty string**. Token-based macros (`%{AUTHENTICATIONTOKEN}`, `%{SHA256_AUTH}`) resolve to empty in command lines.
