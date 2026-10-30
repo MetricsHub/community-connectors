@@ -125,7 +125,7 @@ commandLine: /bin/sh ${file::detail.sh} ${esc(bash)::attribute::id}
 query: SELECT Name FROM Win32_Service WHERE Name = '${esc(wql)::attribute::name}'
 ```
 
-In a `commandLine`, `${esc(bash)::attribute::<key>}`, `${esc(bash)::resource.attribute::<key>}` and `${esc(bash)::param::<name>}` are not escaped in place: the value is assigned to a shell variable at the start of the command, and the reference becomes that variable, quoted for where it lands (in or out of single or double quotes), so that the shell expands it as one word, neither parsed, split nor globbed. This assumes a POSIX shell: do not use them in a command run by `cmd.exe`. A value that would form a credential macro (`%{...}`) with the text around it is not inserted.
+In a `commandLine`, `${esc(bash)::attribute::<key>}`, `${esc(bash)::resource.attribute::<key>}` and `${esc(bash)::param::<name>}` are not escaped in place: the value is assigned to a shell variable at the start of the command, and the reference becomes that variable, quoted for where it lands (in or out of single or double quotes), so that the shell expands it as one word, neither parsed, split nor globbed. This assumes a POSIX shell: do not use them in a command run by `cmd.exe`. A value that would form a credential macro (`%{...}`) with the text around it is not inserted. One word still reaches the command as is: an attribute starting with `-` (a file named `-rf`) would be read as an option, so write `--` before a positional attribute where the command supports it (`rm -- ${esc(bash)::attribute::path}`). Tool parameters refuse such a value.
 
 ## Inline AWK Expressions
 
