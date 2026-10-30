@@ -28,8 +28,6 @@ tools:
         type: string
         description: Regular expression on the process name, e.g. ^java
         default: .*
-        # Any value: a regular expression the compute applies, never a command or a query
-        pattern: '.*'
     sources:
       processes:
         type: wmi
@@ -61,20 +59,22 @@ tools:
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `type` | No | `string` | `string`, `integer`, `number` or `boolean`. Enforced: `integer` accepts `-?[0-9]+` only, `boolean` accepts `true` or `false`. The value is substituted as text. |
+| `type` | No | `string` | `string`, `integer`, `number` or `boolean`. Enforced: an `integer` is a whole number (`5`, `5.0` and `5e0` are all `5`), a `boolean` is `true` or `false`. The value is substituted as text. |
 | `description` | No | None | What the value is for. Give an example. |
 | `required` | No | `false` | Whether the assistant must supply the value. A parameter without `default` and not `required` is simply absent. |
 | `default` | No | None | The value used when the assistant does not supply one. It must satisfy the `type`, `pattern` and `enum`. |
-| `pattern` | No | None | A regular expression the **whole** value must match, e.g. `[\w@.-]+`. |
-| `enum` | No | None | The only values accepted, e.g. `[ TERM, KILL, HUP ]`. |
+| `pattern` | No | None | A Java regular expression the **whole** value must match, e.g. `[\w@.-]+`. |
+| `enum` | No | None | The only values accepted, each of the parameter's `type`, e.g. `[ TERM, KILL, HUP ]`. |
 
-The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. `pattern` and `enum` are advertised to the assistant in the tool's JSON schema, and every argument is checked against `type`, `pattern` and `enum` before the tool runs: an invalid argument is reported to the assistant and nothing runs.
+The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. The `enum` is advertised in the tool's JSON schema and the `pattern` in the parameter's description. Every argument is checked against `type`, `pattern` and `enum` before the tool runs: an invalid argument is reported to the assistant and nothing runs.
 
 ## Escaping and Validation
 
-An argument comes from an AI assistant, and through it from whatever the assistant read: treat it as untrusted. Inserted as is into a command line, a value such as `sshd; reboot` runs a command of its own, and `' OR 1=1 --` rewrites a query. MetricsHub therefore enforces three rules.
+An argument comes from an AI assistant, and through it from whatever the assistant read: treat it as untrusted. Inserted as is into a command line, a value such as `sshd; reboot` runs a command of its own, and `' OR 1=1 --` rewrites a query. MetricsHub therefore enforces the rules below. When the agent loads a tool that breaks one, the tool is refused and a warning explains why; the connector's other tools are still exposed.
 
-**A free-text parameter must be inserted escaped.** A `string` parameter with neither `pattern` nor `enum` is free text. Insert it with `${esc(<type>)::param::<name>}`, which escapes the value for the syntax around it. Otherwise the tool is refused when the agent loads it, and a warning names the parameter.
+The rules apply where a value becomes code: the fields of the sources (a command line, a query, a request) and the `awk` scripts. The other computes only transform the table the sources returned, so a parameter may be used there as is, like `matchName` filtering the processes above.
+
+**A free-text parameter must be inserted escaped.** Insert a `string` parameter with `${esc(<type>)::param::<name>}`, which escapes the value for the syntax around it, unless it is constrained as described below.
 
 | Escape | Insert the value | Escaping |
 | --- | --- | --- |
@@ -88,11 +88,11 @@ An argument comes from an AI assistant, and through it from whatever the assista
 | `regex` | In a regular expression, to match the value literally | `\Q...\E` |
 | `cmd` (or `windows`) | In a `cmd.exe` command | `^` before `& \| < > ( ) % "`: not reliable inside quotes, prefer `powershell` or a `pattern` |
 
-The escape only covers the inside of the quotes: the quotes themselves are written in the connector, as in `'${esc(bash)::param::service}'`. Without them, `esc(bash)` protects nothing.
+**The escape must match where the value lands.** The `bash`, `powershell`, `sql`, `wql` and `json` escapes only cover the inside of a string, whose quotes are written in the connector: the reference must be between single quotes (`bash`, `powershell`, `sql`), single or double quotes (`wql`) or double quotes (`json`), as in `'${esc(bash)::param::service}'`. Single quotes nested in double quotes, as in `sh -c "... '${esc(bash)::param::x}'"`, are refused: the outer string is not protected. A `commandLine` only takes the `bash`, `linux`, `powershell`, `cmd` and `windows` escapes, a `sql` query the `sql` escape, and a `wmi` or `wbem` query the `wql` escape.
 
-**A constrained parameter may be inserted as is.** A parameter with an `enum`, a `pattern`, or an `integer`, `number` or `boolean` type is validated before it is inserted, so `${param::<name>}` is accepted. Write a `pattern` that excludes the characters that matter where the value lands, for example `[\w@.-]+` for a systemd unit. A `pattern: '.*'` explicitly accepts any value: use it only where the value is data, like the regular expression of a `keepOnlyMatchingLines` compute, never in a command line, a query or an `awk` script.
+**A constrained parameter may be inserted as is.** A parameter with an `enum`, an `integer`, `number` or `boolean` type, or a `pattern` refusing every shell and query metacharacter is validated before it is inserted, so `${param::<name>}` is accepted. The metacharacters are the space, tab, line breaks and `` ' " ` $ ; | & < > ( ) { } [ ] * ? ! # ~ % ^ \ ``. A pattern such as `[\w@.-]+` refuses them all; `.*` or `[^;]*` do not, and the parameter must then be escaped.
 
-**An argument may not contain `%{` or `${`.** The credential macros (`%{PASSWORD}`), the source references and the other `${...}` references are resolved after the arguments are inserted, so an argument holding one would reveal its value to the assistant. Such an argument is refused, whatever the parameter.
+**An argument may not form a macro.** The credential macros (`%{PASSWORD}`), the source references and the other `${...}` references are resolved after the arguments are inserted, so an argument forming one would reveal its value to the assistant. An argument containing `%{` or `${` is refused, whatever the parameter, and a value that would form one with the text around it (`{PASSWORD}` right after a `%`) is not inserted.
 
 ```yaml
 tools:
@@ -183,6 +183,6 @@ tools:
 - Using `${param::...}` in a `mapping`: tools have no mapping.
 - Forgetting `result`: the tool has nothing to return.
 - Leaving `destructive` unset on a tool that acts on the host.
-- Inserting a free-text parameter with `${param::...}`: the tool is refused. Use `${esc(<type>)::param::...}` or constrain the parameter.
-- Writing `${esc(bash)::param::...}` without the single quotes around it, or inside double quotes: the value is not protected.
+- Inserting a free-text parameter with `${param::...}` in a source or an `awk` script: the tool is refused. Use `${esc(<type>)::param::...}` or constrain the parameter.
+- Writing `${esc(bash)::param::...}` without the single quotes around it, or inside double quotes: the tool is refused.
 - Returning raw command output without a parsing compute: the assistant gets a single-column table of lines.
