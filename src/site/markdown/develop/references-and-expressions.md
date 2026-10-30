@@ -232,7 +232,21 @@ body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" 
 commandLine: mytool --password '%{esc(bash)::PASSWORD}'
 ```
 
-Each type escapes the **inside** of a string of its syntax, the quotes being written in the connector: `bash`/`linux` and `powershell` escape for a single-quoted string (`'...'`), `sql` for a single-quoted SQL string, `json` for a double-quoted JSON string. (The `${esc(bash)::...}` references to attributes and parameters work differently in a command line: see [Mono-Instance Attribute References](#mono-instance-attribute-references).) The [tools](tools.html#escaping-and-validation) section lists what each type escapes.
+Most types escape the **inside** of a string of their syntax, the quotes being written in the connector:
+
+| Type | Write the macro | Escaping |
+| --- | --- | --- |
+| `bash` (or `linux`) | Between single quotes of a POSIX shell command: `'%{esc(bash)::PASSWORD}'` | `'` becomes `'\''` |
+| `powershell` | Between single quotes of a PowerShell command | `'` (and `‘ ’ ‚ ‛`) doubled |
+| `cmd` (or `windows`) | In a `cmd.exe` command, **outside** of double quotes | `^` before `^ & \| < > ( ) % "`. Inside double quotes, `cmd.exe` keeps the `^` and still expands `%VAR%`: prefer a PowerShell command with `powershell` |
+| `sql` | Between single quotes of a SQL query | `\` and `'` doubled |
+| `wql` | Between single or double quotes of a WQL query | `\`, `'` and `"` preceded with `\` |
+| `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped |
+| `xml` | In XML text or an attribute | `&`, `<`, `>`, `"`, `'` as entities |
+| `url` | In a URL, a header or a form | Percent-encoded, `/` included |
+| `regex` | In a regular expression of the connector (`keep`, `exclude`, `keepOnlyMatchingLines`...) | `\` before `^ $ . * + ? [ ] \` |
+
+The `${esc(bash)::...}` references to attributes and parameters work differently in a command line: see [Mono-Instance Attribute References](#mono-instance-attribute-references). The [tools](tools.html#escaping-and-validation) section lists which escape each field of a tool takes.
 
 > [!WARNING]
 > Macro names must be written in full and in uppercase. A misspelled or unknown macro (e.g. `%{BASICAUTH}`) is silently replaced with an **empty string**. Token-based macros (`%{AUTHENTICATIONTOKEN}`, `%{SHA256_AUTH}`) resolve to empty in command lines.
