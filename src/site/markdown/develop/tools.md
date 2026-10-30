@@ -84,12 +84,12 @@ The rules apply where a value becomes code: the fields of the sources (a command
 | `commandLine` of any other connector (Windows...) | None | | No escape is reliable in `cmd.exe`, and nothing tells whether a word is a command there: only an `enum` or a number. |
 | `query` of a `sql` source | `sql` | Between single quotes, e.g. `LIKE '%${esc(sql)::param::x}%'` | `\` and `'` doubled. A query holding a comment (`--`, `#`, `/*`) or a backslash before the reference is refused, as dialects disagree on them. |
 | `query` of a `wmi` or `wbem` source | `wql` | Between single or double quotes | `\`, `'` and `"` preceded with `\`. |
-| `url`, `path` or `header` of an `http` source | `url` | Anywhere | Percent-encoded, `/` and line breaks included: the value adds no path segment, parameter or header line. |
+| `url`, `path` or `header` of an `http` source | `url` | Anywhere | Percent-encoded, `/` and line breaks included, and a value of dots only (`.`, `..`) too: the value adds no path segment, parameter or header line, nor climbs the path. |
 | `authenticationToken` of an `http` source | None | | It names the source holding the token, looked up before any parameter is replaced: no parameter there. |
 | `body` of an `http` source | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped. |
-|  | `xml` | In XML text or an attribute | `&`, `<`, `>`, `"`, `'` as entities. |
+|  | `xml` | In XML character data or a quoted attribute value, not in a tag name, a comment or a CDATA section | `&`, `<`, `>`, `"`, `'` as entities. |
 |  | `url` | In a form (`a=b&c=d`) | Percent-encoded. |
-| `keep`, `exclude` and the other line filters of a `commandLine` source | `regex` | In the regular expression, to match the value literally | `\` before `^ $ . * + ? [ ] \`, the special characters of the connectors' regular expressions (`( ) \| { }` are literal there) |
+| `keep` and `exclude` of a `commandLine` source | `regex` | In the regular expression, outside of a `[...]` character class, to match the value literally | `\` before `^ $ . * + ? [ ] \`, the special characters of the connectors' regular expressions (`( ) \| { }` are literal there) |
 | Any other source field (an OID, a JMX object name, a static value...) | None | | No escape covers their syntax (the `*` of a JMX pattern...): only an `enum` or a number. |
 | `paths` of a `file` source | None | | No escape keeps a value from climbing with `../` or starting at `/`: only an `enum` or a number. |
 | `awk` script | None | | No escape is reliable in code: constrain the parameter. |
@@ -100,7 +100,9 @@ The rules apply where a value becomes code: the fields of the sources (a command
 
 **An argument may not form a macro.** The credential macros (`%{PASSWORD}`) are expanded once every reference is replaced, so an argument forming one would reveal its value to the assistant. An argument containing `%{` or `${` is refused, whatever the parameter. A value that would form one with the text around it, such as `{PASSWORD}` after a `%`, is not inserted, and a source whose fields end up with more macros than the connector wrote, whatever brought them (an argument, an attribute, another source), does not run.
 
-**A reference must name a declared parameter.** A misspelled `${param::...}` makes the tool refused, rather than run with the reference left in.
+**A reference must name a declared parameter.** A misspelled `${param::...}` makes the tool refused, rather than run with the reference left in. In a tool, `${attribute::<name>}` is the same as `${param::<name>}` (the arguments are the tool's attributes), and follows the same rules.
+
+**An escaped reference may not follow a backslash**, which would escape the first character of the escaped value.
 
 ```yaml
 tools:
@@ -194,6 +196,6 @@ tools:
 - Inserting a free-text parameter with `${param::...}` in a source or an `awk` script: the tool is refused. Use `${esc(<type>)::param::...}` or constrain the parameter.
 - Writing a comment, a here-document or backquotes before `${esc(bash)::param::...}` in a command line: the tool is refused, MetricsHub cannot tell how the reference is quoted.
 - Using `${esc(bash)::param::...}` in arithmetic (`$((...))`, `((...))`, `[[ ... -eq ... ]]`, `let`, or after `declare`, `typeset` or `local`): the tool is refused, as bash evaluates the value again there. Declare an `integer` parameter instead.
-- Using a string parameter where it would not be a mere argument in a POSIX command line: as the name of a command (`${esc(bash)::param::x} --version`, after `;`, `|`, `if`...), as the target of a redirection (`> ${...}`), or anywhere in a command that runs its arguments as code or as another command (`eval`, `sh -c`, `sudo`, `ssh`, `xargs`, `env`, `awk`, `perl`, `python`...). The tool is refused, escaped or not: MetricsHub keeps the shell from parsing a value, not the command that receives it. Any other command that interprets an argument as code is the connector's responsibility: do not pass it a parameter, or restrict the parameter to an `enum`.
+- Using a string parameter where it would not be a mere argument in a POSIX command line: as the name of a command (`${esc(bash)::param::x} --version`, after `;`, `|`, `if`, `find -exec`...), as the target of a redirection (`> ${...}`), or anywhere in a command that runs its arguments as code or as another command (`eval`, `sh -c`, `sudo`, `ssh`, `xargs`, `env`, `awk`, `perl`, `python`...). The tool is refused, escaped or not: MetricsHub keeps the shell from parsing a value, not the command that receives it. Any other command that interprets an argument as code is the connector's responsibility: do not pass it a parameter, or restrict the parameter to an `enum`.
 - Using `esc(bash)` in a connector that also applies to Windows: the tool is refused, the command may run in `cmd.exe`.
 - Returning raw command output without a parsing compute: the assistant gets a single-column table of lines.
