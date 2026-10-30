@@ -245,7 +245,7 @@ Most types escape the **inside** of a string of their syntax, the quotes being w
 | `wql` | Between single or double quotes of a WQL comparison (references only), not in a `LIKE` pattern, where WQL does not read `\` as an escape | `\`, `'` and `"` preceded with `\` |
 | `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped |
 | `xml` | In XML character data or a quoted attribute value | `&`, `<`, `>`, `"`, `'` as entities |
-| `url` | In a URL or a form body, not in a header: a header value is not URL-decoded, so a token would change (`+`, `/`, `=`) | Percent-encoded, `/` included, and a value of dots only. A server decoding `%2F` before routing may still climb with `..%2F` |
+| `url` | In the path or the query of a URL, or in a form body; not in the scheme or the host of an absolute URL, where a value would send the request, credentials included, elsewhere (`localhost` needs no encoding); not in a header: a header value is not URL-decoded, so a token would change (`+`, `/`, `=`) | Percent-encoded, `/` included, and a value of dots only. A server decoding `%2F` before routing may still climb with `..%2F` |
 | `regex` | In a regular expression of the connector (`keep`, `exclude`, `keepOnlyMatchingLines`...), **outside** of a `[...]` character class, where `-` would still form a range (references only) | `\` before `^ $ . * + ? [ ] \` |
 
 The `${esc(bash)::...}` references to attributes and parameters work differently in a command line: see [Mono-Instance Attribute References](#mono-instance-attribute-references). The [tools](tools.html#escaping-and-validation) section lists which escape each field of a tool takes.
