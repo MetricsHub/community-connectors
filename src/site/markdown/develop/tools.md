@@ -26,8 +26,10 @@ tools:
     parameters:
       matchName:
         type: string
-        description: Text in the process name, e.g. java (empty for all processes)
+        description: Regular expression matching the process name, e.g. ^java (empty for all processes)
         default: ''
+        # Only matched against the rows: any value on one line
+        pattern: '.*'
     sources:
       processes:
         type: wmi
@@ -36,7 +38,7 @@ tools:
         computes:
         - type: keepOnlyMatchingLines
           column: 2
-          regExp: ${esc(regex)::param::matchName}
+          regExp: ${param::matchName}
     result:
       source: ${source::processes}
       columns: [ pid, name, workingSetBytes, kernelTime ]
@@ -93,7 +95,7 @@ A parameter that needs more characters (a path, free text, a search pattern) dec
 | `query` of a `wmi` or `wbem` source | Between single or double quotes of a comparison: `'${esc(wql)::param::x}'` | `\`, `'` and `"` preceded with `\`. Not in a `LIKE` pattern, where WQL does not read `\` as an escape |
 | `url` or `path` of an `http` source | In the path or the query: `/api/${esc(url)::param::x}` | Percent-encoded, `/` included, the dots of a `.` or `..` segment too |
 | `body` of an `http` source | `"${esc(json)::param::x}"` in JSON, `${esc(xml)::param::x}` in XML character data or a quoted attribute, `${esc(url)::param::x}` in a form | `\`, `"` and the control characters for JSON; `& < > " '` as entities for XML, where a quoted attribute still turns tabs and line breaks into spaces (keep them out of the `pattern` there); percent-encoding for a form |
-| `keep`, `exclude`, `regExp` | `${esc(regex)::param::x}`, outside of a `[...]` character class | `\` before `^ $ . * + ? [ ] \`, so that the value matches literally |
+| `keep`, `exclude`, `regExp` | A regular expression: `${param::x}`, with a `pattern` such as `.*`. Text to find in a regular expression of the connector: `${esc(regex)::param::x}`, outside of a `[...]` character class | None for a regular expression, which is only matched against the rows. `esc(regex)` puts `\` before `^ $ . * + ? [ ] \`, so that the text matches literally |
 
 ### What the Review Checks
 
@@ -103,7 +105,7 @@ MetricsHub does not read the commands, queries and requests of a connector. The 
 - **Not code.** Never an argument of a command that runs its arguments as code or as another command: `eval`, `sh -c`, `sudo`, `su`, `ssh`, `env`, `xargs`, `nohup`, `timeout`, `nice`, `chroot`, `prlimit`, `find -exec`, `docker exec`, `awk`, `perl`, `python`, `sed` (whose script runs `e` and writes `w`), `dd` (whose `of=` writes), `tar`, `rsync`, `git`, `man`, `less`... nor the value of an option naming a program (`--to-command=`, `--rsh-command`, `-o ProxyCommand=`). Never inside arithmetic (`$((...))`, `let`, `[[ ... -eq ... ]]`), a variable name (`read`, `printf -v`, `export`), `$(...)`, backquotes, a here-document or a comment.
 - **Not an option or an action.** Never completing an option (`-${param::x}` makes `-delete`), and never choosing what a service, package or container manager does: write the action (`systemctl status ${param::x}`, `docker container logs ${param::x}`), or make the parameter an `enum`.
 - **Not a destination.** Never the scheme or the host of a URL, which would send the request and its credentials elsewhere: an `enum` only. Never a `file` source path, unless its `pattern` keeps it in a directory without `..`.
-- **Escaped where it is wider.** A parameter whose `pattern` lets more than the default through is inserted with the escape of its field, inside the quotes the connector writes, as in the table above. A SQL or WQL value sits inside a quoted string, never as a column, a table or a clause.
+- **Escaped where it is wider.** A parameter whose `pattern` lets more than the default through is inserted with the escape of its field, inside the quotes the connector writes, as in the table above, unless it is a regular expression of a compute. A SQL or WQL value sits inside a quoted string, never as a column, a table or a clause.
 - **A pattern that matches in one pass.** MetricsHub matches every argument against the `pattern` of its parameter, without a time limit. Use character classes and single quantifiers (`[A-Za-z0-9_./-]{1,255}`), never a quantified group that can match the same text in several ways (`(a+)+`, `(.*a){16}`), whose matching time explodes on a crafted value, nor a repeated alternation (`(x|y)*`), which exhausts the stack on a long value: write `[xy]*`.
 - **Destructive when it acts.** Anything that changes the host is `destructive: true`.
 
