@@ -118,6 +118,15 @@ Use `${attribute::<key>}` in mono-instance contexts: `monoInstance` collect jobs
 commandLine: /bin/sh ${file::detail.sh} ${attribute::id}
 ```
 
+An attribute comes from the monitored host and may hold spaces or quotes, like a file or process name. Escape it for the syntax around it with the same `esc(TYPE)::` prefix as the credential macros, `${esc(TYPE)::attribute::<key>}`, which also applies to `${esc(TYPE)::resource.attribute::<key>}` and to the tool parameters, `${esc(TYPE)::param::<name>}`:
+
+```yaml
+commandLine: /bin/sh ${file::detail.sh} '${esc(bash)::attribute::id}'
+query: SELECT Name FROM Win32_Service WHERE Name = '${esc(wql)::attribute::name}'
+```
+
+Each type escapes the inside of a string of its syntax, the quotes being written in the connector (see the table under Credential Macros below): `bash` is for the inside of single quotes, `'${esc(bash)::attribute::id}'`, where the shell expands nothing. The value then stays one word, but the command receiving it still reads it: an attribute starting with `-` (a file named `-rf`) would be an option, so write `--` before a positional value where the command supports it (`rm -- '${esc(bash)::attribute::path}'`), and never pass a value to a command that runs it as code (`eval`, `sh -c`, `find -exec`...). A value that would form a credential macro (`%{...}`) with the text around it is not inserted.
+
 ## Inline AWK Expressions
 
 Use `${awk::...}` for concise expression-level formatting.
@@ -216,11 +225,30 @@ sources:
 header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
 ```
 
-To escape the injected value for the surrounding syntax, wrap the macro as `%{esc(TYPE)::MACRO}` where `TYPE` is one of `json`, `xml`, `url`, `regex`, `windows`, `cmd`, `powershell`, `linux`, `bash`, `sql`:
+To escape the injected value for the surrounding syntax, wrap the macro as `%{esc(TYPE)::MACRO}` where `TYPE` is one of `json`, `xml`, `url`, `regex`, `windows`, `cmd`, `powershell`, `linux`, `bash`, `sql`, `wql`:
 
 ```yaml
 body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" }'
+commandLine: mytool --password '%{esc(bash)::PASSWORD}'
 ```
+
+The same types escape the `${esc(TYPE)::...}` references to attributes and parameters, wherever these references are replaced. The credential macros, expanded in HTTP fields and command lines only, are not expanded in a SQL or WQL query nor in the regular expressions of a source: the `sql`, `wql` and `regex` types serve the references there.
+
+Most types escape the **inside** of a string of their syntax, the quotes being written in the connector:
+
+| Type | Write the macro | Escaping |
+| --- | --- | --- |
+| `bash` (or `linux`) | Between single quotes of a POSIX shell command: `--password '%{esc(bash)::PASSWORD}'` | `'` becomes `'\''`: nothing is expanded between single quotes |
+| `powershell` | Between single quotes, in a PowerShell command between double quotes: `-Command "... -Password '%{esc(powershell)::PASSWORD}'"` | `'` and the typographic quotes (‘ ’ ‚ ‛) doubled. A PowerShell command reaches PowerShell through `cmd.exe`, whose double quotes keep `& \| < > ^ ( )` literal, but not `"` and `%`: a value holding them is not protected |
+| `cmd` (or `windows`) | Not as a general escape | `^` before `^ & \| < > ( ) % "`, which keeps a value from chaining commands outside of double quotes, but leaves its spaces splitting it into several arguments, and inside double quotes `cmd.exe` keeps the `^` and still expands `%VAR%`. Use a credential without spaces or quotes |
+| `sql` | Between single quotes of a SQL query (references only) | `\` and `'` doubled. Doubling backslashes suits a server reading `\` as an escape (MySQL and MariaDB by default); elsewhere (PostgreSQL with its default `standard_conforming_strings`, SQL Server, Oracle, MySQL or MariaDB in `NO_BACKSLASH_ESCAPES` mode) a value holding a `\` no longer matches: give such a parameter a `pattern` refusing `\` as well |
+| `wql` | Between single or double quotes of a WQL comparison (references only), not in a `LIKE` pattern, where WQL does not read `\` as an escape | `\`, `'` and `"` preceded with `\` |
+| `json` | Between double quotes of a JSON string | `\`, `"` and the control characters escaped |
+| `xml` | In XML character data or a quoted attribute value | `&`, `<`, `>`, `"`, `'` as entities |
+| `url` | In the path or the query of a URL, or in a form body; not in the scheme or the host of an absolute URL, where a value would send the request, credentials included, elsewhere (`localhost` needs no encoding); not in a header: a header value is not URL-decoded, so a token would change (`+`, `/`, `=`) | Percent-encoded, `/` included, and a value of dots only. A server decoding `%2F` before routing may still climb with `..%2F` |
+| `regex` | In a regular expression of the connector (`keep`, `exclude`, `keepOnlyMatchingLines`...), **outside** of a `[...]` character class, where `-` would still form a range (references only) | `\` before `^ $ . * + ? [ ] \` |
+
+The [tools](tools.html#validation-and-review) section lists which escape each field of a tool takes, and what the review of a tool checks.
 
 > [!WARNING]
 > Macro names must be written in full and in uppercase. A misspelled or unknown macro (e.g. `%{BASICAUTH}`) is silently replaced with an **empty string**. Token-based macros (`%{AUTHENTICATIONTOKEN}`, `%{SHA256_AUTH}`) resolve to empty in command lines.
