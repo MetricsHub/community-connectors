@@ -76,7 +76,7 @@ An argument comes from an AI assistant, and through it from whatever the assista
 
 An invalid argument is reported to the assistant, and nothing runs.
 
-- **Type, enum and pattern.** Every argument must satisfy the `type`, `enum` and `pattern` of its parameter. A `pattern` taking more than 200 ms to match an argument refuses it.
+- **Type, enum and pattern.** Every argument must satisfy the `type`, `enum` and `pattern` of its parameter.
 - **The default pattern.** A `string` parameter declaring neither an `enum` nor a `pattern` only takes letters, digits and `_ . @ : -`, starting with a letter, a digit or `_`, or nothing: `sshd.service`, `getty@tty1.service`, `db-01.example.com`, `10.0.0.1`, `fe80::1`. Such a value cannot leave a string or a word, in a shell, a query or a URL, nor be read as an option, nor climb a path: `sshd; reboot`, `a b`, `$(id)`, `-delete` and `../etc` are refused. It suits most parameters: names, identifiers, addresses. An empty value, which a `default: ''` gives, leaves no word where it is inserted unquoted in a command line (`--filter ${param::x} file` would make `file` the filter): quote it, `'${param::x}'`, or make the parameter `required`.
 - **No macro, no control character.** No argument may contain `%{` or `${`, which would reveal a credential macro such as `%{PASSWORD}`, nor a control character other than a tab or a line break. A value that would form a macro with the text around it, such as `{PASSWORD}` after a `%`, is not inserted.
 - **Declared references.** When the agent loads the connector, every reference must name a declared parameter, `required` or with a `default` (`''` for an optional text), and a known escape type: the tool is refused otherwise, rather than run with the reference left in. In a tool, `${attribute::<name>}` is the same as `${param::<name>}`, the arguments being the tool's attributes.
@@ -104,6 +104,7 @@ MetricsHub does not read the commands, queries and requests of a connector. The 
 - **Not an option or an action.** Never completing an option (`-${param::x}` makes `-delete`), and never choosing what a service, package or container manager does: write the action (`systemctl status ${param::x}`, `docker container logs ${param::x}`), or make the parameter an `enum`.
 - **Not a destination.** Never the scheme or the host of a URL, which would send the request and its credentials elsewhere: an `enum` only. Never a `file` source path, unless its `pattern` keeps it in a directory without `..`.
 - **Escaped where it is wider.** A parameter whose `pattern` lets more than the default through is inserted with the escape of its field, inside the quotes the connector writes, as in the table above. A SQL or WQL value sits inside a quoted string, never as a column, a table or a clause.
+- **A pattern that matches in one pass.** MetricsHub matches every argument against the `pattern` of its parameter, without a time limit. Use character classes and single quantifiers (`[A-Za-z0-9_./-]{1,255}`), never a quantified group that can match the same text in several ways (`(a+)+`, `(.*a){16}`), whose matching time explodes on a crafted value, nor a repeated alternation (`(x|y)*`), which exhausts the stack on a long value: write `[xy]*`.
 - **Destructive when it acts.** Anything that changes the host is `destructive: true`.
 
 ```yaml
