@@ -90,7 +90,7 @@ A parameter that needs more characters (a path, free text, a search pattern) dec
 | Field | Write | Escaping |
 | --- | --- | --- |
 | `commandLine` run by a POSIX shell | Between single quotes: `'${esc(bash)::param::x}'` | `'` becomes `'\''`: nothing is expanded between single quotes |
-| A PowerShell command | Between single quotes: `'${esc(powershell)::param::x}'` | `'` and the typographic quotes doubled. The command reaches PowerShell through `cmd.exe`: keep `"` and `%` out of the `pattern` |
+| A PowerShell command | Between single quotes, in a command between double quotes: `PowerShell.exe -Command "Get-Service '${esc(powershell)::param::x}'"` | `'` and the typographic quotes doubled. The command reaches PowerShell through `cmd.exe`, whose double quotes keep `& \| < > ^ ( )` literal, but not `"` and `%`: keep these two out of the `pattern` |
 | `query` of a `sql` source | Between single quotes: `'${esc(sql)::param::x}'` | `\` and `'` doubled, as MySQL and MariaDB read `\` as an escape. Elsewhere (PostgreSQL, SQL Server, Oracle), keep `\` out of the `pattern`. In a `LIKE` pattern, `%` and `_` stay wildcards |
 | `query` of a `wmi` or `wbem` source | Between single or double quotes of a comparison: `'${esc(wql)::param::x}'` | `\`, `'` and `"` preceded with `\`. Not in a `LIKE` pattern, where WQL does not read `\` as an escape |
 | `url` or `path` of an `http` source | In the path or the query: `/api/${esc(url)::param::x}` | Percent-encoded, `/` included, the dots of a `.` or `..` segment too |
