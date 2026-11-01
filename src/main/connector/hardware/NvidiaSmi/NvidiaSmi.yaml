@@ -228,13 +228,14 @@ monitors:
 tools:
 
   gpuProcesses:
-    description: Lists the processes using each GPU, with the GPU memory they use, first the compute ones with their full name, then all of them, graphics ones (type G, e.g. Xorg) included. Use it when a GPU is full or busy, to find which process holds it.
+    description: Lists the processes using each GPU, with the GPU memory they use, first all of them, graphics ones (type G, e.g. Xorg) included, then the compute ones with their full name. Use it when a GPU is full or busy, to find which process holds it.
     sources:
       processes:
         type: commandLine
-        # The compute query leaves out the graphics processes, which only the summary lists, at its end.
-        # One line with && for both shells, cmd.exe on Windows and sh on Linux.
-        commandLine: nvidia-smi --query-compute-apps=gpu_bus_id,pid,process_name,used_memory --format=csv 2>&1 && nvidia-smi 2>&1
+        # The summary lists the graphics processes too, at its end, but cuts their names. One line with && for both
+        # shells, cmd.exe on Windows and sh on Linux: the summary first, as the compute query fails where it is not
+        # supported (WSL).
+        commandLine: nvidia-smi 2>&1 && nvidia-smi --query-compute-apps=gpu_bus_id,pid,process_name,used_memory --format=csv 2>&1
     result:
       source: ${source::processes}
 

@@ -441,8 +441,9 @@ tools:
             phase < 3 && NF == 2 { uptime[phase] = $1; next }
             phase < 3 {
               pid = $1; sub(/^.*\) /, "")
+              # A process born after the first sample spent all its ticks in between
               if (phase == 1) first[pid] = $12 + $13
-              else if (pid in first) cpu[pid] = ($12 + $13 - first[pid]) * 100 / hz / (uptime[2] - uptime[1])
+              else cpu[pid] = ($12 + $13 - first[pid]) * 100 / hz / (uptime[2] - uptime[1])
               next
             }
             {
@@ -518,7 +519,7 @@ tools:
       source: ${source::kernel}
 
   systemLog:
-    description: Returns the last entries of the system journal at or above a priority, all services included, over the last minutes. Use it to find what failed around an incident. Linux_serviceLogs reads the journal of one service.
+    description: Returns the last entries of the system journal at or above a priority, all services included, over the last minutes. Without the journal, the last lines of /var/log/messages or /var/log/syslog, whatever their priority and time. Use it to find what failed around an incident. Linux_serviceLogs reads the journal of one service.
     parameters:
       priority:
         description: The lowest priority to return
