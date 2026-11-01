@@ -38,6 +38,7 @@ sudoCommands:
 - shutdown
 - ss
 - systemctl
+- tail
 
 # Run the collection commands once per cycle. Commands that are common to
 # modern and legacy Linux are executed once. Where the legacy command differs,
@@ -531,14 +532,22 @@ tools:
         description: How many of the last entries to return, 1 to 1000
         default: 200
         pattern: '[1-9][0-9]{0,2}|1000'
+    # Without journal files (no journald, or Storage=none, where journalctl finds nothing and still succeeds), the end
+    # of the syslog file, whatever the priority and the time. Two sources, as a command line elevates a single command
     sources:
       journal:
         type: commandLine
-        # Without journal files (no journald, or Storage=none, where journalctl finds nothing and still succeeds),
-        # the end of the syslog file, whatever the priority and the time
-        commandLine: "if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then %{SUDO:journalctl} journalctl -p ${param::priority} --since=-${param::minutes}min -n ${param::lines} --no-pager 2>&1; else tail -n ${param::lines} /var/log/messages 2>&1 || tail -n ${param::lines} /var/log/syslog 2>&1; fi"
+        commandLine: "if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then %{SUDO:journalctl} journalctl -p ${param::priority} --since=-${param::minutes}min -n ${param::lines} --no-pager 2>&1; fi"
+      syslog:
+        type: commandLine
+        commandLine: "if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then :; else %{SUDO:tail} tail -n ${param::lines} /var/log/messages 2>&1 || %{SUDO:tail} tail -n ${param::lines} /var/log/syslog 2>&1; fi"
+      log:
+        type: tableUnion
+        tables:
+        - ${source::journal}
+        - ${source::syslog}
     result:
-      source: ${source::journal}
+      source: ${source::log}
 
   performanceSnapshot:
     description: Samples the activity of the host for a few seconds, with the load averages, the pressure stall information (the share of time tasks waited for CPU, memory or I/O), vmstat (run queue, swapping, I/O wait) and, when sysstat is installed, iostat (utilization and latency of each disk). Use it when the host is slow, to tell a CPU, memory or disk bottleneck apart.
@@ -785,6 +794,13 @@ tools:
     sources:
       log:
         type: commandLine
-        commandLine: "grep -E -e '${esc(bash)::param::match}' -- '${esc(bash)::param::path}' 2>&1 | tail -n ${param::lines}"
+        # The path checked again once resolved: a symbolic link must not lead elsewhere
+        commandLine: |
+          file=$(readlink -f -- '${esc(bash)::param::path}') || file='${esc(bash)::param::path}'
+          case "$file" in
+          */.*) echo "Refused: the path leads to $file, a hidden file or directory" ;;
+          /var/log/*|*.log) grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
+          *) echo "Refused: the path leads to $file, neither under /var/log nor a .log file" ;;
+          esac
     result:
       source: ${source::log}
