@@ -508,13 +508,13 @@ tools:
       source: ${source::files}
 
   kernelLog:
-    description: Returns the warnings and errors of the kernel since the boot, as far as its ring buffer or the journal keeps them, such as out-of-memory kills, disk and file system I/O errors, hung tasks, hardware errors and network link changes. Use it when a process died unexpectedly or a device misbehaves.
+    description: Returns the warnings and errors of the kernel since the boot, from its ring buffer and then from the journal, where the same messages may appear twice, such as out-of-memory kills, disk and file system I/O errors, hung tasks, hardware errors and network link changes. Use it when a process died unexpectedly or a device misbehaves.
     sources:
       kernel:
         type: commandLine
-        # The kernel ring buffer first: the journal may have rotated them away, or never read them.
+        # Both: the ring buffer may have wrapped, and the journal may have rotated the messages away, or never read them.
         # Where dmesg is restricted to root, the journal, which the adm or systemd-journal group may read.
-        commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>/dev/null || journalctl -k -p warning --no-pager 2>&1"
+        commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>&1; journalctl -k -p warning --no-pager 2>&1"
     result:
       source: ${source::kernel}
 
@@ -826,11 +826,12 @@ tools:
           case "$file" in
           "") echo "Refused: the path cannot be resolved, a directory on the way is missing or cannot be read" ;;
           */.*) echo "Refused: the path leads to $file, a hidden file or directory" ;;
-          /var/log/*) %{SUDO:tail} tail -n ${param::lines} -- "$file" 2>&1 ;;
+          /var/log/*) %{SUDO:tail} tail -n ${param::lines} -- "$file" 2>&1 || echo "Failed: exit code $?" ;;
           *.log) tail -n ${param::lines} -- "$file" 2>&1 ;;
           *) echo "Refused: the path leads to $file, neither under /var/log nor a .log file" ;;
           esac
-        # The matching lines, and the refusals and errors of tail whatever the expression (an empty one matches all)
-        keep: '${param::match}\|^Refused: \|^tail: '
+        # The matching lines, and the refusals and failures whatever the expression (an empty one matches all). A failed
+        # sudo prints its own message, which varies with the elevation command: the exit code tells the failure.
+        keep: '${param::match}\|^Refused: \|^tail: \|^Failed: '
     result:
       source: ${source::log}
