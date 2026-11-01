@@ -421,13 +421,14 @@ tools:
     sources:
       processes:
         type: commandLine
-        # The CPU time of each process (utime and stime of /proc/<pid>/stat) one second apart: the pcpu of ps is an
-        # average over the life of the process, which hides a long-running process that just started to spin
+        # The CPU time of each process (utime and stime of /proc/<pid>/stat) in two samples a second apart: the pcpu of
+        # ps is an average over the life of the process, which hides a long-running process that just started to spin.
+        # Each sample starts with /proc/uptime: reading the /proc of thousands of processes adds to the second.
         commandLine: |
           getconf CLK_TCK 2>/dev/null; echo ---
-          cat /proc/[0-9]*/stat 2>/dev/null; echo ---
+          cat /proc/uptime /proc/[0-9]*/stat 2>/dev/null; echo ---
           sleep 1
-          cat /proc/[0-9]*/stat 2>/dev/null; echo ---
+          cat /proc/uptime /proc/[0-9]*/stat 2>/dev/null; echo ---
           ps -e -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args= 2>&1
         computes:
         # pid;ppid;user;cpuPercent;memoryPercent;residentKiB;elapsed;state;command
@@ -437,10 +438,11 @@ tools:
             BEGIN { hz = 100 }
             $0 == "---" { phase++; next }
             phase == 0 { hz = $1; next }
+            phase < 3 && NF == 2 { uptime[phase] = $1; next }
             phase < 3 {
               pid = $1; sub(/^.*\) /, "")
               if (phase == 1) first[pid] = $12 + $13
-              else if (pid in first) cpu[pid] = ($12 + $13 - first[pid]) * 100 / hz
+              else if (pid in first) cpu[pid] = ($12 + $13 - first[pid]) * 100 / hz / (uptime[2] - uptime[1])
               next
             }
             {
@@ -490,8 +492,7 @@ tools:
     sources:
       lsof:
         type: commandLine
-        # Not the deleted libraries mapped in memory (mem), left behind by updates: they take no space
-        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 -a -d '^mem' 2>&1; fi"
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 2>&1; fi"
       proc:
         type: commandLine
         # Without lsof, the file descriptors of /proc that point to a deleted file, without their size. The processes
