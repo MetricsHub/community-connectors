@@ -86,8 +86,10 @@ tools:
     description: Shows a virtual machine in detail, with its state and the reason for it (e.g. paused by a storage I/O error), its CPUs, memory and autostart setting, its disk errors, and its statistics (CPU time, balloon memory, block and network I/O). Use it when a VM is down, paused or slow.
     parameters:
       name:
-        description: The VM name, as virsh list --all shows it
+        description: The VM name or UUID, as virsh list --all --name or --uuid shows it. Not a numeric name, which virsh takes for the ID of a running VM
         required: true
+        # Not all digits: virsh looks a domain up by ID first
+        pattern: '[A-Za-z_][A-Za-z0-9_.@-]*|[0-9]+[A-Za-z_.@-][A-Za-z0-9_.@-]*'
     sources:
       details:
         type: commandLine
@@ -104,8 +106,10 @@ tools:
     destructive: true
     parameters:
       name:
-        description: The VM name, as virsh list --all shows it
+        description: The VM name or UUID, as virsh list --all --name or --uuid shows it. Not a numeric name, which virsh takes for the ID of a running VM
         required: true
+        # Not all digits: virsh looks a domain up by ID first
+        pattern: '[A-Za-z_][A-Za-z0-9_.@-]*|[0-9]+[A-Za-z_.@-][A-Za-z0-9_.@-]*'
       action:
         description: What to do with the VM
         required: true

@@ -28,6 +28,17 @@ connector:
     # END SNIPPET: commandLineCriterion
     tags: [ system, linux ]
 
+# The commands of the tools that %{SUDO:...} elevates, when the configuration enables sudo for them
+sudoCommands:
+- dmesg
+- du
+- journalctl
+- kill
+- lsof
+- shutdown
+- ss
+- systemctl
+
 # Run the collection commands once per cycle. Commands that are common to
 # modern and legacy Linux are executed once. Where the legacy command differs,
 # the modern command is tried first and the legacy command is executed only if
@@ -523,8 +534,9 @@ tools:
     sources:
       journal:
         type: commandLine
-        # Without journald, the end of the syslog file, whatever the priority and the time
-        commandLine: "%{SUDO:journalctl} journalctl -p ${param::priority} --since=-${param::minutes}min -n ${param::lines} --no-pager 2>&1 || tail -n ${param::lines} /var/log/messages 2>&1 || tail -n ${param::lines} /var/log/syslog 2>&1"
+        # Without journal files (no journald, or Storage=none, where journalctl finds nothing and still succeeds),
+        # the end of the syslog file, whatever the priority and the time
+        commandLine: "if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then %{SUDO:journalctl} journalctl -p ${param::priority} --since=-${param::minutes}min -n ${param::lines} --no-pager 2>&1; else tail -n ${param::lines} /var/log/messages 2>&1 || tail -n ${param::lines} /var/log/syslog 2>&1; fi"
     result:
       source: ${source::journal}
 
