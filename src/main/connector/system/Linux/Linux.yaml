@@ -489,21 +489,12 @@ tools:
 
   deletedOpenFiles:
     description: Lists the deleted files that processes still hold open or map, with the process and, through lsof, the size. Their space is only freed when the process closes them or stops. Use it when Linux_fileSystemUsage shows a full file system and Linux_largestFiles finds less than what is used. Without lsof, the size is missing, and find needs root or sudo to see the processes of other users.
-    # Two sources, as a command line elevates a single command
     sources:
-      lsof:
-        type: commandLine
-        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 2>&1; fi"
-      proc:
+      files:
         type: commandLine
         # Without lsof, the file descriptors and the memory mappings of /proc that point to a deleted file, without their
         # size. The processes that cannot be read are left out, rather than one error each.
-        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:find} find /proc/[0-9]*/fd /proc/[0-9]*/map_files -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null; fi"
-      files:
-        type: tableUnion
-        tables:
-        - ${source::lsof}
-        - ${source::proc}
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 2>&1; else %{SUDO:find} find /proc/[0-9]*/fd /proc/[0-9]*/map_files -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null; fi"
     result:
       source: ${source::files}
 
@@ -514,7 +505,7 @@ tools:
         type: commandLine
         # Both: the ring buffer may have wrapped, and the journal may have rotated the messages away, or never read them.
         # Where dmesg is restricted to root, the journal, which the adm or systemd-journal group may read.
-        commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>&1; journalctl -k -p warning --no-pager 2>&1"
+        commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>&1; %{SUDO:journalctl} journalctl -k -p warning --no-pager 2>&1"
     result:
       source: ${source::kernel}
 
@@ -535,20 +526,17 @@ tools:
         description: How many of the last entries to return, 1 to 100000
         default: 1000
         pattern: '[1-9][0-9]{0,4}|100000'
-    # Without journal files (no journald, or Storage=none, where journalctl finds nothing and still succeeds), the end
-    # of the syslog file, whatever the priority and the time. Two sources, as a command line elevates a single command
     sources:
-      journal:
-        type: commandLine
-        commandLine: "if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then %{SUDO:journalctl} journalctl -p ${param::priority} --since=-${param::minutes}min -n ${param::lines} --no-pager 2>&1; fi"
-      syslog:
-        type: commandLine
-        commandLine: "if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then :; else %{SUDO:tail} tail -n ${param::lines} /var/log/messages 2>&1 || %{SUDO:tail} tail -n ${param::lines} /var/log/syslog 2>&1; fi"
       log:
-        type: tableUnion
-        tables:
-        - ${source::journal}
-        - ${source::syslog}
+        type: commandLine
+        # Without journal files (no journald, or Storage=none, where journalctl finds nothing and still succeeds), the
+        # end of the syslog file, whatever the priority and the time
+        commandLine: |
+          if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then
+            %{SUDO:journalctl} journalctl -p ${param::priority} --since=-${param::minutes}min -n ${param::lines} --no-pager 2>&1
+          else
+            %{SUDO:tail} tail -n ${param::lines} /var/log/messages 2>&1 || %{SUDO:tail} tail -n ${param::lines} /var/log/syslog 2>&1
+          fi
     result:
       source: ${source::log}
 
@@ -686,20 +674,11 @@ tools:
         description: The process ID
         required: true
         pattern: '[1-9][0-9]{0,9}'
-    # Two sources, as a command line elevates a single command
     sources:
-      lsof:
-        type: commandLine
-        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; fi"
-      proc:
+      files:
         type: commandLine
         # Without lsof, the file descriptors of /proc, which only the owner of the process and root can list
-        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1; fi"
-      files:
-        type: tableUnion
-        tables:
-        - ${source::lsof}
-        - ${source::proc}
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; else %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1; fi"
     result:
       source: ${source::files}
 
