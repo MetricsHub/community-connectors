@@ -32,6 +32,7 @@ connector:
 sudoCommands:
 - dmesg
 - du
+- find
 - grep
 - journalctl
 - kill
@@ -416,7 +417,7 @@ monitors:
 tools:
 
   topProcesses:
-    description: Lists the processes using the most CPU or memory, with their PID, parent PID, user, CPU and memory percentages, resident memory in KiB, elapsed time, state and command line. Use it when the host is slow or short of memory, then Linux_processDetails or Linux_killProcess on a PID.
+    description: Lists the processes using the most CPU or memory, with their PID, parent PID, user, CPU percentage over the last second (100 for one full CPU), memory percentage, resident memory in KiB, elapsed time, state and command line. Use it when the host is slow or short of memory, then Linux_processDetails or Linux_killProcess on a PID.
     parameters:
       sortBy:
         description: pcpu to sort by CPU usage, rss by resident memory
@@ -430,20 +431,26 @@ tools:
     sources:
       processes:
         type: commandLine
-        # All the processes but ps itself, which would top the CPU list.
-        # Command lines cut at 500 characters: a Java class path alone can take thousands.
-        commandLine: ps -N -C ps -o pid=,ppid=,user:32=,pcpu=,pmem=,rss=,etime=,stat=,args= --sort=-${param::sortBy} | head -n ${param::count} | cut -c 1-500
-        computes:
+        # The CPU time of each process (utime and stime of /proc/<pid>/stat, after its name) one second apart: the pcpu of
+        # ps is an average over the life of the process, which hides a long-running process that just started to spin.
+        # Then ps for the other columns, without ps itself. Command lines cut at 500 characters: a Java class path alone
+        # can take thousands.
+        commandLine: |
+          case '${param::sortBy}' in rss) key=6 ;; *) key=4 ;; esac
+          { cat /proc/[0-9]*/stat; echo ---; sleep 1; cat /proc/[0-9]*/stat; echo ---; ps -N -C ps -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args=; } 2>/dev/null | awk -v hz="$(getconf CLK_TCK 2>/dev/null || echo 100)" '
+          $0 == "---" { phase++; next }
+          phase < 2 {
+            pid = $1; rest = $0; sub(/^.*\) /, "", rest); split(rest, f, " ")
+            if (phase == 0) first[pid] = f[12] + f[13]; else if (pid in first) cpu[pid] = (f[12] + f[13] - first[pid]) * 100 / hz
+            next
+          }
+          {
+            command = $8; for (i = 9; i <= NF; i++) command = command " " $i
+            gsub(/;/, ",", command)
+            printf "%s;%s;%s;%.1f;%s;%s;%s;%s;%s\n", $1, $2, $3, cpu[$1] + 0, $4, $5, $6, $7, command
+          }' | sort -t ';' -k "$key" -rn | head -n ${param::count} | cut -c 1-500
         # pid;ppid;user;cpuPercent;memoryPercent;residentKiB;elapsed;state;command
-        - type: awk
-          script: |
-            {
-              command = $9
-              for (i = 10; i <= NF; i++) command = command " " $i
-              gsub(/;/, ",", command)
-              print $1 ";" $2 ";" $3 ";" $4 ";" $5 ";" $6 ";" $7 ";" $8 ";" command
-            }
-          separators: ;
+        separators: ;
     result:
       source: ${source::processes}
       columns: [ pid, ppid, user, cpuPercent, memoryPercent, residentKiB, elapsed, state, command ]
@@ -481,20 +488,25 @@ tools:
       source: ${source::du}
 
   deletedOpenFiles:
-    description: Lists the deleted files that processes still hold open, with the process and the size. Their space is only freed when the process closes them or stops. Use it when Linux_fileSystemUsage shows a full file system and Linux_largestFiles finds less than what is used.
+    description: Lists the deleted files that processes still hold open, with the process and the size. Their space is only freed when the process closes them or stops. Use it when Linux_fileSystemUsage shows a full file system and Linux_largestFiles finds less than what is used. Without lsof, it needs root or sudo for find to see the processes of other users.
+    # Two sources, as a command line elevates a single command
     sources:
       lsof:
         type: commandLine
-        # Not the deleted libraries mapped in memory (mem), left behind by updates: they take no space.
-        # Without lsof, the file descriptors of /proc that point to a deleted file, without their size.
-        commandLine: |
-          if command -v lsof >/dev/null 2>&1; then
-            %{SUDO:lsof} lsof -nP +L1 -a -d '^mem'
-          else
-            find /proc/[0-9]*/fd -lname '*(deleted)' -printf '%p -> %l\n'
-          fi 2>&1 | head -n 100
+        # Not the deleted libraries mapped in memory (mem), left behind by updates: they take no space
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 -a -d '^mem' 2>&1 | head -n 100; fi"
+      proc:
+        type: commandLine
+        # Without lsof, the file descriptors of /proc that point to a deleted file, without their size. The processes
+        # that cannot be read are left out, rather than their errors filling the 100 lines.
+        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:find} find /proc/[0-9]*/fd -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null | head -n 100; fi"
+      files:
+        type: tableUnion
+        tables:
+        - ${source::lsof}
+        - ${source::proc}
     result:
-      source: ${source::lsof}
+      source: ${source::files}
 
   kernelLog:
     description: Returns the recent warnings and errors of the kernel, such as out-of-memory kills, disk and file system I/O errors, hung tasks, hardware errors and network link changes. Use it when a process died unexpectedly or a device misbehaves.
@@ -799,8 +811,9 @@ tools:
         type: commandLine
         # The path checked again once resolved: a symbolic link must not lead elsewhere
         commandLine: |
-          file=$(readlink -f -- '${esc(bash)::param::path}') || file='${esc(bash)::param::path}'
+          file=$(readlink -f -- '${esc(bash)::param::path}')
           case "$file" in
+          "") echo "Refused: the path cannot be resolved, a directory on the way is missing or cannot be read" ;;
           */.*) echo "Refused: the path leads to $file, a hidden file or directory" ;;
           /var/log/*|*.log) %{SUDO:grep} grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
           *) echo "Refused: the path leads to $file, neither under /var/log nor a .log file" ;;
