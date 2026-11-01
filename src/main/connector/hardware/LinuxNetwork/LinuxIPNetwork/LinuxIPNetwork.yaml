@@ -42,14 +42,15 @@ tools:
       source: ${source::details}
 
   routes:
-    description: Shows the IPv4 and IPv6 routing tables, the routing policy rules and the neighbor (ARP and NDP) table. Use it when the host cannot reach a network, or reaches it through the wrong gateway or interface.
+    description: Shows the IPv4 and IPv6 routing tables, the routing policy rules and the neighbor (ARP and NDP) table, the first 200 lines of each. Use it when the host cannot reach a network, or reaches it through the wrong gateway or interface.
     sources:
       routes:
         type: commandLine
+        # The first 200 lines of each table: a router with a full BGP table holds a million routes
         commandLine: |
-          /sbin/ip route 2>&1
-          /sbin/ip -6 route 2>&1
-          /sbin/ip rule 2>&1
+          /sbin/ip route 2>&1 | head -n 200
+          /sbin/ip -6 route 2>&1 | head -n 200
+          /sbin/ip rule 2>&1 | head -n 200
           /sbin/ip neigh 2>&1 | head -n 200
     result:
       source: ${source::routes}

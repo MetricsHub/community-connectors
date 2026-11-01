@@ -32,6 +32,7 @@ connector:
 sudoCommands:
 - dmesg
 - du
+- grep
 - journalctl
 - kill
 - lsof
@@ -458,7 +459,7 @@ tools:
       source: ${source::df}
 
   largestFiles:
-    description: Lists the largest directories and files under a path, largest first, with their size. Only the file system of the path is scanned. Use it after Linux_fileSystemUsage to find what fills a file system. On a large file system, it can take a minute.
+    description: Lists the largest directories and files under a path, largest first, with their size. Only the file system of the path is scanned. Use it after Linux_fileSystemUsage to find what fills a file system. On a large file system, it can take a few minutes.
     parameters:
       path:
         description: Absolute path of the directory to scan, e.g. /var
@@ -474,6 +475,8 @@ tools:
       du:
         type: commandLine
         commandLine: "%{SUDO:du} du -xah -- '${esc(bash)::param::path}' 2>/dev/null | sort -rh | head -n ${param::count}"
+        # du reads the whole tree before sort and head return anything
+        timeout: 300
     result:
       source: ${source::du}
 
@@ -799,7 +802,7 @@ tools:
           file=$(readlink -f -- '${esc(bash)::param::path}') || file='${esc(bash)::param::path}'
           case "$file" in
           */.*) echo "Refused: the path leads to $file, a hidden file or directory" ;;
-          /var/log/*|*.log) grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
+          /var/log/*|*.log) %{SUDO:grep} grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
           *) echo "Refused: the path leads to $file, neither under /var/log nor a .log file" ;;
           esac
     result:
