@@ -488,7 +488,7 @@ tools:
       source: ${source::du}
 
   deletedOpenFiles:
-    description: Lists the deleted files that processes still hold open, with the process and the size. Their space is only freed when the process closes them or stops. Use it when Linux_fileSystemUsage shows a full file system and Linux_largestFiles finds less than what is used. Without lsof, it needs root or sudo for find to see the processes of other users.
+    description: Lists the deleted files that processes still hold open or map, with the process and, through lsof, the size. Their space is only freed when the process closes them or stops. Use it when Linux_fileSystemUsage shows a full file system and Linux_largestFiles finds less than what is used. Without lsof, the size is missing, and find needs root or sudo to see the processes of other users.
     # Two sources, as a command line elevates a single command
     sources:
       lsof:
@@ -784,6 +784,8 @@ tools:
       service:
         description: The systemd unit, e.g. nginx.service
         required: true
+        # The default pattern, but not empty: reset-failed without a unit resets every failed unit
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_.@:-]*'
       action:
         description: What to do with the service
         required: true
