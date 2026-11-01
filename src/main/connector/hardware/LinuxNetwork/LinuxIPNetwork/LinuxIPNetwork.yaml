@@ -51,6 +51,7 @@ tools:
           /sbin/ip route 2>&1 | head -n 200
           /sbin/ip -6 route 2>&1 | head -n 200
           /sbin/ip rule 2>&1 | head -n 200
+          /sbin/ip -6 rule 2>&1 | head -n 200
           /sbin/ip neigh 2>&1 | head -n 200
     result:
       source: ${source::routes}

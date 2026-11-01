@@ -434,18 +434,25 @@ tools:
         type: commandLine
         # The CPU time of each process (utime and stime of /proc/<pid>/stat, after its name) one second apart: the pcpu of
         # ps is an average over the life of the process, which hides a long-running process that just started to spin.
-        # Then ps for the other columns, without ps itself. Command lines cut at 500 characters: a Java class path alone
-        # can take thousands.
+        # Then ps for the other columns, without the processes of this command, which spend CPU while measuring: ps, the
+        # shell, the subshell of { } and their children (awk, sort, cat, sleep...), found from the parent of cat, whose
+        # /proc/self comes first ($$ cannot be written in a connector). Command lines cut at 500 characters: a Java class
+        # path alone can take thousands.
         commandLine: |
           case '${param::sortBy}' in rss) key=6 ;; *) key=4 ;; esac
-          { cat /proc/[0-9]*/stat; echo ---; sleep 1; cat /proc/[0-9]*/stat; echo ---; ps -N -C ps -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args=; } 2>/dev/null | awk -v hz="$(getconf CLK_TCK 2>/dev/null || echo 100)" '
+          { cat /proc/self/stat; echo ---; cat /proc/[0-9]*/stat; echo ---; sleep 1; cat /proc/[0-9]*/stat; echo ---; ps -N -C ps -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args=; } 2>/dev/null | awk -v hz="$(getconf CLK_TCK 2>/dev/null || echo 100)" '
           $0 == "---" { phase++; next }
-          phase < 2 {
+          phase < 3 {
             pid = $1; rest = $0; sub(/^.*\) /, "", rest); split(rest, f, " ")
-            if (phase == 0) first[pid] = f[12] + f[13]; else if (pid in first) cpu[pid] = (f[12] + f[13] - first[pid]) * 100 / hz
+            ppid[pid] = f[2]
+            if (phase == 0) self = pid
+            else if (phase == 1) first[pid] = f[12] + f[13]
+            else if (pid in first) cpu[pid] = (f[12] + f[13] - first[pid]) * 100 / hz
             next
           }
           {
+            group = ppid[self]; shell = ppid[group]
+            if ($1 == group || $1 == shell || $2 == group || $2 == shell) next
             command = $8; for (i = 9; i <= NF; i++) command = command " " $i
             gsub(/;/, ",", command)
             printf "%s;%s;%s;%.1f;%s;%s;%s;%s;%s\n", $1, $2, $3, cpu[$1] + 0, $4, $5, $6, $7, command
@@ -799,7 +806,7 @@ tools:
 
   # Logs
   readLog:
-    description: Returns the last lines of a log file, optionally only those matching a regular expression. Use it to read the log of an application, e.g. /var/log/nginx/error.log or /opt/app/logs/server.log.
+    description: Returns the last lines of a log file, optionally only those matching a regular expression. Use it to read the log of an application, e.g. /var/log/nginx/error.log or /opt/app/logs/server.log. Only the files under /var/log are read with sudo, when it is enabled for grep.
     parameters:
       path:
         description: Absolute path of a file under /var/log, or of a file whose name ends with .log
@@ -819,13 +826,15 @@ tools:
     sources:
       log:
         type: commandLine
-        # The path checked again once resolved: a symbolic link must not lead elsewhere
+        # The path checked again once resolved: a symbolic link must not lead elsewhere. Only /var/log is read with sudo:
+        # elsewhere, a user who can write in the directory could swap the file for a link between the check and the read
         commandLine: |
           file=$(readlink -f -- '${esc(bash)::param::path}')
           case "$file" in
           "") echo "Refused: the path cannot be resolved, a directory on the way is missing or cannot be read" ;;
           */.*) echo "Refused: the path leads to $file, a hidden file or directory" ;;
-          /var/log/*|*.log) %{SUDO:grep} grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
+          /var/log/*) %{SUDO:grep} grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
+          *.log) grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
           *) echo "Refused: the path leads to $file, neither under /var/log nor a .log file" ;;
           esac
     result:
