@@ -83,10 +83,15 @@ monitors:
 tools:
 
   multipathTopology:
-    description: Shows each multipath device with its path groups and paths, their priorities and their states, as multipath -ll prints them. Use it when a LUN loses paths, to see which path and which HBA port failed.
+    description: Shows each multipath device with its path groups and paths, their priorities and their states, as multipath -ll prints them, at most 500 lines. Use it when a LUN loses paths, to see which path and which HBA port failed.
+    parameters:
+      device:
+        description: A multipath device, by name or WWID, e.g. mpatha (empty for all of them)
+        default: ''
     sources:
       topology:
         type: commandLine
-        commandLine: "%{SUDO:multipath} multipath -ll 2>&1"
+        # A SAN host with thousands of LUNs prints tens of thousands of lines
+        commandLine: "%{SUDO:multipath} multipath -ll ${param::device} 2>&1 | head -n 500"
     result:
       source: ${source::topology}

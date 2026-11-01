@@ -166,7 +166,7 @@ monitors:
 tools:
 
   throttleStatus:
-    description: Shows whether the Raspberry Pi is throttled or short of power, with the firmware flags, the core voltage and the temperature. In the get_throttled bit mask, bits 0 to 3 report the current state (under-voltage, frequency capped, throttled, soft temperature limit) and bits 16 to 19 the same since the boot. Use it when a Pi is slow or reboots, a typical sign of a weak power supply.
+    description: Shows whether the Raspberry Pi is throttled or short of power, with the firmware flags, the core voltage and the temperature. In the get_throttled bit mask, bits 0 to 3 report the current state (under-voltage, frequency capped, throttled, soft temperature limit) and bits 16 to 19 the same since the boot. Use it when a Pi is slow or reboots, a typical sign of a weak power supply. Needs vcgencmd, which Raspberry Pi OS installs, unlike the rest of this connector.
     sources:
       throttle:
         type: commandLine

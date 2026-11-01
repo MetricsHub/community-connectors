@@ -36,6 +36,7 @@ sudoCommands:
 - grep
 - journalctl
 - kill
+- ls
 - lsof
 - shutdown
 - ss
@@ -685,11 +686,20 @@ tools:
         description: The process ID
         required: true
         pattern: '[1-9][0-9]{0,9}'
+    # Two sources, as a command line elevates a single command
     sources:
-      files:
+      lsof:
         type: commandLine
-        # Without lsof, the file descriptors of /proc
-        commandLine: "{ %{SUDO:lsof} lsof -nP -p ${param::pid} || ls -l /proc/${param::pid}/fd; } 2>&1 | head -n 300"
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1 | head -n 300; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; fi"
+      proc:
+        type: commandLine
+        # Without lsof, the file descriptors of /proc, which only the owner of the process and root can list
+        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1 | head -n 300; fi"
+      files:
+        type: tableUnion
+        tables:
+        - ${source::lsof}
+        - ${source::proc}
     result:
       source: ${source::files}
 
