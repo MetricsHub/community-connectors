@@ -33,7 +33,6 @@ sudoCommands:
 - dmesg
 - du
 - find
-- grep
 - journalctl
 - kill
 - ls
@@ -417,48 +416,38 @@ monitors:
 # Tools an AI assistant runs through the MetricsHub MCP server
 tools:
 
-  topProcesses:
-    description: Lists the processes using the most CPU or memory, with their PID, parent PID, user, CPU percentage over the last second (100 for one full CPU), memory percentage, resident memory in KiB, elapsed time, state and command line. Use it when the host is slow or short of memory, then Linux_processDetails or Linux_killProcess on a PID.
-    parameters:
-      sortBy:
-        description: pcpu to sort by CPU usage, rss by resident memory
-        default: pcpu
-        enum: [ pcpu, rss ]
-      count:
-        type: integer
-        description: How many processes to return, 1 to 100
-        default: 20
-        pattern: '[1-9][0-9]?|100'
+  processes:
+    description: Lists every process with its PID, parent PID, user, CPU percentage over the last second (100 for one full CPU), memory percentage, resident memory in KiB, elapsed time, state and command line. Use it when the host is slow or short of memory, to find the processes that use the most CPU or memory, then Linux_processDetails or Linux_killProcess on a PID.
     sources:
       processes:
         type: commandLine
-        # The CPU time of each process (utime and stime of /proc/<pid>/stat, after its name) one second apart: the pcpu of
-        # ps is an average over the life of the process, which hides a long-running process that just started to spin.
-        # Then ps for the other columns, without the processes of this command, which spend CPU while measuring: ps, the
-        # shell, the subshell of { } and their children (awk, sort, cat, sleep...), found from the parent of cat, whose
-        # /proc/self comes first ($$ cannot be written in a connector). Command lines cut at 500 characters: a Java class
-        # path alone can take thousands.
+        # The CPU time of each process (utime and stime of /proc/<pid>/stat) one second apart: the pcpu of ps is an
+        # average over the life of the process, which hides a long-running process that just started to spin
         commandLine: |
-          case '${param::sortBy}' in rss) key=6 ;; *) key=4 ;; esac
-          { cat /proc/self/stat; echo ---; cat /proc/[0-9]*/stat; echo ---; sleep 1; cat /proc/[0-9]*/stat; echo ---; ps -N -C ps -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args=; } 2>/dev/null | awk -v hz="$(getconf CLK_TCK 2>/dev/null || echo 100)" '
-          $0 == "---" { phase++; next }
-          phase < 3 {
-            pid = $1; rest = $0; sub(/^.*\) /, "", rest); split(rest, f, " ")
-            ppid[pid] = f[2]
-            if (phase == 0) self = pid
-            else if (phase == 1) first[pid] = f[12] + f[13]
-            else if (pid in first) cpu[pid] = (f[12] + f[13] - first[pid]) * 100 / hz
-            next
-          }
-          {
-            group = ppid[self]; shell = ppid[group]
-            if ($1 == group || $1 == shell || $2 == group || $2 == shell) next
-            command = $8; for (i = 9; i <= NF; i++) command = command " " $i
-            gsub(/;/, ",", command)
-            printf "%s;%s;%s;%.1f;%s;%s;%s;%s;%s\n", $1, $2, $3, cpu[$1] + 0, $4, $5, $6, $7, command
-          }' | sort -t ';' -k "$key" -rn | head -n ${param::count} | cut -c 1-500
+          getconf CLK_TCK 2>/dev/null; echo ---
+          cat /proc/[0-9]*/stat 2>/dev/null; echo ---
+          sleep 1
+          cat /proc/[0-9]*/stat 2>/dev/null; echo ---
+          ps -e -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args= 2>&1
+        computes:
         # pid;ppid;user;cpuPercent;memoryPercent;residentKiB;elapsed;state;command
-        separators: ;
+        # The fields of /proc/<pid>/stat counted after the process name, which may hold spaces and parentheses
+        - type: awk
+          script: |
+            BEGIN { hz = 100 }
+            $0 == "---" { phase++; next }
+            phase == 0 { hz = $1; next }
+            phase < 3 {
+              pid = $1; sub(/^.*\) /, "")
+              if (phase == 1) first[pid] = $12 + $13
+              else if (pid in first) cpu[pid] = ($12 + $13 - first[pid]) * 100 / hz
+              next
+            }
+            {
+              command = $8; for (i = 9; i <= NF; i++) command = command " " $i
+              gsub(/;/, ",", command)
+              printf "%s;%s;%s;%.1f;%s;%s;%s;%s;%s\n", $1, $2, $3, cpu[$1] + 0, $4, $5, $6, $7, command
+            }
     result:
       source: ${source::processes}
       columns: [ pid, ppid, user, cpuPercent, memoryPercent, residentKiB, elapsed, state, command ]
@@ -474,23 +463,23 @@ tools:
       source: ${source::df}
 
   largestFiles:
-    description: Lists the largest directories and files under a path, largest first, with their size. Only the file system of the path is scanned. Use it after Linux_fileSystemUsage to find what fills a file system. On a large file system, it can take a few minutes.
+    description: Lists the directories and files under a path that take at least a given size, with their size. Only the file system of the path is scanned. Use it after Linux_fileSystemUsage to find what fills a file system. On a large file system, it can take a few minutes.
     parameters:
       path:
         description: Absolute path of the directory to scan, e.g. /var
         required: true
         # An absolute path whose names start with a letter, a digit or _: no "..", no option
         pattern: '/|(/[A-Za-z0-9_][A-Za-z0-9_.@-]*)+'
-      count:
+      minimumMegabytes:
         type: integer
-        description: How many entries to return, 1 to 200
-        default: 30
-        pattern: '[1-9][0-9]?|1[0-9][0-9]|200'
+        description: The size from which a directory or a file is listed, in megabytes
+        default: 100
+        pattern: '[1-9][0-9]{0,5}'
     sources:
       du:
         type: commandLine
-        commandLine: "%{SUDO:du} du -xah -- '${esc(bash)::param::path}' 2>/dev/null | sort -rh | head -n ${param::count}"
-        # du reads the whole tree before sort and head return anything
+        commandLine: "%{SUDO:du} du -xah -t ${param::minimumMegabytes}M -- '${esc(bash)::param::path}' 2>/dev/null"
+        # du reads the whole tree
         timeout: 300
     result:
       source: ${source::du}
@@ -502,12 +491,12 @@ tools:
       lsof:
         type: commandLine
         # Not the deleted libraries mapped in memory (mem), left behind by updates: they take no space
-        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 -a -d '^mem' 2>&1 | head -n 100; fi"
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 -a -d '^mem' 2>&1; fi"
       proc:
         type: commandLine
         # Without lsof, the file descriptors of /proc that point to a deleted file, without their size. The processes
-        # that cannot be read are left out, rather than their errors filling the 100 lines.
-        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:find} find /proc/[0-9]*/fd -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null | head -n 100; fi"
+        # that cannot be read are left out, rather than one error each.
+        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:find} find /proc/[0-9]*/fd -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null; fi"
       files:
         type: tableUnion
         tables:
@@ -517,24 +506,13 @@ tools:
       source: ${source::files}
 
   kernelLog:
-    description: Returns the recent warnings and errors of the kernel, such as out-of-memory kills, disk and file system I/O errors, hung tasks, hardware errors and network link changes. Use it when a process died unexpectedly or a device misbehaves.
-    parameters:
-      lines:
-        type: integer
-        description: How many of the last messages to return, 1 to 1000
-        default: 100
-        pattern: '[1-9][0-9]{0,2}|1000'
+    description: Returns the warnings and errors of the kernel since the boot, as far as its ring buffer or the journal keeps them, such as out-of-memory kills, disk and file system I/O errors, hung tasks, hardware errors and network link changes. Use it when a process died unexpectedly or a device misbehaves.
     sources:
       kernel:
         type: commandLine
         # The kernel ring buffer first: the journal may have rotated them away, or never read them.
         # Where dmesg is restricted to root, the journal, which the adm or systemd-journal group may read.
-        commandLine: |
-          if messages=$(%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>&1); then
-            printf '%s\n' "$messages" | tail -n ${param::lines}
-          else
-            journalctl -k -p warning -n ${param::lines} --no-pager 2>&1
-          fi
+        commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>/dev/null || journalctl -k -p warning --no-pager 2>&1"
     result:
       source: ${source::kernel}
 
@@ -552,9 +530,9 @@ tools:
         pattern: '[1-9][0-9]{0,3}|100[0-7][0-9]|10080'
       lines:
         type: integer
-        description: How many of the last entries to return, 1 to 1000
-        default: 200
-        pattern: '[1-9][0-9]{0,2}|1000'
+        description: How many of the last entries to return, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
     # Without journal files (no journald, or Storage=none, where journalctl finds nothing and still succeeds), the end
     # of the syslog file, whatever the priority and the time. Two sources, as a command line elevates a single command
     sources:
@@ -593,9 +571,22 @@ tools:
         commandLine: |
           %{SUDO:ss} ss -tulpn 2>&1
           ss -s 2>&1
-          ss -tan 2>/dev/null | awk 'NR > 1 { count[$1]++ } END { for (state in count) print state, count[state] }'
+      states:
+        type: commandLine
+        commandLine: ss -tan 2>/dev/null
+        computes:
+        # The TCP connections counted in each state
+        - type: awk
+          script: |
+            NR > 1 { count[$1]++ }
+            END { for (state in count) print state " " count[state] }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::sockets}
+        - ${source::states}
     result:
-      source: ${source::sockets}
+      source: ${source::all}
 
   timeSync:
     description: Shows the time and the time zone of the host, whether its clock is synchronized, and its offset to the time sources of chrony, ntpd or systemd-timesyncd. Use it when TLS, Kerberos or cluster errors point to a clock drift.
@@ -616,7 +607,7 @@ tools:
         type: commandLine
         commandLine: |
           echo "Up since $(uptime -s 2>/dev/null)"
-          last -x -F reboot shutdown 2>&1 | head -n 20
+          last -x -F reboot shutdown 2>&1
           [ -f /var/run/reboot-required ] && echo "Reboot required by $(cat /var/run/reboot-required.pkgs 2>/dev/null | tr '\n' ' ')"
           needs-restarting -r 2>/dev/null
           true
@@ -667,7 +658,7 @@ tools:
 
   # Processes
   processDetails:
-    description: Shows one process in detail, with its ps line, its /proc status (state, threads, memory, context switches), its limits and how many files it holds open. Use it on a PID from Linux_topProcesses, e.g. to check whether a process nears its open files limit.
+    description: Shows one process in detail, with its ps line, its /proc status (state, threads, memory, context switches), its limits and how many files it holds open. Use it on a PID from Linux_processes, e.g. to check whether a process nears its open files limit.
     parameters:
       pid:
         type: integer
@@ -678,8 +669,8 @@ tools:
       process:
         type: commandLine
         commandLine: |
-          ps -o pid,ppid,user:32,pcpu,pmem,rss,vsz,nlwp,lstart,etime,stat,args -p ${param::pid} 2>&1 | cut -c 1-500
-          grep -E '^(Name|State|PPid|Uid|Threads|FDSize|VmPeak|VmSize|VmHWM|VmRSS|VmSwap|voluntary_ctxt_switches|nonvoluntary_ctxt_switches):' /proc/${param::pid}/status 2>&1
+          ps -o pid,ppid,user:32,pcpu,pmem,rss,vsz,nlwp,lstart,etime,stat,args -p ${param::pid} 2>&1
+          cat /proc/${param::pid}/status 2>&1
           cat /proc/${param::pid}/limits 2>&1
           if ls /proc/${param::pid}/fd >/dev/null 2>&1; then echo "Open files: $(ls /proc/${param::pid}/fd | wc -l)"; else echo "Open files: unknown, /proc/${param::pid}/fd is not readable"; fi
     result:
@@ -697,11 +688,11 @@ tools:
     sources:
       lsof:
         type: commandLine
-        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1 | head -n 300; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; fi"
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; fi"
       proc:
         type: commandLine
         # Without lsof, the file descriptors of /proc, which only the owner of the process and root can list
-        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1 | head -n 300; fi"
+        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1; fi"
       files:
         type: tableUnion
         tables:
@@ -766,9 +757,9 @@ tools:
         required: true
       lines:
         type: integer
-        description: How many lines to return, 1 to 1000
-        default: 100
-        pattern: '[1-9][0-9]{0,2}|1000'
+        description: How many lines to return, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
       priority:
         description: The lowest priority to return
         default: info
@@ -806,7 +797,7 @@ tools:
 
   # Logs
   readLog:
-    description: Returns the last lines of a log file, optionally only those matching a regular expression. Use it to read the log of an application, e.g. /var/log/nginx/error.log or /opt/app/logs/server.log. Only the files under /var/log are read with sudo, when it is enabled for grep.
+    description: Reads the last lines of a log file and returns them, or only those matching a regular expression. Use it to read the log of an application, e.g. /var/log/nginx/error.log or /opt/app/logs/server.log. Only the files under /var/log are read with sudo, when it is enabled for tail.
     parameters:
       path:
         description: Absolute path of a file under /var/log, or of a file whose name ends with .log
@@ -814,15 +805,15 @@ tools:
         # Under /var/log, or a .log file, each name starting with a letter, a digit or _: no "..", no hidden file
         pattern: '/var/log(/[A-Za-z0-9_][A-Za-z0-9_.@-]*)+|(/[A-Za-z0-9_][A-Za-z0-9_.@-]*)+\.log'
       match:
-        description: Extended regular expression the returned lines must match, e.g. ERROR|WARN (empty for all lines)
+        description: Basic regular expression, as with grep without -E, that the returned lines must contain, e.g. ERROR\|WARN (empty for all lines)
         default: ''
-        # Only read by grep, between single quotes: any value on one line
+        # Never sent to the host: MetricsHub keeps the matching lines
         pattern: '.*'
       lines:
         type: integer
-        description: How many of the last lines to return, 1 to 1000
-        default: 100
-        pattern: '[1-9][0-9]{0,2}|1000'
+        description: How many of the last lines of the file to read, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
     sources:
       log:
         type: commandLine
@@ -833,9 +824,11 @@ tools:
           case "$file" in
           "") echo "Refused: the path cannot be resolved, a directory on the way is missing or cannot be read" ;;
           */.*) echo "Refused: the path leads to $file, a hidden file or directory" ;;
-          /var/log/*) %{SUDO:grep} grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
-          *.log) grep -E -e '${esc(bash)::param::match}' -- "$file" 2>&1 | tail -n ${param::lines} ;;
+          /var/log/*) %{SUDO:tail} tail -n ${param::lines} -- "$file" 2>&1 ;;
+          *.log) tail -n ${param::lines} -- "$file" 2>&1 ;;
           *) echo "Refused: the path leads to $file, neither under /var/log nor a .log file" ;;
           esac
+        # The matching lines, and the refusals and errors of tail whatever the expression (an empty one matches all)
+        keep: '${param::match}\|^Refused: \|^tail: '
     result:
       source: ${source::log}
