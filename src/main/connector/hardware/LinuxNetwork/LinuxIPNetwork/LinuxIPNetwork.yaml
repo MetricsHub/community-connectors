@@ -50,13 +50,13 @@ tools:
       source: ${source::interface}
 
   routes:
-    description: Shows the IPv4 and IPv6 routing tables, the routing policy rules and the neighbor (ARP and NDP) table. Use it when the host cannot reach a network, or reaches it through the wrong gateway or interface.
+    description: Shows the IPv4 and IPv6 routing tables, all of them (main, local and those of policy routing and VRFs), the routing policy rules and the neighbor (ARP and NDP) table. Use it when the host cannot reach a network, or reaches it through the wrong gateway or interface.
     sources:
       routes:
         type: commandLine
         commandLine: |
-          /sbin/ip route 2>&1
-          /sbin/ip -6 route 2>&1
+          /sbin/ip route show table all 2>&1
+          /sbin/ip -6 route show table all 2>&1
           /sbin/ip rule 2>&1
           /sbin/ip -6 rule 2>&1
           /sbin/ip neigh 2>&1

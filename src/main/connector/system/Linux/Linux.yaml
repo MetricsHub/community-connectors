@@ -480,7 +480,7 @@ tools:
     sources:
       du:
         type: commandLine
-        commandLine: "%{SUDO:du} du -xah -t ${param::minimumMegabytes}M -- '${esc(bash)::param::path}' 2>/dev/null"
+        commandLine: "%{SUDO:du} du -xah -t ${param::minimumMegabytes}M -- '${esc(bash)::param::path}' 2>&1"
         # du reads the whole tree
         timeout: 300
     result:
@@ -495,9 +495,9 @@ tools:
         commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 2>&1; fi"
       proc:
         type: commandLine
-        # Without lsof, the file descriptors of /proc that point to a deleted file, without their size. The processes
-        # that cannot be read are left out, rather than one error each.
-        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:find} find /proc/[0-9]*/fd -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null; fi"
+        # Without lsof, the file descriptors and the memory mappings of /proc that point to a deleted file, without their
+        # size. The processes that cannot be read are left out, rather than one error each.
+        commandLine: "if ! command -v lsof >/dev/null 2>&1; then %{SUDO:find} find /proc/[0-9]*/fd /proc/[0-9]*/map_files -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null; fi"
       files:
         type: tableUnion
         tables:
@@ -744,7 +744,7 @@ tools:
       status:
         type: commandLine
         commandLine: |
-          systemctl status -l -n 20 --no-pager -- ${param::service} 2>&1
+          %{SUDO:systemctl} systemctl status -l -n 20 --no-pager -- ${param::service} 2>&1
           systemctl show -p Restart,NRestarts,Result,ExecMainStatus,ActiveEnterTimestamp -- ${param::service} 2>&1
           systemctl cat --no-pager -- ${param::service} 2>&1
     result:
