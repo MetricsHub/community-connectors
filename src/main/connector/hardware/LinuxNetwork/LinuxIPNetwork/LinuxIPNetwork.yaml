@@ -60,8 +60,10 @@ tools:
     description: Pings a host or an address 4 times from the monitored host, and returns the packet loss and the round-trip times. Use it to check whether the monitored host reaches its gateway, a DNS server or a peer.
     parameters:
       target:
-        description: Host name or IP address, e.g. 10.0.0.1 or db-01.example.com
+        description: Host name or IP address, e.g. 10.0.0.1, db-01.example.com, or fe80::1%eth0 for an IPv6 link-local address
         required: true
+        # The default pattern, with a leading : (::1) and an IPv6 scope after % (never followed by {, so no macro)
+        pattern: '[A-Za-z0-9_:][A-Za-z0-9_.@:-]*(%[A-Za-z0-9_.-]+)?'
     sources:
       ping:
         type: commandLine
