@@ -1,8 +1,8 @@
-# This workflow releases the project on Maven Central
+# This workflow releases the project on repo.metricshub.com
 # and prepare a new development version
 
-name: Release to Maven Central
-run-name: Release v${{ inputs.releaseVersion }} to Maven Central
+name: Release to repo.metricshub.com
+run-name: Release v${{ inputs.releaseVersion }} to repo.metricshub.com
 
 on:
   workflow_dispatch:
@@ -18,10 +18,9 @@ on:
 
 jobs:
   release:
-    uses: metricshub/workflows/.github/workflows/maven-central-release.yml@v8
+    uses: metricshub/workflows/.github/workflows/maven-metricshub-release.yml@v10
     with:
       releaseVersion: ${{ inputs.releaseVersion }}
       developmentVersion: ${{ inputs.developmentVersion }}
-      autoRelease: false
       jdkVersion: "25"
     secrets: inherit
