@@ -60,12 +60,15 @@ After translation/replace, mapping consumes the transformed table.
 | [substring](./substring.html) | Keep a portion of a column's value (1-based start, length). |
 | [duplicateColumn](./duplicate-column.html) | Insert a copy of a column immediately after the original. |
 
-### Row Filtering and Column Projection
+### Row Filtering, Sorting and Column Projection
 
 | Compute | Purpose |
 | --- | --- |
 | [keepOnlyMatchingLines](./keep-only-matching-lines.html) | Keep rows whose column matches a regex or value list. |
 | [excludeMatchingLines](./exclude-matching-lines.html) | Remove rows whose column matches a regex or value list. |
+| [sort](./sort.html) | Sort the rows on a column, alphabetically or numerically, ascending or descending. |
+| [head](./head.html) | Keep the first rows. |
+| [tail](./tail.html) | Keep the last rows. |
 | [keepColumns](./keep-columns.html) | Keep only the listed columns. |
 | [extract](./extract.html) | Split a column on separators and keep one sub-part. |
 | [extractPropertyFromWbemPath](./extract-wbem-property.html) | Pull one property value out of a WBEM object path. |

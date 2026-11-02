@@ -194,7 +194,7 @@ tools:
 - Give every parameter a `default` or `required: true`, and an example value in its description.
 - Keep the default pattern for names and identifiers; use an `enum` or a numeric type where you can; give a wider `pattern` only where needed, with the escape of the field.
 - Bound the numbers that size the work or the result (a line count, a time range) with a `pattern` such as `[1-9][0-9]{0,3}`: the type alone accepts any integer.
-- Keep the result small and tabular: filter with computes, name the columns.
+- Keep the result tabular: keep the commands plain, and filter, sort and select the lines with the source's `keep` and `exclude` and with computes ([`sort`](computes/sort.html), [`head`](computes/head.html), [`tail`](computes/tail.html)) rather than with `grep`, `sort`, `head` or `tail` on the host; name the columns.
 - Mark anything that writes as `destructive: true`, even a harmless-looking `identify` LED.
 
 ## Common Mistakes

@@ -13,7 +13,7 @@ This page describes how a connector change travels from your machine to the rele
 2. Develop and validate locally: [Run and Debug Locally](run-and-debug.html), then [Integration Testing](integration-testing.html).
 3. Open a pull request against `main`.
 4. CI builds the project on every pull request (Maven build on JDK 25, via the shared `metricshub/workflows` pipeline). The build must pass.
-5. After review and merge, `main` is automatically built and deployed to Maven Central; releases are cut by maintainers through the "Release" GitHub Actions workflow.
+5. After review and merge, `main` is automatically built and deployed to the MetricsHub Maven repository (`repo.metricshub.com`); releases are cut by maintainers through the "Release" GitHub Actions workflow.
 
 ## What a Connector PR Must Contain
 
@@ -26,6 +26,45 @@ Keep the scope tight: only the files required for the connector change.
 Do **not** commit transient artifacts: emulator logs, `__pycache__/`, temporary captures, or working notes.
 
 ## Local Build and Quality Gates
+
+The build resolves the MetricsHub artifacts (the *SNAPSHOT* versions used by the integration tests, and the MetricsHub Connector Maven Plugin) from `https://repo.metricshub.com/repository/maven-public/`, which requires credentials. Declare this repository (for dependencies and plugins) and your credentials in your `~/.m2/settings.xml`:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>metricshub</id>
+      <username>your-username</username>
+      <password>your-token</password>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <id>metricshub</id>
+      <repositories>
+        <repository>
+          <id>metricshub</id>
+          <url>https://repo.metricshub.com/repository/maven-public/</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>metricshub</id>
+          <url>https://repo.metricshub.com/repository/maven-public/</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>metricshub</activeProfile>
+  </activeProfiles>
+</settings>
+```
+
+Then build with:
 
 ```bash
 mvn verify
