@@ -66,11 +66,20 @@ monitors:
 tools:
 
   eventLog:
-    description: Returns the entries of the IPMI System Event Log (SEL), the hardware events the BMC recorded, such as memory ECC errors, power supply and fan failures, and temperature thresholds crossed. Use it when a hardware monitor reports a problem, or the server restarted unexpectedly, and to keep a copy before LinuxIpmiTool_clearEventLog.
+    description: Returns the latest entries of the IPMI System Event Log (SEL), the hardware events the BMC recorded, such as memory ECC errors, power supply and fan failures, and temperature thresholds crossed. Use it when a hardware monitor reports a problem, or the server restarted unexpectedly, and, with a count above the number of entries, to keep a copy before LinuxIpmiTool_clearEventLog.
+    parameters:
+      count:
+        type: integer
+        description: How many of the latest entries to return, 1 to 99999
+        default: 100
+        pattern: '[1-9][0-9]{0,4}'
     sources:
       sel:
         type: commandLine
         commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open sel elist 2>&1
+        computes:
+        - type: tail
+          lines: ${param::count}
     result:
       source: ${source::sel}
 
