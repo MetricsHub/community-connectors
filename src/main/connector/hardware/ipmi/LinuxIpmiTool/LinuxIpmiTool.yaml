@@ -19,7 +19,7 @@ connector:
     - IpmiTool
     criteria:
     - type: commandline
-      commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open bmc info
+      commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open bmc info
       expectedResult: IPMI Version
       errorMessage: Did not get the expected result from the IPMI tool command
     tags: [ hardware, linux ]
@@ -31,19 +31,19 @@ monitors:
         chassisStatus:
           # Chassis;powerOn;powerFault;powerOverload;interlock;powerControlFault;coolingFault;driveFault;intrusion;frontPanelLockout;powerRestorePolicy;identifyState;lastPowerEvents
           type: commandLine
-          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open chassis status
+          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open chassis status
           computes:
           - type: awk
             script: ${file::chassis_status.awk}
         allFrus:
           type: commandLine
-          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open fru
+          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open fru
           computes:
           - type: awk
             script: ${file::frus_formatter.awk}
         sdr:
           type: commandLine
-          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open -v sdr elist all
+          commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open -v sdr elist all
           computes:
           - type: awk
             script: ${file::sdr_formatter.awk}
@@ -61,3 +61,7 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: 2,3,4,5,6,7,8,9,10,11
+
+# The command that %{SUDO:...} elevates, when the configuration enables sudo for it
+sudoCommands:
+- ipmitool
