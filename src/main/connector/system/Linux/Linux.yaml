@@ -417,7 +417,7 @@ monitors:
 tools:
 
   processes:
-    description: Lists the processes that use the most CPU or memory, the largest first, with their PID, parent PID, user, CPU percentage over the last second (100 for one full CPU), memory percentage, resident memory in KiB, elapsed time, state and command line. Use it when the host is slow or short of memory, then Linux_processDetails or Linux_killProcess on a PID. To look for a given process, raise the count.
+    description: Lists the processes that use the most CPU or memory, the largest first, with their PID, parent PID, user, CPU percentage over the sample (100 for one full CPU), memory percentage, resident memory in KiB, elapsed time, state and command line. Use it when the host is slow or short of memory, then Linux_processDetails or Linux_killProcess on a PID. To look for a given process, raise the count; for a process that spins now and then, lengthen the sample.
     parameters:
       sortBy:
         description: What the processes are sorted on, the largest first
@@ -428,16 +428,21 @@ tools:
         description: How many processes to return, 1 to 99999
         default: 20
         pattern: '[1-9][0-9]{0,4}'
+      seconds:
+        type: integer
+        description: How long the CPU usage is sampled, 1 to 10 seconds
+        default: 1
+        pattern: '[1-9]|10'
     sources:
       processes:
         type: commandLine
-        # The CPU time of each process (utime and stime of /proc/<pid>/stat) in two samples a second apart: the pcpu of
+        # The CPU time of each process (utime and stime of /proc/<pid>/stat) in two samples, seconds apart: the pcpu of
         # ps is an average over the life of the process, which hides a long-running process that just started to spin.
-        # Each sample starts with /proc/uptime: reading the /proc of thousands of processes adds to the second.
+        # Each sample starts with /proc/uptime: reading the /proc of thousands of processes adds to the sample.
         commandLine: |
           getconf CLK_TCK 2>/dev/null; echo ---
           cat /proc/uptime /proc/[0-9]*/stat 2>/dev/null; echo ---
-          sleep 1
+          sleep ${param::seconds}
           cat /proc/uptime /proc/[0-9]*/stat 2>/dev/null; echo ---
           ps -e -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args= 2>&1
         computes:
@@ -616,15 +621,21 @@ tools:
       source: ${source::log}
 
   performanceSnapshot:
-    description: Samples the activity of the host for a few seconds, with the load averages, the pressure stall information (the share of time tasks waited for CPU, memory or I/O), vmstat (run queue, swapping, I/O wait) and, when sysstat is installed, iostat (utilization and latency of each disk). Use it when the host is slow, to tell a CPU, memory or disk bottleneck apart.
+    description: Samples the activity of the host, with the load averages, the pressure stall information (the share of time tasks waited for CPU, memory or I/O), vmstat (run queue, swapping, I/O wait; the averages since the boot, then one line per second) and, when sysstat is installed, iostat (utilization and latency of each disk, averaged over the sample). vmstat and iostat sample in turn, so the tool takes twice the sample. Use it when the host is slow, to tell a CPU, memory or disk bottleneck apart.
+    parameters:
+      seconds:
+        type: integer
+        description: How long vmstat, then iostat, sample the activity, 1 to 10 seconds
+        default: 4
+        pattern: '[1-9]|10'
     sources:
       snapshot:
         type: commandLine
         commandLine: |
           uptime
           grep -H . /proc/pressure/* 2>/dev/null
-          vmstat 1 5 2>&1
-          iostat -dxyk 1 2 2>/dev/null || echo "iostat is not installed (sysstat)"
+          vmstat 1 $((${param::seconds} + 1)) 2>&1
+          iostat -dxyk ${param::seconds} 1 2>/dev/null || echo "iostat is not installed (sysstat)"
     result:
       source: ${source::snapshot}
 

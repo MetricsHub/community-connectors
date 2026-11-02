@@ -9,6 +9,8 @@
 #   fan1_input tachometer, as the Raspberry Pi 5 cooling_fan device does.
 # - The temperature and fan commands print semicolon-separated rows. The board
 #   command prints raw device-tree values that a Jawk compute parses.
+# - The throttleStatus tool reads sysfs too, except for the throttling flags of
+#   the firmware, which only vcgencmd reports reliably.
 
 extends:
 - ../../semconv/Hardware
@@ -166,13 +168,22 @@ monitors:
 tools:
 
   throttleStatus:
-    description: Shows whether the Raspberry Pi is throttled or short of power, with the firmware flags, the core voltage and the temperature. In the get_throttled bit mask, bits 0 to 3 report the current state (under-voltage, frequency capped, throttled, soft temperature limit) and bits 16 to 19 the same since the boot. Use it when a Pi is slow or reboots, a typical sign of a weak power supply. Needs vcgencmd, which Raspberry Pi OS installs, unlike the rest of this connector.
+    description: Shows whether the Raspberry Pi is throttled or short of power. The firmware flags come from vcgencmd get_throttled, a bit mask where bits 0 to 3 report the current state (under-voltage, frequency capped, throttled, soft temperature limit) and bits 16 to 19 the same since the boot; vcgencmd needs Raspberry Pi OS (or its package) and the video group. The other lines, read from sysfs as in the monitors of this connector, need nothing else; they show the under-voltage alarm of the rpi_volt device (1 after an under-voltage, also logged by the kernel as "Undervoltage detected!", see Linux_kernelLog), the CPU temperature in millidegrees Celsius, and the current and maximum frequencies of the ARM cores in kHz. Use it when a Pi is slow or reboots, a typical sign of a weak power supply.
     sources:
       throttle:
         type: commandLine
+        # sysfs has no reliable copy of the firmware flags: the get_throttled file of the firmware device is
+        # deprecated, and was seen reading 0 while vcgencmd reported throttling.
         commandLine: |
           vcgencmd get_throttled 2>&1
-          vcgencmd measure_volts core 2>&1
-          vcgencmd measure_temp 2>&1
+          for hwmon in /sys/class/hwmon/hwmon*; do
+            test "$(cat "$hwmon/name" 2>/dev/null)" = rpi_volt && echo "under_voltage_alarm=$(cat "$hwmon/in0_lcrit_alarm")"
+          done
+          for zone in /sys/class/thermal/thermal_zone*; do
+            case "$(cat "$zone/type" 2>/dev/null)" in
+              cpu-thermal|soc_thermal) echo "temperature_millicelsius=$(cat "$zone/temp")"; break ;;
+            esac
+          done
+          grep -H . /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq 2>&1
     result:
       source: ${source::throttle}

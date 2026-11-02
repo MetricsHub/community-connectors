@@ -62,6 +62,10 @@ monitors:
             separators: ;
             selectColumns: 2,3,4,5,6,7,8,9,10,11
 
+# The command of the tools that %{SUDO:...} elevates, when the configuration enables sudo for it
+sudoCommands:
+- ipmitool
+
 # Tools an AI assistant runs through the MetricsHub MCP server
 tools:
 
@@ -76,7 +80,7 @@ tools:
     sources:
       sel:
         type: commandLine
-        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open sel elist 2>&1
+        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open sel elist 2>&1
         computes:
         - type: tail
           lines: ${param::count}
@@ -95,7 +99,7 @@ tools:
     sources:
       identify:
         type: commandLine
-        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open chassis identify ${param::seconds} 2>&1
+        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open chassis identify ${param::seconds} 2>&1
     result:
       source: ${source::identify}
 
@@ -105,7 +109,7 @@ tools:
     sources:
       clear:
         type: commandLine
-        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;ipmitool -I open sel clear 2>&1
+        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open sel clear 2>&1
     result:
       source: ${source::clear}
 
