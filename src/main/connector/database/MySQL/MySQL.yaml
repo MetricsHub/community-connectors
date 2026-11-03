@@ -517,7 +517,7 @@ tools:
       columns: [ name, tables, rows, dataBytes, indexBytes, diskBytes ]
 
   tableSizes:
-    description: Lists the largest tables, with their schema, name, engine, estimated rows, data, index and free bytes (statistics that may be up to a day old, see information_schema_stats_expiry) and the bytes their InnoDB files take on disk now (all the partitions of a partitioned table; empty for a table in a shared tablespace, whose free bytes are those of the tablespace). OPTIMIZE TABLE gives the free bytes of a table file back. Use it after MySQL_schemaSizes to find what fills a schema. Needs the PROCESS privilege.
+    description: Lists the largest tables, with their schema, name, engine, estimated rows, data, index and free bytes (statistics that may be up to a day old, see information_schema_stats_expiry) and the bytes their InnoDB files take on disk now (all the partitions of a partitioned table and the auxiliary tables of its FULLTEXT indexes; empty for a table in a shared tablespace, whose free bytes are those of the tablespace). OPTIMIZE TABLE gives the free bytes of a table file back. Use it after MySQL_schemaSizes to find what fills a schema. Needs the PROCESS privilege.
     parameters:
       schema:
         description: Only the tables of this schema, e.g. shop (empty for all)
@@ -530,15 +530,18 @@ tools:
     sources:
       tables:
         type: sql
+        # A FULLTEXT index keeps its auxiliary tables in tablespaces named schema/fts_<table id in hex>_..., counted with the table
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
             SELECT t.TABLE_SCHEMA, t.TABLE_NAME, t.ENGINE, t.TABLE_ROWS, t.DATA_LENGTH, t.INDEX_LENGTH, t.DATA_FREE, ts.bytes,
               GREATEST(IFNULL(ts.bytes, 0), IFNULL(t.DATA_LENGTH, 0) + IFNULL(t.INDEX_LENGTH, 0)) AS sortKey
             FROM information_schema.TABLES t
             LEFT JOIN (
-              SELECT SUBSTRING_INDEX(NAME, '#p#', 1) AS tableName, SUM(ALLOCATED_SIZE) AS bytes
-              FROM information_schema.INNODB_TABLESPACES
-              WHERE NAME LIKE '%/%'
+              SELECT IFNULL(p.NAME, SUBSTRING_INDEX(s.NAME, '#p#', 1)) AS tableName, SUM(s.ALLOCATED_SIZE) AS bytes
+              FROM information_schema.INNODB_TABLESPACES s
+              LEFT JOIN information_schema.INNODB_TABLES p
+                ON s.NAME REGEXP '/fts_[0-9a-f]{16}_' AND p.TABLE_ID = CONV(SUBSTRING(SUBSTRING_INDEX(s.NAME, '/', -1), 5, 16), 16, 10)
+              WHERE s.NAME LIKE '%/%'
               GROUP BY tableName
             ) ts ON ts.tableName = CONCAT(t.TABLE_SCHEMA, '/', t.TABLE_NAME)
             WHERE t.TABLE_TYPE = 'BASE TABLE' AND '${param::schema}' IN ('', t.TABLE_SCHEMA)
