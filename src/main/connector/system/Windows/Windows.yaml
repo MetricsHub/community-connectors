@@ -572,9 +572,9 @@ tools:
         default: 24
         pattern: '[1-9][0-9]?|[1-6][0-9]{2}|7[01][0-9]|720'
       provider:
-        description: Only the events of this provider, e.g. Service Control Manager, Microsoft-Windows-Kernel-Power, MSSQL$SQLEXPRESS (empty for all)
+        description: Only the events of this provider, e.g. Service Control Manager, Microsoft-Windows-Kernel-Power, .NET Runtime, MSSQL$SQLEXPRESS (empty for all)
         default: ''
-        pattern: '|[A-Za-z0-9][A-Za-z0-9 ._$/-]{0,255}'
+        pattern: '|[A-Za-z0-9.][A-Za-z0-9 ._$/-]{0,255}'
       match:
         description: Basic regular expression, as with grep without -E, that the returned events must contain, e.g. Spooler\|spouleur (empty for all events)
         default: ''
@@ -627,11 +627,13 @@ tools:
     sources:
       log:
         type: commandLine
-        # A symbolic link named .log must not lead to another file
+        # A link (symbolic link, junction) on the path, the file or a folder above it, must not lead to another file. A
+        # user who can write in a folder of the path could still swap a name for a link between the check and the read
         commandLine: >-
           PowerShell.exe -NoProfile -NonInteractive -Command "try { $i = Get-Item -LiteralPath '${esc(powershell)::param::path}' -Force -ErrorAction Stop;
+          $link = $null; $p = $i.FullName; while ($p -and -not $link) { if ((Get-Item -LiteralPath $p -Force -ErrorAction Stop).Attributes -band [IO.FileAttributes]::ReparsePoint) { $link = $p }; $p = [IO.Path]::GetDirectoryName($p) };
           if ($i.PSIsContainer -or $i.Extension -ne '.log') { 'Refused: ' + $i.FullName + ' is not a .log file' }
-          elseif ($i.Attributes -band [IO.FileAttributes]::ReparsePoint) { 'Refused: ' + $i.FullName + ' is a link' }
+          elseif ($link) { 'Refused: ' + $link + ' is a link' }
           else { Get-Content -LiteralPath $i.FullName -Tail ${param::lines} -ErrorAction Stop } } catch { 'Failed: ' + $_.Exception.Message };
           exit 0" 2>&1
         # The matching lines, and the refusals and failures whatever the expression (an empty one matches all)
@@ -823,7 +825,7 @@ tools:
       columns: [ object, instance, counter, value ]
 
   networkSockets:
-    description: Lists the listening TCP ports and the UDP endpoints with their process (protocol;address;port;pid;process, by port), then how many TCP connections are in each state (state;count, the most frequent first). Use it when a service does not answer on its port, or when connections pile up. Many CloseWait connections mean an application does not close them, many TimeWait a high connection rate, many SynSent a remote service that does not answer.
+    description: Lists the listening TCP ports and the UDP endpoints with their process (protocol;address;port;pid;process, by port; the UDP endpoints of the dynamic range 49152-65535 are counted in one line per process, last), then how many TCP connections are in each state (state;count, the most frequent first). Use it when a service does not answer on its port, or when connections pile up. Many CloseWait connections mean an application does not close them, many TimeWait a high connection rate, many SynSent a remote service that does not answer.
     sources:
       tcp:
         type: wmi
@@ -839,9 +841,14 @@ tools:
         namespace: root\StandardCimv2
         query: SELECT LocalAddress, LocalPort, OwningProcess FROM MSFT_NetUDPEndpoint
         computes:
+        # The endpoints in the dynamic port range (client sockets, the 2500 of a DNS server socket pool) are counted in
+        # one line per process
         - type: awk
           script: |
-            { print "udp;" $0 }
+            BEGIN { FS = ";" }
+            $2 < 49152 { print "udp;" $0; next }
+            { count[$3]++ }
+            END { for (pid in count) print "udp;" count[pid] " endpoints;49152-65535;" pid }
       endpoints:
         type: tableUnion
         tables:
