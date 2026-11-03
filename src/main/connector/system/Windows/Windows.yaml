@@ -377,7 +377,7 @@ monitors:
 tools:
 
   processes:
-    description: Lists the processes that use the most CPU or memory, the largest first, with their PID, parent PID, CPU percentage over the sample (100 for one full CPU), memory percentage (working set over the physical memory), working set and private bytes in KiB, handles, threads, start time and command line. The account of a process is not returned (WMI only gives it through a method). Sorting on memory sorts on the private bytes, the memory a process commits, which a leak grows. Use it when the host is slow or short of memory, then Windows_processDetails or Windows_killProcess on a PID. To look for a given process, raise the count; for a process that spins now and then, lengthen the sample.
+    description: Lists the processes that use the most CPU or memory, the largest first, with their PID, parent PID, CPU percentage over the sample (100 for one full CPU), memory percentage (working set over the physical memory), working set and private bytes in KiB, handles, threads, start time (with its offset to UTC) and command line. The account of a process is not returned (WMI only gives it through a method). Sorting on memory sorts on the private bytes, the memory a process commits, which a leak grows. Use it when the host is slow or short of memory, then Windows_processDetails or Windows_killProcess on a PID. To look for a given process, raise the count; for a process that spins now and then, lengthen the sample.
     parameters:
       sortBy:
         description: What the processes are sorted on, the largest first
@@ -420,7 +420,7 @@ tools:
       memory:
         type: wmi
         namespace: root\CIMv2
-        query: SELECT TotalVisibleMemorySize, CurrentTimeZone FROM Win32_OperatingSystem
+        query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
         computes:
         - type: awk
           script: |
@@ -456,8 +456,8 @@ tools:
             { sub(/;$/, "") }
             $1 == "S1" { first[$2] = $3; time1 = $4; next }
             $1 == "S2" { second[$2] = $3; time2 = $4; next }
-            # The physical memory, and the offset of the local time to UTC in minutes
-            $1 == "M" { totalKiB = $2; zone = $3; next }
+            # The physical memory
+            $1 == "M" { totalKiB = $2; next }
             # Not the System Idle Process (PID 0)
             $1 == "P" && $2 > 0 {
               # The command line, which may hold semicolons, else the name
@@ -470,8 +470,9 @@ tools:
               workingSet = $4 / 1024; privateKiB = $5 / 1024
               memory = 0
               if (totalKiB > 0) memory = workingSet * 100 / totalKiB
-              # The local time to the second, from 2026-11-03T10:15:30.123456+01:00 (WinRM) or seconds since 1970 (WMI)
-              started = ($8 ~ /^[0-9]+$/) ? iso($8 + zone * 60) : substr($8, 1, 19)
+              # To the second: 2026-11-03T10:15:30.123456+01:00 (WinRM) keeps its offset, seconds since 1970 (WMI) shown in UTC
+              started = $8
+              if (started ~ /^[0-9]+$/) started = iso(started) "Z"; else sub(/\.[0-9]*/, "", started)
               printf "%s;%s;%.1f;%.1f;%.0f;%.0f;%s;%s;%s;%s;%s\n", $2, $3, cpu, memory, workingSet, privateKiB, $6, $7, started, command, (sortBy == "memory" ? privateKiB : cpu)
             }
         - type: sort
@@ -858,11 +859,11 @@ tools:
     description: Lists the directories (ending with \) and files under a path that take at least a given size, the largest first, with their size in megabytes, then the errors, such as the directories that cannot be read. Links, junctions and volumes mounted in a folder are not followed. Sizes are logical lengths, as in the Explorer, so a file with several hard links (as in C:\Windows\WinSxS) counts once per link, and a compressed or sparse file counts its full length. A ";" in a name is shown as "," in the path returned. Use it after Windows_fileSystemUsage to find what fills a volume. On a large volume, it can take a few minutes.
     parameters:
       path:
-        description: Absolute path of the directory to scan, e.g. C:\ or C:\inetpub\logs
+        description: Absolute path of the directory to scan, e.g. C:\, C:\inetpub\logs or a volume without a drive letter as Windows_fileSystemUsage returns it (\\?\Volume{GUID}\)
         required: true
-        # A drive, then names starting with a letter, a digit, _ or $: no "..", no wildcard, no quote. A final \ is
-        # allowed, as in the volumes mounted in a folder that Windows_fileSystemUsage returns (C:\Mount\)
-        pattern: '[A-Za-z]:\\|[A-Za-z]:(\\[A-Za-z0-9_$][A-Za-z0-9_ .$@()~+#,-]*)+\\?'
+        # A drive or a volume GUID, then names starting with a letter, a digit, _ or $: no "..", no wildcard, no quote. A
+        # final \ is allowed, as in the volumes mounted in a folder that Windows_fileSystemUsage returns (C:\Mount\)
+        pattern: '([A-Za-z]:|\\\\\?\\Volume\{[0-9A-Fa-f-]{36}\})(\\|(\\[A-Za-z0-9_$][A-Za-z0-9_ .$@()~+#,-]*)+\\?)'
       minimumMegabytes:
         type: integer
         description: The size from which a directory or a file is listed, in megabytes
@@ -878,11 +879,11 @@ tools:
         type: commandLine
         # Get-ChildItem -Recurse of PowerShell 5.1 follows the junctions, and loops in "Application Data": the directories
         # are walked here, without the reparse points, and each directory adds the size of its files to its parents,
-        # whose paths have no final \ (but for a drive root): the path loses its own
+        # whose paths have no final \ (but for a volume root, C:\ or \\?\Volume{GUID}\): the path loses its own
         timeout: 600
         commandLine: >-
           PowerShell.exe -NoProfile -NonInteractive -Command "$m = [long]'${param::minimumMegabytes}' * 1048576;
-          $t = '${esc(powershell)::param::path}'; if ($t.Length -gt 3) { $t = $t.TrimEnd('\') };
+          $t = '${esc(powershell)::param::path}'; if ($t -notmatch '[:}]\\$') { $t = $t.TrimEnd('\') };
           try { $r = Get-Item -LiteralPath $t -Force -ErrorAction Stop } catch { 'Failed: ' + $_.Exception.Message; exit 0 };
           $d = @{}; $stack = New-Object Collections.Stack; $stack.Push($r);
           while ($stack.Count) { $c = $stack.Pop(); $own = 0;
