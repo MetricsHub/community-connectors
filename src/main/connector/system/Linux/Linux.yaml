@@ -807,9 +807,10 @@ tools:
     description: Shows a systemd service in detail, with its state, main process, memory, restart count and last log lines, then its unit file and the drop-ins that override it. Use it on a failed, stopped or restarting service.
     parameters:
       service:
-        # The default pattern takes unit names: sshd, sshd.service, getty@tty1.service
         description: The systemd unit, e.g. sshd.service
         required: true
+        # The default pattern, but not empty: systemctl status without a unit shows the whole system
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_.@:-]*'
     sources:
       status:
         type: commandLine
@@ -826,6 +827,8 @@ tools:
       service:
         description: The systemd unit, e.g. sshd.service
         required: true
+        # The default pattern, but not empty: journalctl -u needs a unit
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_.@:-]*'
       lines:
         type: integer
         description: How many lines to return, 1 to 100000
