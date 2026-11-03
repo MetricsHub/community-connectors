@@ -94,12 +94,12 @@ translations:
 tools:
 
   vms:
-    description: Lists the virtual machines of the Hyper-V host with their VMId, state, status, CPU usage (percentage of the host), assigned and demanded memory in megabytes, uptime, heartbeat and replication health. Use it when a VM is down or slow, or when the host lacks CPU or memory, then HyperV_vmDetails on a VM.
+    description: Lists the virtual machines of the Hyper-V host with their VMId, state, status, CPU usage (percentage of the host), assigned and demanded memory in megabytes, uptime, heartbeat and replication health. Use it when a VM is down or slow, or when the host lacks CPU or memory, then HyperV_vmDetails on a VM. A semicolon or a line break in a name or a status shows as a question mark, which the name parameter of the other HyperV tools rejects, so give the VMId of such a VM (and of any VM whose name that parameter rejects) to HyperV_vmDetails and HyperV_controlVm.
     sources:
       vms:
         type: commandLine
         commandLine: >-
-          PowerShell.exe -NoProfile -NonInteractive -Command "Get-VM | ForEach-Object { '{0};{1};{2};{3};{4};{5};{6};{7};{8};{9}' -f $_.Name, $_.VMId, $_.State, $_.Status, $_.CPUUsage, [math]::Round($_.MemoryAssigned / 1MB), [math]::Round($_.MemoryDemand / 1MB), $_.Uptime.ToString(), $_.Heartbeat, $_.ReplicationHealth };
+          PowerShell.exe -NoProfile -NonInteractive -Command "Get-VM | ForEach-Object { '{0};{1};{2};{3};{4};{5};{6};{7};{8};{9}' -f ($_.Name -replace '[;\r\n]', '?'), $_.VMId, $_.State, ($_.Status -replace '[;\r\n]', '?'), $_.CPUUsage, [math]::Round($_.MemoryAssigned / 1MB), [math]::Round($_.MemoryDemand / 1MB), $_.Uptime.ToString(), $_.Heartbeat, $_.ReplicationHealth };
           exit 0" 2>&1
     result:
       source: ${source::vms}
