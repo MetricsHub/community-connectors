@@ -470,7 +470,7 @@ monitors:
 tools:
 
   threadPools:
-    description: Lists the thread pools of the node (ReadStage, MutationStage, CompactionExecutor, MemtableFlushWriter, Native-Transport-Requests...), the largest backlog first, with their path (request, internal, transport), active tasks, maximum threads, pending tasks, currently blocked tasks, blocked tasks since start and completed tasks. Use it when requests are slow or time out. Pending tasks on ReadStage or MutationStage point to Cassandra_tableStats (sortBy readLatency or writeLatency); on CompactionExecutor to Cassandra_compactions; blocked tasks on MemtableFlushWriter mean slow flushes (disk). Then check Cassandra_droppedMessages.
+    description: Lists the thread pools of the node (ReadStage, MutationStage, CompactionExecutor, MemtableFlushWriter, Native-Transport-Requests...), the largest backlog first, with their path (request, internal, transport), active tasks, maximum threads, pending tasks, currently blocked tasks, blocked tasks since start and completed tasks. Use it when requests are slow or time out. Pending tasks on ReadStage or MutationStage point to Cassandra_tableStats (sortBy readLatency or writeLatency); on CompactionExecutor to Cassandra_compactions; blocked tasks on MemtableFlushWriter mean slow flushes (disk). Then check Cassandra_droppedMessages. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials).
     sources:
       # scope;path;name;Value or Count
       active:
@@ -517,11 +517,12 @@ tools:
         - type: awk
           script: |
             BEGIN { FS = ";" }
-            NF >= 4 { k = $1 ";" $2; pools[k] = 1; v[k ";" $3] = $4 }
+            NF >= 4 { answered = 1; k = $1 ";" $2; pools[k] = 1; v[k ";" $3] = $4 }
             END {
               for (k in pools) {
                 print k ";" v[k ";ActiveTasks"] ";" v[k ";MaxPoolSize"] ";" v[k ";PendingTasks"] ";" v[k ";CurrentlyBlockedTasks"] ";" v[k ";TotalBlockedTasks"] ";" v[k ";CompletedTasks"]
               }
+              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;"
             }
         - type: sort
           column: 5
@@ -532,7 +533,7 @@ tools:
       columns: [ pool, path, active, maxThreads, pending, currentlyBlocked, totalBlocked, completed ]
 
   droppedMessages:
-    description: Lists the message types (MUTATION, READ, HINT, RANGE_SLICE, COUNTER_MUTATION, READ_REPAIR...) the node dropped since it started, the most dropped first, with the count and the rate per second over the last minute and the last 15 minutes. Since Cassandra 4.0, a type is listed under its old name and its new one too (READ and READ_REQ), with the same counts. A message is dropped when it waited longer than its timeout, so the client got a timeout and, for a mutation, the replica misses the write until hints or a repair deliver it. An empty table means that the node dropped no message. Use it after timeouts; then Cassandra_threadPools for the saturated stage.
+    description: Lists the message types (MUTATION, READ, HINT, RANGE_SLICE, COUNTER_MUTATION, READ_REPAIR...) the node dropped since it started, the most dropped first, with the count and the rate per second over the last minute and the last 15 minutes. Since Cassandra 4.0, a type is listed under its old name and its new one too (READ and READ_REQ), with the same counts. A message is dropped when it waited longer than its timeout, so the client got a timeout and, for a mutation, the replica misses the write until hints or a repair deliver it. An empty table means that the node dropped no message. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials). Use it after timeouts; then Cassandra_threadPools for the saturated stage.
     sources:
       dropped:
         type: jmx
@@ -540,9 +541,12 @@ tools:
         attributes: [ Count, OneMinuteRate, FifteenMinuteRate ]
         keyProperties: [ scope ]
         computes:
-        - type: excludeMatchingLines
-          column: 2
-          valueList: "0"
+        # Every message type has a row, even with 0 drops, when JMX answers
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            $2 + 0 > 0 { print }
+            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;" }
         - type: sort
           column: 2
           numeric: true
@@ -552,7 +556,7 @@ tools:
       columns: [ messageType, dropped, perSecondLastMinute, perSecondLast15Minutes ]
 
   compactions:
-    description: Lists the compactions running on the node (and the other operations of the compaction manager, such as validation for a repair, cleanup, index build or anticompaction), with their keyspace, table, operation, bytes completed and total, unit, progress percentage and compaction ID. An empty table means that none is running. Use it when CompactionExecutor has pending tasks or disk I/O is high; for the compactions waiting per table, call Cassandra_tableStats with sortBy pendingCompactions.
+    description: Lists the compactions running on the node (and the other operations of the compaction manager, such as validation for a repair, cleanup, index build or anticompaction), with their keyspace, table, operation, bytes completed and total, unit, progress percentage and compaction ID. An empty table means that none is running. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials). Use it when CompactionExecutor has pending tasks or disk I/O is high; for the compactions waiting per table, call Cassandra_tableStats with sortBy pendingCompactions.
     sources:
       running:
         type: jmx
@@ -578,12 +582,14 @@ tools:
                 print m["keyspace"] ";" m["columnfamily"] ";" m["taskType"] ";" m["completed"] ";" m["total"] ";" m["unit"] ";" progress ";" m["compactionId"]
               }
             }
+            # The attribute always gives one row ([] when idle) when JMX answers
+            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;" }
     result:
       source: ${source::running}
       columns: [ keyspace, table, operation, completed, total, unit, progressPercent, compactionId ]
 
   tableStats:
-    description: Returns the statistics of the tables of the node, like nodetool tablestats, one row per table, sorted on sortBy, the largest first. Columns are keyspace, table, local reads and writes since start with their 99th percentile latency in microseconds (over the last minutes), live SSTables, SSTables read per query (99th percentile), tombstones scanned per query (99th percentile and maximum), tombstone warnings and failures (queries aborted), the largest and mean partition sizes in bytes, the estimated partition count, the live disk space in bytes and the pending compactions. Use it to find the table behind slow reads (many SSTables per read, tombstones, a large partition), a compaction backlog or a full disk. With every keyspace, the system tables are listed too. An empty table means that no table matches.
+    description: Returns the statistics of the tables of the node, like nodetool tablestats, one row per table, sorted on sortBy, the largest first. Columns are keyspace, table, local reads and writes since start with their 99th percentile latency in microseconds (over the last minutes), live SSTables, SSTables read per query (99th percentile), tombstones scanned per query (99th percentile and maximum), tombstone warnings and failures (queries aborted), the largest and mean partition sizes in bytes, the estimated partition count, the live disk space in bytes and the pending compactions. Use it to find the table behind slow reads (many SSTables per read, tombstones, a large partition), a compaction backlog or a full disk. With every keyspace, the system tables are listed too. An empty table means that no table matches. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials).
     parameters:
       keyspace:
         description: The keyspace, e.g. my_app, or a pattern where * matches any characters, e.g. app_* (* for all the keyspaces)
@@ -659,9 +665,15 @@ tools:
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=PendingCompactions
         attributes: [ Value ]
         keyProperties: [ keyspace, scope, name ]
+      # Always one row when JMX answers, to tell "no table matches" from "no answer"
+      sentinel:
+        type: jmx
+        objectName: org.apache.cassandra.db:type=StorageService
+        attributes: [ OperationMode ]
       tables:
         type: tableUnion
         tables:
+        - ${source::sentinel}
         - ${source::readLatency}
         - ${source::writeLatency}
         - ${source::sstables}
@@ -675,9 +687,10 @@ tools:
         - ${source::diskSpace}
         - ${source::pendingCompactions}
         computes:
-        # sortKey;keyspace;table;readCount;readP99Micros;writeCount;writeP99Micros;sstables;sstablesPerReadP99;
+        # keyspace;table;readCount;readP99Micros;writeCount;writeP99Micros;sstables;sstablesPerReadP99;
         # tombstonesPerReadP99;tombstonesPerReadMax;tombstoneWarnings;tombstoneFailures;maxPartitionBytes;
-        # meanPartitionBytes;partitions;liveDiskBytes;pendingCompactions
+        # meanPartitionBytes;partitions;liveDiskBytes;pendingCompactions;sortKey
+        # (sortKey last and never empty: keepColumns leaves the whole table unchanged when a row is short)
         - type: awk
           script: |
             BEGIN {
@@ -686,27 +699,29 @@ tools:
               for (i in s) { split(s[i], kv, ":"); column[kv[1]] = kv[2] }
               sortColumn = column["${param::sortBy}"]
             }
+            NF > 0 && NF < 4 { answered = 1 }
             NF >= 4 { k = $1 ";" $2; tables[k] = 1; v[k ";" $3 ";1"] = $4; v[k ";" $3 ";2"] = $5 }
             END {
+              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;0"
               for (k in tables) {
                 n = split(k ";" v[k ";ReadLatency;1"] ";" v[k ";ReadLatency;2"] ";" v[k ";WriteLatency;1"] ";" v[k ";WriteLatency;2"] ";" v[k ";LiveSSTableCount;1"] ";" v[k ";SSTablesPerReadHistogram;1"] ";" v[k ";TombstoneScannedHistogram;1"] ";" v[k ";TombstoneScannedHistogram;2"] ";" v[k ";TombstoneWarnings;1"] ";" v[k ";TombstoneFailures;1"] ";" v[k ";MaxPartitionSize;1"] ";" v[k ";MeanPartitionSize;1"] ";" v[k ";EstimatedPartitionCount;1"] ";" v[k ";LiveDiskSpaceUsed;1"] ";" v[k ";PendingCompactions;1"], f, ";")
-                line = f[sortColumn]
-                for (i = 1; i <= n; i++) line = line ";" f[i]
-                print line
+                line = ""
+                for (i = 1; i <= n; i++) line = line f[i] ";"
+                print line (f[sortColumn] + 0)
               }
             }
         - type: sort
-          column: 1
+          column: 18
           numeric: true
           descending: true
         - type: keepColumns
-          columnNumbers: 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+          columnNumbers: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
     result:
       source: ${source::tables}
       columns: [ keyspace, table, readCount, readP99Micros, writeCount, writeP99Micros, sstables, sstablesPerReadP99, tombstonesPerReadP99, tombstonesPerReadMax, tombstoneWarnings, tombstoneFailures, maxPartitionBytes, meanPartitionBytes, partitions, liveDiskBytes, pendingCompactions ]
 
   clusterStatus:
-    description: Lists the nodes of the cluster as seen by this node, like nodetool status, with their address, status (UP, or DOWN when unreachable), state (NORMAL, JOINING, LEAVING, MOVING), data load, host ID and schema version, plus the operation mode of this node (NORMAL, STARTING, JOINING, LEAVING, DECOMMISSIONED, MOVING, DRAINING, DRAINED) on its own row. Use it when requests fail with Unavailable errors or a node seems down; nodes with different schema versions have a schema disagreement. Then Cassandra_droppedMessages and Cassandra_threadPools on the nodes that are UP.
+    description: Lists the nodes of the cluster as seen by this node, like nodetool status, with their address, status (UP, or DOWN when unreachable), state (NORMAL, JOINING, LEAVING, MOVING), data load, host ID and schema version, plus the operation mode of this node (NORMAL, STARTING, JOINING, LEAVING, DECOMMISSIONED, MOVING, DRAINING, DRAINED) on its own row. Use it when requests fail with Unavailable errors or a node seems down; nodes with different schema versions have a schema disagreement. Then Cassandra_droppedMessages and Cassandra_threadPools on the nodes that are UP. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials).
     sources:
       storageService:
         type: jmx
@@ -742,6 +757,7 @@ tools:
             }
             BEGIN { FS = ";" }
             NF >= 9 {
+              answered = 1
               list($1, live); list($2, down); list($3, joining); list($4, leaving); list($5, moving)
               map($6, load); map($7, hostId); localHostId = $8; mode = $9
             }
@@ -766,6 +782,7 @@ tools:
                 state = (node in joining) ? "JOINING" : ((node in leaving) ? "LEAVING" : ((node in moving) ? "MOVING" : "NORMAL"))
                 print node ";" status ";" state ";" load[node] ";" hostId[node] ";" schema[node] ";" ((hostId[node] == localHostId) ? mode : "")
               }
+              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
             }
     result:
       source: ${source::nodes}
