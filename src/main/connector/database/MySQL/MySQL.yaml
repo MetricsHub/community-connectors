@@ -251,3 +251,350 @@ monitors:
           db.server.table_locks{db.lock.state="immediate"}: $66 #Table_locks_immediate: Number of table locks which were completed immediately.
           db.server.table_locks{db.lock.state="waited"}: $67 #Table_locks_waited: Number of table locks which had to wait. Indicates table lock contention.
           
+
+tools:
+
+  sessions:
+    description: Lists the sessions of the server, the longest-running first, with their id, user, client host, database, command, seconds in the current state, state, InnoDB transaction (its age in seconds, state, rows locked and rows modified) and statement (its first 4096 characters). The idle sessions are left out, unless they hold an open transaction, which may block the others. Use it when the server is slow, connections pile up or queries hang, then MySQL_lockWaits, MySQL_explainQuery or MySQL_killSession on an id. Needs the PROCESS privilege.
+    parameters:
+      minimumSeconds:
+        type: integer
+        description: Only the sessions busy for at least this many seconds, in their state or their transaction, e.g. 60 for the long-running queries (0 for all)
+        default: 0
+        pattern: '[0-9]{1,6}'
+      includeIdle:
+        type: boolean
+        description: true to also list the idle sessions (Sleep) that hold no transaction
+        default: false
+    sources:
+      sessions:
+        type: sql
+        # The LEFT JOIN returns one empty row when no session matches, and no row when the query fails
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT p.ID, p.USER, p.HOST, p.DB, p.COMMAND, p.TIME AS seconds, p.STATE,
+              TIMESTAMPDIFF(SECOND, t.trx_started, NOW()) AS trxSeconds, t.trx_state, t.trx_rows_locked, t.trx_rows_modified,
+              REPLACE(REPLACE(LEFT(p.INFO, 4096), '\r', ' '), '\n', ' ') AS statement
+            FROM information_schema.PROCESSLIST p
+            LEFT JOIN information_schema.INNODB_TRX t ON t.trx_mysql_thread_id = p.ID
+            WHERE p.ID <> CONNECTION_ID()
+              AND (p.COMMAND NOT IN ('Sleep', 'Daemon') OR t.trx_id IS NOT NULL OR ${param::includeIdle})
+              AND GREATEST(p.TIME, IFNULL(TIMESTAMPDIFF(SECOND, t.trx_started, NOW()), 0)) >= ${param::minimumSeconds}
+          ) q ON TRUE
+          ORDER BY GREATEST(q.seconds, IFNULL(q.trxSeconds, 0)) DESC
+        computes:
+        - type: awk
+          script: |
+            /^;/ { next }
+            { print }
+            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
+    result:
+      source: ${source::sessions}
+      columns: [ id, user, host, db, command, seconds, state, trxSeconds, trxState, trxRowsLocked, trxRowsModified, statement ]
+
+  lockWaits:
+    description: Lists the sessions that wait for a lock and the sessions that hold it, the longest wait first, with the lock type (row for an InnoDB row lock, metadata for a table metadata lock, e.g. an ALTER TABLE that waits for a transaction to end), the waiting session id, the seconds waited, the locked table (and index), the lock mode, the waiting statement, the blocking session id, its age in seconds and its statement (empty when the blocking transaction is idle, not committed yet). For a metadata lock, every other session that holds a lock on the table is listed; the oldest transaction is usually the culprit. Use it when MySQL_sessions shows sessions that wait for a lock, then MySQL_killSession on the blocking id (connection, which rolls back its transaction). Needs the PROCESS privilege.
+    sources:
+      waits:
+        type: sql
+        # The LEFT JOIN returns one empty row when no session waits, and no row when the query fails
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT 'row' AS lockType, r.trx_mysql_thread_id, TIMESTAMPDIFF(SECOND, r.trx_wait_started, NOW()) AS waitSeconds,
+              CONCAT(l.OBJECT_SCHEMA, '.', l.OBJECT_NAME, IFNULL(CONCAT(' index ', l.INDEX_NAME), '')), l.LOCK_MODE,
+              REPLACE(REPLACE(LEFT(r.trx_query, 4096), '\r', ' '), '\n', ' '),
+              b.trx_mysql_thread_id AS blockingId, TIMESTAMPDIFF(SECOND, b.trx_started, NOW()),
+              REPLACE(REPLACE(LEFT(b.trx_query, 4096), '\r', ' '), '\n', ' ') AS blockingStatement
+            FROM performance_schema.data_lock_waits w
+            JOIN performance_schema.data_locks l ON l.ENGINE_LOCK_ID = w.REQUESTING_ENGINE_LOCK_ID
+            JOIN information_schema.INNODB_TRX r ON r.trx_id = w.REQUESTING_ENGINE_TRANSACTION_ID
+            JOIN information_schema.INNODB_TRX b ON b.trx_id = w.BLOCKING_ENGINE_TRANSACTION_ID
+            UNION ALL
+            SELECT DISTINCT 'metadata', wt.PROCESSLIST_ID, wt.PROCESSLIST_TIME,
+              CONCAT(p.OBJECT_SCHEMA, '.', p.OBJECT_NAME), p.LOCK_TYPE,
+              REPLACE(REPLACE(LEFT(wt.PROCESSLIST_INFO, 4096), '\r', ' '), '\n', ' '),
+              bt.PROCESSLIST_ID, bt.PROCESSLIST_TIME,
+              REPLACE(REPLACE(LEFT(bt.PROCESSLIST_INFO, 4096), '\r', ' '), '\n', ' ')
+            FROM performance_schema.metadata_locks p
+            JOIN performance_schema.metadata_locks g ON g.OBJECT_TYPE = p.OBJECT_TYPE AND g.OBJECT_SCHEMA = p.OBJECT_SCHEMA
+              AND g.OBJECT_NAME = p.OBJECT_NAME AND g.LOCK_STATUS = 'GRANTED' AND g.OWNER_THREAD_ID <> p.OWNER_THREAD_ID
+            JOIN performance_schema.threads wt ON wt.THREAD_ID = p.OWNER_THREAD_ID
+            JOIN performance_schema.threads bt ON bt.THREAD_ID = g.OWNER_THREAD_ID
+            WHERE p.LOCK_STATUS = 'PENDING' AND p.OBJECT_TYPE = 'TABLE'
+          ) q ON TRUE
+          ORDER BY q.waitSeconds DESC, q.blockingId
+        computes:
+        - type: awk
+          script: |
+            /^;/ { next }
+            { print }
+            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege and SELECT on performance_schema" }
+    result:
+      source: ${source::waits}
+      columns: [ lockType, waitingId, waitSeconds, lockedObject, lockMode, waitingStatement, blockingId, blockingSeconds, blockingStatement ]
+
+  innodbStatus:
+    description: Returns the output of SHOW ENGINE INNODB STATUS, one line per row, or only one of its sections. Use it after a deadlock (section LATEST DETECTED DEADLOCK shows both transactions, their statements and locks), on long semaphore waits (SEMAPHORES), or to see the open transactions (TRANSACTIONS), the I/O and the buffer pool. Needs the PROCESS privilege.
+    parameters:
+      section:
+        description: The section to return, or all
+        default: all
+        enum: [ all, BACKGROUND THREAD, SEMAPHORES, LATEST FOREIGN KEY ERROR, LATEST DETECTED DEADLOCK, TRANSACTIONS, FILE I/O, INSERT BUFFER AND ADAPTIVE HASH INDEX, LOG, BUFFER POOL AND MEMORY, ROW OPERATIONS ]
+    sources:
+      status:
+        type: sql
+        query: SHOW ENGINE INNODB STATUS
+        computes:
+        # Type;Name;Status, the Status spanning many lines. A section title stands between two lines of dashes.
+        - type: awk
+          script: |
+            BEGIN { section = "${param::section}" }
+            NR == 1 && /^InnoDB;/ { next }
+            { sub(/;$/, ""); line[++n] = $0 }
+            END {
+              if (NR == 0) { print "SHOW ENGINE INNODB STATUS failed: it needs the PROCESS privilege"; exit }
+              for (i = 1; i <= n; i++) {
+                if (line[i] ~ /^--*$/ && i + 2 <= n && line[i + 2] ~ /^--*$/) current = line[i + 1]
+                if (section == "all" || current == section) { print line[i]; found++ }
+              }
+              if (!found) print "No " section " section in the output (e.g. no deadlock since the server started)"
+            }
+    result:
+      source: ${source::status}
+
+  explainQuery:
+    description: Returns the execution plan of the statement that a session runs now (EXPLAIN FORMAT=TREE FOR CONNECTION), one line per row, with the estimated costs and rows of each step. Use it on a long-running query found with MySQL_sessions, to see a full table scan or a missing index. A statement of a stored procedure or an event has no plan here.
+    parameters:
+      id:
+        type: integer
+        description: The session id, from MySQL_sessions, e.g. 1234
+        required: true
+        pattern: '[1-9][0-9]{0,17}'
+    sources:
+      plan:
+        type: sql
+        query: EXPLAIN FORMAT=TREE FOR CONNECTION ${param::id}
+        computes:
+        - type: awk
+          script: |
+            { sub(/;$/, ""); print }
+            END { if (NR == 0) print "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others)" }
+    result:
+      source: ${source::plan}
+
+  topStatements:
+    description: Lists the statements that cost the most since the server started (or the statistics were reset), from performance_schema, grouped by their normalized text, with the schema, the normalized text, the executions, the total seconds, the average and maximum milliseconds, the lock milliseconds, the rows examined, sent and affected, the errors, the warnings, the executions without a good index, the temporary tables on disk, and when they ran first and last. Use it when the server is busy or slow without one long-running query, to find the statements to tune, then MySQL_explainQuery while one runs.
+    parameters:
+      sortBy:
+        description: What the statements are sorted on, the largest first
+        default: totalTime
+        enum: [ totalTime, averageTime, executions, rowsExamined, errors, noIndexUsed ]
+      schema:
+        description: Only the statements run with this default schema (the database of the session), e.g. shop (empty for all)
+        default: ''
+      count:
+        type: integer
+        description: How many statements to return, 1 to 99999
+        default: 20
+        pattern: '[1-9][0-9]{0,4}'
+    sources:
+      statements:
+        type: sql
+        # The LEFT JOIN returns one empty row when no statement matches, and no row when the query fails
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT IFNULL(SCHEMA_NAME, '(none)') AS schemaName, REPLACE(REPLACE(DIGEST_TEXT, '\r', ' '), '\n', ' '), COUNT_STAR,
+              ROUND(SUM_TIMER_WAIT / 1e12, 3), ROUND(AVG_TIMER_WAIT / 1e9, 3), ROUND(MAX_TIMER_WAIT / 1e9, 3),
+              ROUND(SUM_LOCK_TIME / 1e9, 3), SUM_ROWS_EXAMINED, SUM_ROWS_SENT, SUM_ROWS_AFFECTED, SUM_ERRORS, SUM_WARNINGS,
+              SUM_NO_INDEX_USED + SUM_NO_GOOD_INDEX_USED, SUM_CREATED_TMP_DISK_TABLES, FIRST_SEEN, LAST_SEEN,
+              CASE '${param::sortBy}'
+                WHEN 'averageTime' THEN AVG_TIMER_WAIT
+                WHEN 'executions' THEN COUNT_STAR
+                WHEN 'rowsExamined' THEN SUM_ROWS_EXAMINED
+                WHEN 'errors' THEN SUM_ERRORS
+                WHEN 'noIndexUsed' THEN SUM_NO_INDEX_USED + SUM_NO_GOOD_INDEX_USED
+                ELSE SUM_TIMER_WAIT
+              END AS sortKey
+            FROM performance_schema.events_statements_summary_by_digest
+            WHERE '${param::schema}' IN ('', SCHEMA_NAME)
+            ORDER BY sortKey DESC
+            LIMIT ${param::count}
+          ) q ON TRUE
+          ORDER BY q.sortKey DESC
+        computes:
+        - type: awk
+          script: |
+            /^;/ { next }
+            { print }
+            END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
+        # Without the sort key
+        - type: keepColumns
+          columnNumbers: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+    result:
+      source: ${source::statements}
+      columns: [ schema, statement, executions, totalSeconds, averageMs, maxMs, lockMs, rowsExamined, rowsSent, rowsAffected, errors, warnings, noIndexUsed, tmpDiskTables, firstSeen, lastSeen ]
+
+  replicationStatus:
+    description: Shows the state of each replication channel of this replica, from performance_schema, with the source (host and port), the state of the receiver (I/O) and applier (SQL) threads, the lag in seconds (while a transaction is applied, the age of its commit on the source; 0 when the applier is idle), the last receiver error, the last applier errors, and the last heartbeat from the source. Use it when a replica lags or its replication stopped.
+    sources:
+      channels:
+        type: sql
+        # The LEFT JOIN returns one empty row when there is no channel, and no row when the query fails
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT IF(c.CHANNEL_NAME = '', '(default)', c.CHANNEL_NAME) AS channel, CONCAT(cc.HOST, ':', cc.PORT), c.SERVICE_STATE AS receiverState, a.SERVICE_STATE,
+              IFNULL(MAX(IF(w.APPLYING_TRANSACTION = '', NULL, TIMESTAMPDIFF(SECOND, w.APPLYING_TRANSACTION_ORIGINAL_COMMIT_TIMESTAMP, NOW(6)))), 0),
+              IF(c.LAST_ERROR_NUMBER = 0, '', CONCAT(c.LAST_ERROR_NUMBER, ' ', c.LAST_ERROR_MESSAGE, ' at ', c.LAST_ERROR_TIMESTAMP)),
+              IFNULL(GROUP_CONCAT(DISTINCT IF(w.LAST_ERROR_NUMBER = 0, NULL, CONCAT(w.LAST_ERROR_NUMBER, ' ', w.LAST_ERROR_MESSAGE, ' at ', w.LAST_ERROR_TIMESTAMP)) SEPARATOR ' | '), ''),
+              c.LAST_HEARTBEAT_TIMESTAMP
+            FROM performance_schema.replication_connection_status c
+            JOIN performance_schema.replication_connection_configuration cc ON cc.CHANNEL_NAME = c.CHANNEL_NAME
+            JOIN performance_schema.replication_applier_status a ON a.CHANNEL_NAME = c.CHANNEL_NAME
+            LEFT JOIN performance_schema.replication_applier_status_by_worker w ON w.CHANNEL_NAME = c.CHANNEL_NAME
+            GROUP BY c.CHANNEL_NAME, cc.HOST, cc.PORT, c.SERVICE_STATE, a.SERVICE_STATE, c.LAST_ERROR_NUMBER, c.LAST_ERROR_MESSAGE,
+              c.LAST_ERROR_TIMESTAMP, c.LAST_HEARTBEAT_TIMESTAMP
+          ) q ON TRUE
+          ORDER BY q.channel
+        computes:
+        - type: awk
+          script: |
+            /^;/ { print "No replication channel: this server is not a replica"; next }
+            { print }
+            END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
+    result:
+      source: ${source::channels}
+      columns: [ channel, source, receiverState, applierState, lagSeconds, receiverError, applierErrors, lastHeartbeat ]
+
+  schemaSizes:
+    description: Lists the schemas and the shared InnoDB tablespaces (system, undo, temporary), the largest first, with the number of tables, the estimated rows, the data and index bytes (statistics that may be up to a day old, see information_schema_stats_expiry) and the bytes their InnoDB files take on disk now (the tables of the mysql schema are in the mysql tablespace). Use it when the file system of the data directory fills up, then MySQL_tableSizes on a schema. Needs the PROCESS privilege.
+    sources:
+      schemas:
+        type: sql
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT t.TABLE_SCHEMA AS name, COUNT(*), SUM(t.TABLE_ROWS), SUM(t.DATA_LENGTH) AS dataBytes, SUM(t.INDEX_LENGTH) AS indexBytes,
+              SUM(ts.ALLOCATED_SIZE) AS diskBytes
+            FROM information_schema.TABLES t
+            LEFT JOIN information_schema.INNODB_TABLESPACES ts ON ts.NAME = CONCAT(t.TABLE_SCHEMA, '/', t.TABLE_NAME)
+            WHERE t.TABLE_TYPE = 'BASE TABLE'
+            GROUP BY t.TABLE_SCHEMA
+            UNION ALL
+            SELECT CONCAT('tablespace ', NAME), NULL, NULL, NULL, NULL, ALLOCATED_SIZE
+            FROM information_schema.INNODB_TABLESPACES
+            WHERE NAME NOT LIKE '%/%'
+          ) q ON TRUE
+          ORDER BY GREATEST(IFNULL(q.diskBytes, 0), IFNULL(q.dataBytes, 0) + IFNULL(q.indexBytes, 0)) DESC
+        computes:
+        - type: awk
+          script: |
+            /^;/ { next }
+            { print }
+            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
+    result:
+      source: ${source::schemas}
+      columns: [ name, tables, rows, dataBytes, indexBytes, diskBytes ]
+
+  tableSizes:
+    description: Lists the largest tables, with their schema, name, engine, estimated rows, data, index and free bytes (statistics that may be up to a day old, see information_schema_stats_expiry) and the bytes their InnoDB file takes on disk now (empty for a partitioned table or a table in a shared tablespace, whose free bytes are those of the tablespace). OPTIMIZE TABLE gives the free bytes of a table file back. Use it after MySQL_schemaSizes to find what fills a schema. Needs the PROCESS privilege.
+    parameters:
+      schema:
+        description: Only the tables of this schema, e.g. shop (empty for all)
+        default: ''
+      count:
+        type: integer
+        description: How many tables to return, 1 to 99999
+        default: 50
+        pattern: '[1-9][0-9]{0,4}'
+    sources:
+      tables:
+        type: sql
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT t.TABLE_SCHEMA, t.TABLE_NAME, t.ENGINE, t.TABLE_ROWS, t.DATA_LENGTH, t.INDEX_LENGTH, t.DATA_FREE, ts.ALLOCATED_SIZE,
+              GREATEST(IFNULL(ts.ALLOCATED_SIZE, 0), IFNULL(t.DATA_LENGTH, 0) + IFNULL(t.INDEX_LENGTH, 0)) AS sortKey
+            FROM information_schema.TABLES t
+            LEFT JOIN information_schema.INNODB_TABLESPACES ts ON ts.NAME = CONCAT(t.TABLE_SCHEMA, '/', t.TABLE_NAME)
+            WHERE t.TABLE_TYPE = 'BASE TABLE' AND '${param::schema}' IN ('', t.TABLE_SCHEMA)
+            ORDER BY sortKey DESC
+            LIMIT ${param::count}
+          ) q ON TRUE
+          ORDER BY q.sortKey DESC
+        computes:
+        - type: awk
+          script: |
+            /^;/ { next }
+            { print }
+            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
+        # Without the sort key
+        - type: keepColumns
+          columnNumbers: 1,2,3,4,5,6,7,8
+    result:
+      source: ${source::tables}
+      columns: [ schema, table, engine, rows, dataBytes, indexBytes, freeBytes, diskBytes ]
+
+  variables:
+    description: Lists the global system variables whose name contains a text, with their value, where it was set (COMPILED for the default, GLOBAL for the option file, PERSISTED, DYNAMIC for SET GLOBAL at runtime...), the option file and when it was set. Use it to check the configuration behind a problem, e.g. max_connections when connections are refused, innodb_buffer_pool_size, long_query_time or innodb_lock_wait_timeout.
+    parameters:
+      name:
+        description: Text that the variable names contain, matched with LIKE (% matches any text and _ any character), e.g. timeout (empty for all)
+        default: ''
+        # Only inside a quoted LIKE pattern, escaped
+        pattern: '[A-Za-z0-9_%]{0,64}'
+    sources:
+      variables:
+        type: sql
+        # The LEFT JOIN returns one empty row when no variable matches, and no row when the query fails
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT g.VARIABLE_NAME AS name, REPLACE(REPLACE(g.VARIABLE_VALUE, '\r', ' '), '\n', ' '), i.VARIABLE_SOURCE, i.VARIABLE_PATH, i.SET_TIME
+            FROM performance_schema.global_variables g
+            LEFT JOIN performance_schema.variables_info i ON i.VARIABLE_NAME = g.VARIABLE_NAME
+            WHERE g.VARIABLE_NAME LIKE '%${esc(sql)::param::name}%'
+          ) q ON TRUE
+          ORDER BY q.name
+        computes:
+        - type: awk
+          script: |
+            /^;/ { print "No variable matches"; next }
+            { print }
+            END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
+    result:
+      source: ${source::variables}
+      columns: [ name, value, source, file, setTime ]
+
+  killSession:
+    description: Stops the statement that a session runs (query), or closes the session (connection), which also rolls back its open transaction and releases its locks. Returns the session as it is afterwards, or that it is gone. Use it on a runaway query or a blocking session found with MySQL_sessions or MySQL_lockWaits, only when the user asks for it. Killing the session of another user needs CONNECTION_ADMIN (or SUPER).
+    destructive: true
+    parameters:
+      id:
+        type: integer
+        description: The session id, from MySQL_sessions or MySQL_lockWaits, e.g. 1234
+        required: true
+        pattern: '[1-9][0-9]{0,17}'
+      what:
+        description: query (the default) stops the statement and keeps the session, connection closes the session
+        default: query
+        enum: [ query, connection ]
+    executionOrder: [ kill, session ]
+    sources:
+      kill:
+        type: sql
+        query: KILL ${param::what} ${param::id}
+      session:
+        type: sql
+        # The LEFT JOIN returns one empty row when the session is gone
+        query: |
+          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+            SELECT ID, USER, HOST, DB, COMMAND, TIME, STATE, REPLACE(REPLACE(LEFT(INFO, 4096), '\r', ' '), '\n', ' ')
+            FROM information_schema.PROCESSLIST
+            WHERE ID = ${param::id}
+          ) q ON TRUE
+        computes:
+        - type: awk
+          script: |
+            /^;/ { print "There is no session ${param::id} (any more)"; next }
+            { print }
+            END { if (NR == 0) print "The check of session ${param::id} failed" }
+    result:
+      source: ${source::session}
+      columns: [ id, user, host, db, command, seconds, state, statement ]
