@@ -557,3 +557,35 @@ translations:
     "53256": degraded
     "8": ok
     "9": ok
+
+# Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md). The commands run through
+# cmd.exe, which fails the whole source when a command exits with a code other than 0: they end with "exit 0".
+tools:
+
+  physicalDisks:
+    description: Lists the physical disks with their device ID, name, serial number, media and bus types, size in GB, usage (Auto-Select, Hot Spare, Retired...), health and operational status, and their reliability counters (temperature in Celsius, wear percentage, total read and write errors, power-on hours), which need administrator rights and are empty where the disk does not report them. Use it when a disk, a storage pool or a virtual disk is degraded, to find the failing disk; then WinStorageSpaces_virtualDisks for the repairs.
+    sources:
+      disks:
+        type: commandLine
+        # The reliability counters take about a second per disk: 95 s for 127 SAN volumes
+        timeout: 300
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "Get-PhysicalDisk | ForEach-Object { $r = $_ | Get-StorageReliabilityCounter -ErrorAction SilentlyContinue;
+          '{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13}' -f $_.DeviceId, $_.FriendlyName, $_.SerialNumber, $_.MediaType, $_.BusType, [math]::Round($_.Size / 1GB), $_.Usage, $_.HealthStatus, ($_.OperationalStatus -join ','), $r.Temperature, $r.Wear, $r.ReadErrorsTotal, $r.WriteErrorsTotal, $r.PowerOnHours };
+          exit 0" 2>&1
+    result:
+      source: ${source::disks}
+      columns: [ deviceId, name, serialNumber, mediaType, busType, sizeGB, usage, health, operationalStatus, temperature, wearPercent, readErrors, writeErrors, powerOnHours ]
+
+  virtualDisks:
+    description: Shows the storage pools (a primordial pool holds the disks that are in no pool), their virtual disks (Storage Spaces) with their resiliency, health, operational status, size and footprint on the pool in bytes, and the storage jobs, such as the repairs and rebalances that follow a disk replacement, with their progress. Use it when a virtual disk is degraded or detached, or to follow a repair; WinStorageSpaces_physicalDisks finds the failing disk.
+    sources:
+      spaces:
+        type: commandLine
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "'Storage pools:'; Get-StoragePool | Format-Table -AutoSize FriendlyName, IsPrimordial, HealthStatus, OperationalStatus, IsReadOnly, Size, AllocatedSize | Out-String -Width 512;
+          'Virtual disks:'; Get-VirtualDisk | Format-Table -AutoSize FriendlyName, ResiliencySettingName, NumberOfDataCopies, PhysicalDiskRedundancy, HealthStatus, OperationalStatus, DetachedReason, Size, FootprintOnPool | Out-String -Width 512;
+          'Storage jobs:'; Get-StorageJob | Format-Table -AutoSize Name, JobState, PercentComplete, BytesProcessed, BytesTotal, ElapsedTime | Out-String -Width 512;
+          exit 0" 2>&1
+    result:
+      source: ${source::spaces}

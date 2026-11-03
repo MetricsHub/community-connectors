@@ -88,3 +88,66 @@ translations:
     Default: "off"
     Running: "on"
     Suspended: suspended
+
+# Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md). The commands run through
+# cmd.exe, which fails the whole source when a command exits with a code other than 0: they end with "exit 0".
+tools:
+
+  vms:
+    description: Lists the virtual machines of the Hyper-V host with their state, status, CPU usage (percentage of the host), assigned and demanded memory in megabytes, uptime, heartbeat and replication health. Use it when a VM is down or slow, or when the host lacks CPU or memory, then HyperV_vmDetails on a VM.
+    sources:
+      vms:
+        type: commandLine
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "Get-VM | ForEach-Object { '{0};{1};{2};{3};{4};{5};{6};{7};{8}' -f $_.Name, $_.State, $_.Status, $_.CPUUsage, [math]::Round($_.MemoryAssigned / 1MB), [math]::Round($_.MemoryDemand / 1MB), $_.Uptime.ToString(), $_.Heartbeat, $_.ReplicationHealth };
+          exit 0" 2>&1
+    result:
+      source: ${source::vms}
+      columns: [ name, state, status, cpuPercent, memoryAssignedMB, memoryDemandMB, uptime, heartbeat, replicationHealth ]
+
+  vmDetails:
+    description: Shows a virtual machine in detail, with its state, processors, memory (dynamic memory, demand), uptime, integration services, replication, automatic start and stop actions, network adapters with their addresses, virtual disks with their size and file size, and checkpoints, which grow their differencing disks. Use it on a VM from HyperV_vms.
+    parameters:
+      name:
+        description: The name of the virtual machine, e.g. web-01
+        required: true
+        # No wildcard (* ? [ ]), no quote
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_ .,@()+#-]{0,254}'
+    sources:
+      vm:
+        type: commandLine
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "try { $v = Get-VM -Name '${esc(powershell)::param::name}' -ErrorAction Stop } catch { 'Failed: ' + $_.Exception.Message; exit 0 };
+          $v | Format-List Name, Id, State, Status, Uptime, CPUUsage, ProcessorCount, MemoryStartup, DynamicMemoryEnabled, MemoryMinimum, MemoryMaximum, MemoryAssigned, MemoryDemand, MemoryStatus, Heartbeat, IntegrationServicesState, ReplicationState, ReplicationHealth, Generation, Version, Path, CheckpointType, AutomaticStartAction, AutomaticStopAction, Notes;
+          'Network adapters:'; Get-VMNetworkAdapter -VM $v | Format-Table -AutoSize Name, SwitchName, Status, MacAddress, IPAddresses | Out-String -Width 512;
+          'Virtual disks:'; Get-VMHardDiskDrive -VM $v | ForEach-Object { $_ | Format-List ControllerType, ControllerNumber, ControllerLocation, Path; Get-VHD -Path $_.Path | Format-List VhdType, Size, FileSize, FragmentationPercentage, ParentPath };
+          'Checkpoints:'; Get-VMSnapshot -VM $v | Format-Table -AutoSize Name, SnapshotType, CreationTime, ParentSnapshotName | Out-String -Width 512;
+          'Integration services:'; Get-VMIntegrationService -VM $v | Format-Table -AutoSize Name, Enabled, PrimaryStatusDescription | Out-String -Width 512;
+          exit 0" 2>&1
+    result:
+      source: ${source::vm}
+
+  controlVm:
+    description: Starts a virtual machine, shuts it down through its operating system, turns it off (like pulling the plug), restarts it through its operating system, resets it (a hard reset), saves its state, pauses (suspend) or resumes it, then shows its state. A shutdown or a restart fails where the VM has no running shutdown integration service (a shutdown then reports the NonInteractive mode); turnOff or reset it then. Turning off and resetting lose the unsaved data of the VM. Use it only when the user asks, e.g. to restart a VM that hangs.
+    destructive: true
+    parameters:
+      name:
+        description: The name of the virtual machine, e.g. web-01
+        required: true
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_ .,@()+#-]{0,254}'
+      action:
+        description: What to do with the virtual machine
+        required: true
+        enum: [ start, shutdown, turnOff, restart, reset, save, suspend, resume ]
+    sources:
+      control:
+        type: commandLine
+        # A shutdown waits for the operating system of the VM
+        timeout: 600
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "$n = '${esc(powershell)::param::name}';
+          try { switch ('${param::action}') { 'start' { Start-VM -Name $n -ErrorAction Stop } 'shutdown' { Stop-VM -Name $n -ErrorAction Stop } 'turnOff' { Stop-VM -Name $n -TurnOff -Force -ErrorAction Stop } 'restart' { Restart-VM -Name $n -Type Reboot -Force -ErrorAction Stop } 'reset' { Restart-VM -Name $n -Type Reset -Force -ErrorAction Stop } 'save' { Save-VM -Name $n -ErrorAction Stop } 'suspend' { Suspend-VM -Name $n -ErrorAction Stop } 'resume' { Resume-VM -Name $n -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
+          Get-VM -Name $n | Format-List Name, State, Status, Uptime, Heartbeat;
+          exit 0" 2>&1
+    result:
+      source: ${source::control}
