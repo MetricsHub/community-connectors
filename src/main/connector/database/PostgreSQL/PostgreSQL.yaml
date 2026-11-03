@@ -274,7 +274,7 @@ monitors:
 tools:
 
   activeSessions:
-    description: Lists the sessions of the PostgreSQL server (all databases), the longest-running transaction or query first, with their PID, database, user, application, client address, backend type, state, wait event, how long their transaction and their current (or last) query have run in seconds, the PIDs that block them and their query. Idle sessions are left out unless asked for. Use it when queries are slow, connections pile up or a transaction stays "idle in transaction", then PostgreSQL_blockingLocks, PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on a PID. Without superuser or pg_read_all_stats, the sessions of other users only show their PID, database, user and application, with "<insufficient privilege>" as query.
+    description: Lists the sessions of the PostgreSQL server (all databases), the longest-running transaction or query first, with their PID, database, user, application, client address, backend type, state, wait event, how long their transaction and their current (or last) query have run in seconds, the PIDs that block them (0 for a prepared transaction, see PostgreSQL_blockingLocks) and their query. Idle sessions are left out unless asked for. Use it when queries are slow, connections pile up or a transaction stays "idle in transaction", then PostgreSQL_blockingLocks, PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on a PID. Without superuser or pg_read_all_stats, the sessions of other users only show their PID, database, user and application, with "<insufficient privilege>" as query.
     parameters:
       includeIdle:
         type: boolean
@@ -291,7 +291,8 @@ tools:
         query: |
           SELECT pid, datname, usename, application_name, host(client_addr), backend_type, state, wait_event_type, wait_event,
                  round(EXTRACT(EPOCH FROM now() - xact_start)::numeric, 1) AS transaction_seconds,
-                 round(EXTRACT(EPOCH FROM now() - query_start)::numeric, 1) AS query_seconds,
+                 -- An idle session keeps the start of its last query: that query ended at state_change
+                 round(EXTRACT(EPOCH FROM CASE WHEN state LIKE 'idle%' THEN state_change ELSE now() END - query_start)::numeric, 1) AS query_seconds,
                  -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
                  CASE WHEN pid IN (SELECT pid FROM pg_locks WHERE NOT granted) THEN array_to_string(pg_blocking_pids(pid), ' ') END AS blocked_by,
                  btrim(regexp_replace(query, '\s+', ' ', 'g')) AS query
@@ -325,7 +326,7 @@ tools:
       columns: [ database, user, application, clientAddress, state, sessions, oldestStateSeconds ]
 
   blockingLocks:
-    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds since its query started, the locks it waits for and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on the root blocker.
+    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds since its query started, the locks it waits for and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on the root blocker.
     sources:
       locks:
         type: sql
@@ -335,10 +336,14 @@ tools:
                  (SELECT string_agg(l.mode || ' on ' || COALESCE(l.relation::regclass::text, l.locktype), ', ')
                   FROM pg_locks l WHERE l.pid = w.pid AND NOT l.granted) AS waiting_for,
                  btrim(regexp_replace(w.query, '\s+', ' ', 'g')) AS waiting_query,
-                 b.pid, bs.usename, bs.state,
+                 b.pid, bs.usename, CASE WHEN b.pid = 0 THEN 'prepared transaction' ELSE bs.state END,
                  round(EXTRACT(EPOCH FROM now() - bs.xact_start)::numeric, 1) AS blocking_transaction_seconds,
                  cardinality(pg_blocking_pids(b.pid)) > 0 AS blocking_is_blocked,
-                 btrim(regexp_replace(bs.query, '\s+', ' ', 'g')) AS blocking_query
+                 -- PID 0 is a prepared transaction, which has no session
+                 CASE WHEN b.pid = 0
+                   THEN (SELECT 'Prepared transactions: ' || string_agg(format('GID %L by %s on %s since %s', gid, owner, database, prepared), ', ' ORDER BY prepared) FROM pg_prepared_xacts)
+                   ELSE btrim(regexp_replace(bs.query, '\s+', ' ', 'g'))
+                 END AS blocking_query
           FROM pg_stat_activity w
           CROSS JOIN LATERAL unnest(pg_blocking_pids(w.pid)) AS b(pid)
           LEFT JOIN pg_stat_activity bs ON bs.pid = b.pid
@@ -376,6 +381,9 @@ tools:
               -- Before 1.8 (e.g. after a pg_upgrade from PostgreSQL 12), the view has no total_exec_time
               WHEN (SELECT string_to_array(extversion, '.')::int[] < '{1,8}' FROM pg_extension WHERE extname = 'pg_stat_statements')
                 THEN 'pg_stat_statements ' || (SELECT extversion FROM pg_extension WHERE extname = 'pg_stat_statements') || ' is too old in database ' || current_database() || '; run ALTER EXTENSION pg_stat_statements UPDATE'
+              -- The extension may be created in a schema that is not in the search_path
+              WHEN to_regclass('pg_stat_statements') IS NULL
+                THEN 'The pg_stat_statements view is in schema ' || (SELECT extnamespace::regnamespace::text FROM pg_extension WHERE extname = 'pg_stat_statements') || ', not in the search_path of ' || current_user || ' (' || current_setting('search_path') || '); add it with ALTER ROLE ... SET search_path'
             END AS message
           ) m
           WHERE message IS NOT NULL
@@ -408,7 +416,7 @@ tools:
       columns: [ user, database, queryId, calls, totalMs, meanMs, maxMs, rows, sharedBlocksHit, sharedBlocksRead, tempBlocksWritten, query ]
 
   tableStatistics:
-    description: Lists the tables of the database MetricsHub connects to (not the other databases of the server), the largest first or sorted otherwise, with their schema, name, total, table and index size in bytes (empty while an ALTER TABLE, a VACUUM FULL or a REINDEX locks the table), live and dead rows, the percentage of dead rows, the rows modified since the last analyze, the last manual and automatic vacuum and analyze, the vacuum counts, the sequential and index scans, and the age of their oldest transaction ID (or of their TOAST table, if older). Use it when a database grows, queries slow down (dead rows, bloat, stale statistics, sequential scans of large tables), or the transaction ID age nears autovacuum_freeze_max_age (200 million by default) or the wraparound (2 billion).
+    description: Lists the tables of the database MetricsHub connects to (not the other databases of the server), the largest first or sorted otherwise, with their schema, name, total, table and index size in bytes (empty while an ALTER TABLE, a VACUUM FULL or a REINDEX locks the table), live and dead rows, the percentage of dead rows, the rows modified since the last analyze, the last manual and automatic vacuum and analyze, the vacuum counts, the sequential and index scans, and the age of their oldest transaction ID (or of their TOAST table, if older; empty for a partitioned table, whose partitions hold the rows). Use it when a database grows, queries slow down (dead rows, bloat, stale statistics, sequential scans of large tables), or the transaction ID age nears autovacuum_freeze_max_age (200 million by default) or the wraparound (2 billion).
     parameters:
       sortBy:
         description: What the tables are sorted on, the largest first
@@ -430,7 +438,8 @@ tools:
                    s.n_mod_since_analyze, s.last_vacuum, s.last_autovacuum, s.last_analyze, s.last_autoanalyze,
                    s.vacuum_count, s.autovacuum_count, s.seq_scan, s.idx_scan,
                    -- The TOAST table is frozen separately and may be older
-                   greatest(age(c.relfrozenxid), age(toast.relfrozenxid)) AS xid_age
+                   -- A partitioned table has no storage, so no frozen XID (age() says 2147483647): its partitions are listed
+                   CASE WHEN c.relkind <> 'p' THEN greatest(age(c.relfrozenxid), age(toast.relfrozenxid)) END AS xid_age
             FROM pg_stat_user_tables s
             JOIN pg_class c ON c.oid = s.relid
             LEFT JOIN pg_class toast ON toast.oid = c.reltoastrelid
@@ -460,14 +469,17 @@ tools:
       columns: [ schema, table, totalBytes, tableBytes, indexBytes, liveRows, deadRows, deadPercent, modifiedSinceAnalyze, lastVacuum, lastAutovacuum, lastAnalyze, lastAutoanalyze, vacuumCount, autovacuumCount, sequentialScans, indexScans, xidAge ]
 
   databases:
-    description: Lists the databases of the PostgreSQL server, the largest first, with their size in bytes (empty without the CONNECT privilege), sessions, connection limit (-1 for none), the age of their oldest transaction ID and its percentage of the wraparound limit (PostgreSQL stops accepting writes near 100), deadlocks, temporary bytes written, cache hit percentage, and when their statistics were reset. Use it when the disk fills up, to find the largest database, or when the transaction ID age grows, then PostgreSQL_tableStatistics on that database.
+    description: Lists the databases of the PostgreSQL server, the largest first, with their size in bytes (empty without the CONNECT privilege or pg_read_all_stats), client sessions, connection limit (-1 for none), the age of their oldest transaction ID and its percentage of the wraparound limit (PostgreSQL stops accepting writes near 100), deadlocks, temporary bytes written, cache hit percentage, and when their statistics were reset. Use it when the disk fills up, to find the largest database, or when the transaction ID age grows, then PostgreSQL_tableStatistics on that database.
     sources:
       databases:
         type: sql
         query: |
           SELECT d.datname,
-                 CASE WHEN has_database_privilege(d.oid, 'CONNECT') THEN pg_database_size(d.oid) END AS size_bytes,
-                 (SELECT count(*) FROM pg_stat_activity a WHERE a.datid = d.oid) AS sessions,
+                 -- pg_database_size() fails without CONNECT on the database or the privileges of pg_read_all_stats
+                 CASE WHEN has_database_privilege(d.oid, 'CONNECT') OR pg_has_role('pg_read_all_stats', 'USAGE') THEN pg_database_size(d.oid) END AS size_bytes,
+                 -- Client sessions only, not the autovacuum or parallel workers (without pg_read_all_stats, other users' have no backend type)
+                 (SELECT count(*) FROM pg_stat_activity a WHERE a.datid = d.oid
+                    AND (a.backend_type = 'client backend' OR (a.backend_type IS NULL AND a.usename IS NOT NULL))) AS sessions,
                  d.datconnlimit, age(d.datfrozenxid) AS xid_age, round(100.0 * age(d.datfrozenxid) / 2147483647, 1) AS wraparound_percent,
                  s.deadlocks, s.temp_bytes, round(100.0 * s.blks_hit / NULLIF(s.blks_hit + s.blks_read, 0), 1) AS cache_hit_percent, s.stats_reset
           FROM pg_database d
