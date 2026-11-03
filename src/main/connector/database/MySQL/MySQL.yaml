@@ -255,7 +255,7 @@ monitors:
 tools:
 
   sessions:
-    description: Lists the sessions of the server, the longest-running first, with their id, user, client host, database, command, seconds in the current state, state, InnoDB transaction (its age in seconds, state, rows locked and rows modified) and statement (its first 4096 characters). The idle sessions are left out, unless they hold an open transaction, which may block the others. Use it when the server is slow, connections pile up or queries hang, then MySQL_lockWaits, MySQL_explainQuery or MySQL_killSession on an id. Needs the PROCESS privilege.
+    description: Lists the sessions of the server, the longest-running first, with their id, user, client host, database, command, seconds in the current state, state, InnoDB transaction (its age in seconds, state, rows locked and rows modified) and statement (its first 4096 characters). The idle sessions are left out, unless they hold an open transaction, which may block the others, and so are the server threads (replication, event scheduler, Binlog Dump to a replica), which must not be killed. Use it when the server is slow, connections pile up or queries hang, then MySQL_lockWaits, MySQL_explainQuery or MySQL_killSession on an id. Needs the PROCESS privilege.
     parameters:
       minimumSeconds:
         type: integer
@@ -264,14 +264,15 @@ tools:
         pattern: '[0-9]{1,6}'
       includeIdle:
         type: boolean
-        description: true to also list the idle sessions (Sleep) that hold no transaction
+        description: true to also list the idle sessions (Sleep) that hold no transaction and the server threads (system user, event_scheduler, Binlog Dump)
         default: false
     sources:
       sessions:
         type: sql
+        # The driving row reads INNODB_TRX, so that the query fails without the PROCESS privilege (PROCESSLIST would show only the own sessions).
         # The LEFT JOIN returns one empty row when no session matches, and no row when the query fails
         query: |
-          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+          SELECT q.* FROM (SELECT COUNT(*) AS n FROM information_schema.INNODB_TRX) d LEFT JOIN (
             SELECT p.ID, p.USER, p.HOST, p.DB, p.COMMAND, p.TIME AS seconds, p.STATE,
               TIMESTAMPDIFF(SECOND, t.trx_started, NOW()) AS trxSeconds, t.trx_state, t.trx_rows_locked, t.trx_rows_modified,
               REPLACE(REPLACE(LEFT(p.INFO, 4096), '\r', ' '), '\n', ' ') AS statement
@@ -279,6 +280,7 @@ tools:
             LEFT JOIN information_schema.INNODB_TRX t ON t.trx_mysql_thread_id = p.ID
             WHERE p.ID <> CONNECTION_ID()
               AND (p.COMMAND NOT IN ('Sleep', 'Daemon') OR t.trx_id IS NOT NULL OR ${param::includeIdle})
+              AND ((p.USER <> 'system user' AND p.COMMAND NOT LIKE 'Binlog Dump%') OR ${param::includeIdle})
               AND GREATEST(p.TIME, IFNULL(TIMESTAMPDIFF(SECOND, t.trx_started, NOW()), 0)) >= ${param::minimumSeconds}
           ) q ON TRUE
           ORDER BY GREATEST(q.seconds, IFNULL(q.trxSeconds, 0)) DESC
@@ -348,13 +350,18 @@ tools:
         # Type;Name;Status, the Status spanning many lines. A section title stands between two lines of dashes.
         - type: awk
           script: |
-            BEGIN { section = "${param::section}" }
+            BEGIN {
+              section = "${param::section}"
+              # Only these titles start a section: others (e.g. INDIVIDUAL BUFFER POOL INFO) are sub-sections
+              k = split("BACKGROUND THREAD|SEMAPHORES|LATEST FOREIGN KEY ERROR|LATEST DETECTED DEADLOCK|TRANSACTIONS|FILE I/O|INSERT BUFFER AND ADAPTIVE HASH INDEX|LOG|BUFFER POOL AND MEMORY|ROW OPERATIONS", t, "|")
+              for (j = 1; j <= k; j++) titles[t[j]] = 1
+            }
             NR == 1 && /^InnoDB;/ { next }
             { sub(/;$/, ""); line[++n] = $0 }
             END {
               if (NR == 0) { print "SHOW ENGINE INNODB STATUS failed: it needs the PROCESS privilege"; exit }
               for (i = 1; i <= n; i++) {
-                if (line[i] ~ /^--*$/ && i + 2 <= n && line[i + 2] ~ /^--*$/) current = line[i + 1]
+                if (line[i] ~ /^--*$/ && i + 2 <= n && line[i + 2] ~ /^--*$/ && (line[i + 1] in titles)) current = line[i + 1]
                 if (section == "all" || current == section) { print line[i]; found++ }
               }
               if (!found) print "No " section " section in the output (e.g. no deadlock since the server started)"
@@ -435,7 +442,7 @@ tools:
       columns: [ schema, statement, executions, totalSeconds, averageMs, maxMs, lockMs, rowsExamined, rowsSent, rowsAffected, errors, warnings, noIndexUsed, tmpDiskTables, firstSeen, lastSeen ]
 
   replicationStatus:
-    description: Shows the state of each replication channel of this replica, from performance_schema, with the source (host and port), the state of the receiver (I/O) and applier (SQL) threads, the lag in seconds (while a transaction is applied, the age of its commit on the source; 0 when the applier is idle), the last receiver error, the last applier errors, and the last heartbeat from the source. Use it when a replica lags or its replication stopped.
+    description: Shows the state of each replication channel of this replica, from performance_schema, with the source (host and port), the state of the receiver (I/O) and applier (SQL) threads, the lag in seconds (while a transaction is applied, the age of its commit on the source; 0 when the applier is idle; empty, i.e. unknown, when the receiver or the applier is not ON), the last receiver error, the last applier errors, and the last heartbeat from the source. Use it when a replica lags or its replication stopped.
     sources:
       channels:
         type: sql
@@ -443,7 +450,8 @@ tools:
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
             SELECT IF(c.CHANNEL_NAME = '', '(default)', c.CHANNEL_NAME) AS channel, CONCAT(cc.HOST, ':', cc.PORT), c.SERVICE_STATE AS receiverState, a.SERVICE_STATE,
-              IFNULL(MAX(IF(w.APPLYING_TRANSACTION = '', NULL, TIMESTAMPDIFF(SECOND, w.APPLYING_TRANSACTION_ORIGINAL_COMMIT_TIMESTAMP, NOW(6)))), 0),
+              IF(c.SERVICE_STATE = 'ON' AND a.SERVICE_STATE = 'ON',
+                IFNULL(MAX(IF(w.APPLYING_TRANSACTION = '', NULL, TIMESTAMPDIFF(SECOND, w.APPLYING_TRANSACTION_ORIGINAL_COMMIT_TIMESTAMP, NOW(6)))), 0), NULL),
               IF(c.LAST_ERROR_NUMBER = 0, '', CONCAT(c.LAST_ERROR_NUMBER, ' ', c.LAST_ERROR_MESSAGE, ' at ', c.LAST_ERROR_TIMESTAMP)),
               IFNULL(GROUP_CONCAT(DISTINCT IF(w.LAST_ERROR_NUMBER = 0, NULL, CONCAT(w.LAST_ERROR_NUMBER, ' ', w.LAST_ERROR_MESSAGE, ' at ', w.LAST_ERROR_TIMESTAMP)) SEPARATOR ' | '), ''),
               c.LAST_HEARTBEAT_TIMESTAMP
@@ -470,6 +478,7 @@ tools:
     sources:
       schemas:
         type: sql
+        # The system tablespace (ibdata files) is not in INNODB_TABLESPACES, but in FILES
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
             SELECT t.TABLE_SCHEMA AS name, COUNT(*), SUM(t.TABLE_ROWS), SUM(t.DATA_LENGTH) AS dataBytes, SUM(t.INDEX_LENGTH) AS indexBytes,
@@ -482,6 +491,10 @@ tools:
             SELECT CONCAT('tablespace ', NAME), NULL, NULL, NULL, NULL, ALLOCATED_SIZE
             FROM information_schema.INNODB_TABLESPACES
             WHERE NAME NOT LIKE '%/%'
+            UNION ALL
+            SELECT 'tablespace innodb_system', NULL, NULL, NULL, NULL, SUM(TOTAL_EXTENTS * EXTENT_SIZE)
+            FROM information_schema.FILES
+            WHERE TABLESPACE_NAME = 'innodb_system'
           ) q ON TRUE
           ORDER BY GREATEST(IFNULL(q.diskBytes, 0), IFNULL(q.dataBytes, 0) + IFNULL(q.indexBytes, 0)) DESC
         computes:
@@ -563,7 +576,7 @@ tools:
       columns: [ name, value, source, file, setTime ]
 
   killSession:
-    description: Stops the statement that a session runs (query), or closes the session (connection), which also rolls back its open transaction and releases its locks. Returns the session as it is afterwards, or that it is gone. Use it on a runaway query or a blocking session found with MySQL_sessions or MySQL_lockWaits, only when the user asks for it. Killing the session of another user needs CONNECTION_ADMIN (or SUPER).
+    description: Stops the statement that a session runs (query), or closes the session (connection), which also rolls back its open transaction and releases its locks. Returns the session as it is afterwards, or that it is gone. Use it on a runaway query or a blocking session found with MySQL_sessions or MySQL_lockWaits, only when the user asks for it. Never use it on a server thread (user system user or event_scheduler, command Daemon or Binlog Dump), which stops the replication or disconnects a replica (use STOP REPLICA on the replica instead). Killing the session of another user needs CONNECTION_ADMIN (or SUPER).
     destructive: true
     parameters:
       id:
@@ -582,9 +595,10 @@ tools:
         query: KILL ${param::what} ${param::id}
       session:
         type: sql
+        # The driving row reads INNODB_TRX, so that the query fails without the PROCESS privilege (PROCESSLIST would show only the own sessions).
         # The LEFT JOIN returns one empty row when the session is gone
         query: |
-          SELECT q.* FROM (SELECT 1) d LEFT JOIN (
+          SELECT q.* FROM (SELECT COUNT(*) AS n FROM information_schema.INNODB_TRX) d LEFT JOIN (
             SELECT ID, USER, HOST, DB, COMMAND, TIME, STATE, REPLACE(REPLACE(LEFT(INFO, 4096), '\r', ' '), '\n', ' ')
             FROM information_schema.PROCESSLIST
             WHERE ID = ${param::id}
@@ -594,7 +608,7 @@ tools:
           script: |
             /^;/ { print "There is no session ${param::id} (any more)"; next }
             { print }
-            END { if (NR == 0) print "The check of session ${param::id} failed" }
+            END { if (NR == 0) print "Could not check session ${param::id}: it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" }
     result:
       source: ${source::session}
       columns: [ id, user, host, db, command, seconds, state, statement ]
