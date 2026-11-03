@@ -370,7 +370,7 @@ tools:
       source: ${source::status}
 
   explainQuery:
-    description: Returns the execution plan of the statement that a session runs now (EXPLAIN FORMAT=TREE FOR CONNECTION), one line per row, with the estimated costs and rows of each step. Use it on a long-running query found with MySQL_sessions, to see a full table scan or a missing index. A statement of a stored procedure or an event has no plan here.
+    description: Returns the execution plan of the statement that a session runs now (EXPLAIN FORMAT=TREE FOR CONNECTION), one line per row, with the estimated costs and rows of each step. Use it on a long-running query found with MySQL_sessions, to see a full table scan or a missing index. A statement of a stored procedure or an event has no plan here. Needs MySQL 8.0.16 or later (FORMAT=TREE).
     parameters:
       id:
         type: integer
@@ -385,7 +385,7 @@ tools:
         - type: awk
           script: |
             { sub(/;$/, ""); print }
-            END { if (NR == 0) print "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others)" }
+            END { if (NR == 0) print "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" }
     result:
       source: ${source::plan}
 
@@ -442,25 +442,28 @@ tools:
       columns: [ schema, statement, executions, totalSeconds, averageMs, maxMs, lockMs, rowsExamined, rowsSent, rowsAffected, errors, warnings, noIndexUsed, tmpDiskTables, firstSeen, lastSeen ]
 
   replicationStatus:
-    description: Shows the state of each replication channel of this replica, from performance_schema, with the source (host and port), the state of the receiver (I/O) and applier (SQL) threads, the lag in seconds (while a transaction is applied, the age of its commit on the source; 0 when the applier is idle; empty, i.e. unknown, when the receiver or the applier is not ON), the last receiver error, the last applier errors, and the last heartbeat from the source. Use it when a replica lags or its replication stopped.
+    description: Shows the state of each replication channel of this replica, from performance_schema, with the source (host and port), the state of the receiver (I/O) and applier (SQL) threads, the lag in seconds (while a transaction is applied, the age of its commit on the source; 0 when the applier is idle; empty, i.e. unknown, when the receiver or the applier is not ON), the last receiver error, the last applier errors (of the coordinator and of the workers), and the last heartbeat from the source. Use it when a replica lags or its replication stopped.
     sources:
       channels:
         type: sql
-        # The LEFT JOIN returns one empty row when there is no channel, and no row when the query fails
+        # The LEFT JOIN returns one empty row when there is no channel, and no row when the query fails.
+        # A multithreaded applier has a coordinator, which reads the relay log, with its own errors (none for a single thread)
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
             SELECT IF(c.CHANNEL_NAME = '', '(default)', c.CHANNEL_NAME) AS channel, CONCAT(cc.HOST, ':', cc.PORT), c.SERVICE_STATE AS receiverState, a.SERVICE_STATE,
               IF(c.SERVICE_STATE = 'ON' AND a.SERVICE_STATE = 'ON',
                 IFNULL(MAX(IF(w.APPLYING_TRANSACTION = '', NULL, TIMESTAMPDIFF(SECOND, w.APPLYING_TRANSACTION_ORIGINAL_COMMIT_TIMESTAMP, NOW(6)))), 0), NULL),
               IF(c.LAST_ERROR_NUMBER = 0, '', CONCAT(c.LAST_ERROR_NUMBER, ' ', c.LAST_ERROR_MESSAGE, ' at ', c.LAST_ERROR_TIMESTAMP)),
-              IFNULL(GROUP_CONCAT(DISTINCT IF(w.LAST_ERROR_NUMBER = 0, NULL, CONCAT(w.LAST_ERROR_NUMBER, ' ', w.LAST_ERROR_MESSAGE, ' at ', w.LAST_ERROR_TIMESTAMP)) SEPARATOR ' | '), ''),
+              CONCAT_WS(' | ', IF(IFNULL(co.LAST_ERROR_NUMBER, 0) = 0, NULL, CONCAT('coordinator ', co.LAST_ERROR_NUMBER, ' ', co.LAST_ERROR_MESSAGE, ' at ', co.LAST_ERROR_TIMESTAMP)),
+                GROUP_CONCAT(DISTINCT IF(w.LAST_ERROR_NUMBER = 0, NULL, CONCAT(w.LAST_ERROR_NUMBER, ' ', w.LAST_ERROR_MESSAGE, ' at ', w.LAST_ERROR_TIMESTAMP)) SEPARATOR ' | ')),
               c.LAST_HEARTBEAT_TIMESTAMP
             FROM performance_schema.replication_connection_status c
             JOIN performance_schema.replication_connection_configuration cc ON cc.CHANNEL_NAME = c.CHANNEL_NAME
             JOIN performance_schema.replication_applier_status a ON a.CHANNEL_NAME = c.CHANNEL_NAME
+            LEFT JOIN performance_schema.replication_applier_status_by_coordinator co ON co.CHANNEL_NAME = c.CHANNEL_NAME
             LEFT JOIN performance_schema.replication_applier_status_by_worker w ON w.CHANNEL_NAME = c.CHANNEL_NAME
             GROUP BY c.CHANNEL_NAME, cc.HOST, cc.PORT, c.SERVICE_STATE, a.SERVICE_STATE, c.LAST_ERROR_NUMBER, c.LAST_ERROR_MESSAGE,
-              c.LAST_ERROR_TIMESTAMP, c.LAST_HEARTBEAT_TIMESTAMP
+              c.LAST_ERROR_TIMESTAMP, c.LAST_HEARTBEAT_TIMESTAMP, co.LAST_ERROR_NUMBER, co.LAST_ERROR_MESSAGE, co.LAST_ERROR_TIMESTAMP
           ) q ON TRUE
           ORDER BY q.channel
         computes:
@@ -478,13 +481,19 @@ tools:
     sources:
       schemas:
         type: sql
+        # The file-per-table tablespaces are named schema/table, or schema/table#p#partition for each partition.
         # The system tablespace (ibdata files) is not in INNODB_TABLESPACES, but in FILES
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
             SELECT t.TABLE_SCHEMA AS name, COUNT(*), SUM(t.TABLE_ROWS), SUM(t.DATA_LENGTH) AS dataBytes, SUM(t.INDEX_LENGTH) AS indexBytes,
-              SUM(ts.ALLOCATED_SIZE) AS diskBytes
+              MAX(ts.bytes) AS diskBytes
             FROM information_schema.TABLES t
-            LEFT JOIN information_schema.INNODB_TABLESPACES ts ON ts.NAME = CONCAT(t.TABLE_SCHEMA, '/', t.TABLE_NAME)
+            LEFT JOIN (
+              SELECT SUBSTRING_INDEX(NAME, '/', 1) AS db, SUM(ALLOCATED_SIZE) AS bytes
+              FROM information_schema.INNODB_TABLESPACES
+              WHERE NAME LIKE '%/%'
+              GROUP BY db
+            ) ts ON ts.db = t.TABLE_SCHEMA
             WHERE t.TABLE_TYPE = 'BASE TABLE'
             GROUP BY t.TABLE_SCHEMA
             UNION ALL
@@ -508,7 +517,7 @@ tools:
       columns: [ name, tables, rows, dataBytes, indexBytes, diskBytes ]
 
   tableSizes:
-    description: Lists the largest tables, with their schema, name, engine, estimated rows, data, index and free bytes (statistics that may be up to a day old, see information_schema_stats_expiry) and the bytes their InnoDB file takes on disk now (empty for a partitioned table or a table in a shared tablespace, whose free bytes are those of the tablespace). OPTIMIZE TABLE gives the free bytes of a table file back. Use it after MySQL_schemaSizes to find what fills a schema. Needs the PROCESS privilege.
+    description: Lists the largest tables, with their schema, name, engine, estimated rows, data, index and free bytes (statistics that may be up to a day old, see information_schema_stats_expiry) and the bytes their InnoDB files take on disk now (all the partitions of a partitioned table; empty for a table in a shared tablespace, whose free bytes are those of the tablespace). OPTIMIZE TABLE gives the free bytes of a table file back. Use it after MySQL_schemaSizes to find what fills a schema. Needs the PROCESS privilege.
     parameters:
       schema:
         description: Only the tables of this schema, e.g. shop (empty for all)
@@ -523,10 +532,15 @@ tools:
         type: sql
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
-            SELECT t.TABLE_SCHEMA, t.TABLE_NAME, t.ENGINE, t.TABLE_ROWS, t.DATA_LENGTH, t.INDEX_LENGTH, t.DATA_FREE, ts.ALLOCATED_SIZE,
-              GREATEST(IFNULL(ts.ALLOCATED_SIZE, 0), IFNULL(t.DATA_LENGTH, 0) + IFNULL(t.INDEX_LENGTH, 0)) AS sortKey
+            SELECT t.TABLE_SCHEMA, t.TABLE_NAME, t.ENGINE, t.TABLE_ROWS, t.DATA_LENGTH, t.INDEX_LENGTH, t.DATA_FREE, ts.bytes,
+              GREATEST(IFNULL(ts.bytes, 0), IFNULL(t.DATA_LENGTH, 0) + IFNULL(t.INDEX_LENGTH, 0)) AS sortKey
             FROM information_schema.TABLES t
-            LEFT JOIN information_schema.INNODB_TABLESPACES ts ON ts.NAME = CONCAT(t.TABLE_SCHEMA, '/', t.TABLE_NAME)
+            LEFT JOIN (
+              SELECT SUBSTRING_INDEX(NAME, '#p#', 1) AS tableName, SUM(ALLOCATED_SIZE) AS bytes
+              FROM information_schema.INNODB_TABLESPACES
+              WHERE NAME LIKE '%/%'
+              GROUP BY tableName
+            ) ts ON ts.tableName = CONCAT(t.TABLE_SCHEMA, '/', t.TABLE_NAME)
             WHERE t.TABLE_TYPE = 'BASE TABLE' AND '${param::schema}' IN ('', t.TABLE_SCHEMA)
             ORDER BY sortKey DESC
             LIMIT ${param::count}
