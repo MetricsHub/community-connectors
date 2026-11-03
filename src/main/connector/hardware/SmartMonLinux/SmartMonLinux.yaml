@@ -221,3 +221,39 @@ translations:
     OK: 1;false
     Default: 1;true
     PASSED: 1;false
+
+# Tools an AI assistant runs through the MetricsHub MCP server
+tools:
+
+  diskHealth:
+    description: Returns the SMART report of a disk, with its health assessment, its attributes (reallocated and pending sectors, wear, temperature), its error log and its self-test log. Use it when a disk is reported failing or slow. Disks behind a RAID controller are not reachable this way.
+    parameters:
+      device:
+        description: The disk device under /dev, e.g. sda or nvme0
+        required: true
+        pattern: '(sd|hd|vd|xvd)[a-z]{1,3}|nvme[0-9]{1,3}(n[0-9]{1,3})?'
+    sources:
+      smart:
+        type: commandLine
+        commandLine: "%{SUDO:/usr/sbin/smartctl} /usr/sbin/smartctl -a /dev/${param::device} 2>&1"
+    result:
+      source: ${source::smart}
+
+  startSelfTest:
+    description: Starts a SMART self-test of a disk in the background, short (about 2 minutes) or long (a full surface scan that takes hours). The disk stays usable, but slower. Read the result later with SmartMonLinux_diskHealth.
+    destructive: true
+    parameters:
+      device:
+        description: The disk device under /dev, e.g. sda or nvme0
+        required: true
+        pattern: '(sd|hd|vd|xvd)[a-z]{1,3}|nvme[0-9]{1,3}(n[0-9]{1,3})?'
+      test:
+        description: The self-test to run
+        default: short
+        enum: [ short, long ]
+    sources:
+      test:
+        type: commandLine
+        commandLine: "%{SUDO:/usr/sbin/smartctl} /usr/sbin/smartctl -t ${param::test} /dev/${param::device} 2>&1"
+    result:
+      source: ${source::test}

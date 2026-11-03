@@ -78,3 +78,47 @@ translations:
     paused: suspended
     default: "off"
     suspended: suspended
+
+# Tools an AI assistant runs through the MetricsHub MCP server
+tools:
+
+  vmDetails:
+    description: Shows a virtual machine in detail, with its state and the reason for it (e.g. paused by a storage I/O error), its CPUs, memory and autostart setting, its disk errors, and its statistics (CPU time, balloon memory, block and network I/O). Use it when a VM is down, paused or slow.
+    parameters:
+      name:
+        description: The VM name or UUID, as virsh list --all --name or --uuid shows it. Not a numeric name, which virsh takes for the ID of a running VM
+        required: true
+        # Not all digits: virsh looks a domain up by ID first
+        pattern: '[A-Za-z_][A-Za-z0-9_.@-]*|[0-9]+[A-Za-z_.@-][A-Za-z0-9_.@-]*'
+    sources:
+      details:
+        type: commandLine
+        commandLine: |
+          virsh domstate --domain ${param::name} --reason 2>&1
+          virsh dominfo --domain ${param::name} 2>&1
+          virsh domblkerror --domain ${param::name} 2>&1
+          virsh domstats ${param::name} 2>&1
+    result:
+      source: ${source::details}
+
+  controlVm:
+    description: Starts, shuts down (cleanly, through ACPI or the guest agent), reboots, suspends or resumes a virtual machine, or destroys it (powers it off at once, like pulling the plug). A VM paused by storage errors resumes once its storage has space again. Use it only when the user asks.
+    destructive: true
+    parameters:
+      name:
+        description: The VM name or UUID, as virsh list --all --name or --uuid shows it. Not a numeric name, which virsh takes for the ID of a running VM
+        required: true
+        # Not all digits: virsh looks a domain up by ID first
+        pattern: '[A-Za-z_][A-Za-z0-9_.@-]*|[0-9]+[A-Za-z_.@-][A-Za-z0-9_.@-]*'
+      action:
+        description: What to do with the VM
+        required: true
+        enum: [ start, shutdown, reboot, suspend, resume, destroy ]
+    sources:
+      control:
+        type: commandLine
+        commandLine: |
+          virsh ${param::action} --domain ${param::name} 2>&1
+          virsh domstate --domain ${param::name} --reason 2>&1
+    result:
+      source: ${source::control}

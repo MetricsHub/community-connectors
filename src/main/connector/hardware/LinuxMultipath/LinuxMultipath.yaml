@@ -78,3 +78,19 @@ monitors:
           hw.lun.paths: $2
         legacyTextParameters:
           AvailablePathInformation: $5
+
+# Tools an AI assistant runs through the MetricsHub MCP server
+tools:
+
+  multipathTopology:
+    description: Shows each multipath device with its path groups and paths, their priorities and their states, as multipath -ll prints them. Use it when a LUN loses paths, to see which path and which HBA port failed.
+    parameters:
+      device:
+        description: A multipath device, by name or WWID, e.g. mpatha (empty for all of them)
+        default: ''
+    sources:
+      topology:
+        type: commandLine
+        commandLine: "%{SUDO:multipath} multipath -ll ${param::device} 2>&1"
+    result:
+      source: ${source::topology}

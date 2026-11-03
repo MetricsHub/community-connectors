@@ -28,6 +28,20 @@ connector:
     # END SNIPPET: commandLineCriterion
     tags: [ system, linux ]
 
+# The commands of the tools that %{SUDO:...} elevates, when the configuration enables sudo for them
+sudoCommands:
+- dmesg
+- du
+- find
+- journalctl
+- kill
+- ls
+- lsof
+- shutdown
+- ss
+- systemctl
+- tail
+
 # Run the collection commands once per cycle. Commands that are common to
 # modern and legacy Linux are executed once. Where the legacy command differs,
 # the modern command is tried first and the legacy command is executed only if
@@ -398,3 +412,497 @@ monitors:
           os_version: $3
         metrics:
           system.uptime: $4
+
+# Tools an AI assistant runs through the MetricsHub MCP server
+tools:
+
+  processes:
+    description: Lists the processes that use the most CPU or memory, the largest first, with their PID, parent PID, user, CPU percentage over the sample (100 for one full CPU), memory percentage, resident memory in KiB, elapsed time, state and command line. Use it when the host is slow or short of memory, then Linux_processDetails or Linux_killProcess on a PID. To look for a given process, raise the count; for a process that spins now and then, lengthen the sample.
+    parameters:
+      sortBy:
+        description: What the processes are sorted on, the largest first
+        default: cpu
+        enum: [ cpu, memory ]
+      count:
+        type: integer
+        description: How many processes to return, 1 to 99999
+        default: 20
+        pattern: '[1-9][0-9]{0,4}'
+      seconds:
+        type: integer
+        description: How long the CPU usage is sampled, 1 to 10 seconds
+        default: 1
+        pattern: '[1-9]|10'
+    sources:
+      processes:
+        type: commandLine
+        # The CPU time of each process (utime and stime of /proc/<pid>/stat) in two samples, seconds apart: the pcpu of
+        # ps is an average over the life of the process, which hides a long-running process that just started to spin.
+        # Each sample starts with /proc/uptime: reading the /proc of thousands of processes adds to the sample.
+        commandLine: |
+          getconf CLK_TCK 2>/dev/null; echo ---
+          cat /proc/uptime /proc/[0-9]*/stat 2>/dev/null; echo ---
+          sleep ${param::seconds}
+          cat /proc/uptime /proc/[0-9]*/stat 2>/dev/null; echo ---
+          ps -e -o pid=,ppid=,user:32=,pmem=,rss=,etime=,stat=,args= 2>&1
+        computes:
+        # pid;ppid;user;cpuPercent;memoryPercent;residentKiB;elapsed;state;command;sortKey
+        # The fields of /proc/<pid>/stat counted after the process name, which may hold spaces and parentheses
+        - type: awk
+          script: |
+            BEGIN { hz = 100; sortBy = "${param::sortBy}" }
+            $0 == "---" { phase++; next }
+            phase == 0 { hz = $1; next }
+            phase < 3 && NF == 2 { uptime[phase] = $1; next }
+            phase < 3 {
+              pid = $1; sub(/^.*\) /, "")
+              # A process born after the first sample spent all its ticks in between
+              if (phase == 1) first[pid] = $12 + $13
+              else cpu[pid] = ($12 + $13 - first[pid]) * 100 / hz / (uptime[2] - uptime[1])
+              next
+            }
+            {
+              command = $8; for (i = 9; i <= NF; i++) command = command " " $i
+              gsub(/;/, ",", command)
+              printf "%s;%s;%s;%.1f;%s;%s;%s;%s;%s;%s\n", $1, $2, $3, cpu[$1] + 0, $4, $5, $6, $7, command, (sortBy == "memory" ? $5 : cpu[$1] + 0)
+            }
+        - type: sort
+          column: 10
+          numeric: true
+          descending: true
+        - type: head
+          lines: ${param::count}
+        - type: keepColumns
+          columnNumbers: 1,2,3,4,5,6,7,8,9
+    result:
+      source: ${source::processes}
+      columns: [ pid, ppid, user, cpuPercent, memoryPercent, residentKiB, elapsed, state, command ]
+
+  fileSystemUsage:
+    description: Shows the space and the inodes used on each mounted file system. Use it when a write fails with "No space left on device", which a file system out of inodes also reports while it has free space.
+    sources:
+      df:
+        type: commandLine
+        # Snap packages mount read-only squashfs images that are always full
+        commandLine: df -hTP -x squashfs 2>&1; echo; df -iP -x squashfs 2>&1
+    result:
+      source: ${source::df}
+
+  largestFiles:
+    description: Lists the directories and files under a path that take at least a given size, the largest first, with their size in megabytes, then the errors, such as the directories that cannot be read. Only the file system of the path is scanned. Use it after Linux_fileSystemUsage to find what fills a file system. On a large file system, it can take a few minutes.
+    parameters:
+      path:
+        description: Absolute path of the directory to scan, e.g. /var
+        required: true
+        # An absolute path whose names start with a letter, a digit or _: no "..", no option
+        pattern: '/|(/[A-Za-z0-9_][A-Za-z0-9_.@-]*)+'
+      minimumMegabytes:
+        type: integer
+        description: The size from which a directory or a file is listed, in megabytes
+        default: 100
+        pattern: '[1-9][0-9]{0,5}'
+      count:
+        type: integer
+        description: How many of the largest directories and files to return, 1 to 99999
+        default: 50
+        pattern: '[1-9][0-9]{0,4}'
+    sources:
+      du:
+        type: commandLine
+        commandLine: "%{SUDO:du} du -xam -t ${param::minimumMegabytes}M -- '${esc(bash)::param::path}' 2>&1"
+        # du reads the whole tree
+        timeout: 300
+        # megabytes;path, or an error in the first column
+        separators: "\t"
+        selectColumns: 1,2
+      sizes:
+        type: copy
+        from: ${source::du}
+        computes:
+        - type: keepOnlyMatchingLines
+          column: 1
+          regExp: ^[0-9][0-9]*$
+        - type: sort
+          column: 1
+          numeric: true
+          descending: true
+        - type: head
+          lines: ${param::count}
+      # The errors, whatever the count
+      errors:
+        type: copy
+        from: ${source::du}
+        computes:
+        - type: excludeMatchingLines
+          column: 1
+          regExp: ^[0-9][0-9]*$
+      all:
+        type: tableUnion
+        tables:
+        - ${source::sizes}
+        - ${source::errors}
+    result:
+      source: ${source::all}
+
+  deletedOpenFiles:
+    description: Lists the deleted files that processes still hold open or map, the largest first, with the process and, through lsof, the size in bytes. Their space is only freed when the process closes them or stops. Use it when Linux_fileSystemUsage shows a full file system and Linux_largestFiles finds less than what is used. Without lsof, the command, the user and the size are missing, and find needs root or sudo to see the processes of other users.
+    sources:
+      files:
+        type: commandLine
+        # Without lsof, the file descriptors and the memory mappings of /proc that point to a deleted file, without their
+        # size. The processes that cannot be read are left out, rather than one error each.
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP +L1 2>&1; else %{SUDO:find} find /proc/[0-9]*/fd /proc/[0-9]*/map_files -lname '*(deleted)' -printf '%p -> %l\\n' 2>/dev/null; fi"
+        computes:
+        # pid;command;user;fd;sizeBytes;file, from lsof (COMMAND PID USER FD TYPE DEVICE SIZE/OFF NLINK NODE NAME) or from
+        # find (/proc/<pid>/fd/<n> -> <file> (deleted)). Any other line, such as a warning of lsof, in the file column.
+        - type: awk
+          script: |
+            { gsub(/;/, ",") }
+            $1 == "COMMAND" && $2 == "PID" { next }
+            $1 ~ /^\/proc\/[0-9]+\// && $2 == "->" {
+              split($1, path, "/"); file = $0; sub(/^[^ ]* -> /, "", file)
+              print path[3] ";;;" path[4] "/" path[5] ";;" file
+              next
+            }
+            NF >= 10 && $2 ~ /^[0-9]+$/ {
+              file = $10; for (i = 11; i <= NF; i++) file = file " " $i
+              print $2 ";" $1 ";" $3 ";" $4 ";" $7 ";" file
+              next
+            }
+            { print ";;;;;" $0 }
+        - type: sort
+          column: 5
+          numeric: true
+          descending: true
+    result:
+      source: ${source::files}
+      columns: [ pid, command, user, fd, sizeBytes, file ]
+
+  kernelLog:
+    description: Returns the warnings and errors of the kernel since the boot, from its ring buffer and then from the journal, where the same messages may appear twice, such as out-of-memory kills, disk and file system I/O errors, hung tasks, hardware errors and network link changes. Use it when a process died unexpectedly or a device misbehaves.
+    sources:
+      kernel:
+        type: commandLine
+        # Both: the ring buffer may have wrapped, and the journal may have rotated the messages away, or never read them.
+        # Where dmesg is restricted to root, the journal, which the adm or systemd-journal group may read.
+        commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>&1; %{SUDO:journalctl} journalctl -k -p warning --no-pager 2>&1"
+    result:
+      source: ${source::kernel}
+
+  systemLog:
+    description: Returns the last entries of the system journal at or above a priority, all services included, over the last minutes. Without the journal, the last lines of /var/log/messages or /var/log/syslog, whatever their priority and time. Use it to find what failed around an incident. Linux_serviceLogs reads the journal of one service.
+    parameters:
+      priority:
+        description: The lowest priority to return
+        default: err
+        enum: [ emerg, alert, crit, err, warning, notice, info, debug ]
+      minutes:
+        type: integer
+        description: How far back to read, in minutes, 1 to 10080 (a week)
+        default: 60
+        pattern: '[1-9][0-9]{0,3}|100[0-7][0-9]|10080'
+      lines:
+        type: integer
+        description: How many of the last entries to return, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
+    sources:
+      log:
+        type: commandLine
+        # Without journal files (no journald, or Storage=none, where journalctl finds nothing and still succeeds), the
+        # end of the syslog file, whatever the priority and the time
+        commandLine: |
+          if ls /var/log/journal/*/*.journal >/dev/null 2>&1 || ls /run/log/journal/*/*.journal >/dev/null 2>&1; then
+            %{SUDO:journalctl} journalctl -p ${param::priority} --since=-${param::minutes}min -n ${param::lines} --no-pager 2>&1
+          else
+            %{SUDO:tail} tail -n ${param::lines} /var/log/messages 2>&1 || %{SUDO:tail} tail -n ${param::lines} /var/log/syslog 2>&1
+          fi
+    result:
+      source: ${source::log}
+
+  performanceSnapshot:
+    description: Samples the activity of the host, with the load averages, the pressure stall information (the share of time tasks waited for CPU, memory or I/O), vmstat (run queue, swapping, I/O wait; the averages since the boot, then one line per second) and, when sysstat is installed, iostat (utilization and latency of each disk, averaged over the sample). vmstat and iostat sample in turn, so the tool takes twice the sample. Use it when the host is slow, to tell a CPU, memory or disk bottleneck apart.
+    parameters:
+      seconds:
+        type: integer
+        description: How long vmstat, then iostat, sample the activity, 1 to 10 seconds
+        default: 4
+        pattern: '[1-9]|10'
+    sources:
+      snapshot:
+        type: commandLine
+        commandLine: |
+          uptime
+          grep -H . /proc/pressure/* 2>/dev/null
+          vmstat 1 $((${param::seconds} + 1)) 2>&1
+          iostat -dxyk ${param::seconds} 1 2>/dev/null || echo "iostat is not installed (sysstat)"
+    result:
+      source: ${source::snapshot}
+
+  networkSockets:
+    description: Lists the listening TCP and UDP sockets with their process, a summary of the sockets, and how many TCP connections are in each state. Use it when a service does not answer on its port, or when connections pile up. Many CLOSE-WAIT connections mean an application does not close them, many TIME-WAIT a high connection rate.
+    sources:
+      sockets:
+        type: commandLine
+        commandLine: |
+          %{SUDO:ss} ss -tulpn 2>&1
+          ss -s 2>&1
+      states:
+        type: commandLine
+        commandLine: ss -tan 2>/dev/null
+        computes:
+        # The TCP connections counted in each state, the most frequent first
+        - type: awk
+          script: |
+            NR > 1 { count[$1]++ }
+            END { for (state in count) print state ";" count[state] }
+        - type: sort
+          column: 2
+          numeric: true
+          descending: true
+      all:
+        type: tableUnion
+        tables:
+        - ${source::sockets}
+        - ${source::states}
+    result:
+      source: ${source::all}
+
+  timeSync:
+    description: Shows the time and the time zone of the host, whether its clock is synchronized, and its offset to the time sources of chrony, ntpd or systemd-timesyncd. Use it when TLS, Kerberos or cluster errors point to a clock drift.
+    sources:
+      time:
+        type: commandLine
+        commandLine: |
+          date
+          timedatectl 2>&1
+          chronyc tracking 2>/dev/null || ntpq -pn 2>/dev/null || timedatectl timesync-status 2>/dev/null || echo "Neither chronyc, ntpq nor systemd-timesyncd answered"
+    result:
+      source: ${source::time}
+
+  rebootHistory:
+    description: Shows when the host started, its last reboots and shutdowns, and whether installed updates wait for a reboot. Use it when a host restarted unexpectedly, or before planning a reboot.
+    sources:
+      history:
+        type: commandLine
+        commandLine: |
+          echo "Up since $(uptime -s 2>/dev/null)"
+          last -x -F reboot shutdown 2>&1
+          [ -f /var/run/reboot-required ] && echo "Reboot required by $(cat /var/run/reboot-required.pkgs 2>/dev/null | tr '\n' ' ')"
+          needs-restarting -r 2>/dev/null
+          true
+    result:
+      source: ${source::history}
+
+  vacuumJournal:
+    description: Deletes the oldest archived files of the systemd journal until the journal takes no more than the given size, to free space. The active journal files are kept. Use it when /var or / is full and Linux_largestFiles points to /var/log/journal.
+    destructive: true
+    parameters:
+      megabytes:
+        type: integer
+        description: The size to shrink the journal to, in megabytes, 50 to 100000
+        required: true
+        pattern: '[5-9][0-9]|[1-9][0-9]{2,4}|100000'
+    sources:
+      vacuum:
+        type: commandLine
+        commandLine: "%{SUDO:journalctl} journalctl --vacuum-size=${param::megabytes}M 2>&1"
+    result:
+      source: ${source::vacuum}
+
+  reboot:
+    description: Schedules a reboot of the host in a few minutes, which warns the logged-in users and lets the tool return. Linux_cancelReboot cancels it. Use it only when the user explicitly asks for a reboot.
+    destructive: true
+    parameters:
+      minutes:
+        type: integer
+        description: Minutes before the reboot, 1 to 60
+        default: 1
+        pattern: '[1-9]|[1-5][0-9]|60'
+    sources:
+      shutdown:
+        type: commandLine
+        commandLine: "%{SUDO:shutdown} shutdown -r +${param::minutes} 'Reboot requested through MetricsHub' 2>&1"
+    result:
+      source: ${source::shutdown}
+
+  cancelReboot:
+    description: Cancels a scheduled reboot or shutdown, such as the one Linux_reboot schedules.
+    destructive: true
+    sources:
+      cancel:
+        type: commandLine
+        commandLine: "%{SUDO:shutdown} shutdown -c 2>&1 && echo No shutdown is scheduled any more"
+    result:
+      source: ${source::cancel}
+
+  # Processes
+  processDetails:
+    description: Shows one process in detail, with its ps line, its /proc status (state, threads, memory, context switches), its limits and how many files it holds open. Use it on a PID from Linux_processes, e.g. to check whether a process nears its open files limit.
+    parameters:
+      pid:
+        type: integer
+        description: The process ID
+        required: true
+        pattern: '[1-9][0-9]{0,9}'
+    sources:
+      process:
+        type: commandLine
+        commandLine: |
+          ps -o pid,ppid,user:32,pcpu,pmem,rss,vsz,nlwp,lstart,etime,stat,args -p ${param::pid} 2>&1
+          cat /proc/${param::pid}/status 2>&1
+          cat /proc/${param::pid}/limits 2>&1
+          if ls /proc/${param::pid}/fd >/dev/null 2>&1; then echo "Open files: $(ls /proc/${param::pid}/fd | wc -l)"; else echo "Open files: unknown, /proc/${param::pid}/fd is not readable"; fi
+    result:
+      source: ${source::process}
+
+  processOpenFiles:
+    description: Lists the files, sockets and pipes a process holds open, its network connections included. Use it to see what a process writes to or is connected to, or which deleted file it holds.
+    parameters:
+      pid:
+        type: integer
+        description: The process ID
+        required: true
+        pattern: '[1-9][0-9]{0,9}'
+    sources:
+      files:
+        type: commandLine
+        # Without lsof, the file descriptors of /proc, which only the owner of the process and root can list
+        commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; else %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1; fi"
+    result:
+      source: ${source::files}
+
+  killProcess:
+    description: Sends a signal to a process. TERM asks it to stop cleanly, KILL stops it at once (its unsaved data is lost), HUP makes many daemons reload their configuration, INT interrupts it. Check the process with Linux_processDetails first. Use it only when the user asks to stop or reload a process.
+    destructive: true
+    parameters:
+      pid:
+        type: integer
+        description: The process ID, 2 or more
+        required: true
+        # Not 1 (init), and no negative value, which would signal a whole process group
+        pattern: '[2-9]|[1-9][0-9]{1,9}'
+      signal:
+        description: The signal to send
+        default: TERM
+        enum: [ TERM, KILL, HUP, INT ]
+    sources:
+      kill:
+        type: commandLine
+        commandLine: "%{SUDO:kill} kill -s ${param::signal} ${param::pid} 2>&1 && echo Signal ${param::signal} sent to process ${param::pid}"
+    result:
+      source: ${source::kill}
+
+  # systemd services
+  failedUnits:
+    description: Lists the systemd units in the failed state, such as services, mounts, timers and sockets. Use it first when something does not work on a host, then Linux_serviceStatus on a failed service.
+    sources:
+      failed:
+        type: commandLine
+        commandLine: systemctl --failed --no-pager 2>&1
+    result:
+      source: ${source::failed}
+
+  serviceStatus:
+    description: Shows a systemd service in detail, with its state, main process, memory, restart count and last log lines, then its unit file and the drop-ins that override it. Use it on a failed, stopped or restarting service.
+    parameters:
+      service:
+        # The default pattern takes unit names: sshd, sshd.service, getty@tty1.service
+        description: The systemd unit, e.g. sshd.service
+        required: true
+    sources:
+      status:
+        type: commandLine
+        commandLine: |
+          %{SUDO:systemctl} systemctl status -l -n 20 --no-pager -- ${param::service} 2>&1
+          systemctl show -p Restart,NRestarts,Result,ExecMainStatus,ActiveEnterTimestamp -- ${param::service} 2>&1
+          systemctl cat --no-pager -- ${param::service} 2>&1
+    result:
+      source: ${source::status}
+
+  serviceLogs:
+    description: Returns the last lines of the journal of a systemd service. Use it when a service fails or restarts.
+    parameters:
+      service:
+        description: The systemd unit, e.g. sshd.service
+        required: true
+      lines:
+        type: integer
+        description: How many lines to return, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
+      priority:
+        description: The lowest priority to return
+        default: info
+        enum: [ emerg, alert, crit, err, warning, notice, info, debug ]
+    sources:
+      journal:
+        type: commandLine
+        # The journal files the entries under the unit's name, not under its aliases (sshd.service is ssh.service on Debian)
+        commandLine: |
+          unit=$(systemctl show -p Id --value -- ${param::service} 2>/dev/null)
+          [ -n "$unit" ] || unit=${param::service}
+          %{SUDO:journalctl} journalctl --no-pager -n ${param::lines} -p ${param::priority} -u "$unit" 2>&1
+    result:
+      source: ${source::journal}
+
+  controlService:
+    description: Starts, stops, restarts or reloads a systemd service, or clears its failed state (reset-failed), then shows its status. Use it only when the user asks, e.g. to restart a service once the cause of its failure is fixed.
+    destructive: true
+    parameters:
+      service:
+        description: The systemd unit, e.g. nginx.service
+        required: true
+        # The default pattern, but not empty: reset-failed without a unit resets every failed unit
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_.@:-]*'
+      action:
+        description: What to do with the service
+        required: true
+        enum: [ start, stop, restart, reload, reset-failed ]
+    sources:
+      control:
+        type: commandLine
+        commandLine: |
+          %{SUDO:systemctl} systemctl ${param::action} -- ${param::service} 2>&1
+          systemctl status -l -n 10 --no-pager -- ${param::service} 2>&1
+    result:
+      source: ${source::control}
+
+  # Logs
+  readLog:
+    description: Reads the last lines of a log file and returns them, or only those matching a regular expression. Use it to read the log of an application, e.g. /var/log/nginx/error.log or /opt/app/logs/server.log. Only the files under /var/log are read with sudo, when it is enabled for tail.
+    parameters:
+      path:
+        description: Absolute path of a file under /var/log, or of a file whose name ends with .log
+        required: true
+        # Under /var/log, or a .log file, each name starting with a letter, a digit or _: no "..", no hidden file
+        pattern: '/var/log(/[A-Za-z0-9_][A-Za-z0-9_.@-]*)+|(/[A-Za-z0-9_][A-Za-z0-9_.@-]*)+\.log'
+      match:
+        description: Basic regular expression, as with grep without -E, that the returned lines must contain, e.g. ERROR\|WARN (empty for all lines)
+        default: ''
+        # Never sent to the host: MetricsHub keeps the matching lines
+        pattern: '.*'
+      lines:
+        type: integer
+        description: How many of the last lines of the file to read, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
+    sources:
+      log:
+        type: commandLine
+        # The path checked again once resolved: a symbolic link must not lead elsewhere. Only /var/log is read with sudo:
+        # elsewhere, a user who can write in the directory could swap the file for a link between the check and the read
+        commandLine: |
+          file=$(readlink -f -- '${esc(bash)::param::path}')
+          case "$file" in
+          "") echo "Refused: the path cannot be resolved, a directory on the way is missing or cannot be read" ;;
+          */.*) echo "Refused: the path leads to $file, a hidden file or directory" ;;
+          /var/log/*) %{SUDO:tail} tail -n ${param::lines} -- "$file" 2>&1 || echo "Failed: exit code $?" ;;
+          *.log) tail -n ${param::lines} -- "$file" 2>&1 ;;
+          *) echo "Refused: the path leads to $file, neither under /var/log nor a .log file" ;;
+          esac
+        # The matching lines, and the refusals and failures whatever the expression (an empty one matches all). A failed
+        # sudo prints its own message, which varies with the elevation command: the exit code tells the failure.
+        keep: '${param::match}\|^Refused: \|^tail: \|^Failed: '
+    result:
+      source: ${source::log}

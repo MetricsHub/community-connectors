@@ -20,3 +20,60 @@ connector:
     supersedes:
     - LinuxIfConfigNetwork
     tags: [ hardware, linux ]
+
+# Tools an AI assistant runs through the MetricsHub MCP server
+tools:
+
+  interfaceDetails:
+    description: Shows a network interface in detail, with its state, addresses, packet and error counters and, through ethtool, its speed, duplex, link detection and the driver counters that are not zero. Use it when a link is down, slow or drops packets.
+    parameters:
+      interface:
+        description: The interface name, e.g. eth0 or ens192
+        required: true
+    sources:
+      details:
+        type: commandLine
+        commandLine: |
+          /sbin/ip -s -s link show dev ${param::interface} 2>&1
+          /sbin/ip addr show dev ${param::interface} 2>&1
+          %{SUDO:ethtool} /usr/sbin/ethtool ${param::interface} 2>&1
+      counters:
+        type: commandLine
+        commandLine: "%{SUDO:ethtool} /usr/sbin/ethtool -S ${param::interface} 2>&1"
+        exclude: ': 0$'
+      interface:
+        type: tableUnion
+        tables:
+        - ${source::details}
+        - ${source::counters}
+    result:
+      source: ${source::interface}
+
+  routes:
+    description: Shows the IPv4 and IPv6 routing tables, all of them (main, local and those of policy routing and VRFs), the routing policy rules and the neighbor (ARP and NDP) table. Use it when the host cannot reach a network, or reaches it through the wrong gateway or interface.
+    sources:
+      routes:
+        type: commandLine
+        commandLine: |
+          /sbin/ip route show table all 2>&1
+          /sbin/ip -6 route show table all 2>&1
+          /sbin/ip rule 2>&1
+          /sbin/ip -6 rule 2>&1
+          /sbin/ip neigh 2>&1
+    result:
+      source: ${source::routes}
+
+  ping:
+    description: Pings a host or an address 4 times from the monitored host, and returns the packet loss and the round-trip times. Use it to check whether the monitored host reaches its gateway, a DNS server or a peer.
+    parameters:
+      target:
+        description: Host name or IP address, e.g. 10.0.0.1, db-01.example.com, or fe80::1%eth0 for an IPv6 link-local address
+        required: true
+        # The default pattern, with a leading : (::1) and an IPv6 scope after % (never followed by {, so no macro)
+        pattern: '[A-Za-z0-9_:][A-Za-z0-9_.@:-]*(%[A-Za-z0-9_.-]+)?'
+    sources:
+      ping:
+        type: commandLine
+        commandLine: ping -c 4 -W 2 -- ${param::target} 2>&1
+    result:
+      source: ${source::ping}
