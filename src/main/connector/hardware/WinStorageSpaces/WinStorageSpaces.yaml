@@ -646,7 +646,7 @@ translations:
 tools:
 
   physicalDisks:
-    description: Lists the physical disks with their device ID, name, serial number, media and bus types, size in GB, usage (Auto-Select, Hot Spare, Retired...), health and operational status, and their reliability counters (temperature in Celsius, wear percentage, total read and write errors, power-on hours), which are empty where they cannot be read (the disk does not report them, no administrator rights, or a WinRM connection, which does not run the association query that reads them). Use it when a disk, a storage pool or a virtual disk is degraded, to find the failing disk; then WinStorageSpaces_virtualDisks for the repairs.
+    description: Lists the physical disks with their device ID, name, serial number, media and bus types, size in GB, usage (Auto-Select, Hot Spare, Retired...), health and operational status, and their reliability counters (temperature in Celsius, wear percentage, total read and write errors, power-on hours), which are empty where they cannot be read (the disk does not report them, no administrator rights, or a WinRM connection with MetricsHub 3.9.08 or older, which refuses the association query that reads them). Use it when a disk, a storage pool or a virtual disk is degraded, to find the failing disk; then WinStorageSpaces_virtualDisks for the repairs.
     sources:
       disks:
         # ObjectId;DeviceId;FriendlyName;SerialNumber;MediaType;BusType;Size;Usage;HealthStatus;OperationalStatus
@@ -715,7 +715,7 @@ tools:
       columns: [ deviceId, name, serialNumber, mediaType, busType, sizeGB, usage, health, operationalStatus, temperature, wearPercent, readErrors, writeErrors, powerOnHours ]
 
   virtualDisks:
-    description: Shows the storage pools (a primordial pool holds the disks that are in no pool), their virtual disks (Storage Spaces) and the storage jobs, such as the repairs and rebalances that follow a disk replacement, one per row named by its kind (pool, virtualDisk or job). Pools have their health, operational status, primordial and read-only flags (true or false), size and allocated size in bytes; virtual disks their health, operational status, size and footprint on the pool in bytes, resiliency (Simple, Mirror, Parity), number of data copies, physical disk redundancy and detached reason; jobs their state, percentage complete, and bytes processed and total (no elapsed time, which WMI cannot return). Use it when a virtual disk is degraded or detached, or to follow a repair; WinStorageSpaces_physicalDisks finds the failing disk.
+    description: Shows the storage pools (a primordial pool holds the disks that are in no pool), their virtual disks (Storage Spaces) and the storage jobs, such as the repairs and rebalances that follow a disk replacement, one per row named by its kind (pool, virtualDisk or job). Pools have their health, operational status, primordial and read-only flags (true or false), size and allocated size in bytes; virtual disks their health, operational status, size and footprint on the pool in bytes, resiliency (Simple, Mirror, Parity), number of data copies, physical disk redundancy and detached reason; jobs their state, percentage complete, bytes processed and total, and elapsed time in seconds (empty over WMI with MetricsHub 3.9.08 or older). Use it when a virtual disk is degraded or detached, or to follow a repair; WinStorageSpaces_physicalDisks finds the failing disk.
     sources:
       pools:
         # FriendlyName;IsPrimordial;HealthStatus;OperationalStatus;IsReadOnly;Size;AllocatedSize
@@ -734,7 +734,7 @@ tools:
         - type: awk
           script: |
             BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
-            { print "pool", $1, $3, $4, $6, $7, tolower($2), tolower($5), "", "", "", "", "", "", "", "" }
+            { print "pool", $1, $3, $4, $6, $7, tolower($2), tolower($5), "", "", "", "", "", "", "", "", "" }
       virtualDisks:
         # FriendlyName;ResiliencySettingName;NumberOfDataCopies;PhysicalDiskRedundancy;HealthStatus;OperationalStatus;DetachedReason;Size;FootprintOnPool
         type: wmi
@@ -754,27 +754,53 @@ tools:
         - type: awk
           script: |
             BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
-            { print "virtualDisk", $1, $5, $6, $8, $9, "", "", $2, $3, $4, $7, "", "", "", "" }
+            { print "virtualDisk", $1, $5, $6, $8, $9, "", "", $2, $3, $4, $7, "", "", "", "", "" }
       jobs:
-        # Name;JobState;PercentComplete;BytesProcessed;BytesTotal
+        # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal
         type: wmi
         namespace: root\Microsoft\Windows\Storage
-        query: SELECT Name,JobState,PercentComplete,BytesProcessed,BytesTotal FROM MSFT_StorageJob
+        query: SELECT ObjectId,Name,JobState,PercentComplete,BytesProcessed,BytesTotal FROM MSFT_StorageJob
         computes:
         - type: translate
-          column: 2
+          column: 3
           translationTable: ${translation::StorageJobStateTranslationTable}
-        # No ElapsedTime: wmi-java (WMI/DCOM) fails the whole query on a CIM interval value ("Not a valid CIM_DATETIME value")
+      elapsed:
+        # ObjectId;ElapsedTime, in a query of its own: over WMI, MetricsHub 3.9.08 and older (wmi-java 1.0.06 and older)
+        # fail the whole query on a CIM interval value, which leaves the jobs without their elapsed time only
+        type: wmi
+        namespace: root\Microsoft\Windows\Storage
+        query: SELECT ObjectId,ElapsedTime FROM MSFT_StorageJob
+      jobsElapsed:
+        # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal;ObjectId;ElapsedTime
+        type: tableJoin
+        leftTable: ${source::jobs}
+        rightTable: ${source::elapsed}
+        leftKeyColumn: 1
+        rightKeyColumn: 1
+        defaultRightLine: ;;
+        computes:
+        # The elapsed time comes as seconds over WMI, as an ISO 8601 duration (P1DT2H3M4.5S) over WinRM
         - type: awk
           script: |
             BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
-            { print "job", $1, "", "", "", "", "", "", "", "", "", "", $2, $3, $4, $5 }
+            function seconds(d,  total, n, unit) {
+              if (d ~ /^[0-9]+$/) return d
+              if (d !~ /^P/) return ""
+              total = 0
+              while (match(d, /[0-9.]+[DHMS]/)) {
+                n = substr(d, RSTART, RLENGTH - 1); unit = substr(d, RSTART + RLENGTH - 1, 1)
+                total += n * (unit == "D" ? 86400 : unit == "H" ? 3600 : unit == "M" ? 60 : 1)
+                d = substr(d, RSTART + RLENGTH)
+              }
+              return sprintf("%.0f", total)
+            }
+            { print "job", $2, "", "", "", "", "", "", "", "", "", "", $3, $4, $5, $6, seconds($8) }
       all:
         type: tableUnion
         tables:
         - ${source::pools}
         - ${source::virtualDisks}
-        - ${source::jobs}
+        - ${source::jobsElapsed}
     result:
       source: ${source::all}
-      columns: [ kind, name, health, operationalStatus, sizeBytes, usedBytes, isPrimordial, isReadOnly, resiliency, dataCopies, diskRedundancy, detachedReason, jobState, percentComplete, bytesProcessed, bytesTotal ]
+      columns: [ kind, name, health, operationalStatus, sizeBytes, usedBytes, isPrimordial, isReadOnly, resiliency, dataCopies, diskRedundancy, detachedReason, jobState, percentComplete, bytesProcessed, bytesTotal, elapsedSeconds ]
