@@ -311,7 +311,7 @@ tools:
       columns: [ pid, database, user, application, clientAddress, backendType, state, waitEventType, waitEvent, transactionSeconds, querySeconds, blockedBy, query ]
 
   connectionSummary:
-    description: Counts the sessions of the PostgreSQL server by database, user, application, client address and state, the largest groups first, with how long the oldest session of each group has been in its state, in seconds. Use it when the server runs out of connections ("too many clients", "remaining connection slots are reserved") to find who holds them, e.g. an application leaking idle connections. PostgreSQL_settings with max_connections gives the limit. Without superuser or pg_read_all_stats, the state and address of the sessions of other users are empty.
+    description: Counts the sessions of the PostgreSQL server by database, user, application, client address and state, the largest groups first, with how long the oldest session of each group has been in its state, in seconds. Use it when the server runs out of connections ("too many clients", "remaining connection slots are reserved") to find who holds them, e.g. an application leaking idle connections. PostgreSQL_settings with max_connections gives the limit. Without superuser or pg_read_all_stats, the state and address of the sessions of other users are empty, and their parallel and autovacuum workers count as sessions.
     sources:
       summary:
         type: sql
@@ -471,7 +471,7 @@ tools:
       columns: [ schema, table, totalBytes, tableBytes, indexBytes, liveRows, deadRows, deadPercent, modifiedSinceAnalyze, lastVacuum, lastAutovacuum, lastAnalyze, lastAutoanalyze, vacuumCount, autovacuumCount, sequentialScans, indexScans, xidAge ]
 
   databases:
-    description: Lists the databases of the PostgreSQL server, the largest first, with their size in bytes (empty without the CONNECT privilege or pg_read_all_stats), client sessions, connection limit (-1 for none), the age of their oldest transaction ID and its percentage of the wraparound limit (PostgreSQL stops accepting writes near 100), deadlocks, temporary bytes written, cache hit percentage, and when their statistics were reset. Use it when the disk fills up, to find the largest database, or when the transaction ID age grows, then PostgreSQL_tableStatistics on that database.
+    description: Lists the databases of the PostgreSQL server, the largest first, with their size in bytes (empty without the CONNECT privilege or pg_read_all_stats), client sessions, connection limit (-1 for none), the age of their oldest transaction ID and its percentage of the wraparound limit (PostgreSQL stops accepting writes near 100), deadlocks, temporary bytes written, cache hit percentage, and when their statistics were reset. Use it when the disk fills up, to find the largest database, or when the transaction ID age grows, then PostgreSQL_tableStatistics on that database. Without superuser or pg_read_all_stats, the parallel and autovacuum workers of other users count as client sessions, as PostgreSQL hides their backend type.
     sources:
       databases:
         type: sql
@@ -479,7 +479,7 @@ tools:
           SELECT d.datname,
                  -- pg_database_size() fails without CONNECT on the database or the privileges of pg_read_all_stats
                  CASE WHEN has_database_privilege(d.oid, 'CONNECT') OR pg_has_role('pg_read_all_stats', 'USAGE') THEN pg_database_size(d.oid) END AS size_bytes,
-                 -- Client sessions only, not the autovacuum or parallel workers (without pg_read_all_stats, other users' have no backend type)
+                 -- Client sessions only, not the autovacuum or parallel workers (without pg_read_all_stats, other users' workers have no backend type and are counted)
                  (SELECT count(*) FROM pg_stat_activity a WHERE a.datid = d.oid
                     AND (a.backend_type = 'client backend' OR (a.backend_type IS NULL AND a.usename IS NOT NULL))) AS sessions,
                  d.datconnlimit, age(d.datfrozenxid) AS xid_age, round(100.0 * age(d.datfrozenxid) / 2147483647, 1) AS wraparound_percent,
