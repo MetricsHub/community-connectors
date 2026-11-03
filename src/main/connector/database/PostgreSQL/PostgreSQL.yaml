@@ -292,7 +292,8 @@ tools:
           SELECT pid, datname, usename, application_name, host(client_addr), backend_type, state, wait_event_type, wait_event,
                  round(EXTRACT(EPOCH FROM now() - xact_start)::numeric, 1) AS transaction_seconds,
                  round(EXTRACT(EPOCH FROM now() - query_start)::numeric, 1) AS query_seconds,
-                 array_to_string(pg_blocking_pids(pid), ' ') AS blocked_by,
+                 -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
+                 CASE WHEN pid IN (SELECT pid FROM pg_locks WHERE NOT granted) THEN array_to_string(pg_blocking_pids(pid), ' ') END AS blocked_by,
                  btrim(regexp_replace(query, '\s+', ' ', 'g')) AS query
           FROM pg_stat_activity
           WHERE pid <> pg_backend_pid()
@@ -341,6 +342,8 @@ tools:
           FROM pg_stat_activity w
           CROSS JOIN LATERAL unnest(pg_blocking_pids(w.pid)) AS b(pid)
           LEFT JOIN pg_stat_activity bs ON bs.pid = b.pid
+          -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
+          WHERE w.pid IN (SELECT pid FROM pg_locks WHERE NOT granted)
           ORDER BY w.query_start
     result:
       source: ${source::locks}
@@ -370,6 +373,9 @@ tools:
                 THEN 'pg_stat_statements is not loaded; add it to shared_preload_libraries, restart PostgreSQL, then run CREATE EXTENSION pg_stat_statements in database ' || current_database()
               WHEN NOT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')
                 THEN 'The pg_stat_statements extension is not created in database ' || current_database() || '; run CREATE EXTENSION pg_stat_statements'
+              -- Before 1.8 (e.g. after a pg_upgrade from PostgreSQL 12), the view has no total_exec_time
+              WHEN (SELECT string_to_array(extversion, '.')::int[] < '{1,8}' FROM pg_extension WHERE extname = 'pg_stat_statements')
+                THEN 'pg_stat_statements ' || (SELECT extversion FROM pg_extension WHERE extname = 'pg_stat_statements') || ' is too old in database ' || current_database() || '; run ALTER EXTENSION pg_stat_statements UPDATE'
             END AS message
           ) m
           WHERE message IS NOT NULL
@@ -402,7 +408,7 @@ tools:
       columns: [ user, database, queryId, calls, totalMs, meanMs, maxMs, rows, sharedBlocksHit, sharedBlocksRead, tempBlocksWritten, query ]
 
   tableStatistics:
-    description: Lists the tables of the database MetricsHub connects to (not the other databases of the server), the largest first or sorted otherwise, with their schema, name, total, table and index size in bytes (empty while an ALTER TABLE, a VACUUM FULL or a REINDEX locks the table), live and dead rows, the percentage of dead rows, the rows modified since the last analyze, the last manual and automatic vacuum and analyze, the vacuum counts, the sequential and index scans, and the age of their oldest transaction ID. Use it when a database grows, queries slow down (dead rows, bloat, stale statistics, sequential scans of large tables), or the transaction ID age nears autovacuum_freeze_max_age (200 million by default) or the wraparound (2 billion).
+    description: Lists the tables of the database MetricsHub connects to (not the other databases of the server), the largest first or sorted otherwise, with their schema, name, total, table and index size in bytes (empty while an ALTER TABLE, a VACUUM FULL or a REINDEX locks the table), live and dead rows, the percentage of dead rows, the rows modified since the last analyze, the last manual and automatic vacuum and analyze, the vacuum counts, the sequential and index scans, and the age of their oldest transaction ID (or of their TOAST table, if older). Use it when a database grows, queries slow down (dead rows, bloat, stale statistics, sequential scans of large tables), or the transaction ID age nears autovacuum_freeze_max_age (200 million by default) or the wraparound (2 billion).
     parameters:
       sortBy:
         description: What the tables are sorted on, the largest first
@@ -422,9 +428,12 @@ tools:
             SELECT s.schemaname, s.relname, sizes.total_bytes, sizes.table_bytes, sizes.index_bytes,
                    s.n_live_tup, s.n_dead_tup, round(100.0 * s.n_dead_tup / NULLIF(s.n_live_tup + s.n_dead_tup, 0), 1) AS dead_percent,
                    s.n_mod_since_analyze, s.last_vacuum, s.last_autovacuum, s.last_analyze, s.last_autoanalyze,
-                   s.vacuum_count, s.autovacuum_count, s.seq_scan, s.idx_scan, age(c.relfrozenxid) AS xid_age
+                   s.vacuum_count, s.autovacuum_count, s.seq_scan, s.idx_scan,
+                   -- The TOAST table is frozen separately and may be older
+                   greatest(age(c.relfrozenxid), age(toast.relfrozenxid)) AS xid_age
             FROM pg_stat_user_tables s
             JOIN pg_class c ON c.oid = s.relid
+            LEFT JOIN pg_class toast ON toast.oid = c.reltoastrelid
             -- The size functions lock the table, its indexes and its TOAST table, and would wait for an ALTER TABLE,
             -- a VACUUM FULL or a REINDEX that holds or waits for an exclusive lock: no size for such a table
             CROSS JOIN LATERAL (
@@ -532,7 +541,7 @@ tools:
         type: integer
         description: The PID of the session, e.g. 12345
         required: true
-        pattern: '[1-9][0-9]{0,9}'
+        pattern: '[1-9][0-9]{0,8}'
     sources:
       cancel:
         type: sql
@@ -544,9 +553,11 @@ tools:
             WHEN NOT EXISTS (
               SELECT 1 FROM pg_stat_activity a LEFT JOIN pg_roles r ON r.oid = a.usesysid
               WHERE a.pid = '${param::pid}'::int
-                AND ((SELECT rolsuper FROM pg_roles WHERE rolname = current_user) OR pg_has_role(a.usesysid, 'MEMBER')
-                  OR (pg_has_role('pg_signal_backend'::name, 'MEMBER') AND NOT COALESCE(r.rolsuper, true)))
-            ) THEN 'Permission denied to signal PID ${param::pid}; it needs a superuser, the role of the session, or pg_signal_backend for a session of a non-superuser'
+                -- As the server checks: only a superuser signals a superuser (or background) session, else the privileges
+                -- (USAGE, inherited) of the role of the session or of pg_signal_backend
+                AND ((SELECT rolsuper FROM pg_roles WHERE rolname = current_user)
+                  OR (NOT COALESCE(r.rolsuper, true) AND (pg_has_role(a.usesysid, 'USAGE') OR pg_has_role('pg_signal_backend'::name, 'USAGE'))))
+            ) THEN 'Permission denied to signal PID ${param::pid}; it needs a superuser, or for a session of a non-superuser the privileges of its role or of pg_signal_backend'
             WHEN pg_cancel_backend('${param::pid}'::int) THEN 'Cancel request sent to PID ${param::pid}'
             ELSE 'PID ${param::pid} could not be signaled'
           END
@@ -562,7 +573,7 @@ tools:
         type: integer
         description: The PID of the session, e.g. 12345
         required: true
-        pattern: '[1-9][0-9]{0,9}'
+        pattern: '[1-9][0-9]{0,8}'
     sources:
       terminate:
         type: sql
@@ -574,9 +585,11 @@ tools:
             WHEN NOT EXISTS (
               SELECT 1 FROM pg_stat_activity a LEFT JOIN pg_roles r ON r.oid = a.usesysid
               WHERE a.pid = '${param::pid}'::int
-                AND ((SELECT rolsuper FROM pg_roles WHERE rolname = current_user) OR pg_has_role(a.usesysid, 'MEMBER')
-                  OR (pg_has_role('pg_signal_backend'::name, 'MEMBER') AND NOT COALESCE(r.rolsuper, true)))
-            ) THEN 'Permission denied to signal PID ${param::pid}; it needs a superuser, the role of the session, or pg_signal_backend for a session of a non-superuser'
+                -- As the server checks: only a superuser signals a superuser (or background) session, else the privileges
+                -- (USAGE, inherited) of the role of the session or of pg_signal_backend
+                AND ((SELECT rolsuper FROM pg_roles WHERE rolname = current_user)
+                  OR (NOT COALESCE(r.rolsuper, true) AND (pg_has_role(a.usesysid, 'USAGE') OR pg_has_role('pg_signal_backend'::name, 'USAGE'))))
+            ) THEN 'Permission denied to signal PID ${param::pid}; it needs a superuser, or for a session of a non-superuser the privileges of its role or of pg_signal_backend'
             WHEN pg_terminate_backend('${param::pid}'::int, 5000) THEN 'Session ${param::pid} terminated'
             ELSE 'PID ${param::pid} could not be signaled, or still runs after 5 seconds'
           END
