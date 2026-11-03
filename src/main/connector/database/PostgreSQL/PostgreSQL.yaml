@@ -274,7 +274,7 @@ monitors:
 tools:
 
   activeSessions:
-    description: Lists the sessions of the PostgreSQL server (all databases), the longest-running transaction or query first, with their PID, database, user, application, client address, backend type, state, wait event, how long their transaction and their current (or last) query have run in seconds, the PIDs that block them (0 for a prepared transaction, see PostgreSQL_blockingLocks) and their query. Idle sessions are left out unless asked for. Use it when queries are slow, connections pile up or a transaction stays "idle in transaction", then PostgreSQL_blockingLocks, PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on a PID. Without superuser or pg_read_all_stats, the sessions of other users only show their PID, database, user and application, with "<insufficient privilege>" as query.
+    description: Lists the sessions of the PostgreSQL server (all databases), the longest-running transaction or query first, with their PID, database, user, application, client address, backend type, state, wait event, how long their transaction and their current (or last) query have run in seconds, the PIDs that block them (0 for a prepared transaction, see PostgreSQL_blockingLocks) and their query. Idle sessions are left out unless asked for. Use it when queries are slow, connections pile up or a transaction stays "idle in transaction", then PostgreSQL_blockingLocks, PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on a PID. Without superuser or pg_read_all_stats, the sessions of other users only show their PID, database, user and application, with "<insufficient privilege>" as query, and their parallel and autovacuum workers are listed as sessions.
     parameters:
       includeIdle:
         type: boolean
@@ -299,8 +299,10 @@ tools:
           -- An idle session keeps the start of its last query: that query ended at state_change
           CROSS JOIN LATERAL (SELECT EXTRACT(EPOCH FROM CASE WHEN state LIKE 'idle%' THEN state_change ELSE now() END - query_start) AS query_seconds) r
           WHERE pid <> pg_backend_pid()
-            -- Not the background processes, which have no state. Without pg_read_all_stats, the sessions of other users have
+            -- Not the background processes, which have no state, nor the parallel workers of a query, whose leader is listed
+            -- (autovacuum workers and WAL senders stay). Without pg_read_all_stats, the sessions of other users have
             -- no state either, nor a backend type, only their user and "<insufficient privilege>" as query.
+            AND backend_type IS DISTINCT FROM 'parallel worker'
             AND (state IS NOT NULL OR (usename IS NOT NULL AND datname IS NOT NULL AND query = '<insufficient privilege>'))
             AND (state IS DISTINCT FROM 'idle' OR '${param::includeIdle}'::boolean)
             -- Filtered and sorted on the transaction age, or else the query time shown
@@ -328,14 +330,16 @@ tools:
       columns: [ database, user, application, clientAddress, state, sessions, oldestStateSeconds ]
 
   blockingLocks:
-    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds since its query started, the locks it waits for and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on the root blocker.
+    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds since its query started, the locks it waits for (a table of another database than the one MetricsHub connects to by its OID) and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on the root blocker.
     sources:
       locks:
         type: sql
         query: |
           SELECT w.pid, w.usename, w.datname,
                  round(EXTRACT(EPOCH FROM now() - w.query_start)::numeric, 1) AS waiting_seconds,
-                 (SELECT string_agg(l.mode || ' on ' || COALESCE(l.relation::regclass::text, l.locktype), ', ')
+                 -- A table OID only resolves to its name in the database MetricsHub connects to (or for a shared catalog, database 0)
+                 (SELECT string_agg(l.mode || ' on ' || COALESCE(CASE WHEN l.database IN (0, (SELECT oid FROM pg_database WHERE datname = current_database()))
+                                                                   THEN l.relation::regclass::text ELSE 'relation OID ' || l.relation END, l.locktype), ', ')
                   FROM pg_locks l WHERE l.pid = w.pid AND NOT l.granted) AS waiting_for,
                  btrim(regexp_replace(w.query, '\s+', ' ', 'g')) AS waiting_query,
                  b.pid, bs.usename, CASE WHEN b.pid = 0 THEN 'prepared transaction' ELSE bs.state END,
@@ -548,7 +552,7 @@ tools:
       columns: [ name, value, unit, defaultValue, source, file, pendingRestart, context, description ]
 
   cancelQuery:
-    description: Cancels the query running in a PostgreSQL session, which stays connected (its transaction is rolled back). Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first. Returns a line that says whether the cancel request was sent. Use it only when the user asks to stop a query; PostgreSQL_terminateBackend closes the whole session.
+    description: Cancels the query running in a PostgreSQL session, which stays connected. Its transaction is rolled back and releases its locks, and the session shows "idle in transaction (aborted)" until its client ends it, unless the query runs in a savepoint (e.g. psql ON_ERROR_ROLLBACK or JDBC autosave), which only rolls back to the savepoint and keeps the locks taken before it; PostgreSQL_terminateBackend ends the whole transaction. Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first. Returns a line that says whether the cancel request was sent. Use it only when the user asks to stop a query; PostgreSQL_terminateBackend closes the whole session.
     destructive: true
     parameters:
       pid:
