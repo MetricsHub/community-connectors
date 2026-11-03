@@ -290,6 +290,16 @@
 	<reporting>
 		<plugins>
 
+			<!-- changelog: disable the report inherited from oss-parent (JGit cannot open git worktrees) -->
+			<plugin>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports />
+					</reportSet>
+				</reportSets>
+			</plugin>
+
 			<!-- pmd -->
 			<plugin>
 				<artifactId>maven-pmd-plugin</artifactId>
