@@ -80,8 +80,10 @@ tools:
     sources:
       sel:
         type: commandLine
-        # Only the last entries: reading the whole SEL can take minutes over the system interface
+        # The SEL cannot be read backwards: to reach the last entries, ipmitool still reads every entry from the BMC,
+        # which takes minutes for a full SEL over the system interface. "last" only spares the output.
         commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open sel elist last ${param::count} 2>&1
+        timeout: 300
     result:
       source: ${source::sel}
 
