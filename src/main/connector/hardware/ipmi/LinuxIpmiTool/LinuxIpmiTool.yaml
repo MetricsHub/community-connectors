@@ -80,10 +80,8 @@ tools:
     sources:
       sel:
         type: commandLine
-        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open sel elist 2>&1
-        computes:
-        - type: tail
-          lines: ${param::count}
+        # Only the last entries: reading the whole SEL can take minutes over the system interface
+        commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open sel elist last ${param::count} 2>&1
     result:
       source: ${source::sel}
 

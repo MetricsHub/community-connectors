@@ -30,6 +30,8 @@ tools:
       interface:
         description: The interface name, e.g. eth0 or ens192
         required: true
+        # The default pattern, but not empty: ip and ethtool without an interface show them all or their usage
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_.@:-]*'
     sources:
       details:
         type: commandLine
