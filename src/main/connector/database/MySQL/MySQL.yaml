@@ -295,22 +295,23 @@ tools:
       columns: [ id, user, host, db, command, seconds, state, trxSeconds, trxState, trxRowsLocked, trxRowsModified, statement ]
 
   lockWaits:
-    description: Lists the sessions that wait for a lock and the sessions that hold it, the longest wait first, with the lock type (row for an InnoDB row lock, metadata for a table metadata lock, e.g. an ALTER TABLE that waits for a transaction to end), the waiting session id, the seconds waited, the locked table (and index), the lock mode, the waiting statement, the blocking session id, its age in seconds and its statement (empty when the blocking transaction is idle, not committed yet). For a metadata lock, every other session that holds a lock on the table is listed; the oldest transaction is usually the culprit. Use it when MySQL_sessions shows sessions that wait for a lock, then MySQL_killSession on the blocking id (connection, which rolls back its transaction). Needs the PROCESS privilege.
+    description: Lists the sessions that wait for a lock and the sessions that hold it, the longest wait first, with the lock type (row for an InnoDB row lock, table for an InnoDB table lock such as AUTO_INC, metadata for a table metadata lock, e.g. an ALTER TABLE that waits for a transaction to end), the waiting session id, the seconds waited, the locked table (and index), the lock mode, the waiting statement, the blocking session id, its age in seconds and its statement (empty when the blocking transaction is idle, not committed yet). For a metadata lock, every other session that holds a lock on the table is listed; the oldest transaction is usually the culprit. Use it when MySQL_sessions shows sessions that wait for a lock, then MySQL_killSession on the blocking id (connection, which rolls back its transaction). Needs the PROCESS privilege.
     sources:
       waits:
         type: sql
         # The LEFT JOIN returns one empty row when no session waits, and no row when the query fails
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
-            SELECT 'row' AS lockType, r.trx_mysql_thread_id, TIMESTAMPDIFF(SECOND, r.trx_wait_started, NOW()) AS waitSeconds,
+            SELECT IF(l.LOCK_TYPE = 'TABLE', 'table', 'row') AS lockType, r.trx_mysql_thread_id, TIMESTAMPDIFF(SECOND, r.trx_wait_started, NOW()) AS waitSeconds,
               CONCAT(l.OBJECT_SCHEMA, '.', l.OBJECT_NAME, IFNULL(CONCAT(' index ', l.INDEX_NAME), '')), l.LOCK_MODE,
               REPLACE(REPLACE(LEFT(r.trx_query, 4096), '\r', ' '), '\n', ' '),
               b.trx_mysql_thread_id AS blockingId, TIMESTAMPDIFF(SECOND, b.trx_started, NOW()),
               REPLACE(REPLACE(LEFT(b.trx_query, 4096), '\r', ' '), '\n', ' ') AS blockingStatement
             FROM performance_schema.data_lock_waits w
-            JOIN performance_schema.data_locks l ON l.ENGINE_LOCK_ID = w.REQUESTING_ENGINE_LOCK_ID
+            JOIN performance_schema.data_locks l ON l.ENGINE_LOCK_ID = w.REQUESTING_ENGINE_LOCK_ID AND l.ENGINE = w.ENGINE
             JOIN information_schema.INNODB_TRX r ON r.trx_id = w.REQUESTING_ENGINE_TRANSACTION_ID
             JOIN information_schema.INNODB_TRX b ON b.trx_id = w.BLOCKING_ENGINE_TRANSACTION_ID
+            WHERE w.ENGINE = 'INNODB'
             UNION ALL
             SELECT DISTINCT 'metadata', wt.PROCESSLIST_ID, wt.PROCESSLIST_TIME,
               CONCAT(p.OBJECT_SCHEMA, '.', p.OBJECT_NAME), p.LOCK_TYPE,
@@ -447,15 +448,16 @@ tools:
       channels:
         type: sql
         # The LEFT JOIN returns one empty row when there is no channel, and no row when the query fails.
-        # A multithreaded applier has a coordinator, which reads the relay log, with its own errors (none for a single thread)
+        # A multithreaded applier has a coordinator, which reads the relay log, with its own errors (none for a single thread).
+        # A single-threaded applier (replica_parallel_workers = 0) is listed in replication_applier_status_by_worker as worker 0
         query: |
           SELECT q.* FROM (SELECT 1) d LEFT JOIN (
             SELECT IF(c.CHANNEL_NAME = '', '(default)', c.CHANNEL_NAME) AS channel, CONCAT(cc.HOST, ':', cc.PORT), c.SERVICE_STATE AS receiverState, a.SERVICE_STATE,
               IF(c.SERVICE_STATE = 'ON' AND a.SERVICE_STATE = 'ON',
                 IFNULL(MAX(IF(w.APPLYING_TRANSACTION = '', NULL, TIMESTAMPDIFF(SECOND, w.APPLYING_TRANSACTION_ORIGINAL_COMMIT_TIMESTAMP, NOW(6)))), 0), NULL),
-              IF(c.LAST_ERROR_NUMBER = 0, '', CONCAT(c.LAST_ERROR_NUMBER, ' ', c.LAST_ERROR_MESSAGE, ' at ', c.LAST_ERROR_TIMESTAMP)),
-              CONCAT_WS(' | ', IF(IFNULL(co.LAST_ERROR_NUMBER, 0) = 0, NULL, CONCAT('coordinator ', co.LAST_ERROR_NUMBER, ' ', co.LAST_ERROR_MESSAGE, ' at ', co.LAST_ERROR_TIMESTAMP)),
-                GROUP_CONCAT(DISTINCT IF(w.LAST_ERROR_NUMBER = 0, NULL, CONCAT(w.LAST_ERROR_NUMBER, ' ', w.LAST_ERROR_MESSAGE, ' at ', w.LAST_ERROR_TIMESTAMP)) SEPARATOR ' | ')),
+              IF(c.LAST_ERROR_NUMBER = 0, '', CONCAT(c.LAST_ERROR_NUMBER, ' ', REPLACE(REPLACE(c.LAST_ERROR_MESSAGE, '\r', ' '), '\n', ' '), ' at ', c.LAST_ERROR_TIMESTAMP)),
+              CONCAT_WS(' | ', IF(IFNULL(co.LAST_ERROR_NUMBER, 0) = 0, NULL, CONCAT('coordinator ', co.LAST_ERROR_NUMBER, ' ', REPLACE(REPLACE(co.LAST_ERROR_MESSAGE, '\r', ' '), '\n', ' '), ' at ', co.LAST_ERROR_TIMESTAMP)),
+                GROUP_CONCAT(DISTINCT IF(w.LAST_ERROR_NUMBER = 0, NULL, CONCAT(w.LAST_ERROR_NUMBER, ' ', REPLACE(REPLACE(w.LAST_ERROR_MESSAGE, '\r', ' '), '\n', ' '), ' at ', w.LAST_ERROR_TIMESTAMP)) SEPARATOR ' | ')),
               c.LAST_HEARTBEAT_TIMESTAMP
             FROM performance_schema.replication_connection_status c
             JOIN performance_schema.replication_connection_configuration cc ON cc.CHANNEL_NAME = c.CHANNEL_NAME
