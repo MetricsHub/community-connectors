@@ -690,7 +690,7 @@ tools:
       columns: [ schema, statement, executions, totalSeconds, averageMilliseconds, maxMilliseconds, rowsExamined, rowsSent, rowsAffected, noIndexUsed, tmpDiskTables, firstSeen, lastSeen ]
 
   replicationStatus:
-    description: Shows the state of each replication connection of this replica (SHOW ALL SLAVES STATUS), one row per connection with the columns of MariaDB 11.4 (later versions add columns at the end), among them Slave_IO_Running and Slave_SQL_Running (Yes when the threads run), Seconds_Behind_Master (the lag), Last_IO_Error and Last_SQL_Error (why a thread stopped), Using_Gtid and Gtid_IO_Pos. Use it when the replica lags, its threads stopped or its data diverges. Needs the REPLICA MONITOR privilege (SUPER before MariaDB 10.5); a row says so when nothing is listed. For a Galera cluster, use MariaDB_globalStatus with wsrep%.
+    description: Shows the state of each replication connection of this replica (SHOW ALL SLAVES STATUS), one row per connection, among them Slave_IO_Running and Slave_SQL_Running (Yes when the threads run), Seconds_Behind_Master (the lag), Last_IO_Error and Last_SQL_Error (why a thread stopped), Using_Gtid and Gtid_IO_Pos. Only the 55 columns common to all versions are named; the unnamed values after them depend on the version, in order Replicate_Rewrite_DB (10.11 and later only), Retried_transactions, Max_relay_log_size, Executed_log_entries, Slave_received_heartbeats, Slave_heartbeat_period, Gtid_Slave_Pos, then the columns of later versions. Use it when the replica lags, its threads stopped or its data diverges. Needs the REPLICA MONITOR privilege (SUPER before MariaDB 10.5); a row says so when nothing is listed. For a Galera cluster, use MariaDB_globalStatus with wsrep%.
     sources:
       replicas:
         type: sql
@@ -709,7 +709,7 @@ tools:
         - ${source::none}
     result:
       source: ${source::all}
-      columns: [ Connection_name, Slave_SQL_State, Slave_IO_State, Master_Host, Master_User, Master_Port, Connect_Retry, Master_Log_File, Read_Master_Log_Pos, Relay_Log_File, Relay_Log_Pos, Relay_Master_Log_File, Slave_IO_Running, Slave_SQL_Running, Replicate_Do_DB, Replicate_Ignore_DB, Replicate_Do_Table, Replicate_Ignore_Table, Replicate_Wild_Do_Table, Replicate_Wild_Ignore_Table, Last_Errno, Last_Error, Skip_Counter, Exec_Master_Log_Pos, Relay_Log_Space, Until_Condition, Until_Log_File, Until_Log_Pos, Master_SSL_Allowed, Master_SSL_CA_File, Master_SSL_CA_Path, Master_SSL_Cert, Master_SSL_Cipher, Master_SSL_Key, Seconds_Behind_Master, Master_SSL_Verify_Server_Cert, Last_IO_Errno, Last_IO_Error, Last_SQL_Errno, Last_SQL_Error, Replicate_Ignore_Server_Ids, Master_Server_Id, Master_SSL_Crl, Master_SSL_Crlpath, Using_Gtid, Gtid_IO_Pos, Replicate_Do_Domain_Ids, Replicate_Ignore_Domain_Ids, Parallel_Mode, SQL_Delay, SQL_Remaining_Delay, Slave_SQL_Running_State, Slave_DDL_Groups, Slave_Non_Transactional_Groups, Slave_Transactional_Groups, Replicate_Rewrite_DB, Retried_transactions, Max_relay_log_size, Executed_log_entries, Slave_received_heartbeats, Slave_heartbeat_period, Gtid_Slave_Pos ]
+      columns: [ Connection_name, Slave_SQL_State, Slave_IO_State, Master_Host, Master_User, Master_Port, Connect_Retry, Master_Log_File, Read_Master_Log_Pos, Relay_Log_File, Relay_Log_Pos, Relay_Master_Log_File, Slave_IO_Running, Slave_SQL_Running, Replicate_Do_DB, Replicate_Ignore_DB, Replicate_Do_Table, Replicate_Ignore_Table, Replicate_Wild_Do_Table, Replicate_Wild_Ignore_Table, Last_Errno, Last_Error, Skip_Counter, Exec_Master_Log_Pos, Relay_Log_Space, Until_Condition, Until_Log_File, Until_Log_Pos, Master_SSL_Allowed, Master_SSL_CA_File, Master_SSL_CA_Path, Master_SSL_Cert, Master_SSL_Cipher, Master_SSL_Key, Seconds_Behind_Master, Master_SSL_Verify_Server_Cert, Last_IO_Errno, Last_IO_Error, Last_SQL_Errno, Last_SQL_Error, Replicate_Ignore_Server_Ids, Master_Server_Id, Master_SSL_Crl, Master_SSL_Crlpath, Using_Gtid, Gtid_IO_Pos, Replicate_Do_Domain_Ids, Replicate_Ignore_Domain_Ids, Parallel_Mode, SQL_Delay, SQL_Remaining_Delay, Slave_SQL_Running_State, Slave_DDL_Groups, Slave_Non_Transactional_Groups, Slave_Transactional_Groups ]
 
   globalStatus:
     description: Returns the global status counters of the server whose name matches a LIKE pattern, e.g. Threads% (connections), Innodb_row_lock% (lock waits), Slow_queries, Aborted%, Created_tmp% or wsrep% (the Galera cluster state of this node, wsrep_cluster_status Primary when healthy, wsrep_local_state_comment Synced). Counters accumulate since the start (Uptime); call it twice to compute a rate.
@@ -742,7 +742,7 @@ tools:
       columns: [ name, value ]
 
   schemaSizes:
-    description: Lists the databases (schemas) with their number of tables and their size in bytes (data, indexes, free space allocated but unused, and total), the largest first. Use it when the disk of the server fills up, then MariaDB_tableSizes on the largest schema.
+    description: Lists the databases (schemas) with their number of tables (views excluded) and their size in bytes (data, indexes, free space allocated but unused, and total), the largest first. Use it when the disk of the server fills up, then MariaDB_tableSizes on the largest schema.
     sources:
       schemas:
         type: sql
@@ -750,7 +750,8 @@ tools:
           SELECT TABLE_SCHEMA, COUNT(*), SUM(DATA_LENGTH), SUM(INDEX_LENGTH), SUM(DATA_FREE),
             SUM(DATA_LENGTH + INDEX_LENGTH) AS total
           FROM information_schema.TABLES
-          WHERE TABLE_SCHEMA NOT IN ('information_schema', 'performance_schema')
+          WHERE TABLE_TYPE <> 'VIEW'
+            AND TABLE_SCHEMA NOT IN ('information_schema', 'performance_schema')
           GROUP BY TABLE_SCHEMA
           ORDER BY total DESC, TABLE_SCHEMA
     result:
