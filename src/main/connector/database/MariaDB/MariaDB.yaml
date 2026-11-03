@@ -529,5 +529,335 @@ translations:
     "-1": unknown
     Default: unknown
 
+tools:
 
-  
+  sessions:
+    description: Lists the client sessions (threads) of the server, the longest-running first, with their thread ID, user, client host, database, command, seconds in the current state, state, memory used in bytes and current query (first 4096 characters). Use it when the server is slow, connections pile up or queries hang (a state such as "Waiting for table metadata lock" points to a DDL blocked by an open transaction; see MariaDB_transactions). Then MariaDB_killQuery or MariaDB_killConnection on a thread ID. Without the PROCESS privilege, only the sessions of the connection user are listed, and a row says so.
+    parameters:
+      minimumSeconds:
+        type: integer
+        description: Only the sessions that have been in their current state for at least this many seconds, e.g. 10 for the long-running queries (0 for all)
+        default: 0
+        pattern: '[0-9]{1,6}'
+      includeIdle:
+        type: boolean
+        description: Whether to list the idle sessions too (command Sleep)
+        default: false
+    sources:
+      sessions:
+        type: sql
+        query: |
+          SELECT ID, USER, HOST, DB, COMMAND, ROUND(TIME_MS / 1000, 1), STATE, MEMORY_USED, LEFT(INFO, 4096)
+          FROM information_schema.PROCESSLIST
+          WHERE ID <> CONNECTION_ID()
+            AND (${param::includeIdle} OR COMMAND <> 'Sleep')
+            AND TIME >= ${param::minimumSeconds}
+          ORDER BY TIME_MS DESC
+      # The INNODB_TRX view needs the PROCESS privilege, as the sessions of the other users do
+      processCheck:
+        type: sql
+        query: SELECT COUNT(*) FROM information_schema.INNODB_TRX
+      denied:
+        type: awk
+        variables:
+          check: ${source::processCheck}
+        script: |
+          BEGIN { if (length(check) == 0) print "The connection user lacks the PROCESS privilege: only its own sessions are listed" }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::sessions}
+        - ${source::denied}
+    result:
+      source: ${source::all}
+      columns: [ id, user, host, database, command, seconds, state, memoryBytes, query ]
+
+  transactions:
+    description: Lists the open InnoDB transactions, the oldest first, with the thread ID of their session, transaction ID, state (RUNNING, LOCK WAIT...), start time, age in seconds, for a transaction waiting for a lock the seconds it has waited, the thread IDs of the sessions that block it, the table, index and mode of the lock it waits for, then the rows it locked and modified, the user, client host, database and command of its session, and its current query (empty for a session idle in its transaction, which still holds its locks). Use it on lock wait timeouts, deadlocks, a growing history list length or a DDL that waits for a metadata lock. The blocking session is usually the oldest transaction; MariaDB_killConnection on its thread ID rolls it back. Without the PROCESS privilege, a row says so.
+    sources:
+      transactions:
+        type: sql
+        query: |
+          SELECT t.trx_mysql_thread_id, t.trx_id, t.trx_state, t.trx_started,
+            TIMESTAMPDIFF(SECOND, t.trx_started, NOW()),
+            TIMESTAMPDIFF(SECOND, t.trx_wait_started, NOW()),
+            w.blockers, w.lock_table, w.lock_index, w.lock_mode,
+            t.trx_rows_locked, t.trx_rows_modified,
+            p.USER, p.HOST, p.DB, p.COMMAND, LEFT(COALESCE(t.trx_query, p.INFO), 4096)
+          FROM information_schema.INNODB_TRX t
+          LEFT JOIN information_schema.PROCESSLIST p ON p.ID = t.trx_mysql_thread_id
+          LEFT JOIN (
+            SELECT lw.requesting_trx_id,
+              GROUP_CONCAT(DISTINCT b.trx_mysql_thread_id ORDER BY b.trx_mysql_thread_id SEPARATOR ' ') AS blockers,
+              MAX(l.lock_table) AS lock_table, MAX(l.lock_index) AS lock_index, MAX(l.lock_mode) AS lock_mode
+            FROM information_schema.INNODB_LOCK_WAITS lw
+            JOIN information_schema.INNODB_TRX b ON b.trx_id = lw.blocking_trx_id
+            LEFT JOIN information_schema.INNODB_LOCKS l ON l.lock_id = lw.requested_lock_id
+            GROUP BY lw.requesting_trx_id
+          ) w ON w.requesting_trx_id = t.trx_id
+          ORDER BY t.trx_started, t.trx_id
+      processCheck:
+        type: sql
+        query: SELECT COUNT(*) FROM information_schema.INNODB_TRX
+      denied:
+        type: awk
+        variables:
+          check: ${source::processCheck}
+        script: |
+          BEGIN { if (length(check) == 0) print "The connection user lacks the PROCESS privilege needed to read the InnoDB transactions" }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::transactions}
+        - ${source::denied}
+    result:
+      source: ${source::all}
+      columns: [ threadId, transactionId, state, started, seconds, waitSeconds, blockedBy, lockTable, lockIndex, lockMode, rowsLocked, rowsModified, user, host, database, command, query ]
+
+  innodbStatus:
+    description: Returns the InnoDB monitor report (SHOW ENGINE INNODB STATUS) as one text, with the latest detected deadlock (both transactions and their queries), the semaphore waits, the transactions, the I/O, the log (checkpoint age) and the buffer pool. Use it after a deadlock, on stalls or on InnoDB errors. Needs the PROCESS privilege, and a row says so when it is missing.
+    sources:
+      status:
+        type: sql
+        # No compute: a compute reads the row as ;-separated text, and the report may hold a ;
+        query: SHOW ENGINE INNODB STATUS
+      denied:
+        type: awk
+        variables:
+          check: ${source::status}
+        script: |
+          BEGIN { if (length(check) == 0) print "SHOW ENGINE INNODB STATUS returned nothing: the connection user lacks the PROCESS privilege" }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::status}
+        - ${source::denied}
+    result:
+      source: ${source::all}
+      columns: [ type, name, status ]
+
+  topStatements:
+    description: Lists the statements that cost the most since the statistics were reset, from the statement digests of performance_schema, with the schema, normalized statement (first 2048 characters), executions, total seconds, average and maximum milliseconds, rows examined, sent and affected, executions without an index, temporary tables created on disk, and first and last seen. Use it when the server is busy or slow to find the queries to optimize. performance_schema is OFF by default in MariaDB (performance_schema=ON in the server configuration, then a restart); a row says so when it is off, when the statements_digest consumer is disabled, or when the connection user cannot read performance_schema.
+    parameters:
+      sortBy:
+        description: What the statements are sorted on, the largest first
+        default: totalTime
+        enum: [ totalTime, averageTime, executions, rowsExamined ]
+      count:
+        type: integer
+        description: How many statements to return, 1 to 1000
+        default: 20
+        pattern: '[1-9][0-9]{0,2}|1000'
+    sources:
+      digests:
+        type: sql
+        query: |
+          (SELECT SCHEMA_NAME, LEFT(DIGEST_TEXT, 2048), COUNT_STAR, ROUND(SUM_TIMER_WAIT / 1e12, 3),
+            ROUND(AVG_TIMER_WAIT / 1e9, 3), ROUND(MAX_TIMER_WAIT / 1e9, 3),
+            SUM_ROWS_EXAMINED, SUM_ROWS_SENT, SUM_ROWS_AFFECTED, SUM_NO_INDEX_USED, SUM_CREATED_TMP_DISK_TABLES,
+            FIRST_SEEN, LAST_SEEN
+          FROM performance_schema.events_statements_summary_by_digest
+          ORDER BY CASE '${param::sortBy}'
+            WHEN 'averageTime' THEN AVG_TIMER_WAIT
+            WHEN 'executions' THEN COUNT_STAR
+            WHEN 'rowsExamined' THEN SUM_ROWS_EXAMINED
+            ELSE SUM_TIMER_WAIT END DESC
+          LIMIT ${param::count})
+          UNION ALL
+          SELECT NULL, 'performance_schema is OFF: set performance_schema=ON in the server configuration and restart MariaDB to collect statement statistics',
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+          FROM DUAL WHERE @@performance_schema = 0
+          UNION ALL
+          SELECT NULL, 'The statements_digest consumer of performance_schema is disabled: UPDATE performance_schema.setup_consumers SET ENABLED = ''YES'' WHERE NAME = ''statements_digest''',
+            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+          FROM performance_schema.setup_consumers WHERE NAME = 'statements_digest' AND ENABLED = 'NO'
+      readCheck:
+        type: sql
+        query: SELECT COUNT(*) FROM performance_schema.setup_consumers
+      denied:
+        type: awk
+        variables:
+          check: ${source::readCheck}
+        script: |
+          BEGIN { if (length(check) == 0) print ";The connection user cannot read performance_schema (GRANT SELECT ON performance_schema.* to it)" }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::digests}
+        - ${source::denied}
+    result:
+      source: ${source::all}
+      columns: [ schema, statement, executions, totalSeconds, averageMilliseconds, maxMilliseconds, rowsExamined, rowsSent, rowsAffected, noIndexUsed, tmpDiskTables, firstSeen, lastSeen ]
+
+  replicationStatus:
+    description: Shows the state of each replication connection of this replica (SHOW ALL SLAVES STATUS), one row per connection with the columns of MariaDB 11.4 (later versions add columns at the end), among them Slave_IO_Running and Slave_SQL_Running (Yes when the threads run), Seconds_Behind_Master (the lag), Last_IO_Error and Last_SQL_Error (why a thread stopped), Using_Gtid and Gtid_IO_Pos. Use it when the replica lags, its threads stopped or its data diverges. Needs the REPLICA MONITOR privilege (SUPER before MariaDB 10.5); a row says so when nothing is listed. For a Galera cluster, use MariaDB_globalStatus with wsrep%.
+    sources:
+      replicas:
+        type: sql
+        # No compute: a compute reads the row as ;-separated text, and the thread states hold a ;
+        query: SHOW ALL SLAVES STATUS
+      none:
+        type: awk
+        variables:
+          check: ${source::replicas}
+        script: |
+          BEGIN { if (length(check) == 0) print "No replication connection: this server is not a replica, or the connection user lacks the REPLICA MONITOR privilege" }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::replicas}
+        - ${source::none}
+    result:
+      source: ${source::all}
+      columns: [ Connection_name, Slave_SQL_State, Slave_IO_State, Master_Host, Master_User, Master_Port, Connect_Retry, Master_Log_File, Read_Master_Log_Pos, Relay_Log_File, Relay_Log_Pos, Relay_Master_Log_File, Slave_IO_Running, Slave_SQL_Running, Replicate_Do_DB, Replicate_Ignore_DB, Replicate_Do_Table, Replicate_Ignore_Table, Replicate_Wild_Do_Table, Replicate_Wild_Ignore_Table, Last_Errno, Last_Error, Skip_Counter, Exec_Master_Log_Pos, Relay_Log_Space, Until_Condition, Until_Log_File, Until_Log_Pos, Master_SSL_Allowed, Master_SSL_CA_File, Master_SSL_CA_Path, Master_SSL_Cert, Master_SSL_Cipher, Master_SSL_Key, Seconds_Behind_Master, Master_SSL_Verify_Server_Cert, Last_IO_Errno, Last_IO_Error, Last_SQL_Errno, Last_SQL_Error, Replicate_Ignore_Server_Ids, Master_Server_Id, Master_SSL_Crl, Master_SSL_Crlpath, Using_Gtid, Gtid_IO_Pos, Replicate_Do_Domain_Ids, Replicate_Ignore_Domain_Ids, Parallel_Mode, SQL_Delay, SQL_Remaining_Delay, Slave_SQL_Running_State, Slave_DDL_Groups, Slave_Non_Transactional_Groups, Slave_Transactional_Groups, Replicate_Rewrite_DB, Retried_transactions, Max_relay_log_size, Executed_log_entries, Slave_received_heartbeats, Slave_heartbeat_period, Gtid_Slave_Pos ]
+
+  globalStatus:
+    description: Returns the global status counters of the server whose name matches a LIKE pattern, e.g. Threads% (connections), Innodb_row_lock% (lock waits), Slow_queries, Aborted%, Created_tmp% or wsrep% (the Galera cluster state of this node, wsrep_cluster_status Primary when healthy, wsrep_local_state_comment Synced). Counters accumulate since the start (Uptime); call it twice to compute a rate.
+    parameters:
+      name:
+        description: LIKE pattern of the counter names, case-insensitive, with % for any characters and _ for one, e.g. wsrep% (% for all)
+        default: '%'
+        pattern: '[A-Za-z0-9_%]{1,64}'
+    sources:
+      status:
+        type: sql
+        query: SHOW GLOBAL STATUS LIKE '${esc(sql)::param::name}'
+    result:
+      source: ${source::status}
+      columns: [ name, value ]
+
+  variables:
+    description: Returns the global system variables of the server whose name matches a LIKE pattern, e.g. max_connections, innodb_buffer_pool_size, %timeout, slow_query%, innodb_lock_wait_timeout or wsrep% (the Galera configuration). Use it to check the configuration behind a problem, e.g. Threads_connected of MariaDB_globalStatus near max_connections.
+    parameters:
+      name:
+        description: LIKE pattern of the variable names, case-insensitive, with % for any characters and _ for one, e.g. innodb_buffer% (% for all)
+        default: '%'
+        pattern: '[A-Za-z0-9_%]{1,64}'
+    sources:
+      variables:
+        type: sql
+        query: SHOW GLOBAL VARIABLES LIKE '${esc(sql)::param::name}'
+    result:
+      source: ${source::variables}
+      columns: [ name, value ]
+
+  schemaSizes:
+    description: Lists the databases (schemas) with their number of tables and their size in bytes (data, indexes, free space allocated but unused, and total), the largest first. Use it when the disk of the server fills up, then MariaDB_tableSizes on the largest schema.
+    sources:
+      schemas:
+        type: sql
+        query: |
+          SELECT TABLE_SCHEMA, COUNT(*), SUM(DATA_LENGTH), SUM(INDEX_LENGTH), SUM(DATA_FREE),
+            SUM(DATA_LENGTH + INDEX_LENGTH) AS total
+          FROM information_schema.TABLES
+          WHERE TABLE_SCHEMA NOT IN ('information_schema', 'performance_schema')
+          GROUP BY TABLE_SCHEMA
+          ORDER BY total DESC, TABLE_SCHEMA
+    result:
+      source: ${source::schemas}
+      columns: [ schema, tables, dataBytes, indexBytes, freeBytes, totalBytes ]
+
+  tableSizes:
+    description: Lists the largest tables, of one schema or of all, with their engine, estimated number of rows and size in bytes (data, indexes, free space allocated but unused, and total), the largest first. Use it after MariaDB_schemaSizes to find what fills the disk; a large free space is reclaimed by OPTIMIZE TABLE.
+    parameters:
+      schema:
+        description: The schema (database) whose tables are listed, e.g. shop (empty for all schemas)
+        default: ''
+      count:
+        type: integer
+        description: How many of the largest tables to return, 1 to 99999
+        default: 50
+        pattern: '[1-9][0-9]{0,4}'
+    sources:
+      tables:
+        type: sql
+        query: |
+          SELECT TABLE_SCHEMA, TABLE_NAME, ENGINE, TABLE_ROWS, DATA_LENGTH, INDEX_LENGTH, DATA_FREE,
+            DATA_LENGTH + INDEX_LENGTH AS total
+          FROM information_schema.TABLES
+          WHERE TABLE_TYPE <> 'VIEW'
+            AND TABLE_SCHEMA NOT IN ('information_schema', 'performance_schema')
+            AND ('${esc(sql)::param::schema}' = '' OR TABLE_SCHEMA = '${esc(sql)::param::schema}')
+          ORDER BY total DESC, TABLE_SCHEMA, TABLE_NAME
+          LIMIT ${param::count}
+    result:
+      source: ${source::tables}
+      columns: [ schema, table, engine, rowsEstimate, dataBytes, indexBytes, freeBytes, totalBytes ]
+
+  killQuery:
+    description: Stops the statement that a session runs (KILL QUERY), leaving the session connected; the statement fails with "Query execution was interrupted", InnoDB undoes what it changed, and an open transaction of the session stays open. Returns the session before and after the kill (a session whose client exits once its statement is interrupted is gone after it), or a row saying that there is no such session. Use it on a runaway query found with MariaDB_sessions; to release the locks of a session idle in a transaction, use MariaDB_killConnection. Killing the session of another user needs the CONNECTION ADMIN privilege (SUPER before MariaDB 10.5).
+    destructive: true
+    parameters:
+      id:
+        type: integer
+        description: The thread ID of the session, as listed by MariaDB_sessions, e.g. 42
+        required: true
+        pattern: '[1-9][0-9]{0,18}'
+    executionOrder: [ before, kill, after, all ]
+    sources:
+      before:
+        type: sql
+        query: |
+          SELECT 'before', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
+          FROM information_schema.PROCESSLIST WHERE ID = ${param::id}
+          UNION ALL
+          SELECT 'before', ${param::id}, NULL, NULL, NULL, NULL, NULL, 'No such session (or not visible without the PROCESS privilege)', NULL
+          FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM information_schema.PROCESSLIST WHERE ID = ${param::id})
+      kill:
+        type: sql
+        query: KILL QUERY ${param::id}
+      after:
+        type: sql
+        query: |
+          SELECT 'after', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
+          FROM information_schema.PROCESSLIST WHERE ID = ${param::id}
+          UNION ALL
+          SELECT 'after', ${param::id}, NULL, NULL, NULL, NULL, NULL, 'No such session (or not visible without the PROCESS privilege)', NULL
+          FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM information_schema.PROCESSLIST WHERE ID = ${param::id})
+      all:
+        type: tableUnion
+        tables:
+        - ${source::before}
+        - ${source::after}
+    result:
+      source: ${source::all}
+      columns: [ phase, id, user, host, database, command, seconds, state, query ]
+
+  killConnection:
+    description: Disconnects a session (KILL CONNECTION), which rolls back its open transaction and releases its locks; a long transaction can take as long to roll back. Returns the session before and after the kill (gone, or command Killed while it rolls back), or a row saying that there is no such session. Use it on the session that blocks others, as found with MariaDB_transactions. Do not kill the replication threads (user "system user"). Killing the session of another user needs the CONNECTION ADMIN privilege (SUPER before MariaDB 10.5).
+    destructive: true
+    parameters:
+      id:
+        type: integer
+        description: The thread ID of the session, as listed by MariaDB_sessions or MariaDB_transactions, e.g. 42
+        required: true
+        pattern: '[1-9][0-9]{0,18}'
+    executionOrder: [ before, kill, after, all ]
+    sources:
+      before:
+        type: sql
+        query: |
+          SELECT 'before', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
+          FROM information_schema.PROCESSLIST WHERE ID = ${param::id}
+          UNION ALL
+          SELECT 'before', ${param::id}, NULL, NULL, NULL, NULL, NULL, 'No such session (or not visible without the PROCESS privilege)', NULL
+          FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM information_schema.PROCESSLIST WHERE ID = ${param::id})
+      kill:
+        type: sql
+        query: KILL CONNECTION ${param::id}
+      after:
+        type: sql
+        query: |
+          SELECT 'after', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
+          FROM information_schema.PROCESSLIST WHERE ID = ${param::id}
+          UNION ALL
+          SELECT 'after', ${param::id}, NULL, NULL, NULL, NULL, NULL, 'No such session (or not visible without the PROCESS privilege)', NULL
+          FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM information_schema.PROCESSLIST WHERE ID = ${param::id})
+      all:
+        type: tableUnion
+        tables:
+        - ${source::before}
+        - ${source::after}
+    result:
+      source: ${source::all}
+      columns: [ phase, id, user, host, database, command, seconds, state, query ]
