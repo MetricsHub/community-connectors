@@ -330,7 +330,7 @@ tools:
       columns: [ database, user, application, clientAddress, state, sessions, oldestStateSeconds ]
 
   blockingLocks:
-    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds since its query started, the locks it waits for (a table of another database than the one MetricsHub connects to by its OID) and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on the root blocker.
+    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds since its query started, the locks it waits for (a table of another database than the one MetricsHub connects to by its OID) and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_terminateBackend on a root blocker "idle in transaction" (which ignores a cancel), or PostgreSQL_cancelQuery on one that runs a query.
     sources:
       locks:
         type: sql
@@ -552,7 +552,7 @@ tools:
       columns: [ name, value, unit, defaultValue, source, file, pendingRestart, context, description ]
 
   cancelQuery:
-    description: Cancels the query running in a PostgreSQL session, which stays connected. Its transaction is rolled back and releases its locks, and the session shows "idle in transaction (aborted)" until its client ends it, unless the query runs in a savepoint (e.g. psql ON_ERROR_ROLLBACK or JDBC autosave), which only rolls back to the savepoint and keeps the locks taken before it; PostgreSQL_terminateBackend ends the whole transaction. Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first. Returns a line that says whether the cancel request was sent. Use it only when the user asks to stop a query; PostgreSQL_terminateBackend closes the whole session.
+    description: Cancels the query running in a PostgreSQL session, which stays connected. A session that runs no query, e.g. "idle in transaction", ignores a cancel and keeps its transaction and its locks, so the tool does not signal it and PostgreSQL_terminateBackend is the way to end it. In a transaction block, the canceled query aborts the transaction, which releases its locks, and the session shows "idle in transaction (aborted)" until its client ends it, unless the query runs in a savepoint (e.g. psql ON_ERROR_ROLLBACK or JDBC autosave), which only rolls back to the savepoint and keeps the locks taken before it; PostgreSQL_terminateBackend ends the whole transaction. Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first. Returns a line that says whether the cancel request was sent, or that the session runs no query. Use it only when the user asks to stop a query; PostgreSQL_terminateBackend closes the whole session.
     destructive: true
     parameters:
       pid:
@@ -576,6 +576,9 @@ tools:
                 AND ((SELECT rolsuper FROM pg_roles WHERE rolname = current_user)
                   OR (NOT COALESCE(r.rolsuper, true) AND (pg_has_role(a.usesysid, 'USAGE') OR pg_has_role('pg_signal_backend'::name, 'USAGE'))))
             ) THEN 'Permission denied to signal PID ${param::pid}; it needs a superuser, or for a session of a non-superuser the privileges of its role or of pg_signal_backend'
+            -- An idle session ignores a cancel, even idle in transaction with its locks: only a terminate ends it
+            WHEN EXISTS (SELECT 1 FROM pg_stat_activity WHERE pid = '${param::pid}'::int AND state LIKE 'idle%')
+              THEN 'PID ${param::pid} runs no query (' || (SELECT state FROM pg_stat_activity WHERE pid = '${param::pid}'::int) || '), so a cancel has no effect; PostgreSQL_terminateBackend ends its session'
             WHEN pg_cancel_backend('${param::pid}'::int) THEN 'Cancel request sent to PID ${param::pid}'
             ELSE 'PID ${param::pid} could not be signaled'
           END
