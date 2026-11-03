@@ -664,7 +664,7 @@ tools:
       columns: [ volume, label, fileSystem, sizeGB, freeGB, usedPercent ]
 
   largestFiles:
-    description: Lists the directories (ending with \) and files under a path that take at least a given size, the largest first, with their size in megabytes, then the errors, such as the directories that cannot be read. Links, junctions and volumes mounted in a folder are not followed. Sizes are logical lengths, as in the Explorer, so a file with several hard links (as in C:\Windows\WinSxS) counts once per link, and a compressed or sparse file counts its full length. Use it after Windows_fileSystemUsage to find what fills a volume. On a large volume, it can take a few minutes.
+    description: Lists the directories (ending with \) and files under a path that take at least a given size, the largest first, with their size in megabytes, then the errors, such as the directories that cannot be read. Links, junctions and volumes mounted in a folder are not followed. Sizes are logical lengths, as in the Explorer, so a file with several hard links (as in C:\Windows\WinSxS) counts once per link, and a compressed or sparse file counts its full length. A ";" in a name is shown as "," in the path returned. Use it after Windows_fileSystemUsage to find what fills a volume. On a large volume, it can take a few minutes.
     parameters:
       path:
         description: Absolute path of the directory to scan, e.g. C:\ or C:\inetpub\logs
