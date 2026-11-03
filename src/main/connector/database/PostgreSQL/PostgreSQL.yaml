@@ -330,13 +330,14 @@ tools:
       columns: [ database, user, application, clientAddress, state, sessions, oldestStateSeconds ]
 
   blockingLocks:
-    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds since its query started, the locks it waits for (a table of another database than the one MetricsHub connects to by its OID) and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_terminateBackend on a root blocker "idle in transaction" (which ignores a cancel), or PostgreSQL_cancelQuery on one that runs a query.
+    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds it has waited for the lock, the locks it waits for (a table of another database than the one MetricsHub connects to by its OID) and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_terminateBackend on a root blocker "idle in transaction" (which ignores a cancel), or PostgreSQL_cancelQuery on one that runs a query.
     sources:
       locks:
         type: sql
         query: |
           SELECT w.pid, w.usename, w.datname,
-                 round(EXTRACT(EPOCH FROM now() - w.query_start)::numeric, 1) AS waiting_seconds,
+                 -- Since the lock wait started (not the query, which may have run long before it), maybe null for an instant
+                 round(EXTRACT(EPOCH FROM now() - (SELECT min(l.waitstart) FROM pg_locks l WHERE l.pid = w.pid AND NOT l.granted))::numeric, 1) AS waiting_seconds,
                  -- A table OID only resolves to its name in the database MetricsHub connects to (or for a shared catalog, database 0)
                  (SELECT string_agg(l.mode || ' on ' || COALESCE(CASE WHEN l.database IN (0, (SELECT oid FROM pg_database WHERE datname = current_database()))
                                                                    THEN l.relation::regclass::text ELSE 'relation OID ' || l.relation END, l.locktype), ', ')
@@ -351,11 +352,12 @@ tools:
                    ELSE btrim(regexp_replace(bs.query, '\s+', ' ', 'g'))
                  END AS blocking_query
           FROM pg_stat_activity w
-          CROSS JOIN LATERAL unnest(pg_blocking_pids(w.pid)) AS b(pid)
+          -- The leader of a parallel query is listed once for each of its workers that blocks
+          CROSS JOIN LATERAL (SELECT DISTINCT unnest(pg_blocking_pids(w.pid)) AS pid) b
           LEFT JOIN pg_stat_activity bs ON bs.pid = b.pid
           -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
           WHERE w.pid IN (SELECT pid FROM pg_locks WHERE NOT granted)
-          ORDER BY w.query_start
+          ORDER BY waiting_seconds DESC NULLS LAST
     result:
       source: ${source::locks}
       columns: [ waitingPid, waitingUser, database, waitingSeconds, waitingFor, waitingQuery, blockingPid, blockingUser, blockingState, blockingTransactionSeconds, blockingIsBlocked, blockingQuery ]
@@ -437,7 +439,9 @@ tools:
       tables:
         type: sql
         query: |
-          WITH locked AS (SELECT relation FROM pg_locks WHERE locktype = 'relation' AND mode = 'AccessExclusiveLock')
+          -- pg_locks covers every database: a relation OID only means this table in the current one
+          WITH locked AS (SELECT relation FROM pg_locks WHERE locktype = 'relation' AND mode = 'AccessExclusiveLock'
+                            AND database = (SELECT oid FROM pg_database WHERE datname = current_database()))
           SELECT * FROM (
             SELECT s.schemaname, s.relname, sizes.total_bytes, sizes.table_bytes, sizes.index_bytes,
                    s.n_live_tup, s.n_dead_tup, round(100.0 * s.n_dead_tup / NULLIF(s.n_live_tup + s.n_dead_tup, 0), 1) AS dead_percent,
@@ -505,7 +509,8 @@ tools:
           SELECT 'server',
                  CASE WHEN pg_is_in_recovery() THEN 'standby' ELSE 'primary' END,
                  CASE WHEN pg_is_in_recovery()
-                   THEN COALESCE((SELECT status FROM pg_stat_wal_receiver), 'no WAL receiver')
+                   -- Without pg_read_all_stats, the WAL receiver shows but its status and upstream server are null
+                   THEN COALESCE((SELECT COALESCE(status, 'WAL receiver running (status hidden without pg_read_all_stats)') FROM pg_stat_wal_receiver), 'no WAL receiver')
                         || CASE WHEN pg_is_wal_replay_paused() THEN ', replay paused' ELSE '' END
                    ELSE 'accepting writes'
                  END,
