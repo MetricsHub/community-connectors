@@ -664,7 +664,7 @@ tools:
       columns: [ volume, label, fileSystem, sizeGB, freeGB, usedPercent ]
 
   largestFiles:
-    description: Lists the directories (ending with \) and files under a path that take at least a given size, the largest first, with their size in megabytes, then the errors, such as the directories that cannot be read. Links, junctions and volumes mounted in a folder are not followed. Use it after Windows_fileSystemUsage to find what fills a volume. On a large volume, it can take a few minutes.
+    description: Lists the directories (ending with \) and files under a path that take at least a given size, the largest first, with their size in megabytes, then the errors, such as the directories that cannot be read. Links, junctions and volumes mounted in a folder are not followed. Sizes are logical lengths, as in the Explorer, so a file with several hard links (as in C:\Windows\WinSxS) counts once per link, and a compressed or sparse file counts its full length. Use it after Windows_fileSystemUsage to find what fills a volume. On a large volume, it can take a few minutes.
     parameters:
       path:
         description: Absolute path of the directory to scan, e.g. C:\ or C:\inetpub\logs
@@ -694,12 +694,12 @@ tools:
           while ($stack.Count) { $c = $stack.Pop(); $own = 0;
           try { $items = $c.GetFileSystemInfos() } catch { 'Failed: ' + $c.FullName + ': ' + $_.Exception.InnerException.Message; continue };
           foreach ($i in $items) { if ($i -is [IO.DirectoryInfo]) { if (-not ($i.Attributes -band [IO.FileAttributes]::ReparsePoint)) { $stack.Push($i) } }
-          else { $own += $i.Length; if ($i.Length -ge $m) { '{0};{1}' -f [math]::Floor($i.Length / 1048576), $i.FullName } } };
+          else { $own += $i.Length; if ($i.Length -ge $m) { '{0}|{1}' -f [math]::Floor($i.Length / 1048576), $i.FullName } } };
           $p = $c.FullName; while ($p -and $p.Length -ge $r.FullName.Length) { $d[$p] += $own; $p = [IO.Path]::GetDirectoryName($p) } };
-          foreach ($k in $d.Keys) { if ($d[$k] -ge $m) { '{0};{1}\' -f [math]::Floor($d[$k] / 1048576), $k.TrimEnd('\') } };
+          foreach ($k in $d.Keys) { if ($d[$k] -ge $m) { '{0}|{1}\' -f [math]::Floor($d[$k] / 1048576), $k.TrimEnd('\') } };
           exit 0" 2>&1
-        # megabytes;path, or an error in the first column
-        separators: ";"
+        # megabytes|path, or an error in the first column: a path may hold a ";" (shown as "," by the engine), never a "|"
+        separators: "|"
         selectColumns: 1,2
       sizes:
         type: copy
