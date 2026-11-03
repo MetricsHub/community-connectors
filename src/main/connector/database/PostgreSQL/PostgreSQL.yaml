@@ -291,19 +291,21 @@ tools:
         query: |
           SELECT pid, datname, usename, application_name, host(client_addr), backend_type, state, wait_event_type, wait_event,
                  round(EXTRACT(EPOCH FROM now() - xact_start)::numeric, 1) AS transaction_seconds,
-                 -- An idle session keeps the start of its last query: that query ended at state_change
-                 round(EXTRACT(EPOCH FROM CASE WHEN state LIKE 'idle%' THEN state_change ELSE now() END - query_start)::numeric, 1) AS query_seconds,
+                 round(r.query_seconds::numeric, 1) AS query_seconds,
                  -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
                  CASE WHEN pid IN (SELECT pid FROM pg_locks WHERE NOT granted) THEN array_to_string(pg_blocking_pids(pid), ' ') END AS blocked_by,
                  btrim(regexp_replace(query, '\s+', ' ', 'g')) AS query
           FROM pg_stat_activity
+          -- An idle session keeps the start of its last query: that query ended at state_change
+          CROSS JOIN LATERAL (SELECT EXTRACT(EPOCH FROM CASE WHEN state LIKE 'idle%' THEN state_change ELSE now() END - query_start) AS query_seconds) r
           WHERE pid <> pg_backend_pid()
             -- Not the background processes, which have no state. Without pg_read_all_stats, the sessions of other users have
             -- no state either, nor a backend type, only their user and "<insufficient privilege>" as query.
             AND (state IS NOT NULL OR (usename IS NOT NULL AND datname IS NOT NULL AND query = '<insufficient privilege>'))
             AND (state IS DISTINCT FROM 'idle' OR '${param::includeIdle}'::boolean)
-            AND COALESCE(EXTRACT(EPOCH FROM now() - COALESCE(xact_start, query_start)), 0) >= '${param::minimumSeconds}'::numeric
-          ORDER BY COALESCE(xact_start, query_start) NULLS LAST
+            -- Filtered and sorted on the transaction age, or else the query time shown
+            AND COALESCE(EXTRACT(EPOCH FROM now() - xact_start), r.query_seconds, 0) >= '${param::minimumSeconds}'::numeric
+          ORDER BY COALESCE(EXTRACT(EPOCH FROM now() - xact_start), r.query_seconds) DESC NULLS LAST
     result:
       source: ${source::sessions}
       columns: [ pid, database, user, application, clientAddress, backendType, state, waitEventType, waitEvent, transactionSeconds, querySeconds, blockedBy, query ]
