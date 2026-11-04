@@ -107,6 +107,9 @@ For each row of the referenced table, the engine clones the enclosing source, re
 | `source` | Yes | None | Reference to the source whose table drives the loop. |
 | `concatMethod` | No | `list` | How per-entry results are combined (see below). |
 | `sleep` | No | None | Milliseconds to pause after each entry — throttles chatty APIs. |
+| `maxParallel` | No | None (one entry at a time) | Maximum number of entries executed concurrently (capped at 50). Results are still concatenated in the row order. MetricsHub Community 3.9.09 or later. |
+
+Entries run one at a time by default. Set `maxParallel` when each entry is slow and the target handles concurrent requests well, for example a WMI query that takes seconds per disk: with `maxParallel: 8`, 8 disks cost the time of one query instead of 8. `maxParallel` is ignored, and the entries run one at a time, when `sleep` is set, when the source has [`forceSerialization: true`](#forceserialization), or when the host is configured with `sequential: true`. Don't set it for devices that dislike bursts of requests.
 
 `concatMethod` values:
 
