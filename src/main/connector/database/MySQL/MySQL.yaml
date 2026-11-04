@@ -424,7 +424,7 @@ tools:
                 ELSE SUM_TIMER_WAIT
               END AS sortKey
             FROM performance_schema.events_statements_summary_by_digest
-            WHERE '${param::schema}' IN ('', SCHEMA_NAME)
+            WHERE '${esc(sql)::param::schema}' IN ('', SCHEMA_NAME)
             ORDER BY sortKey DESC
             LIMIT ${param::count}
           ) q ON TRUE
@@ -548,7 +548,7 @@ tools:
               WHERE s.NAME LIKE '%/%'
               GROUP BY tableName
             ) ts ON ts.tableName = CONCAT(t.TABLE_SCHEMA, '/', t.TABLE_NAME)
-            WHERE t.TABLE_TYPE = 'BASE TABLE' AND '${param::schema}' IN ('', t.TABLE_SCHEMA)
+            WHERE t.TABLE_TYPE = 'BASE TABLE' AND '${esc(sql)::param::schema}' IN ('', t.TABLE_SCHEMA)
             ORDER BY sortKey DESC
             LIMIT ${param::count}
           ) q ON TRUE
