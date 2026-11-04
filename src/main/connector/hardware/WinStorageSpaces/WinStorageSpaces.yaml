@@ -146,6 +146,8 @@ monitors:
           executeForEachEntryOf:
             source: ${source::monitors.disk_controller.discovery.sources.source(7)}
             concatMethod: list
+            # Each query takes seconds in the Storage provider, which answers concurrent queries in parallel
+            maxParallel: 8
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,ReadErrorsTotal,Wear,WriteErrorsTotal,Temperature,TemperatureMax FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter
         source(11):
@@ -259,6 +261,8 @@ monitors:
           executeForEachEntryOf:
             source: ${source::monitors.disk_controller.discovery.sources.source(7)}
             concatMethod: list
+            # Each query takes seconds in the Storage provider, which answers concurrent queries in parallel
+            maxParallel: 8
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,ReadErrorsTotal,Wear,WriteErrorsTotal FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter
           computes:
@@ -437,6 +441,8 @@ monitors:
           executeForEachEntryOf:
             source: ${source::monitors.disk_controller.discovery.sources.source(11)}
             concatMethod: list
+            # Each query takes seconds in the Storage provider, which answers concurrent queries in parallel
+            maxParallel: 8
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,Temperature FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter
       mapping:
