@@ -270,3 +270,363 @@ monitors:
           db.server.lock.type: $3
         metrics:
           db.server.locks: $4
+
+tools:
+
+  activeSessions:
+    description: Lists the sessions of the PostgreSQL server (all databases), the longest-running transaction or query first, with their PID, database, user, application, client address, backend type, state, wait event, how long their transaction and their current (or last) query have run in seconds, the PIDs that block them (0 for a prepared transaction, see PostgreSQL_blockingLocks) and their query. Idle sessions are left out unless asked for. Use it when queries are slow, connections pile up or a transaction stays "idle in transaction", then PostgreSQL_blockingLocks, PostgreSQL_cancelQuery or PostgreSQL_terminateBackend on a PID. Without superuser or pg_read_all_stats, the sessions of other users only show their PID, database, user and application, with "<insufficient privilege>" as query, and their parallel and autovacuum workers are listed as sessions.
+    parameters:
+      includeIdle:
+        type: boolean
+        description: Whether to list the idle sessions too
+        default: false
+      minimumSeconds:
+        type: integer
+        description: Only the sessions whose transaction, or else query, has run at least this many seconds, e.g. 60 for the long-running ones (0 for all)
+        default: 0
+        pattern: '[0-9]{1,6}'
+    sources:
+      sessions:
+        type: sql
+        query: |
+          SELECT pid, datname, usename, application_name, host(client_addr), backend_type, state, wait_event_type, wait_event,
+                 round(EXTRACT(EPOCH FROM now() - xact_start)::numeric, 1) AS transaction_seconds,
+                 round(r.query_seconds::numeric, 1) AS query_seconds,
+                 -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock, themselves or
+                 -- through a parallel worker (whose leader waits for it, not for a lock)
+                 CASE WHEN pid IN (SELECT COALESCE(p.leader_pid, l.pid) FROM pg_locks l LEFT JOIN pg_stat_activity p ON p.pid = l.pid WHERE NOT l.granted)
+                   -- once each, as a leader is blocked through each of its waiting workers
+                   THEN (SELECT string_agg(DISTINCT b::text, ' ') FROM unnest(pg_blocking_pids(pid)) b) END AS blocked_by,
+                 btrim(regexp_replace(query, '\s+', ' ', 'g')) AS query
+          FROM pg_stat_activity
+          -- An idle session keeps the start of its last query: that query ended at state_change
+          CROSS JOIN LATERAL (SELECT EXTRACT(EPOCH FROM CASE WHEN state LIKE 'idle%' THEN state_change ELSE now() END - query_start) AS query_seconds) r
+          WHERE pid <> pg_backend_pid()
+            -- Not the background processes, which have no state, nor the parallel workers of a query, whose leader is listed
+            -- (autovacuum workers and WAL senders stay). Without pg_read_all_stats, the sessions of other users have
+            -- no state either, nor a backend type, only their user and "<insufficient privilege>" as query.
+            AND backend_type IS DISTINCT FROM 'parallel worker'
+            AND (state IS NOT NULL OR (usename IS NOT NULL AND datname IS NOT NULL AND query = '<insufficient privilege>'))
+            AND (state IS DISTINCT FROM 'idle' OR '${param::includeIdle}'::boolean)
+            -- Filtered and sorted on the transaction age, or else the query time shown
+            AND COALESCE(EXTRACT(EPOCH FROM now() - xact_start), r.query_seconds, 0) >= '${param::minimumSeconds}'::numeric
+          ORDER BY COALESCE(EXTRACT(EPOCH FROM now() - xact_start), r.query_seconds) DESC NULLS LAST
+    result:
+      source: ${source::sessions}
+      columns: [ pid, database, user, application, clientAddress, backendType, state, waitEventType, waitEvent, transactionSeconds, querySeconds, blockedBy, query ]
+
+  connectionSummary:
+    description: Counts the sessions of the PostgreSQL server by database, user, application, client address and state, the largest groups first, with how long the oldest session of each group has been in its state, in seconds. Use it when the server runs out of connections ("too many clients", "remaining connection slots are reserved") to find who holds them, e.g. an application leaking idle connections. PostgreSQL_settings with max_connections gives the limit. Without superuser or pg_read_all_stats, the state and address of the sessions of other users are empty, and their parallel and autovacuum workers count as sessions.
+    sources:
+      summary:
+        type: sql
+        query: |
+          SELECT datname, usename, application_name, host(client_addr), state, count(*) AS sessions,
+                 round(max(EXTRACT(EPOCH FROM now() - state_change))::numeric, 1) AS oldest_state_seconds
+          FROM pg_stat_activity
+          -- Without pg_read_all_stats, the sessions of other users have no backend type, nor state and address
+          WHERE backend_type = 'client backend' OR (backend_type IS NULL AND usename IS NOT NULL AND datname IS NOT NULL)
+          GROUP BY datname, usename, application_name, host(client_addr), state
+          ORDER BY sessions DESC
+    result:
+      source: ${source::summary}
+      columns: [ database, user, application, clientAddress, state, sessions, oldestStateSeconds ]
+
+  blockingLocks:
+    description: Lists the sessions waiting for a lock, one row for each session that blocks them, the longest wait first, with the waiting PID, user, database, seconds it has waited for the lock, the locks it waits for (a table of another database than the one MetricsHub connects to by its OID) and its query, then the blocking PID, user, state, the age of its transaction in seconds, whether it is itself blocked, and its query. A blocker that is not itself blocked is the root of the chain, often a session "idle in transaction". A blocking PID 0 is a prepared transaction (two-phase commit), which PostgreSQL_terminateBackend cannot end; its query then lists the prepared transactions, which only COMMIT PREPARED or ROLLBACK PREPARED with their GID end. Use it when queries hang or PostgreSQL_activeSessions shows Lock waits, then PostgreSQL_terminateBackend on a root blocker "idle in transaction" (which ignores a cancel), or PostgreSQL_cancelQuery on one that runs a query.
+    sources:
+      locks:
+        type: sql
+        query: |
+          -- The locks waited for, by the session or by its parallel workers, which are listed as their leader
+          WITH waits AS (SELECT l.*, COALESCE(p.leader_pid, l.pid) AS session FROM pg_locks l LEFT JOIN pg_stat_activity p ON p.pid = l.pid WHERE NOT l.granted)
+          SELECT w.pid, w.usename, w.datname,
+                 -- Since the lock wait started (not the query, which may have run long before it), maybe null for an instant
+                 round(EXTRACT(EPOCH FROM now() - (SELECT min(l.waitstart) FROM waits l WHERE l.session = w.pid))::numeric, 1) AS waiting_seconds,
+                 -- A table OID only resolves to its name in the database MetricsHub connects to (or for a shared catalog, database 0)
+                 (SELECT string_agg(DISTINCT l.mode || ' on ' || COALESCE(CASE WHEN l.database IN (0, (SELECT oid FROM pg_database WHERE datname = current_database()))
+                                                                            THEN l.relation::regclass::text ELSE 'relation OID ' || l.relation END, l.locktype), ', ')
+                  FROM waits l WHERE l.session = w.pid) AS waiting_for,
+                 btrim(regexp_replace(w.query, '\s+', ' ', 'g')) AS waiting_query,
+                 b.pid, bs.usename, CASE WHEN b.pid = 0 THEN 'prepared transaction' ELSE bs.state END,
+                 round(EXTRACT(EPOCH FROM now() - bs.xact_start)::numeric, 1) AS blocking_transaction_seconds,
+                 cardinality(pg_blocking_pids(b.pid)) > 0 AS blocking_is_blocked,
+                 -- PID 0 is a prepared transaction, which has no session
+                 CASE WHEN b.pid = 0
+                   THEN (SELECT 'Prepared transactions: ' || string_agg(format('GID %L by %s on %s since %s', gid, owner, database, prepared), ', ' ORDER BY prepared) FROM pg_prepared_xacts)
+                   ELSE btrim(regexp_replace(bs.query, '\s+', ' ', 'g'))
+                 END AS blocking_query
+          FROM pg_stat_activity w
+          -- The leader of a parallel query is listed once for each of its workers that blocks
+          CROSS JOIN LATERAL (SELECT DISTINCT unnest(pg_blocking_pids(w.pid)) AS pid) b
+          LEFT JOIN pg_stat_activity bs ON bs.pid = b.pid
+          -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
+          WHERE w.pid IN (SELECT session FROM waits)
+          ORDER BY waiting_seconds DESC NULLS LAST
+    result:
+      source: ${source::locks}
+      columns: [ waitingPid, waitingUser, database, waitingSeconds, waitingFor, waitingQuery, blockingPid, blockingUser, blockingState, blockingTransactionSeconds, blockingIsBlocked, blockingQuery ]
+
+  topStatements:
+    description: Lists the statements that cost the most since the statistics were reset, from the pg_stat_statements extension, with the user, database, query ID, calls, total, mean and maximum execution time in milliseconds, rows, shared blocks hit and read, temporary blocks written and the normalized query. When the extension is missing or not loaded, a single row says so and how to install it. Use it when the server is slow or busy, to find the queries to optimize.
+    parameters:
+      sortBy:
+        description: What the statements are sorted on, the largest first (sharedBlocksRead for the I/O, tempBlocksWritten for the sorts and hashes that spill to disk)
+        default: totalTime
+        enum: [ totalTime, meanTime, calls, rows, sharedBlocksRead, tempBlocksWritten ]
+      count:
+        type: integer
+        description: How many statements to return, 1 to 99999
+        default: 20
+        pattern: '[1-9][0-9]{0,4}'
+    sources:
+      # The query of the statements fails, and returns no rows, without the extension: say why
+      check:
+        type: sql
+        query: |
+          SELECT message FROM (
+            SELECT CASE
+              -- Its settings only exist once shared_preload_libraries loaded it (which only a superuser may read)
+              WHEN current_setting('pg_stat_statements.max', true) IS NULL
+                THEN 'pg_stat_statements is not loaded; add it to shared_preload_libraries, restart PostgreSQL, then run CREATE EXTENSION pg_stat_statements in database ' || current_database()
+              WHEN NOT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements')
+                THEN 'The pg_stat_statements extension is not created in database ' || current_database() || '; run CREATE EXTENSION pg_stat_statements'
+              -- Before 1.8 (e.g. after a pg_upgrade from PostgreSQL 12), the view has no total_exec_time
+              WHEN (SELECT string_to_array(extversion, '.')::int[] < '{1,8}' FROM pg_extension WHERE extname = 'pg_stat_statements')
+                THEN 'pg_stat_statements ' || (SELECT extversion FROM pg_extension WHERE extname = 'pg_stat_statements') || ' is too old in database ' || current_database() || '; run ALTER EXTENSION pg_stat_statements UPDATE'
+              -- The extension may be created in a schema that is not in the search_path
+              WHEN to_regclass('pg_stat_statements') IS NULL
+                THEN 'The pg_stat_statements view is in schema ' || (SELECT extnamespace::regnamespace::text FROM pg_extension WHERE extname = 'pg_stat_statements') || ', not in the search_path of ' || current_user || ' (' || current_setting('search_path') || '); add it with ALTER ROLE ... SET search_path'
+            END AS message
+          ) m
+          WHERE message IS NOT NULL
+      statements:
+        type: sql
+        query: |
+          SELECT r.rolname, d.datname, s.queryid, s.calls,
+                 round(s.total_exec_time::numeric, 1), round(s.mean_exec_time::numeric, 2), round(s.max_exec_time::numeric, 1),
+                 s.rows, s.shared_blks_hit, s.shared_blks_read, s.temp_blks_written,
+                 btrim(regexp_replace(s.query, '\s+', ' ', 'g'))
+          FROM pg_stat_statements s
+          LEFT JOIN pg_roles r ON r.oid = s.userid
+          LEFT JOIN pg_database d ON d.oid = s.dbid
+          ORDER BY CASE '${param::sortBy}'
+            WHEN 'meanTime' THEN s.mean_exec_time
+            WHEN 'calls' THEN s.calls
+            WHEN 'rows' THEN s.rows
+            WHEN 'sharedBlocksRead' THEN s.shared_blks_read
+            WHEN 'tempBlocksWritten' THEN s.temp_blks_written
+            ELSE s.total_exec_time
+          END DESC
+          LIMIT ${param::count}
+      all:
+        type: tableUnion
+        tables:
+        - ${source::check}
+        - ${source::statements}
+    result:
+      source: ${source::all}
+      columns: [ user, database, queryId, calls, totalMs, meanMs, maxMs, rows, sharedBlocksHit, sharedBlocksRead, tempBlocksWritten, query ]
+
+  tableStatistics:
+    description: Lists the tables of the database MetricsHub connects to (not the other databases of the server), the largest first or sorted otherwise, with their schema, name, total, table (with its TOAST data) and index size in bytes (empty while an ALTER TABLE, a VACUUM FULL or a REINDEX locks the table), live and dead rows, the percentage of dead rows, the rows modified since the last analyze, the last manual and automatic vacuum and analyze, the vacuum counts, the sequential and index scans, and the age of their oldest transaction ID (or of their TOAST table, if older; empty for a partitioned table, whose partitions hold the rows). Use it when a database grows, queries slow down (dead rows, bloat, stale statistics, sequential scans of large tables), or the transaction ID age nears autovacuum_freeze_max_age (200 million by default) or the wraparound (2 billion).
+    parameters:
+      sortBy:
+        description: What the tables are sorted on, the largest first
+        default: totalSize
+        enum: [ totalSize, deadRows, modifiedSinceAnalyze, sequentialScans, xidAge ]
+      count:
+        type: integer
+        description: How many tables to return, 1 to 99999
+        default: 50
+        pattern: '[1-9][0-9]{0,4}'
+    sources:
+      tables:
+        type: sql
+        query: |
+          -- pg_locks covers every database: a relation OID only means this table in the current one
+          WITH locked AS (SELECT relation FROM pg_locks WHERE locktype = 'relation' AND mode = 'AccessExclusiveLock'
+                            AND database = (SELECT oid FROM pg_database WHERE datname = current_database()))
+          SELECT * FROM (
+            SELECT s.schemaname, s.relname, sizes.total_bytes, sizes.table_bytes, sizes.index_bytes,
+                   s.n_live_tup, s.n_dead_tup, round(100.0 * s.n_dead_tup / NULLIF(s.n_live_tup + s.n_dead_tup, 0), 1) AS dead_percent,
+                   s.n_mod_since_analyze, s.last_vacuum, s.last_autovacuum, s.last_analyze, s.last_autoanalyze,
+                   s.vacuum_count, s.autovacuum_count, s.seq_scan, s.idx_scan,
+                   -- The TOAST table is frozen separately and may be older
+                   -- A partitioned table has no storage, so no frozen XID (age() says 2147483647): its partitions are listed
+                   CASE WHEN c.relkind <> 'p' THEN greatest(age(c.relfrozenxid), age(toast.relfrozenxid)) END AS xid_age
+            FROM pg_stat_user_tables s
+            JOIN pg_class c ON c.oid = s.relid
+            LEFT JOIN pg_class toast ON toast.oid = c.reltoastrelid
+            -- The size functions lock the table, its indexes and its TOAST table, and would wait for an ALTER TABLE,
+            -- a VACUUM FULL or a REINDEX that holds or waits for an exclusive lock: no size for such a table
+            CROSS JOIN LATERAL (
+              SELECT CASE WHEN unlocked THEN pg_total_relation_size(s.relid) END AS total_bytes,
+                     CASE WHEN unlocked THEN pg_table_size(s.relid) END AS table_bytes,
+                     CASE WHEN unlocked THEN pg_indexes_size(s.relid) END AS index_bytes
+              FROM (SELECT NOT EXISTS (
+                SELECT 1 FROM locked l
+                WHERE l.relation = s.relid OR l.relation = c.reltoastrelid
+                   OR l.relation IN (SELECT indexrelid FROM pg_index WHERE indrelid IN (s.relid, c.reltoastrelid))
+              ) AS unlocked) u
+            ) sizes
+          ) t
+          ORDER BY CASE '${param::sortBy}'
+            WHEN 'deadRows' THEN n_dead_tup
+            WHEN 'modifiedSinceAnalyze' THEN n_mod_since_analyze
+            WHEN 'sequentialScans' THEN seq_scan
+            WHEN 'xidAge' THEN xid_age
+            ELSE total_bytes
+          END DESC NULLS LAST
+          LIMIT ${param::count}
+    result:
+      source: ${source::tables}
+      columns: [ schema, table, totalBytes, tableBytes, indexBytes, liveRows, deadRows, deadPercent, modifiedSinceAnalyze, lastVacuum, lastAutovacuum, lastAnalyze, lastAutoanalyze, vacuumCount, autovacuumCount, sequentialScans, indexScans, xidAge ]
+
+  databases:
+    description: Lists the databases of the PostgreSQL server, the largest first, with their size in bytes (empty without the CONNECT privilege or pg_read_all_stats), client sessions, connection limit (-1 for none), the age of their oldest transaction ID and its percentage of the wraparound limit (PostgreSQL stops accepting writes near 100), deadlocks, temporary bytes written, cache hit percentage, and when their statistics were reset. Use it when the disk fills up, to find the largest database, or when the transaction ID age grows, then PostgreSQL_tableStatistics on that database. Without superuser or pg_read_all_stats, the parallel and autovacuum workers of other users count as client sessions, as PostgreSQL hides their backend type.
+    sources:
+      databases:
+        type: sql
+        query: |
+          SELECT d.datname,
+                 -- pg_database_size() fails without CONNECT on the database or the privileges of pg_read_all_stats
+                 CASE WHEN has_database_privilege(d.oid, 'CONNECT') OR pg_has_role('pg_read_all_stats', 'USAGE') THEN pg_database_size(d.oid) END AS size_bytes,
+                 -- Client sessions only, not the autovacuum or parallel workers (without pg_read_all_stats, other users' workers have no backend type and are counted)
+                 (SELECT count(*) FROM pg_stat_activity a WHERE a.datid = d.oid
+                    AND (a.backend_type = 'client backend' OR (a.backend_type IS NULL AND a.usename IS NOT NULL))) AS sessions,
+                 d.datconnlimit, age(d.datfrozenxid) AS xid_age, round(100.0 * age(d.datfrozenxid) / 2147483647, 1) AS wraparound_percent,
+                 s.deadlocks, s.temp_bytes, round(100.0 * s.blks_hit / NULLIF(s.blks_hit + s.blks_read, 0), 1) AS cache_hit_percent, s.stats_reset
+          FROM pg_database d
+          LEFT JOIN pg_stat_database s ON s.datid = d.oid
+          WHERE NOT d.datistemplate
+          ORDER BY size_bytes DESC NULLS LAST
+    result:
+      source: ${source::databases}
+      columns: [ database, sizeBytes, sessions, connectionLimit, xidAge, wraparoundPercent, deadlocks, tempBytes, cacheHitPercent, statsReset ]
+
+  replicationStatus:
+    description: Shows the replication of the PostgreSQL server, one row each for the server itself (primary, or standby with the status of its WAL receiver, its upstream server, the WAL received but not replayed in bytes and the seconds since the last replayed transaction), its standbys (state and sync state, client, the WAL not replayed yet in bytes, replay lag in seconds) and its replication slots (active or not, WAL status, type and database, the WAL they retain in bytes). Use it when replication lags or breaks, or when pg_wal fills the disk, often because of an inactive slot.
+    sources:
+      replication:
+        type: sql
+        query: |
+          SELECT 'server',
+                 CASE WHEN pg_is_in_recovery() THEN 'standby' ELSE 'primary' END,
+                 CASE WHEN pg_is_in_recovery()
+                   -- Without pg_read_all_stats, the WAL receiver shows but its status and upstream server are null
+                   THEN COALESCE((SELECT COALESCE(status, 'WAL receiver running (status hidden without pg_read_all_stats)') FROM pg_stat_wal_receiver), 'no WAL receiver')
+                        || CASE WHEN pg_is_wal_replay_paused() THEN ', replay paused' ELSE '' END
+                   ELSE 'accepting writes'
+                 END,
+                 (SELECT sender_host || ':' || sender_port FROM pg_stat_wal_receiver),
+                 CASE WHEN pg_is_in_recovery() THEN pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn()) END,
+                 CASE WHEN pg_is_in_recovery() THEN round(EXTRACT(EPOCH FROM now() - pg_last_xact_replay_timestamp())::numeric, 1) END,
+                 CASE WHEN pg_is_in_recovery() THEN 'replayed up to ' || pg_last_wal_replay_lsn() ELSE 'WAL written up to ' || pg_current_wal_lsn() END
+          UNION ALL
+          SELECT 'standby', application_name, state || ', ' || sync_state, COALESCE(client_hostname, host(client_addr)),
+                 pg_wal_lsn_diff(CASE WHEN pg_is_in_recovery() THEN pg_last_wal_receive_lsn() ELSE pg_current_wal_lsn() END, replay_lsn),
+                 round(EXTRACT(EPOCH FROM replay_lag)::numeric, 1),
+                 'user ' || usename || ', sent up to ' || sent_lsn || ', replayed up to ' || replay_lsn
+          FROM pg_stat_replication
+          UNION ALL
+          SELECT 'slot', slot_name, CASE WHEN active THEN 'active' ELSE 'inactive' END || COALESCE(', ' || wal_status, ''),
+                 slot_type || COALESCE(' ' || plugin, '') || COALESCE(' on ' || database, ''),
+                 pg_wal_lsn_diff(CASE WHEN pg_is_in_recovery() THEN pg_last_wal_receive_lsn() ELSE pg_current_wal_lsn() END, restart_lsn),
+                 NULL,
+                 COALESCE('restart up to ' || restart_lsn, 'no WAL reserved') || COALESCE(', safe_wal_size ' || safe_wal_size, '')
+          FROM pg_replication_slots
+    result:
+      source: ${source::replication}
+      columns: [ kind, name, state, peer, lagBytes, lagSeconds, detail ]
+
+  settings:
+    description: Lists the settings of the PostgreSQL server changed from their default (in the configuration files, by ALTER SYSTEM, ALTER DATABASE or ALTER ROLE) or waiting for a restart, or the settings whose name contains a text, with their value, unit, default value, source, file and line, whether a restart is pending, when they can change (context) and what they do. Use it to check the configuration behind a problem, e.g. max_connections, work_mem, autovacuum or shared_buffers.
+    parameters:
+      name:
+        description: Text to find in the setting names, e.g. autovacuum or wal (empty for the settings changed from their default)
+        default: ''
+    sources:
+      settings:
+        type: sql
+        query: |
+          SELECT name, setting, unit, boot_val, source, sourcefile || ':' || sourceline, pending_restart, context, short_desc
+          FROM pg_settings
+          WHERE CASE WHEN '${esc(sql)::param::name}' = ''
+            THEN source NOT IN ('default', 'override', 'client', 'session') OR pending_restart
+            ELSE strpos(lower(name), lower('${esc(sql)::param::name}')) > 0
+          END
+          ORDER BY name
+    result:
+      source: ${source::settings}
+      columns: [ name, value, unit, defaultValue, source, file, pendingRestart, context, description ]
+
+  cancelQuery:
+    description: Cancels the query running in a PostgreSQL session, which stays connected. A session that runs no query, e.g. "idle in transaction", ignores a cancel and keeps its transaction and its locks, so the tool does not signal it and PostgreSQL_terminateBackend is the way to end it (without pg_read_all_stats, the state of the sessions of other users is hidden, so the tool signals them and says so). In a transaction block, the canceled query aborts the transaction, which releases its locks, and the session shows "idle in transaction (aborted)" until its client ends it, unless the query runs in a savepoint (e.g. psql ON_ERROR_ROLLBACK or JDBC autosave), which only rolls back to the savepoint and keeps the locks taken before it; PostgreSQL_terminateBackend ends the whole transaction. Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first. Returns a line that says whether the cancel request was sent, or that the session runs no query. Use it only when the user asks to stop a query; PostgreSQL_terminateBackend closes the whole session.
+    destructive: true
+    parameters:
+      pid:
+        type: integer
+        description: The PID of the session, e.g. 12345
+        required: true
+        pattern: '[1-9][0-9]{0,8}'
+    sources:
+      cancel:
+        type: sql
+        # A refused signal is an error, which returns no rows: the privileges are checked first
+        query: |
+          SELECT CASE
+            WHEN '${param::pid}'::int = pg_backend_pid() THEN 'PID ${param::pid} is the session of MetricsHub'
+            WHEN NOT EXISTS (SELECT 1 FROM pg_stat_activity WHERE pid = '${param::pid}'::int) THEN 'No PostgreSQL session with PID ${param::pid}'
+            WHEN NOT EXISTS (
+              SELECT 1 FROM pg_stat_activity a LEFT JOIN pg_roles r ON r.oid = a.usesysid
+              WHERE a.pid = '${param::pid}'::int
+                -- As the server checks: only a superuser signals a superuser (or background) session, else the privileges
+                -- (USAGE, inherited) of the role of the session or of pg_signal_backend
+                AND ((SELECT rolsuper FROM pg_roles WHERE rolname = current_user)
+                  OR (NOT COALESCE(r.rolsuper, true) AND (pg_has_role(a.usesysid, 'USAGE') OR pg_has_role('pg_signal_backend'::name, 'USAGE'))))
+            ) THEN 'Permission denied to signal PID ${param::pid}; it needs a superuser, or for a session of a non-superuser the privileges of its role or of pg_signal_backend'
+            -- An idle session ignores a cancel, even idle in transaction with its locks: only a terminate ends it
+            WHEN EXISTS (SELECT 1 FROM pg_stat_activity WHERE pid = '${param::pid}'::int AND state LIKE 'idle%')
+              THEN 'PID ${param::pid} runs no query (' || (SELECT state FROM pg_stat_activity WHERE pid = '${param::pid}'::int) || '), so a cancel has no effect; PostgreSQL_terminateBackend ends its session'
+            -- Without pg_read_all_stats, the state of a session of another user is hidden
+            WHEN pg_cancel_backend('${param::pid}'::int) THEN 'Cancel request sent to PID ${param::pid}'
+              || CASE WHEN EXISTS (SELECT 1 FROM pg_stat_activity WHERE pid = '${param::pid}'::int AND query = '<insufficient privilege>')
+                   THEN ', whose state is hidden without pg_read_all_stats: if it runs no query (e.g. idle in transaction), the cancel has no effect and PostgreSQL_terminateBackend ends its session' ELSE '' END
+            ELSE 'PID ${param::pid} could not be signaled'
+          END
+    result:
+      source: ${source::cancel}
+      columns: [ message ]
+
+  terminateBackend:
+    description: Terminates a PostgreSQL session, which closes its connection and rolls back its transaction, and waits up to 5 seconds for it to end. Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first, and prefer PostgreSQL_cancelQuery when stopping the query is enough. Returns a line that says whether the session ended. Use it only when the user asks to end a session, e.g. a root blocker "idle in transaction".
+    destructive: true
+    parameters:
+      pid:
+        type: integer
+        description: The PID of the session, e.g. 12345
+        required: true
+        pattern: '[1-9][0-9]{0,8}'
+    sources:
+      terminate:
+        type: sql
+        # A refused signal is an error, which returns no rows: the privileges are checked first
+        query: |
+          SELECT CASE
+            WHEN '${param::pid}'::int = pg_backend_pid() THEN 'PID ${param::pid} is the session of MetricsHub'
+            WHEN NOT EXISTS (SELECT 1 FROM pg_stat_activity WHERE pid = '${param::pid}'::int) THEN 'No PostgreSQL session with PID ${param::pid}'
+            WHEN NOT EXISTS (
+              SELECT 1 FROM pg_stat_activity a LEFT JOIN pg_roles r ON r.oid = a.usesysid
+              WHERE a.pid = '${param::pid}'::int
+                -- As the server checks: only a superuser signals a superuser (or background) session, else the privileges
+                -- (USAGE, inherited) of the role of the session or of pg_signal_backend
+                AND ((SELECT rolsuper FROM pg_roles WHERE rolname = current_user)
+                  OR (NOT COALESCE(r.rolsuper, true) AND (pg_has_role(a.usesysid, 'USAGE') OR pg_has_role('pg_signal_backend'::name, 'USAGE'))))
+            ) THEN 'Permission denied to signal PID ${param::pid}; it needs a superuser, or for a session of a non-superuser the privileges of its role or of pg_signal_backend'
+            WHEN pg_terminate_backend('${param::pid}'::int, 5000) THEN 'Session ${param::pid} terminated'
+            ELSE 'PID ${param::pid} could not be signaled, or still runs after 5 seconds'
+          END
+    result:
+      source: ${source::terminate}
+      columns: [ message ]
