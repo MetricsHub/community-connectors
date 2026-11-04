@@ -292,8 +292,11 @@ tools:
           SELECT pid, datname, usename, application_name, host(client_addr), backend_type, state, wait_event_type, wait_event,
                  round(EXTRACT(EPOCH FROM now() - xact_start)::numeric, 1) AS transaction_seconds,
                  round(r.query_seconds::numeric, 1) AS query_seconds,
-                 -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
-                 CASE WHEN pid IN (SELECT pid FROM pg_locks WHERE NOT granted) THEN array_to_string(pg_blocking_pids(pid), ' ') END AS blocked_by,
+                 -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock, themselves or
+                 -- through a parallel worker (whose leader waits for it, not for a lock)
+                 CASE WHEN pid IN (SELECT COALESCE(p.leader_pid, l.pid) FROM pg_locks l LEFT JOIN pg_stat_activity p ON p.pid = l.pid WHERE NOT l.granted)
+                   -- once each, as a leader is blocked through each of its waiting workers
+                   THEN (SELECT string_agg(DISTINCT b::text, ' ') FROM unnest(pg_blocking_pids(pid)) b) END AS blocked_by,
                  btrim(regexp_replace(query, '\s+', ' ', 'g')) AS query
           FROM pg_stat_activity
           -- An idle session keeps the start of its last query: that query ended at state_change
@@ -335,13 +338,15 @@ tools:
       locks:
         type: sql
         query: |
+          -- The locks waited for, by the session or by its parallel workers, which are listed as their leader
+          WITH waits AS (SELECT l.*, COALESCE(p.leader_pid, l.pid) AS session FROM pg_locks l LEFT JOIN pg_stat_activity p ON p.pid = l.pid WHERE NOT l.granted)
           SELECT w.pid, w.usename, w.datname,
                  -- Since the lock wait started (not the query, which may have run long before it), maybe null for an instant
-                 round(EXTRACT(EPOCH FROM now() - (SELECT min(l.waitstart) FROM pg_locks l WHERE l.pid = w.pid AND NOT l.granted))::numeric, 1) AS waiting_seconds,
+                 round(EXTRACT(EPOCH FROM now() - (SELECT min(l.waitstart) FROM waits l WHERE l.session = w.pid))::numeric, 1) AS waiting_seconds,
                  -- A table OID only resolves to its name in the database MetricsHub connects to (or for a shared catalog, database 0)
-                 (SELECT string_agg(l.mode || ' on ' || COALESCE(CASE WHEN l.database IN (0, (SELECT oid FROM pg_database WHERE datname = current_database()))
-                                                                   THEN l.relation::regclass::text ELSE 'relation OID ' || l.relation END, l.locktype), ', ')
-                  FROM pg_locks l WHERE l.pid = w.pid AND NOT l.granted) AS waiting_for,
+                 (SELECT string_agg(DISTINCT l.mode || ' on ' || COALESCE(CASE WHEN l.database IN (0, (SELECT oid FROM pg_database WHERE datname = current_database()))
+                                                                            THEN l.relation::regclass::text ELSE 'relation OID ' || l.relation END, l.locktype), ', ')
+                  FROM waits l WHERE l.session = w.pid) AS waiting_for,
                  btrim(regexp_replace(w.query, '\s+', ' ', 'g')) AS waiting_query,
                  b.pid, bs.usename, CASE WHEN b.pid = 0 THEN 'prepared transaction' ELSE bs.state END,
                  round(EXTRACT(EPOCH FROM now() - bs.xact_start)::numeric, 1) AS blocking_transaction_seconds,
@@ -356,7 +361,7 @@ tools:
           CROSS JOIN LATERAL (SELECT DISTINCT unnest(pg_blocking_pids(w.pid)) AS pid) b
           LEFT JOIN pg_stat_activity bs ON bs.pid = b.pid
           -- pg_blocking_pids() locks the lock manager: only for the sessions that wait for a lock
-          WHERE w.pid IN (SELECT pid FROM pg_locks WHERE NOT granted)
+          WHERE w.pid IN (SELECT session FROM waits)
           ORDER BY waiting_seconds DESC NULLS LAST
     result:
       source: ${source::locks}
@@ -424,7 +429,7 @@ tools:
       columns: [ user, database, queryId, calls, totalMs, meanMs, maxMs, rows, sharedBlocksHit, sharedBlocksRead, tempBlocksWritten, query ]
 
   tableStatistics:
-    description: Lists the tables of the database MetricsHub connects to (not the other databases of the server), the largest first or sorted otherwise, with their schema, name, total, table and index size in bytes (empty while an ALTER TABLE, a VACUUM FULL or a REINDEX locks the table), live and dead rows, the percentage of dead rows, the rows modified since the last analyze, the last manual and automatic vacuum and analyze, the vacuum counts, the sequential and index scans, and the age of their oldest transaction ID (or of their TOAST table, if older; empty for a partitioned table, whose partitions hold the rows). Use it when a database grows, queries slow down (dead rows, bloat, stale statistics, sequential scans of large tables), or the transaction ID age nears autovacuum_freeze_max_age (200 million by default) or the wraparound (2 billion).
+    description: Lists the tables of the database MetricsHub connects to (not the other databases of the server), the largest first or sorted otherwise, with their schema, name, total, table (with its TOAST data) and index size in bytes (empty while an ALTER TABLE, a VACUUM FULL or a REINDEX locks the table), live and dead rows, the percentage of dead rows, the rows modified since the last analyze, the last manual and automatic vacuum and analyze, the vacuum counts, the sequential and index scans, and the age of their oldest transaction ID (or of their TOAST table, if older; empty for a partitioned table, whose partitions hold the rows). Use it when a database grows, queries slow down (dead rows, bloat, stale statistics, sequential scans of large tables), or the transaction ID age nears autovacuum_freeze_max_age (200 million by default) or the wraparound (2 billion).
     parameters:
       sortBy:
         description: What the tables are sorted on, the largest first
@@ -457,12 +462,12 @@ tools:
             -- a VACUUM FULL or a REINDEX that holds or waits for an exclusive lock: no size for such a table
             CROSS JOIN LATERAL (
               SELECT CASE WHEN unlocked THEN pg_total_relation_size(s.relid) END AS total_bytes,
-                     CASE WHEN unlocked THEN pg_relation_size(s.relid) END AS table_bytes,
+                     CASE WHEN unlocked THEN pg_table_size(s.relid) END AS table_bytes,
                      CASE WHEN unlocked THEN pg_indexes_size(s.relid) END AS index_bytes
               FROM (SELECT NOT EXISTS (
                 SELECT 1 FROM locked l
                 WHERE l.relation = s.relid OR l.relation = c.reltoastrelid
-                   OR l.relation IN (SELECT indexrelid FROM pg_index WHERE indrelid = s.relid)
+                   OR l.relation IN (SELECT indexrelid FROM pg_index WHERE indrelid IN (s.relid, c.reltoastrelid))
               ) AS unlocked) u
             ) sizes
           ) t
@@ -557,7 +562,7 @@ tools:
       columns: [ name, value, unit, defaultValue, source, file, pendingRestart, context, description ]
 
   cancelQuery:
-    description: Cancels the query running in a PostgreSQL session, which stays connected. A session that runs no query, e.g. "idle in transaction", ignores a cancel and keeps its transaction and its locks, so the tool does not signal it and PostgreSQL_terminateBackend is the way to end it. In a transaction block, the canceled query aborts the transaction, which releases its locks, and the session shows "idle in transaction (aborted)" until its client ends it, unless the query runs in a savepoint (e.g. psql ON_ERROR_ROLLBACK or JDBC autosave), which only rolls back to the savepoint and keeps the locks taken before it; PostgreSQL_terminateBackend ends the whole transaction. Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first. Returns a line that says whether the cancel request was sent, or that the session runs no query. Use it only when the user asks to stop a query; PostgreSQL_terminateBackend closes the whole session.
+    description: Cancels the query running in a PostgreSQL session, which stays connected. A session that runs no query, e.g. "idle in transaction", ignores a cancel and keeps its transaction and its locks, so the tool does not signal it and PostgreSQL_terminateBackend is the way to end it (without pg_read_all_stats, the state of the sessions of other users is hidden, so the tool signals them and says so). In a transaction block, the canceled query aborts the transaction, which releases its locks, and the session shows "idle in transaction (aborted)" until its client ends it, unless the query runs in a savepoint (e.g. psql ON_ERROR_ROLLBACK or JDBC autosave), which only rolls back to the savepoint and keeps the locks taken before it; PostgreSQL_terminateBackend ends the whole transaction. Find the PID with PostgreSQL_activeSessions or PostgreSQL_blockingLocks first. Returns a line that says whether the cancel request was sent, or that the session runs no query. Use it only when the user asks to stop a query; PostgreSQL_terminateBackend closes the whole session.
     destructive: true
     parameters:
       pid:
@@ -584,7 +589,10 @@ tools:
             -- An idle session ignores a cancel, even idle in transaction with its locks: only a terminate ends it
             WHEN EXISTS (SELECT 1 FROM pg_stat_activity WHERE pid = '${param::pid}'::int AND state LIKE 'idle%')
               THEN 'PID ${param::pid} runs no query (' || (SELECT state FROM pg_stat_activity WHERE pid = '${param::pid}'::int) || '), so a cancel has no effect; PostgreSQL_terminateBackend ends its session'
+            -- Without pg_read_all_stats, the state of a session of another user is hidden
             WHEN pg_cancel_backend('${param::pid}'::int) THEN 'Cancel request sent to PID ${param::pid}'
+              || CASE WHEN EXISTS (SELECT 1 FROM pg_stat_activity WHERE pid = '${param::pid}'::int AND query = '<insufficient privilege>')
+                   THEN ', whose state is hidden without pg_read_all_stats: if it runs no query (e.g. idle in transaction), the cancel has no effect and PostgreSQL_terminateBackend ends its session' ELSE '' END
             ELSE 'PID ${param::pid} could not be signaled'
           END
     result:
