@@ -510,11 +510,12 @@ translations:
     "11": SATA
     "12": Secure Digital
     "13": MMC - Multimedia Card
-    "14": Other
+    "14": Virtual
     "15": File-Backed Virtual
     "16": Storage Spaces
     "17": NVMe
-    "18": Other
+    "18": SCM
+    "19": UFS
     "0": Unknown
     "1": SCSI
     "2": ATAPI
@@ -563,3 +564,249 @@ translations:
     "53256": degraded
     "8": ok
     "9": ok
+  HealthStatusTranslationTable:
+    "0": Healthy
+    "1": Warning
+    "2": Unhealthy
+    "5": Unknown
+  MediaTypeTranslationTable:
+    "0": Unspecified
+    "3": HDD
+    "4": SSD
+    "5": SCM
+  PhysicalDiskUsageTranslationTable:
+    "0": Unknown
+    "1": Auto-Select
+    "2": Manual-Select
+    "3": Hot Spare
+    "4": Retired
+    "5": Journal
+  # OperationalStatus of the physical disks, storage pools (53248-53249) and virtual disks (53250-53251, 53275, 53284),
+  # as named by the Storage PowerShell module (Storage.types.ps1xml)
+  StorageOperationalStatusTranslationTable:
+    "0": Unknown
+    "1": Other
+    "2": OK
+    "3": Degraded
+    "4": Stressed
+    "5": Predictive Failure
+    "6": Error
+    "7": Non-Recoverable Error
+    "8": Starting
+    "9": Stopping
+    "10": Stopped
+    "11": In Service
+    "12": No Contact
+    "13": Lost Communication
+    "14": Aborted
+    "15": Dormant
+    "16": Supporting Entity in Error
+    "17": Completed
+    "18": Power Mode
+    "19": Relocating
+    "53248": Read-only
+    "53249": Incomplete
+    "53250": Detached
+    "53251": Incomplete
+    "53252": Failed Media
+    "53253": Split
+    "53254": Stale Metadata
+    "53255": IO Error
+    "53256": Unrecognized Metadata
+    "53261": Scan Needed
+    "53262": Spot Fix Needed
+    "53263": Full Repair Needed
+    "53269": Removing From Pool
+    "53270": In Maintenance Mode
+    "53271": Updating Firmware
+    "53272": Device Hardware Error
+    "53273": Not Usable
+    "53274": Transient Error
+    "53275": Suboptimal
+    "53276": Starting Maintenance Mode
+    "53277": Stopping Maintenance Mode
+    "53284": No Redundancy
+    "53285": Threshold Exceeded
+    "53286": Abnormal Latency
+  DetachedReasonTranslationTable:
+    "0": Unknown
+    "1": None
+    "2": By Policy
+    "3": Majority Disks Unhealthy
+    "4": Incomplete
+    "5": Timeout
+  StorageJobStateTranslationTable:
+    "2": New
+    "3": Starting
+    "4": Running
+    "5": Suspended
+    "6": Shutting Down
+    "7": Completed
+    "8": Terminated
+    "9": Killed
+    "10": Exception
+    "11": Service
+    "12": Query Pending
+
+# Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md)
+tools:
+
+  physicalDisks:
+    description: Lists the physical disks with their device ID, name, serial number, media and bus types, size in GB, usage (Auto-Select, Hot Spare, Retired...), health and operational status, and their reliability counters (temperature in Celsius, wear percentage, total read and write errors, power-on hours), which are empty where they cannot be read (the disk does not report them, no administrator rights, or a WinRM connection with MetricsHub 3.9.08 or older, which refuses the association query that reads them). Use it when a disk, a storage pool or a virtual disk is degraded, to find the failing disk; then WinStorageSpaces_virtualDisks for the repairs.
+    sources:
+      disks:
+        # ObjectId;DeviceId;FriendlyName;SerialNumber;MediaType;BusType;Size;Usage;HealthStatus;OperationalStatus
+        type: wmi
+        namespace: root\Microsoft\Windows\Storage
+        query: SELECT ObjectId,DeviceId,FriendlyName,SerialNumber,MediaType,BusType,Size,Usage,HealthStatus,OperationalStatus FROM MSFT_PhysicalDisk
+        computes:
+        # ObjectId goes into the object path of the ASSOCIATORS OF query below, between double quotes: \ and " take a \
+        - type: replace
+          column: 1
+          existingValue: '\'
+          newValue: '\\'
+        - type: replace
+          column: 1
+          existingValue: '"'
+          newValue: '\"'
+        - type: translate
+          column: 5
+          translationTable: ${translation::MediaTypeTranslationTable}
+        - type: translate
+          column: 6
+          translationTable: ${translation::BustypeTranslationTable}
+        - type: translate
+          column: 8
+          translationTable: ${translation::PhysicalDiskUsageTranslationTable}
+        - type: translate
+          column: 9
+          translationTable: ${translation::HealthStatusTranslationTable}
+        - type: arrayTranslate
+          column: 10
+          translationTable: ${translation::StorageOperationalStatusTranslationTable}
+          resultSeparator: ', '
+        # The join below drops the rows with an empty key, such as a lost disk's empty DeviceId: prefix it
+        - type: prepend
+          column: 2
+          value: id
+      counters:
+        # MSFT_StorageReliabilityCounter cannot be enumerated: one ASSOCIATORS OF query per disk
+        # DeviceId;Temperature;Wear;ReadErrorsTotal;WriteErrorsTotal;PowerOnHours
+        type: wmi
+        executeForEachEntryOf:
+          source: ${source::disks}
+          concatMethod: list
+        namespace: root\Microsoft\Windows\Storage
+        query: SELECT DeviceId,Temperature,Wear,ReadErrorsTotal,WriteErrorsTotal,PowerOnHours FROM ASSOCIATORS OF {MSFT_PhysicalDisk.ObjectId="$1"} WHERE ResultClass = MSFT_StorageReliabilityCounter
+        computes:
+        - type: prepend
+          column: 1
+          value: id
+      table:
+        # ObjectId;DeviceId;FriendlyName;SerialNumber;MediaType;BusType;Size;Usage;HealthStatus;OperationalStatus;DeviceId;Temperature;Wear;ReadErrorsTotal;WriteErrorsTotal;PowerOnHours
+        type: tableJoin
+        leftTable: ${source::disks}
+        rightTable: ${source::counters}
+        leftKeyColumn: 2
+        rightKeyColumn: 1
+        defaultRightLine: ;;;;;;
+        computes:
+        # DeviceId without its prefix, size in GB
+        - type: awk
+          script: |
+            BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
+            { print substr($2, 3), $3, $4, $5, $6, sprintf("%.0f", $7 / 1073741824), $8, $9, $10, $12, $13, $14, $15, $16 }
+    result:
+      source: ${source::table}
+      columns: [ deviceId, name, serialNumber, mediaType, busType, sizeGB, usage, health, operationalStatus, temperature, wearPercent, readErrors, writeErrors, powerOnHours ]
+
+  virtualDisks:
+    description: Shows the storage pools (a primordial pool holds the disks that are in no pool), their virtual disks (Storage Spaces) and the storage jobs, such as the repairs and rebalances that follow a disk replacement, one per row named by its kind (pool, virtualDisk or job). Pools have their health, operational status, primordial and read-only flags (true or false), size and allocated size in bytes; virtual disks their health, operational status, size and footprint on the pool in bytes, resiliency (Simple, Mirror, Parity), number of data copies, physical disk redundancy and detached reason; jobs their state, percentage complete, bytes processed and total, and elapsed time in seconds (empty over WMI with MetricsHub 3.9.08 or older). Use it when a virtual disk is degraded or detached, or to follow a repair; WinStorageSpaces_physicalDisks finds the failing disk.
+    sources:
+      pools:
+        # FriendlyName;IsPrimordial;HealthStatus;OperationalStatus;IsReadOnly;Size;AllocatedSize
+        type: wmi
+        namespace: root\Microsoft\Windows\Storage
+        query: SELECT FriendlyName,IsPrimordial,HealthStatus,OperationalStatus,IsReadOnly,Size,AllocatedSize FROM MSFT_StoragePool
+        computes:
+        - type: translate
+          column: 3
+          translationTable: ${translation::HealthStatusTranslationTable}
+        - type: arrayTranslate
+          column: 4
+          translationTable: ${translation::StorageOperationalStatusTranslationTable}
+          resultSeparator: ', '
+        # The columns of the result; booleans in lowercase, as WinRM gives them (WMI gives True/False)
+        - type: awk
+          script: |
+            BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
+            { print "pool", $1, $3, $4, $6, $7, tolower($2), tolower($5), "", "", "", "", "", "", "", "", "" }
+      virtualDisks:
+        # FriendlyName;ResiliencySettingName;NumberOfDataCopies;PhysicalDiskRedundancy;HealthStatus;OperationalStatus;DetachedReason;Size;FootprintOnPool
+        type: wmi
+        namespace: root\Microsoft\Windows\Storage
+        query: SELECT FriendlyName,ResiliencySettingName,NumberOfDataCopies,PhysicalDiskRedundancy,HealthStatus,OperationalStatus,DetachedReason,Size,FootprintOnPool FROM MSFT_VirtualDisk
+        computes:
+        - type: translate
+          column: 5
+          translationTable: ${translation::HealthStatusTranslationTable}
+        - type: arrayTranslate
+          column: 6
+          translationTable: ${translation::StorageOperationalStatusTranslationTable}
+          resultSeparator: ', '
+        - type: translate
+          column: 7
+          translationTable: ${translation::DetachedReasonTranslationTable}
+        - type: awk
+          script: |
+            BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
+            { print "virtualDisk", $1, $5, $6, $8, $9, "", "", $2, $3, $4, $7, "", "", "", "", "" }
+      jobs:
+        # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal
+        type: wmi
+        namespace: root\Microsoft\Windows\Storage
+        query: SELECT ObjectId,Name,JobState,PercentComplete,BytesProcessed,BytesTotal FROM MSFT_StorageJob
+        computes:
+        - type: translate
+          column: 3
+          translationTable: ${translation::StorageJobStateTranslationTable}
+      elapsed:
+        # ObjectId;ElapsedTime, in a query of its own: over WMI, MetricsHub 3.9.08 and older (wmi-java 1.0.06 and older)
+        # fail the whole query on a CIM interval value, which leaves the jobs without their elapsed time only
+        type: wmi
+        namespace: root\Microsoft\Windows\Storage
+        query: SELECT ObjectId,ElapsedTime FROM MSFT_StorageJob
+      jobsElapsed:
+        # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal;ObjectId;ElapsedTime
+        type: tableJoin
+        leftTable: ${source::jobs}
+        rightTable: ${source::elapsed}
+        leftKeyColumn: 1
+        rightKeyColumn: 1
+        defaultRightLine: ;;
+        computes:
+        # The elapsed time comes as seconds over WMI, as an ISO 8601 duration (P1DT2H3M4.5S) over WinRM
+        - type: awk
+          script: |
+            BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
+            function seconds(d,  total, n, unit) {
+              if (d ~ /^[0-9]+$/) return d
+              if (d !~ /^P/) return ""
+              total = 0
+              while (match(d, /[0-9.]+[DHMS]/)) {
+                n = substr(d, RSTART, RLENGTH - 1); unit = substr(d, RSTART + RLENGTH - 1, 1)
+                total += n * (unit == "D" ? 86400 : unit == "H" ? 3600 : unit == "M" ? 60 : 1)
+                d = substr(d, RSTART + RLENGTH)
+              }
+              return sprintf("%.0f", total)
+            }
+            { print "job", $2, "", "", "", "", "", "", "", "", "", "", $3, $4, $5, $6, seconds($8) }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::pools}
+        - ${source::virtualDisks}
+        - ${source::jobsElapsed}
+    result:
+      source: ${source::all}
+      columns: [ kind, name, health, operationalStatus, sizeBytes, usedBytes, isPrimordial, isReadOnly, resiliency, dataCopies, diskRedundancy, detachedReason, jobState, percentComplete, bytesProcessed, bytesTotal, elapsedSeconds ]

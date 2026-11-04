@@ -234,8 +234,9 @@ tools:
         type: commandLine
         # The summary lists the graphics processes too, at its end, but cuts their names. One line with && for both
         # shells, cmd.exe on Windows and sh on Linux: the summary first, as the compute query fails where it is not
-        # supported (WSL).
-        commandLine: nvidia-smi 2>&1 && nvidia-smi --query-compute-apps=gpu_bus_id,pid,process_name,used_memory --format=csv 2>&1
+        # supported (WSL). Over WinRM, a command that exits with an error code loses its whole output: the echo after
+        # || ends the line with success, in both shells.
+        commandLine: nvidia-smi 2>&1 && nvidia-smi --query-compute-apps=gpu_bus_id,pid,process_name,used_memory --format=csv 2>&1 || echo nvidia-smi failed
     result:
       source: ${source::processes}
 
@@ -244,7 +245,8 @@ tools:
     sources:
       performance:
         type: commandLine
-        commandLine: nvidia-smi -q -d PERFORMANCE,CLOCK,POWER,TEMPERATURE,ECC 2>&1
+        # The echo after || keeps the output over WinRM (see gpuProcesses)
+        commandLine: nvidia-smi -q -d PERFORMANCE,CLOCK,POWER,TEMPERATURE,ECC 2>&1 || echo nvidia-smi failed
         timeout: 90
     result:
       source: ${source::performance}

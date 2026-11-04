@@ -88,3 +88,70 @@ translations:
     Default: "off"
     Running: "on"
     Suspended: suspended
+
+# Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md). The commands run through
+# cmd.exe, which fails the whole source when a command exits with a code other than 0: they end with "exit 0".
+tools:
+
+  vms:
+    description: Lists the virtual machines of the Hyper-V host with their VMId, state, status, CPU usage (percentage of the host), assigned and demanded memory in megabytes, uptime, heartbeat and replication health. Use it when a VM is down or slow, or when the host lacks CPU or memory, then HyperV_vmDetails on a VM. A semicolon or a line break in a name or a status shows as a question mark, which the name parameter of the other HyperV tools rejects, so give the VMId of such a VM (and of any VM whose name that parameter rejects) to HyperV_vmDetails and HyperV_controlVm.
+    sources:
+      vms:
+        type: commandLine
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "Get-VM | ForEach-Object { '{0};{1};{2};{3};{4};{5};{6};{7};{8};{9}' -f ($_.Name -replace '[;\r\n]', '?'), $_.VMId, $_.State, ($_.Status -replace '[;\r\n]', '?'), $_.CPUUsage, [math]::Round($_.MemoryAssigned / 1MB), [math]::Round($_.MemoryDemand / 1MB), $_.Uptime.ToString(), $_.Heartbeat, $_.ReplicationHealth };
+          exit 0" 2>&1
+    result:
+      source: ${source::vms}
+      columns: [ name, vmId, state, status, cpuPercent, memoryAssignedMB, memoryDemandMB, uptime, heartbeat, replicationHealth ]
+
+  vmDetails:
+    description: Shows a virtual machine in detail, with its state, processors, memory (dynamic memory, demand), uptime, integration services, replication, automatic start and stop actions, network adapters with their addresses, virtual disks with their size and file size, and checkpoints, which grow their differencing disks. Use it on a VM from HyperV_vms. When several VMs share the name, it shows them all, with their VMId.
+    parameters:
+      name:
+        description: The name or the VMId of the virtual machine, e.g. web-01
+        required: true
+        # No wildcard (* ? [ ]), no quote
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_ .,@()+#-]{0,254}'
+    sources:
+      vm:
+        type: commandLine
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "$n = '${esc(powershell)::param::name}';
+          $v = @(Get-VM | Where-Object { $_.Name -eq $n -or $_.VMId.Guid -eq $n });
+          if ($v.Count -eq 0) { 'Failed: no virtual machine has the name or VMId ' + $n; exit 0 };
+          $v | Format-List Name, VMId,State, Status, Uptime, CPUUsage, ProcessorCount, MemoryStartup, DynamicMemoryEnabled, MemoryMinimum, MemoryMaximum, MemoryAssigned, MemoryDemand, MemoryStatus, Heartbeat, IntegrationServicesState, ReplicationState, ReplicationHealth, Generation, Version, Path, CheckpointType, AutomaticStartAction, AutomaticStopAction, Notes;
+          'Network adapters:'; Get-VMNetworkAdapter -VM $v | Format-Table -AutoSize Name, SwitchName, Status, MacAddress, IPAddresses | Out-String -Width 512;
+          'Virtual disks:'; Get-VMHardDiskDrive -VM $v | ForEach-Object { $_ | Format-List ControllerType, ControllerNumber, ControllerLocation, Path; Get-VHD -Path $_.Path | Format-List VhdType, Size, FileSize, FragmentationPercentage, ParentPath };
+          'Checkpoints:'; Get-VMSnapshot -VM $v | Format-Table -AutoSize Name, SnapshotType, CreationTime, ParentSnapshotName | Out-String -Width 512;
+          'Integration services:'; Get-VMIntegrationService -VM $v | Format-Table -AutoSize Name, Enabled, PrimaryStatusDescription | Out-String -Width 512;
+          exit 0" 2>&1
+    result:
+      source: ${source::vm}
+
+  controlVm:
+    description: Starts a virtual machine, shuts it down through its operating system, turns it off (like pulling the plug), restarts it through its operating system, resets it (a hard reset), saves its state, pauses (suspend) or resumes it, then shows its state. A shutdown or a restart fails where the VM has no running shutdown integration service (a shutdown then reports the NonInteractive mode); turnOff or reset it then. Where Restart-VM cannot reboot the guest (older Hyper-V modules, such as Windows Server 2012 R2), a restart is a shutdown then a start, and it refuses a VM that is not running. Turning off and resetting lose the unsaved data of the VM. Use it only when the user asks, e.g. to restart a VM that hangs. It refuses a name that several VMs share; give the VMId (from HyperV_vms) then.
+    destructive: true
+    parameters:
+      name:
+        description: The name or the VMId of the virtual machine, e.g. web-01 or 69e11fd0-1c2b-4f3a-9d8e-0a1b2c3d4e5f
+        required: true
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_ .,@()+#-]{0,254}'
+      action:
+        description: What to do with the virtual machine
+        required: true
+        enum: [ start, shutdown, turnOff, restart, reset, save, suspend, resume ]
+    sources:
+      control:
+        type: commandLine
+        # A shutdown waits for the operating system of the VM
+        timeout: 600
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "$n = '${esc(powershell)::param::name}';
+          $v = @(Get-VM | Where-Object { $_.Name -eq $n -or $_.VMId.Guid -eq $n });
+          if ($v.Count -ne 1) { 'Refused: ' + $v.Count + ' virtual machines have the name or VMId ' + $n + ' (VMIds: ' + ($v.VMId -join ', ') + ')'; exit 0 };
+          try { switch ('${param::action}') { 'start' { Start-VM -VM $v -ErrorAction Stop } 'shutdown' { Stop-VM -VM $v -ErrorAction Stop } 'turnOff' { Stop-VM -VM $v -TurnOff -Force -ErrorAction Stop } 'restart' { if ((Get-Command Restart-VM).Parameters.ContainsKey('Type')) { Restart-VM -VM $v -Type Reboot -Force -ErrorAction Stop } elseif ($v[0].State -ne 'Running') { throw 'The VM is ' + $v[0].State + ', not Running: start it instead' } else { Stop-VM -VM $v -ErrorAction Stop; Start-VM -VM $v -ErrorAction Stop } } 'reset' { Restart-VM -VM $v -Force -ErrorAction Stop } 'save' { Save-VM -VM $v -ErrorAction Stop } 'suspend' { Suspend-VM -VM $v -ErrorAction Stop } 'resume' { Resume-VM -VM $v -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
+          Get-VM -Id $v[0].VMId | Format-List Name, VMId, State, Status, Uptime, Heartbeat;
+          exit 0" 2>&1
+    result:
+      source: ${source::control}

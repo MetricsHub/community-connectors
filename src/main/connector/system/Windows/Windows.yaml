@@ -370,3 +370,1065 @@ monitors:
           os_version: $3
         metrics:
           system.uptime: $5
+
+# Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md).
+# The commands run through cmd.exe, which fails the whole source when a command exits with a code other than 0: the
+# PowerShell commands end with "exit 0", and print their errors (2>&1), so that the assistant sees them.
+tools:
+
+  processes:
+    description: Lists the processes that use the most CPU or memory, the largest first, with their PID, parent PID, CPU percentage over the sample (100 for one full CPU), memory percentage (working set over the physical memory), working set and private bytes in KiB, handles, threads, start time (with its offset to UTC) and command line. The account of a process is not returned (WMI only gives it through a method). Sorting on memory sorts on the private bytes, the memory a process commits, which a leak grows. Use it when the host is slow or short of memory, then Windows_processDetails or Windows_killProcess on a PID. To look for a given process, raise the count; for a process that spins now and then, lengthen the sample.
+    parameters:
+      sortBy:
+        description: What the processes are sorted on, the largest first
+        default: cpu
+        enum: [ cpu, memory ]
+      count:
+        type: integer
+        description: How many processes to return, 1 to 99999
+        default: 20
+        pattern: '[1-9][0-9]{0,4}'
+      seconds:
+        type: integer
+        description: How long the CPU usage is sampled, 1 to 10 seconds (plus the time of the queries)
+        default: 1
+        pattern: '[1-9]|10'
+    # The CPU time of each process in two samples of the performance counters, around a pause, then the processes and
+    # the physical memory
+    executionOrder: [ cpu1, pause, cpu2, memory, list, processes ]
+    sources:
+      cpu1:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT IDProcess, PercentProcessorTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfProc_Process
+        computes:
+        - type: awk
+          script: |
+            { print "S1;" $0 }
+      pause:
+        type: commandLine
+        # ping waits a second between two echoes: 1 + (seconds - 1) seconds
+        commandLine: ping -n 2 127.0.0.1 >NUL & ping -n ${param::seconds} 127.0.0.1 >NUL
+      cpu2:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT IDProcess, PercentProcessorTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfProc_Process
+        computes:
+        - type: awk
+          script: |
+            { print "S2;" $0 }
+      memory:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
+        computes:
+        - type: awk
+          script: |
+            { print "M;" $0 }
+      list:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT ProcessId, ParentProcessId, WorkingSetSize, PrivatePageCount, HandleCount, ThreadCount, CreationDate, Name, CommandLine FROM Win32_Process
+        computes:
+        - type: awk
+          script: |
+            { print "P;" $0 }
+      processes:
+        type: tableUnion
+        tables:
+        - ${source::cpu1}
+        - ${source::cpu2}
+        - ${source::memory}
+        - ${source::list}
+        computes:
+        # pid;ppid;cpuPercent;memoryPercent;workingSetKiB;privateKiB;handles;threads;started;command;sortKey
+        - type: awk
+          script: |
+            BEGIN { FS = ";"; sortBy = "${param::sortBy}" }
+            # yyyy-mm-ddThh:mm:ss from seconds since 1970-01-01
+            function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
+              s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
+              yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
+              doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
+              return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
+            }
+            # The rows of a table end with a ";"
+            { sub(/;$/, "") }
+            $1 == "S1" { first[$2] = $3; time1 = $4; next }
+            $1 == "S2" { second[$2] = $3; time2 = $4; next }
+            # The physical memory
+            $1 == "M" { totalKiB = $2; next }
+            # Not the System Idle Process (PID 0)
+            $1 == "P" && $2 > 0 {
+              # The command line, which may hold semicolons, else the name
+              command = $10; for (i = 11; i <= NF; i++) command = command "," $i
+              if (command == "") command = $9
+              # A process born after the first sample spent all its CPU time in between
+              cpu = 0
+              if (($2 in second) && time2 > time1) cpu = (second[$2] - first[$2]) * 100 / (time2 - time1)
+              if (cpu < 0) cpu = 0
+              workingSet = $4 / 1024; privateKiB = $5 / 1024
+              memory = 0
+              if (totalKiB > 0) memory = workingSet * 100 / totalKiB
+              # To the second: 2026-11-03T10:15:30.123456+01:00 (WinRM) keeps its offset, seconds since 1970 (WMI) shown in UTC
+              started = $8
+              if (started ~ /^[0-9]+$/) started = iso(started) "Z"; else sub(/\.[0-9]*/, "", started)
+              printf "%s;%s;%.1f;%.1f;%.0f;%.0f;%s;%s;%s;%s;%s\n", $2, $3, cpu, memory, workingSet, privateKiB, $6, $7, started, command, (sortBy == "memory" ? privateKiB : cpu)
+            }
+        - type: sort
+          column: 11
+          numeric: true
+          descending: true
+        - type: head
+          lines: ${param::count}
+        - type: keepColumns
+          columnNumbers: 1,2,3,4,5,6,7,8,9,10
+    result:
+      source: ${source::processes}
+      columns: [ pid, ppid, cpuPercent, memoryPercent, workingSetKiB, privateKiB, handles, threads, started, command ]
+
+  processDetails:
+    description: Shows one process in detail, as property;value rows - its executable, command line, start time, session, CPU time in kernel and user mode (seconds), working set, peak working set, private bytes and virtual size (KiB), handles, threads and bytes read and written, then the services it hosts (a svchost.exe hosts several) and its TCP connections. The account of the process is not returned (WMI only gives it through a method). Use it on a PID from Windows_processes.
+    parameters:
+      pid:
+        type: integer
+        description: The process ID
+        required: true
+        pattern: '[1-9][0-9]{0,9}'
+    sources:
+      process:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT ProcessId, ParentProcessId, Name, ExecutablePath, CreationDate, SessionId, KernelModeTime, UserModeTime, WorkingSetSize, PeakWorkingSetSize, PrivatePageCount, VirtualSize, HandleCount, ThreadCount, ReadTransferCount, WriteTransferCount, CommandLine FROM Win32_Process WHERE ProcessId = ${param::pid}
+        computes:
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            # yyyy-mm-ddThh:mm:ss from seconds since 1970-01-01
+            function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
+              s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
+              yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
+              doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
+              return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
+            }
+            # An empty value would leave the row without its value column
+            function show(name, value) { print name ";" (value == "" ? "(not available)" : value) }
+            # The rows of a table end with a ";"
+            { sub(/;$/, "") }
+            {
+              found = 1
+              # The command line, which may hold semicolons
+              command = $17; for (i = 18; i <= NF; i++) command = command "," $i
+              show("ProcessId", $1)
+              show("ParentProcessId", $2)
+              show("Name", $3)
+              show("ExecutablePath", $4)
+              show("CommandLine", command)
+              # 2026-11-03T10:15:30.123456+01:00 (WinRM), or seconds since 1970 (WMI) shown in UTC
+              show("Started", ($5 ~ /^[0-9]+$/) ? iso($5) "Z" : $5)
+              show("SessionId", $6)
+              # 100 ns units; bytes, but kilobytes for the peak working set
+              printf "KernelModeSeconds;%.1f\n", $7 / 10000000
+              printf "UserModeSeconds;%.1f\n", $8 / 10000000
+              printf "WorkingSetKiB;%.0f\n", $9 / 1024
+              show("PeakWorkingSetKiB", $10)
+              printf "PrivateKiB;%.0f\n", $11 / 1024
+              printf "VirtualSizeKiB;%.0f\n", $12 / 1024
+              show("Handles", $13)
+              show("Threads", $14)
+              show("ReadBytes", $15)
+              show("WrittenBytes", $16)
+            }
+            END { if (!found) print "Error;No such process" }
+      services:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, State, StartMode, DisplayName FROM Win32_Service WHERE ProcessId = ${param::pid}
+        computes:
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            # The rows of a table end with a ";"
+            { sub(/;$/, "") }
+            { name = $4; for (i = 5; i <= NF; i++) name = name "," $i; print "Service;" $1 " (" $2 ", " $3 ") " name }
+      connections:
+        type: wmi
+        namespace: root\StandardCimv2
+        query: SELECT LocalAddress, LocalPort, RemoteAddress, RemotePort, State FROM MSFT_NetTCPConnection WHERE OwningProcess = ${param::pid}
+        computes:
+        - type: awk
+          script: |
+            BEGIN {
+              FS = ";"
+              split("Closed;Listen;SynSent;SynReceived;Established;FinWait1;FinWait2;CloseWait;Closing;LastAck;TimeWait;DeleteTCB", names, ";")
+            }
+            # An IPv6 address in brackets
+            function endpoint(address, port) { return (address ~ /:/ ? "[" address "]" : address) ":" port }
+            { print "TCP;" endpoint($1, $2) " " endpoint($3, $4) " " (($5 in names) ? names[$5] : ($5 == 100 ? "Bound" : $5)) }
+      details:
+        type: tableUnion
+        tables:
+        - ${source::process}
+        - ${source::services}
+        - ${source::connections}
+    result:
+      source: ${source::details}
+      columns: [ property, value ]
+
+  killProcess:
+    description: Terminates a process at once, like the End task of the Task Manager; its unsaved data is lost. The critical processes of Windows and the service hosts (svchost.exe) are refused; stop a service with Windows_controlService instead. Check the process with Windows_processDetails first. Use it only when the user asks to stop a process.
+    destructive: true
+    parameters:
+      pid:
+        type: integer
+        description: The process ID
+        required: true
+        # Not 0 (System Idle Process) nor 4 (System)
+        pattern: '[1-35-9]|[1-9][0-9]{1,9}'
+    sources:
+      kill:
+        type: commandLine
+        # Terminating a critical process (csrss, wininit, services...) crashes Windows
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "$p = Get-Process -Id ${param::pid} -ErrorAction SilentlyContinue;
+          if (-not $p) { 'No process ${param::pid}' }
+          elseif ($p.ProcessName -in 'System', 'Idle', 'Registry', 'smss', 'csrss', 'wininit', 'winlogon', 'services', 'lsass', 'lsaiso', 'svchost', 'Memory Compression') { 'Refused: process ${param::pid} is ' + $p.ProcessName + ', which Windows needs' }
+          else { try { Stop-Process -Id ${param::pid} -Force -ErrorAction Stop; 'Process ${param::pid} (' + $p.ProcessName + ') terminated' } catch { 'Failed: ' + $_.Exception.Message } };
+          exit 0" 2>&1
+    result:
+      source: ${source::kill}
+
+  # Services
+  services:
+    description: Lists the services that should run but do not (automatic services that are not running) and the services that stopped with an error, with their state, start mode, exit codes and account. Exit code 0 means the service stopped cleanly, as do the delayed and trigger-start services when idle; 1066 means a service-specific error (see serviceExitCode); 1067 that the process terminated unexpectedly. Use it first when something does not work on a host, then Windows_serviceDetails on a service.
+    sources:
+      services:
+        type: wmi
+        namespace: root\CIMv2
+        # 1077: never started since the boot
+        query: SELECT Name, DisplayName, State, StartMode, ExitCode, ServiceSpecificExitCode, StartName FROM Win32_Service WHERE State <> 'Running' AND (StartMode = 'Auto' OR (ExitCode <> 0 AND ExitCode <> 1077))
+    result:
+      source: ${source::services}
+      columns: [ name, displayName, state, startMode, exitCode, serviceExitCode, account ]
+
+  serviceDetails:
+    description: Shows a service in detail, as property;value rows - its state, start mode, exit codes, process, account, executable and description, the services and drivers it depends on and those that depend on it (with their state), and its recovery actions (sc.exe qfailure). Use it on a service that is stopped, fails or restarts, then Windows_eventLog with the provider Service Control Manager and the display name of the service as match, for its crashes.
+    parameters:
+      service:
+        description: The name of the service (not its display name), e.g. Spooler or MSSQL$SQLEXPRESS
+        required: true
+        # The default pattern, but not empty, and with $ (MSSQL$<instance>); no wildcard
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_.@:$-]*'
+    sources:
+      service:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, DisplayName, State, Status, StartMode, ExitCode, ServiceSpecificExitCode, ProcessId, StartName, PathName, Description FROM Win32_Service WHERE Name = '${esc(wql)::param::service}'
+        computes:
+        - type: awk
+          script: |
+            { print "S;" $0 }
+      # Apart: before Windows 10 and Server 2016, the property does not exist and fails the whole query. WMI leaves it
+      # empty unless StartMode is selected too
+      delayed:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT StartMode, DelayedAutoStart FROM Win32_Service WHERE Name = '${esc(wql)::param::service}'
+        computes:
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            { print "Y;" $2 }
+      # Every dependency: ASSOCIATORS OF returns nothing through WinRM
+      dependencies:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Antecedent, Dependent FROM Win32_DependentService
+        computes:
+        - type: awk
+          script: |
+            { print "D;" $0 }
+      # The state of the services and of the drivers
+      states:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, State FROM Win32_BaseService
+        computes:
+        - type: awk
+          script: |
+            { print "B;" $0 }
+      details:
+        type: tableUnion
+        tables:
+        - ${source::service}
+        - ${source::delayed}
+        - ${source::dependencies}
+        - ${source::states}
+        computes:
+        - type: awk
+          script: |
+            BEGIN { FS = ";"; split("Name;DisplayName;State;Status;StartMode;ExitCode;ServiceSpecificExitCode;ProcessId;StartName;PathName", names, ";") }
+            # An empty value would leave the row without its value column
+            function show(name, value) { print name ";" (value == "" ? "(not available)" : value) }
+            # The name in a reference, Win32_Service.Name="RpcSs" through WMI, .../cimv2/Win32_ServiceRpcSs through WinRM
+            function nameOf(reference) {
+              if (match(reference, /Name="[^"]*"/)) return substr(reference, RSTART + 6, RLENGTH - 7)
+              sub(/.*\/Win32_(TerminalService|Service|SystemDriver)/, "", reference)
+              return reference
+            }
+            # The rows of a table end with a ";"
+            { sub(/;$/, "") }
+            $1 == "S" {
+              service = tolower($2)
+              for (i = 1; i <= 10; i++) value[i] = $(i + 1)
+              # The description, which may hold semicolons
+              text = $12; for (i = 13; i <= NF; i++) text = text "," $i
+              next
+            }
+            $1 == "Y" { delayed = $2; next }
+            $1 == "D" { n++; antecedent[n] = nameOf($2); dependent[n] = nameOf($3); next }
+            $1 == "B" { state[tolower($2)] = $3 }
+            END {
+              if (service == "") { print "Error;No such service"; exit }
+              for (i = 1; i <= 10; i++) {
+                show(names[i], value[i])
+                if (names[i] == "StartMode" && delayed != "") show("DelayedAutoStart", delayed)
+              }
+              show("Description", text)
+              for (k = 1; k <= n; k++) if (tolower(dependent[k]) == service) print "Depends on;" antecedent[k] " (" state[tolower(antecedent[k])] ")"
+              for (k = 1; k <= n; k++) if (tolower(antecedent[k]) == service) print "Depended on by;" dependent[k] " (" state[tolower(dependent[k])] ")"
+            }
+      recovery:
+        type: commandLine
+        # Fails, and returns nothing, for a service that does not exist
+        commandLine: sc.exe qfailure ${param::service}
+        computes:
+        - type: awk
+          script: |
+            # The recovery actions, without the blank lines
+            { sub(/;$/, ""); gsub(/^[ \t\r]+|[ \t\r]+$/, "") }
+            $0 != "" { print "Recovery;" $0 }
+      all:
+        type: tableUnion
+        tables:
+        - ${source::details}
+        - ${source::recovery}
+    result:
+      source: ${source::all}
+      columns: [ property, value ]
+
+  controlService:
+    description: Starts, stops or restarts a service, then shows its status. A service that others depend on only stops or restarts with withDependents, which stops them too; check their state afterwards with Windows_serviceDetails. Stopping WinRM, or a service it depends on, cuts the connection of MetricsHub to the host. Use it only when the user asks, e.g. to restart a service once the cause of its failure is fixed.
+    destructive: true
+    parameters:
+      service:
+        description: The name of the service (not its display name), e.g. Spooler
+        required: true
+        pattern: '[A-Za-z0-9_][A-Za-z0-9_.@:$-]*'
+      action:
+        description: What to do with the service
+        required: true
+        enum: [ start, stop, restart ]
+      withDependents:
+        type: boolean
+        description: Whether to stop the services that depend on it too
+        default: false
+    sources:
+      control:
+        type: commandLine
+        # Stop-Service and Restart-Service wait until the service stops
+        timeout: 300
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "$n = '${esc(powershell)::param::service}'; $f = '${param::withDependents}' -eq 'true';
+          try { switch ('${param::action}') { 'start' { Start-Service -Name $n -ErrorAction Stop } 'stop' { Stop-Service -Name $n -Force:$f -ErrorAction Stop } 'restart' { Restart-Service -Name $n -Force:$f -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
+          Get-Service -Name $n | Format-List Name, DisplayName, Status, StartType;
+          exit 0" 2>&1
+    result:
+      source: ${source::control}
+
+  # Logs
+  eventLog:
+    description: Returns the latest events of an event log at or above a level, over the last hours, the latest first, with their time, level, event ID, provider (source) and message. Use it to find what failed around an incident, in the System log (services, drivers, disks, reboots) or the Application log (application crashes), or in a log of Applications and Services such as Microsoft-Windows-TaskScheduler/Operational. Filter on a provider, e.g. Service Control Manager, or on the messages with match.
+    parameters:
+      log:
+        description: The event log, e.g. System, Application, Security, Microsoft-Windows-TaskScheduler/Operational
+        default: System
+        pattern: '[A-Za-z0-9][A-Za-z0-9 ._/-]{0,255}'
+      level:
+        description: The lowest level to return
+        default: warning
+        enum: [ critical, error, warning, information, verbose ]
+      hours:
+        type: integer
+        description: How far back to read, in hours, 1 to 720 (30 days)
+        default: 24
+        pattern: '[1-9][0-9]?|[1-6][0-9]{2}|7[01][0-9]|720'
+      provider:
+        description: Only the events of this provider, e.g. Service Control Manager, Microsoft-Windows-Kernel-Power, .NET Runtime, MSSQL$SQLEXPRESS (empty for all)
+        default: ''
+        pattern: '|[A-Za-z0-9.][A-Za-z0-9 ._$/-]{0,255}'
+      match:
+        description: Basic regular expression, as with grep without -E, that the returned events must contain, e.g. Spooler\|spouleur (empty for all events)
+        default: ''
+        # Never sent to the host: MetricsHub keeps the matching lines
+        pattern: '.*'
+      count:
+        type: integer
+        description: How many of the latest events to read, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
+    sources:
+      events:
+        type: commandLine
+        # Level 0 (LogAlways) is returned with the information events, as the Security audits use it. Formatting the
+        # messages of many events takes time.
+        timeout: 300
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "$l = @{ critical = 1; error = 2; warning = 3; information = 4; verbose = 5 }['${param::level}'];
+          $f = @{ LogName = '${esc(powershell)::param::log}'; Level = 1..$l; StartTime = (Get-Date) - (New-TimeSpan -Hours ${param::hours}) };
+          if ($l -ge 4) { $f.Level = 0..$l };
+          if ('${esc(powershell)::param::provider}') { $f.ProviderName = '${esc(powershell)::param::provider}' };
+          $names = 'information', 'critical', 'error', 'warning', 'information', 'verbose';
+          try { Get-WinEvent -FilterHashtable $f -MaxEvents ${param::count} -ErrorAction Stop | ForEach-Object { '{0:o};{1};{2};{3};{4}' -f $_.TimeCreated, $names[$_.Level], $_.Id, $_.ProviderName, (($_.Message -replace '\s+', ' ') -replace ';', ',') } }
+          catch { if ($_.FullyQualifiedErrorId -like 'NoMatchingEventsFound*') { ';;;;No events match' } else { ';;;;Failed: ' + $_.Exception.Message } };
+          exit 0" 2>&1
+        # The matching events, and the messages, whatever the expression (an empty one matches all)
+        keep: '${param::match}\|^;;;;'
+    result:
+      source: ${source::events}
+      columns: [ time, level, id, provider, message ]
+
+  readLog:
+    description: Reads the last lines of a log file whose name ends with .log and returns them, or only those matching a regular expression. Use it to read the log of an application, e.g. C:\inetpub\logs\LogFiles\W3SVC1\u_ex261103.log or C:\Windows\Logs\CBS\CBS.log. Windows_eventLog reads the event logs.
+    parameters:
+      path:
+        description: Absolute path of a file whose name ends with .log, e.g. C:\Program Files\App\logs\server.log
+        required: true
+        # A drive, then names starting with a letter, a digit, _ or $: no "..", no wildcard, no quote
+        pattern: '[A-Za-z]:(\\[A-Za-z0-9_$][A-Za-z0-9_ .$@()~+#,-]*)+\.log'
+      match:
+        description: Basic regular expression, as with grep without -E, that the returned lines must contain, e.g. ERROR\|WARN (empty for all lines)
+        default: ''
+        # Never sent to the host: MetricsHub keeps the matching lines
+        pattern: '.*'
+      lines:
+        type: integer
+        description: How many of the last lines of the file to read, 1 to 100000
+        default: 1000
+        pattern: '[1-9][0-9]{0,4}|100000'
+    sources:
+      log:
+        type: commandLine
+        # A link (symbolic link, junction) on the path, the file or a folder above it, must not lead to another file. A
+        # user who can write in a folder of the path could still swap a name for a link between the check and the read
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "try { $i = Get-Item -LiteralPath '${esc(powershell)::param::path}' -Force -ErrorAction Stop;
+          $link = $null; $p = $i.FullName; while ($p -and -not $link) { if ((Get-Item -LiteralPath $p -Force -ErrorAction Stop).Attributes -band [IO.FileAttributes]::ReparsePoint) { $link = $p }; $p = [IO.Path]::GetDirectoryName($p) };
+          if ($i.PSIsContainer -or $i.Extension -ne '.log') { 'Refused: ' + $i.FullName + ' is not a .log file' }
+          elseif ($link) { 'Refused: ' + $link + ' is a link' }
+          else { Get-Content -LiteralPath $i.FullName -Tail ${param::lines} -ErrorAction Stop } } catch { 'Failed: ' + $_.Exception.Message };
+          exit 0" 2>&1
+        # The matching lines, and the refusals and failures whatever the expression (an empty one matches all)
+        keep: '${param::match}\|^Refused: \|^Failed: '
+    result:
+      source: ${source::log}
+
+  # Disks
+  fileSystemUsage:
+    description: Shows the size, the free space and the used percentage of each local volume, those mounted in a folder or without a drive letter included. Use it when a write fails for lack of space, then Windows_largestFiles to find what fills a volume.
+    sources:
+      volumes:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, Label, FileSystem, Capacity, FreeSpace FROM Win32_Volume WHERE DriveType = 3
+        computes:
+        # volume;label;fileSystem;sizeGB;freeGB;usedPercent
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            {
+              used = 0
+              if ($4 > 0) used = ($4 - $5) * 100 / $4
+              printf "%s;%s;%s;%.1f;%.1f;%.1f\n", $1, $2, $3, $4 / 1073741824, $5 / 1073741824, used
+            }
+    result:
+      source: ${source::volumes}
+      columns: [ volume, label, fileSystem, sizeGB, freeGB, usedPercent ]
+
+  largestFiles:
+    description: Lists the directories (ending with \) and files under a path that take at least a given size, the largest first, with their size in megabytes, then the errors, such as the directories that cannot be read. Links, junctions and volumes mounted in a folder are not followed. Sizes are logical lengths, as in the Explorer, so a file with several hard links (as in C:\Windows\WinSxS) counts once per link, and a compressed or sparse file counts its full length. A ";" in a name is shown as "," in the path returned. Use it after Windows_fileSystemUsage to find what fills a volume. On a large volume, it can take a few minutes.
+    parameters:
+      path:
+        description: Absolute path of the directory to scan, e.g. C:\, C:\inetpub\logs or a volume without a drive letter as Windows_fileSystemUsage returns it (\\?\Volume{GUID}\)
+        required: true
+        # A drive or a volume GUID, then names starting with a letter, a digit, _ or $: no "..", no wildcard, no quote. A
+        # final \ is allowed, as in the volumes mounted in a folder that Windows_fileSystemUsage returns (C:\Mount\)
+        pattern: '([A-Za-z]:|\\\\\?\\Volume\{[0-9A-Fa-f-]{36}\})(\\|(\\[A-Za-z0-9_$][A-Za-z0-9_ .$@()~+#,-]*)+\\?)'
+      minimumMegabytes:
+        type: integer
+        description: The size from which a directory or a file is listed, in megabytes
+        default: 100
+        pattern: '[1-9][0-9]{0,5}'
+      count:
+        type: integer
+        description: How many of the largest directories and files to return, 1 to 99999
+        default: 50
+        pattern: '[1-9][0-9]{0,4}'
+    sources:
+      scan:
+        type: commandLine
+        # Get-ChildItem -Recurse of PowerShell 5.1 follows the junctions, and loops in "Application Data": the directories
+        # are walked here, without the reparse points, and each directory adds the size of its files to its parents,
+        # whose paths have no final \ (but for a volume root, C:\ or \\?\Volume{GUID}\): the path loses its own
+        timeout: 600
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "$m = [long]'${param::minimumMegabytes}' * 1048576;
+          $t = '${esc(powershell)::param::path}'; if ($t -notmatch '[:}]\\$') { $t = $t.TrimEnd('\') };
+          try { $r = Get-Item -LiteralPath $t -Force -ErrorAction Stop } catch { 'Failed: ' + $_.Exception.Message; exit 0 };
+          $d = @{}; $stack = New-Object Collections.Stack; $stack.Push($r);
+          while ($stack.Count) { $c = $stack.Pop(); $own = 0;
+          try { $items = $c.GetFileSystemInfos() } catch { 'Failed: ' + $c.FullName + ': ' + $_.Exception.InnerException.Message; continue };
+          foreach ($i in $items) { if ($i -is [IO.DirectoryInfo]) { if (-not ($i.Attributes -band [IO.FileAttributes]::ReparsePoint)) { $stack.Push($i) } }
+          else { $own += $i.Length; if ($i.Length -ge $m) { '{0}|{1}' -f [math]::Floor($i.Length / 1048576), $i.FullName } } };
+          $p = $c.FullName; while ($p -and $p.Length -ge $r.FullName.Length) { $d[$p] += $own; $p = [IO.Path]::GetDirectoryName($p) } };
+          foreach ($k in $d.Keys) { if ($d[$k] -ge $m) { '{0}|{1}\' -f [math]::Floor($d[$k] / 1048576), $k.TrimEnd('\') } };
+          exit 0" 2>&1
+        # megabytes|path, or an error in the first column: a path may hold a ";" (shown as "," by the engine), never a "|"
+        separators: "|"
+        selectColumns: 1,2
+      sizes:
+        type: copy
+        from: ${source::scan}
+        computes:
+        - type: keepOnlyMatchingLines
+          column: 1
+          regExp: ^[0-9][0-9]*$
+        - type: sort
+          column: 1
+          numeric: true
+          descending: true
+        - type: head
+          lines: ${param::count}
+      # The errors, whatever the count
+      errors:
+        type: copy
+        from: ${source::scan}
+        computes:
+        - type: excludeMatchingLines
+          column: 1
+          regExp: ^[0-9][0-9]*$
+      all:
+        type: tableUnion
+        tables:
+        - ${source::sizes}
+        - ${source::errors}
+    result:
+      source: ${source::all}
+
+  # Activity
+  performanceSnapshot:
+    description: Samples the activity of the host from its performance counters, as object;instance;counter;value rows - for the processors (busy, user, privileged, interrupt and DPC percentages), the system (seconds between the two samples, processor queue length, context switches per second, processes, threads), the memory (available megabytes, committed megabytes and percentage of the commit limit, commit limit, pages read from or written to disk per second, page faults per second, nonpaged pool), the paging files (used and peak percentages) and each physical disk (busy, read and write time percentages, average queue lengths in all, for reads and for writes, current queue length, transfers, reads and writes per second, megabytes read and written per second, average read and write latency in milliseconds). Use it when the host is slow, to tell a CPU, memory or disk bottleneck apart. A processor queue above 2 per processor means a CPU shortage, sustained pages per second a memory shortage, and a disk latency above 20 ms or a queue above 2 per spindle a disk bottleneck.
+    parameters:
+      seconds:
+        type: integer
+        description: How long the activity is sampled, 1 to 10 seconds (plus the time of the queries)
+        default: 4
+        pattern: '[1-9]|10'
+    # Two samples of the raw performance counters, around a pause; the paging files only need one
+    executionOrder: [ processor1, system1, memory1, disk1, pause, processor2, system2, memory2, disk2, pagingFile, snapshot ]
+    sources:
+      processor1:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
+        computes:
+        - type: awk
+          script: |
+            { print "1;PerfOS_Processor;" $0 }
+      system1:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
+        computes:
+        - type: awk
+          script: |
+            { print "1;PerfOS_System;;" $0 }
+      memory1:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
+        computes:
+        - type: awk
+          script: |
+            { print "1;PerfOS_Memory;;" $0 }
+      disk1:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
+        computes:
+        - type: awk
+          script: |
+            { print "1;PerfDisk_PhysicalDisk;" $0 }
+      pause:
+        type: commandLine
+        # ping waits a second between two echoes: 1 + (seconds - 1) seconds
+        commandLine: ping -n 2 127.0.0.1 >NUL & ping -n ${param::seconds} 127.0.0.1 >NUL
+      processor2:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
+        computes:
+        - type: awk
+          script: |
+            { print "2;PerfOS_Processor;" $0 }
+      system2:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
+        computes:
+        - type: awk
+          script: |
+            { print "2;PerfOS_System;;" $0 }
+      memory2:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
+        computes:
+        - type: awk
+          script: |
+            { print "2;PerfOS_Memory;;" $0 }
+      disk2:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
+        computes:
+        - type: awk
+          script: |
+            { print "2;PerfDisk_PhysicalDisk;" $0 }
+      pagingFile:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Name, PercentUsage, PercentUsage_Base, PercentUsagePeak, PercentUsagePeak_Base FROM Win32_PerfRawData_PerfOS_PagingFile
+        computes:
+        - type: awk
+          script: |
+            { print "2;PerfOS_PagingFile;" $0 }
+      snapshot:
+        type: tableUnion
+        tables:
+        - ${source::processor1}
+        - ${source::system1}
+        - ${source::memory1}
+        - ${source::disk1}
+        - ${source::processor2}
+        - ${source::system2}
+        - ${source::memory2}
+        - ${source::disk2}
+        - ${source::pagingFile}
+        computes:
+        # object;instance;counter;value, with the formula of each counter type: a rate over the 100 ns timer, a rate per
+        # second, an average time per operation, or the value of the second sample
+        - type: awk
+          script: |
+            BEGIN {
+              FS = ";"
+              # The columns of each query, after the sample, the object and the instance
+              columns["PerfOS_Processor"] = "PercentProcessorTime;PercentUserTime;PercentPrivilegedTime;PercentInterruptTime;PercentDPCTime;Timestamp_Sys100NS"
+              columns["PerfOS_System"] = "ProcessorQueueLength;ContextSwitchesPersec;Processes;Threads;Timestamp_PerfTime;Frequency_PerfTime"
+              columns["PerfOS_Memory"] = "AvailableMBytes;CommittedBytes;CommitLimit;PagesPersec;PageFaultsPersec;PoolNonpagedBytes;Timestamp_PerfTime;Frequency_PerfTime"
+              columns["PerfOS_PagingFile"] = "PercentUsage;PercentUsage_Base;PercentUsagePeak;PercentUsagePeak_Base"
+              columns["PerfDisk_PhysicalDisk"] = "PercentIdleTime;PercentIdleTime_Base;PercentDiskReadTime;PercentDiskWriteTime;AvgDiskQueueLength;AvgDiskReadQueueLength;AvgDiskWriteQueueLength;CurrentDiskQueueLength;DiskTransfersPersec;DiskReadsPersec;DiskWritesPersec;DiskReadBytesPersec;DiskWriteBytesPersec;AvgDisksecPerRead;AvgDisksecPerRead_Base;AvgDisksecPerWrite;AvgDisksecPerWrite_Base;Timestamp_Sys100NS;Timestamp_PerfTime;Frequency_PerfTime"
+            }
+            ($2 in columns) {
+              count = split(columns[$2], names, ";")
+              for (k = 1; k <= count; k++) value[$1, $2, $3, names[k]] = $(k + 3)
+              instances[$2 ";" $3] = 1
+            }
+            function last(name) { return value[2, o, i, name] }
+            function delta(name) { return value[2, o, i, name] - value[1, o, i, name] }
+            # The percentage of the 100 ns timer
+            function timer(name) { return dt100ns > 0 ? delta(name) * 100 / dt100ns : 0 }
+            function perSecond(name) { return seconds > 0 ? delta(name) / seconds : 0 }
+            # An average time per operation, in milliseconds
+            function latency(name) { return delta(name "_Base") > 0 ? delta(name) * 1000 / frequency / delta(name "_Base") : 0 }
+            # A percentage of its base, in the second sample
+            function ratio(name) { return last(name "_Base") > 0 ? last(name) * 100 / last(name "_Base") : 0 }
+            function out(counter, v) { printf "%s;%s;%s;%.1f\n", label, i, counter, v }
+            # 100 less an idle percentage, over its own 100 ns base when it has one
+            function busy(name) {
+              if (delta(name "_Base") > 0) v = 100 - delta(name) * 100 / delta(name "_Base")
+              else v = 100 - timer(name)
+              return v < 0 ? 0 : v
+            }
+            END {
+              for (k in instances) {
+                split(k, parts, ";"); o = parts[1]; i = parts[2]
+                dt100ns = delta("Timestamp_Sys100NS")
+                frequency = last("Frequency_PerfTime")
+                seconds = frequency > 0 ? delta("Timestamp_PerfTime") / frequency : 0
+                if (o == "PerfOS_Processor") {
+                  label = "processor"
+                  out("busyPercent", busy("PercentProcessorTime"))
+                  out("userPercent", timer("PercentUserTime"))
+                  out("privilegedPercent", timer("PercentPrivilegedTime"))
+                  out("interruptPercent", timer("PercentInterruptTime"))
+                  out("dpcPercent", timer("PercentDPCTime"))
+                } else if (o == "PerfOS_System") {
+                  label = "system"
+                  # The actual time between the two samples
+                  out("sampleSeconds", seconds)
+                  out("processorQueueLength", last("ProcessorQueueLength"))
+                  out("contextSwitchesPerSecond", perSecond("ContextSwitchesPersec"))
+                  out("processes", last("Processes"))
+                  out("threads", last("Threads"))
+                } else if (o == "PerfOS_Memory") {
+                  label = "memory"
+                  out("availableMegabytes", last("AvailableMBytes"))
+                  out("committedPercent", last("CommitLimit") > 0 ? last("CommittedBytes") * 100 / last("CommitLimit") : 0)
+                  out("committedMegabytes", last("CommittedBytes") / 1048576)
+                  out("commitLimitMegabytes", last("CommitLimit") / 1048576)
+                  out("pagesPerSecond", perSecond("PagesPersec"))
+                  out("pageFaultsPerSecond", perSecond("PageFaultsPersec"))
+                  out("nonpagedPoolMegabytes", last("PoolNonpagedBytes") / 1048576)
+                } else if (o == "PerfOS_PagingFile") {
+                  label = "pagingFile"
+                  out("usedPercent", ratio("PercentUsage"))
+                  out("peakPercent", ratio("PercentUsagePeak"))
+                } else if (o == "PerfDisk_PhysicalDisk") {
+                  label = "physicalDisk"
+                  out("busyPercent", busy("PercentIdleTime"))
+                  out("readTimePercent", timer("PercentDiskReadTime"))
+                  out("writeTimePercent", timer("PercentDiskWriteTime"))
+                  out("averageQueueLength", dt100ns > 0 ? delta("AvgDiskQueueLength") / dt100ns : 0)
+                  out("averageReadQueueLength", dt100ns > 0 ? delta("AvgDiskReadQueueLength") / dt100ns : 0)
+                  out("averageWriteQueueLength", dt100ns > 0 ? delta("AvgDiskWriteQueueLength") / dt100ns : 0)
+                  out("currentQueueLength", last("CurrentDiskQueueLength"))
+                  out("transfersPerSecond", perSecond("DiskTransfersPersec"))
+                  out("readsPerSecond", perSecond("DiskReadsPersec"))
+                  out("writesPerSecond", perSecond("DiskWritesPersec"))
+                  out("readMegabytesPerSecond", perSecond("DiskReadBytesPersec") / 1048576)
+                  out("writeMegabytesPerSecond", perSecond("DiskWriteBytesPersec") / 1048576)
+                  out("readLatencyMilliseconds", latency("AvgDisksecPerRead"))
+                  out("writeLatencyMilliseconds", latency("AvgDisksecPerWrite"))
+                }
+              }
+            }
+        # By object, then by instance
+        - type: sort
+          column: 2
+        - type: sort
+          column: 1
+    result:
+      source: ${source::snapshot}
+      columns: [ object, instance, counter, value ]
+
+  networkSockets:
+    description: Lists the listening TCP ports and the UDP endpoints with their process (protocol;address;port;pid;process, by port; the UDP endpoints of the dynamic range 49152-65535 are counted in one line per process, last), then how many TCP connections are in each state (state;count, the most frequent first). Use it when a service does not answer on its port, or when connections pile up. Many CloseWait connections mean an application does not close them, many TimeWait a high connection rate, many SynSent a remote service that does not answer.
+    sources:
+      tcp:
+        type: wmi
+        namespace: root\StandardCimv2
+        # 2: Listen
+        query: SELECT LocalAddress, LocalPort, OwningProcess FROM MSFT_NetTCPConnection WHERE State = 2
+        computes:
+        - type: awk
+          script: |
+            { print "tcp;" $0 }
+      udp:
+        type: wmi
+        namespace: root\StandardCimv2
+        query: SELECT LocalAddress, LocalPort, OwningProcess FROM MSFT_NetUDPEndpoint
+        computes:
+        # The endpoints in the dynamic port range (client sockets, the 2500 of a DNS server socket pool) are counted in
+        # one line per process
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            $2 < 49152 { print "udp;" $0; next }
+            { count[$3]++ }
+            END { for (pid in count) print "udp;" count[pid] " endpoints;49152-65535;" pid }
+      endpoints:
+        type: tableUnion
+        tables:
+        - ${source::tcp}
+        - ${source::udp}
+      processes:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT ProcessId, Name FROM Win32_Process
+      listening:
+        type: tableJoin
+        leftTable: ${source::endpoints}
+        rightTable: ${source::processes}
+        leftKeyColumn: 4
+        rightKeyColumn: 1
+        defaultRightLine: ;;
+        computes:
+        - type: keepColumns
+          columnNumbers: 1,2,3,4,6
+        - type: sort
+          column: 3
+          numeric: true
+      states:
+        type: wmi
+        namespace: root\StandardCimv2
+        query: SELECT State FROM MSFT_NetTCPConnection
+        computes:
+        # The TCP connections counted in each state, the most frequent first
+        - type: awk
+          script: |
+            BEGIN {
+              FS = ";"
+              split("Closed;Listen;SynSent;SynReceived;Established;FinWait1;FinWait2;CloseWait;Closing;LastAck;TimeWait;DeleteTCB", names, ";")
+            }
+            { state = ($1 in names) ? names[$1] : ($1 == 100 ? "Bound" : $1); count[state]++ }
+            END { for (state in count) print state ";" count[state] }
+        - type: sort
+          column: 2
+          numeric: true
+          descending: true
+      all:
+        type: tableUnion
+        tables:
+        - ${source::listening}
+        - ${source::states}
+    result:
+      source: ${source::all}
+
+  timeSync:
+    description: Shows the local time and the time zone of the host, the state of the Windows Time service, its time source and synchronization status, its peers, and the offset of the clock to its time source over 3 samples, when that source is a time server. Use it when Kerberos, TLS or cluster errors point to a clock drift.
+    sources:
+      clock:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT LocalDateTime, CurrentTimeZone FROM Win32_OperatingSystem
+        computes:
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            # yyyy-mm-ddThh:mm:ss from seconds since 1970-01-01
+            function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
+              s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
+              yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
+              doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
+              return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
+            }
+            # 2026-11-03T17:53:00.469+01:00 (WinRM), or seconds since 1970 (WMI) and the offset to UTC in minutes
+            $1 !~ /^[0-9]+$/ { print "Local time: " $1; next }
+            {
+              offset = $2 < 0 ? -$2 : $2
+              printf "Local time: %s%s%02d:%02d\n", iso($1 + $2 * 60), ($2 < 0 ? "-" : "+"), int(offset / 60), offset % 60
+            }
+      zone:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Caption FROM Win32_TimeZone
+        computes:
+        - type: awk
+          script: |
+            { print "Time zone: " $0 }
+      service:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT State, StartMode FROM Win32_Service WHERE Name = 'W32Time'
+        computes:
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            { print "Windows Time service: " $1 " (" $2 ")" }
+      # Fails, and returns nothing, when the Windows Time service is stopped
+      status:
+        type: commandLine
+        commandLine: w32tm /query /status /verbose & w32tm /query /peers
+      server:
+        type: commandLine
+        commandLine: w32tm /query /source
+        computes:
+        # The time server without its flags (time.windows.com,0x9), but not a clock such as Local CMOS Clock
+        - type: awk
+          script: |
+            { sub(/,.*/, ""); gsub(/^[ \t]+|[ \t]+$/, "") }
+            /^[A-Za-z0-9][A-Za-z0-9.:_-]*$/ { print }
+      offset:
+        type: commandLine
+        # Waits for a time server that does not answer
+        timeout: 120
+        commandLine: w32tm /stripchart /computer:$1 /samples:3 /dataonly
+        executeForEachEntryOf:
+          source: ${source::server}
+          concatMethod: list
+      time:
+        type: tableUnion
+        tables:
+        - ${source::clock}
+        - ${source::zone}
+        - ${source::service}
+        - ${source::status}
+        - ${source::offset}
+    result:
+      source: ${source::time}
+
+  rebootHistory:
+    description: Shows when the host started, then its starts, shutdowns and reboots over the last days (time in UTC;event ID;source;message, the latest 200, the latest first) with who or what asked for them and why (event 1074), the unexpected ones (6008, and 41 when Windows restarted without a clean shutdown), and whether a reboot is pending, for updates, a Windows feature, file renames or a computer rename. Use it when a host restarted unexpectedly, or before planning a reboot.
+    parameters:
+      days:
+        type: integer
+        description: How far back to read the System log, in days, 1 to 3650; WMI reads the events of the period one by one, which takes seconds per month of a busy log
+        default: 30
+        pattern: '[1-9][0-9]{0,2}|[1-2][0-9]{3}|3[0-5][0-9]{2}|36[0-4][0-9]|3650'
+    sources:
+      boot:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT LastBootUpTime FROM Win32_OperatingSystem
+        computes:
+        # 2026-10-08T13:46:33.5+02:00 (WinRM), or seconds since 1970 (WMI) shown in UTC
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
+              s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
+              yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
+              doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
+              return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
+            }
+            { print "Up since " (($1 ~ /^[0-9]+$/) ? iso($1) "Z" : $1) }
+      # The start of the period, in UTC, as a WMI date (yyyymmddhhmmss.000000+000): WMI reads the System log from the latest
+      # event back to that date, not the whole log
+      since:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT Year, Month, Day, Hour, Minute, Second FROM Win32_UTCTime
+        computes:
+        # The days since 0000-03-01, less the period, then back to a date
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            {
+              y = $1 - ($2 <= 2); m = $2 > 2 ? $2 - 3 : $2 + 9; yoe = y % 400
+              z = int(y / 400) * 146097 + yoe * 365 + int(yoe / 4) - int(yoe / 100) + int((153 * m + 2) / 5) + $3 - 1 - ${param::days}
+              era = int(z / 146097); doe = z - era * 146097
+              yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
+              doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
+              printf "%04d%02d%02d%02d%02d%02d.000000+000\n", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, $4, $5, $6
+            }
+      events:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT TimeGenerated, EventCode, SourceName, Message FROM Win32_NTLogEvent WHERE LogFile = 'System' AND TimeGenerated >= '$1' AND (EventCode = 41 OR EventCode = 1074 OR EventCode = 1076 OR EventCode = 6005 OR EventCode = 6006 OR EventCode = 6008)
+        executeForEachEntryOf:
+          source: ${source::since}
+          concatMethod: list
+        computes:
+        # time;id;provider;message, a message on one line
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
+              s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
+              yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
+              doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
+              return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
+            }
+            function flush() { if (event != "") { gsub(/[ \t]+/, " ", event); print event; count++ }; event = "" }
+            # The rows of a table end with a ";"
+            { sub(/;$/, "") }
+            # An event starts with its time, 2026-10-08T11:46:47.642527Z (WinRM) or seconds since 1970 (WMI), and its ID;
+            # the next lines of its message follow
+            $1 ~ /^[0-9]{4}-?[0-9]{2}-?[0-9]{2}/ && $2 ~ /^[0-9]+$/ {
+              flush()
+              event = (($1 ~ /^[0-9]+$/) ? iso($1) "Z" : $1) ";" $2 ";" $3 ";" $4
+              for (i = 5; i <= NF; i++) event = event "," $i
+              next
+            }
+            { gsub(/;/, ","); event = event " " $0 }
+            END { flush(); if (!count) print "No start, shutdown or reboot event in the last ${param::days} days" }
+        - type: sort
+          column: 1
+          descending: true
+        - type: head
+          lines: 200
+      # A key that does not exist fails its reg query, which prints nothing: the computer names, which always exist, last
+      pending:
+        type: commandLine
+        commandLine: >-
+          reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" /ve
+          & reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired" /ve
+          & reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager" /v PendingFileRenameOperations
+          & reg query "HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName" /v ComputerName
+          & reg query "HKLM\SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName" /v ComputerName
+        computes:
+        - type: awk
+          script: |
+            BEGIN { FS = " " }
+            /^HKEY_/ {
+              key = $0
+              if (key ~ /RebootPending$/) print "Reboot pending: Component Based Servicing (updates, Windows features)"
+              if (key ~ /RebootRequired$/) print "Reboot pending: Windows Update"
+              next
+            }
+            $1 == "PendingFileRenameOperations" && NF > 2 { print "Reboot pending: file renames (PendingFileRenameOperations)" }
+            $1 == "ComputerName" { if (key ~ /ActiveComputerName$/) active = $NF; else configured = $NF }
+            END { if (active != configured) print "Reboot pending: computer rename" }
+      history:
+        type: tableUnion
+        tables:
+        - ${source::boot}
+        - ${source::events}
+        - ${source::pending}
+    result:
+      source: ${source::history}
+
+  installedUpdates:
+    description: Lists the installed updates (hotfixes) with their KB number, type, installation date (yyyy-mm-dd) and who installed them, the latest first. Use it when a problem started after an update.
+    sources:
+      updates:
+        type: wmi
+        namespace: root\CIMv2
+        query: SELECT HotFixID, Description, InstalledOn, InstalledBy FROM Win32_QuickFixEngineering
+        computes:
+        # The date as yyyy-mm-dd, from m/d/yyyy
+        - type: awk
+          script: |
+            BEGIN { FS = ";" }
+            {
+              date = $3
+              if (split($3, d, "/") == 3) date = sprintf("%04d-%02d-%02d", d[3], d[1], d[2])
+              print $1 ";" $2 ";" date ";" $4
+            }
+        - type: sort
+          column: 3
+          descending: true
+    result:
+      source: ${source::updates}
+      columns: [ hotFixId, description, installedOn, installedBy ]
+
+  reboot:
+    description: Schedules a reboot of the host in a few minutes, which warns the logged-in users, then closes their applications without saving. Windows_cancelReboot cancels it. Use it only when the user explicitly asks for a reboot.
+    destructive: true
+    parameters:
+      minutes:
+        type: integer
+        description: Minutes before the reboot, 1 to 60
+        default: 1
+        pattern: '[1-9]|[1-5][0-9]|60'
+    sources:
+      shutdown:
+        type: commandLine
+        # A planned reboot, reason "Other"
+        commandLine: >-
+          PowerShell.exe -NoProfile -NonInteractive -Command "shutdown.exe /r /t (New-TimeSpan -Minutes ${param::minutes}).TotalSeconds /d p:0:0 /c 'Reboot requested through MetricsHub';
+          if ($LASTEXITCODE -eq 0) { 'A reboot is scheduled in ${param::minutes} minutes' } else { 'Failed: exit code ' + $LASTEXITCODE };
+          exit 0" 2>&1
+    result:
+      source: ${source::shutdown}
+
+  cancelReboot:
+    description: Cancels a scheduled reboot or shutdown, such as the one Windows_reboot schedules.
+    destructive: true
+    sources:
+      cancel:
+        type: commandLine
+        commandLine: shutdown.exe /a 2>&1 && echo The scheduled shutdown is cancelled || echo No shutdown was cancelled
+    result:
+      source: ${source::cancel}
