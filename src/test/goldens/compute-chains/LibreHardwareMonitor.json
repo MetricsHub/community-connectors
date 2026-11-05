@@ -7,7 +7,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "", "0" ], [ "b", "0" ], [ "2.5", "3" ] ],
@@ -117,19 +117,19 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableSeparatorInCell" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableWide" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -271,7 +271,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "a", "  - b", "" ], [ "1", "  - 2.5", "" ], [ "x", " ", "" ], [ "only", " ", "" ] ],

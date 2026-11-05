@@ -73,7 +73,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "FRU", "c", "b", "a" ], [ "FRU", "z", "", "x" ], [ "FRU", "3", "2.5", "1" ] ],
@@ -95,19 +95,19 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableSeparatorInCell" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableWide" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -209,19 +209,19 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableSeparatorInCell" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableWide" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },

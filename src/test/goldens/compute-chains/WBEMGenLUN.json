@@ -7,7 +7,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "only", "", "naa." ] ],
@@ -29,7 +29,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "only", "", "naa." ] ],
@@ -55,15 +55,15 @@
         },
         "table" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableSeparatorInCell" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableWide" : {
           "table" : [ ],
-          "rawData" : "r1c2;r1c3;r1c11;\nr2c2;r2c3;r2c11;\nr3c2;r3c3;r3c11;"
+          "rawData" : ""
         }
       }
     },
@@ -117,19 +117,19 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableSeparatorInCell" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "tableWide" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     }

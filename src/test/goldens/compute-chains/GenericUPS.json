@@ -293,7 +293,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "MSHW", "Input a", "b", "0", "0" ], [ "MSHW", "Input x", "", "", "" ], [ "MSHW", "Input 1", "2.5", "2.75", "2.25" ], [ "MSHW", "Input only", "", "", "" ] ],
@@ -337,7 +337,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "MSHW", "Output a", "b", "0", "0" ], [ "MSHW", "Output x", "", "", "" ], [ "MSHW", "Output 1", "2.5", "2.75", "2.25" ], [ "MSHW", "Output only", "", "", "" ] ],

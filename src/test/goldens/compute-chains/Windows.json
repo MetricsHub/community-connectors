@@ -183,7 +183,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "a", "b", "c", "0.0", "0.0", "0.0" ], [ "x", "", "z", "0.0", "0.0", "0.0" ], [ "1", "2.5", "3", "0.0", "0.0", "0.0" ], [ "only", "", "", "0.0", "0.0", "0.0" ] ],
@@ -307,7 +307,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "tcp", "a", "b", "c" ], [ "tcp", "x", "", "z", "" ], [ "tcp", "1", "2.5", "3" ], [ "tcp", "only" ] ],
@@ -329,7 +329,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "udp", "x", "", "z", "" ], [ "udp", "1", "2.5", "3" ], [ "udp", "only" ], [ "udp", "1 endpoints", "49152-65535", "c" ] ],
@@ -351,7 +351,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "1", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "1", "PerfDisk_PhysicalDisk", "x", "", "z", "" ], [ "1", "PerfDisk_PhysicalDisk", "1", "2.5", "3" ], [ "1", "PerfDisk_PhysicalDisk", "only" ] ],
@@ -373,7 +373,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "2", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "2", "PerfDisk_PhysicalDisk", "x", "", "z", "" ], [ "2", "PerfDisk_PhysicalDisk", "1", "2.5", "3" ], [ "2", "PerfDisk_PhysicalDisk", "only" ] ],
@@ -395,7 +395,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "1", "PerfOS_Memory", "", "a", "b", "c" ], [ "1", "PerfOS_Memory", "", "x", "", "z", "" ], [ "1", "PerfOS_Memory", "", "1", "2.5", "3" ], [ "1", "PerfOS_Memory", "", "only" ] ],
@@ -417,7 +417,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "2", "PerfOS_Memory", "", "a", "b", "c" ], [ "2", "PerfOS_Memory", "", "x", "", "z", "" ], [ "2", "PerfOS_Memory", "", "1", "2.5", "3" ], [ "2", "PerfOS_Memory", "", "only" ] ],
@@ -439,7 +439,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "2", "PerfOS_PagingFile", "a", "b", "c" ], [ "2", "PerfOS_PagingFile", "x", "", "z", "" ], [ "2", "PerfOS_PagingFile", "1", "2.5", "3" ], [ "2", "PerfOS_PagingFile", "only" ] ],
@@ -461,7 +461,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "1", "PerfOS_Processor", "a", "b", "c" ], [ "1", "PerfOS_Processor", "x", "", "z", "" ], [ "1", "PerfOS_Processor", "1", "2.5", "3" ], [ "1", "PerfOS_Processor", "only" ] ],
@@ -483,7 +483,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "2", "PerfOS_Processor", "a", "b", "c" ], [ "2", "PerfOS_Processor", "x", "", "z", "" ], [ "2", "PerfOS_Processor", "1", "2.5", "3" ], [ "2", "PerfOS_Processor", "only" ] ],
@@ -575,7 +575,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "1", "PerfOS_System", "", "a", "b", "c" ], [ "1", "PerfOS_System", "", "x", "", "z", "" ], [ "1", "PerfOS_System", "", "1", "2.5", "3" ], [ "1", "PerfOS_System", "", "only" ] ],
@@ -597,7 +597,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "2", "PerfOS_System", "", "a", "b", "c" ], [ "2", "PerfOS_System", "", "x", "", "z", "" ], [ "2", "PerfOS_System", "", "1", "2.5", "3" ], [ "2", "PerfOS_System", "", "only" ] ],
@@ -619,7 +619,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "TCP", "a:b c: " ], [ "TCP", "x: z: " ], [ "TCP", "1:2.5 3: " ], [ "TCP", "only: : " ] ],
@@ -663,7 +663,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "Service", "a (b, c) " ], [ "Service", "x (, z) " ], [ "Service", "1 (2.5, 3) " ], [ "Service", "only (, ) " ] ],
@@ -685,7 +685,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "S1", "a", "b", "c" ], [ "S1", "x", "", "z", "" ], [ "S1", "1", "2.5", "3" ], [ "S1", "only" ] ],
@@ -707,7 +707,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "S2", "a", "b", "c" ], [ "S2", "x", "", "z", "" ], [ "S2", "1", "2.5", "3" ], [ "S2", "only" ] ],
@@ -729,7 +729,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "P", "a", "b", "c" ], [ "P", "x", "", "z", "" ], [ "P", "1", "2.5", "3" ], [ "P", "only" ] ],
@@ -751,7 +751,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "M", "a", "b", "c" ], [ "M", "x", "", "z", "" ], [ "M", "1", "2.5", "3" ], [ "M", "only" ] ],
@@ -843,7 +843,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "Up since a" ], [ "Up since x" ], [ "Up since 1970-01-01T00:00:01Z" ], [ "Up since only" ] ],
@@ -887,15 +887,15 @@
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "rawData" : ""
         },
         "commandLineWide" : {
           "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -927,7 +927,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "Y", "b" ], [ "Y" ], [ "Y", "2.5" ], [ "Y" ] ],
@@ -949,7 +949,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "D", "a", "b", "c" ], [ "D", "x", "", "z", "" ], [ "D", "1", "2.5", "3" ], [ "D", "only" ] ],
@@ -1049,7 +1049,7 @@
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -1059,7 +1059,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "S", "a", "b", "c" ], [ "S", "x", "", "z", "" ], [ "S", "1", "2.5", "3" ], [ "S", "only" ] ],
@@ -1081,7 +1081,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "B", "a", "b", "c" ], [ "B", "x", "", "z", "" ], [ "B", "1", "2.5", "3" ], [ "B", "only" ] ],
@@ -1103,7 +1103,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "Local time: a" ], [ "Local time: x" ], [ "Local time: 1970-01-01T00:02:31+00:02" ], [ "Local time: only" ] ],
@@ -1129,11 +1129,11 @@
         },
         "commandLineWide" : {
           "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -1143,7 +1143,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "Windows Time service: a (b)" ], [ "Windows Time service: x ()" ], [ "Windows Time service: 1 (2.5)" ], [ "Windows Time service: only ()" ] ],
@@ -1165,7 +1165,7 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "Time zone: a", "b", "c" ], [ "Time zone: x", "", "z", "" ], [ "Time zone: 1", "2.5", "3" ], [ "Time zone: only" ] ],
