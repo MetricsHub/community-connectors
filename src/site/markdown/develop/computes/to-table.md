@@ -34,10 +34,10 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `toTable`. |
-| `separator` | No | `;` | The text separating the cells of a line, taken literally. A trailing separator does not add an empty cell; two consecutive separators do. |
+| `separator` | No | `;` | The text separating the cells of a line, taken literally. A trailing separator does not add an empty cell; two consecutive separators do. A blank separator (a space, a tab) splits on runs of it and keeps no empty cell, as the `commandLine` source does. |
 | `keep` | No | None | Regular expression; only the lines that match become rows. |
 | `exclude` | No | None | Regular expression; the lines that match are dropped. |
-| `selectColumns` | No | None | Comma-separated **1-based** column numbers or ranges to keep after the split, in that order, e.g. `"2,4-6,8-"` (`8-` means from column 8 to the last one). A selected column absent from a row gives an empty cell, so the row is kept. |
+| `selectColumns` | No | None | Comma-separated **1-based** column numbers or ranges to keep after the split, in that order, e.g. `"2,4-6,8-"` (`8-` means from column 8 to the last one). A selected column absent from a row gives an empty cell, so the row is kept. `0` selects nothing. |
 
 Blank lines never become rows.
 
