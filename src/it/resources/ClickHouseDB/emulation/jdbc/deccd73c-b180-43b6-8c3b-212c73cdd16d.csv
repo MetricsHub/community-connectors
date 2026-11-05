@@ -1,0 +1,5 @@
+default;1;1;localhost;127.0.0.1;9000;1;unknown;0;0;0;0;;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+replication_lab;1;1;clickhouse-01;172.20.0.3;9000;1;unknown;0;0;0;1;;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+replication_lab;1;2;clickhouse-02;172.20.0.2;9000;0;unknown;0;0;0;1;;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+sharding_lab;1;1;clickhouse-01;172.20.0.3;9000;1;unknown;0;0;0;0;;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+sharding_lab;2;1;clickhouse-02;172.20.0.2;9000;0;unknown;0;0;0;0;;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;

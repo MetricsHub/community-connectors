@@ -382,7 +382,7 @@ monitors:
       mapping:
         source: ${source::mariadbInfo}
         attributes:
-          db.system: mariadb
+          db.system.name: mariadb
           db.server.name: $57
           id: $57
           db.namespace: $1

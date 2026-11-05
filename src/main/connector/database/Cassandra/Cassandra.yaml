@@ -79,7 +79,7 @@ beforeAll:
 
 monitors:
   cassandra:
-    keys: [ db.system ]
+    keys: [ db.system.name ]
     simple:
       sources:
         # Storage metrics $1
@@ -230,7 +230,7 @@ monitors:
       mapping:
         source: ${source::dbMetrics}
         attributes:
-          db.system: cassandra
+          db.system.name: cassandra
           db.server.name: ${source::beforeAll.dbServerName}
           db.version: ${source::beforeAll.dbReleaseVersion}
           db.cluster.name: ${source::beforeAll.dbClusterName}
@@ -349,7 +349,7 @@ monitors:
         # scope;Size;Hits;Misses;Requests
         source: ${source::cacheMetrics}
         attributes:
-          db.system: cassandra
+          db.system.name: cassandra
           db.cassandra.cache.type: $1
           db.server.name: ${source::beforeAll.dbServerName}
           db.version: ${source::beforeAll.dbReleaseVersion}
@@ -420,7 +420,7 @@ monitors:
         # scope;path;PendingTasks;ActiveTasks;CurrentlyBlockedTasks
         source: ${source::threadMetrics}
         attributes:
-          db.system: cassandra
+          db.system.name: cassandra
           db.cassandra.thread.role: $1
           db.thread.pool: $2
           db.server.name: ${source::beforeAll.dbServerName}
@@ -433,7 +433,7 @@ monitors:
 
   # Additional monitor for cluster-level metrics
   cassandra_cluster:
-    keys: [ db.system ]
+    keys: [ db.system.name ]
     simple:
       sources:
         clusterNodes:
@@ -456,7 +456,7 @@ monitors:
       mapping:
         source: ${source::clusterNodes}
         attributes:
-          db.system: cassandra
+          db.system.name: cassandra
           db.server.name: ${source::beforeAll.dbServerName}
           db.version: ${source::beforeAll.dbReleaseVersion}
           db.cluster.name: ${source::beforeAll.dbClusterName}
