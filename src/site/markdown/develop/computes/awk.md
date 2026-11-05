@@ -42,6 +42,35 @@ sources:
 | `exclude` | No | None | Regular expression; matching **output** lines are discarded. |
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
+| `input` | No | `text` | How the script reads the source result: `text` (the raw text, or the table serialized as `;`-separated lines) or `table` (each row is a record whose cells are `$1..$NF`, nothing is serialized). See [Table input and output](#table-input-and-output). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, re-parsed into a table with `keep`, `exclude`, `separators` and `selectColumns`) or `table` (each `print a, b, c` is one row `[a, b, c]`, each `printf` one single-cell row; the filtering properties do not apply). |
+
+## Table Input And Output
+
+By default the script reads text and prints text, and the printed lines are re-parsed into a table on `;`. A `;` inside a value therefore moves the following columns, in the input as in the output.
+
+With `input: table`, the script reads the table itself: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part. `$0` is only synthesized (cells joined with `OFS`) when the script reads it.
+
+With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain. `OFS` and `ORS` play no part. A `printf` call is one row with a single cell.
+
+```yaml
+sources:
+  fans:
+    type: snmpTable
+    oid: 1.3.6.1.4.1.674.10892.5.4.700.12.1
+    selectColumns: "ID,2,5,6"
+    computes:
+    - type: awk
+      input: table
+      output: table
+      script: |
+        $3 > 0 { print $1, $2, $3 / 60, "ok" }
+```
+
+The two properties are independent: a script written for text input can produce a table, and the reverse.
+
+> [!NOTE]
+> A script written before `input: table` existed reads text, since the default is `text`: the engine inserts the serialization (`toText`) before an `awk` compute that follows a table source, so existing scripts setting `FS = ";"` keep working. Only a script declaring `input: table` reads the table as records.
 
 ## Variables
 
@@ -106,6 +135,8 @@ The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` rem
 ## Common Mistakes
 
 - Relying on GNU awk extensions (`gensub`, `asort`, coprocesses...) that JAWK does not provide.
+- Keeping `FS = ";"` and `split($0, a, ";")` in a script declared with `input: table`: the fields are the cells already, and `$0` is the cells joined with `OFS` (a space by default), not with `;`.
+- Printing a `;`-joined string with `output: table`: `print $1 ";" $2` gives one cell holding `a;b`, not two cells. Print the values as separate arguments.
 - Setting `selectColumns` without `separators`: the lines are never split, so the selection does nothing.
 - Expecting `keep`/`exclude` to filter the script's *input* — they filter its *output*. Filter input inside the script itself.
 - A script that prints nothing empties the table, and every downstream compute and mapping silently gets no rows.
