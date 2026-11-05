@@ -36,7 +36,16 @@ fan02;Fan B;3
 After translation/replace, mapping consumes the transformed table.
 
 > [!NOTE]
-> Because serialization uses semicolons as column separators, some transforms that append semicolon-delimited content may increase the number of materialized columns after reparsing.
+> Because serialization uses semicolons as column separators, some transforms that append semicolon-delimited content may increase the number of materialized columns after reparsing. Prefer [insertColumn](./insert-column.html) to add a column.
+
+## Content Types
+
+A source result is either **text** (lines) or a **table** (rows of cells):
+
+- `http`, `file` and `ipmi` produce text; `commandLine` and the `awk` source produce text that MetricsHub also splits on `;` into a table (`commandLine` after its own `separators` and `selectColumns`), so a table compute can follow them directly; every other source produces a table;
+- `awk` reads text and writes text, re-split on `;` the same way; `json2Csv`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
+
+Convert explicitly with [toTable](./to-table.html) and [toText](./to-text.html) when a compute does not read what the previous step produced. MetricsHub inserts these conversions itself where connectors written before they existed relied on an implicit one (a table compute after `commandLine` or `awk`, an `awk` compute after a table source), so existing connectors keep working.
 
 ## Compute Pages
 
@@ -59,6 +68,7 @@ After translation/replace, mapping consumes the transformed table.
 | [replace](./replace.html) | Replace a literal value in a column. |
 | [substring](./substring.html) | Keep a portion of a column's value (1-based start, length). |
 | [duplicateColumn](./duplicate-column.html) | Insert a copy of a column immediately after the original. |
+| [insertColumn](./insert-column.html) | Insert a new column at a position, holding a literal or `$n` value. |
 
 ### Row Filtering, Sorting and Column Projection
 
@@ -88,6 +98,8 @@ After translation/replace, mapping consumes the transformed table.
 | --- | --- |
 | [json2Csv](./json2csv.html) | Flatten a JSON payload into table rows (prepends an entry column). |
 | [xml2Csv](./xml2csv.html) | Flatten an XML payload into table rows. |
+| [toTable](./to-table.html) | Turn a text result into a table (one row per line, split on a separator). |
+| [toText](./to-text.html) | Turn a table into semicolon-separated text for an `awk` compute. |
 | [encode](./encode.html) | Encode a column as `base64` or `url`. |
 | [decode](./decode.html) | Decode a `base64` or `url` column. |
 

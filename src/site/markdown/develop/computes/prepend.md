@@ -66,7 +66,7 @@ which re-parses as **2 columns**: the `;` inside the value split the old column 
 ## Recommended Pattern
 
 - Quote values that end with a space or contain `;` followed by text, so YAML preserves them verbatim: `value: 'MSHW;Input '`.
-- Use `prepend` with a trailing `;` (`value: MSHW;`) to add a constant leading key column to keyless single-value sources before a `tableJoin` or `mapping`.
+- Prefer [insertColumn](./insert-column.html) with `column: 1` (`value: MSHW`) to add a constant leading key column to keyless single-value sources before a `tableJoin` or `mapping`: `prepend` with a trailing `;` relies on the table being re-parsed from its text. Keep the trick as it is in existing connectors.
 - Label human-readable fields (`"Model: "`, `"SerialNumber: "`) with `prepend` right before `mapping` rather than in AWK scripts — it keeps the pipeline declarative.
 - Keep a `# Column1;Column2;...` comment after any `prepend` that inserts columns, so later computes are written against the new layout.
 

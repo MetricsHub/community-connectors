@@ -139,6 +139,7 @@
 				<item name="Extract" href="develop/computes/extract.html" />
 				<item name="Extract WBEM Property" href="develop/computes/extract-wbem-property.html" />
 				<item name="Head" href="develop/computes/head.html" />
+				<item name="Insert Column" href="develop/computes/insert-column.html" />
 				<item name="JSON to CSV" href="develop/computes/json2csv.html" />
 				<item name="Keep Columns" href="develop/computes/keep-columns.html" />
 				<item name="Keep Only Matching Lines" href="develop/computes/keep-only-matching-lines.html" />
@@ -149,6 +150,8 @@
 				<item name="Substring" href="develop/computes/substring.html" />
 				<item name="Subtract" href="develop/computes/subtract.html" />
 				<item name="Tail" href="develop/computes/tail.html" />
+				<item name="To Table" href="develop/computes/to-table.html" />
+				<item name="To Text" href="develop/computes/to-text.html" />
 				<item name="Translate" href="develop/computes/translate.html" />
 				<item name="Translate per Bit" href="develop/computes/translate-per-bit.html" />
 				<item name="XML to CSV" href="develop/computes/xml2csv.html" />

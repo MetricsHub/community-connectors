@@ -13,7 +13,7 @@ It is often preferred to use actual APIs, like REST APIs or SNMP, to extract met
 
 The specified command line is executed on the monitored host (typically a remote system) through the protocol configured by the user in MetricsHub, unless the `executeLocally` property is set to `true`.
 
-The output of the command is captured and converted to a table, following a few extraction properties, like `separators`, `selectColumns`, and `keep` (see below descriptions).
+The output of the command is captured and converted to a table, following a few extraction properties, like `separators`, `selectColumns`, and `keep` (see below descriptions). The selected text is kept as well, so a text compute such as `awk` reads it directly (see the [content types](../computes/index.html#Content_Types)).
 
 ## Syntax
 
