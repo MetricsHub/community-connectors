@@ -7,7 +7,7 @@ description: The toTable compute turns a text result into a table, one row per l
 
 ## When To Use
 
-A source result is either **text** (lines, as produced by `http`, `file`, `ipmiRaw`, `commandLine` and the `awk` source or compute) or a **table** (rows of cells, as produced by every other source and by every other compute). Use `toTable` to turn a text result into a table before a table compute (`keepColumns`, `translate`, `append`, ...) or before `mapping`.
+A source result is either **text** (lines, as produced by `http`, `file`, `commandLine` and the `awk` source or compute) or a **table** (rows of cells, as produced by every other source and by every other compute). Use `toTable` to turn a text result into a table before a table compute (`keepColumns`, `translate`, `append`, ...) or before `mapping`.
 
 Each line of the text becomes a row and is split on `separator`. Lines can be filtered with `keep` and `exclude`, and the columns selected with `selectColumns`, with the same semantics as the equivalent properties of the [`commandLine` source](../sources/command-line.html) and the [`awk` compute](./awk.html).
 
