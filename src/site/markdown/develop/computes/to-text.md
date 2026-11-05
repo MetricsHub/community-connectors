@@ -9,7 +9,7 @@ description: The toText compute turns a table into text, one semicolon-separated
 
 A source result is either **text** (lines) or a **table** (rows of cells). Use `toText` to turn a table into text before a compute that reads text, in practice before an [`awk` compute](./awk.html) that must see the rows of a table produced by `snmpTable`, `wmi`, `wbem`, `sql`, `json2Csv`, ...
 
-The table is serialized the way the `awk` compute has always read a table: each row becomes a line, the cells are joined with `;` and the line ends with a `;`. A `;` inside a cell is replaced by `,` so that the number of columns does not change. The result is text only: the table is gone until a `toTable` or an `awk` compute rebuilds one.
+The table is serialized the way the `awk` compute has always read a table: each row becomes a line, the cells are joined with `;` and the line ends with a `;`. A `;` inside a cell is replaced by `,` so that the number of columns does not change. The result is text only: the table is gone until a `toTable` rebuilds one. An `awk` compute writes text as well, so when its output is meant as a table, follow it with an explicit `toTable` (MetricsHub still re-splits the text of an `awk` on `;` for existing connectors, see the [content types](./index.html#Content_Types)).
 
 MetricsHub inserts this conversion itself before an `awk` compute that follows a table producer, so a connector written before the conversion existed keeps working unchanged. Write it explicitly in new connectors: the chain then says what it does.
 
@@ -27,7 +27,7 @@ sources:
       script: |
         BEGIN { FS = ";" }
         { print $1 ";" $2 ";" ($3 / 60) ";" }
-      separators: ;
+    - type: toTable
 ```
 
 ## Properties

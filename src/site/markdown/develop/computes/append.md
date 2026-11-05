@@ -65,7 +65,7 @@ which re-parses as 4 columns — two new empty columns now follow column 2. Real
 
 - Keep a `# Column1;Column2;...` comment before and after each `append` that adds columns, so the evolving table layout stays readable.
 - Use `$n` values to merge columns (e.g. append `$5` to column 1 to build a composite identifier).
-- Prefer `append` with `;` padding over more complex sources when `mapping` simply needs extra empty columns.
+- Prefer [insertColumn](./insert-column.html) to add a column (an empty placeholder, a constant): `append` with `;` relies on the table being re-parsed from its text. Keep the `;` trick as it is in existing connectors.
 - Quote values that start or end with spaces or contain YAML-significant characters: `value: ' - '`.
 
 ## Common Mistakes

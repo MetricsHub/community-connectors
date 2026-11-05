@@ -18,17 +18,17 @@ sources:
   enclosures:
     type: wmi
     namespace: root\cimv2
-    query: SELECT Model, SerialNumber FROM Win32_ComputerSystemProduct
+    query: SELECT Name, IdentifyingNumber FROM Win32_ComputerSystemProduct
     computes:
-      # Model;SerialNumber;
+      # Name;IdentifyingNumber;
     - type: insertColumn
       column: 1
       value: Computer
-      # DeviceType;Model;SerialNumber;
+      # DeviceType;Name;IdentifyingNumber;
     - type: insertColumn
       column: 4
       value: $2-$3
-      # DeviceType;Model;SerialNumber;ID;
+      # DeviceType;Name;IdentifyingNumber;ID;
 ```
 
 ## Properties

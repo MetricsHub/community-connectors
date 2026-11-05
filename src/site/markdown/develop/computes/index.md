@@ -42,8 +42,8 @@ After translation/replace, mapping consumes the transformed table.
 
 A source result is either **text** (lines) or a **table** (rows of cells):
 
-- `http`, `file`, `ipmi`, `commandLine` and the `awk` source produce text; every other source produces a table;
-- `awk` reads text and writes text; `json2Csv`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
+- `http`, `file` and `ipmi` produce text; `commandLine` and the `awk` source produce text that MetricsHub also splits on `;` into a table (`commandLine` after its own `separators` and `selectColumns`), so a table compute can follow them directly; every other source produces a table;
+- `awk` reads text and writes text, re-split on `;` the same way; `json2Csv`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
 
 Convert explicitly with [toTable](./to-table.html) and [toText](./to-text.html) when a compute does not read what the previous step produced. MetricsHub inserts these conversions itself where connectors written before they existed relied on an implicit one (a table compute after `commandLine` or `awk`, an `awk` compute after a table source), so existing connectors keep working.
 
