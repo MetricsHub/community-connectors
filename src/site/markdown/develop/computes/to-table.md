@@ -9,7 +9,7 @@ description: The toTable compute turns a text result into a table, one row per l
 
 A source result is either **text** (lines, as produced by `http`, `file`, `commandLine` and the `awk` source or compute) or a **table** (rows of cells, as produced by every other source and by every other compute). Use `toTable` to turn a text result into a table before a table compute (`keepColumns`, `translate`, `append`, ...) or before `mapping`.
 
-Each line of the text becomes a row and is split on `separator`. Lines can be filtered with `keep` and `exclude`, and the columns selected with `selectColumns`, with the same semantics as the equivalent properties of the [`commandLine` source](../sources/command-line.html) and the [`awk` compute](./awk.html).
+Each line of the text becomes a row and is split on `separator`, taken literally (a multi-character separator is one separator). Lines can be filtered with `keep` and `exclude` as on the [`commandLine` source](../sources/command-line.html), and the columns selected with `selectColumns`.
 
 MetricsHub inserts this conversion itself in existing connectors (a table compute after `commandLine` or after an `awk` compute), so a connector written before the conversion existed keeps working unchanged. Write it explicitly in new connectors: the chain then says what it does.
 
@@ -34,10 +34,10 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `toTable`. |
-| `separator` | No | `;` | The character(s) separating the cells of a line. A trailing separator does not add an empty cell; a separator between two consecutive separators does. |
+| `separator` | No | `;` | The text separating the cells of a line, taken literally. A trailing separator does not add an empty cell; two consecutive separators do. |
 | `keep` | No | None | Regular expression; only the lines that match become rows. |
 | `exclude` | No | None | Regular expression; the lines that match are dropped. |
-| `selectColumns` | No | None | Comma-separated **1-based** column numbers or ranges to keep after the split, e.g. `"2,4-6"`. |
+| `selectColumns` | No | None | Comma-separated **1-based** column numbers or ranges to keep after the split, in that order, e.g. `"2,4-6,8-"` (`8-` means from column 8 to the last one). A selected column absent from a row gives an empty cell, so the row is kept. |
 
 Blank lines never become rows.
 
