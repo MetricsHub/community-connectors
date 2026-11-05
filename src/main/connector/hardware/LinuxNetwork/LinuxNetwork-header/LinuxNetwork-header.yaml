@@ -28,11 +28,14 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: "2,3,4"
+          - type: toTable
         source(2):
           # Discovery
           # Source(2) = output of the command ls -l /sys/class/net
           type: commandLine
           commandLine: for p in /sys/class/net/*; do [ -e "$p/device" ] && printf '%s\n' "${p##*/}"; done
+          computes:
+          - type: toTable
         source(3):
           type: tableJoin
           leftTable: ${source::monitors.network.discovery.sources.source(2)}
@@ -67,6 +70,7 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: "2,3,4,5,6,7,8"
+          - type: toTable
         source(2):
           # Source(2) = output of ethtool
           type: commandLine
@@ -79,6 +83,7 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: "2,3,4,5"
+          - type: toTable
         source(3):
           # Source(3) = table joint of Source(1) and Source(2)
           # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;IPState;DeviceID;LinkStatus;LinkSpeed;DuplexMode;
@@ -87,11 +92,12 @@ monitors:
           rightTable: ${source::monitors.network.collect.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;;
+          defaultRightLine: [ "", "", "", "" ]
           computes:
           - type: translate
             column: 7
             translationTable: ${translation::NetworkStateTranslationTable}
+          - type: toText
           - type: awk
             script: |
               BEGIN { FS=";"; OFS=";"; }
@@ -106,6 +112,7 @@ monitors:
                 print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
               }
             separators: ;
+          - type: toTable
 
       mapping:
         # And here is the ValueTable

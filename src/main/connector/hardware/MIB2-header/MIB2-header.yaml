@@ -53,7 +53,7 @@ monitors:
           rightTable: ${source::monitors.network.discovery.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;
+          defaultRightLine: [ "", "", "" ]
       mapping:
         # InstanceTable = Source(3)
         # PortID;Description;TypeCode;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;
@@ -148,7 +148,7 @@ monitors:
           rightTable: ${source::monitors.network.collect.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;;;;
+          defaultRightLine: [ "", "", "", "", "", "" ]
           computes:
             # Now add MSHW to the Left and Right of the ifMIBObjects SpeedMBS
             # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;

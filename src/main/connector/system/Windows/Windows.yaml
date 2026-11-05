@@ -402,37 +402,47 @@ tools:
         namespace: root\CIMv2
         query: SELECT IDProcess, PercentProcessorTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfProc_Process
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "S1;" $0 }
+        - type: toTable
       pause:
         type: commandLine
         # ping waits a second between two echoes: 1 + (seconds - 1) seconds
         commandLine: ping -n 2 127.0.0.1 >NUL & ping -n ${param::seconds} 127.0.0.1 >NUL
+        computes:
+        - type: toTable
       cpu2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT IDProcess, PercentProcessorTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfProc_Process
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "S2;" $0 }
+        - type: toTable
       memory:
         type: wmi
         namespace: root\CIMv2
         query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "M;" $0 }
+        - type: toTable
       list:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessId, ParentProcessId, WorkingSetSize, PrivatePageCount, HandleCount, ThreadCount, CreationDate, Name, CommandLine FROM Win32_Process
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "P;" $0 }
+        - type: toTable
       processes:
         type: tableUnion
         tables:
@@ -441,6 +451,7 @@ tools:
         - ${source::memory}
         - ${source::list}
         computes:
+        - type: toText
         # pid;ppid;cpuPercent;memoryPercent;workingSetKiB;privateKiB;handles;threads;started;command;sortKey
         - type: awk
           script: |
@@ -475,6 +486,7 @@ tools:
               if (started ~ /^[0-9]+$/) started = iso(started) "Z"; else sub(/\.[0-9]*/, "", started)
               printf "%s;%s;%.1f;%.1f;%.0f;%.0f;%s;%s;%s;%s;%s\n", $2, $3, cpu, memory, workingSet, privateKiB, $6, $7, started, command, (sortBy == "memory" ? privateKiB : cpu)
             }
+        - type: toTable
         - type: sort
           column: 11
           numeric: true
@@ -501,6 +513,7 @@ tools:
         namespace: root\CIMv2
         query: SELECT ProcessId, ParentProcessId, Name, ExecutablePath, CreationDate, SessionId, KernelModeTime, UserModeTime, WorkingSetSize, PeakWorkingSetSize, PrivatePageCount, VirtualSize, HandleCount, ThreadCount, ReadTransferCount, WriteTransferCount, CommandLine FROM Win32_Process WHERE ProcessId = ${param::pid}
         computes:
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
@@ -540,22 +553,26 @@ tools:
               show("WrittenBytes", $16)
             }
             END { if (!found) print "Error;No such process" }
+        - type: toTable
       services:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, State, StartMode, DisplayName FROM Win32_Service WHERE ProcessId = ${param::pid}
         computes:
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
             # The rows of a table end with a ";"
             { sub(/;$/, "") }
             { name = $4; for (i = 5; i <= NF; i++) name = name "," $i; print "Service;" $1 " (" $2 ", " $3 ") " name }
+        - type: toTable
       connections:
         type: wmi
         namespace: root\StandardCimv2
         query: SELECT LocalAddress, LocalPort, RemoteAddress, RemotePort, State FROM MSFT_NetTCPConnection WHERE OwningProcess = ${param::pid}
         computes:
+        - type: toText
         - type: awk
           script: |
             BEGIN {
@@ -565,6 +582,7 @@ tools:
             # An IPv6 address in brackets
             function endpoint(address, port) { return (address ~ /:/ ? "[" address "]" : address) ":" port }
             { print "TCP;" endpoint($1, $2) " " endpoint($3, $4) " " (($5 in names) ? names[$5] : ($5 == 100 ? "Bound" : $5)) }
+        - type: toTable
       details:
         type: tableUnion
         tables:
@@ -595,6 +613,8 @@ tools:
           elseif ($p.ProcessName -in 'System', 'Idle', 'Registry', 'smss', 'csrss', 'wininit', 'winlogon', 'services', 'lsass', 'lsaiso', 'svchost', 'Memory Compression') { 'Refused: process ${param::pid} is ' + $p.ProcessName + ', which Windows needs' }
           else { try { Stop-Process -Id ${param::pid} -Force -ErrorAction Stop; 'Process ${param::pid} (' + $p.ProcessName + ') terminated' } catch { 'Failed: ' + $_.Exception.Message } };
           exit 0" 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::kill}
 
@@ -625,9 +645,11 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, DisplayName, State, Status, StartMode, ExitCode, ServiceSpecificExitCode, ProcessId, StartName, PathName, Description FROM Win32_Service WHERE Name = '${esc(wql)::param::service}'
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "S;" $0 }
+        - type: toTable
       # Apart: before Windows 10 and Server 2016, the property does not exist and fails the whole query. WMI leaves it
       # empty unless StartMode is selected too
       delayed:
@@ -635,28 +657,34 @@ tools:
         namespace: root\CIMv2
         query: SELECT StartMode, DelayedAutoStart FROM Win32_Service WHERE Name = '${esc(wql)::param::service}'
         computes:
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
             { print "Y;" $2 }
+        - type: toTable
       # Every dependency: ASSOCIATORS OF returns nothing through WinRM
       dependencies:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Antecedent, Dependent FROM Win32_DependentService
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "D;" $0 }
+        - type: toTable
       # The state of the services and of the drivers
       states:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, State FROM Win32_BaseService
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "B;" $0 }
+        - type: toTable
       details:
         type: tableUnion
         tables:
@@ -665,6 +693,7 @@ tools:
         - ${source::dependencies}
         - ${source::states}
         computes:
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";"; split("Name;DisplayName;State;Status;StartMode;ExitCode;ServiceSpecificExitCode;ProcessId;StartName;PathName", names, ";") }
@@ -698,6 +727,7 @@ tools:
               for (k = 1; k <= n; k++) if (tolower(dependent[k]) == service) print "Depends on;" antecedent[k] " (" state[tolower(antecedent[k])] ")"
               for (k = 1; k <= n; k++) if (tolower(antecedent[k]) == service) print "Depended on by;" dependent[k] " (" state[tolower(dependent[k])] ")"
             }
+        - type: toTable
       recovery:
         type: commandLine
         # Fails, and returns nothing, for a service that does not exist
@@ -708,6 +738,7 @@ tools:
             # The recovery actions, without the blank lines
             { sub(/;$/, ""); gsub(/^[ \t\r]+|[ \t\r]+$/, "") }
             $0 != "" { print "Recovery;" $0 }
+        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -743,6 +774,8 @@ tools:
           try { switch ('${param::action}') { 'start' { Start-Service -Name $n -ErrorAction Stop } 'stop' { Stop-Service -Name $n -Force:$f -ErrorAction Stop } 'restart' { Restart-Service -Name $n -Force:$f -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
           Get-Service -Name $n | Format-List Name, DisplayName, Status, StartType;
           exit 0" 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::control}
 
@@ -794,6 +827,8 @@ tools:
           exit 0" 2>&1
         # The matching events, and the messages, whatever the expression (an empty one matches all)
         keep: '${param::match}\|^;;;;'
+        computes:
+        - type: toTable
     result:
       source: ${source::events}
       columns: [ time, level, id, provider, message ]
@@ -830,6 +865,8 @@ tools:
           exit 0" 2>&1
         # The matching lines, and the refusals and failures whatever the expression (an empty one matches all)
         keep: '${param::match}\|^Refused: \|^Failed: '
+        computes:
+        - type: toTable
     result:
       source: ${source::log}
 
@@ -842,6 +879,7 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, Label, FileSystem, Capacity, FreeSpace FROM Win32_Volume WHERE DriveType = 3
         computes:
+        - type: toText
         # volume;label;fileSystem;sizeGB;freeGB;usedPercent
         - type: awk
           script: |
@@ -851,6 +889,7 @@ tools:
               if ($4 > 0) used = ($4 - $5) * 100 / $4
               printf "%s;%s;%s;%.1f;%.1f;%.1f\n", $1, $2, $3, $4 / 1073741824, $5 / 1073741824, used
             }
+        - type: toTable
     result:
       source: ${source::volumes}
       columns: [ volume, label, fileSystem, sizeGB, freeGB, usedPercent ]
@@ -896,6 +935,8 @@ tools:
         # megabytes|path, or an error in the first column: a path may hold a ";" (shown as "," by the engine), never a "|"
         separators: "|"
         selectColumns: 1,2
+        computes:
+        - type: toTable
       sizes:
         type: copy
         from: ${source::scan}
@@ -942,77 +983,97 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "1;PerfOS_Processor;" $0 }
+        - type: toTable
       system1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "1;PerfOS_System;;" $0 }
+        - type: toTable
       memory1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "1;PerfOS_Memory;;" $0 }
+        - type: toTable
       disk1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "1;PerfDisk_PhysicalDisk;" $0 }
+        - type: toTable
       pause:
         type: commandLine
         # ping waits a second between two echoes: 1 + (seconds - 1) seconds
         commandLine: ping -n 2 127.0.0.1 >NUL & ping -n ${param::seconds} 127.0.0.1 >NUL
+        computes:
+        - type: toTable
       processor2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "2;PerfOS_Processor;" $0 }
+        - type: toTable
       system2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "2;PerfOS_System;;" $0 }
+        - type: toTable
       memory2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "2;PerfOS_Memory;;" $0 }
+        - type: toTable
       disk2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "2;PerfDisk_PhysicalDisk;" $0 }
+        - type: toTable
       pagingFile:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentUsage, PercentUsage_Base, PercentUsagePeak, PercentUsagePeak_Base FROM Win32_PerfRawData_PerfOS_PagingFile
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "2;PerfOS_PagingFile;" $0 }
+        - type: toTable
       snapshot:
         type: tableUnion
         tables:
@@ -1026,6 +1087,7 @@ tools:
         - ${source::disk2}
         - ${source::pagingFile}
         computes:
+        - type: toText
         # object;instance;counter;value, with the formula of each counter type: a rate over the 100 ns timer, a rate per
         # second, an average time per operation, or the value of the second sample
         - type: awk
@@ -1113,6 +1175,7 @@ tools:
                 }
               }
             }
+        - type: toTable
         # By object, then by instance
         - type: sort
           column: 2
@@ -1131,9 +1194,11 @@ tools:
         # 2: Listen
         query: SELECT LocalAddress, LocalPort, OwningProcess FROM MSFT_NetTCPConnection WHERE State = 2
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "tcp;" $0 }
+        - type: toTable
       udp:
         type: wmi
         namespace: root\StandardCimv2
@@ -1141,12 +1206,14 @@ tools:
         computes:
         # The endpoints in the dynamic port range (client sockets, the 2500 of a DNS server socket pool) are counted in
         # one line per process
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
             $2 < 49152 { print "udp;" $0; next }
             { count[$3]++ }
             END { for (pid in count) print "udp;" count[pid] " endpoints;49152-65535;" pid }
+        - type: toTable
       endpoints:
         type: tableUnion
         tables:
@@ -1162,7 +1229,7 @@ tools:
         rightTable: ${source::processes}
         leftKeyColumn: 4
         rightKeyColumn: 1
-        defaultRightLine: ;;
+        defaultRightLine: [ "", "" ]
         computes:
         - type: keepColumns
           columnNumbers: 1,2,3,4,6
@@ -1175,6 +1242,7 @@ tools:
         query: SELECT State FROM MSFT_NetTCPConnection
         computes:
         # The TCP connections counted in each state, the most frequent first
+        - type: toText
         - type: awk
           script: |
             BEGIN {
@@ -1183,6 +1251,7 @@ tools:
             }
             { state = ($1 in names) ? names[$1] : ($1 == 100 ? "Bound" : $1); count[state]++ }
             END { for (state in count) print state ";" count[state] }
+        - type: toTable
         - type: sort
           column: 2
           numeric: true
@@ -1203,6 +1272,7 @@ tools:
         namespace: root\CIMv2
         query: SELECT LocalDateTime, CurrentTimeZone FROM Win32_OperatingSystem
         computes:
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
@@ -1219,27 +1289,34 @@ tools:
               offset = $2 < 0 ? -$2 : $2
               printf "Local time: %s%s%02d:%02d\n", iso($1 + $2 * 60), ($2 < 0 ? "-" : "+"), int(offset / 60), offset % 60
             }
+        - type: toTable
       zone:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Caption FROM Win32_TimeZone
         computes:
+        - type: toText
         - type: awk
           script: |
             { print "Time zone: " $0 }
+        - type: toTable
       service:
         type: wmi
         namespace: root\CIMv2
         query: SELECT State, StartMode FROM Win32_Service WHERE Name = 'W32Time'
         computes:
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
             { print "Windows Time service: " $1 " (" $2 ")" }
+        - type: toTable
       # Fails, and returns nothing, when the Windows Time service is stopped
       status:
         type: commandLine
         commandLine: w32tm /query /status /verbose & w32tm /query /peers
+        computes:
+        - type: toTable
       server:
         type: commandLine
         commandLine: w32tm /query /source
@@ -1249,6 +1326,7 @@ tools:
           script: |
             { sub(/,.*/, ""); gsub(/^[ \t]+|[ \t]+$/, "") }
             /^[A-Za-z0-9][A-Za-z0-9.:_-]*$/ { print }
+        - type: toTable
       offset:
         type: commandLine
         # Waits for a time server that does not answer
@@ -1257,6 +1335,8 @@ tools:
         executeForEachEntryOf:
           source: ${source::server}
           concatMethod: list
+        computes:
+        - type: toTable
       time:
         type: tableUnion
         tables:
@@ -1282,6 +1362,7 @@ tools:
         namespace: root\CIMv2
         query: SELECT LastBootUpTime FROM Win32_OperatingSystem
         computes:
+        - type: toText
         # 2026-10-08T13:46:33.5+02:00 (WinRM), or seconds since 1970 (WMI) shown in UTC
         - type: awk
           script: |
@@ -1293,6 +1374,7 @@ tools:
               return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
             }
             { print "Up since " (($1 ~ /^[0-9]+$/) ? iso($1) "Z" : $1) }
+        - type: toTable
       # The start of the period, in UTC, as a WMI date (yyyymmddhhmmss.000000+000): WMI reads the System log from the latest
       # event back to that date, not the whole log
       since:
@@ -1301,6 +1383,7 @@ tools:
         query: SELECT Year, Month, Day, Hour, Minute, Second FROM Win32_UTCTime
         computes:
         # The days since 0000-03-01, less the period, then back to a date
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
@@ -1312,6 +1395,7 @@ tools:
               doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
               printf "%04d%02d%02d%02d%02d%02d.000000+000\n", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, $4, $5, $6
             }
+        - type: toTable
       events:
         type: wmi
         namespace: root\CIMv2
@@ -1320,6 +1404,7 @@ tools:
           source: ${source::since}
           concatMethod: list
         computes:
+        - type: toText
         # time;id;provider;message, a message on one line
         - type: awk
           script: |
@@ -1343,6 +1428,7 @@ tools:
             }
             { gsub(/;/, ","); event = event " " $0 }
             END { flush(); if (!count) print "No start, shutdown or reboot event in the last ${param::days} days" }
+        - type: toTable
         - type: sort
           column: 1
           descending: true
@@ -1370,6 +1456,7 @@ tools:
             $1 == "PendingFileRenameOperations" && NF > 2 { print "Reboot pending: file renames (PendingFileRenameOperations)" }
             $1 == "ComputerName" { if (key ~ /ActiveComputerName$/) active = $NF; else configured = $NF }
             END { if (active != configured) print "Reboot pending: computer rename" }
+        - type: toTable
       history:
         type: tableUnion
         tables:
@@ -1387,6 +1474,7 @@ tools:
         namespace: root\CIMv2
         query: SELECT HotFixID, Description, InstalledOn, InstalledBy FROM Win32_QuickFixEngineering
         computes:
+        - type: toText
         # The date as yyyy-mm-dd, from m/d/yyyy
         - type: awk
           script: |
@@ -1396,6 +1484,7 @@ tools:
               if (split($3, d, "/") == 3) date = sprintf("%04d-%02d-%02d", d[3], d[1], d[2])
               print $1 ";" $2 ";" date ";" $4
             }
+        - type: toTable
         - type: sort
           column: 3
           descending: true
@@ -1420,6 +1509,8 @@ tools:
           PowerShell.exe -NoProfile -NonInteractive -Command "shutdown.exe /r /t (New-TimeSpan -Minutes ${param::minutes}).TotalSeconds /d p:0:0 /c 'Reboot requested through MetricsHub';
           if ($LASTEXITCODE -eq 0) { 'A reboot is scheduled in ${param::minutes} minutes' } else { 'Failed: exit code ' + $LASTEXITCODE };
           exit 0" 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::shutdown}
 
@@ -1430,5 +1521,7 @@ tools:
       cancel:
         type: commandLine
         commandLine: shutdown.exe /a 2>&1 && echo The scheduled shutdown is cancelled || echo No shutdown was cancelled
+        computes:
+        - type: toTable
     result:
       source: ${source::cancel}

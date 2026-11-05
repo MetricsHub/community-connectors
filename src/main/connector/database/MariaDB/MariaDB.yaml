@@ -563,6 +563,8 @@ tools:
           check: ${source::processCheck}
         script: |
           BEGIN { if (length(check) == 0) print "The connection user lacks the PROCESS privilege: only its own sessions are listed" }
+        computes:
+        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -605,6 +607,8 @@ tools:
           check: ${source::processCheck}
         script: |
           BEGIN { if (length(check) == 0) print "The connection user lacks the PROCESS privilege needed to read the InnoDB transactions" }
+        computes:
+        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -627,6 +631,8 @@ tools:
           check: ${source::status}
         script: |
           BEGIN { if (length(check) == 0) print "SHOW ENGINE INNODB STATUS returned nothing: the connection user lacks the PROCESS privilege" }
+        computes:
+        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -680,6 +686,8 @@ tools:
           check: ${source::readCheck}
         script: |
           BEGIN { if (length(check) == 0) print ";The connection user cannot read performance_schema (GRANT SELECT ON performance_schema.* to it)" }
+        computes:
+        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -702,6 +710,8 @@ tools:
           check: ${source::replicas}
         script: |
           BEGIN { if (length(check) == 0) print "No replication connection: this server is not a replica, or the connection user lacks the REPLICA MONITOR privilege" }
+        computes:
+        - type: toTable
       all:
         type: tableUnion
         tables:

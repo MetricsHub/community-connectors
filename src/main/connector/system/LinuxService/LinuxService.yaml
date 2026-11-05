@@ -68,6 +68,7 @@ monitors:
                   }
                 }
               }
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ${var::serviceNames} # In metricshub.yaml, the regex should be set this way "serviceNames: cron\|PatrolAgent\|snmp"

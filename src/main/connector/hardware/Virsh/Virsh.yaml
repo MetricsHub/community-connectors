@@ -38,6 +38,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::vm.awk}
+          - type: toTable
       mapping:
         source: ${source::monitors.vm.discovery.sources.source(1)}
         attributes:
@@ -58,6 +59,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::vm.awk}
+          - type: toTable
           # No state: virsh dominfo failed for this domain, collect nothing rather than report it off
           - type: keepOnlyMatchingLines
             column: 2
@@ -98,6 +100,8 @@ tools:
           virsh dominfo --domain ${param::name} 2>&1
           virsh domblkerror --domain ${param::name} 2>&1
           virsh domstats ${param::name} 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::details}
 
@@ -120,5 +124,7 @@ tools:
         commandLine: |
           virsh ${param::action} --domain ${param::name} 2>&1
           virsh domstate --domain ${param::name} --reason 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::control}

@@ -135,7 +135,7 @@
     },
     "${source::monitors.enclosure.collect.sources.source(1)}" : {
       "source" : "ipmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
@@ -183,7 +183,7 @@
     },
     "${source::monitors.enclosure.discovery.sources.source(1)}" : {
       "source" : "ipmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
@@ -231,7 +231,7 @@
     },
     "${source::monitors.fan.collect.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "append" ],
+      "computes" : [ "keepOnlyMatchingLines", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],
@@ -247,13 +247,13 @@
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
     "${source::monitors.fan.collect.sources.source(2)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "append", "append", "convert" ],
+      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "insertColumn", "insertColumn", "insertColumn", "insertColumn", "convert" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],
@@ -275,7 +275,7 @@
     },
     "${source::monitors.fan.discovery.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "append", "append" ],
+      "computes" : [ "keepOnlyMatchingLines", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],
@@ -291,13 +291,13 @@
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
     "${source::monitors.fan.discovery.sources.source(2)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "append" ],
+      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "insertColumn", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],
@@ -363,7 +363,7 @@
     },
     "${source::monitors.memory.discovery.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "duplicateColumn", "extract", "extract", "awk" ],
+      "computes" : [ "keepOnlyMatchingLines", "duplicateColumn", "extract", "extract", "toText", "awk", "toTable" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],

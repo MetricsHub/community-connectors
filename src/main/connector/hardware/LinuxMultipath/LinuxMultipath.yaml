@@ -43,6 +43,7 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: "2,3,5"
+          - type: toTable
       mapping:
         # InstanceTable = Source(1)
         # LunName;LunInfo;LunStatus;
@@ -68,6 +69,7 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: 2,4,5,6,7
+          - type: toTable
       mapping:
         # ValueTable = Source(1)
         # LunName;NumberPaths;LunStatus;LunStatusInfo;AvailablePathInformation;
@@ -92,5 +94,7 @@ tools:
       topology:
         type: commandLine
         commandLine: "%{SUDO:multipath} multipath -ll ${param::device} 2>&1"
+        computes:
+        - type: toTable
     result:
       source: ${source::topology}

@@ -25,7 +25,7 @@
     },
     "${source::monitors.network.discovery.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "keepOnlyMatchingLines", "translate", "replace", "multiply", "awk" ],
+      "computes" : [ "keepOnlyMatchingLines", "translate", "replace", "multiply", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],

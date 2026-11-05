@@ -177,9 +177,63 @@
         }
       }
     },
+    "${source::tools.cancelReboot.sources.cancel}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
+    "${source::tools.controlService.sources.control}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
+    "${source::tools.eventLog.sources.events}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.fileSystemUsage.sources.volumes}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -201,7 +255,7 @@
     },
     "${source::tools.installedUpdates.sources.updates}" : {
       "source" : "wmi",
-      "computes" : [ "awk", "sort" ],
+      "computes" : [ "toText", "awk", "toTable", "sort" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -221,15 +275,37 @@
         }
       }
     },
+    "${source::tools.killProcess.sources.kill}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.largestFiles.sources.errors}" : {
       "source" : "copy",
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
-        "commandLine" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "" ], [ "val", "with,comma" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;\n;\nval;with,comma;\nonly;"
+        "csv" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\nonly;"
         },
-        "commandLineWide" : {
+        "csvSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "csvWide" : {
           "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
           "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         },
@@ -239,15 +315,37 @@
         }
       }
     },
+    "${source::tools.largestFiles.sources.scan}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.largestFiles.sources.sizes}" : {
       "source" : "copy",
       "computes" : [ "keepOnlyMatchingLines", "sort", "head" ],
       "outputs" : {
-        "commandLine" : {
+        "csv" : {
           "table" : [ [ "1", "2.5", "3" ] ],
           "rawData" : "1;2.5;3;"
         },
-        "commandLineWide" : {
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -281,7 +379,7 @@
     },
     "${source::tools.networkSockets.sources.states}" : {
       "source" : "wmi",
-      "computes" : [ "awk", "sort" ],
+      "computes" : [ "toText", "awk", "toTable", "sort" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -303,7 +401,7 @@
     },
     "${source::tools.networkSockets.sources.tcp}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -325,7 +423,7 @@
     },
     "${source::tools.networkSockets.sources.udp}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -347,7 +445,7 @@
     },
     "${source::tools.performanceSnapshot.sources.disk1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -369,7 +467,7 @@
     },
     "${source::tools.performanceSnapshot.sources.disk2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -391,7 +489,7 @@
     },
     "${source::tools.performanceSnapshot.sources.memory1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -413,7 +511,7 @@
     },
     "${source::tools.performanceSnapshot.sources.memory2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -435,7 +533,7 @@
     },
     "${source::tools.performanceSnapshot.sources.pagingFile}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -455,9 +553,27 @@
         }
       }
     },
+    "${source::tools.performanceSnapshot.sources.pause}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.performanceSnapshot.sources.processor1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -479,7 +595,7 @@
     },
     "${source::tools.performanceSnapshot.sources.processor2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -501,7 +617,7 @@
     },
     "${source::tools.performanceSnapshot.sources.snapshot}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk", "sort", "sort" ],
+      "computes" : [ "toText", "awk", "toTable", "sort", "sort" ],
       "outputs" : {
         "awkSource" : {
           "table" : [ ],
@@ -571,7 +687,7 @@
     },
     "${source::tools.performanceSnapshot.sources.system1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -593,7 +709,7 @@
     },
     "${source::tools.performanceSnapshot.sources.system2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -615,7 +731,7 @@
     },
     "${source::tools.processDetails.sources.connections}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -637,7 +753,7 @@
     },
     "${source::tools.processDetails.sources.process}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ [ "Error", "No such process" ] ],
@@ -659,7 +775,7 @@
     },
     "${source::tools.processDetails.sources.services}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -681,7 +797,7 @@
     },
     "${source::tools.processes.sources.cpu1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -703,7 +819,7 @@
     },
     "${source::tools.processes.sources.cpu2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -725,7 +841,7 @@
     },
     "${source::tools.processes.sources.list}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -747,7 +863,7 @@
     },
     "${source::tools.processes.sources.memory}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -767,9 +883,27 @@
         }
       }
     },
+    "${source::tools.processes.sources.pause}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.processes.sources.processes}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk", "sort", "head", "keepColumns" ],
+      "computes" : [ "toText", "awk", "toTable", "sort", "head", "keepColumns" ],
       "outputs" : {
         "awkSource" : {
           "table" : [ ],
@@ -837,9 +971,45 @@
         }
       }
     },
+    "${source::tools.readLog.sources.log}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
+    "${source::tools.reboot.sources.shutdown}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.rebootHistory.sources.boot}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -861,7 +1031,7 @@
     },
     "${source::tools.rebootHistory.sources.events}" : {
       "source" : "wmi",
-      "computes" : [ "awk", "sort", "head" ],
+      "computes" : [ "toText", "awk", "toTable", "sort", "head" ],
       "outputs" : {
         "empty" : {
           "table" : [ [ "No start, shutdown or reboot event in the last ${param::days} days" ] ],
@@ -883,7 +1053,7 @@
     },
     "${source::tools.rebootHistory.sources.pending}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -901,29 +1071,29 @@
     },
     "${source::tools.rebootHistory.sources.since}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : null
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : null
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell,with,sep;;;"
         },
         "tableWide" : {
           "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : null
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
     "${source::tools.serviceDetails.sources.delayed}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -945,7 +1115,7 @@
     },
     "${source::tools.serviceDetails.sources.dependencies}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -967,7 +1137,7 @@
     },
     "${source::tools.serviceDetails.sources.details}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "awkSource" : {
           "table" : [ [ "Error", "No such service" ] ],
@@ -1037,7 +1207,7 @@
     },
     "${source::tools.serviceDetails.sources.recovery}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ [ "Recovery", "a", "b", "c" ], [ "Recovery", "x", "", "z" ], [ "Recovery", "1", "2.5", "3" ], [ "Recovery", "val", "with,comma" ], [ "Recovery", "only" ] ],
@@ -1055,7 +1225,7 @@
     },
     "${source::tools.serviceDetails.sources.service}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -1077,7 +1247,7 @@
     },
     "${source::tools.serviceDetails.sources.states}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -1099,7 +1269,7 @@
     },
     "${source::tools.timeSync.sources.clock}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -1119,9 +1289,27 @@
         }
       }
     },
+    "${source::tools.timeSync.sources.offset}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.timeSync.sources.server}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ [ "only" ] ],
@@ -1139,7 +1327,7 @@
     },
     "${source::tools.timeSync.sources.service}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -1159,9 +1347,27 @@
         }
       }
     },
+    "${source::tools.timeSync.sources.status}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::tools.timeSync.sources.zone}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],

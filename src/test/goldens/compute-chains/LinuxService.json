@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.service.simple.sources.serviceInfo}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines", "translate", "translate" ],
+      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines", "translate", "translate" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],

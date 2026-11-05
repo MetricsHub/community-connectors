@@ -40,6 +40,7 @@ monitors:
             script: ${file::enclosureDiscovery1.awk}
             keep: ^MSHW;
             separators: ;
+          - type: toTable
         source(2):
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/dmidecode} /usr/sbin/dmidecode -t bios"
@@ -49,6 +50,7 @@ monitors:
             script: ${file::enclosureDiscovery2.awk}
             keep: ^MSHW;
             separators: ;
+          - type: toTable
         source(3):
           # '"MSHW;"Manufacturer";"Type";"SN";"'
           type: tableJoin
@@ -81,6 +83,7 @@ monitors:
             script: ${file::temperature.awk}
             keep: ^MSHW;
             separators: ;
+          - type: toTable
       mapping:
         # Temperature Instance Table
         # "MSHW;"Name";"Type";"Value";"Max";"Critical";"
@@ -106,6 +109,7 @@ monitors:
             script: ${file::temperature.awk}
             keep: ^MSHW;
             separators: ;
+          - type: toTable
       mapping:
         # Temperature Value Table
         # "MSHW;"Name";"Type";"Value";"Max";"Critical";"
@@ -128,6 +132,7 @@ monitors:
             script: "${file::voltage.awk}"
             keep: ^MSHW;
             separators: ;
+          - type: toTable
       mapping:
         # Voltage Instance Table
         # "MSHW;"Name";"Type";"Value";Lower";"Upper";"
@@ -154,6 +159,7 @@ monitors:
             script: ${file::voltage.awk}
             keep: ^MSHW;
             separators: ;
+          - type: toTable
       mapping:
         # Voltage Value Table
         # "MSHW;"Name";"Type";"Value";
@@ -176,6 +182,7 @@ monitors:
             script: ${file::fan.awk}
             keep: ^MSHW;
             separators: ;
+          - type: toTable
       mapping:
         # FAN Instance Table
         # ""MSHW;"DName"-"FName";"Value";"Min";"Max";"Alarm";"
@@ -202,9 +209,10 @@ monitors:
             script: ${file::fan.awk}
             keep: ^MSHW;
             separators: ;
+          - type: toTable
       mapping:
-        # Voltage Value Table
-        # "MSHW;"Name";"Type";"Value";
+        # FAN Value Table
+        # ""MSHW;"DName"-"FName";"Value";"Min";"Max";"Alarm";"
         source: ${source::monitors.fan.collect.sources.source(1)}
         attributes:
           id: $2

@@ -285,11 +285,13 @@ tools:
           ) q ON TRUE
           ORDER BY GREATEST(q.seconds, IFNULL(q.trxSeconds, 0)) DESC
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { next }
             { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
+        - type: toTable
     result:
       source: ${source::sessions}
       columns: [ id, user, host, db, command, seconds, state, trxSeconds, trxState, trxRowsLocked, trxRowsModified, statement ]
@@ -327,11 +329,13 @@ tools:
           ) q ON TRUE
           ORDER BY q.waitSeconds DESC, q.blockingId
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { next }
             { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege and SELECT on performance_schema" }
+        - type: toTable
     result:
       source: ${source::waits}
       columns: [ lockType, waitingId, waitSeconds, lockedObject, lockMode, waitingStatement, blockingId, blockingSeconds, blockingStatement ]
@@ -348,6 +352,7 @@ tools:
         type: sql
         query: SHOW ENGINE INNODB STATUS
         computes:
+        - type: toText
         # Type;Name;Status, the Status spanning many lines. A section title stands between two lines of dashes.
         - type: awk
           script: |
@@ -367,6 +372,7 @@ tools:
               }
               if (!found) print "No " section " section in the output (e.g. no deadlock since the server started)"
             }
+        - type: toTable
     result:
       source: ${source::status}
 
@@ -383,10 +389,12 @@ tools:
         type: sql
         query: EXPLAIN FORMAT=TREE FOR CONNECTION ${param::id}
         computes:
+        - type: toText
         - type: awk
           script: |
             { sub(/;$/, ""); print }
             END { if (NR == 0) print "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" }
+        - type: toTable
     result:
       source: ${source::plan}
 
@@ -430,11 +438,13 @@ tools:
           ) q ON TRUE
           ORDER BY q.sortKey DESC
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { next }
             { print }
             END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
+        - type: toTable
         # Without the sort key
         - type: keepColumns
           columnNumbers: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
@@ -469,11 +479,13 @@ tools:
           ) q ON TRUE
           ORDER BY q.channel
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { print "No replication channel: this server is not a replica"; next }
             { print }
             END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
+        - type: toTable
     result:
       source: ${source::channels}
       columns: [ channel, source, receiverState, applierState, lagSeconds, receiverError, applierErrors, lastHeartbeat ]
@@ -509,11 +521,13 @@ tools:
           ) q ON TRUE
           ORDER BY GREATEST(IFNULL(q.diskBytes, 0), IFNULL(q.dataBytes, 0) + IFNULL(q.indexBytes, 0)) DESC
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { next }
             { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
+        - type: toTable
     result:
       source: ${source::schemas}
       columns: [ name, tables, rows, dataBytes, indexBytes, diskBytes ]
@@ -554,11 +568,13 @@ tools:
           ) q ON TRUE
           ORDER BY q.sortKey DESC
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { next }
             { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
+        - type: toTable
         # Without the sort key
         - type: keepColumns
           columnNumbers: 1,2,3,4,5,6,7,8
@@ -587,11 +603,13 @@ tools:
           ) q ON TRUE
           ORDER BY q.name
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { print "No variable matches"; next }
             { print }
             END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
+        - type: toTable
     result:
       source: ${source::variables}
       columns: [ name, value, source, file, setTime ]
@@ -625,11 +643,13 @@ tools:
             WHERE ID = ${param::id}
           ) q ON TRUE
         computes:
+        - type: toText
         - type: awk
           script: |
             /^;/ { print "There is no session ${param::id} (any more)"; next }
             { print }
             END { if (NR == 0) print "Could not check session ${param::id}: it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" }
+        - type: toTable
     result:
       source: ${source::session}
       columns: [ id, user, host, db, command, seconds, state, statement ]

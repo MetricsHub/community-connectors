@@ -45,6 +45,7 @@ beforeAll:
     attributes:
     - Name
     computes:
+    - type: toText
     - type: awk
       script: |
         BEGIN {
@@ -58,6 +59,7 @@ beforeAll:
                 print ""
             }
         }
+    - type: toTable
 
   # Cluster name for the Cassandra instance
   # ClusterName;
@@ -221,12 +223,14 @@ monitors:
             - ${source::uptime}
             - ${source::connectedNativeClients}
           computes:
+            - type: toText
             - type: awk
               script: |
                 {
                     gsub(/^[ \t]+|[ \t]+$/, "", $0)
                     printf "%s", $0
                 }
+            - type: toTable
       mapping:
         source: ${source::dbMetrics}
         attributes:
@@ -450,8 +454,10 @@ monitors:
             - MovingNodes
           # Compute the number of nodes in each state
           computes:
+            - type: toText
             - type: awk
               script: "${file::nodes.awk}"
+            - type: toTable
 
       mapping:
         source: ${source::clusterNodes}
@@ -514,6 +520,7 @@ tools:
         - ${source::completed}
         computes:
         # pool;path;active;maxThreads;pending;currentlyBlocked;totalBlocked;completed
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
@@ -524,6 +531,7 @@ tools:
               }
               if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;"
             }
+        - type: toTable
         - type: sort
           column: 5
           numeric: true
@@ -542,11 +550,13 @@ tools:
         keyProperties: [ scope ]
         computes:
         # Every message type has a row, even with 0 drops, when JMX answers
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";" }
             $2 + 0 > 0 { print }
             END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;" }
+        - type: toTable
         - type: sort
           column: 2
           numeric: true
@@ -565,6 +575,7 @@ tools:
         attributes: [ Compactions ]
         computes:
         # keyspace;table;operation;completed;total;unit;progressPercent;compactionId
+        - type: toText
         - type: awk
           script: |
             {
@@ -584,6 +595,7 @@ tools:
             }
             # The attribute always gives one row ([] when idle) when JMX answers
             END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;" }
+        - type: toTable
     result:
       source: ${source::running}
       columns: [ keyspace, table, operation, completed, total, unit, progressPercent, compactionId ]
@@ -691,6 +703,7 @@ tools:
         # tombstonesPerReadP99;tombstonesPerReadMax;tombstoneWarnings;tombstoneFailures;maxPartitionBytes;
         # meanPartitionBytes;partitions;liveDiskBytes;pendingCompactions;sortKey
         # (sortKey last and never empty: keepColumns leaves the whole table unchanged when a row is short)
+        - type: toText
         - type: awk
           script: |
             BEGIN {
@@ -710,6 +723,7 @@ tools:
                 print line (f[sortColumn] + 0)
               }
             }
+        - type: toTable
         - type: sort
           column: 18
           numeric: true
@@ -740,6 +754,7 @@ tools:
         - ${source::schema}
         computes:
         # address;status;state;load;hostId;schemaVersion;localOperationMode
+        - type: toText
         - type: awk
           script: |
             function list(s, out,   n, i, a) {
@@ -784,6 +799,7 @@ tools:
               }
               if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
             }
+        - type: toTable
     result:
       source: ${source::nodes}
       columns: [ address, status, state, load, hostId, schemaVersion, localOperationMode ]

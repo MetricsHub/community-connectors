@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.enclosure.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -21,7 +21,7 @@
     },
     "${source::monitors.enclosure.discovery.sources.source(2)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -39,7 +39,7 @@
     },
     "${source::monitors.fan.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -57,7 +57,7 @@
     },
     "${source::monitors.fan.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -75,7 +75,7 @@
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -93,7 +93,7 @@
     },
     "${source::monitors.temperature.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -111,7 +111,7 @@
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -129,7 +129,7 @@
     },
     "${source::monitors.voltage.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],

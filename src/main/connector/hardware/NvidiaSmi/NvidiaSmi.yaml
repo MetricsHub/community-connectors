@@ -33,6 +33,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
       mapping:
         source: ${source::monitors.enclosure.discovery.sources.source(1)}
   gpu:
@@ -75,6 +76,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_GPU
@@ -127,6 +129,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_TEMP
@@ -169,6 +172,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_VOLTAGE
@@ -214,6 +218,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_FAN
@@ -237,6 +242,8 @@ tools:
         # supported (WSL). Over WinRM, a command that exits with an error code loses its whole output: the echo after
         # || ends the line with success, in both shells.
         commandLine: nvidia-smi 2>&1 && nvidia-smi --query-compute-apps=gpu_bus_id,pid,process_name,used_memory --format=csv 2>&1 || echo nvidia-smi failed
+        computes:
+        - type: toTable
     result:
       source: ${source::processes}
 
@@ -248,5 +255,7 @@ tools:
         # The echo after || keeps the output over WinRM (see gpuProcesses)
         commandLine: nvidia-smi -q -d PERFORMANCE,CLOCK,POWER,TEMPERATURE,ECC 2>&1 || echo nvidia-smi failed
         timeout: 90
+        computes:
+        - type: toTable
     result:
       source: ${source::performance}

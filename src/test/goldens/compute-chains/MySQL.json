@@ -3,7 +3,7 @@
   "sources" : {
     "${source::tools.explainQuery.sources.plan}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -25,7 +25,7 @@
     },
     "${source::tools.innodbStatus.sources.status}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "No ${param::section} section in the output (e.g. no deadlock since the server started)" ] ],
@@ -47,7 +47,7 @@
     },
     "${source::tools.killSession.sources.session}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -69,7 +69,7 @@
     },
     "${source::tools.lockWaits.sources.waits}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -91,7 +91,7 @@
     },
     "${source::tools.replicationStatus.sources.channels}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -113,7 +113,7 @@
     },
     "${source::tools.schemaSizes.sources.schemas}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -135,7 +135,7 @@
     },
     "${source::tools.sessions.sources.sessions}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -157,7 +157,7 @@
     },
     "${source::tools.tableSizes.sources.tables}" : {
       "source" : "sql",
-      "computes" : [ "awk", "keepColumns" ],
+      "computes" : [ "toText", "awk", "toTable", "keepColumns" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -179,7 +179,7 @@
     },
     "${source::tools.topStatements.sources.statements}" : {
       "source" : "sql",
-      "computes" : [ "awk", "keepColumns" ],
+      "computes" : [ "toText", "awk", "toTable", "keepColumns" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
@@ -201,7 +201,7 @@
     },
     "${source::tools.variables.sources.variables}" : {
       "source" : "sql",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
           "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],

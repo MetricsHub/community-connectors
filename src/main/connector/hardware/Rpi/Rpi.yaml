@@ -73,6 +73,7 @@ monitors:
               $1 ~ /\/model$/ { model = $2 }
               $1 ~ /\/serial-number$/ { serial = $2 }
               END { if (model != "") print "raspberry-pi;" model ";" serial ";" }
+          - type: toTable
       mapping:
         source: ${source::board}
         attributes:
@@ -107,6 +108,7 @@ monitors:
               esac;
             done
           computes:
+          - type: toTable
           # sysfs reports millidegrees Celsius: convert to degrees Celsius.
           - type: divide
             column: 3
@@ -152,6 +154,8 @@ monitors:
               printf 'cooling-fan;Cooling fan;%s\n' "$value";
               break;
             done
+          computes:
+          - type: toTable
       mapping:
         source: ${source::coolingFan}
         attributes:
@@ -185,5 +189,7 @@ tools:
             esac
           done
           grep -H . /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::throttle}

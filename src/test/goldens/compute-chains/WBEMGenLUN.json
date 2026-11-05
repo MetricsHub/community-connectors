@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.lun.collect.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -25,7 +25,7 @@
     },
     "${source::monitors.lun.discovery.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -47,7 +47,7 @@
     },
     "${source::monitors.lun.discovery.sources.source(10)}" : {
       "source" : "tableJoin",
-      "computes" : [ "keepColumns", "awk" ],
+      "computes" : [ "keepColumns", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -113,7 +113,7 @@
     },
     "${source::monitors.lun.discovery.sources.source(6)}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],

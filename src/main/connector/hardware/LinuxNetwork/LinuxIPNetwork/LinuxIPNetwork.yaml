@@ -39,10 +39,14 @@ tools:
           /sbin/ip -s -s link show dev ${param::interface} 2>&1
           /sbin/ip addr show dev ${param::interface} 2>&1
           %{SUDO:ethtool} /usr/sbin/ethtool ${param::interface} 2>&1
+        computes:
+        - type: toTable
       counters:
         type: commandLine
         commandLine: "%{SUDO:ethtool} /usr/sbin/ethtool -S ${param::interface} 2>&1"
         exclude: ': 0$'
+        computes:
+        - type: toTable
       interface:
         type: tableUnion
         tables:
@@ -62,6 +66,8 @@ tools:
           /sbin/ip rule 2>&1
           /sbin/ip -6 rule 2>&1
           /sbin/ip neigh 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::routes}
 
@@ -77,5 +83,7 @@ tools:
       ping:
         type: commandLine
         commandLine: ping -c 4 -W 2 -- ${param::target} 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::ping}

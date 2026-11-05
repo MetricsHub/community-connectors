@@ -143,6 +143,7 @@ monitors:
                 print $1 ";" $2 / 100 ";" $3 / 100 ";" $4 / 100 ";" $5 / 100 ";" $6 / 100
               }
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::cpuInfo}
         attributes:
@@ -166,13 +167,14 @@ monitors:
     simple:
       sources:
         memoryInfo:
-          # memSystem
+          # memTotal;memFree;memUsed;memBuffers;memCached;memFreeUtilization;memUsedUtilization;memBuffersUtilization;memCachedUtilization
           type: copy
           from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
             script: ${file::memory.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::memoryInfo}
         attributes:
@@ -202,6 +204,7 @@ monitors:
           - type: awk
             script: ${file::swap.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::swaps}
         attributes:
@@ -226,6 +229,7 @@ monitors:
           - type: awk
             script: ${file::swap-activity.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::swapActivity}
         attributes:
@@ -249,6 +253,7 @@ monitors:
           - type: awk
             script: ${file::network.awk}
             separators: ;
+          - type: toTable
 
         # Use the sysfs filesystem to filter out virtual interfaces
         sysClassNet:
@@ -262,6 +267,7 @@ monitors:
               /^##[A-Z_]+##$/ { if (insec) exit; next }
               insec { print }
             separators: ;
+          - type: toTable
 
         # Use the sysfs filesystem to get the link speed of each interface
         linkSpeed:
@@ -278,6 +284,7 @@ monitors:
               /^##[A-Z_]+##$/ { if (insec) exit; next }
               insec { if (($2 + 0) == -1) $2 = ""; print }
             separators: ;
+          - type: toTable
           # Convert speed from Mbps to bytes per second
           # Interface;SpeedBytesPerSecond
           - type: multiply
@@ -322,7 +329,7 @@ monitors:
       type: multiInstance
       sources:
         physicalDiskActivity:
-        #OperationsIORead;OperationsIOWrite;OperationsRead;OperationsWrite;MergedRead;MergedWrite;OperationTimeRead;OperationTimeWrite;IOTime
+        # Device;OperationsIORead;OperationsIOWrite;OperationsRead;OperationsWrite;MergedRead;MergedWrite;OperationTimeRead;OperationTimeWrite;IOTime
           type: copy
           from: "${source::beforeAll.systemSnapshot}"
           computes:
@@ -334,6 +341,7 @@ monitors:
                 print $3 ";" $6*512 ";" $10*512 ";" $4 ";" $8 ";" $5 ";" $9 ";" $7/1000 ";" $11/1000 ";" $13/1000
               }
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::physicalDiskActivity}
         attributes:
@@ -356,7 +364,7 @@ monitors:
       type: multiInstance
       sources:
         fileSystemInfo:
-          # filesystem;mountpoint;type;used;available
+          # filesystem;mountpoint;type;used;free;usedUtilization;freeUtilization;reserved;reservedUtilization
           type: commandLine
           commandLine: |
             export LC_ALL=C
@@ -373,6 +381,7 @@ monitors:
           - type: awk
             script: ${file::filesystem.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::fileSystemInfo}
         attributes:
@@ -392,7 +401,7 @@ monitors:
   system:
     simple:
       sources:
-        # Distribution;Version;Kernel
+        # Distribution;Version;Kernel;Uptime
         osInformation:
           type: copy
           from: "${source::beforeAll.systemSnapshot}"
@@ -403,6 +412,7 @@ monitors:
               /^##[A-Z_]+##$/ { if (insec) exit; next }
               insec { print }
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::osInformation}
         attributes:
@@ -466,6 +476,7 @@ tools:
               gsub(/;/, ",", command)
               printf "%s;%s;%s;%.1f;%s;%s;%s;%s;%s;%s\n", $1, $2, $3, cpu[$1] + 0, $4, $5, $6, $7, command, (sortBy == "memory" ? $5 : cpu[$1] + 0)
             }
+        - type: toTable
         - type: sort
           column: 10
           numeric: true
@@ -485,6 +496,8 @@ tools:
         type: commandLine
         # Snap packages mount read-only squashfs images that are always full
         commandLine: df -hTP -x squashfs 2>&1; echo; df -iP -x squashfs 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::df}
 
@@ -515,6 +528,8 @@ tools:
         # megabytes;path, or an error in the first column
         separators: "\t"
         selectColumns: 1,2
+        computes:
+        - type: toTable
       sizes:
         type: copy
         from: ${source::du}
@@ -570,6 +585,7 @@ tools:
               next
             }
             { print ";;;;;" $0 }
+        - type: toTable
         - type: sort
           column: 5
           numeric: true
@@ -586,6 +602,8 @@ tools:
         # Both: the ring buffer may have wrapped, and the journal may have rotated the messages away, or never read them.
         # Where dmesg is restricted to root, the journal, which the adm or systemd-journal group may read.
         commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>&1; %{SUDO:journalctl} journalctl -k -p warning --no-pager 2>&1"
+        computes:
+        - type: toTable
     result:
       source: ${source::kernel}
 
@@ -617,6 +635,8 @@ tools:
           else
             %{SUDO:tail} tail -n ${param::lines} /var/log/messages 2>&1 || %{SUDO:tail} tail -n ${param::lines} /var/log/syslog 2>&1
           fi
+        computes:
+        - type: toTable
     result:
       source: ${source::log}
 
@@ -636,6 +656,8 @@ tools:
           grep -H . /proc/pressure/* 2>/dev/null
           vmstat 1 $((${param::seconds} + 1)) 2>&1
           iostat -dxyk ${param::seconds} 1 2>/dev/null || echo "iostat is not installed (sysstat)"
+        computes:
+        - type: toTable
     result:
       source: ${source::snapshot}
 
@@ -647,6 +669,8 @@ tools:
         commandLine: |
           %{SUDO:ss} ss -tulpn 2>&1
           ss -s 2>&1
+        computes:
+        - type: toTable
       states:
         type: commandLine
         commandLine: ss -tan 2>/dev/null
@@ -656,6 +680,7 @@ tools:
           script: |
             NR > 1 { count[$1]++ }
             END { for (state in count) print state ";" count[state] }
+        - type: toTable
         - type: sort
           column: 2
           numeric: true
@@ -677,6 +702,8 @@ tools:
           date
           timedatectl 2>&1
           chronyc tracking 2>/dev/null || ntpq -pn 2>/dev/null || timedatectl timesync-status 2>/dev/null || echo "Neither chronyc, ntpq nor systemd-timesyncd answered"
+        computes:
+        - type: toTable
     result:
       source: ${source::time}
 
@@ -691,6 +718,8 @@ tools:
           [ -f /var/run/reboot-required ] && echo "Reboot required by $(cat /var/run/reboot-required.pkgs 2>/dev/null | tr '\n' ' ')"
           needs-restarting -r 2>/dev/null
           true
+        computes:
+        - type: toTable
     result:
       source: ${source::history}
 
@@ -707,6 +736,8 @@ tools:
       vacuum:
         type: commandLine
         commandLine: "%{SUDO:journalctl} journalctl --vacuum-size=${param::megabytes}M 2>&1"
+        computes:
+        - type: toTable
     result:
       source: ${source::vacuum}
 
@@ -723,6 +754,8 @@ tools:
       shutdown:
         type: commandLine
         commandLine: "%{SUDO:shutdown} shutdown -r +${param::minutes} 'Reboot requested through MetricsHub' 2>&1"
+        computes:
+        - type: toTable
     result:
       source: ${source::shutdown}
 
@@ -733,6 +766,8 @@ tools:
       cancel:
         type: commandLine
         commandLine: "%{SUDO:shutdown} shutdown -c 2>&1 && echo No shutdown is scheduled any more"
+        computes:
+        - type: toTable
     result:
       source: ${source::cancel}
 
@@ -753,6 +788,8 @@ tools:
           cat /proc/${param::pid}/status 2>&1
           cat /proc/${param::pid}/limits 2>&1
           if ls /proc/${param::pid}/fd >/dev/null 2>&1; then echo "Open files: $(ls /proc/${param::pid}/fd | wc -l)"; else echo "Open files: unknown, /proc/${param::pid}/fd is not readable"; fi
+        computes:
+        - type: toTable
     result:
       source: ${source::process}
 
@@ -769,6 +806,8 @@ tools:
         type: commandLine
         # Without lsof, the file descriptors of /proc, which only the owner of the process and root can list
         commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; else %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1; fi"
+        computes:
+        - type: toTable
     result:
       source: ${source::files}
 
@@ -790,6 +829,8 @@ tools:
       kill:
         type: commandLine
         commandLine: "%{SUDO:kill} kill -s ${param::signal} ${param::pid} 2>&1 && echo Signal ${param::signal} sent to process ${param::pid}"
+        computes:
+        - type: toTable
     result:
       source: ${source::kill}
 
@@ -800,6 +841,8 @@ tools:
       failed:
         type: commandLine
         commandLine: systemctl --failed --no-pager 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::failed}
 
@@ -818,6 +861,8 @@ tools:
           %{SUDO:systemctl} systemctl status -l -n 20 --no-pager -- ${param::service} 2>&1
           systemctl show -p Restart,NRestarts,Result,ExecMainStatus,ActiveEnterTimestamp -- ${param::service} 2>&1
           systemctl cat --no-pager -- ${param::service} 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::status}
 
@@ -846,6 +891,8 @@ tools:
           unit=$(systemctl show -p Id --value -- ${param::service} 2>/dev/null)
           [ -n "$unit" ] || unit=${param::service}
           %{SUDO:journalctl} journalctl --no-pager -n ${param::lines} -p ${param::priority} -u "$unit" 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::journal}
 
@@ -868,6 +915,8 @@ tools:
         commandLine: |
           %{SUDO:systemctl} systemctl ${param::action} -- ${param::service} 2>&1
           systemctl status -l -n 10 --no-pager -- ${param::service} 2>&1
+        computes:
+        - type: toTable
     result:
       source: ${source::control}
 
@@ -907,5 +956,7 @@ tools:
         # The matching lines, and the refusals and failures whatever the expression (an empty one matches all). A failed
         # sudo prints its own message, which varies with the elevation command: the exit code tells the failure.
         keep: '${param::match}\|^Refused: \|^tail: \|^Failed: '
+        computes:
+        - type: toTable
     result:
       source: ${source::log}
