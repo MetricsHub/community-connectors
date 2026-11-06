@@ -36,7 +36,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `insertColumn`. |
-| `column` | Yes | None | **1-based** position of the new column: `1` inserts before the first column, *number of columns + 1* appends after the last one. A row shorter than `column - 1` cells is left unchanged. |
+| `column` | Yes | None | **1-based** position of the new column: `1` inserts before the first column, *number of columns + 1* appends after the last one. A row shorter than `column - 1` cells is padded with empty cells first, so the new cell always lands at `column`. |
 | `value` | Yes | None | The value of the new cell. `$n` is replaced by the content of column *n* of the same row (an empty string when the row has no such column); several references and literal text can be combined, e.g. `$2-$3`. |
 
 ## Table Transformation Example
@@ -69,4 +69,4 @@ With `column: 2` and `value: ok`:
 
 - Forgetting that the columns from `column` onwards shift right: update the indexes of the following computes and of the `mapping` section.
 - Writing `value: $5` expecting a literal `$5`: `$n` is a column reference. Use `$$5` for a literal.
-- Using a position greater than *number of columns + 1*: the row is left unchanged (and a warning is logged).
+- Using a position greater than *number of columns + 1* by mistake: the rows are padded with empty cells up to the new column, so check the position against the `# column` comment above the compute.
