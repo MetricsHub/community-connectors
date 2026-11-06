@@ -496,8 +496,6 @@ tools:
         type: commandLine
         # Snap packages mount read-only squashfs images that are always full
         commandLine: df -hTP -x squashfs 2>&1; echo; df -iP -x squashfs 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::df}
 
@@ -602,8 +600,6 @@ tools:
         # Both: the ring buffer may have wrapped, and the journal may have rotated the messages away, or never read them.
         # Where dmesg is restricted to root, the journal, which the adm or systemd-journal group may read.
         commandLine: "%{SUDO:dmesg} dmesg -T -l emerg,alert,crit,err,warn 2>&1; %{SUDO:journalctl} journalctl -k -p warning --no-pager 2>&1"
-        computes:
-        - type: toTable
     result:
       source: ${source::kernel}
 
@@ -635,8 +631,6 @@ tools:
           else
             %{SUDO:tail} tail -n ${param::lines} /var/log/messages 2>&1 || %{SUDO:tail} tail -n ${param::lines} /var/log/syslog 2>&1
           fi
-        computes:
-        - type: toTable
     result:
       source: ${source::log}
 
@@ -656,8 +650,6 @@ tools:
           grep -H . /proc/pressure/* 2>/dev/null
           vmstat 1 $((${param::seconds} + 1)) 2>&1
           iostat -dxyk ${param::seconds} 1 2>/dev/null || echo "iostat is not installed (sysstat)"
-        computes:
-        - type: toTable
     result:
       source: ${source::snapshot}
 
@@ -702,8 +694,6 @@ tools:
           date
           timedatectl 2>&1
           chronyc tracking 2>/dev/null || ntpq -pn 2>/dev/null || timedatectl timesync-status 2>/dev/null || echo "Neither chronyc, ntpq nor systemd-timesyncd answered"
-        computes:
-        - type: toTable
     result:
       source: ${source::time}
 
@@ -718,8 +708,6 @@ tools:
           [ -f /var/run/reboot-required ] && echo "Reboot required by $(cat /var/run/reboot-required.pkgs 2>/dev/null | tr '\n' ' ')"
           needs-restarting -r 2>/dev/null
           true
-        computes:
-        - type: toTable
     result:
       source: ${source::history}
 
@@ -736,8 +724,6 @@ tools:
       vacuum:
         type: commandLine
         commandLine: "%{SUDO:journalctl} journalctl --vacuum-size=${param::megabytes}M 2>&1"
-        computes:
-        - type: toTable
     result:
       source: ${source::vacuum}
 
@@ -754,8 +740,6 @@ tools:
       shutdown:
         type: commandLine
         commandLine: "%{SUDO:shutdown} shutdown -r +${param::minutes} 'Reboot requested through MetricsHub' 2>&1"
-        computes:
-        - type: toTable
     result:
       source: ${source::shutdown}
 
@@ -766,8 +750,6 @@ tools:
       cancel:
         type: commandLine
         commandLine: "%{SUDO:shutdown} shutdown -c 2>&1 && echo No shutdown is scheduled any more"
-        computes:
-        - type: toTable
     result:
       source: ${source::cancel}
 
@@ -788,8 +770,6 @@ tools:
           cat /proc/${param::pid}/status 2>&1
           cat /proc/${param::pid}/limits 2>&1
           if ls /proc/${param::pid}/fd >/dev/null 2>&1; then echo "Open files: $(ls /proc/${param::pid}/fd | wc -l)"; else echo "Open files: unknown, /proc/${param::pid}/fd is not readable"; fi
-        computes:
-        - type: toTable
     result:
       source: ${source::process}
 
@@ -806,8 +786,6 @@ tools:
         type: commandLine
         # Without lsof, the file descriptors of /proc, which only the owner of the process and root can list
         commandLine: "if command -v lsof >/dev/null 2>&1; then %{SUDO:lsof} lsof -nP -p ${param::pid} 2>&1; [ -d /proc/${param::pid} ] || echo No process ${param::pid}; else %{SUDO:ls} ls -l /proc/${param::pid}/fd 2>&1; fi"
-        computes:
-        - type: toTable
     result:
       source: ${source::files}
 
@@ -829,8 +807,6 @@ tools:
       kill:
         type: commandLine
         commandLine: "%{SUDO:kill} kill -s ${param::signal} ${param::pid} 2>&1 && echo Signal ${param::signal} sent to process ${param::pid}"
-        computes:
-        - type: toTable
     result:
       source: ${source::kill}
 
@@ -841,8 +817,6 @@ tools:
       failed:
         type: commandLine
         commandLine: systemctl --failed --no-pager 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::failed}
 
@@ -861,8 +835,6 @@ tools:
           %{SUDO:systemctl} systemctl status -l -n 20 --no-pager -- ${param::service} 2>&1
           systemctl show -p Restart,NRestarts,Result,ExecMainStatus,ActiveEnterTimestamp -- ${param::service} 2>&1
           systemctl cat --no-pager -- ${param::service} 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::status}
 
@@ -891,8 +863,6 @@ tools:
           unit=$(systemctl show -p Id --value -- ${param::service} 2>/dev/null)
           [ -n "$unit" ] || unit=${param::service}
           %{SUDO:journalctl} journalctl --no-pager -n ${param::lines} -p ${param::priority} -u "$unit" 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::journal}
 
@@ -915,8 +885,6 @@ tools:
         commandLine: |
           %{SUDO:systemctl} systemctl ${param::action} -- ${param::service} 2>&1
           systemctl status -l -n 10 --no-pager -- ${param::service} 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::control}
 
@@ -956,7 +924,5 @@ tools:
         # The matching lines, and the refusals and failures whatever the expression (an empty one matches all). A failed
         # sudo prints its own message, which varies with the elevation command: the exit code tells the failure.
         keep: '${param::match}\|^Refused: \|^tail: \|^Failed: '
-        computes:
-        - type: toTable
     result:
       source: ${source::log}

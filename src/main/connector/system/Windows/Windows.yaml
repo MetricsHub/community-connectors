@@ -613,8 +613,6 @@ tools:
           elseif ($p.ProcessName -in 'System', 'Idle', 'Registry', 'smss', 'csrss', 'wininit', 'winlogon', 'services', 'lsass', 'lsaiso', 'svchost', 'Memory Compression') { 'Refused: process ${param::pid} is ' + $p.ProcessName + ', which Windows needs' }
           else { try { Stop-Process -Id ${param::pid} -Force -ErrorAction Stop; 'Process ${param::pid} (' + $p.ProcessName + ') terminated' } catch { 'Failed: ' + $_.Exception.Message } };
           exit 0" 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::kill}
 
@@ -774,8 +772,6 @@ tools:
           try { switch ('${param::action}') { 'start' { Start-Service -Name $n -ErrorAction Stop } 'stop' { Stop-Service -Name $n -Force:$f -ErrorAction Stop } 'restart' { Restart-Service -Name $n -Force:$f -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
           Get-Service -Name $n | Format-List Name, DisplayName, Status, StartType;
           exit 0" 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::control}
 
@@ -865,8 +861,6 @@ tools:
           exit 0" 2>&1
         # The matching lines, and the refusals and failures whatever the expression (an empty one matches all)
         keep: '${param::match}\|^Refused: \|^Failed: '
-        computes:
-        - type: toTable
     result:
       source: ${source::log}
 
@@ -1509,8 +1503,6 @@ tools:
           PowerShell.exe -NoProfile -NonInteractive -Command "shutdown.exe /r /t (New-TimeSpan -Minutes ${param::minutes}).TotalSeconds /d p:0:0 /c 'Reboot requested through MetricsHub';
           if ($LASTEXITCODE -eq 0) { 'A reboot is scheduled in ${param::minutes} minutes' } else { 'Failed: exit code ' + $LASTEXITCODE };
           exit 0" 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::shutdown}
 
@@ -1521,7 +1513,5 @@ tools:
       cancel:
         type: commandLine
         commandLine: shutdown.exe /a 2>&1 && echo The scheduled shutdown is cancelled || echo No shutdown was cancelled
-        computes:
-        - type: toTable
     result:
       source: ${source::cancel}

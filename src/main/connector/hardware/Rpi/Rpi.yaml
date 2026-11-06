@@ -189,7 +189,5 @@ tools:
             esac
           done
           grep -H . /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::throttle}

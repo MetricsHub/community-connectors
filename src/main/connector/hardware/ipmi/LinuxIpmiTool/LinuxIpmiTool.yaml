@@ -89,8 +89,6 @@ tools:
         # which takes minutes for a full SEL over the system interface. "last" only spares the output.
         commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open sel elist last ${param::count} 2>&1
         timeout: 300
-        computes:
-        - type: toTable
     result:
       source: ${source::sel}
 
@@ -107,8 +105,6 @@ tools:
       identify:
         type: commandLine
         commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open chassis identify ${param::seconds} 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::identify}
 
@@ -119,8 +115,6 @@ tools:
       clear:
         type: commandLine
         commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open sel clear 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::clear}
 

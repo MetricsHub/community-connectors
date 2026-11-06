@@ -100,8 +100,6 @@ tools:
           virsh dominfo --domain ${param::name} 2>&1
           virsh domblkerror --domain ${param::name} 2>&1
           virsh domstats ${param::name} 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::details}
 
@@ -124,7 +122,5 @@ tools:
         commandLine: |
           virsh ${param::action} --domain ${param::name} 2>&1
           virsh domstate --domain ${param::name} --reason 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::control}

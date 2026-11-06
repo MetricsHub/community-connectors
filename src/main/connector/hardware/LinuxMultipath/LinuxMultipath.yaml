@@ -94,7 +94,5 @@ tools:
       topology:
         type: commandLine
         commandLine: "%{SUDO:multipath} multipath -ll ${param::device} 2>&1"
-        computes:
-        - type: toTable
     result:
       source: ${source::topology}

@@ -130,8 +130,6 @@ tools:
           'Checkpoints:'; Get-VMSnapshot -VM $v | Format-Table -AutoSize Name, SnapshotType, CreationTime, ParentSnapshotName | Out-String -Width 512;
           'Integration services:'; Get-VMIntegrationService -VM $v | Format-Table -AutoSize Name, Enabled, PrimaryStatusDescription | Out-String -Width 512;
           exit 0" 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::vm}
 
@@ -159,7 +157,5 @@ tools:
           try { switch ('${param::action}') { 'start' { Start-VM -VM $v -ErrorAction Stop } 'shutdown' { Stop-VM -VM $v -ErrorAction Stop } 'turnOff' { Stop-VM -VM $v -TurnOff -Force -ErrorAction Stop } 'restart' { if ((Get-Command Restart-VM).Parameters.ContainsKey('Type')) { Restart-VM -VM $v -Type Reboot -Force -ErrorAction Stop } elseif ($v[0].State -ne 'Running') { throw 'The VM is ' + $v[0].State + ', not Running: start it instead' } else { Stop-VM -VM $v -ErrorAction Stop; Start-VM -VM $v -ErrorAction Stop } } 'reset' { Restart-VM -VM $v -Force -ErrorAction Stop } 'save' { Save-VM -VM $v -ErrorAction Stop } 'suspend' { Suspend-VM -VM $v -ErrorAction Stop } 'resume' { Resume-VM -VM $v -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
           Get-VM -Id $v[0].VMId | Format-List Name, VMId, State, Status, Uptime, Heartbeat;
           exit 0" 2>&1
-        computes:
-        - type: toTable
     result:
       source: ${source::control}

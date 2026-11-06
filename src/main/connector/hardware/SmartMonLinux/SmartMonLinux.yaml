@@ -258,8 +258,6 @@ tools:
       smart:
         type: commandLine
         commandLine: "%{SUDO:/usr/sbin/smartctl} /usr/sbin/smartctl -a /dev/${param::device} 2>&1"
-        computes:
-        - type: toTable
     result:
       source: ${source::smart}
 
@@ -279,7 +277,5 @@ tools:
       test:
         type: commandLine
         commandLine: "%{SUDO:/usr/sbin/smartctl} /usr/sbin/smartctl -t ${param::test} /dev/${param::device} 2>&1"
-        computes:
-        - type: toTable
     result:
       source: ${source::test}
