@@ -10,8 +10,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "1" ], [ "x", "", "1", "" ], [ "1", "2.5", "1000" ], [ "cell;with;sep", "", "1" ], [ "only" ] ],
-          "rawData" : "a;b;1;\nx;;1;;\n1;2.5;1000;\ncell;with;sep;;1;\nonly;"
+          "table" : [ [ "a", "b", "1" ], [ "x", "", "1", "" ], [ "1", "2.5", "1000" ], [ "only" ] ],
+          "rawData" : "a;b;1;\nx;;1;;\n1;2.5;1000;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "1" ], [ "cell;with;sep", "", "1" ] ],
+          "rawData" : "a;b;1;\ncell;with;sep;;1;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "1", "r1c4", "r1c5", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "1", "r2c4", "r2c5", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "1", "r3c4", "r3c5", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;1;r1c4;r1c5;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;1;r2c4;r2c5;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;1;r3c4;r3c5;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -20,8 +28,16 @@
       "computes" : [ "translate", "translate" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "csvWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "UNKNOWN", "Unknown Status", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "UNKNOWN", "Unknown Status", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "UNKNOWN", "Unknown Status", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;UNKNOWN;Unknown Status;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;UNKNOWN;Unknown Status;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;UNKNOWN;Unknown Status;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         },
         "empty" : {
           "table" : [ ],
@@ -40,6 +56,14 @@
         "table" : {
           "table" : [ ],
           "rawData" : ""
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -48,6 +72,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -62,12 +94,20 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "-11", "b", "c", "", "", "", "", "", "", "", "", "", "", "a" ], [ "-11", "", "z", "", "", "", "", "", "", "", "", "", "", "x" ], [ "-10", "2.5", "3", "", "", "", "", "", "", "", "", "", "", "1" ], [ "-11", "with", "sep", "", "", "", "", "", "", "", "", "", "", "cell" ], [ "-11", "", "", "", "", "", "", "", "", "", "", "", "", "only" ] ],
-          "rawData" : "-11;b;c;;;;;;;;;;;a;\n-11;;z;;;;;;;;;;;x;\n-10;2.5;3;;;;;;;;;;;1;\n-11;with;sep;;;;;;;;;;;cell;\n-11;;;;;;;;;;;;;only;"
+          "table" : [ [ "-11", "b", "c", "", "", "", "", "", "", "", "", "", "", "a" ], [ "-11", "", "z", "", "", "", "", "", "", "", "", "", "", "x" ], [ "-10", "2.5", "3", "", "", "", "", "", "", "", "", "", "", "1" ], [ "-11", "", "", "", "", "", "", "", "", "", "", "", "", "only" ] ],
+          "rawData" : "-11;b;c;;;;;;;;;;;a;\n-11;;z;;;;;;;;;;;x;\n-10;2.5;3;;;;;;;;;;;1;\n-11;;;;;;;;;;;;;only;"
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ [ "-11", "b", "c", "", "", "", "", "", "", "", "", "", "", "a" ], [ "-11", "with", "sep", "", "", "", "", "", "", "", "", "", "", "cell" ] ],
+          "rawData" : "-11;b;c;;;;;;;;;;;a;\n-11;with;sep;;;;;;;;;;;cell;"
+        },
+        "csvWide" : {
+          "table" : [ [ "-11", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c1" ], [ "-11", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c1" ], [ "-11", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c1" ] ],
+          "rawData" : "-11;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c1;\n-11;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c1;\n-11;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c1;"
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -79,9 +119,17 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -94,8 +142,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "", "a", "Manufacturer: c Serial Number: b" ], [ "", "x", "Manufacturer: z" ], [ "", "1", "Manufacturer: 3 Serial Number: 2.5" ], [ "", "cell,with,sep" ], [ "", "only" ] ],
-          "rawData" : ";a;Manufacturer: c Serial Number: b;\n;x;Manufacturer: z;\n;1;Manufacturer: 3 Serial Number: 2.5;\n;cell,with,sep;\n;only;"
+          "table" : [ [ "", "a", "Manufacturer: c Serial Number: b" ], [ "", "x", "Manufacturer: z" ], [ "", "1", "Manufacturer: 3 Serial Number: 2.5" ], [ "", "only" ] ],
+          "rawData" : ";a;Manufacturer: c Serial Number: b;\n;x;Manufacturer: z;\n;1;Manufacturer: 3 Serial Number: 2.5;\n;only;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "", "a", "Manufacturer: c Serial Number: b" ], [ "", "cell,with,sep" ] ],
+          "rawData" : ";a;Manufacturer: c Serial Number: b;\n;cell,with,sep;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c5", "r1c1", "Model: r1c4 Manufacturer: r1c3 Serial Number: r1c2" ], [ "r2c5", "r2c1", "Model: r2c4 Manufacturer: r2c3 Serial Number: r2c2" ], [ "r3c5", "r3c1", "Model: r3c4 Manufacturer: r3c3 Serial Number: r3c2" ] ],
+          "rawData" : "r1c5;r1c1;Model: r1c4 Manufacturer: r1c3 Serial Number: r1c2;\nr2c5;r2c1;Model: r2c4 Manufacturer: r2c3 Serial Number: r2c2;\nr3c5;r3c1;Model: r3c4 Manufacturer: r3c3 Serial Number: r3c2;"
         }
       }
     },
@@ -108,8 +164,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "UNKNOWN", "Unknown Status", "ok" ], [ "1", "2.5", "3.0E-6" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;UNKNOWN;Unknown Status;ok;\n1;2.5;3.0E-6;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "UNKNOWN", "Unknown Status", "ok" ], [ "1", "2.5", "3.0E-6" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;UNKNOWN;Unknown Status;ok;\n1;2.5;3.0E-6;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "UNKNOWN", "Unknown Status", "ok", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "UNKNOWN", "Unknown Status", "ok", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "UNKNOWN", "Unknown Status", "ok", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;UNKNOWN;Unknown Status;ok;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;UNKNOWN;Unknown Status;ok;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;UNKNOWN;Unknown Status;ok;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -122,8 +186,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c7", "r1c8" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c7", "r2c8" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c7", "r3c8" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c7;r1c8;\nr2c1;r2c2;r2c3;r2c4;r2c7;r2c8;\nr3c1;r3c2;r3c3;r3c4;r3c7;r3c8;"
         }
       }
     },
@@ -136,8 +208,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell", "with", "sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell", "with", "sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -146,6 +226,14 @@
       "computes" : [ "keepOnlyMatchingLines", "replace", "replace", "replace", "replace" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -160,6 +248,14 @@
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -180,6 +276,14 @@
         "table" : {
           "table" : [ ],
           "rawData" : ""
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "tableWide" : {
+          "table" : [ ],
+          "rawData" : ""
         }
       }
     },
@@ -192,8 +296,16 @@
           "rawData" : null
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -202,6 +314,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -216,8 +336,16 @@
       "computes" : [ "multiply" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "csvWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         },
         "empty" : {
           "table" : [ ],
@@ -230,6 +358,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },

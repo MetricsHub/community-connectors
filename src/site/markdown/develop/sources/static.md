@@ -21,7 +21,7 @@ This is useful for:
 sources:
   fixedState:
     type: static
-    value: serviceA;ok
+    value: [ "serviceA", "ok" ]
 ```
 
 ## Properties
@@ -29,20 +29,34 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `static`. |
-| `value` | Yes | None | Inline serialized table content or reference. |
+| `value` | Yes | None | The row of the table as a list of cells (recommended), or a string: a source reference, or legacy `;` CSV text. See [Writing `value`](#writing-value). |
 | `computes` | No | `[]` | Post-processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+
+## Writing `value`
+
+Write `value` as a YAML list: the source produces one row holding exactly these cells, `;` included, `[ "", "" ]` being two empty cells:
+
+```yaml
+value: [ "DDN", "Data Direct Networks", "Disk Array" ]
+```
+
+A string `value` holding a source reference (`${source::...}`) copies that source's table.
+
+### Legacy string form
+
+Older connectors write the table as a string: lines are rows, each line is split on `;`, and a trailing `;` may be left out only when the last cell is not empty (`a;;` is 2 cells, `;;;` is 3 empty cells). A cell cannot hold a `;` in this form, and the multi-line string is the only way to produce several rows. Prefer the list form in new connectors.
 
 ## Recommended Pattern
 
 - Keep static payloads tiny and explicit.
-- Use semicolon-separated rows when emitting multi-column values.
+- Write one cell per list item; never join cells with `;`.
 - Prefer translation tables for large static mappings.
 
 ## Common Mistakes
 
 - Encoding large datasets in `static` instead of external files/translations.
-- Forgetting that `value` is parsed as table text (semicolon/newline semantics apply).
+- Writing a string `value` holding `;` and expecting one cell: the string form is parsed as table text.
 - Mixing static defaults with dynamic data without clear join keys.
 
 ## Community Examples

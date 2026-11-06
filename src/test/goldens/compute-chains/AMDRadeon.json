@@ -9,6 +9,10 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "commandLineWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : ""
@@ -21,11 +25,15 @@
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "rawData" : ""
+        },
+        "commandLineWide" : {
+          "table" : [ ],
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -35,11 +43,19 @@
       "outputs" : {
         "csv" : {
           "table" : [ ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ [ "r1c1", "gpu_edge", "r1c5" ], [ "r1c1", "gpu_junction", "r1c6" ], [ "r1c1", "gpu_memory", "r1c7" ], [ "r2c1", "gpu_edge", "r2c5" ], [ "r2c1", "gpu_junction", "r2c6" ], [ "r2c1", "gpu_memory", "r2c7" ], [ "r3c1", "gpu_edge", "r3c5" ], [ "r3c1", "gpu_junction", "r3c6" ], [ "r3c1", "gpu_memory", "r3c7" ] ],
+          "rawData" : "r1c1;gpu_edge;r1c5;\nr1c1;gpu_junction;r1c6;\nr1c1;gpu_memory;r1c7;\nr2c1;gpu_edge;r2c5;\nr2c1;gpu_junction;r2c6;\nr2c1;gpu_memory;r2c7;\nr3c1;gpu_edge;r3c5;\nr3c1;gpu_junction;r3c6;\nr3c1;gpu_memory;r3c7;"
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     }

@@ -9,6 +9,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : ""
@@ -20,6 +28,14 @@
       "computes" : [ "keepOnlyMatchingLines", "prepend" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -37,6 +53,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : ""
@@ -48,6 +72,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -65,6 +97,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : ""
@@ -76,6 +116,14 @@
       "computes" : [ "keepOnlyMatchingLines", "prepend" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -100,6 +148,14 @@
         "textNoTrailingNewline" : {
           "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
           "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+        },
+        "textNoTrailingNewlineWide" : {
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
+          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+        },
+        "textWide" : {
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
+          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
         }
       }
     },
@@ -108,6 +164,14 @@
       "computes" : [ "keepOnlyMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -132,6 +196,14 @@
         "textNoTrailingNewline" : {
           "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
           "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+        },
+        "textNoTrailingNewlineWide" : {
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
+          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+        },
+        "textWide" : {
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
+          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
         }
       }
     },
@@ -140,6 +212,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -157,6 +237,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : null
@@ -168,6 +256,14 @@
       "computes" : [ "keepOnlyMatchingLines", "keepColumns", "append", "append", "convert" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -185,6 +281,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : null
@@ -196,6 +300,14 @@
       "computes" : [ "keepOnlyMatchingLines", "keepColumns", "append" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -213,6 +325,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : null
@@ -224,6 +344,14 @@
       "computes" : [ "keepOnlyMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -241,6 +369,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : ""
@@ -252,8 +388,16 @@
       "computes" : [ "excludeMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "csvWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "UNKNOWN", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "UNKNOWN", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "UNKNOWN", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;UNKNOWN;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;UNKNOWN;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;UNKNOWN;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         },
         "empty" : {
           "table" : [ ],
@@ -266,8 +410,16 @@
       "computes" : [ "excludeMatchingLines", "prepend" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "csvWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "Serial Number: r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "Serial Number: r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "Serial Number: r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;Serial Number: r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;Serial Number: r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;Serial Number: r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         },
         "empty" : {
           "table" : [ ],
@@ -280,6 +432,14 @@
       "computes" : [ "keepOnlyMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -297,6 +457,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : null
@@ -308,6 +476,14 @@
       "computes" : [ "keepOnlyMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -325,6 +501,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : null
@@ -336,6 +520,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -353,6 +545,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : null
@@ -367,6 +567,14 @@
           "table" : [ ],
           "rawData" : ""
         },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
         "empty" : {
           "table" : [ ],
           "rawData" : null
@@ -378,6 +586,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },

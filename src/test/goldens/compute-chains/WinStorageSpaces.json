@@ -12,6 +12,14 @@
         "table" : {
           "table" : [ ],
           "rawData" : ""
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "tableWide" : {
+          "table" : [ ],
+          "rawData" : ""
         }
       }
     },
@@ -24,8 +32,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
           "rawData" : null
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : null
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c8" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c8" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c8" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c8;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c8;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c8;"
         }
       }
     },
@@ -38,8 +54,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell", "with", "sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell", "with", "sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -52,8 +76,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
           "rawData" : null
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : null
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c9", "r1c12" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c9", "r2c12" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c9", "r3c12" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c9;r1c12;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c9;r2c12;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c9;r3c12;"
         }
       }
     },
@@ -66,8 +98,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "UNKNOWN", "Unknown" ], [ "x", "UNKNOWN", "Unknown" ], [ "1", "failed", "Full Repair Needed" ], [ "cell", "sep", "", "UNKNOWN" ], [ "only", "", "" ] ],
-          "rawData" : "a;UNKNOWN;Unknown;\nx;UNKNOWN;Unknown;\n1;failed;Full Repair Needed;\ncell;sep;;UNKNOWN;\nonly;;;"
+          "table" : [ [ "a", "UNKNOWN", "Unknown" ], [ "x", "UNKNOWN", "Unknown" ], [ "1", "failed", "Full Repair Needed" ], [ "only", "", "" ] ],
+          "rawData" : "a;UNKNOWN;Unknown;\nx;UNKNOWN;Unknown;\n1;failed;Full Repair Needed;\nonly;;;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "UNKNOWN", "Unknown" ], [ "cell", "sep", "", "UNKNOWN" ] ],
+          "rawData" : "a;UNKNOWN;Unknown;\ncell;sep;;UNKNOWN;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "UNKNOWN", "Unknown", "r1c4" ], [ "r2c1", "UNKNOWN", "Unknown", "r2c4" ], [ "r3c1", "UNKNOWN", "Unknown", "r3c4" ] ],
+          "rawData" : "r1c1;UNKNOWN;Unknown;r1c4;\nr2c1;UNKNOWN;Unknown;r2c4;\nr3c1;UNKNOWN;Unknown;r3c4;"
         }
       }
     },
@@ -77,11 +117,19 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
           "table" : [ [ "1", "", "File System: " ] ],
           "rawData" : "1;;File System: ;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "tableWide" : {
+          "table" : [ ],
+          "rawData" : ""
         }
       }
     },
@@ -94,8 +142,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "UNKNOWN", "c", "c" ], [ "x", "", "UNKNOWN", "z", "z", "" ], [ "1", "2.5", "UNKNOWN", "3", "3" ], [ "cell;with;sep", "", "UNKNOWN", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;UNKNOWN;c;c;\nx;;UNKNOWN;z;z;;\n1;2.5;UNKNOWN;3;3;\ncell;with;sep;;UNKNOWN;;;\nonly;"
+          "table" : [ [ "a", "b", "UNKNOWN", "c", "c" ], [ "x", "", "UNKNOWN", "z", "z", "" ], [ "1", "2.5", "UNKNOWN", "3", "3" ], [ "only" ] ],
+          "rawData" : "a;b;UNKNOWN;c;c;\nx;;UNKNOWN;z;z;;\n1;2.5;UNKNOWN;3;3;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "UNKNOWN", "", "" ], [ "cell;with;sep", "", "UNKNOWN", "", "" ] ],
+          "rawData" : "a;b;UNKNOWN;;;\ncell;with;sep;;UNKNOWN;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "UNKNOWN", "", "", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "UNKNOWN", "", "", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "UNKNOWN", "", "", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;UNKNOWN;;;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;UNKNOWN;;;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;UNKNOWN;;;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -108,8 +164,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "97.0" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;97.0;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "97.0" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;97.0;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -124,6 +188,14 @@
         "table" : {
           "table" : [ ],
           "rawData" : ""
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -136,8 +208,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "c", "", "b" ], [ "x", "z", "41", "50" ], [ "1", "3", "", "2.5" ], [ "cell,with,sep", "", "41", "50" ], [ "only", "", "41", "50" ] ],
-          "rawData" : "a;c;;b;\nx;z;41;50;\n1;3;;2.5;\ncell,with,sep;;41;50;\nonly;;41;50;"
+          "table" : [ [ "a", "c", "", "b" ], [ "x", "z", "41", "50" ], [ "1", "3", "", "2.5" ], [ "only", "", "41", "50" ] ],
+          "rawData" : "a;c;;b;\nx;z;41;50;\n1;3;;2.5;\nonly;;41;50;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "c", "", "b" ], [ "cell,with,sep", "", "41", "50" ] ],
+          "rawData" : "a;c;;b;\ncell,with,sep;;41;50;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c9", "", "r1c6" ], [ "r2c1", "r2c9", "", "r2c6" ], [ "r3c1", "r3c9", "", "r3c6" ] ],
+          "rawData" : "r1c1;r1c9;;r1c6;\nr2c1;r2c9;;r2c6;\nr3c1;r3c9;;r3c6;"
         }
       }
     },
@@ -150,8 +230,16 @@
           "rawData" : null
         },
         "table" : {
-          "table" : [ [ "ida", "b", "c" ], [ "idx", "", "z", "" ], [ "id1", "2.5", "3" ], [ "idcell;with;sep", "", "" ], [ "idonly" ] ],
-          "rawData" : "ida;b;c;\nidx;;z;;\nid1;2.5;3;\nidcell;with;sep;;;\nidonly;"
+          "table" : [ [ "ida", "b", "c" ], [ "idx", "", "z", "" ], [ "id1", "2.5", "3" ], [ "idonly" ] ],
+          "rawData" : "ida;b;c;\nidx;;z;;\nid1;2.5;3;\nidonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "ida", "b", "c" ], [ "idcell;with;sep", "", "" ] ],
+          "rawData" : "ida;b;c;\nidcell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "idr1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "idr2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "idr3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "idr1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nidr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nidr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -164,8 +252,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "idb", "c" ], [ "x", "id", "z", "" ], [ "1", "id2.5", "3" ], [ "cell", "idwith", "sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;idb;c;\nx;id;z;;\n1;id2.5;3;\ncell;idwith;sep;;;\nonly;"
+          "table" : [ [ "a", "idb", "c" ], [ "x", "id", "z", "" ], [ "1", "id2.5", "3" ], [ "only" ] ],
+          "rawData" : "a;idb;c;\nx;id;z;;\n1;id2.5;3;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "idb", "c" ], [ "cell", "idwith", "sep", "", "" ] ],
+          "rawData" : "a;idb;c;\ncell;idwith;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "idr1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "idr2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "idr3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;idr1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;idr2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;idr3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -175,11 +271,19 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "", "c", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "", "z", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "5", "3", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "", "", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "", "", "", "", "", "0", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : ";c;;;;0;;;;;;;;;\n;z;;;;0;;;;;;;;;\n5;3;;;;0;;;;;;;;;\n;;;;;0;;;;;;;;;\n;;;;;0;;;;;;;;;"
+          "table" : [ [ "", "c", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "", "z", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "5", "3", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "", "", "", "", "", "0", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : ";c;;;;0;;;;;;;;;\n;z;;;;0;;;;;;;;;\n5;3;;;;0;;;;;;;;;\n;;;;;0;;;;;;;;;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "", "c", "", "", "", "0", "", "", "", "", "", "", "", "" ], [ "", "", "", "", "", "0", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : ";c;;;;0;;;;;;;;;\n;;;;;0;;;;;;;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "c2", "r1c3", "r1c4", "r1c5", "r1c6", "0", "r1c8", "r1c9", "r1c10", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "c2", "r2c3", "r2c4", "r2c5", "r2c6", "0", "r2c8", "r2c9", "r2c10", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "c2", "r3c3", "r3c4", "r3c5", "r3c6", "0", "r3c8", "r3c9", "r3c10", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "c2;r1c3;r1c4;r1c5;r1c6;0;r1c8;r1c9;r1c10;r1c12;r1c13;r1c14;r1c15;r1c16;\nc2;r2c3;r2c4;r2c5;r2c6;0;r2c8;r2c9;r2c10;r2c12;r2c13;r2c14;r2c15;r2c16;\nc2;r3c3;r3c4;r3c5;r3c6;0;r3c8;r3c9;r3c10;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -189,11 +293,19 @@
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "job", "b", "", "", "", "", "", "", "", "", "", "", "c", "", "", "", "" ], [ "job", "", "", "", "", "", "", "", "", "", "", "", "z", "", "", "", "" ], [ "job", "2.5", "", "", "", "", "", "", "", "", "", "", "3", "", "", "", "" ], [ "job", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "job", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "job;b;;;;;;;;;;;c;;;;;\njob;;;;;;;;;;;;z;;;;;\njob;2.5;;;;;;;;;;;3;;;;;\njob;;;;;;;;;;;;;;;;;\njob;;;;;;;;;;;;;;;;;"
+          "table" : [ [ "job", "b", "", "", "", "", "", "", "", "", "", "", "c", "", "", "", "" ], [ "job", "", "", "", "", "", "", "", "", "", "", "", "z", "", "", "", "" ], [ "job", "2.5", "", "", "", "", "", "", "", "", "", "", "3", "", "", "", "" ], [ "job", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "job;b;;;;;;;;;;;c;;;;;\njob;;;;;;;;;;;;z;;;;;\njob;2.5;;;;;;;;;;;3;;;;;\njob;;;;;;;;;;;;;;;;;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "job", "b", "", "", "", "", "", "", "", "", "", "", "c", "", "", "", "" ], [ "job", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "job;b;;;;;;;;;;;c;;;;;\njob;;;;;;;;;;;;;;;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "job", "r1c2", "", "", "", "", "", "", "", "", "", "", "r1c3", "r1c4", "r1c5", "r1c6", "" ], [ "job", "r2c2", "", "", "", "", "", "", "", "", "", "", "r2c3", "r2c4", "r2c5", "r2c6", "" ], [ "job", "r3c2", "", "", "", "", "", "", "", "", "", "", "r3c3", "r3c4", "r3c5", "r3c6", "" ] ],
+          "rawData" : "job;r1c2;;;;;;;;;;;r1c3;r1c4;r1c5;r1c6;;\njob;r2c2;;;;;;;;;;;r2c3;r2c4;r2c5;r2c6;;\njob;r3c2;;;;;;;;;;;r3c3;r3c4;r3c5;r3c6;;"
         }
       }
     },
@@ -206,8 +318,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "Starting" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;Starting;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "Starting" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;Starting;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
+          "rawData" : "a;b;c;\ncell;with;sep;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
         }
       }
     },
@@ -220,8 +340,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "pool", "a", "c", "", "", "", "b", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "x", "z", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "1", "3", "", "", "", "2.5", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "cell", "sep", "", "", "", "with", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "only", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "pool;a;c;;;;b;;;;;;;;;;;\npool;x;z;;;;;;;;;;;;;;;\npool;1;3;;;;2.5;;;;;;;;;;;\npool;cell;sep;;;;with;;;;;;;;;;;\npool;only;;;;;;;;;;;;;;;;"
+          "table" : [ [ "pool", "a", "c", "", "", "", "b", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "x", "z", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "1", "3", "", "", "", "2.5", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "only", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "pool;a;c;;;;b;;;;;;;;;;;\npool;x;z;;;;;;;;;;;;;;;\npool;1;3;;;;2.5;;;;;;;;;;;\npool;only;;;;;;;;;;;;;;;;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "pool", "a", "c", "", "", "", "b", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "cell", "sep", "", "", "", "with", "", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "pool;a;c;;;;b;;;;;;;;;;;\npool;cell;sep;;;;with;;;;;;;;;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "pool", "r1c1", "r1c3", "", "r1c6", "r1c7", "r1c2", "r1c5", "", "", "", "", "", "", "", "", "" ], [ "pool", "r2c1", "r2c3", "", "r2c6", "r2c7", "r2c2", "r2c5", "", "", "", "", "", "", "", "", "" ], [ "pool", "r3c1", "r3c3", "", "r3c6", "r3c7", "r3c2", "r3c5", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "pool;r1c1;r1c3;;r1c6;r1c7;r1c2;r1c5;;;;;;;;;;\npool;r2c1;r2c3;;r2c6;r2c7;r2c2;r2c5;;;;;;;;;;\npool;r3c1;r3c3;;r3c6;r3c7;r3c2;r3c5;;;;;;;;;;"
         }
       }
     },
@@ -234,8 +362,16 @@
           "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "virtualDisk", "a", "", "", "", "", "", "", "b", "c", "", "", "", "", "", "", "" ], [ "virtualDisk", "x", "", "", "", "", "", "", "", "z", "", "", "", "", "", "", "" ], [ "virtualDisk", "1", "", "", "", "", "", "", "2.5", "3", "", "", "", "", "", "", "" ], [ "virtualDisk", "cell", "", "", "", "", "", "", "with", "sep", "", "", "", "", "", "", "" ], [ "virtualDisk", "only", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "virtualDisk;a;;;;;;;b;c;;;;;;;;\nvirtualDisk;x;;;;;;;;z;;;;;;;;\nvirtualDisk;1;;;;;;;2.5;3;;;;;;;;\nvirtualDisk;cell;;;;;;;with;sep;;;;;;;;\nvirtualDisk;only;;;;;;;;;;;;;;;;"
+          "table" : [ [ "virtualDisk", "a", "", "", "", "", "", "", "b", "c", "", "", "", "", "", "", "" ], [ "virtualDisk", "x", "", "", "", "", "", "", "", "z", "", "", "", "", "", "", "" ], [ "virtualDisk", "1", "", "", "", "", "", "", "2.5", "3", "", "", "", "", "", "", "" ], [ "virtualDisk", "only", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "virtualDisk;a;;;;;;;b;c;;;;;;;;\nvirtualDisk;x;;;;;;;;z;;;;;;;;\nvirtualDisk;1;;;;;;;2.5;3;;;;;;;;\nvirtualDisk;only;;;;;;;;;;;;;;;;"
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "virtualDisk", "a", "", "", "", "", "", "", "b", "c", "", "", "", "", "", "", "" ], [ "virtualDisk", "cell", "", "", "", "", "", "", "with", "sep", "", "", "", "", "", "", "" ] ],
+          "rawData" : "virtualDisk;a;;;;;;;b;c;;;;;;;;\nvirtualDisk;cell;;;;;;;with;sep;;;;;;;;"
+        },
+        "tableWide" : {
+          "table" : [ [ "virtualDisk", "r1c1", "r1c5", "", "r1c8", "r1c9", "", "", "r1c2", "r1c3", "r1c4", "r1c7", "", "", "", "", "" ], [ "virtualDisk", "r2c1", "r2c5", "", "r2c8", "r2c9", "", "", "r2c2", "r2c3", "r2c4", "r2c7", "", "", "", "", "" ], [ "virtualDisk", "r3c1", "r3c5", "", "r3c8", "r3c9", "", "", "r3c2", "r3c3", "r3c4", "r3c7", "", "", "", "", "" ] ],
+          "rawData" : "virtualDisk;r1c1;r1c5;;r1c8;r1c9;;;r1c2;r1c3;r1c4;r1c7;;;;;;\nvirtualDisk;r2c1;r2c5;;r2c8;r2c9;;;r2c2;r2c3;r2c4;r2c7;;;;;;\nvirtualDisk;r3c1;r3c5;;r3c8;r3c9;;;r3c2;r3c3;r3c4;r3c7;;;;;;"
         }
       }
     }

@@ -7,11 +7,15 @@
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "rawData" : ""
+        },
+        "commandLineWide" : {
+          "table" : [ ],
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -21,11 +25,15 @@
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "rawData" : ""
+        },
+        "commandLineWide" : {
+          "table" : [ ],
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -34,6 +42,14 @@
       "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -49,11 +65,15 @@
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "rawData" : ""
+        },
+        "commandLineWide" : {
+          "table" : [ ],
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -62,6 +82,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -77,11 +105,15 @@
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "rawData" : ""
+        },
+        "commandLineWide" : {
+          "table" : [ ],
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -90,6 +122,14 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
@@ -105,11 +145,15 @@
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "rawData" : ""
+        },
+        "commandLineWide" : {
+          "table" : [ ],
+          "rawData" : ""
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
@@ -118,6 +162,14 @@
       "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ],
+          "rawData" : ""
+        },
+        "csvWide" : {
           "table" : [ ],
           "rawData" : ""
         },
