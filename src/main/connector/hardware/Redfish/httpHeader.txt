@@ -1,0 +1,4 @@
+X-Auth-Token: %{AUTHENTICATIONTOKEN}
+Accept:application/json
+Content-Type:application/json
+OData-Version: 4.0
