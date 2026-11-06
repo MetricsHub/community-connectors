@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.physical_disk.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "translate" ],
+      "computes" : [ "awk", "toTable", "duplicateColumn", "translate", "translate" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -19,21 +19,39 @@
         }
       }
     },
+    "${source::monitors.physical_disk.collect.sources.source(2)}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
+          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
+          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+        },
+        "empty" : {
+          "table" : [ ],
+          "rawData" : ""
+        }
+      }
+    },
     "${source::monitors.physical_disk.collect.sources.source(3)}" : {
       "source" : "tableJoin",
-      "computes" : [ "append" ],
+      "computes" : [ "insertColumn" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c", "", "", "joinValue" ], [ "x", "", "z", "", "", "joinValue" ], [ "1", "2.5", "3", "", "", "joinValue" ], [ "only", "", "", "", "", "joinValue" ] ],
+          "rawData" : "a;b;c;;;joinValue;\nx;;z;;;joinValue;\n1;2.5;3;;;joinValue;\nonly;;;;;joinValue;"
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c", "", "", "joinValue" ], [ "cell;with;sep", "", "", "", "", "joinValue" ] ],
+          "rawData" : "a;b;c;;;joinValue;\ncell,with,sep;;;;;joinValue;"
         },
         "tableWide" : {
           "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "joinValue", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "joinValue", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "joinValue", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
@@ -43,7 +61,7 @@
     },
     "${source::monitors.physical_disk.collect.sources.source(4)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ [ "", "", "", "", "", "", "", "", "", "", "", "", "", "joinValue" ] ],
@@ -61,7 +79,7 @@
     },
     "${source::monitors.physical_disk.discovery.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "awk", "excludeMatchingLines" ],
+      "computes" : [ "awk", "toTable", "excludeMatchingLines" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -79,7 +97,7 @@
     },
     "${source::monitors.smart.simple.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -97,7 +115,7 @@
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -115,7 +133,7 @@
     },
     "${source::monitors.temperature.discovery.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],

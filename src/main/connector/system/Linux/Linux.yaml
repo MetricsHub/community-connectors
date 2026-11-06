@@ -143,6 +143,7 @@ monitors:
                 print $1 ";" $2 / 100 ";" $3 / 100 ";" $4 / 100 ";" $5 / 100 ";" $6 / 100
               }
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::cpuInfo}
         attributes:
@@ -166,13 +167,14 @@ monitors:
     simple:
       sources:
         memoryInfo:
-          # memSystem
+          # memTotal;memFree;memUsed;memBuffers;memCached;memFreeUtilization;memUsedUtilization;memBuffersUtilization;memCachedUtilization
           type: copy
           from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
             script: ${file::memory.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::memoryInfo}
         attributes:
@@ -202,6 +204,7 @@ monitors:
           - type: awk
             script: ${file::swap.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::swaps}
         attributes:
@@ -226,6 +229,7 @@ monitors:
           - type: awk
             script: ${file::swap-activity.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::swapActivity}
         attributes:
@@ -249,6 +253,7 @@ monitors:
           - type: awk
             script: ${file::network.awk}
             separators: ;
+          - type: toTable
 
         # Use the sysfs filesystem to filter out virtual interfaces
         sysClassNet:
@@ -262,6 +267,7 @@ monitors:
               /^##[A-Z_]+##$/ { if (insec) exit; next }
               insec { print }
             separators: ;
+          - type: toTable
 
         # Use the sysfs filesystem to get the link speed of each interface
         linkSpeed:
@@ -278,6 +284,7 @@ monitors:
               /^##[A-Z_]+##$/ { if (insec) exit; next }
               insec { if (($2 + 0) == -1) $2 = ""; print }
             separators: ;
+          - type: toTable
           # Convert speed from Mbps to bytes per second
           # Interface;SpeedBytesPerSecond
           - type: multiply
@@ -322,7 +329,7 @@ monitors:
       type: multiInstance
       sources:
         physicalDiskActivity:
-        #OperationsIORead;OperationsIOWrite;OperationsRead;OperationsWrite;MergedRead;MergedWrite;OperationTimeRead;OperationTimeWrite;IOTime
+        # Device;OperationsIORead;OperationsIOWrite;OperationsRead;OperationsWrite;MergedRead;MergedWrite;OperationTimeRead;OperationTimeWrite;IOTime
           type: copy
           from: "${source::beforeAll.systemSnapshot}"
           computes:
@@ -334,6 +341,7 @@ monitors:
                 print $3 ";" $6*512 ";" $10*512 ";" $4 ";" $8 ";" $5 ";" $9 ";" $7/1000 ";" $11/1000 ";" $13/1000
               }
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::physicalDiskActivity}
         attributes:
@@ -356,7 +364,7 @@ monitors:
       type: multiInstance
       sources:
         fileSystemInfo:
-          # filesystem;mountpoint;type;used;available
+          # filesystem;mountpoint;type;used;free;usedUtilization;freeUtilization;reserved;reservedUtilization
           type: commandLine
           commandLine: |
             export LC_ALL=C
@@ -373,6 +381,7 @@ monitors:
           - type: awk
             script: ${file::filesystem.awk}
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::fileSystemInfo}
         attributes:
@@ -392,7 +401,7 @@ monitors:
   system:
     simple:
       sources:
-        # Distribution;Version;Kernel
+        # Distribution;Version;Kernel;Uptime
         osInformation:
           type: copy
           from: "${source::beforeAll.systemSnapshot}"
@@ -403,6 +412,7 @@ monitors:
               /^##[A-Z_]+##$/ { if (insec) exit; next }
               insec { print }
             separators: ;
+          - type: toTable
       mapping:
         source: ${source::osInformation}
         attributes:
@@ -466,6 +476,7 @@ tools:
               gsub(/;/, ",", command)
               printf "%s;%s;%s;%.1f;%s;%s;%s;%s;%s;%s\n", $1, $2, $3, cpu[$1] + 0, $4, $5, $6, $7, command, (sortBy == "memory" ? $5 : cpu[$1] + 0)
             }
+        - type: toTable
         - type: sort
           column: 10
           numeric: true
@@ -515,6 +526,8 @@ tools:
         # megabytes;path, or an error in the first column
         separators: "\t"
         selectColumns: 1,2
+        computes:
+        - type: toTable
       sizes:
         type: copy
         from: ${source::du}
@@ -570,6 +583,7 @@ tools:
               next
             }
             { print ";;;;;" $0 }
+        - type: toTable
         - type: sort
           column: 5
           numeric: true
@@ -647,6 +661,8 @@ tools:
         commandLine: |
           %{SUDO:ss} ss -tulpn 2>&1
           ss -s 2>&1
+        computes:
+        - type: toTable
       states:
         type: commandLine
         commandLine: ss -tan 2>/dev/null
@@ -656,6 +672,7 @@ tools:
           script: |
             NR > 1 { count[$1]++ }
             END { for (state in count) print state ";" count[state] }
+        - type: toTable
         - type: sort
           column: 2
           numeric: true

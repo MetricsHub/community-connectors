@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.cpu.collect.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -113,7 +113,7 @@
     },
     "${source::monitors.gpu.collect.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -267,7 +267,7 @@
     },
     "${source::monitors.temperature.discovery.sources.source(2)}" : {
       "source" : "tableJoin",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],

@@ -69,7 +69,7 @@
     },
     "${source::monitors.enclosure.simple.sources.allFrus}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ [ "FRU", "a", "b", "c", "x", "", "z", "", "", "1", "2.5", "3", "val", "with,comma", "only" ] ],
@@ -87,7 +87,7 @@
     },
     "${source::monitors.enclosure.simple.sources.chassisStatus}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -127,7 +127,7 @@
     },
     "${source::monitors.enclosure.simple.sources.interpretedSensors}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk", "awk" ],
+      "computes" : [ "toText", "awk", "awk", "toTable" ],
       "outputs" : {
         "awkSource" : {
           "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
@@ -197,7 +197,7 @@
     },
     "${source::monitors.enclosure.simple.sources.sdr}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ [ "SDR", "a", "b", "c", "x", "", "z", "", "", "1", "2.5", "3", "val", "with,comma", "only" ] ],
@@ -215,7 +215,7 @@
     },
     "${source::monitors.fan.simple.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "append", "append" ],
+      "computes" : [ "keepOnlyMatchingLines", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],
@@ -231,13 +231,13 @@
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
     "${source::monitors.fan.simple.sources.source(2)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "convert", "append" ],
+      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "convert", "insertColumn", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],

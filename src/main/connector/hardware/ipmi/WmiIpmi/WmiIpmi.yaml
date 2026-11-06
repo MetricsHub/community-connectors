@@ -33,6 +33,7 @@ monitors:
           query: SELECT IdentifyingNumber,Name,Vendor FROM Win32_ComputerSystemProduct
           namespace: root\cimv2
           computes:
+            - type: toText
             - type: awk
               script: |
                 BEGIN { FS=";"; OFS=";" }
@@ -43,24 +44,29 @@ monitors:
                 }
 
               separators: ;
+            - type: toTable
 
         numericSensors:
           type: wmi
           query: SELECT BaseUnits,CurrentReading,Description,LowerThresholdCritical,LowerThresholdNonCritical,SensorType,UnitModifier,UpperThresholdCritical,UpperThresholdNonCritical FROM NumericSensor
           namespace: root\hardware
           computes:
+            - type: toText
             - type: awk
               script: ${file::numeric_sensors.awk}
               separators: ;
+            - type: toTable
 
         discreteSensors:
           type: wmi
           query: SELECT CurrentState,Description FROM Sensor
           namespace: root\hardware
           computes:
+            - type: toText
             - type: awk
               script: ${file::discrete_sensors.awk}
               separators: ;
+            - type: toTable
 
         interpretedSensors:
           type: tableUnion
@@ -69,8 +75,10 @@ monitors:
             - ${source::numericSensors}
             - ${source::discreteSensors}
           computes:
+            - type: toText
             - type: awk
               script: ${file::../interpret_sensors.awk}
               keep: ^MSHW;
               separators: ;
               selectColumns: 2,3,4,5,6,7,8,9,10,11
+            - type: toTable

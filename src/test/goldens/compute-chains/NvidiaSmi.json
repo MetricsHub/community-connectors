@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.enclosure.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -21,7 +21,7 @@
     },
     "${source::monitors.fan.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -61,7 +61,7 @@
     },
     "${source::monitors.gpu.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -101,7 +101,7 @@
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -141,7 +141,7 @@
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],

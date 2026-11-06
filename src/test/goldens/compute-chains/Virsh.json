@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.vm.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines", "translate" ],
+      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines", "translate" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -21,7 +21,7 @@
     },
     "${source::monitors.vm.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],

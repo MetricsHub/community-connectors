@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.lun.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ [ "val", "val", "with,comma", "0" ], [ "only", "0", "", "" ] ],
@@ -21,7 +21,7 @@
     },
     "${source::monitors.lun.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ [ "val", "with,comma", "with,comma" ], [ "only", "only" ] ],

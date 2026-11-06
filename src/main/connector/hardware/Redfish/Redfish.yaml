@@ -763,12 +763,14 @@ monitors:
             column: 4
             translationTable: "${translation::StatusInformationTranslationTable}"
           # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
+          - type: toText
           - type: awk
             script: |
               BEGIN { FS=";"; OFS=";" }
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
               { print }
             separators: ;
+          - type: toTable
       mapping:
         # Temperature Value Table
         # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingCelsius;State;
@@ -841,12 +843,14 @@ monitors:
             column: 5
             value: 1000
           # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
+          - type: toText
           - type: awk
             script: |
               BEGIN { FS=";"; OFS=";" }
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
               { print }
             separators: ;
+          - type: toTable
       mapping:
         # Voltage Value Table
         # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingVolts;State;

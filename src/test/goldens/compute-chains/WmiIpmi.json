@@ -69,7 +69,7 @@
     },
     "${source::monitors.enclosure.simple.sources.computerSystems}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -91,7 +91,7 @@
     },
     "${source::monitors.enclosure.simple.sources.discreteSensors}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -135,7 +135,7 @@
     },
     "${source::monitors.enclosure.simple.sources.interpretedSensors}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "awkSource" : {
           "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
@@ -205,7 +205,7 @@
     },
     "${source::monitors.enclosure.simple.sources.numericSensors}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -227,7 +227,7 @@
     },
     "${source::monitors.fan.simple.sources.source(1)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "append", "append" ],
+      "computes" : [ "keepOnlyMatchingLines", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],
@@ -243,13 +243,13 @@
         },
         "empty" : {
           "table" : [ ],
-          "rawData" : null
+          "rawData" : ""
         }
       }
     },
     "${source::monitors.fan.simple.sources.source(2)}" : {
       "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "convert", "append" ],
+      "computes" : [ "keepOnlyMatchingLines", "keepColumns", "convert", "insertColumn", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],

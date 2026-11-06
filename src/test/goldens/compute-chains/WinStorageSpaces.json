@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.disk_controller.discovery.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines", "translate", "awk" ],
+      "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines", "translate", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -91,7 +91,7 @@
     },
     "${source::monitors.logical_disk.collect.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "duplicateColumn", "translate", "translate", "awk" ],
+      "computes" : [ "duplicateColumn", "translate", "translate", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -102,8 +102,8 @@
           "rawData" : "a;UNKNOWN;Unknown;\nx;UNKNOWN;Unknown;\n1;failed;Full Repair Needed;\nonly;;;"
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "UNKNOWN", "Unknown" ], [ "cell", "sep", "", "UNKNOWN" ] ],
-          "rawData" : "a;UNKNOWN;Unknown;\ncell;sep;;UNKNOWN;"
+          "table" : [ [ "a", "UNKNOWN", "Unknown" ], [ "cell,with,sep", "UNKNOWN", "Unknown" ] ],
+          "rawData" : "a;UNKNOWN;Unknown;\ncell,with,sep;UNKNOWN;Unknown;"
         },
         "tableWide" : {
           "table" : [ [ "r1c1", "UNKNOWN", "Unknown", "r1c4" ], [ "r2c1", "UNKNOWN", "Unknown", "r2c4" ], [ "r3c1", "UNKNOWN", "Unknown", "r3c4" ] ],
@@ -113,7 +113,7 @@
     },
     "${source::monitors.logical_disk.discovery.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "keepOnlyMatchingLines", "awk" ],
+      "computes" : [ "keepOnlyMatchingLines", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -201,7 +201,7 @@
     },
     "${source::monitors.temperature.discovery.sources.source(2)}" : {
       "source" : "tableJoin",
-      "computes" : [ "keepColumns", "awk" ],
+      "computes" : [ "keepColumns", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -267,7 +267,7 @@
     },
     "${source::tools.physicalDisks.sources.table}" : {
       "source" : "tableJoin",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -289,7 +289,7 @@
     },
     "${source::tools.virtualDisks.sources.jobsElapsed}" : {
       "source" : "tableJoin",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -333,7 +333,7 @@
     },
     "${source::tools.virtualDisks.sources.pools}" : {
       "source" : "wmi",
-      "computes" : [ "translate", "arrayTranslate", "awk" ],
+      "computes" : [ "translate", "arrayTranslate", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -344,8 +344,8 @@
           "rawData" : "pool;a;c;;;;b;;;;;;;;;;;\npool;x;z;;;;;;;;;;;;;;;\npool;1;3;;;;2.5;;;;;;;;;;;\npool;only;;;;;;;;;;;;;;;;"
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "pool", "a", "c", "", "", "", "b", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "cell", "sep", "", "", "", "with", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "pool;a;c;;;;b;;;;;;;;;;;\npool;cell;sep;;;;with;;;;;;;;;;;"
+          "table" : [ [ "pool", "a", "c", "", "", "", "b", "", "", "", "", "", "", "", "", "", "" ], [ "pool", "cell,with,sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "pool;a;c;;;;b;;;;;;;;;;;\npool;cell,with,sep;;;;;;;;;;;;;;;;"
         },
         "tableWide" : {
           "table" : [ [ "pool", "r1c1", "r1c3", "", "r1c6", "r1c7", "r1c2", "r1c5", "", "", "", "", "", "", "", "", "" ], [ "pool", "r2c1", "r2c3", "", "r2c6", "r2c7", "r2c2", "r2c5", "", "", "", "", "", "", "", "", "" ], [ "pool", "r3c1", "r3c3", "", "r3c6", "r3c7", "r3c2", "r3c5", "", "", "", "", "", "", "", "", "" ] ],
@@ -355,7 +355,7 @@
     },
     "${source::tools.virtualDisks.sources.virtualDisks}" : {
       "source" : "wmi",
-      "computes" : [ "translate", "arrayTranslate", "translate", "awk" ],
+      "computes" : [ "translate", "arrayTranslate", "translate", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -366,8 +366,8 @@
           "rawData" : "virtualDisk;a;;;;;;;b;c;;;;;;;;\nvirtualDisk;x;;;;;;;;z;;;;;;;;\nvirtualDisk;1;;;;;;;2.5;3;;;;;;;;\nvirtualDisk;only;;;;;;;;;;;;;;;;"
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "virtualDisk", "a", "", "", "", "", "", "", "b", "c", "", "", "", "", "", "", "" ], [ "virtualDisk", "cell", "", "", "", "", "", "", "with", "sep", "", "", "", "", "", "", "" ] ],
-          "rawData" : "virtualDisk;a;;;;;;;b;c;;;;;;;;\nvirtualDisk;cell;;;;;;;with;sep;;;;;;;;"
+          "table" : [ [ "virtualDisk", "a", "", "", "", "", "", "", "b", "c", "", "", "", "", "", "", "" ], [ "virtualDisk", "cell,with,sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
+          "rawData" : "virtualDisk;a;;;;;;;b;c;;;;;;;;\nvirtualDisk;cell,with,sep;;;;;;;;;;;;;;;;"
         },
         "tableWide" : {
           "table" : [ [ "virtualDisk", "r1c1", "r1c5", "", "r1c8", "r1c9", "", "", "r1c2", "r1c3", "r1c4", "r1c7", "", "", "", "", "" ], [ "virtualDisk", "r2c1", "r2c5", "", "r2c8", "r2c9", "", "", "r2c2", "r2c3", "r2c4", "r2c7", "", "", "", "", "" ], [ "virtualDisk", "r3c1", "r3c5", "", "r3c8", "r3c9", "", "", "r3c2", "r3c3", "r3c4", "r3c7", "", "", "", "", "" ] ],

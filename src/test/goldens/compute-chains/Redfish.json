@@ -963,7 +963,7 @@
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "awk" ],
+      "computes" : [ "json2csv", "translate", "translate", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],
@@ -1023,7 +1023,7 @@
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "multiply", "awk" ],
+      "computes" : [ "json2csv", "translate", "translate", "multiply", "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
           "table" : [ ],

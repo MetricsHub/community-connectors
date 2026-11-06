@@ -33,6 +33,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
       mapping:
         source: ${source::monitors.enclosure.discovery.sources.source(1)}
   gpu:
@@ -75,6 +76,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_GPU
@@ -127,6 +129,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_TEMP
@@ -169,6 +172,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_VOLTAGE
@@ -214,6 +218,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
+          - type: toTable
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ^MSHW_FAN

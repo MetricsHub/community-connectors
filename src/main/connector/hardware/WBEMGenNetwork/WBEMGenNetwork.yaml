@@ -189,7 +189,7 @@ monitors:
           rightTable: ${source::monitors.network.collect.sources.source(7)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;0;;0;
+          defaultRightLine: [ "", "0", "", "0" ]
           computes:
             # Computes TransmittedPackets ( = TransmitErrors + TransmitsOK )
             # DeviceID;TransmittedPackets;DeviceID;ReceivesOK;DeviceID;TransmitError;DeviceID;ReceiveError
@@ -214,7 +214,7 @@ monitors:
           rightTable: ${source::monitors.network.collect.sources.source(1)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;
+          defaultRightLine: [ "", "", "" ]
         source(11):
           # Link Speed
           # DeviceID;LinkSpeed
@@ -243,7 +243,7 @@ monitors:
           rightTable: ${source::monitors.network.collect.sources.source(9)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;;;;;;
+          defaultRightLine: [ "", "", "", "", "", "", "", "" ]
           computes:
             # Now replace some "special" chars in one of the DeviceID columns with underscores
             # as it looks like the perfmon instances can't have '#' or '/'
@@ -280,7 +280,7 @@ monitors:
           rightTable: ${source::monitors.network.collect.sources.source(14)}
           leftKeyColumn: 8
           rightKeyColumn: 1
-          defaultRightLine: ;;;
+          defaultRightLine: [ "", "", "" ]
       mapping:
         # And here is the ValueTable (at last!)
         source: ${source::monitors.network.collect.sources.source(15)}

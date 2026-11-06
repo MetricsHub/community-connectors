@@ -54,8 +54,8 @@ tools:
 | `<toolName>.destructive` | No | `false` | `true` when the tool changes the state of the host: a reboot, a command, a write. See the Destructive Tools section below. |
 | `<toolName>.sources` | Yes | None | Named sources with their computes, like a monitor job's `sources`. |
 | `<toolName>.executionOrder` | No | Dependency order | Explicit source order, like a monitor job's. |
-| `<toolName>.result.source` | Yes | None | Reference of the source whose table is returned, e.g. `${source::processes}`. |
-| `<toolName>.result.columns` | No | None | Names of the table columns, in order, so that the rows read as records. |
+| `<toolName>.result.source` | Yes | None | Reference of the source whose result is returned, e.g. `${source::processes}`. |
+| `<toolName>.result.columns` | No | None | Names of the table columns, in order, so that the rows read as records. Without `columns`, a result source that ends in text (a command output, a free-form `awk`, or a `tableUnion` of such outputs) is returned as text; one that ends in a table is returned as rows. |
 
 ### Parameters
 
@@ -144,7 +144,7 @@ A tool creates no monitor and its tables do not reach the monitor jobs: `mapping
 
 ## How the Assistant Calls It
 
-The agent adds two parameters to every tool: `hostname`, a list of configured hosts to run it on (**required**), and `poolSize`, the number of hosts run concurrently. The result lists one entry per host, holding the `columns` declared in `result` and the `rows` of the result source, or an `error`.
+The agent adds two parameters to every tool: `hostname`, a list of configured hosts to run it on (**required**), and `poolSize`, the number of hosts run concurrently. The result lists one entry per host, holding the `columns` declared in `result` and the `rows` of the result source, its `text` when the tool declares no columns and the source ends in text, or an `error`.
 
 ```json
 {
@@ -154,6 +154,21 @@ The agent adds two parameters to every tool: `hostname`, a list of configured ho
       "response": {
         "columns": [ "pid", "name", "workingSetBytes", "kernelTime" ],
         "rows": [ [ "4212", "java.exe", "734003200", "12.5" ] ]
+      }
+    }
+  ]
+}
+```
+
+A tool that returns a command output as it is, such as `ping`, declares no `columns` and no `toTable`: the assistant reads the output itself.
+
+```json
+{
+  "hosts": [
+    {
+      "hostname": "srv-01",
+      "response": {
+        "text": "PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.\n64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=0.31 ms\n..."
       }
     }
   ]
@@ -194,7 +209,8 @@ tools:
 - Give every parameter a `default` or `required: true`, and an example value in its description.
 - Keep the default pattern for names and identifiers; use an `enum` or a numeric type where you can; give a wider `pattern` only where needed, with the escape of the field.
 - Bound the numbers that size the work or the result (a line count, a time range) with a `pattern` such as `[1-9][0-9]{0,3}`: the type alone accepts any integer.
-- Keep the result tabular: keep the commands plain, and filter, sort and select the lines with the source's `keep` and `exclude` and with computes ([`sort`](computes/sort.html), [`head`](computes/head.html), [`tail`](computes/tail.html)) rather than with `grep`, `sort`, `head` or `tail` on the host; name the columns.
+- Return a table when the output has a structure the assistant should read field by field: split it with [`toTable`](computes/to-table.html) and the separator the command really uses (a space for `ps`-like output), filter, sort and select the lines with the source's `keep` and `exclude` and with computes ([`sort`](computes/sort.html), [`head`](computes/head.html), [`tail`](computes/tail.html)) rather than with `grep`, `sort`, `head` or `tail` on the host, and name the columns.
+- Return text when the output is meant to be read as a whole (`ping`, a log excerpt, a status report): no `toTable`, no `columns`.
 - Mark anything that writes as `destructive: true`, even a harmless-looking `identify` LED.
 
 ## Common Mistakes

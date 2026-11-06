@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.enclosure.simple.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "divide" ],
+      "computes" : [ "awk", "toTable", "divide" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -21,7 +21,7 @@
     },
     "${source::monitors.fan.simple.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
           "table" : [ ],
@@ -39,7 +39,7 @@
     },
     "${source::monitors.temperature.simple.sources.sensors}" : {
       "source" : "copy",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csv" : {
           "table" : [ ],

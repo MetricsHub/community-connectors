@@ -38,6 +38,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::vm.awk}
+          - type: toTable
       mapping:
         source: ${source::monitors.vm.discovery.sources.source(1)}
         attributes:
@@ -58,6 +59,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::vm.awk}
+          - type: toTable
           # No state: virsh dominfo failed for this domain, collect nothing rather than report it off
           - type: keepOnlyMatchingLines
             column: 2
