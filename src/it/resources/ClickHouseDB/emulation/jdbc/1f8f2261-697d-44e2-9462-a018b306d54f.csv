@@ -1,0 +1,4 @@
+lab;mh_queue_all;ok;2;0;0;0;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_blocked;degraded;1;1;128;0;0;0;1;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_error;degraded;1;1;128;0;0;1;0;30;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_broken;failed;1;0;0;1;128;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;

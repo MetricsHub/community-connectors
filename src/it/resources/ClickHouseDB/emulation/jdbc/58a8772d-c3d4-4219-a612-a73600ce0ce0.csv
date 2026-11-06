@@ -1,0 +1,9 @@
+lab;mh_mutation_test;MergeTree;100;1972;1;1;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_all;Distributed;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_blocked;Distributed;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_broken;Distributed;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_error;Distributed;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;mh_queue_local;MergeTree;50;1335;1;1;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;replicated_events;ReplicatedMergeTree;2;765;1;1;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;shard_events_all;Distributed;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;shard_events_local;MergeTree;10;964;1;1;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;

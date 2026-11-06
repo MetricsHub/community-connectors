@@ -1704,7 +1704,7 @@
     },
     "attributes" : {
       "db.version" : "10.5.29-MariaDB-ubu2004",
-      "db.system" : "mariadb",
+      "db.system.name" : "mariadb",
       "connector_id" : "MariaDB",
       "id" : "0e7cecdb37b8",
       "db.server.name" : "0e7cecdb37b8",

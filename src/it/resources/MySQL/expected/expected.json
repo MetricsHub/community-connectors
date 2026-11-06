@@ -971,7 +971,7 @@
       },
       "attributes": {
         "db.version": "9.2.0",
-        "db.system": "mysql",
+        "db.system.name": "mysql",
         "connector_id": "MySQL",
         "id": "c52e41411c85",
         "db.server.name": "c52e41411c85",
