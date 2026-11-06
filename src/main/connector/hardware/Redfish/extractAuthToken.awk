@@ -1,5 +1,5 @@
 BEGIN { FS = ":"; }
-$1 == "X-Auth-Token" {
+$1 ~ /^[Xx]-[Aa][Uu][Tt][Hh]-[Tt][Oo][Kk][Ee][Nn]$/ {
   gsub(/^[ \t]+|[ \t\r]+$/, "", $2)
   print $2
 }
