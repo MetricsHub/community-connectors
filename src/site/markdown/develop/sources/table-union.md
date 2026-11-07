@@ -11,6 +11,31 @@ Use `tableUnion` to append rows from multiple tables into one table.
 
 `tableUnion` does not perform key matching. It is a row concatenation operation.
 
+When every source in `tables` ends in text (a `commandLine` or `awk` source without computes, a source whose last compute produces text, a `copy` of one of these, or another such union), the union is a **text union**: its result is the texts of the sources joined with a line feed. An `awk` compute on the union, or on a `copy` of it, reads that text as is, so a script can parse the outputs of several commands in one pass. Do not add `toTable` to the sources of a text union: it would rewrite each line with a trailing `;` before the script sees it.
+
+```yaml
+sources:
+  version:
+    type: commandLine
+    commandLine: show version
+  environment:
+    type: commandLine
+    commandLine: show environment
+  outputs:
+    type: tableUnion
+    tables:
+    - ${source::version}
+    - ${source::environment}
+    computes:
+    - type: awk
+      script: ${file::parse-show.awk}
+    - type: toTable
+```
+
+Each pair of consecutive line feeds in the joined text becomes a single line feed, so most blank lines disappear: do not rely on blank lines to separate the outputs, match a line of each output instead.
+
+When the sources mix text and tables, the union is a table union: give the text sources an explicit `toTable`, and an `awk` on the union an explicit `toText` before it.
+
 ## Syntax
 
 ```yaml
