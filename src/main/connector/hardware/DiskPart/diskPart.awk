@@ -73,15 +73,11 @@ BEGIN {
 	if (type == "Partition") {
 		type = ""
 	}
-	# An empty last column is not a cell (as the former text output turned into a table)
+	if (info != "") {
+		info = "Volume Information: " info
+	}
 	if (collect) {
-		if (status == "") {
-			print volumeID
-		} else {
-			print volumeID, status
-		}
-	} else if (info == "") {
-		print volumeID, displayID, letter, type, fs, size, status
+		print volumeID, status
 	} else {
 		print volumeID, displayID, letter, type, fs, size, status, info
 	}

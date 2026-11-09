@@ -49,9 +49,6 @@ monitors:
           - type: prepend
             column: 5
             value: "File System: "
-          - type: prepend
-            column: 8
-            value: "Volume Information: "
       mapping:
         # The InstanceTable
         source: ${source::monitors.logical_disk.discovery.sources.source(1)}
