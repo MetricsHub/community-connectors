@@ -181,8 +181,8 @@ monitors:
           hw.parent.id: Computer
           name: ${awk::sprintf("%s (%s)", $1, "Planar")}
         metrics:
-          hw.fan.speed.limit{limit_type="low.degraded"}: $4
-          hw.fan.speed.limit{limit_type="low.critical"}: $5
+          # fanN_min is the speed below which lm-sensors raises its alarm (fanN_max is a speed, fanN_alarm a flag)
+          hw.fan.speed.limit{limit_type="low.critical"}: $3
     collect:
       # Collection Type
       type: multiInstance
