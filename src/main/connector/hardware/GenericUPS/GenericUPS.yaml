@@ -47,10 +47,10 @@ monitors:
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: 4
           computes:
-          - type: toText
           - type: awk
             script: ${file::enclosure.awk}
-          - type: toTable
+            input: table
+            output: table
             # MSHW;PowerConsumption;
         source(3):
           type: tableJoin
@@ -188,10 +188,10 @@ monitors:
             column: 3
             value: ${source::monitors.voltage.discovery.sources.source(1)}
             # MSHW;ID;UPSConfigInputVoltage;
-          - type: toText
           - type: awk
             script: ${file::voltage.awk}
-          - type: toTable
+            input: table
+            output: table
             # Create Thresholds
             # MSHW;ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
         source(3):
@@ -217,10 +217,10 @@ monitors:
             column: 3
             value: ${source::monitors.voltage.discovery.sources.source(3)}
             # MSHW;ID;UPSConfigOutputVoltage;
-          - type: toText
           - type: awk
             script: ${file::voltage.awk}
-          - type: toTable
+            input: table
+            output: table
             # Create Thresholds
             # MSHW;ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
         source(5):

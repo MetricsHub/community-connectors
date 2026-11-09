@@ -18,7 +18,7 @@
 #   normalized (asserted/deasserted) and emitted once FRU mapping is available.
 
 BEGIN {
-  FS=";"; OFS=";"
+  OFS=";"
   chassis_fru_id = -1
   fru_count = 0
   fru_flushed = 0
@@ -174,7 +174,7 @@ function build_oem_specific_status(record_text, sensor_name,    asserted_text,he
 }
 
 # Print and cleanup a discrete device once FRU mapping is known
-function emit_device_for_entity(entity_key,    device_key,fru_id,vendor,model,serial,device_line){
+function emit_device_for_entity(entity_key,    device_key,fru_id,vendor,model,serial,device_status){
   device_key = device_type_by_entity[entity_key] SUBSEP device_instance_by_entity[entity_key]
   if(!(device_key in device_status_by_key)) return
 
@@ -194,16 +194,15 @@ function emit_device_for_entity(entity_key,    device_key,fru_id,vendor,model,se
     serial=fru_serial_by_id[fru_id]
   }
 
-  device_line = device_type_by_entity[entity_key] OFS device_instance_by_entity[entity_key] \
-                OFS device_type_by_entity[entity_key] " " device_instance_by_entity[entity_key] \
-                OFS vendor OFS model OFS serial OFS device_status_by_key[device_key]
+  device_status = device_status_by_key[device_key]
+  gsub(/=State Asserted/,"=1",device_status)
+  gsub(/=State Deasserted/,"=0",device_status)
+  gsub(/=Asserted/,"=1",device_status)
+  gsub(/=Deasserted/,"=0",device_status)
 
-  gsub(/=State Asserted/,"=1",device_line)
-  gsub(/=State Deasserted/,"=0",device_line)
-  gsub(/=Asserted/,"=1",device_line)
-  gsub(/=Deasserted/,"=0",device_line)
-
-  print device_line
+  print device_type_by_entity[entity_key], device_instance_by_entity[entity_key], \
+        device_type_by_entity[entity_key] " " device_instance_by_entity[entity_key], \
+        vendor, model, serial, device_status
 
   delete device_status_by_key[device_key]
   delete device_type_by_entity[entity_key]
@@ -212,28 +211,35 @@ function emit_device_for_entity(entity_key,    device_key,fru_id,vendor,model,se
 }
 
 # Flush buffered FRUs, ensuring Chassis is first (so interpret_sensors.awk picks the right one)
+function print_fru_line(id,    fru_cells){
+  split(fru_line_by_id[id], fru_cells, OFS)
+  print fru_cells[1], fru_cells[2], fru_cells[3], fru_cells[4]
+}
+
 function flush_fru_lines(    i,id){
   if (fru_flushed) return
   fru_flushed = 1
 
   if (chassis_fru_id in fru_line_by_id) {
-    print fru_line_by_id[chassis_fru_id]
+    print_fru_line(chassis_fru_id)
   }
 
   for (i = 1; i <= fru_count; i++) {
     id = fru_ids[i]
     if (id == chassis_fru_id) continue
-    if (id in fru_line_by_id) print fru_line_by_id[id]
+    if (id in fru_line_by_id) print_fru_line(id)
   }
 }
 
 # --- main ---
 {
+  # The record text is the cells joined with OFS: assigning a field rebuilds $0 with it
+  $1=$1
   record_type=$1
   record_text=strip_record_prefix($0)
 
   # ---- Chassis status line (chassis_status.awk): already in the final format ----
-  if(record_type=="Chassis"){ print; next }
+  if(record_type=="Chassis"){ print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13; next }
 
   # ---- FRU ----
   if(record_type=="FRU"){
@@ -362,7 +368,7 @@ function flush_fru_lines(    i,id){
     if(!is_number(threshold_high)) threshold_high=get_field_value(record_text,"Upper non-recoverable")
     if(!is_number(threshold_low)) threshold_low=""
     if(!is_number(threshold_high)) threshold_high=""
-    print "Temperature" OFS sensor_hex_id OFS sensor_name OFS device_location OFS numeric_value OFS threshold_low OFS threshold_high
+    print "Temperature", sensor_hex_id, sensor_name, device_location, numeric_value, threshold_low, threshold_high
   }
   else if(unit_text=="RPM"){
     threshold_low = get_field_value(record_text,"Lower non-critical")
@@ -370,7 +376,7 @@ function flush_fru_lines(    i,id){
     if(!is_number(threshold_high)) threshold_high=get_field_value(record_text,"Lower non-recoverable")
     if(!is_number(threshold_low)) threshold_low=""
     if(!is_number(threshold_high)) threshold_high=""
-    print "Fan" OFS sensor_hex_id OFS sensor_name OFS device_location OFS numeric_value OFS threshold_low OFS threshold_high
+    print "Fan", sensor_hex_id, sensor_name, device_location, numeric_value, threshold_low, threshold_high
   }
   else if(unit_text=="Volts"){
     threshold_low=get_field_value(record_text,"Lower non-critical")
@@ -385,13 +391,13 @@ function flush_fru_lines(    i,id){
     if(!is_number(threshold_high) || threshold_high==0) threshold_high=""; else threshold_high=threshold_high*1000
     numeric_value=numeric_value*1000
 
-    print "Voltage" OFS sensor_hex_id OFS sensor_name OFS device_location OFS numeric_value OFS threshold_low OFS threshold_high
+    print "Voltage", sensor_hex_id, sensor_name, device_location, numeric_value, threshold_low, threshold_high
   }
   else if(unit_text=="Amps"){
-    print "Current" OFS sensor_hex_id OFS sensor_name OFS device_location OFS numeric_value
+    print "Current", sensor_hex_id, sensor_name, device_location, numeric_value
   }
   else if(unit_text=="Watts"){
-    print "PowerConsumption" OFS sensor_hex_id OFS sensor_name OFS device_location OFS numeric_value
+    print "PowerConsumption", sensor_hex_id, sensor_name, device_location, numeric_value
   }
 }
 

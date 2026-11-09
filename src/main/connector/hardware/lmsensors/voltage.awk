@@ -32,7 +32,7 @@ BEGIN {
 		}
 		Type = $1
 		gsub(/:/, "", Type)
-		print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Lower ";" Upper ";")
+		print "MSHW", Name "-" Type, Type, Value, Lower, Upper
 	}
 }
 

@@ -17,16 +17,22 @@ function trim(trimString) {
     return rtrim(ltrim(trimString));
 }
 
+# One row, a cell per ";"-separated item (variable count, hence printf); like toTable, drop one trailing empty cell
+function printRow(row) {
+    sub(/;$/, "", row)
+    printf "%s\n", row
+}
+
 /Sensor ID/ {
     if(sdr != "SDR") {
-        print sdr
+        printRow(sdr)
         sdr = "SDR"
     }
 }
 
 /Device ID/ {
     if(sdr != "SDR") {
-        print sdr
+        printRow(sdr)
         sdr = "SDR"
     }
 }
@@ -37,5 +43,5 @@ function trim(trimString) {
 }
 
 END {
-    print sdr
+    printRow(sdr)
 }

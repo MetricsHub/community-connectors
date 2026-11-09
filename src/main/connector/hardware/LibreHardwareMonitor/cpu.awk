@@ -1,7 +1,3 @@
-BEGIN {
-	FS = ";"
-}
-
 # Skip bus clock speed
 ($1 ~ /[Bb]us/) {
 	next
@@ -19,7 +15,7 @@ BEGIN {
 # Print the result at the end
 END {
 	for (cpuId in clockCount) {
-		print "MSHW;" cpuId ";" (clockSum[cpuId] / clockCount[cpuId])
+		print cpuId, (clockSum[cpuId] / clockCount[cpuId])
 	}
 }
 

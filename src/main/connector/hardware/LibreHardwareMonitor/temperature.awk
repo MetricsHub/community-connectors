@@ -1,7 +1,3 @@
-BEGIN {
-	FS = ";"
-}
-
 # Skip sensors that mention "Max" or "Average" (they are not real sensors anyway)
 ($2 ~ " Max" || $2 ~ " Average") {
 	next
@@ -85,7 +81,7 @@ END {
 			label = label " - " name
 		}
 		# Print
-		print "MSHW;" sensorId ";" label ";" wThres ";" aThres ";"
+		print sensorId, label, wThres, aThres
 	}
 }
 

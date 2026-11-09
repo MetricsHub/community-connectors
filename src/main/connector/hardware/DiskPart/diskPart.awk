@@ -73,6 +73,17 @@ BEGIN {
 	if (type == "Partition") {
 		type = ""
 	}
-	print "MSHW;" volumeID ";" displayID ";" letter ";" type ";" fs ";" size ";" status ";" info ";"
+	# An empty last column is not a cell (as the former text output turned into a table)
+	if (collect) {
+		if (status == "") {
+			print volumeID
+		} else {
+			print volumeID, status
+		}
+	} else if (info == "") {
+		print volumeID, displayID, letter, type, fs, size, status
+	} else {
+		print volumeID, displayID, letter, type, fs, size, status, info
+	}
 }
 

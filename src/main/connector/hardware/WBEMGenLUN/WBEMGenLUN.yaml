@@ -42,13 +42,10 @@ monitors:
           computes:
             # Take the list of volumes and associated them to the MPIO disk.
             # MPIOID;LunPathCount;NAAID;
-          - type: toText
           - type: awk
             script: "${file::lunAssociation1.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4"
-          - type: toTable
+            input: table
+            output: table
         source(2):
           # Source (2) = Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;
@@ -88,13 +85,10 @@ monitors:
           computes:
             # To upper the PnPAddress
             # LunId(WithDevice);PnPAddress;
-          - type: toText
           - type: awk
             script: ${file::lunToUpper.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3"
-          - type: toTable
+            input: table
+            output: table
         source(7):
           # Source 7 = 2 Joined to 3 with Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;
@@ -143,13 +137,10 @@ monitors:
             columnNumbers: 2,3,11
             # Take the list of volumes and associated them to the MPIO disk.
             # MPIOID;VolumeList;
-          - type: toText
           - type: awk
             script: ${file::lunAssociation2.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3
-          - type: toTable
+            input: table
+            output: table
         source(11):
           # Join the MPIO Discovered list with the Volume List
           # MPIOID;LunPathCount;NAAID;MPIOID;VolumeList;
@@ -193,13 +184,10 @@ monitors:
           computes:
             # Take the list of volumes and associated them to the MPIO disk.
             # MPIOID;LunPathCount;NAAID;
-          - type: toText
           - type: awk
             script: ${file::lunAssociation1.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4
-          - type: toTable
+            input: table
+            output: table
       mapping:
         # ValueTable = Source(1)
         # LUNID;NumberPaths

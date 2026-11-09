@@ -59,15 +59,12 @@ monitors:
           - type: translate
             column: 2
             translationTable: ${translation::BustypeTranslationTable}
-          - type: toText
             # Merge all info into a proper label for the "Model" field
             # __PATH;DeviceID;Model;FirmwareVersion;SerialNumber;Size
           - type: awk
             script: ${file::diskController.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7
-          - type: toTable
+            input: table
+            output: table
         source(2):
           # Source(2) = Win32_DiskDrive
           # SerialNumber;PnPDeviceID;
@@ -322,15 +319,12 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 3
             valueList: 3
-          - type: toText
             # Transform DriveLetterNumber into a letter, and change ObjectId for DriveLetter is possible
             # DeviceID;Label;Filesystem;Size;
           - type: awk
             script: ${file::logicalDiskDiscovery.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
-          - type: toTable
+            input: table
+            output: table
       mapping:
         # InstanceTable = Source(1)
         source: ${source::monitors.logical_disk.discovery.sources.source(1)}
@@ -368,15 +362,12 @@ monitors:
           - type: translate
             column: 4
             translationTable: ${translation::LogicalDiskHealthStatusInformationTranslationTable}
-          - type: toText
             # Convert ObjectId and DriveLetterNumber into a DeviceId
             # DeviceID;Status;StatusInformation;SizeRemaning;
           - type: awk
             script: ${file::logicalDiskCollect.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
-          - type: toTable
+            input: table
+            output: table
       mapping:
         # ValueTable = Source(1)
         source: ${source::monitors.logical_disk.collect.sources.source(1)}
@@ -417,16 +408,13 @@ monitors:
             # DeviceId;TemperatureMax;Model;
           - type: keepColumns
             columnNumbers: 1,6,9
-          - type: toText
             # Assess Warning and Alarm thresholds, based on TemperatureMax
             # (which is often 0, in which case we set thresholds based on the type of the disk)
             # DeviceId;TemperatureType;WarningThreshold;AlarmThreshold;
           - type: awk
             script: ${file::temperature.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
-          - type: toTable
+            input: table
+            output: table
       mapping:
         # InstanceTable = Source(2)
         source: ${source::monitors.temperature.discovery.sources.source(2)}

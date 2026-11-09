@@ -87,7 +87,7 @@ BEGIN {
 # Prints a front-panel LED derived from the Chassis status line
 # LED;DeviceID;Name;EntityID;Color;OnStatus;OffStatus;BlinkingStatus;State
 function chassisLed(name, color, onStatus, state) {
-	print "MSHW;LED;" name ";" name ";Chassis;" color ";" onStatus ";ok;" onStatus ";" state
+	print "LED", name, name, "Chassis", color, onStatus, "ok", onStatus, state
 }
 
 ($1 == "Chassis") {
@@ -181,9 +181,14 @@ function chassisLed(name, color, onStatus, state) {
 	if (deviceType == "Temperature" && entityID == "SEL Fullness") {
 		next
 	}
-	# Simply re-print numeric sensors
-	if (deviceType == "Voltage" || deviceType == "Temperature" || deviceType == "Fan" || deviceType == "Current" || deviceType == "PowerConsumption" || deviceType == "EnergyUsage" || deviceType == "FRU") {
-		print "MSHW;" $0
+	# Simply re-print numeric sensors (SensorType;SensorID;SensorName;Location;Value;Threshold1;Threshold2)
+	# and FRUs (FRU;Vendor;Model;SerialNumber)
+	if (deviceType == "FRU") {
+		print $1, $2, $3, $4
+		next
+	}
+	if (deviceType == "Voltage" || deviceType == "Temperature" || deviceType == "Fan" || deviceType == "Current" || deviceType == "PowerConsumption" || deviceType == "EnergyUsage") {
+		print $1, $2, $3, $4, $5, $6, $7
 		next
 	}
 	##############################################################
@@ -470,7 +475,7 @@ function chassisLed(name, color, onStatus, state) {
 					} else {
 						ledStatus = "UNKNOWN"
 					}
-					print "MSHW;LED;" sensorName ";" sensorName ";" deviceID ";" color ";" onStatus ";" offStatus ";" blinkingStatus ";" ledStatus
+					print "LED", sensorName, sensorName, deviceID, color, onStatus, offStatus, blinkingStatus, ledStatus
 					continue
 				} else if (substr(sensorName, 1, 5) == "DDR3_") {
 					if (digit2 == 1) {
@@ -857,7 +862,11 @@ function chassisLed(name, color, onStatus, state) {
 		sensorNameList = substr(sensorNameList, 1, length(sensorNameList) - 2)
 	}
 	# Good! The FRU details of the IPMI extension (memory size and type, CPU speed and info) follow, when provided
-	print "MSHW;" deviceType ";" deviceID ";" entityID ";" vendor ";" model ";" serialNumber ";" status ";" statusInformation ";Monitored by sensors: " sensorNameList ";" $8 ";" $9 ";" $10 ";" $11
+	if (NF > 7) {
+		print deviceType, deviceID, entityID, vendor, model, serialNumber, status, statusInformation, "Monitored by sensors: " sensorNameList, $8, $9, $10, $11
+	} else {
+		print deviceType, deviceID, entityID, vendor, model, serialNumber, status, statusInformation, "Monitored by sensors: " sensorNameList
+	}
 }
 
 END {
@@ -885,6 +894,6 @@ END {
 		systemSensorNameList = substr(systemSensorNameList, 1, length(systemSensorNameList) - 2)
 	}
 	# Print the enclosure stuff
-	print "MSHW;Enclosure;" systemVendor ";" systemModel ";" systemSerialNumber ";" systemStatus ";" systemStatusInformation ";" systemPowerConsumption ";Monitored by sensors: " systemSensorNameList
+	print "Enclosure", systemVendor, systemModel, systemSerialNumber, systemStatus, systemStatusInformation, systemPowerConsumption, "Monitored by sensors: " systemSensorNameList
 }
 

@@ -1,3 +1,20 @@
+# One row per LUN: LunName;LunInfo;LunStatus (discovery) or, with the variable collect set,
+# LunName;NumberPaths;LunStatus;LunStatusInfo;AvailablePathInformation
+# An empty last column is not a cell (as the former text output turned into a table)
+function printLun() {
+	if (collect) {
+		if (AvailablePaths == "") {
+			print LunName, NumberPaths, LunStatus, LunStatusInfo
+		} else {
+			print LunName, NumberPaths, LunStatus, LunStatusInfo, AvailablePaths
+		}
+	} else if (LunStatus == "") {
+		print LunName, LunInfo
+	} else {
+		print LunName, LunInfo, LunStatus
+	}
+}
+
 BEGIN {
 	NumberPaths = 0
 	LunName = ""
@@ -32,7 +49,7 @@ BEGIN {
 #   `- 1:0:3:3  sdag 66:0   active undef running
 $1 ~ /^[0-9A-Za-z][0-9A-Za-z]/ && $1 !~ /[=\[]/ {
 	if (LunName != "") {
-		print ("MSHW;" LunName ";" LunInfo ";" NumberPaths ";" LunStatus ";" LunStatusInfo ";" AvailablePaths ";")
+		printLun()
 	}
 	NumberPaths = 0
 	LunName = ""
@@ -77,7 +94,7 @@ $1 ~ /^[0-9A-Za-z][0-9A-Za-z]/ && $1 !~ /[=\[]/ {
 
 END {
 	if (LunName != "") {
-		print ("MSHW;" LunName ";" LunInfo ";" NumberPaths ";" LunStatus ";" LunStatusInfo ";" AvailablePaths ";")
+		printLun()
 	}
 }
 

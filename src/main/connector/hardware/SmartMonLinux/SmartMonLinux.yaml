@@ -51,12 +51,9 @@ monitors:
           from: "${source::beforeAll.smartctlAll}"
           computes:
           - type: awk
-            # Output: "MSHW"; deviceID; vendor; serialNumber; extraOptions
+            # Output: deviceID; vendor; serialNumber; extraOptions
             script: "${file::smartctl_inventory.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
-          - type: toTable
+            output: table
           - type: excludeMatchingLines
             column: 2
             regExp: "[Vv]irtual"
@@ -82,10 +79,7 @@ monitors:
           # SMARTstatus
           - type: awk
             script: "${file::physical_disk_smart_health.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2
-          - type: toTable
+            output: table
             # Duplicate the SMARTstatus: the first copy becomes the join key, the second the PredictedFailure value
             # SMARTstatus;SMARTstatus
           - type: duplicateColumn
@@ -129,8 +123,7 @@ monitors:
             - type: awk
               # Output: ecc_fast_read; ecc_delayed_read; rereads_rewrites_read; corrected_read; invocations_read; uncorrected_read; ecc_fast_write; ecc_delayed_write; rereads_rewrites_write; corrected_write; invocations_write; uncorrected_write; non_medium; "joinValue"
               script: "${file::physical_disk_error_counters.awk}"
-              separators: ;
-            - type: toTable
+              output: table
         source(5):
           type: tableJoin
           leftTable: "${source::monitors.physical_disk.collect.sources.source(3)}"
@@ -172,10 +165,7 @@ monitors:
           - type: awk
             # Output: DeviceID;WarningThreshold; ExtraOptions
             script: "${file::smartctl_temperature_discovery.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4"
-          - type: toTable
+            output: table
       mapping:
         # InstanceTable = Source(1)
         source: "${source::monitors.temperature.discovery.sources.source(1)}"
@@ -197,13 +187,10 @@ monitors:
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
           computes:
           # Process smartctl's output through awk smartctl_temperature_collect.awk
-          # "MSHW"; Temperature
+          # Temperature
           - type: awk
             script: "${file::smartctl_temperature_collect.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2
-          - type: toTable
+            output: table
       mapping:
         # ValueTable = Source(1)
         source: "${source::monitors.temperature.collect.sources.source(1)}"
@@ -219,12 +206,9 @@ monitors:
           computes:
           - type: awk
             # Source(1) = output of smart_attributes.awk
-            # Output: "MSHW";DiskId;SmartAttributeName;RawValue
+            # Output: DiskId;SmartAttributeName;RawValue
             script: "${file::smart_attributes.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4"
-          - type: toTable
+            output: table
       mapping:
         source: "${source::monitors.smart.simple.sources.source(1)}"
         attributes:

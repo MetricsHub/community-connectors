@@ -40,10 +40,7 @@ monitors:
             # LunName;LunInfo;LunStatus;
           - type: awk
             script: ${file::lun.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,5"
-          - type: toTable
+            output: table
       mapping:
         # InstanceTable = Source(1)
         # LunName;LunInfo;LunStatus;
@@ -66,10 +63,9 @@ monitors:
             # LunName;NumberPaths;LunStatus;LunStatusInfo;AvailablePathInformation;
           - type: awk
             script: ${file::lun.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,4,5,6,7
-          - type: toTable
+            output: table
+            variables:
+              collect: 1
       mapping:
         # ValueTable = Source(1)
         # LunName;NumberPaths;LunStatus;LunStatusInfo;AvailablePathInformation;

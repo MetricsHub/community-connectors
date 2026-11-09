@@ -41,7 +41,7 @@ monitors:
               function addUnitFile() {
                 # An alias resolves to the Id of its unit, which is already listed: keep the first row
                 if (id != "" && !(id in row)) {
-                  row[id] = id ";" load ";" active ";" state
+                  row[id] = load; act[id] = active; st[id] = state
                 }
                 id = ""
               }
@@ -50,7 +50,7 @@ monitors:
                 if ($0 ~ /\.service/) {
                   sub(/^[^a-zA-Z0-9]+/, "");
                   sub("\.service", "");
-                  row[$1] = $1 ";" $2 ";" $3 ";" $4
+                  row[$1] = $2; act[$1] = $3; st[$1] = $4
                 }
                 next
               }
@@ -64,11 +64,11 @@ monitors:
                 # No unit file shown: list-unit-files or show failed, report nothing rather than a partial inventory
                 if (shown) {
                   for (name in row) {
-                    print row[name]
+                    print name, row[name], act[name], st[name]
                   }
                 }
               }
-          - type: toTable
+            output: table
           - type: keepOnlyMatchingLines
             column: 1
             regExp: ${var::serviceNames} # In metricshub.yaml, the regex should be set this way "serviceNames: cron\|PatrolAgent\|snmp"

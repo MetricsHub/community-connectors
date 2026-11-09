@@ -7,6 +7,6 @@
 END {
 	input = output / 0.9
 	powerconsumption = input - output
-	print "MSHW;" powerconsumption ";"
+	print "MSHW", powerconsumption
 }
 

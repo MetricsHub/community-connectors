@@ -31,7 +31,7 @@ $1 ~ /^ether$/ && $2 ~ /[0-9A-Fa-f][0-9A-Fa-f]:[0-9A-Fa-f][0-9A-Fa-f]:/ {
 END {
 	for (deviceID in ports) {
 		if (ports[deviceID] != "" && portActive[deviceID] == 1) {
-			print "MSHW;" deviceID ";" macAddress[deviceID] ";" ipAddress[deviceID] ";"
+			print deviceID, macAddress[deviceID], ipAddress[deviceID]
 		}
 	}
 }

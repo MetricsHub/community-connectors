@@ -4,10 +4,6 @@
 #   id;gpu_edge;val5
 #   id;gpu_junction;val6
 #   id;gpu_memory;val7
-BEGIN {
-    FS = OFS = ";"
-}
-
 NF >= 7 {
     id = $1
     edge = $5
