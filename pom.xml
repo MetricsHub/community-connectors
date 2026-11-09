@@ -274,8 +274,10 @@
                 </executions>
                 <configuration>
 					<skipITs>false</skipITs>
+                    <!-- A single reused JVM: EmulationITBase builds the connector store once per JVM, and the replays
+                         themselves take well under a second. More forks would each build the store at the same time. -->
                     <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                     <includes>
                         <include>**/*IT.java</include>
                     </includes>
