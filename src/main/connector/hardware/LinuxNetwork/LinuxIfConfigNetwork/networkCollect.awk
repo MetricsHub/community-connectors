@@ -47,6 +47,6 @@ $1 == "TX" && $2 == "errors" {
 }
 
 END {
-	unavailableIpState = NR ? " " : ""
-	print deviceID, receivePackets, transmitPackets, (receiveErrors + transmitErrors), receiveBytes, transmitBytes, unavailableIpState
+	# ifconfig gives no IP state: empty 7th cell, the next steps read the ethtool columns from $8
+	print deviceID, receivePackets, transmitPackets, (receiveErrors + transmitErrors), receiveBytes, transmitBytes, ""
 }

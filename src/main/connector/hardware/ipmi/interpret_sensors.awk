@@ -842,7 +842,6 @@ function chassisLed(name, color, onStatus, state) {
 				########### Other unknown states
 			}
 		}
-		#print "MSHW;" sensorName ";" sensorReading;
 	}
 	# Last phase of processing
 	# Make sure we at least got something, otherwise it means we are not able to intepret anything anyway

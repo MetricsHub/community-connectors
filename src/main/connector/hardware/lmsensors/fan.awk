@@ -41,7 +41,7 @@ BEGIN {
 			}
 		}
 		if ($1 ~ /fan[0-9]_pulses/) {
-			print "MSHW", DName "-" FName, Value, Min, Max, Alarm
+			print DName "-" FName, Value, Min, Max, Alarm
 		}
 	}
 }

@@ -37,13 +37,13 @@ monitors:
           commandLine: "%{SUDO:multipath} multipath -l"
           computes:
             # AWK it
-            # LunName;LunInfo;LunStatus;
+            # LunName;LunInfo;NumberPaths;LunStatus;LunStatusInfo;AvailablePaths
           - type: awk
             script: ${file::lun.awk}
             output: table
       mapping:
         # InstanceTable = Source(1)
-        # LunName;LunInfo;LunStatus;
+        # LunName;LunInfo;NumberPaths;LunStatus;LunStatusInfo;AvailablePaths
         source: ${source::monitors.lun.discovery.sources.source(1)}
         attributes:
           id: $1
@@ -60,22 +60,20 @@ monitors:
           commandLine: "%{SUDO:multipath} multipath -l"
           computes:
             # AWK it
-            # LunName;NumberPaths;LunStatus;LunStatusInfo;AvailablePathInformation;
+            # LunName;LunInfo;NumberPaths;LunStatus;LunStatusInfo;AvailablePaths
           - type: awk
             script: ${file::lun.awk}
             output: table
-            variables:
-              collect: 1
       mapping:
         # ValueTable = Source(1)
-        # LunName;NumberPaths;LunStatus;LunStatusInfo;AvailablePathInformation;
+        # LunName;LunInfo;NumberPaths;LunStatus;LunStatusInfo;AvailablePaths
         source: ${source::monitors.lun.collect.sources.source(1)}
         attributes:
           id: $1
         metrics:
-          hw.lun.paths: $2
+          hw.lun.paths: $3
         legacyTextParameters:
-          AvailablePathInformation: $5
+          AvailablePathInformation: $6
 
 # Tools an AI assistant runs through the MetricsHub MCP server
 tools:

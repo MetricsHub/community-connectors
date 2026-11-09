@@ -177,23 +177,20 @@ monitors:
           oid: 1.3.6.1.2.1.33.1.3.3.1
           selectColumns: ID
           computes:
-          - type: insertColumn
-            column: 1
-            value: MSHW
           - type: prepend
-            column: 2
+            column: 1
             value: 'Input '
-            # MSHW;ID;
+            # ID;
           - type: append
-            column: 3
+            column: 2
             value: ${source::monitors.voltage.discovery.sources.source(1)}
-            # MSHW;ID;UPSConfigInputVoltage;
+            # ID;UPSConfigInputVoltage;
           - type: awk
             script: ${file::voltage.awk}
             input: table
             output: table
             # Create Thresholds
-            # MSHW;ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
+            # ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
         source(3):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.9.3.0
@@ -206,46 +203,37 @@ monitors:
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: ID
           computes:
-          - type: insertColumn
-            column: 1
-            value: MSHW
           - type: prepend
-            column: 2
+            column: 1
             value: 'Output '
-            # MSHW;ID;
+            # ID;
           - type: append
-            column: 3
+            column: 2
             value: ${source::monitors.voltage.discovery.sources.source(3)}
-            # MSHW;ID;UPSConfigOutputVoltage;
+            # ID;UPSConfigOutputVoltage;
           - type: awk
             script: ${file::voltage.awk}
             input: table
             output: table
             # Create Thresholds
-            # MSHW;ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
+            # ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
         source(5):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
           computes:
           - type: insertColumn
             column: 1
-            value: MSHW
-          - type: insertColumn
-            column: 2
             value: Battery Voltage
-            # MSHW;ID;UPSBatteryVoltage;
+            # ID;UPSBatteryVoltage;
         source(6):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.5.3.1
           selectColumns: ID
           computes:
-          - type: insertColumn
-            column: 1
-            value: MSHW
           - type: prepend
-            column: 2
+            column: 1
             value: 'Bypass '
-            # MSHW;ID;
+            # ID;
         source(7):
           type: tableUnion
           tables:
@@ -255,17 +243,17 @@ monitors:
           - ${source::monitors.voltage.discovery.sources.source(6)}
       mapping:
         # InstanceTable = Source(7)
-        # MSHW;ID;Voltage;UpperThreshold;LowerThreshold;
+        # ID;Voltage;UpperThreshold;LowerThreshold;
         source: ${source::monitors.voltage.discovery.sources.source(7)}
         attributes:
-          id: $2
-          __display_id: $2
+          id: $1
+          __display_id: $1
           sensor_location: UPS
           hw.parent.type: enclosure
-          name: "${awk::sprintf(\"%s (%s)\", $2, \"UPS\")}"
+          name: "${awk::sprintf(\"%s (%s)\", $1, \"UPS\")}"
         metrics:
-          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($4)
-          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($5)
+          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($3)
+          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($4)
     collect:
       # Voltage Collect
       type: multiInstance
@@ -276,60 +264,48 @@ monitors:
           computes:
           - type: insertColumn
             column: 1
-            value: MSHW
-          - type: insertColumn
-            column: 2
             value: Battery Voltage
             # UPSBatteryVoltage is in 0.1v, so multiply by 100 to get mv (1000 mv = 1 v)
-            # MSHW;ID;UPSBatteryVoltage;
+            # ID;UPSBatteryVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 100
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.3.3.1
           selectColumns: "ID,3"
           computes:
-          - type: insertColumn
-            column: 1
-            value: MSHW
           - type: prepend
-            column: 2
+            column: 1
             value: 'Input '
-            # MSHW;ID;UPSInputVoltage;
+            # ID;UPSInputVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 1000
         source(3):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: ID,2
           computes:
-          - type: insertColumn
-            column: 1
-            value: MSHW
           - type: prepend
-            column: 2
+            column: 1
             value: 'Output '
-            # MSHW;ID;UPSOutputVoltage;
+            # ID;UPSOutputVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 1000
         source(4):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.5.3.1
           selectColumns: ID,2
           computes:
-          - type: insertColumn
-            column: 1
-            value: MSHW
           - type: prepend
-            column: 2
+            column: 1
             value: 'Bypass '
             # upsBypassVoltage is in Volts, so multiply by 1000 to get mv.
-            # MSHW;ID;UPSBypassVoltage;
+            # ID;UPSBypassVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 1000
         source(5):
           type: tableUnion
@@ -340,12 +316,12 @@ monitors:
           - ${source::monitors.voltage.collect.sources.source(4)}
       mapping:
         # ValueTable = Source(5)
-        # MSHW;ID;Voltage;
+        # ID;Voltage;
         source: ${source::monitors.voltage.collect.sources.source(5)}
         attributes:
-          id: $2
+          id: $1
         metrics:
-          hw.voltage: milliVolt2Volt($3)
+          hw.voltage: milliVolt2Volt($2)
   temperature:
     keys:
     - id
