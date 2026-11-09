@@ -57,8 +57,7 @@ The text written by `printf` is split into rows on `ORS` and into cells on `OFS`
 
 ```awk
 BEGIN { OFS = ";" }
-{ printf "%s", $1; for (i = 2; i <= NF; i++) printf "%s%s", OFS, $i; printf "
-" }
+{ printf "%s", $1; for (i = 2; i <= NF; i++) printf "%s%s", OFS, $i; printf "\n" }
 ```
 
 ```yaml
