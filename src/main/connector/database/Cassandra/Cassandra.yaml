@@ -45,21 +45,17 @@ beforeAll:
     attributes:
     - Name
     computes:
-    - type: toText
     - type: awk
+      input: table
+      output: table
       script: |
-        BEGIN {
-            FS = "@"
-        }
-
         {
-            if (NF == 2 && $1 ~ /^[0-9]+$/) {
-                print $2
+            if (split($1, part, "@") == 2 && part[1] ~ /^[0-9]+$/) {
+                print part[2]
             } else {
                 print ""
             }
         }
-    - type: toTable
 
   # Cluster name for the Cassandra instance
   # ClusterName;
@@ -223,14 +219,18 @@ monitors:
             - ${source::uptime}
             - ${source::connectedNativeClients}
           computes:
-            - type: toText
             - type: awk
+              input: table
+              output: table
               script: |
+                BEGIN { OFS = ";" }
                 {
-                    gsub(/^[ \t]+|[ \t]+$/, "", $0)
-                    printf "%s", $0
+                    sub(/^[ \t]+/, "", $1)
+                    # A member without a value (an empty row) still holds its position
+                    if (NF == 0) cell[++n] = ""
+                    for (i = 1; i <= NF; i++) cell[++n] = $i
                 }
-            - type: toTable
+                END { for (i = 1; i <= n; i++) printf "%s%s", cell[i], (i < n ? OFS : "\n") }
       mapping:
         source: ${source::dbMetrics}
         attributes:
@@ -454,10 +454,10 @@ monitors:
             - MovingNodes
           # Compute the number of nodes in each state
           computes:
-            - type: toText
             - type: awk
               script: "${file::nodes.awk}"
-            - type: toTable
+              input: table
+              output: table
 
       mapping:
         source: ${source::clusterNodes}
@@ -520,18 +520,19 @@ tools:
         - ${source::completed}
         computes:
         # pool;path;active;maxThreads;pending;currentlyBlocked;totalBlocked;completed
-        - type: toText
         - type: awk
+          input: table
+          output: table
           script: |
-            BEGIN { FS = ";" }
-            NF >= 4 { answered = 1; k = $1 ";" $2; pools[k] = 1; v[k ";" $3] = $4 }
+            NF >= 3 { answered = 1; k = $1 ";" $2; pool[k] = $1; path[k] = $2; v[k, $3] = $4 }
             END {
-              for (k in pools) {
-                print k ";" v[k ";ActiveTasks"] ";" v[k ";MaxPoolSize"] ";" v[k ";PendingTasks"] ";" v[k ";CurrentlyBlockedTasks"] ";" v[k ";TotalBlockedTasks"] ";" v[k ";CompletedTasks"]
+              for (k in pool) {
+                # No completed tasks value: the row stops after totalBlocked
+                if (v[k, "CompletedTasks"] == "") print pool[k], path[k], v[k, "ActiveTasks"], v[k, "MaxPoolSize"], v[k, "PendingTasks"], v[k, "CurrentlyBlockedTasks"], v[k, "TotalBlockedTasks"]
+                else print pool[k], path[k], v[k, "ActiveTasks"], v[k, "MaxPoolSize"], v[k, "PendingTasks"], v[k, "CurrentlyBlockedTasks"], v[k, "TotalBlockedTasks"], v[k, "CompletedTasks"]
               }
-              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;"
+              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", ""
             }
-        - type: toTable
         - type: sort
           column: 5
           numeric: true
@@ -550,13 +551,12 @@ tools:
         keyProperties: [ scope ]
         computes:
         # Every message type has a row, even with 0 drops, when JMX answers
-        - type: toText
         - type: awk
+          input: table
+          output: table
           script: |
-            BEGIN { FS = ";" }
-            $2 + 0 > 0 { print }
-            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;" }
-        - type: toTable
+            $2 + 0 > 0 { print $1, $2, $3, $4 }
+            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "" }
         - type: sort
           column: 2
           numeric: true
@@ -575,11 +575,12 @@ tools:
         attributes: [ Compactions ]
         computes:
         # keyspace;table;operation;completed;total;unit;progressPercent;compactionId
-        - type: toText
         - type: awk
+          input: table
+          output: table
           script: |
             {
-              s = $0
+              s = $1
               while (match(s, /\{[^}]*\}/)) {
                 item = substr(s, RSTART + 1, RLENGTH - 2)
                 s = substr(s, RSTART + RLENGTH)
@@ -590,12 +591,13 @@ tools:
                   if (p > 0) m[substr(parts[i], 1, p - 1)] = substr(parts[i], p + 1)
                 }
                 progress = (m["total"] > 0) ? sprintf("%.1f", 100 * m["completed"] / m["total"]) : ""
-                print m["keyspace"] ";" m["columnfamily"] ";" m["taskType"] ";" m["completed"] ";" m["total"] ";" m["unit"] ";" progress ";" m["compactionId"]
+                # No compaction ID: the row stops after progressPercent
+                if (m["compactionId"] == "") print m["keyspace"], m["columnfamily"], m["taskType"], m["completed"], m["total"], m["unit"], progress
+                else print m["keyspace"], m["columnfamily"], m["taskType"], m["completed"], m["total"], m["unit"], progress, m["compactionId"]
               }
             }
             # The attribute always gives one row ([] when idle) when JMX answers
-            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;" }
-        - type: toTable
+            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" }
     result:
       source: ${source::running}
       columns: [ keyspace, table, operation, completed, total, unit, progressPercent, compactionId ]
@@ -703,27 +705,28 @@ tools:
         # tombstonesPerReadP99;tombstonesPerReadMax;tombstoneWarnings;tombstoneFailures;maxPartitionBytes;
         # meanPartitionBytes;partitions;liveDiskBytes;pendingCompactions;sortKey
         # (sortKey last and never empty: keepColumns leaves the whole table unchanged when a row is short)
-        - type: toText
         - type: awk
+          input: table
+          output: table
           script: |
             BEGIN {
-              FS = ";"
               split("readLatency:4 writeLatency:6 sstables:7 sstablesPerRead:8 tombstones:9 partitionSize:13 diskSpace:16 pendingCompactions:17", s, " ")
               for (i in s) { split(s[i], kv, ":"); column[kv[1]] = kv[2] }
               sortColumn = column["${param::sortBy}"]
+              # The values of columns 3 to 17: metric name and attribute number
+              n = split("ReadLatency:1 ReadLatency:2 WriteLatency:1 WriteLatency:2 LiveSSTableCount:1 SSTablesPerReadHistogram:1 TombstoneScannedHistogram:1 TombstoneScannedHistogram:2 TombstoneWarnings:1 TombstoneFailures:1 MaxPartitionSize:1 MeanPartitionSize:1 EstimatedPartitionCount:1 LiveDiskSpaceUsed:1 PendingCompactions:1", metric, " ")
             }
-            NF > 0 && NF < 4 { answered = 1 }
-            NF >= 4 { k = $1 ";" $2; tables[k] = 1; v[k ";" $3 ";1"] = $4; v[k ";" $3 ";2"] = $5 }
+            NF > 0 && NF < 3 { answered = 1 }
+            NF >= 3 { k = $1 ";" $2; keyspace[k] = $1; table[k] = $2; v[k, $3 ":1"] = $4; v[k, $3 ":2"] = $5 }
             END {
-              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;0"
-              for (k in tables) {
-                n = split(k ";" v[k ";ReadLatency;1"] ";" v[k ";ReadLatency;2"] ";" v[k ";WriteLatency;1"] ";" v[k ";WriteLatency;2"] ";" v[k ";LiveSSTableCount;1"] ";" v[k ";SSTablesPerReadHistogram;1"] ";" v[k ";TombstoneScannedHistogram;1"] ";" v[k ";TombstoneScannedHistogram;2"] ";" v[k ";TombstoneWarnings;1"] ";" v[k ";TombstoneFailures;1"] ";" v[k ";MaxPartitionSize;1"] ";" v[k ";MeanPartitionSize;1"] ";" v[k ";EstimatedPartitionCount;1"] ";" v[k ";LiveDiskSpaceUsed;1"] ";" v[k ";PendingCompactions;1"], f, ";")
-                line = ""
-                for (i = 1; i <= n; i++) line = line f[i] ";"
-                print line (f[sortColumn] + 0)
+              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 0
+              for (k in keyspace) {
+                f[1] = keyspace[k]
+                f[2] = table[k]
+                for (i = 1; i <= n; i++) f[i + 2] = v[k, metric[i]]
+                print f[1], f[2], f[3], f[4], f[5], f[6], f[7], f[8], f[9], f[10], f[11], f[12], f[13], f[14], f[15], f[16], f[17], f[sortColumn] + 0
               }
             }
-        - type: toTable
         - type: sort
           column: 18
           numeric: true
@@ -754,8 +757,9 @@ tools:
         - ${source::schema}
         computes:
         # address;status;state;load;hostId;schemaVersion;localOperationMode
-        - type: toText
         - type: awk
+          input: table
+          output: table
           script: |
             function list(s, out,   n, i, a) {
               gsub(/^\[|\]$/, "", s)
@@ -770,8 +774,7 @@ tools:
                 if (p > 0) { out[substr(a[i], 1, p - 1)] = substr(a[i], p + 1); all[substr(a[i], 1, p - 1)] = 1 }
               }
             }
-            BEGIN { FS = ";" }
-            NF >= 9 {
+            NF >= 8 {
               answered = 1
               list($1, live); list($2, down); list($3, joining); list($4, leaving); list($5, moving)
               map($6, load); map($7, hostId); localHostId = $8; mode = $9
@@ -795,11 +798,12 @@ tools:
               for (node in all) {
                 status = (node in live) ? "UP" : ((node in down) ? "DOWN" : "")
                 state = (node in joining) ? "JOINING" : ((node in leaving) ? "LEAVING" : ((node in moving) ? "MOVING" : "NORMAL"))
-                print node ";" status ";" state ";" load[node] ";" hostId[node] ";" schema[node] ";" ((hostId[node] == localHostId) ? mode : "")
+                # Only the local node has an operation mode: the rows of the other nodes stop after schemaVersion
+                if (hostId[node] == localHostId && mode != "") print node, status, state, load[node], hostId[node], schema[node], mode
+                else print node, status, state, load[node], hostId[node], schema[node]
               }
-              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", ""
             }
-        - type: toTable
     result:
       source: ${source::nodes}
       columns: [ address, status, state, load, hostId, schemaVersion, localOperationMode ]

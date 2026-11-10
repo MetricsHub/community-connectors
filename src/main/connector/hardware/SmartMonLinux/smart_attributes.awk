@@ -79,6 +79,6 @@ current_device != "" {
     lower_name = tolower(attribute_name)
     # Emit only risk-oriented attributes.
     if (attribute_name == "Current_Pending_Sector" || attribute_name == "Reallocated_Sector_Ct" || lower_name ~ /(error|fail|bad|timeout)/) {
-        print "MSHW", current_device, normalize_attribute_name(attribute_name), raw_value
+        print current_device,normalize_attribute_name(attribute_name), raw_value
     }
 }

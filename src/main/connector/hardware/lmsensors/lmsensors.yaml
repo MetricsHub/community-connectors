@@ -35,24 +35,20 @@ monitors:
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/dmidecode} /usr/sbin/dmidecode -t system"
           computes:
-          # '"MSHW;"Manufacturer";"Type";"SN";"'
+          # "MSHW";"Manufacturer";"Type";"SN" (MSHW: constant key to join the BIOS row of source(2))
           - type: awk
             script: ${file::enclosureDiscovery1.awk}
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
         source(2):
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/dmidecode} /usr/sbin/dmidecode -t bios"
           computes:
-          # '"MSHW;"Bios Info"'
+          # "MSHW";"Bios Info" (MSHW: constant key to join source(1))
           - type: awk
             script: ${file::enclosureDiscovery2.awk}
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
         source(3):
-          # '"MSHW;"Manufacturer";"Type";"SN";"'
+          # "MSHW";"Manufacturer";"Type";"SN";"MSHW";"Bios Info"
           type: tableJoin
           leftTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(2)}
@@ -60,7 +56,7 @@ monitors:
           rightKeyColumn: 1
       mapping:
         # Enclosure Instance Table
-        # "MSHW;"Name";"Type";"SN";""MSHW;"Bios Info"
+        # "MSHW";"Manufacturer";"Type";"SN";"MSHW";"Bios Info"
         source: ${source::monitors.enclosure.discovery.sources.source(3)}
         attributes:
           id: Computer
@@ -81,22 +77,20 @@ monitors:
           computes:
           - type: awk
             script: ${file::temperature.awk}
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
       mapping:
         # Temperature Instance Table
-        # "MSHW;"Name";"Type";"Value";"Max";"Critical";"
+        # "Name";"Type";"Value";"Max";"Critical"
         source: ${source::monitors.temperature.discovery.sources.source(1)}
         attributes:
-          id: $2
-          __display_id: $2
+          id: $1
+          __display_id: $1
           hw.parent.type: enclosure
           hw.parent.id: Computer
-          name: $2
+          name: $1
         metrics:
-          hw.temperature.limit{limit_type="high.degraded"}: $5
-          hw.temperature.limit{limit_type="high.critical"}: $6
+          hw.temperature.limit{limit_type="high.degraded"}: $4
+          hw.temperature.limit{limit_type="high.critical"}: $5
     collect:
       # Collection Type
       type: multiInstance
@@ -107,17 +101,15 @@ monitors:
           computes:
           - type: awk
             script: ${file::temperature.awk}
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
       mapping:
         # Temperature Value Table
-        # "MSHW;"Name";"Type";"Value";"Max";"Critical";"
+        # "Name";"Type";"Value";"Max";"Critical"
         source: ${source::monitors.temperature.collect.sources.source(1)}
         attributes:
-          id: $2
+          id: $1
         metrics:
-          hw.temperature: $4
+          hw.temperature: $3
   voltage:
     keys:
     - id
@@ -130,23 +122,21 @@ monitors:
           computes:
           - type: awk
             script: "${file::voltage.awk}"
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
       mapping:
         # Voltage Instance Table
-        # "MSHW;"Name";"Type";"Value";Lower";"Upper";"
+        # "Name";"Type";"Value";"Lower";"Upper"
         source: ${source::monitors.voltage.discovery.sources.source(1)}
         attributes:
-          id: $2
-          __display_id: $2
+          id: $1
+          __display_id: $1
           sensor_location: Planar
           hw.parent.type: enclosure
           hw.parent.id: Computer
-          name: ${awk::sprintf("%s (%s)", $2, "Planar")}
+          name: ${awk::sprintf("%s (%s)", $1, "Planar")}
         metrics:
-          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($5)
-          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($6)
+          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($4)
+          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($5)
     collect:
       # Collection Type
       type: multiInstance
@@ -157,17 +147,15 @@ monitors:
           computes:
           - type: awk
             script: ${file::voltage.awk}
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
       mapping:
         # Voltage Value Table
-        # "MSHW;"Name";"Type";"Value";
+        # "Name";"Type";"Value";"Lower";"Upper"
         source: ${source::monitors.voltage.collect.sources.source(1)}
         attributes:
-          id: $2
+          id: $1
         metrics:
-          hw.voltage: milliVolt2Volt($4)
+          hw.voltage: milliVolt2Volt($3)
   fan:
     keys:
     - id
@@ -180,23 +168,21 @@ monitors:
           computes:
           - type: awk
             script: ${file::fan.awk}
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
       mapping:
         # FAN Instance Table
-        # ""MSHW;"DName"-"FName";"Value";"Min";"Max";"Alarm";"
+        # "DName-FName";"Value";"Min";"Max";"Alarm"
         source: ${source::monitors.fan.discovery.sources.source(1)}
         attributes:
-          id: $2
-          __display_id: $2
+          id: $1
+          __display_id: $1
           sensor_location: Planar
           hw.parent.type: enclosure
           hw.parent.id: Computer
-          name: ${awk::sprintf("%s (%s)", $2, "Planar")}
+          name: ${awk::sprintf("%s (%s)", $1, "Planar")}
         metrics:
-          hw.fan.speed.limit{limit_type="low.degraded"}: $5
-          hw.fan.speed.limit{limit_type="low.critical"}: $6
+          # fanN_min is the speed below which lm-sensors raises its alarm (fanN_max is a speed, fanN_alarm a flag)
+          hw.fan.speed.limit{limit_type="low.critical"}: $3
     collect:
       # Collection Type
       type: multiInstance
@@ -207,14 +193,12 @@ monitors:
           computes:
           - type: awk
             script: ${file::fan.awk}
-            keep: ^MSHW;
-            separators: ;
-          - type: toTable
+            output: table
       mapping:
         # FAN Value Table
-        # ""MSHW;"DName"-"FName";"Value";"Min";"Max";"Alarm";"
+        # "DName-FName";"Value";"Min";"Max";"Alarm"
         source: ${source::monitors.fan.collect.sources.source(1)}
         attributes:
-          id: $2
+          id: $1
         metrics:
-          hw.fan.speed: $3
+          hw.fan.speed: $2

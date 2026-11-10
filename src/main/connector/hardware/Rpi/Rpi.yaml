@@ -63,17 +63,17 @@ monitors:
           # id;model;serial_number
           #
           # The id is a constant, since a host has a single board. The
-          # temperature and fan monitors use it as hw.parent.id. The trailing
-          # separator keeps an empty serial_number column when the property is
-          # missing. Nothing is printed without a model, so a failed command
+          # temperature and fan monitors use it as hw.parent.id. The
+          # serial_number cell is empty when the property is missing.
+          # Nothing is printed without a model, so a failed command
           # does not blank the attributes of the existing enclosure.
           - type: awk
+            output: table
             script: |
               BEGIN { FS = ":" }
               $1 ~ /\/model$/ { model = $2 }
               $1 ~ /\/serial-number$/ { serial = $2 }
-              END { if (model != "") print "raspberry-pi;" model ";" serial ";" }
-          - type: toTable
+              END { if (model != "") print "raspberry-pi", model, serial }
       mapping:
         source: ${source::board}
         attributes:

@@ -127,15 +127,12 @@ monitors:
           leftKeyColumn: 3
           rightKeyColumn: 1
           computes:
-          - type: toText
             # Perform some computation to exclude non-real sensors, and calculate alarm thresholds when possible
             # SensorId;Name;WarningThreshold;AlarmThreshold;
           - type: awk
             script: ${file::temperature.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5
-          - type: toTable
+            input: table
+            output: table
       mapping:
         # Instance table
         # SensorId;Name;WarningThreshold;AlarmThreshold;
@@ -365,16 +362,13 @@ monitors:
           query: SELECT Name, Parent, Value FROM Sensor where SensorType ='Clock'
           namespace: root\LibreHardwareMonitor
           computes:
-          - type: toText
             # Process that through an AWK script that will compute the clock speed average
             # (yes, we have the clock speed for each core, and they can be different)
             # CpuDeviceID;AverageClock
           - type: awk
             script: ${file::cpu.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3"
-          - type: toTable
+            input: table
+            output: table
         source(2):
           # SensorName;CpuDeviceID;CPUPowerConsumption
           type: wmi
@@ -546,14 +540,11 @@ monitors:
           query: SELECT Name, Parent, Value, SensorType FROM Sensor
           namespace: root\LibreHardwareMonitor
           computes:
-          - type: toText
           # Name, gpuId, Value, SensorType
           - type: awk
             script: ${file::gpu.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5,6,7,8,9"
-          - type: toTable
+            input: table
+            output: table
       mapping:
         # Value Table
         # gpuID, VideoDecode, VideoEncode, Memory, PowerConsumption, ReveivedBytes, TransmittedBytes, UsedTimePercent

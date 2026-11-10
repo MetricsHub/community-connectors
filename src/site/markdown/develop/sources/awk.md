@@ -34,7 +34,7 @@ sources:
 | `script` | Yes | None | Inline AWK script or `${file::...}` reference. |
 | `input` | No | Empty | Input text or source reference consumed by the script. |
 | `inputFormat` | No | `text` | How the script reads `input`: `text` (the referenced source as `;`-separated lines, or the literal text) or `table` (`input` must be a source reference; each row of that source's table is a record whose cells are `$1..$NF`, nothing is serialized). |
-| `output` | No | `text` | What the script produces: `text` (the printed lines, re-parsed into a table on `;`) or `table` (each `print a, b, c` is one row, each `printf` one single-cell row). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, re-parsed into a table on `;`) or `table` (each `print a, b, c` is one row; `printf` text is split into rows on `ORS` and into cells on `OFS`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows; other values become scalars. See [Variables](#variables). |
 | `separators` | No | None | Compatibility property; usually unnecessary for source-level AWK. |
 | `keep` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |

@@ -1,5 +1,4 @@
 BEGIN {
-	FS = ";"
 	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 }
 
@@ -9,6 +8,6 @@ BEGIN {
 	} else {
 		deviceId = $1
 	}
-	print "MSHW;" deviceId ";" $3 ";" $4 ";" $5
+	print deviceId, $3, $4, $5
 }
 

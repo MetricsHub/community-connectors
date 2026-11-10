@@ -43,7 +43,7 @@ sources:
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
 | `input` | No | `text` | How the script reads the source result: `text` (the raw text, or the table serialized as `;`-separated lines) or `table` (each row is a record whose cells are `$1..$NF`, nothing is serialized). See [Table input and output](#table-input-and-output). |
-| `output` | No | `text` | What the script produces: `text` (the printed lines, re-parsed into a table with `keep`, `exclude`, `separators` and `selectColumns`) or `table` (each `print a, b, c` is one row `[a, b, c]`, each `printf` one single-cell row; the filtering properties do not apply). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, re-parsed into a table with `keep`, `exclude`, `separators` and `selectColumns`) or `table` (each `print a, b, c` is one row `[a, b, c]`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
 
 ## Table Input And Output
 
@@ -51,7 +51,14 @@ By default the script reads text and prints text, and the printed lines are re-p
 
 With `input: table`, the script reads the table itself: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part. `$0` is only synthesized (cells joined with `OFS`) when the script reads it.
 
-With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain. `OFS` and `ORS` play no part. A `printf` call is one row with a single cell.
+With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (or `print $0`) is one row with a single cell holding the whole record: print the fields instead (`print $1, $2, $3`).
+
+The text written by `printf` is split into rows on `ORS` and into cells on `OFS` (the `OFS` in effect when the row began). Use it for a row whose number of cells varies:
+
+```awk
+BEGIN { OFS = ";" }
+{ printf "%s", $1; for (i = 2; i <= NF; i++) printf "%s%s", OFS, $i; printf "\n" }
+```
 
 ```yaml
 sources:

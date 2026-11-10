@@ -39,10 +39,7 @@ monitors:
           # Process IPMI result througn an AWK script to interpret what can be interpreted
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
-          - type: toTable
+            output: table
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
@@ -77,10 +74,7 @@ monitors:
           # Post-processing of the IPMI mess (which has already been greatly sorted out!)
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
-          - type: toTable
+            output: table
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
@@ -529,14 +523,12 @@ monitors:
             # Fall back to the legacy "Size" when the BMC provides no SPD data, and build the description
             # from the vendor, the type and the size that are known
             # Memory module;DeviceID;Entity ID;Vendor;Model;Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo;Description
-          - type: toText
           - type: awk
+            input: table
+            output: table
             script: |
-              BEGIN { FS=";"; OFS=";" }
               $11 == "" { $11 = $6 }
-              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print }
-            separators: ;
-          - type: toTable
+              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15 }
       mapping:
         # InstanceTable = Source(1)
         # The size and the type come from the SPD data of the memory module FRU, when the BMC provides it

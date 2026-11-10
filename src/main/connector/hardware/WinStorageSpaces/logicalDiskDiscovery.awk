@@ -1,5 +1,4 @@
 BEGIN {
-	FS = ";"
 	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 }
 
@@ -19,6 +18,6 @@ BEGIN {
 	}
 	filesystem = $4
 	size = $6
-	print "MSHW;" deviceId ";" label ";File System: " filesystem ";" size
+	print deviceId, label, "File System: " filesystem, size
 }
 

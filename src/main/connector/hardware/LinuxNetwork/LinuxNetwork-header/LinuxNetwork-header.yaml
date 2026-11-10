@@ -25,10 +25,7 @@ monitors:
             # DeviceID;MacAddress;IPAddress;
           - type: awk
             script: ${file::networkDiscovery.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4"
-          - type: toTable
+            output: table
         source(2):
           # Discovery
           # Source(2) = output of the command ls -l /sys/class/net
@@ -67,10 +64,7 @@ monitors:
             # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;IPState;
           - type: awk
             script: ${file::networkCollect.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5,6,7,8"
-          - type: toTable
+            output: table
         source(2):
           # Source(2) = output of ethtool
           type: commandLine
@@ -80,10 +74,7 @@ monitors:
             # DeviceID;LinkStatus;LinkSpeed;DuplexMode;
           - type: awk
             script: ${file::ethtool.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
-          - type: toTable
+            output: table
         source(3):
           # Source(3) = table joint of Source(1) and Source(2)
           # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;IPState;DeviceID;LinkStatus;LinkSpeed;DuplexMode;
@@ -97,11 +88,10 @@ monitors:
           - type: translate
             column: 7
             translationTable: ${translation::NetworkStateTranslationTable}
-          - type: toText
           - type: awk
+            input: table
+            output: table
             script: |
-              BEGIN { FS=";"; OFS=";"; }
-              
               {
                 gsub(/^[ \t]+|[ \t]+$/, "", $9)
                 gsub(/^[ \t]+|[ \t]+$/, "", $7)
@@ -111,8 +101,6 @@ monitors:
               
                 print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
               }
-            separators: ;
-          - type: toTable
 
       mapping:
         # And here is the ValueTable

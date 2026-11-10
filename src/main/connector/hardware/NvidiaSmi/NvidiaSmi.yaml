@@ -33,7 +33,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
-          - type: toTable
+            output: table
       mapping:
         source: ${source::monitors.enclosure.discovery.sources.source(1)}
   gpu:
@@ -47,7 +47,7 @@ monitors:
           computes:
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_GPU
+            regExp: ^GPU$
       mapping:
         source: ${source::monitors.gpu.discovery.sources.source(1)}
         attributes:
@@ -76,10 +76,10 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
-          - type: toTable
+            output: table
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_GPU
+            regExp: ^GPU$
       mapping:
         source: ${source::monitors.gpu.collect.sources.source(1)}
         attributes:
@@ -107,7 +107,7 @@ monitors:
           computes:
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_TEMP
+            regExp: ^TEMPERATURE$
       mapping:
         source: ${source::monitors.temperature.discovery.sources.source(1)}
         attributes:
@@ -129,10 +129,10 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
-          - type: toTable
+            output: table
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_TEMP
+            regExp: ^TEMPERATURE$
       mapping:
         source: ${source::monitors.temperature.collect.sources.source(1)}
         attributes:
@@ -150,7 +150,7 @@ monitors:
           computes:
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_VOLTAGE
+            regExp: ^VOLTAGE$
           - type: keepOnlyMatchingLines
             column: 3
             regExp: .
@@ -172,10 +172,10 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
-          - type: toTable
+            output: table
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_VOLTAGE
+            regExp: ^VOLTAGE$
       mapping:
         source: ${source::monitors.voltage.collect.sources.source(1)}
         attributes:
@@ -193,7 +193,7 @@ monitors:
           computes:
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_FAN
+            regExp: ^FAN$
           - type: keepOnlyMatchingLines
             column: 3
             regExp: .
@@ -218,10 +218,10 @@ monitors:
           computes:
           - type: awk
             script: ${file::nvidiaSmi.awk}
-          - type: toTable
+            output: table
           - type: keepOnlyMatchingLines
             column: 1
-            regExp: ^MSHW_FAN
+            regExp: ^FAN$
       mapping:
         source: ${source::monitors.fan.collect.sources.source(1)}
         attributes:

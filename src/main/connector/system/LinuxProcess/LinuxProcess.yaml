@@ -77,9 +77,9 @@ monitors:
                 command = substr(command, 1, length(command)-1)
                 gsub(";", "", command)
 
-                printf "%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n", pid,ppid,comm,user,cpuSeconds,mem,rss,vsz,thcount,elapsedSeconds,command
+                print pid, ppid, comm, user, cpuSeconds, mem, rss, vsz, thcount, elapsedSeconds, command
               }
-          - type: toTable
+            output: table
           # Filter by process name
           - type: keepOnlyMatchingLines
             column: 3

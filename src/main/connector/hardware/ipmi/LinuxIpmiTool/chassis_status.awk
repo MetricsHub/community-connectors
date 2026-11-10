@@ -51,6 +51,6 @@ END {
 			}
 			events = events (events == "" ? "" : "|") event
 		}
-		print "Chassis;" flag(status["System Power"]) ";" flag(status["Main Power Fault"]) ";" flag(status["Power Overload"]) ";" flag(status["Power Interlock"]) ";" flag(status["Power Control Fault"]) ";" flag(status["Cooling/Fan Fault"]) ";" flag(status["Drive Fault"]) ";" flag(status["Chassis Intrusion"]) ";" flag(status["Front-Panel Lockout"]) ";" policy ";;" events
+		print "Chassis", flag(status["System Power"]), flag(status["Main Power Fault"]), flag(status["Power Overload"]), flag(status["Power Interlock"]), flag(status["Power Control Fault"]), flag(status["Cooling/Fan Fault"]), flag(status["Drive Fault"]), flag(status["Chassis Intrusion"]), flag(status["Front-Panel Lockout"]), policy, "", events
 	}
 }
