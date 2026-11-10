@@ -130,7 +130,7 @@ See [Monitors and Jobs](monitors-and-jobs.html) for the complete job model: `dis
 
 Connector pipelines are table-based end to end.
 
-- A source typically outputs rows and columns.
+- A source typically outputs rows and columns. Some sources (`commandLine`, `http`, `file`, `ipmi`, `awk`) output text, which a compute turns into a table (see the [content types](computes/index.html#content-types)).
 - Computes generally transform rows/columns.
 - Mapping expects a table and uses column references (`$1`, `$2`, ...).
 
@@ -161,7 +161,7 @@ Internally, a table is represented as `List<List<String>>`. The example below sh
 >   eth1;Uplink 2;degraded;1000000000
 >   ```
 
-This serialization detail explains why operations that append semicolon-delimited strings can effectively materialize extra columns after parsing.
+The serialized text is how a table is written out where text is expected (a `${source::...}` reference, an `awk` script reading text), with the variations described in [Serialization Details](sources/index.html#serialization-details-you-must-know). Only a conversion (`toTable`, `json2Csv`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: a `;` that a compute writes into a cell stays in that cell.
 
 ## `mapping` Block Inside Jobs
 

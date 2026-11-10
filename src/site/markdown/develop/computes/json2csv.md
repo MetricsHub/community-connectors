@@ -34,7 +34,7 @@ sources:
 | `type` | Yes | None | `json2Csv`. |
 | `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
 | `properties` | Yes | None | Semicolon-separated list of JSON pointers, each resolved **relative to one entry** (`/id;/name;/operationalStatus`). Nested values use full pointer paths, including array indexes (`/Links/Storage[0]/@odata.id`). The list order defines the column order. |
-| `separator` | No | `;` | Column separator of the generated rows. Keep the default `;` so the output matches the engine table serialization. |
+| `separator` | No | `;` | Column separator of the rows that `json2Csv` writes before it splits them into cells. Use a separator that the values do not contain. The result is a table whatever the separator: an `awk` compute that follows reads it as `;`-separated text (see [toText](./to-text.html)), or cell by cell with `input: table`. |
 | `parsingMode` | No | `tree` | How the JSON document is read: `tree` loads the whole document in memory, `events` reads it as a stream and keeps only one entry at a time. The rows are the same. See [Large Payloads](#large-payloads). |
 
 > [!IMPORTANT]
@@ -115,6 +115,7 @@ Some documents cannot be read this way and are processed as with `tree`, with th
 - Writing property pointers relative to the document root instead of relative to one entry under `entryKey`.
 - Separating `properties` with commas: the list is semicolon-separated.
 - Leaving `entryKey` pointing at a single object when the payload nests the records one level deeper, which yields a single mostly-empty row instead of one row per record.
+- Placing `json2Csv` after a compute that already produced a table: there is nothing to parse and the table is unchanged. A payload that does not parse gives an empty table.
 
 ## Community Examples
 

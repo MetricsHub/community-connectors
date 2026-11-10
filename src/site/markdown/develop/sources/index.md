@@ -7,7 +7,7 @@ description: How source execution works in MetricsHub connectors and full source
 
 ## What A Source Produces
 
-In MetricsHub connectors, a source produces a **table**. Internally, this is a list of rows, where each row is a list of strings.
+In MetricsHub connectors, a source produces a **table**, or a text that its computes turn into a table (`commandLine`, `http`, `file`, `ipmi`, `awk`, see the [content types](../computes/index.html#content-types)). Internally, a table is a list of rows, where each row is a list of strings.
 
 Most compute operations modify one table column at a time, which is why they usually require `column:`.
 
@@ -32,12 +32,12 @@ psu02;PSU 2;failed
 
 ## Serialization Details You Must Know
 
-The engine often materializes/de-materializes tables from semicolon-separated text. This is the reason some transformations can look unusual but still work.
+A source result is either text or a table (see the [content types](../computes/index.html#content-types)). A table is written in the serialized form above where it is used as text, with two variations:
 
-For example, if a compute appends `;42` to column 2, it can effectively create a new column after rematerialization.
+- in a `${source::...}` reference, each line ends with `;`, except a line whose only `;` is that trailing one (typically a row of a single cell), and a `;` inside a cell is kept; the lines of a text are taken as they are, with the same exception;
+- for an `awk` script that reads text, each line ends with `;` and a `;` inside a cell becomes `,` (see [toText](../computes/to-text.html)).
 
-> [!WARNING]
-> This behavior is powerful but easy to abuse. Prefer explicit computes (`duplicateColumn`, `append`, `prepend`, `extract`, `json2Csv`) over fragile "inject a semicolon" tricks unless you truly need them.
+Only a conversion (`toTable`, `json2Csv`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: if a compute appends `;42` to column 2, the cell holds `;42` at its end and the table keeps its columns. Add a column with [insertColumn](../computes/insert-column.html) or [duplicateColumn](../computes/duplicate-column.html).
 
 ## Where Sources Run in the Connector Lifecycle
 
@@ -117,6 +117,8 @@ Entries run one at a time by default. Set `maxParallel` when each entry is slow 
 - `json_array` — join the raw JSON results with commas and wrap them in `[ ... ]`, ready for a single `json2Csv`.
 - `json_array_extended` — like `json_array`, but merges the driving row's own columns into each JSON entry, so downstream computes can correlate result and origin.
 - custom object `{ concatStart: "...", concatEnd: "..." }` — wrap each entry's raw result; both wrappers may themselves use `$n`.
+
+With `list`, the result has the type of the source: a text for `http` or `commandLine` (the entries' texts joined with a line feed), a table for `snmpGet`, `wmi`, `sql`, ... (the entries' rows). With `json_array`, `json_array_extended` and a custom object, the result is text: an entry that returns a table contributes its text as [toText](../computes/to-text.html) writes it (each row ending with `;`, a `;` inside a cell becoming `,`).
 
 > [!WARNING]
 > A failed entry adds nothing to the result: `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source looks answered, so when it feeds the mapping of a `discovery` or `simple` job, the run is trusted and the instances of the failed entity are removed (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Join the result back onto the inventory with a [`tableJoin`](./table-join.html) and a `defaultRightLine`, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) when no inventory exists.

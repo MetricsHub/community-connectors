@@ -98,7 +98,7 @@ disk0;ok;42
 disk1;failed;0
 ```
 
-This model is shared with source/compute pipelines, so semicolon manipulations can change effective columns when data is rematerialized as a table.
+Sources write a table out as text in a similar form, for example in a `${source::...}` reference (see [Serialization Details](../sources/index.html#serialization-details-you-must-know)).
 
 > [!TIP]
 > Prefer regexes that explicitly account for semicolon separators and line boundaries when matching table-backed criteria.

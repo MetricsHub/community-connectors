@@ -36,16 +36,24 @@ fan02;Fan B;3
 After translation/replace, mapping consumes the transformed table.
 
 > [!NOTE]
-> Because serialization uses semicolons as column separators, some transforms that append semicolon-delimited content may increase the number of materialized columns after reparsing. Prefer [insertColumn](./insert-column.html) to add a column.
+> A compute changes the cells of the table, never its text: a `;` or a line feed that `append`, `prepend`, `replace` or `translate` writes into a cell stays in that cell, and adds no column and no row. This holds for a `${source::...}` reference in the value as well: a table of several cells is written into the cell as its serialized text (`a;b;c;`). Use [insertColumn](./insert-column.html) to add a column, and a [tableJoin](../sources/table-join.html) to combine the columns of two sources.
 
 ## Content Types
 
-A source result is either **text** (lines) or a **table** (rows of cells):
+A source result, and the result of each compute, is either **text** (lines) or a **table** (rows of cells), never both:
 
-- `http`, `file` and `ipmi` produce text; `commandLine` and the `awk` source produce text that MetricsHub also splits on `;` into a table (`commandLine` after its own `separators` and `selectColumns`), so a table compute can follow them directly; every other source produces a table;
-- `awk` reads text and writes text, re-split on `;` the same way; `json2Csv`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
+- `commandLine`, `http`, `file`, `ipmi` and the `awk` source with the default `output: text` produce text (`commandLine` after its own `keep`, `exclude`, `separators` and `selectColumns`), and so does a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`; every other source produces a table (`sql`, `wmi`, `snmpTable`, `static`, the `awk` source with `output: table`, ...); a `copy` produces what it copies, and a `tableUnion` of texts is a text (see [tableUnion](../sources/table-union.html));
+- `awk` reads text and writes text unless it declares `input: table` or `output: table`; `json2Csv`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
 
-Convert explicitly with [toTable](./to-table.html) and [toText](./to-text.html) when a compute does not read what the previous step produced. MetricsHub inserts these conversions itself where connectors written before they existed relied on an implicit one (a table compute after `commandLine` or `awk`, an `awk` compute after a table source), so existing connectors keep working.
+Convert with [toTable](./to-table.html) and [toText](./to-text.html) when a compute does not read what the previous step produced. When it loads a connector, MetricsHub inserts these conversions itself, and they behave exactly like written ones:
+
+- a `toTable` with its default properties (one row per line, cells split on `;`) after the text of a `commandLine` source, an `awk` source or an `awk` compute: before the next table compute, and at the end of the source, so that the `mapping`, a `tableJoin` or a variable reads a table. A source that only `copy` sources and text unions read, or that a tool without columns returns, keeps its text at the end: the copies and unions convert it where they need a table, and the tool returns the text;
+- a `toTable` with its default properties before an `awk` compute declaring `input: table` that follows any text, and before a table compute that follows an explicit `toText`;
+- a `toText` (`;`-separated lines ending with `;`) before an `awk` compute that reads text and follows a table.
+
+Nothing is inserted between a table compute or the `mapping` and the text of `http`, `file` or `ipmi`, of a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`, or of a text union with such a source among its members: convert it with `json2Csv`, `xml2Csv`, `toTable` or `awk`. A step that reads the wrong type sees nothing: a table compute (or the `mapping`) on text reads no rows and produces an empty table, and `json2Csv` or `xml2Csv` on a table leaves the table unchanged.
+
+A source that returns nothing, or fails, gives an empty result of its own type: after a failed `commandLine`, an `awk` compute still runs its `BEGIN` and `END` blocks.
 
 ## Compute Pages
 
@@ -63,8 +71,8 @@ Convert explicitly with [toTable](./to-table.html) and [toText](./to-text.html) 
 
 | Compute | Purpose |
 | --- | --- |
-| [append](./append.html) | Concatenate a value to the end of a column (can materialize new columns with `;`). |
-| [prepend](./prepend.html) | Concatenate a value to the start of a column (can materialize new columns with `;`). |
+| [append](./append.html) | Concatenate a value to the end of a column. |
+| [prepend](./prepend.html) | Concatenate a value to the start of a column. |
 | [replace](./replace.html) | Replace a literal value in a column. |
 | [substring](./substring.html) | Keep a portion of a column's value (1-based start, length). |
 | [duplicateColumn](./duplicate-column.html) | Insert a copy of a column immediately after the original. |

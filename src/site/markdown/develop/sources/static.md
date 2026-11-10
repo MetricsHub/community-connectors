@@ -41,7 +41,9 @@ Write `value` as a YAML list: the source produces one row holding exactly these 
 value: [ "DDN", "Data Direct Networks", "Disk Array" ]
 ```
 
-A string `value` holding a source reference (`${source::...}`) copies that source's table.
+A line break in a cell, from a reference that resolves to several lines, becomes a space.
+
+A string `value` holding a source reference (`${source::...}`) copies that source's table. The text of an `http`, `file` or `ipmi` source gives no rows.
 
 ### Legacy string form
 

@@ -7,11 +7,13 @@ description: The toTable compute turns a text result into a table, one row per l
 
 ## When To Use
 
-A source result is either **text** (lines, as produced by `http`, `file`, `ipmi`, `commandLine` and the `awk` source or compute) or a **table** (rows of cells, as produced by every other source and by every other compute). Use `toTable` to turn a text result into a table before a table compute (`keepColumns`, `translate`, `append`, ...) or before `mapping`.
+A source result is either **text** (lines, as produced by `http`, `file`, `ipmi`, `commandLine` and the `awk` source or compute with the default `output: text`) or a **table** (rows of cells, as produced by every other source and by every other compute). Use `toTable` to turn a text result into a table before a table compute (`keepColumns`, `translate`, `append`, ...) or before `mapping`.
 
 Each line of the text becomes a row and is split on `separator`, taken literally (a multi-character separator is one separator). Lines can be filtered with `keep` and `exclude` as on the [`commandLine` source](../sources/command-line.html), and the columns selected with `selectColumns`.
 
-MetricsHub inserts this conversion itself in existing connectors (a table compute after `commandLine` or after an `awk` compute), so a connector written before the conversion existed keeps working unchanged. Write it explicitly in new connectors: the chain then says what it does.
+MetricsHub inserts this conversion, with its default properties, where the text of a `commandLine` source, an `awk` source or an `awk` compute is read as a table (see the [content types](./index.html#content-types)). It inserts nothing between the text of `http`, `file` or `ipmi` and a table compute. Write it explicitly in new connectors: the chain then says what it does.
+
+On a table, `toTable` without properties leaves the table unchanged. With `keep`, `exclude`, `selectColumns` or a `separator` other than `;`, it applies them to the table written as [toText](./to-text.html) writes it.
 
 ## Syntax
 
@@ -39,7 +41,7 @@ sources:
 | `exclude` | No | None | Regular expression; the lines that match are dropped. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers or ranges to keep after the split, in that order, e.g. `"2,4-6,8-"` (`8-` means from column 8 to the last one). A selected column absent from a row gives an empty cell, so the row is kept. `0` selects nothing. |
 
-Blank lines never become rows.
+Blank lines never become rows, and CRLF line endings are read as LF.
 
 ## Table Transformation Example
 
@@ -69,6 +71,6 @@ sdb 1.8T disk
 
 ## Common Mistakes
 
-- Applying a table compute to a text result without `toTable`: the table is empty, so the compute has nothing to work on.
+- Applying a table compute, or the `mapping`, to the text of `http`, `file` or `ipmi` without a conversion: it reads no rows and produces an empty table.
 - Choosing a separator that also appears inside cells: the cell is split. Use the `awk` compute to build the rows when the text has no safe separator.
 - Expecting `selectColumns` to work without a split: the columns are the cells produced by `separator`.
