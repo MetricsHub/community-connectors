@@ -3,37 +3,31 @@
   "sources" : {
     "${source::monitors.vm.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines", "translate" ],
+      "computes" : [ "awk", "keepOnlyMatchingLines", "translate" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.vm.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     }

@@ -6,20 +6,16 @@
       "computes" : [ "insertColumn" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;x;;z;;\nMSHW;1;2.5;3;\nMSHW;only;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;cell,with,sep;;;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -28,20 +24,16 @@
       "computes" : [ "insertColumn" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;x;;z;;\nMSHW;1;2.5;3;\nMSHW;only;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;cell,with,sep;;;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -50,20 +42,16 @@
       "computes" : [ "duplicateColumn", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "b", "c" ], [ "x", "", "", "z", "" ], [ "1", "2.5", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;b;c;\nx;;;z;;\n1;2.5;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "b", "c" ], [ "x", "", "", "z", "" ], [ "1", "2.5", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "b", "c" ], [ "cell;with;sep", "", "", "" ] ],
-          "rawData" : "a;b;b;c;\ncell;with;sep;;;;"
+          "table" : [ [ "a", "b", "b", "c" ], [ "cell;with;sep", "", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -72,20 +60,16 @@
       "computes" : [ "insertColumn" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;x;;z;;\nMSHW;1;2.5;3;\nMSHW;only;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;cell,with,sep;;;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -94,42 +78,34 @@
       "computes" : [ "insertColumn" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;x;;z;;\nMSHW;1;2.5;3;\nMSHW;only;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;cell,with,sep;;;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.enclosure.collect.sources.source(2)}" : {
       "source" : "snmpTable",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ [ "MSHW", "0" ] ],
-          "rawData" : "MSHW;0;"
+          "table" : [ [ "MSHW", "0" ] ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "0.111111" ] ],
-          "rawData" : "MSHW;0.111111;"
+          "table" : [ [ "MSHW", "0.111111" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "0" ] ],
-          "rawData" : "MSHW;0;"
+          "table" : [ [ "MSHW", "0" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "0" ] ],
-          "rawData" : "MSHW;0;"
+          "table" : [ [ "MSHW", "0" ] ]
         }
       }
     },
@@ -138,20 +114,16 @@
       "computes" : [ "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "failed", "c" ], [ "x", "failed", "z", "" ], [ "1", "failed", "3" ], [ "only" ] ],
-          "rawData" : "a;failed;c;\nx;failed;z;;\n1;failed;3;\nonly;"
+          "table" : [ [ "a", "failed", "c" ], [ "x", "failed", "z", "" ], [ "1", "failed", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "failed", "c" ], [ "cell;with;sep", "failed", "" ] ],
-          "rawData" : "a;failed;c;\ncell;with;sep;failed;;"
+          "table" : [ [ "a", "failed", "c" ], [ "cell;with;sep", "failed", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "failed", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "failed", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "failed", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;failed;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;failed;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;failed;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "failed", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "failed", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "failed", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -160,108 +132,88 @@
       "computes" : [ "insertColumn" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;x;;z;;\nMSHW;1;2.5;3;\nMSHW;only;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "x", "", "z", "" ], [ "MSHW", "1", "2.5", "3" ], [ "MSHW", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;a;b;c;\nMSHW;cell,with,sep;;;"
+          "table" : [ [ "MSHW", "a", "b", "c" ], [ "MSHW", "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "MSHW", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "snmpGet",
-      "computes" : [ "insertColumn", "insertColumn", "multiply" ],
+      "computes" : [ "insertColumn", "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Battery Voltage", "a", "b", "c" ], [ "MSHW", "Battery Voltage", "x", "", "z", "" ], [ "MSHW", "Battery Voltage", "100.0", "2.5", "3" ], [ "MSHW", "Battery Voltage", "only" ] ],
-          "rawData" : "MSHW;Battery Voltage;a;b;c;\nMSHW;Battery Voltage;x;;z;;\nMSHW;Battery Voltage;100.0;2.5;3;\nMSHW;Battery Voltage;only;"
+          "table" : [ [ "Battery Voltage", "a", "b", "c" ], [ "Battery Voltage", "x", "", "z", "" ], [ "Battery Voltage", "100.0", "2.5", "3" ], [ "Battery Voltage", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Battery Voltage", "a", "b", "c" ], [ "MSHW", "Battery Voltage", "cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;Battery Voltage;a;b;c;\nMSHW;Battery Voltage;cell;with;sep;;;"
+          "table" : [ [ "Battery Voltage", "a", "b", "c" ], [ "Battery Voltage", "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Battery Voltage", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "Battery Voltage", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "Battery Voltage", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;Battery Voltage;r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;Battery Voltage;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;Battery Voltage;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "Battery Voltage", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Battery Voltage", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Battery Voltage", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.voltage.collect.sources.source(2)}" : {
       "source" : "snmpTable",
-      "computes" : [ "insertColumn", "prepend", "multiply" ],
+      "computes" : [ "prepend", "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Input a", "b", "c" ], [ "MSHW", "Input x", "", "z", "" ], [ "MSHW", "Input 1", "2500.0", "3" ], [ "MSHW", "Input only" ] ],
-          "rawData" : "MSHW;Input a;b;c;\nMSHW;Input x;;z;;\nMSHW;Input 1;2500.0;3;\nMSHW;Input only;"
+          "table" : [ [ "Input a", "b", "c" ], [ "Input x", "", "z", "" ], [ "Input 1", "2500.0", "3" ], [ "Input only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Input a", "b", "c" ], [ "MSHW", "Input cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;Input a;b;c;\nMSHW;Input cell;with;sep;;;"
+          "table" : [ [ "Input a", "b", "c" ], [ "Input cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Input r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "Input r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "Input r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;Input r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;Input r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;Input r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "Input r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Input r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Input r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.voltage.collect.sources.source(3)}" : {
       "source" : "snmpTable",
-      "computes" : [ "insertColumn", "prepend", "multiply" ],
+      "computes" : [ "prepend", "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Output a", "b", "c" ], [ "MSHW", "Output x", "", "z", "" ], [ "MSHW", "Output 1", "2500.0", "3" ], [ "MSHW", "Output only" ] ],
-          "rawData" : "MSHW;Output a;b;c;\nMSHW;Output x;;z;;\nMSHW;Output 1;2500.0;3;\nMSHW;Output only;"
+          "table" : [ [ "Output a", "b", "c" ], [ "Output x", "", "z", "" ], [ "Output 1", "2500.0", "3" ], [ "Output only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Output a", "b", "c" ], [ "MSHW", "Output cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;Output a;b;c;\nMSHW;Output cell;with;sep;;;"
+          "table" : [ [ "Output a", "b", "c" ], [ "Output cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Output r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "Output r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "Output r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;Output r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;Output r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;Output r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "Output r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Output r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Output r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.voltage.collect.sources.source(4)}" : {
       "source" : "snmpTable",
-      "computes" : [ "insertColumn", "prepend", "multiply" ],
+      "computes" : [ "prepend", "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Bypass a", "b", "c" ], [ "MSHW", "Bypass x", "", "z", "" ], [ "MSHW", "Bypass 1", "2500.0", "3" ], [ "MSHW", "Bypass only" ] ],
-          "rawData" : "MSHW;Bypass a;b;c;\nMSHW;Bypass x;;z;;\nMSHW;Bypass 1;2500.0;3;\nMSHW;Bypass only;"
+          "table" : [ [ "Bypass a", "b", "c" ], [ "Bypass x", "", "z", "" ], [ "Bypass 1", "2500.0", "3" ], [ "Bypass only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Bypass a", "b", "c" ], [ "MSHW", "Bypass cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;Bypass a;b;c;\nMSHW;Bypass cell;with;sep;;;"
+          "table" : [ [ "Bypass a", "b", "c" ], [ "Bypass cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Bypass r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "Bypass r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "Bypass r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;Bypass r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;Bypass r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;Bypass r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "Bypass r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Bypass r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Bypass r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -270,42 +222,34 @@
       "computes" : [ "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1000.0", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1000.0;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1000.0", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.voltage.discovery.sources.source(2)}" : {
       "source" : "snmpTable",
-      "computes" : [ "insertColumn", "prepend", "append", "toText", "awk", "toTable" ],
+      "computes" : [ "prepend", "append", "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Input a", "b", "0", "0" ], [ "MSHW", "Input x", "", "", "" ], [ "MSHW", "Input 1", "2.5", "2.75", "2.25" ], [ "MSHW", "Input only", "", "", "" ] ],
-          "rawData" : "MSHW;Input a;b;0;0;\nMSHW;Input x;;;;\nMSHW;Input 1;2.5;2.75;2.25;\nMSHW;Input only;;;;"
+          "table" : [ [ "Input a", "b", "0", "0" ], [ "Input x", "", "", "" ], [ "Input 1", "2.5", "2.75", "2.25" ], [ "Input only", "", "", "" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Input a", "b", "0", "0" ], [ "MSHW", "Input cell,with,sep", "", "", "" ] ],
-          "rawData" : "MSHW;Input a;b;0;0;\nMSHW;Input cell,with,sep;;;;"
+          "table" : [ [ "Input a", "b", "0", "0" ], [ "Input cell;with;sep", "", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Input r1c1", "r1c2", "0", "0" ], [ "MSHW", "Input r2c1", "r2c2", "0", "0" ], [ "MSHW", "Input r3c1", "r3c2", "0", "0" ] ],
-          "rawData" : "MSHW;Input r1c1;r1c2;0;0;\nMSHW;Input r2c1;r2c2;0;0;\nMSHW;Input r3c1;r3c2;0;0;"
+          "table" : [ [ "Input r1c1", "r1c2", "0", "0" ], [ "Input r2c1", "r2c2", "0", "0" ], [ "Input r3c1", "r3c2", "0", "0" ] ]
         }
       }
     },
@@ -314,86 +258,70 @@
       "computes" : [ "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1000.0", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1000.0;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1000.0", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.voltage.discovery.sources.source(4)}" : {
       "source" : "snmpTable",
-      "computes" : [ "insertColumn", "prepend", "append", "toText", "awk", "toTable" ],
+      "computes" : [ "prepend", "append", "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Output a", "b", "0", "0" ], [ "MSHW", "Output x", "", "", "" ], [ "MSHW", "Output 1", "2.5", "2.75", "2.25" ], [ "MSHW", "Output only", "", "", "" ] ],
-          "rawData" : "MSHW;Output a;b;0;0;\nMSHW;Output x;;;;\nMSHW;Output 1;2.5;2.75;2.25;\nMSHW;Output only;;;;"
+          "table" : [ [ "Output a", "b", "0", "0" ], [ "Output x", "", "", "" ], [ "Output 1", "2.5", "2.75", "2.25" ], [ "Output only", "", "", "" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Output a", "b", "0", "0" ], [ "MSHW", "Output cell,with,sep", "", "", "" ] ],
-          "rawData" : "MSHW;Output a;b;0;0;\nMSHW;Output cell,with,sep;;;;"
+          "table" : [ [ "Output a", "b", "0", "0" ], [ "Output cell;with;sep", "", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Output r1c1", "r1c2", "0", "0" ], [ "MSHW", "Output r2c1", "r2c2", "0", "0" ], [ "MSHW", "Output r3c1", "r3c2", "0", "0" ] ],
-          "rawData" : "MSHW;Output r1c1;r1c2;0;0;\nMSHW;Output r2c1;r2c2;0;0;\nMSHW;Output r3c1;r3c2;0;0;"
+          "table" : [ [ "Output r1c1", "r1c2", "0", "0" ], [ "Output r2c1", "r2c2", "0", "0" ], [ "Output r3c1", "r3c2", "0", "0" ] ]
         }
       }
     },
     "${source::monitors.voltage.discovery.sources.source(5)}" : {
       "source" : "snmpGet",
-      "computes" : [ "insertColumn", "insertColumn" ],
+      "computes" : [ "insertColumn" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Battery Voltage", "a", "b", "c" ], [ "MSHW", "Battery Voltage", "x", "", "z", "" ], [ "MSHW", "Battery Voltage", "1", "2.5", "3" ], [ "MSHW", "Battery Voltage", "only" ] ],
-          "rawData" : "MSHW;Battery Voltage;a;b;c;\nMSHW;Battery Voltage;x;;z;;\nMSHW;Battery Voltage;1;2.5;3;\nMSHW;Battery Voltage;only;"
+          "table" : [ [ "Battery Voltage", "a", "b", "c" ], [ "Battery Voltage", "x", "", "z", "" ], [ "Battery Voltage", "1", "2.5", "3" ], [ "Battery Voltage", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Battery Voltage", "a", "b", "c" ], [ "MSHW", "Battery Voltage", "cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;Battery Voltage;a;b;c;\nMSHW;Battery Voltage;cell,with,sep;;;"
+          "table" : [ [ "Battery Voltage", "a", "b", "c" ], [ "Battery Voltage", "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Battery Voltage", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "Battery Voltage", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "Battery Voltage", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;Battery Voltage;r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;Battery Voltage;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;Battery Voltage;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "Battery Voltage", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Battery Voltage", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Battery Voltage", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.voltage.discovery.sources.source(6)}" : {
       "source" : "snmpTable",
-      "computes" : [ "insertColumn", "prepend" ],
+      "computes" : [ "prepend" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "MSHW", "Bypass a", "b", "c" ], [ "MSHW", "Bypass x", "", "z", "" ], [ "MSHW", "Bypass 1", "2.5", "3" ], [ "MSHW", "Bypass only" ] ],
-          "rawData" : "MSHW;Bypass a;b;c;\nMSHW;Bypass x;;z;;\nMSHW;Bypass 1;2.5;3;\nMSHW;Bypass only;"
+          "table" : [ [ "Bypass a", "b", "c" ], [ "Bypass x", "", "z", "" ], [ "Bypass 1", "2.5", "3" ], [ "Bypass only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "MSHW", "Bypass a", "b", "c" ], [ "MSHW", "Bypass cell;with;sep", "", "" ] ],
-          "rawData" : "MSHW;Bypass a;b;c;\nMSHW;Bypass cell;with;sep;;;"
+          "table" : [ [ "Bypass a", "b", "c" ], [ "Bypass cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "MSHW", "Bypass r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "MSHW", "Bypass r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "MSHW", "Bypass r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "MSHW;Bypass r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nMSHW;Bypass r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nMSHW;Bypass r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "Bypass r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Bypass r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Bypass r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     }

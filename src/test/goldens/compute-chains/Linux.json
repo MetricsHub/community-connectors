@@ -3,199 +3,166 @@
   "sources" : {
     "${source::monitors.cpu.simple.sources.cpuInfo}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.file_system.simple.sources.fileSystemInfo}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.memory.simple.sources.memoryInfo}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "0", "0", "0", "0", "0", "0", "0", "0", "0" ] ],
-          "rawData" : "0;0;0;0;0;0;0;0;0;"
+          "table" : [ [ "0", "0", "0", "0", "0", "0", "0", "0", "0" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "0", "0", "0", "0", "0", "0", "0", "0", "0" ] ],
-          "rawData" : "0;0;0;0;0;0;0;0;0;"
+          "table" : [ [ "0", "0", "0", "0", "0", "0", "0", "0", "0" ] ]
         },
         "empty" : {
-          "table" : [ [ "0", "0", "0", "0", "0", "0", "0", "0", "0" ] ],
-          "rawData" : "0;0;0;0;0;0;0;0;0;"
+          "table" : [ [ "0", "0", "0", "0", "0", "0", "0", "0", "0" ] ]
         }
       }
     },
     "${source::monitors.network.simple.sources.ipLink}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.network.simple.sources.linkSpeed}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable", "multiply" ],
+      "computes" : [ "awk", "multiply" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.network.simple.sources.sysClassNet}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.paging.simple.sources.swaps}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.paging_activity.simple.sources.swapActivity}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "0", "0", "0", "0" ] ],
-          "rawData" : "0;0;0;0;"
+          "table" : [ [ "0", "0", "0", "0" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "0", "0", "0", "0" ] ],
-          "rawData" : "0;0;0;0;"
+          "table" : [ [ "0", "0", "0", "0" ] ]
         },
         "empty" : {
-          "table" : [ [ "0", "0", "0", "0" ] ],
-          "rawData" : "0;0;0;0;"
+          "table" : [ [ "0", "0", "0", "0" ] ]
         }
       }
     },
     "${source::monitors.physical_disk.simple.sources.physicalDiskActivity}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.system.simple.sources.osInformation}" : {
       "source" : "copy",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::tools.deletedOpenFiles.sources.files}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "sort" ],
+      "computes" : [ "awk", "sort" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "", "", "", "", "", "a,b,c" ], [ "", "", "", "", "", "x,,z," ], [ "", "", "", "", "" ], [ "", "", "", "", "", "1,2.5,3" ], [ "", "", "", "", "", "val,with,comma" ], [ "", "", "", "", "", "only" ] ],
-          "rawData" : ";;;;;a,b,c;\n;;;;;x,,z,;\n;;;;;\n;;;;;1,2.5,3;\n;;;;;val,with,comma;\n;;;;;only;"
+          "table" : [ [ "", "", "", "", "", "a;b;c" ], [ "", "", "", "", "", "x;;z;" ], [ "", "", "", "", "", "" ], [ "", "", "", "", "", "1;2.5;3" ], [ "", "", "", "", "", "val;with,comma" ], [ "", "", "", "", "", "only" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "", "", "", "", "", "r1c1,r1c2,r1c3,r1c4,r1c5,r1c6,r1c7,r1c8,r1c9,r1c10,r1c11,r1c12,r1c13,r1c14,r1c15,r1c16" ], [ "", "", "", "", "", "r2c1,r2c2,r2c3,r2c4,r2c5,r2c6,r2c7,r2c8,r2c9,r2c10,r2c11,r2c12,r2c13,r2c14,r2c15,r2c16" ], [ "", "", "", "", "", "r3c1,r3c2,r3c3,r3c4,r3c5,r3c6,r3c7,r3c8,r3c9,r3c10,r3c11,r3c12,r3c13,r3c14,r3c15,r3c16" ] ],
-          "rawData" : ";;;;;r1c1,r1c2,r1c3,r1c4,r1c5,r1c6,r1c7,r1c8,r1c9,r1c10,r1c11,r1c12,r1c13,r1c14,r1c15,r1c16;\n;;;;;r2c1,r2c2,r2c3,r2c4,r2c5,r2c6,r2c7,r2c8,r2c9,r2c10,r2c11,r2c12,r2c13,r2c14,r2c15,r2c16;\n;;;;;r3c1,r3c2,r3c3,r3c4,r3c5,r3c6,r3c7,r3c8,r3c9,r3c10,r3c11,r3c12,r3c13,r3c14,r3c15,r3c16;"
+          "table" : [ [ "", "", "", "", "", "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16" ], [ "", "", "", "", "", "r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16" ], [ "", "", "", "", "", "r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -204,16 +171,13 @@
       "computes" : [ "toTable" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -222,20 +186,16 @@
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "only" ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "csvWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -244,20 +204,16 @@
       "computes" : [ "keepOnlyMatchingLines", "sort", "head" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "1", "2.5", "3" ] ],
-          "rawData" : "1;2.5;3;"
+          "table" : [ [ "1", "2.5", "3" ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -266,52 +222,43 @@
       "computes" : [ "toTable" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nval;with,comma;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::tools.networkSockets.sources.states}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "sort" ],
+      "computes" : [ "awk", "sort" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "1", "2.5", "3", "1" ], [ "", "1" ], [ "only", "1" ], [ "val", "with,comma", "1" ], [ "x", "", "z", "", "1" ] ],
-          "rawData" : "1;2.5;3;1;\n;1;\nonly;1;\nval;with,comma;1;\nx;;z;;1;"
+          "table" : [ [ "", "1" ], [ "val;with,comma", "1" ], [ "1;2.5;3", "1" ], [ "only", "1" ], [ "x;;z;", "1" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16", "1" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "1" ] ],
-          "rawData" : "r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;1;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;1;"
+          "table" : [ [ "r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16", "1" ], [ "r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16", "1" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::tools.processes.sources.processes}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "sort", "head", "keepColumns" ],
+      "computes" : [ "awk", "sort", "head", "keepColumns" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     }
