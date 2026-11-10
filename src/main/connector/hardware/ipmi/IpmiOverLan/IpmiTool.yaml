@@ -117,7 +117,7 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
-          # START SNIPPET: appendEmptyColumnsCompute
+          # START SNIPPET: insertEmptyColumnsCompute
             # Add empty Status and StatusInformation columns
             # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
           - type: insertColumn
@@ -127,7 +127,7 @@ monitors:
           - type: insertColumn
             column: 5
             value: ""
-          # END SNIPPET: appendEmptyColumnsCompute
+          # END SNIPPET: insertEmptyColumnsCompute
             # Add empty AdditionalInformation1 column at the very end
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
           - type: insertColumn

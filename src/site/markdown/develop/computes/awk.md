@@ -7,7 +7,7 @@ description: Runs an AWK script over the source result with optional scalar and 
 
 ## When To Use
 
-Use the `awk` compute for parsing jobs that simpler computes cannot express: reshaping free-form command output into semicolon-separated rows, correlating multi-line records, or computing derived values. The script receives the source's current result as its input — the raw text when available (e.g. `commandLine` output), otherwise the table serialized as semicolon-separated lines — and its printed output becomes the new table.
+Use the `awk` compute for parsing jobs that simpler computes cannot express: reshaping free-form command output into semicolon-separated rows, correlating multi-line records, or computing derived values. The script receives the source's current result as its input — the text (e.g. `commandLine` output), or a table serialized as semicolon-separated lines by [toText](./to-text.html) — and its printed output becomes the new result.
 
 MetricsHub embeds **JAWK**, a Java implementation of the AWK language, extended with a few MetricsHub utility functions. Standard AWK constructs work; do not assume GNU awk (`gawk`) extensions are available.
 
@@ -42,14 +42,14 @@ sources:
 | `exclude` | No | None | Regular expression; matching **output** lines are discarded. |
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
-| `input` | No | `text` | How the script reads the source result: `text` (the raw text, or the table serialized as `;`-separated lines) or `table` (each row is a record whose cells are `$1..$NF`, nothing is serialized). See [Table input and output](#table-input-and-output). |
-| `output` | No | `text` | What the script produces: `text` (the printed lines, re-parsed into a table with `keep`, `exclude`, `separators` and `selectColumns`) or `table` (each `print a, b, c` is one row `[a, b, c]`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
+| `input` | No | `text` | How the script reads the source result: `text` (the text, or a table serialized by `toText` as `;`-separated lines ending with `;`) or `table` (each row is a record whose cells are `$1..$NF`, nothing is serialized). See [Table input and output](#table-input-and-output). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, filtered with `keep`, `exclude`, `separators` and `selectColumns`, each ending with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
 
 ## Table Input And Output
 
-By default the script reads text and prints text, and the printed lines are re-parsed into a table on `;`. A `;` inside a value therefore moves the following columns, in the input as in the output.
+By default the script reads text and prints text. A table read as text goes through `toText`, which turns a `;` inside a cell into `,`. When the result is read as a table (by a table compute, the `mapping`, ...), the printed lines go through `toTable`, which splits them on `;`: a `;` inside a printed value therefore moves the following columns.
 
-With `input: table`, the script reads the table itself: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part. `$0` is only synthesized (cells joined with `OFS`) when the script reads it.
+With `input: table`, the script reads the table itself: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part. `$0` is only synthesized (cells joined with `OFS`) when the script reads it. After a text, MetricsHub first converts it with a `toTable` that splits each line on `;`.
 
 With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (or `print $0`) is one row with a single cell holding the whole record: print the fields instead (`print $1, $2, $3`).
 
@@ -77,7 +77,7 @@ sources:
 The two properties are independent: a script written for text input can produce a table, and the reverse.
 
 > [!NOTE]
-> A script written before `input: table` existed reads text, since the default is `text`: the engine inserts the serialization (`toText`) before an `awk` compute that follows a table source, so existing scripts setting `FS = ";"` keep working. Only a script declaring `input: table` reads the table as records.
+> With the default `input: text`, an `awk` compute that follows a table reads it through the `toText` that MetricsHub inserts before it: `;`-separated lines ending with `;`, so a script setting `FS = ";"` reads the cells as fields, followed by an empty last field. Only a script declaring `input: table` reads the table as records.
 
 ## Variables
 
@@ -96,10 +96,9 @@ computes:
         split($0, fields, ";")
         print fields[1] ";" (fields[2] * scale) ";" hostname
       }
-    separators: ;
 ```
 
-For input `disk0;100` and hostname `server01`, the output table contains `disk0`, `200`, and `server01`. The script uses `split()` to read the input fields and prints semicolon-separated values; `separators` splits the printed output into table columns.
+For input `disk0;100` and hostname `server01`, the output table contains `disk0`, `200`, and `server01`. The script uses `split()` to read the input fields and prints semicolon-separated values, which become the table columns when the result is read as a table (see the [content types](./index.html#content-types)).
 
 To access another source's table, add a variable such as `aTable: ${source::monitors.disk.discovery.sources.raw}` and read `aTable[0][0]` for its first cell or `length(aTable)` for its row count. Ensure that source has already run. The compute still receives its current source result as normal AWK input; variables provide additional data. See the [source-table example and empty-source behavior](../sources/awk.html#variables).
 

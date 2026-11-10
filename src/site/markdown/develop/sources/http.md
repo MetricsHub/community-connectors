@@ -58,6 +58,7 @@ sources:
 - Pulling huge payloads and filtering later.
 - Mixing relative `path` and absolute `url` inconsistently in one connector.
 - Forgetting `resultContent` and trying to parse headers as body.
+- Applying a table compute, or the `mapping`, to the HTTP result directly: it is text, so it reads no rows. Convert it first with `json2Csv`, `xml2Csv`, `toTable` or `awk`.
 - Using body parsing for simple health checks.
 
 ## Community Examples

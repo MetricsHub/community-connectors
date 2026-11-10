@@ -1,5 +1,5 @@
 keywords: prepend, compute, concatenate, prefix, insert column, string
-description: The prepend compute concatenates a value at the beginning of every cell in a column, and can materialize new columns when the value contains semicolons.
+description: The prepend compute concatenates a value at the beginning of every cell in a column.
 
 # prepend (Compute)
 
@@ -9,7 +9,7 @@ description: The prepend compute concatenates a value at the beginning of every 
 
 Use `prepend` to concatenate a value at the **beginning** of a column's content, on every row of the table. Typical uses are labeling a raw value for display (`value: "SerialNumber: "` before the serial number column), prepending `$n` (the content of column *n*) to build composite values, or prepending the content of another source with `${source::...}`.
 
-Because a table is serialized as semicolon-separated text, prepending a value that contains `;` effectively **inserts new columns** to the left of the target column — a deliberate and widely used trick, especially to add a constant marker column (`value: MSHW;`) in front of single-value SNMP results.
+The value is added to the cell as it is: a `;` or a line feed in it is an ordinary character of the cell, and adds no column and no row. To add a column, such as a constant `MSHW` key in front of single-value SNMP results, use [insertColumn](./insert-column.html).
 
 ## Syntax
 
@@ -20,11 +20,11 @@ sources:
     oid: 1.3.6.1.2.1.33.1.3.3.1
     selectColumns: ID
     computes:
-      # Add a constant "MSHW" ID column and an "Input " label prefix
-      # MSHW;Input <lineID>;
+      # Add an "Input " label prefix
+      # Input <lineID>;
     - type: prepend
       column: 1
-      value: 'MSHW;Input '
+      value: 'Input '
 ```
 
 ## Properties
@@ -33,11 +33,11 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `prepend`. |
 | `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
-| `value` | Yes | None | String inserted at the beginning of the column content. Accepts a literal, a `$n` reference to another column of the same row, or a `${source::...}` reference whose content is prepended. A value containing `;` inserts new columns (see below). |
+| `value` | Yes | None | String inserted at the beginning of the column content. Accepts a literal, a `$n` reference to another column of the same row, or a `${source::...}` reference whose content is prepended. A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
 
-With `column: 1` and `value: 'MSHW;Input '`:
+With `column: 1` and `value: 'Input '`:
 
 > [!TABS]
 >
@@ -50,29 +50,21 @@ With `column: 1` and `value: 'MSHW;Input '`:
 >
 > - <span class="fa-solid fa-table-list"></span> Result
 >
->   | Constant | Name |
->   | --- | --- |
->   | MSHW | Input 1 |
->   | MSHW | Input 2 |
-
-**Semicolon trick:** the first row serializes as `1`; prepending `MSHW;Input ` to column 1 yields:
-
-```text
-MSHW;Input 1
-```
-
-which re-parses as **2 columns**: the `;` inside the value split the old column 1 into a new constant column plus the prefixed original. GenericUPS uses exactly this (`value: MSHW;`) to give single-value `snmpGet` results a stable ID column.
+>   | Name |
+>   | --- |
+>   | Input 1 |
+>   | Input 2 |
 
 ## Recommended Pattern
 
-- Quote values that end with a space or contain `;` followed by text, so YAML preserves them verbatim: `value: 'MSHW;Input '`.
-- Prefer [insertColumn](./insert-column.html) with `column: 1` (`value: MSHW`) to add a constant leading key column to keyless single-value sources before a `tableJoin` or `mapping`: `prepend` with a trailing `;` relies on the table being re-parsed from its text. Keep the trick as it is in existing connectors.
+- Quote values that end with a space, so YAML preserves them verbatim: `value: 'Input '`.
+- Use [insertColumn](./insert-column.html) with `column: 1` (`value: MSHW`) to add a constant leading key column to keyless single-value sources before a `tableJoin` or `mapping`.
 - Label human-readable fields (`"Model: "`, `"SerialNumber: "`) with `prepend` right before `mapping` rather than in AWK scripts — it keeps the pipeline declarative.
-- Keep a `# Column1;Column2;...` comment after any `prepend` that inserts columns, so later computes are written against the new layout.
 
 ## Common Mistakes
 
-- Forgetting that a `;` in `value` shifts **all** column indexes right — every subsequent compute and the `mapping` section must use the new indexes.
+- Expecting a `;` in `value` to insert columns: `value: MSHW;` on the cell `1` gives the single cell `MSHW;1`. Use [insertColumn](./insert-column.html).
+- Prepending a `${source::...}` reference to a table of several cells to bring its columns in: the cell receives the serialized row (`1` becomes `a;b;1`). Combine sources with a [tableJoin](../sources/table-join.html).
 - Forgetting that `column` is 1-based.
 - Writing `value: $2` expecting a literal `$2`: `$n` is interpreted as a column reference.
 - Losing a trailing space by leaving the value unquoted: write `value: "Model: "`, not `value: Model: `.
@@ -80,9 +72,4 @@ which re-parses as **2 columns**: the `;` inside the value split the old column 
 ## Community Examples
 
 - [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
-- [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
-
-From Windows (prepending the content of another source to combine both tables for calculations), included directly from the connector source:
-
-<!-- MACRO{snippet|id=prependMemorySourceCompute|file=src/main/connector/system/Windows/Windows.yaml} -->
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml) (`"Model: "` and `"SerialNumber: "` labels)

@@ -35,9 +35,13 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `copy`. |
-| `from` | Yes | None | Source reference or inline serialized table to duplicate. |
+| `from` | Yes | None | Source reference to duplicate, or an inline table written as `;`-separated text. |
 | `computes` | No | `[]` | Additional transforms applied after copy. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+
+A copy of a text is a text, even when empty. A copy of a table, or of an inline value, is a table, separate from the original: the computes of the copy do not change the original source.
+
+In the example above, `rawSensors` ends with the text of an `awk` compute and only a copy reads it, so it stays text: MetricsHub inserts the `toTable` in the copy, before `keepOnlyMatchingLines` (see the [content types](../computes/index.html#content-types)).
 
 ## Recommended Pattern
 
