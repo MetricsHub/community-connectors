@@ -3,37 +3,31 @@
   "sources" : {
     "${source::monitors.enclosure.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.fan.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -42,38 +36,31 @@
       "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.gpu.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -82,38 +69,31 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -122,38 +102,31 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines" ],
+      "computes" : [ "awk", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -162,20 +135,16 @@
       "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     }

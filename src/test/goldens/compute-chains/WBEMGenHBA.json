@@ -6,42 +6,34 @@
       "computes" : [ "duplicateColumn", "duplicateColumn", "translate", "translate", "translate", "multiply", "replace" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "UNKNOWN", "UNKNOWN", "UNKNOWN", "c" ], [ "x", "UNKNOWN", "UNKNOWN", "UNKNOWN", "z", "" ], [ "1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "3000.0" ], [ "only" ] ],
-          "rawData" : "a;UNKNOWN;UNKNOWN;UNKNOWN;c;\nx;UNKNOWN;UNKNOWN;UNKNOWN;z;;\n1;UNKNOWN;UNKNOWN;UNKNOWN;3000.0;\nonly;"
+          "table" : [ [ "a", "UNKNOWN", "UNKNOWN", "UNKNOWN", "c" ], [ "x", "UNKNOWN", "UNKNOWN", "UNKNOWN", "z", "" ], [ "1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "3000.0" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "UNKNOWN", "UNKNOWN", "UNKNOWN", "c" ], [ "cell", "with", "sep", "UNKNOWN", "UNKNOWN", "UNKNOWN", "" ] ],
-          "rawData" : "a;UNKNOWN;UNKNOWN;UNKNOWN;c;\ncell;with;sep;UNKNOWN;UNKNOWN;UNKNOWN;;"
+          "table" : [ [ "a", "UNKNOWN", "UNKNOWN", "UNKNOWN", "c" ], [ "cell;with;sep", "UNKNOWN", "UNKNOWN", "UNKNOWN", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;UNKNOWN;UNKNOWN;UNKNOWN;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;UNKNOWN;UNKNOWN;UNKNOWN;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;UNKNOWN;UNKNOWN;UNKNOWN;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "UNKNOWN", "UNKNOWN", "UNKNOWN", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.network.discovery.sources.source(1)}" : {
       "source" : "wmi",
-      "computes" : [ "keepOnlyMatchingLines", "translate", "replace", "multiply", "toText", "awk", "toTable" ],
+      "computes" : [ "keepOnlyMatchingLines", "translate", "replace", "multiply", "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "tableWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -50,20 +42,16 @@
       "computes" : [ "extract" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : null
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -72,20 +60,16 @@
       "computes" : [ "replace", "replace", "replace" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell", "with", "sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     }

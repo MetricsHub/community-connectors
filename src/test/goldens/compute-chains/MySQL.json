@@ -6,20 +6,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" ] ],
-          "rawData" : "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE);"
+          "table" : [ [ "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" ] ]
         }
       }
     },
@@ -28,20 +24,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "No ${param::section} section in the output (e.g. no deadlock since the server started)" ] ],
-          "rawData" : "No ${param::section} section in the output (e.g. no deadlock since the server started);"
+          "table" : [ [ "No ${param::section} section in the output (e.g. no deadlock since the server started)" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "No ${param::section} section in the output (e.g. no deadlock since the server started)" ] ],
-          "rawData" : "No ${param::section} section in the output (e.g. no deadlock since the server started);"
+          "table" : [ [ "No ${param::section} section in the output (e.g. no deadlock since the server started)" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "No ${param::section} section in the output (e.g. no deadlock since the server started)" ] ],
-          "rawData" : "No ${param::section} section in the output (e.g. no deadlock since the server started);"
+          "table" : [ [ "No ${param::section} section in the output (e.g. no deadlock since the server started)" ] ]
         },
         "empty" : {
-          "table" : [ [ "SHOW ENGINE INNODB STATUS failed: it needs the PROCESS privilege" ] ],
-          "rawData" : "SHOW ENGINE INNODB STATUS failed: it needs the PROCESS privilege;"
+          "table" : [ [ "SHOW ENGINE INNODB STATUS failed: it needs the PROCESS privilege" ] ]
         }
       }
     },
@@ -50,20 +42,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "Could not check session ${param::id}: it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" ] ],
-          "rawData" : "Could not check session ${param::id}: it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN);"
+          "table" : [ [ "Could not check session ${param::id}: it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" ] ]
         }
       }
     },
@@ -72,20 +60,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "The query failed: it needs the PROCESS privilege and SELECT on performance_schema" ] ],
-          "rawData" : "The query failed: it needs the PROCESS privilege and SELECT on performance_schema;"
+          "table" : [ [ "The query failed: it needs the PROCESS privilege and SELECT on performance_schema" ] ]
         }
       }
     },
@@ -94,20 +78,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "The query failed: it needs SELECT on performance_schema" ] ],
-          "rawData" : "The query failed: it needs SELECT on performance_schema;"
+          "table" : [ [ "The query failed: it needs SELECT on performance_schema" ] ]
         }
       }
     },
@@ -116,20 +96,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "The query failed: it needs the PROCESS privilege" ] ],
-          "rawData" : "The query failed: it needs the PROCESS privilege;"
+          "table" : [ [ "The query failed: it needs the PROCESS privilege" ] ]
         }
       }
     },
@@ -138,20 +114,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "The query failed: it needs the PROCESS privilege" ] ],
-          "rawData" : "The query failed: it needs the PROCESS privilege;"
+          "table" : [ [ "The query failed: it needs the PROCESS privilege" ] ]
         }
       }
     },
@@ -160,20 +132,16 @@
       "computes" : [ "toText", "awk", "toTable", "keepColumns" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8" ] ]
         },
         "empty" : {
-          "table" : [ [ "The query failed: it needs the PROCESS privilege" ] ],
-          "rawData" : "The query failed: it needs the PROCESS privilege;"
+          "table" : [ [ "The query failed: it needs the PROCESS privilege" ] ]
         }
       }
     },
@@ -182,20 +150,16 @@
       "computes" : [ "toText", "awk", "toTable", "keepColumns" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "The query failed: it needs SELECT on performance_schema" ] ],
-          "rawData" : "The query failed: it needs SELECT on performance_schema;"
+          "table" : [ [ "The query failed: it needs SELECT on performance_schema" ] ]
         }
       }
     },
@@ -204,20 +168,16 @@
       "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell,with,sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ [ "The query failed: it needs SELECT on performance_schema" ] ],
-          "rawData" : "The query failed: it needs SELECT on performance_schema;"
+          "table" : [ [ "The query failed: it needs SELECT on performance_schema" ] ]
         }
       }
     }

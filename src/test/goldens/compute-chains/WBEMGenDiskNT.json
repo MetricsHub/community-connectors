@@ -6,20 +6,16 @@
       "computes" : [ "extract" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : null
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -28,20 +24,16 @@
       "computes" : [ "extract", "extract", "replace", "replace" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "", "b", "c" ], [ "", "", "z", "" ], [ "", "2.5", "3" ], [ "" ] ],
-          "rawData" : ";b;c;\n;;z;;\n;2.5;3;\n;"
+          "table" : [ [ "", "b", "c" ], [ "", "", "z", "" ], [ "", "2.5", "3" ], [ "" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "", "", "c" ], [ "", "", "" ] ],
-          "rawData" : ";;c;\n;;;"
+          "table" : [ [ "", "", "c" ], [ "", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "", "", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "", "", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "", "", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : ";;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\n;;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\n;;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "", "", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "", "", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "", "", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -50,20 +42,16 @@
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -72,20 +60,16 @@
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -94,20 +78,16 @@
       "computes" : [ "duplicateColumn", "duplicateColumn", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "UNKNWON", "Unknown", "c" ], [ "x", "", "UNKNWON", "Unknown", "z", "" ], [ "1", "2.5", "UNKNWON", "Unknown", "3" ], [ "only" ] ],
-          "rawData" : "a;b;UNKNWON;Unknown;c;\nx;;UNKNWON;Unknown;z;;\n1;2.5;UNKNWON;Unknown;3;\nonly;"
+          "table" : [ [ "a", "b", "UNKNWON", "Unknown", "c" ], [ "x", "", "UNKNWON", "Unknown", "z", "" ], [ "1", "2.5", "UNKNWON", "Unknown", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "UNKNWON", "Unknown", "c" ], [ "cell;with;sep", "", "UNKNWON", "Unknown", "" ] ],
-          "rawData" : "a;b;UNKNWON;Unknown;c;\ncell;with;sep;;UNKNWON;Unknown;;"
+          "table" : [ [ "a", "b", "UNKNWON", "Unknown", "c" ], [ "cell;with;sep", "", "UNKNWON", "Unknown", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "UNKNWON", "Unknown", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "UNKNWON", "Unknown", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "UNKNWON", "Unknown", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;UNKNWON;Unknown;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;UNKNWON;Unknown;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;UNKNWON;Unknown;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "UNKNWON", "Unknown", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "UNKNWON", "Unknown", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "UNKNWON", "Unknown", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     }

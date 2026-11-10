@@ -3,37 +3,31 @@
   "sources" : {
     "${source::monitors.logical_disk.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "duplicateColumn", "translate" ],
+      "computes" : [ "awk", "duplicateColumn", "translate" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.logical_disk.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "excludeMatchingLines", "prepend", "prepend" ],
+      "computes" : [ "awk", "excludeMatchingLines", "prepend" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     }

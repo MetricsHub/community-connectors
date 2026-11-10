@@ -3,19 +3,16 @@
   "sources" : {
     "${source::monitors.service.simple.sources.serviceInfo}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable", "keepOnlyMatchingLines", "translate", "translate" ],
+      "computes" : [ "awk", "keepOnlyMatchingLines", "translate", "translate" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     }

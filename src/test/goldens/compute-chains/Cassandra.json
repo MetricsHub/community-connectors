@@ -3,23 +3,19 @@
   "sources" : {
     "${source::beforeAll.dbServerName}" : {
       "source" : "jmx",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "" ], [ "" ], [ "" ], [ "" ] ],
-          "rawData" : ";\n;\n;\n;"
+          "table" : [ [ "" ], [ "" ], [ "" ], [ "" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "" ], [ "" ] ],
-          "rawData" : ";\n;"
+          "table" : [ [ "" ], [ "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "" ], [ "" ], [ "" ] ],
-          "rawData" : ";\n;\n;"
+          "table" : [ [ "" ], [ "" ], [ "" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -28,90 +24,70 @@
       "computes" : [ "keepColumns" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : null
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : null
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c4", "r1c6", "r1c8" ], [ "r2c1", "r2c2", "r2c4", "r2c6", "r2c8" ], [ "r3c1", "r3c2", "r3c4", "r3c6", "r3c8" ] ],
-          "rawData" : "r1c1;r1c2;r1c4;r1c6;r1c8;\nr2c1;r2c2;r2c4;r2c6;r2c8;\nr3c1;r3c2;r3c4;r3c6;r3c8;"
+          "table" : [ [ "r1c1", "r1c2", "r1c4", "r1c6", "r1c8" ], [ "r2c1", "r2c2", "r2c4", "r2c6", "r2c8" ], [ "r3c1", "r3c2", "r3c4", "r3c6", "r3c8" ] ]
         }
       }
     },
     "${source::monitors.cassandra.simple.sources.dbMetrics}" : {
       "source" : "tableUnion",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ [ "a", "b", "c", "x", "", "z", "1", "2.5", "3", "val", "with,comma", "only" ] ],
-          "rawData" : "a;b;c;x;;z;1;2.5;3;val;with,comma;only;"
+          "table" : [ [ "a", "b", "c", "x", "", "z", "1", "2.5", "3", "val", "with,comma", "only" ] ]
         },
         "awkSourceWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "commandLine" : {
-          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "val", "with,comma", "only" ] ],
-          "rawData" : "a;b;c;x;;z;;1;2.5;3;val;with,comma;only;"
+          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "val", "with,comma", "only" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "csv" : {
-          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "only" ] ],
-          "rawData" : "a;b;c;x;;z;;1;2.5;3;only;"
+          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "only" ] ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "only" ] ],
-          "rawData" : "a;b;c;x;;z;;1;2.5;3;only;"
+          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c", "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;cell,with,sep;;;"
+          "table" : [ [ "a", "b", "c", "cell", "with", "sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c", "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;cell,with,sep;;;"
+          "table" : [ [ "a", "b", "c", "cell", "with", "sep", "", "" ] ]
         },
         "csvWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "only" ] ],
-          "rawData" : "a;b;c;x;;z;;1;2.5;3;only;"
+          "table" : [ [ "a", "b", "c", "x", "", "z", "", "1", "2.5", "3", "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c", "cell,with,sep", "", "" ] ],
-          "rawData" : "a;b;c;cell,with,sep;;;"
+          "table" : [ [ "a", "b", "c", "cell", "with", "sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;r2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;r3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -120,42 +96,34 @@
       "computes" : [ "divide" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "0.001", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n0.001;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "0.001", "2.5", "3" ], [ "only" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.cassandra_cluster.simple.sources.clusterNodes}" : {
       "source" : "jmx",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "4", "2", "3", "0", "0" ] ],
-          "rawData" : "4;2;3;0;0;"
+          "table" : [ [ "4", "2", "3", "0", "0" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "4", "1", "1", "0", "0" ] ],
-          "rawData" : "4;1;1;0;0;"
+          "table" : [ [ "2", "1", "1", "0", "0" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "3", "3", "3", "3", "3" ] ],
-          "rawData" : "3;3;3;3;3;"
+          "table" : [ [ "3", "3", "3", "3", "3" ] ]
         },
         "empty" : {
-          "table" : [ [ "0", "0", "0", "0", "0" ] ],
-          "rawData" : "0;0;0;0;0;"
+          "table" : [ [ "0", "0", "0", "0", "0" ] ]
         }
       }
     },
@@ -164,274 +132,214 @@
       "computes" : [ "keepColumns" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : null
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : null
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c6", "r1c9" ], [ "r2c1", "r2c2", "r2c3", "r2c6", "r2c9" ], [ "r3c1", "r3c2", "r3c3", "r3c6", "r3c9" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c6;r1c9;\nr2c1;r2c2;r2c3;r2c6;r2c9;\nr3c1;r3c2;r3c3;r3c6;r3c9;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c6", "r1c9" ], [ "r2c1", "r2c2", "r2c3", "r2c6", "r2c9" ], [ "r3c1", "r3c2", "r3c3", "r3c6", "r3c9" ] ]
         }
       }
     },
     "${source::tools.clusterStatus.sources.nodes}" : {
       "source" : "tableUnion",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "awkSourceWide" : {
-          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ],
-          "rawData" : "r1c4;;LEAVING;;;;\nr2c3;;JOINING;;;;\nr3c2;DOWN;NORMAL;;;;\nr1c5;;MOVING;;;;\nr2c4;;LEAVING;;;;\nr3c3;;JOINING;;;;\nr2c5;;MOVING;;;;\nr3c4;;LEAVING;;;;\nr3c5;;MOVING;;;;\nr1c1;UP;NORMAL;;;;\nr1c2;DOWN;NORMAL;;;;\nr2c1;UP;NORMAL;;;;\nr1c3;;JOINING;;;;\nr2c2;DOWN;NORMAL;;;;\nr3c1;UP;NORMAL;;;;"
+          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ]
         },
         "commandLine" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ],
-          "rawData" : "r1c4;;LEAVING;;;;\nr2c3;;JOINING;;;;\nr3c2;DOWN;NORMAL;;;;\nr1c5;;MOVING;;;;\nr2c4;;LEAVING;;;;\nr3c3;;JOINING;;;;\nr2c5;;MOVING;;;;\nr3c4;;LEAVING;;;;\nr3c5;;MOVING;;;;\nr1c1;UP;NORMAL;;;;\nr1c2;DOWN;NORMAL;;;;\nr2c1;UP;NORMAL;;;;\nr1c3;;JOINING;;;;\nr2c2;DOWN;NORMAL;;;;\nr3c1;UP;NORMAL;;;;"
+          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ]
         },
         "csv" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ],
-          "rawData" : "r1c4;;LEAVING;;;;\nr2c3;;JOINING;;;;\nr3c2;DOWN;NORMAL;;;;\nr1c5;;MOVING;;;;\nr2c4;;LEAVING;;;;\nr3c3;;JOINING;;;;\nr2c5;;MOVING;;;;\nr3c4;;LEAVING;;;;\nr3c5;;MOVING;;;;\nr1c1;UP;NORMAL;;;;\nr1c2;DOWN;NORMAL;;;;\nr2c1;UP;NORMAL;;;;\nr1c3;;JOINING;;;;\nr2c2;DOWN;NORMAL;;;;\nr3c1;UP;NORMAL;;;;"
+          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "csvWide" : {
-          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ],
-          "rawData" : "r1c4;;LEAVING;;;;\nr2c3;;JOINING;;;;\nr3c2;DOWN;NORMAL;;;;\nr1c5;;MOVING;;;;\nr2c4;;LEAVING;;;;\nr3c3;;JOINING;;;;\nr2c5;;MOVING;;;;\nr3c4;;LEAVING;;;;\nr3c5;;MOVING;;;;\nr1c1;UP;NORMAL;;;;\nr1c2;DOWN;NORMAL;;;;\nr2c1;UP;NORMAL;;;;\nr1c3;;JOINING;;;;\nr2c2;DOWN;NORMAL;;;;\nr3c1;UP;NORMAL;;;;"
+          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ]
         },
         "empty" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "table" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ],
-          "rawData" : "r1c4;;LEAVING;;;;\nr2c3;;JOINING;;;;\nr3c2;DOWN;NORMAL;;;;\nr1c5;;MOVING;;;;\nr2c4;;LEAVING;;;;\nr3c3;;JOINING;;;;\nr2c5;;MOVING;;;;\nr3c4;;LEAVING;;;;\nr3c5;;MOVING;;;;\nr1c1;UP;NORMAL;;;;\nr1c2;DOWN;NORMAL;;;;\nr2c1;UP;NORMAL;;;;\nr1c3;;JOINING;;;;\nr2c2;DOWN;NORMAL;;;;\nr3c1;UP;NORMAL;;;;"
+          "table" : [ [ "r1c4", "", "LEAVING", "", "", "" ], [ "r2c3", "", "JOINING", "", "", "" ], [ "r3c2", "DOWN", "NORMAL", "", "", "" ], [ "r1c5", "", "MOVING", "", "", "" ], [ "r2c4", "", "LEAVING", "", "", "" ], [ "r3c3", "", "JOINING", "", "", "" ], [ "r2c5", "", "MOVING", "", "", "" ], [ "r3c4", "", "LEAVING", "", "", "" ], [ "r3c5", "", "MOVING", "", "", "" ], [ "r1c1", "UP", "NORMAL", "", "", "" ], [ "r1c2", "DOWN", "NORMAL", "", "", "" ], [ "r2c1", "UP", "NORMAL", "", "", "" ], [ "r1c3", "", "JOINING", "", "", "" ], [ "r2c2", "DOWN", "NORMAL", "", "", "" ], [ "r3c1", "UP", "NORMAL", "", "", "" ] ]
         },
         "text" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         },
         "textWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "" ] ]
         }
       }
     },
     "${source::tools.compactions.sources.running}" : {
       "source" : "jmx",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ]
         }
       }
     },
     "${source::tools.droppedMessages.sources.dropped}" : {
       "source" : "jmx",
-      "computes" : [ "toText", "awk", "toTable", "sort" ],
+      "computes" : [ "awk", "sort" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "1", "2.5", "3" ] ],
-          "rawData" : "1;2.5;3;"
+          "table" : [ [ "1", "2.5", "3", "" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "" ] ]
         }
       }
     },
     "${source::tools.tableStats.sources.tables}" : {
       "source" : "tableUnion",
-      "computes" : [ "toText", "awk", "toTable", "sort", "keepColumns" ],
+      "computes" : [ "awk", "sort", "keepColumns" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;;;;;;;;;;;\nx;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "awkSourceWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\nr1c1;r1c2;;;;;;;;;;;;;;;;\nr2c1;r2c2;;;;;;;;;;;;;;;;\nr3c1;r3c2;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "commandLine" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;;;;;;;;;;;\nx;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\nr1c1;r1c2;;;;;;;;;;;;;;;;\nr2c1;r2c2;;;;;;;;;;;;;;;;\nr3c1;r3c2;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "csv" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;;;;;;;;;;;\nx;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;;;;;;;;;;;\nx;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "cell,with,sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\ncell,with,sep;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "cell;with;sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\nr1c1;r1c2;;;;;;;;;;;;;;;;\nr2c1;r2c2;;;;;;;;;;;;;;;;\nr3c1;r3c2;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "cell,with,sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\ncell,with,sep;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "cell;with;sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "csvWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\nr1c1;r1c2;;;;;;;;;;;;;;;;\nr2c1;r2c2;;;;;;;;;;;;;;;;\nr3c1;r3c2;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "empty" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "table" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;;;;;;;;;;;\nx;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "x", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "cell,with,sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\ncell,with,sep;;;;;;;;;;;;;;;;;\na;b;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "cell;with;sep", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;\nr1c1;r1c2;;;;;;;;;;;;;;;;\nr2c1;r2c2;;;;;;;;;;;;;;;;\nr3c1;r3c2;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r1c1", "r1c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "text" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         },
         "textWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;;;;;;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" ] ]
         }
       }
     },
     "${source::tools.threadPools.sources.pools}" : {
       "source" : "tableUnion",
-      "computes" : [ "toText", "awk", "toTable", "sort" ],
+      "computes" : [ "awk", "sort" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;\nx;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "awkSourceWide" : {
-          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ],
-          "rawData" : "r1c1;r1c2;;;;;;\nr2c1;r2c2;;;;;;\nr3c1;r3c2;;;;;;"
+          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ]
         },
         "commandLine" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;\nx;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ],
-          "rawData" : "r1c1;r1c2;;;;;;\nr2c1;r2c2;;;;;;\nr3c1;r3c2;;;;;;"
+          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ]
         },
         "csv" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;\nx;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;\nx;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "cell,with,sep", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "cell,with,sep;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "cell;with;sep", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ],
-          "rawData" : "r1c1;r1c2;;;;;;\nr2c1;r2c2;;;;;;\nr3c1;r3c2;;;;;;"
+          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ [ "cell,with,sep", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "cell,with,sep;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "cell;with;sep", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "csvWide" : {
-          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ],
-          "rawData" : "r1c1;r1c2;;;;;;\nr2c1;r2c2;;;;;;\nr3c1;r3c2;;;;;;"
+          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ]
         },
         "empty" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ]
         },
         "table" : {
-          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "1;2.5;;;;;;\nx;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "1", "2.5", "", "", "", "", "" ], [ "x", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "cell,with,sep", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ],
-          "rawData" : "cell,with,sep;;;;;;;\na;b;;;;;;"
+          "table" : [ [ "cell;with;sep", "", "", "", "", "", "" ], [ "a", "b", "", "", "", "", "" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ],
-          "rawData" : "r1c1;r1c2;;;;;;\nr2c1;r2c2;;;;;;\nr3c1;r3c2;;;;;;"
+          "table" : [ [ "r1c1", "r1c2", "", "", "", "", "" ], [ "r2c1", "r2c2", "", "", "", "", "" ], [ "r3c1", "r3c2", "", "", "", "", "" ] ]
         },
         "text" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ]
         },
         "textWide" : {
-          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ],
-          "rawData" : "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing);;;;;;;"
+          "table" : [ [ "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" ] ]
         }
       }
     }

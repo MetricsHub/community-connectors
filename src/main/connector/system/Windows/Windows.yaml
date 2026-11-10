@@ -74,23 +74,23 @@ monitors:
   memory:
     simple:
       sources:
-        # Free;Free;Cached;Cached
-        memoryInformation:
+        # Total (KiB), a single cell
+        totalMemory:
           type: wmi
           namespace: root\CIMv2
-          query: SELECT AvailableBytes,AvailableBytes,CacheBytes,CacheBytes FROM Win32_PerfRawData_PerfOS_Memory
+          query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
         calculatedMemoryInformation:
         # Free;Free%;Cached;Cached%;Used;Used%;Total
           type: wmi
           namespace: root\CIMv2
-          query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
+          query: SELECT AvailableBytes,AvailableBytes,CacheBytes,CacheBytes FROM Win32_PerfRawData_PerfOS_Memory
           computes:
-          # START SNIPPET: prependMemorySourceCompute
-          # Combining both sources for calculations
-          - type: prepend
-            column: 1
-            value: ${source::memoryInformation}
-          # END SNIPPET: prependMemorySourceCompute
+          # Free;Free;Cached;Cached
+          # Adding the total as column 5 (a single cell: the value adds a column)
+          # Free;Free;Cached;Cached;Total
+          - type: append
+            column: 5
+            value: ${source::totalMemory}
           # Converting total to bytes and making a copy for used memory
           - type: multiply
             column: 5

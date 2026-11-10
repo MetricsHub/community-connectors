@@ -6,20 +6,16 @@
       "computes" : [ "keepOnlyMatchingLines", "prepend", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -28,20 +24,16 @@
       "computes" : [ "keepOnlyMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -50,64 +42,52 @@
       "computes" : [ "keepOnlyMatchingLines", "prepend", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.enclosure.simple.sources.computerSystems}" : {
       "source" : "wmi",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "FRU", "c", "b", "a" ], [ "FRU", "z", "", "x" ], [ "FRU", "3", "2.5", "1" ] ],
-          "rawData" : "FRU;c;b;a;\nFRU;z;;x;\nFRU;3;2.5;1;"
+          "table" : [ [ "FRU", "c", "b", "a" ], [ "FRU", "z", "", "x" ], [ "FRU", "3", "2.5", "1" ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "FRU", "c", "b", "a" ], [ "FRU", "", "", "cell,with,sep" ] ],
-          "rawData" : "FRU;c;b;a;\nFRU;;;cell,with,sep;"
+          "table" : [ [ "FRU", "c", "b", "a" ], [ "FRU", "", "", "cell;with;sep" ] ]
         },
         "tableWide" : {
-          "table" : [ [ "FRU", "r1c3", "r1c2", "r1c1" ], [ "FRU", "r2c3", "r2c2", "r2c1" ], [ "FRU", "r3c3", "r3c2", "r3c1" ] ],
-          "rawData" : "FRU;r1c3;r1c2;r1c1;\nFRU;r2c3;r2c2;r2c1;\nFRU;r3c3;r3c2;r3c1;"
+          "table" : [ [ "FRU", "r1c3", "r1c2", "r1c1" ], [ "FRU", "r2c3", "r2c2", "r2c1" ], [ "FRU", "r3c3", "r3c2", "r3c1" ] ]
         }
       }
     },
     "${source::monitors.enclosure.simple.sources.discreteSensors}" : {
       "source" : "wmi",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "tableWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -116,112 +96,88 @@
       "computes" : [ "keepOnlyMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.enclosure.simple.sources.interpretedSensors}" : {
       "source" : "tableUnion",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "awkSourceWide" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "commandLine" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "commandLineWide" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "csv" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "csvWide" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "empty" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "table" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "tableWide" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "text" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         },
         "textWide" : {
-          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ],
-          "rawData" : "Enclosure;;;;;;;Monitored by sensors: ;"
+          "table" : [ [ "Enclosure", "", "", "", "", "", "", "Monitored by sensors: " ] ]
         }
       }
     },
     "${source::monitors.enclosure.simple.sources.numericSensors}" : {
       "source" : "wmi",
-      "computes" : [ "toText", "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "tableSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "tableWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -230,20 +186,16 @@
       "computes" : [ "keepOnlyMatchingLines", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -252,20 +204,16 @@
       "computes" : [ "keepOnlyMatchingLines", "keepColumns", "convert", "insertColumn", "insertColumn", "insertColumn", "insertColumn" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -274,20 +222,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -296,20 +240,16 @@
       "computes" : [ "keepOnlyMatchingLines", "duplicateColumn", "extract", "extract", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -318,20 +258,16 @@
       "computes" : [ "excludeMatchingLines", "prepend", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ],
-          "rawData" : "a;b;c;\ncell;with;sep;;;"
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
         },
         "csvWide" : {
-          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "Serial Number: r1c6", "UNKNOWN", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "Serial Number: r2c6", "UNKNOWN", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "Serial Number: r3c6", "UNKNOWN", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;Serial Number: r1c6;UNKNOWN;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16;\nr2c1;r2c2;r2c3;r2c4;r2c5;Serial Number: r2c6;UNKNOWN;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16;\nr3c1;r3c2;r3c3;r3c4;r3c5;Serial Number: r3c6;UNKNOWN;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16;"
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "Serial Number: r1c6", "UNKNOWN", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "Serial Number: r2c6", "UNKNOWN", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "Serial Number: r3c6", "UNKNOWN", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -340,20 +276,16 @@
       "computes" : [ "keepOnlyMatchingLines", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -362,20 +294,16 @@
       "computes" : [ "keepOnlyMatchingLines", "prepend", "prepend", "convert" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -384,20 +312,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -406,20 +330,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvSeparatorInCell" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     }

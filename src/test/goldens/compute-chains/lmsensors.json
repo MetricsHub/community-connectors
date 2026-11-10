@@ -3,145 +3,121 @@
   "sources" : {
     "${source::monitors.enclosure.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.enclosure.discovery.sources.source(2)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.fan.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.fan.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.temperature.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.voltage.discovery.sources.source(1)}" : {
       "source" : "commandLine",
-      "computes" : [ "awk", "toTable" ],
+      "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "commandLineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     }

@@ -6,28 +6,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.Id-0;\n/Members[1];@odata.Id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -36,28 +30,22 @@
       "computes" : [ "json2csv", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/", "Id-0", "unknown", "Alarm" ] ],
-          "rawData" : "/;Id-0;unknown;Alarm;"
+          "table" : [ [ "/", "Id-0", "unknown", "Alarm" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -66,28 +54,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ],
-          "rawData" : "/Entry/Value/Members[0];Column(2)-up;@odata.id-0;\n/Entry/Value/Members[1];Column(2)-up;@odata.id;1;\n/Entry/Value/Members[2];Column(2)-up;;\n/Entry/Value/Members[3];Column(2)-up;42;\n"
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -96,28 +78,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Socket-0", "Manufacturer-0", "Model-0", "MaxSpeedMHz-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Socket", "1", "Manufacturer", "1", "Model", "1", "MaxSpeedMHz", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42" ] ],
-          "rawData" : "/Entry/Value[0];Column(2)-up;Id-0;Socket-0;Manufacturer-0;Model-0;MaxSpeedMHz-0;\n/Entry/Value[1];Column(2)-up;Id;1;Socket;1;Manufacturer;1;Model;1;MaxSpeedMHz;1;\n/Entry/Value[2];Column(2)-up;;;;;;\n/Entry/Value[3];Column(2)-up;42;42;42;42;42;\n"
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Socket-0", "Manufacturer-0", "Model-0", "MaxSpeedMHz-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Socket", "1", "Manufacturer", "1", "Model", "1", "MaxSpeedMHz", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -126,28 +102,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.id-0;\n/Members[1];@odata.id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -156,28 +126,22 @@
       "computes" : [ "json2csv", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/", "@odata.id-0", "unknown", "Alarm" ] ],
-          "rawData" : "/;@odata.id-0;unknown;Alarm;"
+          "table" : [ [ "/", "@odata.id-0", "unknown", "Alarm" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -186,28 +150,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.id-0;\n/Members[1];@odata.id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -216,28 +174,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ],
-          "rawData" : "/Entry/Value[0];@odata.id-0;@odata.id-0;\n/Entry/Value[1];@odata.id;1;@odata.id;1;\n/Entry/Value[2];;;\n/Entry/Value[3];42;42;\n"
+          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -246,28 +198,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.id-0;\n/Members[1];@odata.id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -276,28 +222,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/", "@odata.id-0", "Name-0", "SerialNumber-0", "PartNumber-0", "Manufacturer-0", "Model-0" ] ],
-          "rawData" : "/;@odata.id-0;Name-0;SerialNumber-0;PartNumber-0;Manufacturer-0;Model-0;\n"
+          "table" : [ [ "/", "@odata.id-0", "Name-0", "SerialNumber-0", "PartNumber-0", "Manufacturer-0", "Model-0" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -306,28 +246,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.id-0;\n/Members[1];@odata.id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -336,28 +270,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ],
-          "rawData" : "/Entry/Value[0];@odata.id-0;@odata.id-0;\n/Entry/Value[1];@odata.id;1;@odata.id;1;\n/Entry/Value[2];;;\n/Entry/Value[3];42;42;\n"
+          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -366,28 +294,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ],
-          "rawData" : "/Entry/Value[0];@odata.id-0;@odata.id-0;\n/Entry/Value[1];@odata.id;1;@odata.id;1;\n/Entry/Value[2];;;\n/Entry/Value[3];42;42;\n"
+          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -396,28 +318,22 @@
       "computes" : [ "json2csv", "translate", "translate", "subtract", "divide", "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Fans[0]", "MemberId-0", "unknown", "Alarm", "Reading-0", "Reading-0", "MinReadingRange-0", "MaxReadingRange-0" ], [ "/Fans[1]", "MemberId", "unknown", "Alarm", "1", "Health", "1", "Reading", "1", "Reading", "1", "MinReadingRange", "1", "MaxReadingRange", "1" ], [ "/Fans[2]", "", "unknown", "Alarm", "", "", "", "" ], [ "/Fans[3]", "42", "unknown", "Alarm", "42", "4200.0", "42", "0.0" ] ],
-          "rawData" : "/Fans[0];MemberId-0;unknown;Alarm;Reading-0;Reading-0;MinReadingRange-0;MaxReadingRange-0;\n/Fans[1];MemberId;unknown;Alarm;1;Health;1;Reading;1;Reading;1;MinReadingRange;1;MaxReadingRange;1;\n/Fans[2];;unknown;Alarm;;;;;\n/Fans[3];42;unknown;Alarm;42;4200.0;42;0.0;"
+          "table" : [ [ "/Fans[0]", "MemberId-0", "unknown", "Alarm", "Reading-0", "Reading-0", "MinReadingRange-0", "MaxReadingRange-0" ], [ "/Fans[1]", "MemberId", "unknown", "Alarm", "1", "Health", "1", "Reading", "1", "Reading", "1", "MinReadingRange", "1", "MaxReadingRange", "1" ], [ "/Fans[2]", "", "unknown", "Alarm", "", "", "", "" ], [ "/Fans[3]", "42", "unknown", "Alarm", "42", "4200.0", "42", "0.0" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -426,28 +342,22 @@
       "computes" : [ "json2csv", "keepOnlyMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -456,28 +366,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.Id-0;\n/Members[1];@odata.Id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -486,28 +390,22 @@
       "computes" : [ "json2csv", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/", "Id-0", "unknown", "Alarm" ] ],
-          "rawData" : "/;Id-0;unknown;Alarm;"
+          "table" : [ [ "/", "Id-0", "unknown", "Alarm" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -516,28 +414,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ],
-          "rawData" : "/Entry/Value/Members[0];Column(2)-up;@odata.id-0;\n/Entry/Value/Members[1];Column(2)-up;@odata.id;1;\n/Entry/Value/Members[2];Column(2)-up;;\n/Entry/Value/Members[3];Column(2)-up;42;\n"
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -546,28 +438,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "DeviceLocator-0", "CapacityMiB-0", "Manufacturer-0", "PartNumber-0", "SerialNumber-0", "MemoryDeviceType-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "DeviceLocator", "1", "CapacityMiB", "1", "Manufacturer", "1", "PartNumber", "1", "SerialNumber", "1", "MemoryDeviceType", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42", "42", "42" ] ],
-          "rawData" : "/Entry/Value[0];Column(2)-up;Id-0;DeviceLocator-0;CapacityMiB-0;Manufacturer-0;PartNumber-0;SerialNumber-0;MemoryDeviceType-0;\n/Entry/Value[1];Column(2)-up;Id;1;DeviceLocator;1;CapacityMiB;1;Manufacturer;1;PartNumber;1;SerialNumber;1;MemoryDeviceType;1;\n/Entry/Value[2];Column(2)-up;;;;;;;;\n/Entry/Value[3];Column(2)-up;42;42;42;42;42;42;42;\n"
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "DeviceLocator-0", "CapacityMiB-0", "Manufacturer-0", "PartNumber-0", "SerialNumber-0", "MemoryDeviceType-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "DeviceLocator", "1", "CapacityMiB", "1", "Manufacturer", "1", "PartNumber", "1", "SerialNumber", "1", "MemoryDeviceType", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -576,28 +462,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.id-0;\n/Members[1];@odata.id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -606,28 +486,22 @@
       "computes" : [ "json2csv", "translate", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/", "Id-0", "failed", "degraded", "Alarm", "SpeedMbps-0" ] ],
-          "rawData" : "/;Id-0;failed;degraded;Alarm;SpeedMbps-0;"
+          "table" : [ [ "/", "Id-0", "failed", "degraded", "Alarm", "SpeedMbps-0" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -636,28 +510,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ],
-          "rawData" : "/Entry/Value/Members[0];Column(2)-up;@odata.id-0;\n/Entry/Value/Members[1];Column(2)-up;@odata.id;1;\n/Entry/Value/Members[2];Column(2)-up;;\n/Entry/Value/Members[3];Column(2)-up;42;\n"
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -666,28 +534,22 @@
       "computes" : [ "json2csv", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Name-0", "MACAddress-0", "" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Name", "", "MACAddress", "1", "State", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "" ] ],
-          "rawData" : "/Entry/Value[0];Column(2)-up;Id-0;Name-0;MACAddress-0;;\n/Entry/Value[1];Column(2)-up;Id;1;Name;;MACAddress;1;State;1;\n/Entry/Value[2];Column(2)-up;;;;;\n/Entry/Value[3];Column(2)-up;42;42;42;;"
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Name-0", "MACAddress-0", "" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Name", "", "MACAddress", "1", "State", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -696,28 +558,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ],
-          "rawData" : "/Members[0];@odata.id-0;\n/Members[1];@odata.id;1;\n/Members[2];;\n/Members[3];42;\n"
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -726,28 +582,22 @@
       "computes" : [ "json2csv", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Devices[0]", "Name-0", "unknown", "Alarm" ], [ "/Devices[1]", "Name", "unknown", "Alarm", "1", "Health", "1" ], [ "/Devices[2]", "", "unknown", "Alarm" ], [ "/Devices[3]", "42", "unknown", "Alarm" ] ],
-          "rawData" : "/Devices[0];Name-0;unknown;Alarm;\n/Devices[1];Name;unknown;Alarm;1;Health;1;\n/Devices[2];;unknown;Alarm;\n/Devices[3];42;unknown;Alarm;"
+          "table" : [ [ "/Devices[0]", "Name-0", "unknown", "Alarm" ], [ "/Devices[1]", "Name", "unknown", "Alarm", "1", "Health", "1" ], [ "/Devices[2]", "", "unknown", "Alarm" ], [ "/Devices[3]", "42", "unknown", "Alarm" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -756,28 +606,22 @@
       "computes" : [ "json2csv", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Id-0", "unknown", "Alarm" ], [ "/Entry/Value[1]", "Id", "unknown", "Alarm", "1", "Health", "1" ], [ "/Entry/Value[2]", "", "unknown", "Alarm" ], [ "/Entry/Value[3]", "42", "unknown", "Alarm" ] ],
-          "rawData" : "/Entry/Value[0];Id-0;unknown;Alarm;\n/Entry/Value[1];Id;unknown;Alarm;1;Health;1;\n/Entry/Value[2];;unknown;Alarm;\n/Entry/Value[3];42;unknown;Alarm;"
+          "table" : [ [ "/Entry/Value[0]", "Id-0", "unknown", "Alarm" ], [ "/Entry/Value[1]", "Id", "unknown", "Alarm", "1", "Health", "1" ], [ "/Entry/Value[2]", "", "unknown", "Alarm" ], [ "/Entry/Value[3]", "42", "unknown", "Alarm" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -786,28 +630,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ],
-          "rawData" : "/Entry/Value/Members[0];Column(2)-up;@odata.id-0;\n/Entry/Value/Members[1];Column(2)-up;@odata.id;1;\n/Entry/Value/Members[2];Column(2)-up;;\n/Entry/Value/Members[3];Column(2)-up;42;\n"
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -816,28 +654,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Devices[0]", "Column(2)-up", "Name-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value/Devices[1]", "Column(2)-up", "Name", "1", "Manufacturer", "1", "Model", "1" ], [ "/Entry/Value/Devices[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value/Devices[3]", "Column(2)-up", "42", "42", "42" ] ],
-          "rawData" : "/Entry/Value/Devices[0];Column(2)-up;Name-0;Manufacturer-0;Model-0;\n/Entry/Value/Devices[1];Column(2)-up;Name;1;Manufacturer;1;Model;1;\n/Entry/Value/Devices[2];Column(2)-up;;;;\n/Entry/Value/Devices[3];Column(2)-up;42;42;42;\n"
+          "table" : [ [ "/Entry/Value/Devices[0]", "Column(2)-up", "Name-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value/Devices[1]", "Column(2)-up", "Name", "1", "Manufacturer", "1", "Model", "1" ], [ "/Entry/Value/Devices[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value/Devices[3]", "Column(2)-up", "42", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -846,28 +678,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Links/Drives[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Links/Drives[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Links/Drives[2]", "Column(2)-up", "" ], [ "/Entry/Value/Links/Drives[3]", "Column(2)-up", "42" ] ],
-          "rawData" : "/Entry/Value/Links/Drives[0];Column(2)-up;@odata.id-0;\n/Entry/Value/Links/Drives[1];Column(2)-up;@odata.id;1;\n/Entry/Value/Links/Drives[2];Column(2)-up;;\n/Entry/Value/Links/Drives[3];Column(2)-up;42;\n"
+          "table" : [ [ "/Entry/Value/Links/Drives[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Links/Drives[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Links/Drives[2]", "Column(2)-up", "" ], [ "/Entry/Value/Links/Drives[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -876,28 +702,22 @@
       "computes" : [ "json2csv" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Manufacturer", "1", "Model", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42" ] ],
-          "rawData" : "/Entry/Value[0];Column(2)-up;Id-0;Manufacturer-0;Model-0;\n/Entry/Value[1];Column(2)-up;Id;1;Manufacturer;1;Model;1;\n/Entry/Value[2];Column(2)-up;;;;\n/Entry/Value[3];Column(2)-up;42;42;42;\n"
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Manufacturer", "1", "Model", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
@@ -906,28 +726,22 @@
       "computes" : [ "json2csv", "translate", "translate" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/PowerSupplies[0]", "MemberId-0", "unknown", "Alarm" ], [ "/PowerSupplies[1]", "MemberId", "unknown", "Alarm", "1", "Health", "1" ], [ "/PowerSupplies[2]", "", "unknown", "Alarm" ], [ "/PowerSupplies[3]", "42", "unknown", "Alarm" ] ],
-          "rawData" : "/PowerSupplies[0];MemberId-0;unknown;Alarm;\n/PowerSupplies[1];MemberId;unknown;Alarm;1;Health;1;\n/PowerSupplies[2];;unknown;Alarm;\n/PowerSupplies[3];42;unknown;Alarm;"
+          "table" : [ [ "/PowerSupplies[0]", "MemberId-0", "unknown", "Alarm" ], [ "/PowerSupplies[1]", "MemberId", "unknown", "Alarm", "1", "Health", "1" ], [ "/PowerSupplies[2]", "", "unknown", "Alarm" ], [ "/PowerSupplies[3]", "42", "unknown", "Alarm" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -936,58 +750,46 @@
       "computes" : [ "json2csv", "excludeMatchingLines", "prepend", "prepend", "prepend" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/PowerSupplies[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "PowerSupplyType-0", "LineInputVoltage-0", "Model: Model-0", "Firmware Version: firmwareVersion-0", "Serial Number: SerialNumber-0" ], [ "/Entry/Value/PowerSupplies[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "Model: 1", "Firmware Version: PowerSupplyType", "Serial Number: 1", "LineInputVoltage", "1", "Model", "1", "firmwareVersion", "1", "SerialNumber", "1" ], [ "/Entry/Value/PowerSupplies[2]", "Column(3)-up", "", "", "", "", "", "Model: ", "Firmware Version: ", "Serial Number: " ], [ "/Entry/Value/PowerSupplies[3]", "Column(3)-up", "42", "42", "42", "42", "42", "Model: 42", "Firmware Version: 42", "Serial Number: 42" ] ],
-          "rawData" : "/Entry/Value/PowerSupplies[0];Column(3)-up;MemberId-0;Name-0;State-0;PowerSupplyType-0;LineInputVoltage-0;Model: Model-0;Firmware Version: firmwareVersion-0;Serial Number: SerialNumber-0;\n/Entry/Value/PowerSupplies[1];Column(3)-up;MemberId;1;Name;1;State;Model: 1;Firmware Version: PowerSupplyType;Serial Number: 1;LineInputVoltage;1;Model;1;firmwareVersion;1;SerialNumber;1;\n/Entry/Value/PowerSupplies[2];Column(3)-up;;;;;;Model: ;Firmware Version: ;Serial Number: ;\n/Entry/Value/PowerSupplies[3];Column(3)-up;42;42;42;42;42;Model: 42;Firmware Version: 42;Serial Number: 42;"
+          "table" : [ [ "/Entry/Value/PowerSupplies[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "PowerSupplyType-0", "LineInputVoltage-0", "Model: Model-0", "Firmware Version: firmwareVersion-0", "Serial Number: SerialNumber-0" ], [ "/Entry/Value/PowerSupplies[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "Model: 1", "Firmware Version: PowerSupplyType", "Serial Number: 1", "LineInputVoltage", "1", "Model", "1", "firmwareVersion", "1", "SerialNumber", "1" ], [ "/Entry/Value/PowerSupplies[2]", "Column(3)-up", "", "", "", "", "", "Model: ", "Firmware Version: ", "Serial Number: " ], [ "/Entry/Value/PowerSupplies[3]", "Column(3)-up", "42", "42", "42", "42", "42", "Model: 42", "Firmware Version: 42", "Serial Number: 42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "toText", "awk", "toTable" ],
+      "computes" : [ "json2csv", "translate", "translate", "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Temperatures[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Temperatures[1]", "MemberId", "unknown", "State: Health", "", "Health", "1", "ReadingCelsius", "1", "State", "1" ], [ "/Temperatures[2]", "", "unknown", "Alarm", "", "" ], [ "/Temperatures[3]", "42", "unknown", "State: 42", "", "42" ] ],
-          "rawData" : "/Temperatures[0];MemberId-0;unknown;State: State-0;;State-0;\n/Temperatures[1];MemberId;unknown;State: Health;;Health;1;ReadingCelsius;1;State;1;\n/Temperatures[2];;unknown;Alarm;;;\n/Temperatures[3];42;unknown;State: 42;;42;"
+          "table" : [ [ "/Temperatures[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Temperatures[1]", "MemberId", "unknown", "State: Health", "", "Health" ], [ "/Temperatures[2]", "", "unknown", "Alarm", "", "" ], [ "/Temperatures[3]", "42", "unknown", "State: 42", "", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -996,58 +798,46 @@
       "computes" : [ "json2csv", "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Temperatures[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0", "ReadingCelsius-0" ], [ "/Entry/Value/Temperatures[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "1", "UpperThresholdNoncritical", "1", "UpperThresholdCritical", "1", "ReadingCelsius", "1" ], [ "/Entry/Value/Temperatures[2]", "Column(3)-up", "", "", "", "", "", "" ], [ "/Entry/Value/Temperatures[3]", "Column(3)-up", "42", "42", "42", "42", "42", "42" ] ],
-          "rawData" : "/Entry/Value/Temperatures[0];Column(3)-up;MemberId-0;Name-0;State-0;UpperThresholdNoncritical-0;UpperThresholdCritical-0;ReadingCelsius-0;\n/Entry/Value/Temperatures[1];Column(3)-up;MemberId;1;Name;1;State;1;UpperThresholdNoncritical;1;UpperThresholdCritical;1;ReadingCelsius;1;\n/Entry/Value/Temperatures[2];Column(3)-up;;;;;;;\n/Entry/Value/Temperatures[3];Column(3)-up;42;42;42;42;42;42;"
+          "table" : [ [ "/Entry/Value/Temperatures[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0", "ReadingCelsius-0" ], [ "/Entry/Value/Temperatures[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "1", "UpperThresholdNoncritical", "1", "UpperThresholdCritical", "1", "ReadingCelsius", "1" ], [ "/Entry/Value/Temperatures[2]", "Column(3)-up", "", "", "", "", "", "" ], [ "/Entry/Value/Temperatures[3]", "Column(3)-up", "42", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "multiply", "toText", "awk", "toTable" ],
+      "computes" : [ "json2csv", "translate", "translate", "multiply", "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Voltages[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Voltages[1]", "MemberId", "unknown", "State: Health", "", "Health", "1", "ReadingVolts", "1", "State", "1" ], [ "/Voltages[2]", "", "unknown", "Alarm", "", "" ], [ "/Voltages[3]", "42", "unknown", "State: 42", "", "42" ] ],
-          "rawData" : "/Voltages[0];MemberId-0;unknown;State: State-0;;State-0;\n/Voltages[1];MemberId;unknown;State: Health;;Health;1;ReadingVolts;1;State;1;\n/Voltages[2];;unknown;Alarm;;;\n/Voltages[3];42;unknown;State: 42;;42;"
+          "table" : [ [ "/Voltages[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Voltages[1]", "MemberId", "unknown", "State: Health", "", "Health" ], [ "/Voltages[2]", "", "unknown", "Alarm", "", "" ], [ "/Voltages[3]", "42", "unknown", "State: 42", "", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -1056,28 +846,22 @@
       "computes" : [ "json2csv", "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Voltages[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0" ], [ "/Entry/Value/Voltages[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "1", "UpperThresholdNoncritical", "1", "UpperThresholdCritical", "1" ], [ "/Entry/Value/Voltages[2]", "Column(3)-up", "", "", "", "", "" ], [ "/Entry/Value/Voltages[3]", "Column(3)-up", "42", "42", "42", "42", "42" ] ],
-          "rawData" : "/Entry/Value/Voltages[0];Column(3)-up;MemberId-0;Name-0;State-0;UpperThresholdNoncritical-0;UpperThresholdCritical-0;\n/Entry/Value/Voltages[1];Column(3)-up;MemberId;1;Name;1;State;1;UpperThresholdNoncritical;1;UpperThresholdCritical;1;\n/Entry/Value/Voltages[2];Column(3)-up;;;;;;\n/Entry/Value/Voltages[3];Column(3)-up;42;42;42;42;42;"
+          "table" : [ [ "/Entry/Value/Voltages[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0" ], [ "/Entry/Value/Voltages[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "1", "UpperThresholdNoncritical", "1", "UpperThresholdCritical", "1" ], [ "/Entry/Value/Voltages[2]", "Column(3)-up", "", "", "", "", "" ], [ "/Entry/Value/Voltages[3]", "Column(3)-up", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly\n"
+          "table" : [ ]
         },
         "textNoTrailingNewline" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
         },
         "textNoTrailingNewlineWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16"
+          "table" : [ ]
         },
         "textWide" : {
-          "table" : [ ],
-          "rawData" : "r1c1;r1c2;r1c3;r1c4;r1c5;r1c6;r1c7;r1c8;r1c9;r1c10;r1c11;r1c12;r1c13;r1c14;r1c15;r1c16\nr2c1;r2c2;r2c3;r2c4;r2c5;r2c6;r2c7;r2c8;r2c9;r2c10;r2c11;r2c12;r2c13;r2c14;r2c15;r2c16\nr3c1;r3c2;r3c3;r3c4;r3c5;r3c6;r3c7;r3c8;r3c9;r3c10;r3c11;r3c12;r3c13;r3c14;r3c15;r3c16\n"
+          "table" : [ ]
         }
       }
     }
