@@ -257,7 +257,7 @@ The related `%{SUDO:command}` macro (command elevation) is tied to the connector
 
 ## Serialization Side Effects (Advanced but Important)
 
-Tables are internally list-of-list-of-strings. They are serialized as semicolon-separated rows only where text is expected (a `${source::...}` reference, an `awk` script reading text), and only a conversion (`toTable`, `json2Csv`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table.
+Tables are internally list-of-list-of-strings. They are serialized as semicolon-separated rows only where text is expected (a `${source::...}` reference, a `toText`), and only a conversion (`toTable`, `json2Csv`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table.
 A `;` that a compute writes into a cell is therefore an ordinary character of that cell: appending `;value` to a column adds no column. The serialized text shows the side effect:
 
 ```text
@@ -266,7 +266,7 @@ node01;ClusterA;ok;
 
 # after append on column 2 with value ';rack1' (still 3 cells: node01, ClusterA;rack1, ok)
 
-# read by an awk script through toText: the ; in the cell becomes a ,
+# written by toText: the ; in the cell becomes a ,
 node01;ClusterA,rack1;ok;
 
 # written by a ${source::...} reference: the ; is kept, so a reader splitting on ; sees 4 fields
