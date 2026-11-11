@@ -53,10 +53,10 @@ With `input: table`, the script reads the table itself: each row is one record, 
 
 With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (or `print $0`) is one row with a single cell holding the whole record: print the fields instead (`print $1, $2, $3`).
 
-The text written by `printf` is split into rows on `ORS` and into cells on `OFS` (the `OFS` in effect when the row began). Use it for a row whose number of cells varies:
+The text written by `printf` is split into rows on `ORS` and into cells on `OFS` (the `OFS` in effect when the row began), so a value that holds the `OFS` is split too. Use `printf` for a row whose number of cells varies, with `OFS = SUBSEP` (a character that never appears in data): each value stays one cell, even when it holds a `;`.
 
 ```awk
-BEGIN { OFS = ";" }
+BEGIN { OFS = SUBSEP }
 { printf "%s", $1; for (i = 2; i <= NF; i++) printf "%s%s", OFS, $i; printf "\n" }
 ```
 
@@ -143,6 +143,7 @@ The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` rem
 - Relying on GNU awk extensions (`gensub`, `asort`, coprocesses...) that JAWK does not provide.
 - Keeping `FS = ";"` and `split($0, a, ";")` in a script declared with `input: table`: the fields are the cells already, and `$0` is the cells joined with `OFS` (a space by default), not with `;`.
 - Printing a `;`-joined string with `output: table`: `print $1 ";" $2` gives one cell holding `a;b`, not two cells. Print the values as separate arguments.
+- Writing a row with `printf` and `OFS = ";"` with `output: table`: a value holding a `;` becomes two cells. Use `print` with one argument per cell, or set `OFS = SUBSEP` for a `printf` row.
 - Setting `selectColumns` without `separators`: the lines are never split, so the selection does nothing.
 - Expecting `keep`/`exclude` to filter the script's *input* — they filter its *output*. Filter input inside the script itself.
 - A script that prints nothing empties the table, and every downstream compute and mapping silently gets no rows.

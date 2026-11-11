@@ -34,7 +34,7 @@ sources:
 | `script` | Yes | None | Inline AWK script or `${file::...}` reference. |
 | `input` | No | Empty | Input text or source reference consumed by the script. |
 | `inputFormat` | No | `text` | How the script reads `input`: `text` (the referenced source's text, or its table as `;`-separated lines, or the literal text) or `table` (`input` must be a source reference; each row of that source's table is a record whose cells are `$1..$NF`, nothing is serialized; the text of an `http`, `file` or `ipmi` source gives no record). |
-| `output` | No | `text` | What the script produces: `text` (the printed lines as they are, which MetricsHub splits on `;` with a `toTable` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; `printf` text is split into rows on `ORS` and into cells on `OFS`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines as they are, which MetricsHub splits on `;` with a `toTable` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; `printf` text is split into rows on `ORS` and into cells on `OFS`, so a `printf` row sets `OFS = SUBSEP`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows; other values become scalars. See [Variables](#variables). |
 | `separators` | No | None | Compatibility property; usually unnecessary for source-level AWK. |
 | `keep` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |
