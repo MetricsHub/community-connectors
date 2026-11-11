@@ -7,11 +7,11 @@ description: The toText compute turns a table into text, one semicolon-separated
 
 ## When To Use
 
-A source result is either **text** (lines) or a **table** (rows of cells). Use `toText` to turn a table into text before a compute that reads text, in practice before an [`awk` compute](./awk.html) that must see the rows of a table produced by `snmpTable`, `wmi`, `wbem`, `sql`, `json2Csv`, ...
+A source result is either **text** (lines) or a **table** (rows of cells). Use `toText` to turn a table into text before a compute that reads text, in practice before an [`awk` compute](./awk.html) whose script parses the rows of a table produced by `snmpTable`, `wmi`, `wbem`, `sql`, `json2Csv`, ... as `;`-separated lines.
 
 Each row becomes a line, the cells are joined with `;` and the line ends with a `;`. A `;` inside a cell is replaced by `,` so that the number of columns does not change. The result is text only: the table is gone until a `toTable` rebuilds one. An `awk` compute writes text as well, so when its output is meant as a table, follow it with an explicit `toTable` (MetricsHub inserts one where the text is read as a table, see the [content types](./index.html#content-types)), or declare `output: table` on the `awk`. On a text, `toText` changes nothing.
 
-MetricsHub inserts this conversion before an `awk` compute that reads text and follows a table. Write it explicitly in new connectors, or declare `input: table` on the `awk` to read the cells without serialization.
+MetricsHub inserts nothing before an `awk` compute: without `toText`, an `awk` that follows a table reads it structured, one record per row and one field per cell (`$1..$NF`). Write `toText` only for a script that parses the `;`-separated lines.
 
 ## Syntax
 

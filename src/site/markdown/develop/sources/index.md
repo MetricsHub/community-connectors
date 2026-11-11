@@ -35,7 +35,7 @@ psu02;PSU 2;failed
 A source result is either text or a table (see the [content types](../computes/index.html#content-types)). A table is written in the serialized form above where it is used as text, with two variations:
 
 - in a `${source::...}` reference, each line ends with `;`, except a line whose only `;` is that trailing one (typically a row of a single cell), and a `;` inside a cell is kept; the lines of a text are taken as they are, with the same exception;
-- for an `awk` script that reads text, each line ends with `;` and a `;` inside a cell becomes `,` (see [toText](../computes/to-text.html)).
+- in a [toText](../computes/to-text.html) (written before an `awk` script that parses the `;` lines; an `awk` reads a table structured otherwise), each line ends with `;` and a `;` inside a cell becomes `,`.
 
 Only a conversion (`toTable`, `json2Csv`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: if a compute appends `;42` to column 2, the cell holds `;42` at its end and the table keeps its columns. Add a column with [insertColumn](../computes/insert-column.html) or [duplicateColumn](../computes/duplicate-column.html).
 
