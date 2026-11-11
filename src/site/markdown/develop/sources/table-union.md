@@ -32,7 +32,7 @@ sources:
     - type: toTable
 ```
 
-The union changes nothing inside a text: its blank lines and its line endings (CRLF included) are kept, and the join between two texts never adds a blank line. A script can therefore end a section on a blank line of a command output (`NF == 0`). A blank line does not mark where one source ends and the next starts, though: to tell the outputs apart, match a line of each output.
+The union keeps the blank lines of each text and converts CRLF line endings to LF, and the join between two texts never adds a blank line. A script can therefore end a section on a blank line of a command output (`NF == 0`). A blank line does not mark where one source ends and the next starts, though: to tell the outputs apart, match a line of each output.
 
 Otherwise the union is a table union: the rows of the tables, one after the other. MetricsHub appends a `toTable` to every `commandLine` or `awk` source of a table union, including a union of such sources that is a table union because one of them is read as a table elsewhere. The text of an `http`, `file` or `ipmi` source, or of a source ending in an explicit `toText`, contributes no rows, so convert it in that source first (`toTable`, `json2Csv`, ...). An `awk` on a table union reads it through `toText`: write it explicitly before the `awk`. The union holds a copy of the rows: a compute on the union does not change its sources.
 
