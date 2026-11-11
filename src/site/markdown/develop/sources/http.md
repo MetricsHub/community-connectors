@@ -24,7 +24,6 @@ sources:
     - type: json2Csv
       entryKey: /Members
       properties: /@odata.id
-      separator: ;
 ```
 
 ## Properties

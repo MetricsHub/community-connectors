@@ -11,7 +11,7 @@ Use `tableUnion` to append rows from multiple tables into one table.
 
 `tableUnion` does not perform key matching. It is a row concatenation operation.
 
-When every source in `tables` ends in text, the empty ones aside (a text source without computes: `commandLine`, `http`, `file`, `ipmi`, or `awk` with the default `output: text`; a source whose last compute produces text; a `copy` of one of these; or another such union), the union is a **text union**: its result is the texts of the sources joined with a line feed. A `commandLine` or `awk` source that something else reads as a table (a `mapping`, a `tableJoin`, ...) ends in a table, since MetricsHub then appends a `toTable` to it. An `awk` compute on the union, or on a `copy` of it, reads that text as is, so a script can parse the outputs of several commands in one pass. Do not add `toTable` to the sources of a text union: it would rewrite each line with a trailing `;` before the script sees it.
+When every source in `tables` ends in text, the empty ones aside (a text source without computes: `commandLine`, `http`, `file`, `ipmi`, or `awk` with the default `output: text`; a source whose last compute produces text; a `copy` of one of these; or another such union), the union is a **text union**: its result is the texts of the sources one after the other, with a line feed added after a text that does not already end with one. An empty source adds nothing. A `commandLine` or `awk` source that something else reads as a table (a `mapping`, a `tableJoin`, ...) ends in a table, since MetricsHub then appends a `toTable` to it. An `awk` compute on the union, or on a `copy` of it, reads that text as is, so a script can parse the outputs of several commands in one pass. Do not add `toTable` to the sources of a text union: it would rewrite each line with a trailing `;` before the script sees it.
 
 ```yaml
 sources:
@@ -32,7 +32,7 @@ sources:
     - type: toTable
 ```
 
-Each pair of consecutive line feeds in the joined text becomes a single line feed, so most blank lines disappear: do not rely on blank lines to separate the outputs, match a line of each output instead.
+The union keeps the blank lines of each text and converts CRLF line endings to LF, and the join between two texts never adds a blank line. A script can therefore end a section on a blank line of a command output (`NF == 0`). A blank line does not mark where one source ends and the next starts, though: to tell the outputs apart, match a line of each output.
 
 Otherwise the union is a table union: the rows of the tables, one after the other. The text of an `http`, `file` or `ipmi` source contributes no rows, so convert it in that source first (`toTable`, `json2Csv`, ...). A `commandLine` or `awk` source gets a `toTable` from MetricsHub only when something reads it as a table: in a union of such sources where only some are also read as a table elsewhere, the others stay texts and contribute no rows. End each of them with an explicit `toTable` in that case. An `awk` on a table union reads its rows structured (`$1..$NF`): write a `toText` before the `awk` to parse them as `;`-separated lines. The union holds a copy of the rows: a compute on the union does not change its sources.
 
