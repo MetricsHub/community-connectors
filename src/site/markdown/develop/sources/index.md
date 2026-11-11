@@ -137,7 +137,7 @@ Use it only when the target device or agent genuinely cannot handle concurrent r
 beforeAll:
   interfaces:
     type: commandLine
-    commandLine: ip -o link show | awk -F': ' '{print $2}'
+    commandLine: "ip -o link show | awk -F': ' '{print $2}'"
 
 monitors:
   network:

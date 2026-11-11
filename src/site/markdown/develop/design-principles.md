@@ -119,7 +119,7 @@ A `copy` produces what the source it copies produces. A `tableUnion` whose membe
 These read a table. A text there is reported (`TEXT_FEEDS_TABLE`): end its source with a `toTable`, or an `awk` with `output: table`, a `json2Table` or an `xml2Csv`.
 
 - `leftTable` and `rightTable` of a [`tableJoin`](sources/table-join.html);
-- the members of a [`tableUnion`](sources/table-union.html);
+- the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is reported once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is reported `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
 - `mapping.source`;
 - the result source of a tool that declares `columns` (see [tools](tools.html));
 - the computes that work on columns: every compute but `awk`, `json2Table`, `xml2Csv` and `toTable` (`toText` included);

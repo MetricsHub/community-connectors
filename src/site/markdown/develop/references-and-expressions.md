@@ -165,7 +165,7 @@ ${source::<source-name>}
 
 #### Replace a value with a protocol property
 
-The following example replaces the value `PORT` in column `1` with the HTTP port configured for the protocol:
+The following example turns the JSON body into a table, then replaces the value `PORT` in column `2` with the HTTP port configured for the protocol:
 
 ```yaml
 sources:
@@ -173,15 +173,18 @@ sources:
     type: http
     path: /api/device
     computes:
+      - type: json2Table
+        entryKey: /
+        properties: /url
       - type: replace
-        column: 1
+        column: 2
         existingValue: "PORT"
         newValue: ${protocol::http.port}
 ```
 
 #### Append content from another source
 
-The following example appends the content of another source to the value in column `1`:
+The following example appends the content of another source to the value in column `2`. The referenced source must produce a text: a table there is reported (`TABLE_INTERPOLATED`, see [Strict Content Types](design-principles.html#strict-content-types)).
 
 ```yaml
 sources:
@@ -189,14 +192,17 @@ sources:
     type: http
     path: /api/device
     computes:
+      - type: json2Table
+        entryKey: /
+        properties: /name
       - type: append
-        column: 1
+        column: 2
         value: " - ${source::monitors.enclosure.simple.sources.source_discovery}"
 ```
 
 #### Reference a resource attribute
 
-The following example keeps only the lines whose value in column `3` matches the URL built from the `host.name` resource attribute:
+The following example keeps only the hosts whose URL, in column `3`, matches the URL built from the `host.name` resource attribute:
 
 ```yaml
 sources:
@@ -204,6 +210,9 @@ sources:
     type: http
     path: /api/hosts
     computes:
+      - type: json2Table
+        entryKey: /hosts
+        properties: /id;/url
       - type: keepOnlyMatchingLines
         column: 3
         valueList: "https://${resource.attribute::host.name}"

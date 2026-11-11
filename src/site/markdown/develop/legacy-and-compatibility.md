@@ -102,6 +102,21 @@ After:
 rightTable: [ [ in, ac, AC Input ], [ out, ac, AC Output ] ]
 ```
 
+Before:
+
+```yaml
+- type: awk
+  input: table
+  script: ${file::parse.awk}
+```
+
+After:
+
+```yaml
+- type: awk
+  script: ${file::parse.awk}
+```
+
 ## Compatibility Review Checklist
 
 - canonical names used in modified sections

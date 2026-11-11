@@ -113,10 +113,7 @@ sources:
     rightKeyColumn: 1
 ```
 
-- Cells are YAML scalars: quote a number that must keep its text, such as a code or a version. YAML reads `01` as `1` and `1.10` as `1.1`: write `'01'` and `'1.10'`.
-- A list that is not a list of rows, a cell holding a line break, a null cell (`~`), a cell that is a list or a map, an empty row and an empty table are rejected when the connector loads.
-
-Older connectors write a literal as a string: lines are rows, each split on `;` (`rightTable: MSHW_TableID;`). This form still works but is reported (`STRING_LITERAL_ROWS`, see [Strict Content Types](../design-principles.html#strict-content-types)), and a cell cannot hold a `;` in it.
+A list that is not a list of rows is rejected when the connector loads. Cells, quoting and the older `;` string form (`rightTable: MSHW_TableID;`, reported `STRING_LITERAL_ROWS`) follow the rules of [Writing Table Literals](./table-union.html#writing-table-literals).
 
 ## Recommended Pattern
 
