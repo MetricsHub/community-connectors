@@ -7,7 +7,7 @@ description: Runs an AWK script over the source result with optional scalar and 
 
 ## When To Use
 
-Use the `awk` compute for parsing jobs that simpler computes cannot express: reshaping free-form command output into semicolon-separated rows, correlating multi-line records, or computing derived values. The script receives the source's current result as its input — the text (e.g. `commandLine` output), or a table serialized as semicolon-separated lines by [toText](./to-text.html) — and its printed output becomes the new result.
+Use the `awk` compute for parsing jobs that simpler computes cannot express: reshaping free-form command output into semicolon-separated rows, correlating multi-line records, or computing derived values. The script receives the source's current result as its input, as it is: a text (e.g. `commandLine` output) is read the traditional way, one record per line split on `FS`; a table is read structured, one record per row, one field per cell. Its printed output becomes the new result.
 
 MetricsHub embeds **JAWK**, a Java implementation of the AWK language, extended with a few MetricsHub utility functions. Standard AWK constructs work; do not assume GNU awk (`gawk`) extensions are available.
 
@@ -42,14 +42,16 @@ sources:
 | `exclude` | No | None | Regular expression; matching **output** lines are discarded. |
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
-| `input` | No | `text` | How the script reads the source result: `text` (the text, or a table serialized by `toText` as `;`-separated lines ending with `;`) or `table` (each row is a record whose cells are `$1..$NF`, nothing is serialized). See [Table input and output](#table-input-and-output). |
+| `input` | No | None | Deprecated and ignored: the script reads the source result as it is (a text the traditional way, a table structured). Still accepted so that existing connectors load. To read a table as `;`-separated lines, write a [toText](./to-text.html) before the `awk`. |
 | `output` | No | `text` | What the script produces: `text` (the printed lines, filtered with `keep`, `exclude`, `separators` and `selectColumns`, each ending with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
 
 ## Table Input And Output
 
-By default the script reads text and prints text. A table read as text goes through `toText`, which turns a `;` inside a cell into `,`. When the result is read as a table (by a table compute, the `mapping`, ...), the printed lines go through `toTable`, which splits them on `;`: a `;` inside a printed value therefore moves the following columns.
+The script reads the source result as it is. A text is read the traditional way: each line is a record, split into fields on `FS`. A table is read structured: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part, and `$0` is only synthesized (cells joined with `OFS`, a space by default) when the script reads it.
 
-With `input: table`, the script reads the table itself: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part. `$0` is only synthesized (cells joined with `OFS`) when the script reads it. After a text, MetricsHub first converts it with a `toTable` that splits each line on `;`. If the source still turns out to be a text when the compute runs (for example when its content type differs from the one declared), MetricsHub converts it the same way, whatever the `output`. If that text is not empty, it also logs a warning that names the host, the connector and the compute (its source and position), without the values.
+To parse a table as text (the `;`-joined line, for instance with `split($0, a, ";")`), write a [toText](./to-text.html) before the `awk`: it serializes each row as `;`-separated cells ending with `;`, and turns a `;` inside a cell into `,`.
+
+By default the script prints text. When the result is read as a table (by a table compute, the `mapping`, ...), the printed lines go through `toTable`, which splits them on `;`: a `;` inside a printed value therefore moves the following columns.
 
 With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (or `print $0`) is one row with a single cell holding the whole record: print the fields instead (`print $1, $2, $3`).
 
@@ -68,16 +70,15 @@ sources:
     selectColumns: "ID,2,5,6"
     computes:
     - type: awk
-      input: table
       output: table
       script: |
         $3 > 0 { print $1, $2, $3 / 60, "ok" }
 ```
 
-The two properties are independent: a script written for text input can produce a table, and the reverse.
+`output: table` does not depend on the input: a script reading a text can produce a table, and the reverse.
 
 > [!NOTE]
-> With the default `input: text`, an `awk` compute that follows a table reads it through the `toText` that MetricsHub inserts before it: `;`-separated lines ending with `;`, so a script setting `FS = ";"` reads the cells as fields, followed by an empty last field. Only a script declaring `input: table` reads the table as records.
+> An `awk` compute that follows a table reads the rows, not `;`-separated lines: `NF` is the number of cells (no trailing empty field), a `;` inside a cell stays in its field, and `$0` is the cells joined with `OFS`. A script written for the `;` lines (`FS = ";"`, `split($0, a, ";")`, `print $0`) needs an explicit `toText` before it. `input: table` is no longer needed and is ignored.
 
 ## Variables
 
@@ -98,7 +99,7 @@ computes:
       }
 ```
 
-For input `disk0;100` and hostname `server01`, the output table contains `disk0`, `200`, and `server01`. The script uses `split()` to read the input fields and prints semicolon-separated values, which become the table columns when the result is read as a table (see the [content types](./index.html#content-types)).
+For a text input `disk0;100` and hostname `server01`, the output table contains `disk0`, `200`, and `server01`. The script uses `split()` to read the input fields and prints semicolon-separated values, which become the table columns when the result is read as a table (see the [content types](./index.html#content-types)). After a table, read the cells as `$1` and `$2` instead of splitting `$0`.
 
 To access another source's table, add a variable such as `aTable: ${source::monitors.disk.discovery.sources.raw}` and read `aTable[0][0]` for its first cell or `length(aTable)` for its row count. Ensure that source has already run. The compute still receives its current source result as normal AWK input; variables provide additional data. See the [source-table example and empty-source behavior](../sources/awk.html#variables).
 
@@ -141,7 +142,7 @@ The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` rem
 ## Common Mistakes
 
 - Relying on GNU awk extensions (`gensub`, `asort`, coprocesses...) that JAWK does not provide.
-- Keeping `FS = ";"` and `split($0, a, ";")` in a script declared with `input: table`: the fields are the cells already, and `$0` is the cells joined with `OFS` (a space by default), not with `;`.
+- Using `split($0, a, ";")` or `print $0` in a script that follows a table: the fields are the cells already, and `$0` is the cells joined with `OFS` (a space by default), not with `;`. Read `$1..$NF`, or write a `toText` before the `awk` to parse the `;` lines.
 - Printing a `;`-joined string with `output: table`: `print $1 ";" $2` gives one cell holding `a;b`, not two cells. Print the values as separate arguments.
 - Writing a row with `printf` and `OFS = ";"` with `output: table`: a value holding a `;` becomes two cells. Use `print` with one argument per cell, or set `OFS = SUBSEP` for a `printf` row.
 - Setting `selectColumns` without `separators`: the lines are never split, so the selection does nothing.

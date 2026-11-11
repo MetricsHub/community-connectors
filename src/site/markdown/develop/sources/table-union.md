@@ -34,7 +34,7 @@ sources:
 
 Each pair of consecutive line feeds in the joined text becomes a single line feed, so most blank lines disappear: do not rely on blank lines to separate the outputs, match a line of each output instead.
 
-Otherwise the union is a table union: the rows of the tables, one after the other. The text of an `http`, `file` or `ipmi` source contributes no rows, so convert it in that source first (`toTable`, `json2Csv`, ...). A `commandLine` or `awk` source gets a `toTable` from MetricsHub only when something reads it as a table: in a union of such sources where only some are also read as a table elsewhere, the others stay texts and contribute no rows. End each of them with an explicit `toTable` in that case. An `awk` on a table union reads it through `toText`: write it explicitly before the `awk`. The union holds a copy of the rows: a compute on the union does not change its sources.
+Otherwise the union is a table union: the rows of the tables, one after the other. The text of an `http`, `file` or `ipmi` source contributes no rows, so convert it in that source first (`toTable`, `json2Csv`, ...). A `commandLine` or `awk` source gets a `toTable` from MetricsHub only when something reads it as a table: in a union of such sources where only some are also read as a table elsewhere, the others stay texts and contribute no rows. End each of them with an explicit `toTable` in that case. An `awk` on a table union reads its rows structured (`$1..$NF`): write a `toText` before the `awk` to parse them as `;`-separated lines. The union holds a copy of the rows: a compute on the union does not change its sources.
 
 ## Syntax
 
