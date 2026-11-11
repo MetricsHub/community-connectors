@@ -55,7 +55,7 @@ tools:
 | `<toolName>.sources` | Yes | None | Named sources with their computes, like a monitor job's `sources`. |
 | `<toolName>.executionOrder` | No | Dependency order | Explicit source order, like a monitor job's. |
 | `<toolName>.result.source` | Yes | None | Reference of the source whose result is returned, e.g. `${source::processes}`. |
-| `<toolName>.result.columns` | No | None | Names of the table columns, in order, so that the rows read as records. Without `columns`, a result source that ends in text (a command output, a free-form `awk`, a compute-free copy of one, or a `tableUnion` of such outputs, unless one of them is also read as a table elsewhere, which makes the result a table) is returned as text; one that ends in a table is returned as rows. |
+| `<toolName>.result.columns` | No | None | Names of the table columns, in order, so that the rows read as records. Without `columns`, a result source that ends in text (a command output, a free-form `awk`, or a `tableUnion` of such outputs) is returned as text; one that ends in a table is returned as rows. |
 
 ### Parameters
 
