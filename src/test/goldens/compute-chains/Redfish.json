@@ -9,7 +9,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -57,7 +57,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id;1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -81,7 +81,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Socket-0", "Manufacturer-0", "Model-0", "MaxSpeedMHz-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Socket", "1", "Manufacturer", "1", "Model", "1", "MaxSpeedMHz", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Socket-0", "Manufacturer-0", "Model-0", "MaxSpeedMHz-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id;1", "Socket;1", "Manufacturer;1", "Model;1", "MaxSpeedMHz;1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -105,7 +105,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -153,7 +153,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -177,7 +177,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id;1", "@odata.id;1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -201,7 +201,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -249,7 +249,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -273,7 +273,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id;1", "@odata.id;1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -297,7 +297,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id", "1", "@odata.id", "1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value[0]", "@odata.id-0", "@odata.id-0" ], [ "/Entry/Value[1]", "@odata.id;1", "@odata.id;1" ], [ "/Entry/Value[2]", "", "" ], [ "/Entry/Value[3]", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -321,7 +321,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Fans[0]", "MemberId-0", "unknown", "Alarm", "Reading-0", "Reading-0", "MinReadingRange-0", "MaxReadingRange-0" ], [ "/Fans[1]", "MemberId", "unknown", "Alarm", "1", "Health", "1", "Reading", "1", "Reading", "1", "MinReadingRange", "1", "MaxReadingRange", "1" ], [ "/Fans[2]", "", "unknown", "Alarm", "", "", "", "" ], [ "/Fans[3]", "42", "unknown", "Alarm", "42", "4200.0", "42", "0.0" ] ]
+          "table" : [ [ "/Fans[0]", "MemberId-0", "unknown", "Alarm", "Reading-0", "Reading-0", "MinReadingRange-0", "MaxReadingRange-0" ], [ "/Fans[1]", "MemberId;1", "unknown", "Alarm", "Reading;1", "Reading;1", "MinReadingRange;1", "MaxReadingRange;1" ], [ "/Fans[2]", "", "unknown", "Alarm", "", "", "", "" ], [ "/Fans[3]", "42", "unknown", "Alarm", "42", "4200.0", "42", "0.0" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -369,7 +369,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.Id-0" ], [ "/Members[1]", "@odata.Id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -417,7 +417,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id;1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -441,7 +441,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "DeviceLocator-0", "CapacityMiB-0", "Manufacturer-0", "PartNumber-0", "SerialNumber-0", "MemoryDeviceType-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "DeviceLocator", "1", "CapacityMiB", "1", "Manufacturer", "1", "PartNumber", "1", "SerialNumber", "1", "MemoryDeviceType", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "DeviceLocator-0", "CapacityMiB-0", "Manufacturer-0", "PartNumber-0", "SerialNumber-0", "MemoryDeviceType-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id;1", "DeviceLocator;1", "CapacityMiB;1", "Manufacturer;1", "PartNumber;1", "SerialNumber;1", "MemoryDeviceType;1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -465,7 +465,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -513,7 +513,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id;1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -537,7 +537,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Name-0", "MACAddress-0", "" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Name", "", "MACAddress", "1", "State", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "" ] ]
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Name-0", "MACAddress-0", "" ], [ "/Entry/Value[1]", "Column(2)-up", "Id;1", "Name;1", "MACAddress;1", "" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42", "" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -561,7 +561,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id", "1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
+          "table" : [ [ "/Members[0]", "@odata.id-0" ], [ "/Members[1]", "@odata.id;1" ], [ "/Members[2]", "" ], [ "/Members[3]", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -585,7 +585,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Devices[0]", "Name-0", "unknown", "Alarm" ], [ "/Devices[1]", "Name", "unknown", "Alarm", "1", "Health", "1" ], [ "/Devices[2]", "", "unknown", "Alarm" ], [ "/Devices[3]", "42", "unknown", "Alarm" ] ]
+          "table" : [ [ "/Devices[0]", "Name-0", "unknown", "Alarm" ], [ "/Devices[1]", "Name;1", "unknown", "Alarm" ], [ "/Devices[2]", "", "unknown", "Alarm" ], [ "/Devices[3]", "42", "unknown", "Alarm" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -609,7 +609,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Id-0", "unknown", "Alarm" ], [ "/Entry/Value[1]", "Id", "unknown", "Alarm", "1", "Health", "1" ], [ "/Entry/Value[2]", "", "unknown", "Alarm" ], [ "/Entry/Value[3]", "42", "unknown", "Alarm" ] ]
+          "table" : [ [ "/Entry/Value[0]", "Id-0", "unknown", "Alarm" ], [ "/Entry/Value[1]", "Id;1", "unknown", "Alarm" ], [ "/Entry/Value[2]", "", "unknown", "Alarm" ], [ "/Entry/Value[3]", "42", "unknown", "Alarm" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -633,7 +633,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
+          "table" : [ [ "/Entry/Value/Members[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Members[1]", "Column(2)-up", "@odata.id;1" ], [ "/Entry/Value/Members[2]", "Column(2)-up", "" ], [ "/Entry/Value/Members[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -657,7 +657,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Devices[0]", "Column(2)-up", "Name-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value/Devices[1]", "Column(2)-up", "Name", "1", "Manufacturer", "1", "Model", "1" ], [ "/Entry/Value/Devices[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value/Devices[3]", "Column(2)-up", "42", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value/Devices[0]", "Column(2)-up", "Name-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value/Devices[1]", "Column(2)-up", "Name;1", "Manufacturer;1", "Model;1" ], [ "/Entry/Value/Devices[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value/Devices[3]", "Column(2)-up", "42", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -681,7 +681,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Links/Drives[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Links/Drives[1]", "Column(2)-up", "@odata.id", "1" ], [ "/Entry/Value/Links/Drives[2]", "Column(2)-up", "" ], [ "/Entry/Value/Links/Drives[3]", "Column(2)-up", "42" ] ]
+          "table" : [ [ "/Entry/Value/Links/Drives[0]", "Column(2)-up", "@odata.id-0" ], [ "/Entry/Value/Links/Drives[1]", "Column(2)-up", "@odata.id;1" ], [ "/Entry/Value/Links/Drives[2]", "Column(2)-up", "" ], [ "/Entry/Value/Links/Drives[3]", "Column(2)-up", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -705,7 +705,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id", "1", "Manufacturer", "1", "Model", "1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value[0]", "Column(2)-up", "Id-0", "Manufacturer-0", "Model-0" ], [ "/Entry/Value[1]", "Column(2)-up", "Id;1", "Manufacturer;1", "Model;1" ], [ "/Entry/Value[2]", "Column(2)-up", "", "", "" ], [ "/Entry/Value[3]", "Column(2)-up", "42", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -729,7 +729,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/PowerSupplies[0]", "MemberId-0", "unknown", "Alarm" ], [ "/PowerSupplies[1]", "MemberId", "unknown", "Alarm", "1", "Health", "1" ], [ "/PowerSupplies[2]", "", "unknown", "Alarm" ], [ "/PowerSupplies[3]", "42", "unknown", "Alarm" ] ]
+          "table" : [ [ "/PowerSupplies[0]", "MemberId-0", "unknown", "Alarm" ], [ "/PowerSupplies[1]", "MemberId;1", "unknown", "Alarm" ], [ "/PowerSupplies[2]", "", "unknown", "Alarm" ], [ "/PowerSupplies[3]", "42", "unknown", "Alarm" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -753,7 +753,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/PowerSupplies[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "PowerSupplyType-0", "LineInputVoltage-0", "Model: Model-0", "Firmware Version: firmwareVersion-0", "Serial Number: SerialNumber-0" ], [ "/Entry/Value/PowerSupplies[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "Model: 1", "Firmware Version: PowerSupplyType", "Serial Number: 1", "LineInputVoltage", "1", "Model", "1", "firmwareVersion", "1", "SerialNumber", "1" ], [ "/Entry/Value/PowerSupplies[2]", "Column(3)-up", "", "", "", "", "", "Model: ", "Firmware Version: ", "Serial Number: " ], [ "/Entry/Value/PowerSupplies[3]", "Column(3)-up", "42", "42", "42", "42", "42", "Model: 42", "Firmware Version: 42", "Serial Number: 42" ] ]
+          "table" : [ [ "/Entry/Value/PowerSupplies[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "PowerSupplyType-0", "LineInputVoltage-0", "Model: Model-0", "Firmware Version: firmwareVersion-0", "Serial Number: SerialNumber-0" ], [ "/Entry/Value/PowerSupplies[1]", "Column(3)-up", "MemberId;1", "Name;1", "State;1", "PowerSupplyType;1", "LineInputVoltage;1", "Model: Model;1", "Firmware Version: firmwareVersion;1", "Serial Number: SerialNumber;1" ], [ "/Entry/Value/PowerSupplies[2]", "Column(3)-up", "", "", "", "", "", "Model: ", "Firmware Version: ", "Serial Number: " ], [ "/Entry/Value/PowerSupplies[3]", "Column(3)-up", "42", "42", "42", "42", "42", "Model: 42", "Firmware Version: 42", "Serial Number: 42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -777,7 +777,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Temperatures[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Temperatures[1]", "MemberId", "unknown", "State: Health", "", "Health" ], [ "/Temperatures[2]", "", "unknown", "Alarm", "", "" ], [ "/Temperatures[3]", "42", "unknown", "State: 42", "", "42" ] ]
+          "table" : [ [ "/Temperatures[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Temperatures[1]", "MemberId;1", "unknown", "State: State;1", "", "State;1" ], [ "/Temperatures[2]", "", "unknown", "Alarm", "", "" ], [ "/Temperatures[3]", "42", "unknown", "State: 42", "", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -801,7 +801,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Temperatures[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0", "ReadingCelsius-0" ], [ "/Entry/Value/Temperatures[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "1", "UpperThresholdNoncritical", "1", "UpperThresholdCritical", "1", "ReadingCelsius", "1" ], [ "/Entry/Value/Temperatures[2]", "Column(3)-up", "", "", "", "", "", "" ], [ "/Entry/Value/Temperatures[3]", "Column(3)-up", "42", "42", "42", "42", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value/Temperatures[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0", "ReadingCelsius-0" ], [ "/Entry/Value/Temperatures[1]", "Column(3)-up", "MemberId;1", "Name;1", "State;1", "UpperThresholdNoncritical;1", "UpperThresholdCritical;1", "ReadingCelsius;1" ], [ "/Entry/Value/Temperatures[2]", "Column(3)-up", "", "", "", "", "", "" ], [ "/Entry/Value/Temperatures[3]", "Column(3)-up", "42", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -825,7 +825,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Voltages[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Voltages[1]", "MemberId", "unknown", "State: Health", "", "Health" ], [ "/Voltages[2]", "", "unknown", "Alarm", "", "" ], [ "/Voltages[3]", "42", "unknown", "State: 42", "", "42" ] ]
+          "table" : [ [ "/Voltages[0]", "MemberId-0", "unknown", "State: State-0", "", "State-0" ], [ "/Voltages[1]", "MemberId;1", "unknown", "State: State;1", "", "State;1" ], [ "/Voltages[2]", "", "unknown", "Alarm", "", "" ], [ "/Voltages[3]", "42", "unknown", "State: 42", "", "42" ] ]
         },
         "text" : {
           "table" : [ ]
@@ -849,7 +849,7 @@
           "table" : [ ]
         },
         "json" : {
-          "table" : [ [ "/Entry/Value/Voltages[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0" ], [ "/Entry/Value/Voltages[1]", "Column(3)-up", "MemberId", "1", "Name", "1", "State", "1", "UpperThresholdNoncritical", "1", "UpperThresholdCritical", "1" ], [ "/Entry/Value/Voltages[2]", "Column(3)-up", "", "", "", "", "" ], [ "/Entry/Value/Voltages[3]", "Column(3)-up", "42", "42", "42", "42", "42" ] ]
+          "table" : [ [ "/Entry/Value/Voltages[0]", "Column(3)-up", "MemberId-0", "Name-0", "State-0", "UpperThresholdNoncritical-0", "UpperThresholdCritical-0" ], [ "/Entry/Value/Voltages[1]", "Column(3)-up", "MemberId;1", "Name;1", "State;1", "UpperThresholdNoncritical;1", "UpperThresholdCritical;1" ], [ "/Entry/Value/Voltages[2]", "Column(3)-up", "", "", "", "", "" ], [ "/Entry/Value/Voltages[3]", "Column(3)-up", "42", "42", "42", "42", "42" ] ]
         },
         "text" : {
           "table" : [ ]
