@@ -223,7 +223,8 @@ monitors:
               input: table
               output: table
               script: |
-                BEGIN { OFS = ";" }
+                # Table output splits printf text on OFS: SUBSEP, which no cell contains, keeps a ";" in its cell
+                BEGIN { OFS = SUBSEP }
                 {
                     sub(/^[ \t]+/, "", $1)
                     # A member without a value (an empty row) still holds its position

@@ -34,7 +34,7 @@ sources:
 | `type` | Yes | None | `json2Csv`. |
 | `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
 | `properties` | Yes | None | Semicolon-separated list of JSON pointers, each resolved **relative to one entry** (`/id;/name;/operationalStatus`). Nested values use full pointer paths, including array indexes (`/Links/Storage[0]/@odata.id`). The list order defines the column order. |
-| `separator` | No | `;` | Column separator of the rows that `json2Csv` writes before it splits them into cells. Use a separator that the values do not contain. The result is a table whatever the separator: an `awk` compute that follows reads it as `;`-separated text (see [toText](./to-text.html)), or cell by cell with `input: table`. |
+| `separator` | No | `;` | Column separator of the rows that `json2Csv` writes before it splits them into cells. Use a separator that the values do not contain. The result is a table whatever the separator: an `awk` compute that follows reads it cell by cell (`$1..$NF`), or as `;`-separated text after a [toText](./to-text.html). |
 | `parsingMode` | No | `tree` | How the JSON document is read: `tree` loads the whole document in memory, `events` reads it as a stream and keeps only one entry at a time. The rows are the same. See [Large Payloads](#large-payloads). |
 
 > [!IMPORTANT]
