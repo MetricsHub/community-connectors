@@ -1,6 +1,7 @@
 BEGIN {
     fru = "FRU"
-    OFS = ";"
+    # Table output splits printf text on OFS: SUBSEP, which no cell contains, keeps a ";" in its cell
+    OFS = SUBSEP
 }
 
 function ltrim(ltrimString) {
@@ -15,7 +16,7 @@ function trim(trimString) {
     return rtrim(ltrim(trimString));
 }
 
-# One row, a cell per ";"-separated item (variable count, hence printf)
+# One row, a cell per OFS-separated item (variable count, hence printf)
 function printRow(row) {
     printf "%s\n", row
 }
@@ -29,7 +30,7 @@ function printRow(row) {
 
 {
     line = trim($0)
-    fru = fru ";" line
+    fru = fru OFS line
 }
 
 END {
