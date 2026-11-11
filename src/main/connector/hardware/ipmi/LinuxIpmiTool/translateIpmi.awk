@@ -18,7 +18,9 @@
 #   normalized (asserted/deasserted) and emitted once FRU mapping is available.
 
 BEGIN {
-  OFS=";"
+  # The cells of a record (one ipmitool line each) are joined with SUBSEP, a character no value holds:
+  # a ";" inside a value stays in it
+  OFS=SUBSEP
   chassis_fru_id = -1
   fru_count = 0
   fru_flushed = 0
@@ -65,18 +67,19 @@ function is_kept_discrete_type(entity_type){
           entity_type=="Add-in Card")
 }
 
-# Extract value after "Label : " until next ';' (no split/capture groups)
-# Extract value for an exact label (matches start of a logical line: beginning or after ';')
-# Example match: ";Board Mfg   : FUJITSU;" but NOT ";Board Mfg Date : Mon May ...;"
-function get_field_value(record_text, label_text,    re, segment){
-  re = "(^|;)[ \t]*" label_text "[ \t]*:[ \t]*"
+# Extract value after "Label : " until the end of its line (the next SUBSEP), no split/capture groups
+# Extract value for an exact label (matches start of a logical line: beginning or after SUBSEP)
+# Example match: "<SUBSEP>Board Mfg   : FUJITSU<SUBSEP>" but NOT "<SUBSEP>Board Mfg Date : Mon May ...<SUBSEP>"
+function get_field_value(record_text, label_text,    re, segment, line_end){
+  re = "(^|" SUBSEP ")[ \t]*" label_text "[ \t]*:[ \t]*"
   if (!match(record_text, re)) return ""
   segment = substr(record_text, RSTART + RLENGTH)
-  sub(/;.*$/, "", segment)
+  line_end = index(segment, SUBSEP)
+  if (line_end) segment = substr(segment, 1, line_end - 1)
   return trim(segment)
 }
 
-function strip_record_prefix(line){ sub(/^[A-Z]+;/,"",line); return line }
+function strip_record_prefix(line){ sub("^[A-Z]+" SUBSEP, "", line); return line }
 
 function extract_fru_id(record_text,    description_text,id_token){
   description_text=get_field_value(record_text,"FRU Device Description")
