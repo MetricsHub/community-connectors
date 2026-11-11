@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: ${file::ipmi-fru.sh}
     computes:
+    - type: toTable
     - type: keepColumns
       columnNumbers: 1,2,3,7,8,9
 ```

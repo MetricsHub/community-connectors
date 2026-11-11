@@ -11,30 +11,9 @@ Use `tableUnion` to append rows from multiple tables into one table.
 
 `tableUnion` does not perform key matching. It is a row concatenation operation.
 
-When every source in `tables` ends in text, the empty ones aside (a text source without computes: `commandLine`, `http`, `file`, `ipmi`, or `awk` with the default `output: text`; a source whose last compute produces text; a `copy` of one of these; or another such union), the union is a **text union**: its result is the texts of the sources one after the other, with a line feed added after a text that does not already end with one. An empty source adds nothing. A `commandLine` or `awk` source that something else reads as a table (a `mapping`, a `tableJoin`, ...) ends in a table, since MetricsHub then appends a `toTable` to it. An `awk` compute on the union, or on a `copy` of it, reads that text as is, so a script can parse the outputs of several commands in one pass. Do not add `toTable` to the sources of a text union: it would rewrite each line with a trailing `;` before the script sees it.
+Its result is the rows of the tables, one after the other. The union holds a copy of the rows: a compute on the union does not change its sources. An `awk` on the union reads its rows structured (`$1..$NF`): write a `toText` before the `awk` to parse them as `;`-separated lines.
 
-```yaml
-sources:
-  version:
-    type: commandLine
-    commandLine: show version
-  environment:
-    type: commandLine
-    commandLine: show environment
-  outputs:
-    type: tableUnion
-    tables:
-    - ${source::version}
-    - ${source::environment}
-    computes:
-    - type: awk
-      script: ${file::parse-show.awk}
-    - type: toTable
-```
-
-The union keeps the blank lines of each text and converts CRLF line endings to LF, and the join between two texts never adds a blank line. A script can therefore end a section on a blank line of a command output (`NF == 0`). A blank line does not mark where one source ends and the next starts, though: to tell the outputs apart, match a line of each output.
-
-Otherwise the union is a table union: the rows of the tables, one after the other. The text of an `http`, `file` or `ipmi` source contributes no rows, so convert it in that source first (`toTable`, `json2Csv`, ...). A `commandLine` or `awk` source gets a `toTable` from MetricsHub only when something reads it as a table: in a union of such sources where only some are also read as a table elsewhere, the others stay texts and contribute no rows. End each of them with an explicit `toTable` in that case. An `awk` on a table union reads its rows structured (`$1..$NF`): write a `toText` before the `awk` to parse them as `;`-separated lines. The union holds a copy of the rows: a compute on the union does not change its sources.
+Every member must be a table: a source that ends in a table, or a [table literal](#writing-table-literals). To concatenate texts, such as command outputs that one `awk` script parses together, use [textUnion](./text-union.html).
 
 ## Syntax
 
@@ -52,9 +31,35 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `tableUnion`. |
-| `tables` | Yes | None | Ordered list of source tables to concatenate. |
+| `tables` | Yes | None | Ordered list of the tables to concatenate: source references, or table literals written as lists of rows (see [Writing Table Literals](#writing-table-literals)). |
 | `computes` | No | `[]` | Post-union processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+
+## Writing Table Literals
+
+A member of `tables` can be a table written in the connector, as a YAML list of rows, each row a list of cells. It gives exactly these rows and cells, `;` included (MetricsHub Community 3.9.09 or later):
+
+```yaml
+sources:
+  powerSupplies:
+    type: tableUnion
+    tables:
+    - [ [ in, ac, AC Input ], [ out, ac, AC Output ] ]
+    - ${source::monitors.power.discovery.sources.supplies}
+```
+
+- Cells are YAML scalars: quote a number that must keep its text, such as a code or a version. YAML reads `01` as `1` and `1.10` as `1.1`: write `'01'` and `'1.10'`.
+- A cell cannot hold a line break. A null cell (`~`), a cell that is a list or a map, an empty row and an empty table are rejected when the connector loads, as is a blank member.
+- In a flow list (`[ ... ]`), quote the source references: `{` and `}` are YAML flow indicators, as in `tables: [ [ [ a, b ] ], "${source::supplies}" ]`.
+
+Older connectors write a literal as a string: lines are rows, each split on `;` (`"in;ac;AC Input"`). This form still works but is reported (`STRING_LITERAL_ROWS`, see [Strict Content Types](../design-principles.html#strict-content-types)), and a cell cannot hold a `;` in it.
+
+## Texts in a Union
+
+A union whose members are not all tables still works as in earlier versions, but is reported (see [Strict Content Types](../design-principles.html#strict-content-types)):
+
+- When every member ends in text, the empty ones aside, the union joins the texts exactly as a [textUnion](./text-union.html) does, and its result is a text. It is reported once (`TABLE_UNION_OF_TEXTS`): replace `type: tableUnion` and `tables` with `type: textUnion` and `texts`.
+- A union of texts and tables is reported once (`MIXED_UNION`), and each text member too (`TEXT_FEEDS_TABLE`). Its result is the rows of the tables. The text of an `http`, `file` or `ipmi` member contributes no rows, and a `commandLine` or `awk` member contributes rows only through the `toTable` that MetricsHub appends to it. Convert each text member in its own source (`toTable`, `json2Table`, `awk` with `output: table`, ...).
 
 ## Recommended Pattern
 
@@ -67,6 +72,8 @@ sources:
 - Unioning incompatible schemas and mapping wrong columns.
 - Using union where join semantics are actually required.
 - Forgetting to preserve an origin/type column before union.
+- Unioning command outputs to parse them with one `awk`: use a [textUnion](./text-union.html).
+- Leaving a numeric cell of a table literal unquoted: `01` becomes `1`.
 
 ## Community Examples
 

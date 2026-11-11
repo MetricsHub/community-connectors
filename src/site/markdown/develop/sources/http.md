@@ -21,7 +21,7 @@ sources:
     path: /redfish/v1/Systems
     resultContent: body
     computes:
-    - type: json2Csv
+    - type: json2Table
       entryKey: /Members
       properties: /@odata.id
 ```
@@ -36,14 +36,50 @@ sources:
 | `url` | Conditionally | None | Absolute URL. |
 | `header` | No | None | Request headers (inline or `${file::...}`). |
 | `body` | No | None | Request payload. |
-| `authenticationToken` | No | None | Token value/expression used by HTTP extension. |
+| `authenticationToken` | No | None | Token value/expression used by HTTP extension, usually a reference to the source that extracts it. See [Authentication Token](#authentication-token). |
 | `resultContent` | No | `body` | Response part: `body`, `header`, `all`, `http_status`. |
 | `executeForEachEntryOf` | No | None | Execute request once per input row (`$1`, `$2`, ... placeholders). |
-| `computes` | No | `[]` | Post-processing pipeline (often `json2Csv`/`xml2Csv`). |
+| `computes` | No | `[]` | Post-processing pipeline (often `json2Table`/`xml2Csv`). |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 > [!IMPORTANT]
 > Define at least one of `path` or `url`. New connectors should generally prefer `path` with protocol configuration.
+
+The fields `url`, `path`, `header`, `body` and `authenticationToken` interpolate their `${source::...}` references: each one must reference a text (see [Strict Content Types](../design-principles.html#strict-content-types)).
+
+## Authentication Token
+
+`authenticationToken` usually references the source that extracts the token from a login response. MetricsHub reads the token from that source:
+
+- from a text, its whole first line, without its LF or CR LF ending (a lone CR does not end the line), MetricsHub Community 3.9.09 or later; earlier versions took the text up to its first `;`;
+- from a table, its first cell. A table there is reported (`TABLE_INTERPOLATED`).
+
+Extract the token as a text, for example with an `awk` that prints only the token:
+
+```yaml
+beforeAll:
+  login:
+    type: http
+    method: post
+    path: /api/login
+    body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" }'
+    computes:
+    # {"token":"abc123"} gives abc123
+    - type: awk
+      script: |
+        BEGIN { FS = "\"" }
+        { for (i = 1; i < NF; i++) if ($i == "token") { print $(i + 2); exit } }
+monitors:
+  enclosure:
+    simple:
+      sources:
+        inventory:
+          type: http
+          path: /api/enclosure
+          authenticationToken: ${source::beforeAll.login}
+```
+
+In this release, MetricsHub still appends a `toTable` to the text of an `awk` or `commandLine` that a field references, as to a text read as a table: the token is then the first cell of the first line, which ends at a `;`.
 
 ## Recommended Pattern
 
@@ -57,7 +93,8 @@ sources:
 - Pulling huge payloads and filtering later.
 - Mixing relative `path` and absolute `url` inconsistently in one connector.
 - Forgetting `resultContent` and trying to parse headers as body.
-- Applying a table compute, or the `mapping`, to the HTTP result directly: it is text, so it reads no rows. Convert it first with `json2Csv`, `xml2Csv`, `toTable` or `awk`.
+- Applying a table compute, or the `mapping`, to the HTTP result directly: it is text, so it reads no rows. Convert it first with `json2Table`, `xml2Csv`, `toTable` or `awk` (with `output: table`).
+- Referencing a table in `url`, `path`, `header`, `body` or `authenticationToken`: it is reported (`TABLE_INTERPOLATED`). Reference a source that ends in text, such as an `awk` that prints the value.
 - Using body parsing for simple health checks.
 
 ## Community Examples

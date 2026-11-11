@@ -32,8 +32,8 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `awk`. |
 | `script` | Yes | None | Inline AWK script or `${file::...}` reference. |
-| `input` | No | Empty | Input text, or a single source reference such as `${source::beforeAll.inventoryRaw}`: the script reads that source as it is at run time, a table structured (each row is a record whose cells are `$1..$NF`, and `$0` is the row as the reference gives it: cells joined with `;`, the trailing `;` kept unless the row has a single cell), a text the traditional way (lines split on `FS`). A reference inside a longer text is replaced by the source's text (a table as `;`-separated lines). |
-| `inputFormat` | No | None | Deprecated and ignored: an input that is a single source reference is read as that source is. Still accepted so that existing connectors load. |
+| `input` | No | Empty | Input text, or a single source reference such as `${source::beforeAll.inventoryRaw}`: the script reads that source as it is at run time, a table structured (each row is a record whose cells are `$1..$NF`, and `$0` is the row as the reference gives it: cells joined with `;`, the trailing `;` kept unless the row has a single cell), a text the traditional way (lines split on `FS`). A reference inside a longer text (a template such as `MODE;${source::raw}`) is replaced by the source's text: it must reference a text, a table there is reported (`TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). |
+| `inputFormat` | No | None | Deprecated and ignored: an input that is a single source reference is read as that source is. Still accepted so that existing connectors load, and reported (`DEPRECATED_SYNTAX`): remove it. |
 | `output` | No | `text` | What the script produces: `text` (the printed lines as they are, which MetricsHub splits on `;` with a `toTable` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; `printf` text is split into rows on `ORS` and into cells on `OFS`, so a `printf` row sets `OFS = SUBSEP`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows; other values become scalars. See [Variables](#variables). |
 | `separators` | No | None | Compatibility property; usually unnecessary for source-level AWK. |
@@ -79,7 +79,7 @@ sources:
 
 For a row `disk0;SSD;100` and hostname `server01`, the output is `disk0;100;server01;730.5`. No `input` is needed here: the `BEGIN` block reads the table variable directly. By contrast, `input: ${source::...}` feeds that source to the script's normal record processing: its rows as records for a table, its lines for a text.
 
-If a referenced source produced text, MetricsHub splits it into rows on line feeds and into cells on `;`, as [toTable](../computes/to-table.html) does with its default separator. An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
+If a referenced source produced text, MetricsHub splits it into rows on line feeds and into cells on `;`, as [toTable](../computes/to-table.html) does with its default separator. Such a variable is reported (`TEXT_FEEDS_TABLE`): end the referenced source with an explicit `toTable`. An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
 
 ## Recommended Pattern
 

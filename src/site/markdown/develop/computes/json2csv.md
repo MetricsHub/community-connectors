@@ -1,15 +1,17 @@
-keywords: json2Csv, compute, json, csv, rest api, entryKey, parsingMode
-description: json2Csv flattens a JSON payload into a table, producing one row per JSON entry plus a leading entry-path column, one cell per property.
+keywords: json2Table, json2Csv, compute, json, table, rest api, entryKey, parsingMode
+description: json2Table flattens a JSON payload into a table, producing one row per JSON entry plus a leading entry-path column, one cell per property.
 
-# json2Csv (Compute)
+# json2Table (Compute)
 
 <!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
 
 ## When To Use
 
-Use `json2Csv` to turn a raw JSON payload — typically the `body` of an [`http`](../sources/http.html) source — into the tabular form that mapping and other computes expect. Point `entryKey` at the JSON array (or object) holding the entries, and list in `properties` the values to extract from each entry: the compute emits one row per entry, one column per property.
+Use `json2Table` to turn a raw JSON payload — typically the `body` of an [`http`](../sources/http.html) source — into the tabular form that mapping and other computes expect. Point `entryKey` at the JSON array (or object) holding the entries, and list in `properties` the values to extract from each entry: the compute emits one row per entry, one column per property.
 
 This is almost always the **first** compute in an HTTP source pipeline: parse the payload into a table immediately, then filter and reshape with regular table computes.
+
+`json2Table` is the name of this compute from MetricsHub Community 3.9.09. `json2Csv`, its former name, still works as a deprecated alias with the same behavior and is reported (`DEPRECATED_SYNTAX`, see [Strict Content Types](../design-principles.html#strict-content-types)). Earlier versions only know `json2Csv`.
 
 ## Syntax
 
@@ -21,7 +23,7 @@ sources:
     path: /api/v1/inventory/switches
     resultContent: body
     computes:
-    - type: json2Csv
+    - type: json2Table
       entryKey: /switches
       properties: /id;/name;/operationalStatus
 ```
@@ -30,17 +32,17 @@ sources:
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `type` | Yes | None | `json2Csv`. |
+| `type` | Yes | None | `json2Table` (`json2Csv` is a deprecated alias). |
 | `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
 | `properties` | Yes | None | Semicolon-separated list of JSON pointers, each resolved **relative to one entry** (`/id;/name;/operationalStatus`). Nested values use full pointer paths, including array indexes (`/Links/Storage[0]/@odata.id`). The list order defines the column order. |
 | `separator` | No | `;` | Deprecated and ignored (MetricsHub Community 3.9.09 or later): each property gives exactly one cell, whatever its value holds. Still accepted, so existing connectors keep working; omit it in new connectors. Earlier versions split the rows on it, so a value holding the separator shifted the columns. |
 | `parsingMode` | No | `tree` | How the JSON document is read: `tree` loads the whole document in memory, `events` reads it as a stream and keeps only one entry at a time. The rows are the same. See [Large Payloads](#large-payloads). |
 
 > [!IMPORTANT]
-> `json2Csv` prepends one extra column identifying the JSON entry each row was built from (its path in the document). Your first property therefore lands in **column 2**: reference it as `$2` in `mapping` and in subsequent computes.
+> `json2Table` prepends one extra column identifying the JSON entry each row was built from (its path in the document). Your first property therefore lands in **column 2**: reference it as `$2` in `mapping` and in subsequent computes.
 
 > [!NOTE]
-> Each value lands whole in its cell (MetricsHub Community 3.9.09 or later): a value that holds a line feed or a `;` stays in one cell of one row, and empty values, including the last property, give empty cells. Earlier versions cut a value with a line feed into extra rows and a value with the separator into extra cells. An `awk` compute with `input: table` reads each cell as is. An `awk` reading text gets the table through a [toText](./to-text.html), which turns a `;` inside a cell into `,` and writes a line feed as is, so that value spans several AWK records. A `${source::}` reference to the table keeps the `;` and the line feed.
+> Each value lands whole in its cell (MetricsHub Community 3.9.09 or later): a value that holds a line feed or a `;` stays in one cell of one row, and empty values, including the last property, give empty cells. Earlier versions cut a value with a line feed into extra rows and a value with the separator into extra cells. An `awk` compute that follows reads each cell as is. An `awk` reading text gets the table through a [toText](./to-text.html), which turns a `;` inside a cell into `,` and writes a line feed as is, so that value spans several AWK records. A `${source::}` reference to the table keeps the `;` and the line feed.
 
 You may encounter two shorthand styles in examples: property pointers written without the leading `/` (`properties: id;name;status`), which resolve against each entry's top level, and array traversal expressed inside the property itself (`properties: Members[*].@odata.id`). Prefer the canonical form used by real connectors: `entryKey` pointing at the array, plus one leading-slash pointer per column (`entryKey: /Members` with `properties: /@odata.id`).
 
@@ -75,13 +77,13 @@ Equivalent serialized output:
 
 ## Large Payloads
 
-With the default `parsingMode: tree`, `json2Csv` builds a map of every node of the document before it writes the rows. This takes about 20 times the size of the payload in memory, even when only a few values are read per entry.
+With the default `parsingMode: tree`, `json2Table` builds a map of every node of the document before it writes the rows. This takes about 20 times the size of the payload in memory, even when only a few values are read per entry.
 
 For a REST API that returns large lists (thousands of objects, several MB), set `parsingMode: events`:
 
 ```yaml
     computes:
-    - type: json2Csv
+    - type: json2Table
       entryKey: /items
       properties: /metadata/name;/metadata/namespace;/status/phase
       parsingMode: events
@@ -104,7 +106,7 @@ Some documents cannot be read this way and are processed as with `tree`, with th
 
 ## Recommended Pattern
 
-- Set `resultContent: body` on the HTTP source and put `json2Csv` first in its `computes` pipeline.
+- Set `resultContent: body` on the HTTP source and put `json2Table` first in its `computes` pipeline.
 - Point `entryKey` at the array of records and keep every property pointer relative to a single record.
 - Account for the leading entry column: the first property is `$2`, not `$1`.
 - Add `parsingMode: events` when the payload can be large (a list of all the objects of a kind).
@@ -116,8 +118,8 @@ Some documents cannot be read this way and are processed as with `tree`, with th
 - Writing property pointers relative to the document root instead of relative to one entry under `entryKey`.
 - Separating `properties` with commas: the list is semicolon-separated.
 - Leaving `entryKey` pointing at a single object when the payload nests the records one level deeper, which yields a single mostly-empty row instead of one row per record.
-- Placing `json2Csv` after a compute that already produced a table: there is nothing to parse and the table is unchanged. A payload that does not parse gives an empty table.
-- Rejoining rows or cells of `json2Csv` in a following `awk` with `input: table`: since MetricsHub Community 3.9.09 a value with a line feed or a separator no longer cuts its row. An `awk` reading text still sees a value with a line feed as several records, and a `;` as `,`: declare `input: table` on it rather than rejoining.
+- Placing `json2Table` after a compute that already produced a table: there is nothing to parse and the table is unchanged. It is reported (`TABLE_FEEDS_TEXT`). A payload that does not parse gives an empty table.
+- Rejoining rows or cells of `json2Table` in a following `awk`: since MetricsHub Community 3.9.09 a value with a line feed or a separator no longer cuts its row. An `awk` that follows reads each cell as is; only a `toText` before it shows a value with a line feed as several records, and a `;` as `,`: drop the `toText` rather than rejoining.
 
 ## Community Examples
 
@@ -126,4 +128,4 @@ Some documents cannot be read this way and are processed as with `tree`, with th
 <!-- MACRO{snippet|id=json2CsvCompute|file=src/main/connector/hardware/Redfish/Redfish.yaml} -->
 
 > [!NOTE]
-> Redfish still uses the legacy lowercase alias `json2csv`. Use the canonical `json2Csv` casing in new connectors (see [Legacy and Compatibility](../legacy-and-compatibility.html)).
+> Redfish still writes `json2csv`, the lowercase spelling of the deprecated `json2Csv` alias. Use `json2Table` in new connectors (see [Legacy and Compatibility](../legacy-and-compatibility.html)).

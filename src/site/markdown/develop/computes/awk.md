@@ -42,7 +42,7 @@ sources:
 | `exclude` | No | None | Regular expression; matching **output** lines are discarded. |
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
-| `input` | No | None | Deprecated and ignored: the script reads the source result as it is (a text the traditional way, a table structured). Still accepted so that existing connectors load. To read a table as `;`-separated lines, write a [toText](./to-text.html) before the `awk`. |
+| `input` | No | None | Deprecated and ignored: the script reads the source result as it is (a text the traditional way, a table structured). Still accepted so that existing connectors load, and reported (`DEPRECATED_SYNTAX`): remove it. To read a table as `;`-separated lines, write a [toText](./to-text.html) before the `awk`. |
 | `output` | No | `text` | What the script produces: `text` (the printed lines, filtered with `keep`, `exclude`, `separators` and `selectColumns`, each ending with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
 
 ## Table Input And Output
@@ -51,7 +51,7 @@ The script reads the source result as it is. A text is read the traditional way:
 
 To parse a table as text (the `;`-joined line, for instance with `split($0, a, ";")`), write a [toText](./to-text.html) before the `awk`: it serializes each row as `;`-separated cells ending with `;`, and turns a `;` inside a cell into `,`.
 
-By default the script prints text. When the result is read as a table (by a table compute, the `mapping`, ...), the printed lines go through `toTable`, which splits them on `;`: a `;` inside a printed value therefore moves the following columns.
+By default the script prints text. When the result is read as a table (by a table compute, the `mapping`, ...), the printed lines go through `toTable`, which splits them on `;`: a `;` inside a printed value therefore moves the following columns. MetricsHub inserts this `toTable` when you do not write it, and reports it (`TEXT_FEEDS_TABLE`, see [Strict Content Types](../design-principles.html#strict-content-types)): write the `toTable` after the `awk`, or declare `output: table`.
 
 With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (or `print $0`) is one row with a single cell holding the whole record: print the fields instead (`print $1, $2, $3`).
 
@@ -78,7 +78,7 @@ sources:
 `output: table` does not depend on the input: a script reading a text can produce a table, and the reverse.
 
 > [!NOTE]
-> An `awk` compute that follows a table reads the rows, not `;`-separated lines: `NF` is the number of cells (no trailing empty field), a `;` inside a cell stays in its field, and `$0` is the cells joined with `OFS`. A script written for the `;` lines (`FS = ";"`, `split($0, a, ";")`, `print $0`) needs an explicit `toText` before it. `input: table` is no longer needed and is ignored.
+> An `awk` compute that follows a table reads the rows, not `;`-separated lines: `NF` is the number of cells (no trailing empty field), a `;` inside a cell stays in its field, and `$0` is the cells joined with `OFS`. A script written for the `;` lines (`FS = ";"`, `split($0, a, ";")`, `print $0`) needs an explicit `toText` before it. `input: table` is no longer needed: it is ignored and reported (`DEPRECATED_SYNTAX`).
 
 ## Variables
 

@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: ${file::ipmi-sensors.sh}
     computes:
+    - type: toTable
     - type: keepOnlyMatchingLines
       column: 1
       valueList: temperature

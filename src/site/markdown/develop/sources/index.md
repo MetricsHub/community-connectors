@@ -7,7 +7,7 @@ description: How source execution works in MetricsHub connectors and full source
 
 ## What A Source Produces
 
-In MetricsHub connectors, a source produces a **table**, or a text that its computes turn into a table (`commandLine`, `http`, `file`, `ipmi`, `awk`, see the [content types](../computes/index.html#content-types)). Internally, a table is a list of rows, where each row is a list of strings.
+In MetricsHub connectors, a source produces a **table**, or a text that its computes turn into a table (`commandLine`, `http`, `file`, `ipmi`, `awk`, `textUnion`, see the [content types](../computes/index.html#content-types)). Internally, a table is a list of rows, where each row is a list of strings.
 
 Most compute operations modify one table column at a time, which is why they usually require `column:`.
 
@@ -37,7 +37,7 @@ A source result is either text or a table (see the [content types](../computes/i
 - in a `${source::...}` reference, each line ends with `;`, except a line whose only `;` is that trailing one (typically a row of a single cell), and a `;` inside a cell is kept; the lines of a text are taken as they are, with the same exception;
 - in a [toText](../computes/to-text.html) (written before an `awk` script that parses the `;` lines; an `awk` reads a table structured otherwise), each line ends with `;` and a `;` inside a cell becomes `,`.
 
-Only a conversion (`toTable`, `json2Csv`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: if a compute appends `;42` to column 2, the cell holds `;42` at its end and the table keeps its columns. Add a column with [insertColumn](../computes/insert-column.html) or [duplicateColumn](../computes/duplicate-column.html).
+Only a conversion (`toTable`, `json2Table`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: if a compute appends `;42` to column 2, the cell holds `;42` at its end and the table keeps its columns. Add a column with [insertColumn](../computes/insert-column.html) or [duplicateColumn](../computes/duplicate-column.html).
 
 ## Where Sources Run in the Connector Lifecycle
 
@@ -85,11 +85,11 @@ Any source can be executed **once per row of another source's table**. This is t
 sources:
   members:
     # Table of members, one row each: <entry>;/redfish/v1/Chassis/1
-    # (json2Csv prepends an entry column, so the link is column 2)
+    # (json2Table prepends an entry column, so the link is column 2)
     type: http
     path: /redfish/v1/Chassis
     computes:
-    - type: json2Csv
+    - type: json2Table
       entryKey: /Members
       properties: /@odata.id
   details:
@@ -104,7 +104,7 @@ For each row of the referenced table, the engine clones the enclosing source, re
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `source` | Yes | None | Reference to the source whose table drives the loop. |
+| `source` | Yes | None | Reference to the source whose table drives the loop. It must be a table: a text there is reported (`TEXT_FEEDS_TABLE`). |
 | `concatMethod` | No | `list` | How per-entry results are combined (see below). |
 | `sleep` | No | None | Milliseconds to pause after each entry — throttles chatty APIs. |
 | `maxParallel` | No | None (one entry at a time) | Maximum number of entries executed concurrently (capped at 50). Results are still concatenated in the row order. MetricsHub Community 3.9.09 or later. |
@@ -114,7 +114,7 @@ Entries run one at a time by default. Set `maxParallel` when each entry is slow 
 `concatMethod` values:
 
 - `list` — stack every entry's rows/text (classic table union).
-- `json_array` — join the raw JSON results with commas and wrap them in `[ ... ]`, ready for a single `json2Csv`.
+- `json_array` — join the raw JSON results with commas and wrap them in `[ ... ]`, ready for a single `json2Table`.
 - `json_array_extended` — like `json_array`, but merges the driving row's own columns into each JSON entry, so downstream computes can correlate result and origin.
 - custom object `{ concatStart: "...", concatEnd: "..." }` — wrap each entry's raw result; both wrappers may themselves use `$n`.
 
@@ -150,6 +150,7 @@ monitors:
           computes:
           - type: awk
             script: '/:/{gsub(/:/,"",$1); print $1 ";" $2}'
+          - type: toTable
       mapping:
         source: ${source::monitors.network.simple.sources.rxBytes}
         attributes:
@@ -187,5 +188,6 @@ Official schema: <https://www.schemastore.org/metricshub-connector.json>
 - [static](./static.html)
 - [tableJoin](./table-join.html)
 - [tableUnion](./table-union.html)
+- [textUnion](./text-union.html)
 - [wbem](./wbem.html)
 - [wmi](./wmi.html)

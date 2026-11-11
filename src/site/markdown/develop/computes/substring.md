@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: /usr/sbin/lsdev -c disk -F 'name physloc'
     computes:
+    - type: toTable
       # Keep only the first 5 chars of the disk path to obtain the controller ID
       # DeviceID;controllerID;
     - type: substring
