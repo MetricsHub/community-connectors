@@ -49,7 +49,7 @@ sources:
 
 By default the script reads text and prints text. A table read as text goes through `toText`, which turns a `;` inside a cell into `,`. When the result is read as a table (by a table compute, the `mapping`, ...), the printed lines go through `toTable`, which splits them on `;`: a `;` inside a printed value therefore moves the following columns.
 
-With `input: table`, the script reads the table itself: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part. `$0` is only synthesized (cells joined with `OFS`) when the script reads it. After a text, MetricsHub first converts it with a `toTable` that splits each line on `;`.
+With `input: table`, the script reads the table itself: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part. `$0` is only synthesized (cells joined with `OFS`) when the script reads it. After a text, MetricsHub first converts it with a `toTable` that splits each line on `;`. If the source still turns out to be a text when the compute runs (for example when its content type differs from the one declared), MetricsHub converts it the same way, whatever the `output`. If that text is not empty, it also logs a warning that names the host, the connector and the compute (its source and position), without the values.
 
 With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (or `print $0`) is one row with a single cell holding the whole record: print the fields instead (`print $1, $2, $3`).
 
