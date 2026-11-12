@@ -268,7 +268,7 @@ The related `%{SUDO:command}` macro (command elevation) is tied to the connector
 
 ## Serialization Side Effects (Advanced but Important)
 
-Tables are internally list-of-list-of-strings. They are serialized as semicolon-separated rows only where text is expected (a `${source::...}` reference, a `toText`), and only a conversion (`toTable`, `json2Table`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table.
+Tables are internally list-of-list-of-strings. They are serialized as semicolon-separated rows only where text is expected (a `${source::...}` reference, a `toText`), and only a conversion (`toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table.
 A `;` that a compute writes into a cell is therefore an ordinary character of that cell: appending `;value` to a column adds no column. The serialized text shows the side effect:
 
 ```text

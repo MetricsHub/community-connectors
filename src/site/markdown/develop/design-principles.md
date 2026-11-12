@@ -110,7 +110,7 @@ What a source produces is the type at the end of its chain, as written:
 | Text | Table |
 | --- | --- |
 | `commandLine`, `http`, `file`, `ipmi`, the `awk` source with the default `output: text`, [`textUnion`](sources/text-union.html), a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` | every other source: `snmpTable`, `wmi`, `sql`, `static`, `tableJoin`, `tableUnion`, `internalDbQuery`, the `awk` source with `output: table`, ... |
-| a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `xml2Csv`, an `awk` compute with `output: table` or any other compute |
+| a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute |
 
 A `copy` produces what the source it copies produces. A `tableUnion` whose members are all texts still produces a text, and is reported (see [Texts in a Union](sources/table-union.html#texts-in-a-union)).
 
@@ -122,7 +122,7 @@ These read a table. A text there is reported (`TEXT_FEEDS_TABLE`): end its sourc
 - the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is reported once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is reported `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
 - `mapping.source`;
 - the result source of a tool that declares `columns` (see [tools](tools.html));
-- the computes that work on columns: every compute but `awk`, `json2Table`, `xml2Csv` and `toTable` (`toText` included);
+- the computes that work on columns: every compute but `awk`, `json2Table`, `json2List`, `xml2Csv` and `toTable` (`toText` included);
 - the tables of an [`internalDbQuery`](sources/internal-db-query.html);
 - the `source` of `executeForEachEntryOf`;
 - a `${source::...}` reference in the `variables` of an `awk`.
@@ -132,7 +132,7 @@ These read a table. A text there is reported (`TEXT_FEEDS_TABLE`): end its sourc
 These read a text. A table there is reported (`TABLE_FEEDS_TEXT`): end its source with a [`toText`](computes/to-text.html).
 
 - the members of a [`textUnion`](sources/text-union.html);
-- `json2Table`, `xml2Csv` and `toTable`.
+- `json2Table`, `json2List`, `xml2Csv` and `toTable`.
 
 An `awk` compute reads either type as it is, and so does an `awk` source whose `input` is a single reference.
 
