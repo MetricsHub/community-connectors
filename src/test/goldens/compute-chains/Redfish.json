@@ -3,7 +3,7 @@
   "sources" : {
     "${source::monitors.cpu.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -27,7 +27,7 @@
     },
     "${source::monitors.cpu.collect.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate" ],
+      "computes" : [ "json2Table", "translate", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -51,7 +51,7 @@
     },
     "${source::monitors.cpu.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -75,7 +75,7 @@
     },
     "${source::monitors.cpu.discovery.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -99,7 +99,7 @@
     },
     "${source::monitors.enclosure.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -123,7 +123,7 @@
     },
     "${source::monitors.enclosure.collect.sources.source(3)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate" ],
+      "computes" : [ "json2Table", "translate", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -147,7 +147,7 @@
     },
     "${source::monitors.enclosure.collect.sources.source(4)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -171,7 +171,7 @@
     },
     "${source::monitors.enclosure.collect.sources.source(5)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -195,7 +195,7 @@
     },
     "${source::monitors.enclosure.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -219,7 +219,7 @@
     },
     "${source::monitors.enclosure.discovery.sources.source(3)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -243,7 +243,7 @@
     },
     "${source::monitors.enclosure.discovery.sources.source(4)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -267,7 +267,7 @@
     },
     "${source::monitors.enclosure.discovery.sources.source(5)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -291,7 +291,7 @@
     },
     "${source::monitors.enclosure.discovery.sources.source(6)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -315,7 +315,7 @@
     },
     "${source::monitors.fan.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "subtract", "divide", "multiply" ],
+      "computes" : [ "json2Table", "translate", "translate", "subtract", "divide", "multiply" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -339,7 +339,7 @@
     },
     "${source::monitors.fan.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "keepOnlyMatchingLines" ],
+      "computes" : [ "json2Table", "keepOnlyMatchingLines" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -363,7 +363,7 @@
     },
     "${source::monitors.memory.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -387,7 +387,7 @@
     },
     "${source::monitors.memory.collect.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate" ],
+      "computes" : [ "json2Table", "translate", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -411,7 +411,7 @@
     },
     "${source::monitors.memory.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -435,7 +435,7 @@
     },
     "${source::monitors.memory.discovery.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -459,7 +459,7 @@
     },
     "${source::monitors.network.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -483,7 +483,7 @@
     },
     "${source::monitors.network.collect.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "translate" ],
+      "computes" : [ "json2Table", "translate", "translate", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -507,7 +507,7 @@
     },
     "${source::monitors.network.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -531,7 +531,7 @@
     },
     "${source::monitors.network.discovery.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate" ],
+      "computes" : [ "json2Table", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -555,7 +555,7 @@
     },
     "${source::monitors.physical_disk.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -579,7 +579,7 @@
     },
     "${source::monitors.physical_disk.collect.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate" ],
+      "computes" : [ "json2Table", "translate", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -603,7 +603,7 @@
     },
     "${source::monitors.physical_disk.collect.sources.source(3)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate" ],
+      "computes" : [ "json2Table", "translate", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -627,7 +627,7 @@
     },
     "${source::monitors.physical_disk.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -651,7 +651,7 @@
     },
     "${source::monitors.physical_disk.discovery.sources.source(2)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -675,7 +675,7 @@
     },
     "${source::monitors.physical_disk.discovery.sources.source(3)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -699,7 +699,7 @@
     },
     "${source::monitors.physical_disk.discovery.sources.source(4)}" : {
       "source" : "http",
-      "computes" : [ "json2csv" ],
+      "computes" : [ "json2Table" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -723,7 +723,7 @@
     },
     "${source::monitors.power_supply.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate" ],
+      "computes" : [ "json2Table", "translate", "translate" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -747,7 +747,7 @@
     },
     "${source::monitors.power_supply.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "excludeMatchingLines", "prepend", "prepend", "prepend" ],
+      "computes" : [ "json2Table", "excludeMatchingLines", "prepend", "prepend", "prepend" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -771,7 +771,7 @@
     },
     "${source::monitors.temperature.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "awk" ],
+      "computes" : [ "json2Table", "translate", "translate", "awk" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -795,7 +795,7 @@
     },
     "${source::monitors.temperature.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "excludeMatchingLines" ],
+      "computes" : [ "json2Table", "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -819,7 +819,7 @@
     },
     "${source::monitors.voltage.collect.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "translate", "translate", "multiply", "awk" ],
+      "computes" : [ "json2Table", "translate", "translate", "multiply", "awk" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
@@ -843,7 +843,7 @@
     },
     "${source::monitors.voltage.discovery.sources.source(1)}" : {
       "source" : "http",
-      "computes" : [ "json2csv", "excludeMatchingLines" ],
+      "computes" : [ "json2Table", "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
           "table" : [ ]
