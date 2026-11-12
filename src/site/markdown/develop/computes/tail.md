@@ -20,6 +20,7 @@ sources:
     commandLine: cat /opt/app/logs/server.log
     keep: ERROR
     computes:
+    - type: toTable
     - type: tail
       lines: 20
 ```

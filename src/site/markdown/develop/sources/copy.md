@@ -25,6 +25,7 @@ sources:
     type: copy
     from: ${source::monitors.sensor.collect.sources.rawSensors}
     computes:
+    - type: toTable
     - type: keepOnlyMatchingLines
       column: 3
       regExp: "(ok|degraded|failed)"
@@ -41,7 +42,7 @@ sources:
 
 A copy of a text is a text, even when empty. A copy of a table, or of an inline value, is a table, separate from the original: the computes of the copy do not change the original source.
 
-In the example above, `rawSensors` ends with the text of an `awk` compute and only a copy reads it, so it stays text: MetricsHub inserts the `toTable` in the copy, before `keepOnlyMatchingLines` (see the [content types](../computes/index.html#content-types)).
+In the example above, `rawSensors` ends with the text of an `awk` compute and only a copy reads it, so it stays text: the copy converts it with its own `toTable`, before `keepOnlyMatchingLines`. Without it, MetricsHub inserts that `toTable` and reports the `keepOnlyMatchingLines` of the copy (`TEXT_FEEDS_TABLE`, see the [content types](../computes/index.html#content-types)).
 
 ## Recommended Pattern
 

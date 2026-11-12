@@ -161,7 +161,7 @@ Internally, a table is represented as `List<List<String>>`. The example below sh
 >   eth1;Uplink 2;degraded;1000000000
 >   ```
 
-The serialized text is how a table is written out where text is expected (a `${source::...}` reference, a `toText`), with the variations described in [Serialization Details](sources/index.html#serialization-details-you-must-know). Only a conversion (`toTable`, `json2Csv`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: a `;` that a compute writes into a cell stays in that cell.
+The serialized text is how a table is written out where text is expected (a `${source::...}` reference, a `toText`), with the variations described in [Serialization Details](sources/index.html#serialization-details-you-must-know). Only a conversion (`toTable`, `json2Table`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: a `;` that a compute writes into a cell stays in that cell.
 
 ## `mapping` Block Inside Jobs
 

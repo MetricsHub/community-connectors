@@ -33,7 +33,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `prepend`. |
 | `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
-| `value` | Yes | None | String inserted at the beginning of the column content. Accepts a literal, a `$n` reference to another column of the same row, or a `${source::...}` reference whose content is prepended. A `;` or a line feed in the value stays in the cell. |
+| `value` | Yes | None | String inserted at the beginning of the column content. Accepts a literal, a `$n` reference to another column of the same row, or a `${source::...}` reference to a text, whose content is prepended (a table there is reported, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
 
@@ -64,7 +64,7 @@ With `column: 1` and `value: 'Input '`:
 ## Common Mistakes
 
 - Expecting a `;` in `value` to insert columns: `value: MSHW;` on the cell `1` gives the single cell `MSHW;1`. Use [insertColumn](./insert-column.html).
-- Prepending a `${source::...}` reference to a table of several cells to bring its columns in: the cell receives the serialized row (`1` becomes `a;b;1`). Combine sources with a [tableJoin](../sources/table-join.html).
+- Prepending a `${source::...}` reference to a table of several cells to bring its columns in: the cell receives the serialized row (`1` becomes `a;b;1`), and the reference is reported (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
 - Forgetting that `column` is 1-based.
 - Writing `value: $2` expecting a literal `$2`: `$n` is interpreted as a column reference.
 - Losing a trailing space by leaving the value unquoted: write `value: "Model: "`, not `value: Model: `.

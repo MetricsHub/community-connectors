@@ -17,11 +17,16 @@ This page explains what to use now and how to migrate safely.
 | Area | Canonical | Legacy Variant(s) | Recommendation |
 | --- | --- | --- | --- |
 | Detection type | `commandLine` | `commandline` | Use `commandLine` in new code. |
-| Compute type | `json2Csv` | `json2csv` | Use `json2Csv` in new code. |
+| Compute type | `json2Table` | `json2Csv`, `json2csv` | Use `json2Table` in new code (MetricsHub Community 3.9.09 or later). The legacy names are reported (`DEPRECATED_SYNTAX`). |
 | Compute type | `xml2Csv` | `xml2csv` | Use `xml2Csv` in new code. |
 | Compute type | `keepOnlyMatchingLines` | `KeepOnlyMatchingLines` | Use canonical casing. |
 | TableJoin WBEM | `keyType: Wbem` | `isWbemKey: true` | Prefer `keyType`; keep legacy only when needed. |
 | HTTP result content | `http_status` | `httpStatus` (older docs) | Use `http_status` in docs and new connectors. |
+| Union of texts | `type: textUnion` with `texts` | `type: tableUnion` with `tables` of texts | Use `textUnion`. The legacy form is reported (`TABLE_UNION_OF_TEXTS`). |
+| Table literal | List of rows: `[ [ a, b ], [ c, d ] ]` | `;` string: `"a;b\nc;d"` | Use the list of rows in `tables`, `leftTable` and `rightTable`. The legacy form is reported (`STRING_LITERAL_ROWS`). |
+| AWK input | No property: an `awk` reads its source as it is | `input` (compute), `inputFormat` (source) | Remove them: they are ignored and reported (`DEPRECATED_SYNTAX`). |
+
+MetricsHub Community 3.9.09 or later reports these legacy forms when it loads a connector, together with the other rules of the [Strict Content Types](design-principles.html#strict-content-types).
 
 ## Rare/Legacy Features Still Documented
 
@@ -62,7 +67,54 @@ Before:
 After:
 
 ```yaml
-- type: json2Csv
+- type: json2Table
+```
+
+Before:
+
+```yaml
+outputs:
+  type: tableUnion
+  tables:
+  - ${source::version}
+  - ${source::environment}
+```
+
+After:
+
+```yaml
+outputs:
+  type: textUnion
+  texts:
+  - ${source::version}
+  - ${source::environment}
+```
+
+Before:
+
+```yaml
+rightTable: "in;ac;AC Input\nout;ac;AC Output"
+```
+
+After:
+
+```yaml
+rightTable: [ [ in, ac, AC Input ], [ out, ac, AC Output ] ]
+```
+
+Before:
+
+```yaml
+- type: awk
+  input: table
+  script: ${file::parse.awk}
+```
+
+After:
+
+```yaml
+- type: awk
+  script: ${file::parse.awk}
 ```
 
 ## Compatibility Review Checklist
