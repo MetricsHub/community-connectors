@@ -112,7 +112,7 @@ BEGIN {
 
 A list is indexed from 0, like the rows of a source table. A map is indexed by its keys, in no particular order for `for (key in aMap)`, and `aMap[1]` finds the key `1`. An empty value in a list, such as `""` or a missing value, is an empty string.
 
-The values in a list or a map are strings, like the cells of a source table. A plain scalar variable compares as a number when it looks like one, but these values compare as text: `aList[0] > 9` is false for `"10"`. Add `+ 0` to compare them as numbers: `aList[0] + 0 > 9`.
+Like a scalar variable, an input field or a cell of a source table, a value in a list or a map compares as a number when it looks like one, and as text otherwise: `aList[0] > 9` is true for `"10"`.
 
 ## Recommended Pattern
 
