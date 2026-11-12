@@ -1,5 +1,5 @@
 keywords: awk source, jawk, scripting source, variables, arrays
-description: Reference for the awk source type (JAWK), scalar and source-table variables, and when to prefer compute-level AWK.
+description: Reference for the awk source type (JAWK), scalar, list, map and source-table variables, and when to prefer compute-level AWK.
 
 # awk (Source)
 
@@ -35,7 +35,7 @@ sources:
 | `input` | No | Empty | Input text, or a single source reference such as `${source::beforeAll.inventoryRaw}`: the script reads that source as it is at run time, a table structured (each row is a record whose cells are `$1..$NF`, and `$0` is the row as the reference gives it: cells joined with `;`, the trailing `;` kept unless the row has a single cell), a text the traditional way (lines split on `FS`). A reference inside a longer text (a template such as `MODE;${source::raw}`) is replaced by the source's text: it must reference a text, a table there is reported (`TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). |
 | `inputFormat` | No | None | Deprecated and ignored: an input that is a single source reference is read as that source is. Still accepted so that existing connectors load, and reported (`DEPRECATED_SYNTAX`): remove it. |
 | `output` | No | `text` | What the script produces: `text` (the printed lines as they are, which MetricsHub splits on `;` with a `toTable` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; a `print` without argument is one row of the record's fields `$1..$NF`, while `print $0` is the row as the reference gives it, in one cell; `printf` text is split into rows on `ORS` and into cells on `OFS`, so a `printf` row sets `OFS = SUBSEP`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
-| `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows; other values become scalars. See [Variables](#variables). |
+| `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
 | `separators` | No | None | Compatibility property; usually unnecessary for source-level AWK. |
 | `keep` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |
 | `exclude` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |
@@ -56,6 +56,8 @@ Both AWK sources and [AWK computes](../computes/awk.html#variables) accept a `va
 | Literal text or a quoted number, such as `"365.25"` | A scalar, usable in string expressions or arithmetic. |
 | A resource attribute, monitor attribute, or protocol property reference | A scalar resolved immediately before execution, e.g. `${resource.attribute::host.name}`, `${attribute::id}`, or `${protocol::http.port}`. |
 | A source reference, such as `${source::monitors.disk.discovery.sources.raw}` | An array of rows: `aTable[row][column]`, with **zero-based** row and column indexes. `length(aTable)` returns the row count. |
+| A YAML list | An array indexed from 0: `aList[0]`, `length(aList)`. See [Lists And Maps](#lists-and-maps). |
+| A YAML map | An array indexed by its keys: `aMap["key"]`, `for (key in aMap)`. See [Lists And Maps](#lists-and-maps). |
 
 ### Read A Source Table
 
@@ -80,6 +82,37 @@ sources:
 For a row `disk0;SSD;100` and hostname `server01`, the output is `disk0;100;server01;730.5`. No `input` is needed here: the `BEGIN` block reads the table variable directly. By contrast, `input: ${source::...}` feeds that source to the script's normal record processing: its rows as records for a table, its lines for a text.
 
 If a referenced source produced text, MetricsHub splits it into rows on line feeds and into cells on `;`, as [toTable](../computes/to-table.html) does with its default separator. Such a variable is reported (`TEXT_FEEDS_TABLE`): end the referenced source with an explicit `toTable`. An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
+
+### Lists And Maps
+
+A variable can hold a list or a map, which the script reads as an array. Lists and maps can be nested, and each value they hold is resolved like a variable: an attribute or protocol property reference is replaced, and a source reference becomes that source's table.
+
+```yaml
+- type: awk
+  script: ${file::xml-rows.awk}
+  variables:
+    properties:
+    - node
+    - node-model
+    - ""
+    - is-node-healthy
+    labels:
+      vendor: NetApp
+      host: ${resource.attribute::host.name}
+```
+
+```awk
+BEGIN {
+  for (i = 0; i < length(properties); i++) {
+    print i, properties[i]
+  }
+  print labels["vendor"], labels["host"]
+}
+```
+
+A list is indexed from 0, like the rows of a source table. A map is indexed by its keys, in no particular order for `for (key in aMap)`, and `aMap[1]` finds the key `1`. An empty value in a list, such as `""` or a missing value, is an empty string.
+
+The values in a list or a map are strings, like the cells of a source table. A plain scalar variable compares as a number when it looks like one, but these values compare as text: `aList[0] > 9` is false for `"10"`. Add `+ 0` to compare them as numbers: `aList[0] + 0 > 9`.
 
 ## Recommended Pattern
 
