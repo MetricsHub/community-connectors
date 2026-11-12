@@ -54,7 +54,7 @@ The fields `url`, `path`, `header`, `body` and `authenticationToken` interpolate
 - from a text, its whole first line, without its LF or CR LF ending (a lone CR does not end the line), MetricsHub Community 3.9.09 or later; earlier versions took the text up to its first `;`;
 - from a table, its first cell. A table there is reported (`TABLE_INTERPOLATED`).
 
-Extract the token as a text, for example with an `awk` that prints only the token:
+Extract the token as a text, for example with a [json2List](../computes/json2list.html) and an `awk` that prints only the token:
 
 ```yaml
 beforeAll:
@@ -65,10 +65,9 @@ beforeAll:
     body: '{ "user": "%{esc(json)::USERNAME}", "password": "%{esc(json)::PASSWORD}" }'
     computes:
     # {"token":"abc123"} gives abc123
+    - type: json2List
     - type: awk
-      script: |
-        BEGIN { FS = "\"" }
-        { for (i = 1; i < NF; i++) if ($i == "token") { print $(i + 2); exit } }
+      script: '$1 == "/token" { print $2; exit }'
 monitors:
   enclosure:
     simple:

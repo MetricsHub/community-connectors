@@ -43,7 +43,7 @@ After translation/replace, mapping consumes the transformed table.
 A source result, and the result of each compute, is either **text** (lines) or a **table** (rows of cells), never both:
 
 - `commandLine`, `http`, `file`, `ipmi` and the `awk` source with the default `output: text` produce text (`commandLine` after its own `keep`, `exclude`, `separators` and `selectColumns`), and so does a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`; every other source produces a table (`sql`, `wmi`, `snmpTable`, `static`, the `awk` source with `output: table`, ...); a `copy` produces what it copies, a [textUnion](../sources/text-union.html) is a text, and so is a `tableUnion` of texts (see [tableUnion](../sources/table-union.html#texts-in-a-union));
-- `awk` reads its input as it is (a text the traditional way, a table structured, see [awk](./awk.html#table-input-and-output)) and writes text unless it declares `output: table`; `json2Table`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
+- `awk` reads its input as it is (a text the traditional way, a table structured, see [awk](./awk.html#table-input-and-output)) and writes text unless it declares `output: table`; `json2Table`, `json2List`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
 
 Convert with [toTable](./to-table.html) and [toText](./to-text.html) when a compute does not read what the previous step produced. MetricsHub checks every chain when it loads a connector and reports a step that reads the wrong type (see [Strict Content Types](../design-principles.html#strict-content-types)). In this release, it still inserts these conversions itself, and they behave exactly like written ones; a later release rejects the connector instead, so write them:
 
@@ -52,7 +52,7 @@ Convert with [toTable](./to-table.html) and [toText](./to-text.html) when a comp
 
 Nothing is inserted before an `awk` compute: it reads the text or the table it receives. Write a `toText` before an `awk` whose script parses a table as `;`-separated lines.
 
-Nothing is inserted between a table compute or the `mapping` and the text of `http`, `file` or `ipmi`, of a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`, or of a text union with such a source among its members: convert it with `json2Table`, `xml2Csv`, `toTable` or `awk` (with `output: table`). A step that reads the wrong type sees nothing: a table compute (or the `mapping`) on text reads no rows and produces an empty table, and `json2Table` or `xml2Csv` on a table leaves the table unchanged.
+Nothing is inserted between a table compute or the `mapping` and the text of `http`, `file` or `ipmi`, of a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`, or of a text union with such a source among its members: convert it with `json2Table`, `json2List`, `xml2Csv`, `toTable` or `awk` (with `output: table`). A step that reads the wrong type sees nothing: a table compute (or the `mapping`) on text reads no rows and produces an empty table, and `json2Table`, `json2List` or `xml2Csv` on a table leaves the table unchanged.
 
 A source that returns nothing, or fails, gives an empty result of its own type: after a failed `commandLine`, an `awk` compute still runs its `BEGIN` and `END` blocks.
 
@@ -106,6 +106,7 @@ A source that returns nothing, or fails, gives an empty result of its own type: 
 | Compute | Purpose |
 | --- | --- |
 | [json2Table](./json2csv.html) | Flatten a JSON payload into table rows (prepends an entry column). Formerly `json2Csv`, still accepted as a deprecated alias. |
+| [json2List](./json2list.html) | List every value of a JSON document as a row: its key path and the value. |
 | [xml2Csv](./xml2csv.html) | Flatten an XML payload into table rows. |
 | [toTable](./to-table.html) | Turn a text result into a table (one row per line, split on a separator). |
 | [toText](./to-text.html) | Turn a table into semicolon-separated text for an `awk` compute. |
