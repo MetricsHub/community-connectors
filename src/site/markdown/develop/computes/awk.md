@@ -1,5 +1,5 @@
 keywords: awk, compute, JAWK, script, parsing, variables, arrays, keep, selectColumns
-description: Runs an AWK script over the source result with optional scalar and source-table variables, then rebuilds the table with line filtering and column selection.
+description: Runs an AWK script over the source result with optional scalar, list, map and source-table variables, then rebuilds the table with line filtering and column selection.
 
 # awk (Compute)
 
@@ -37,7 +37,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `awk`. |
 | `script` | Yes | None | The AWK script: an embedded-file reference `${file::script.awk}` (a file next to the connector), or the script text itself, typically as a YAML block scalar (`script: \|`). |
-| `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows; other values become scalars. See [Variables](#variables). |
+| `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
 | `keep` | No | None | Regular expression; only **output** lines of the script that match are kept. |
 | `exclude` | No | None | Regular expression; matching **output** lines are discarded. |
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
@@ -82,7 +82,7 @@ sources:
 
 ## Variables
 
-AWK computes accept the same `variables` map as [AWK sources](../sources/awk.html#variables): literals and resolved resource/monitor attributes or protocol properties become scalars, while source references become arrays accessed as `aTable[row][column]` with **zero-based** indexes. Variables are available before `BEGIN` runs and work with both inline scripts and embedded `.awk` files.
+AWK computes accept the same `variables` map as [AWK sources](../sources/awk.html#variables): literals and resolved resource/monitor attributes or protocol properties become scalars, source references become arrays accessed as `aTable[row][column]` with **zero-based** indexes, and [YAML lists and maps](../sources/awk.html#lists-and-maps) become arrays. Variables are available before `BEGIN` runs and work with both inline scripts and embedded `.awk` files.
 
 For example, append the hostname and a scaled value to each semicolon-separated input row:
 
