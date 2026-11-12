@@ -182,52 +182,6 @@ monitors:
           id: $2
         metrics:
           hw.voltage: milliVolt2Volt($3)
-  fan:
-    keys:
-    - id
-    discovery:
-      sources:
-        source(1):
-          type: copy
-          from: ${source::monitors.enclosure.discovery.sources.source(1)}
-          computes:
-          - type: keepOnlyMatchingLines
-            column: 1
-            regExp: ^FAN$
-          - type: keepOnlyMatchingLines
-            column: 3
-            regExp: .
-      mapping:
-        source: ${source::monitors.fan.discovery.sources.source(1)}
-        attributes:
-          id: $2
-          __display_id: $2
-          sensor_location: gpu
-          hw.parent.type: enclosure
-          name: ${awk::sprintf("%s (%s)", $2, "gpu")}
-        metrics:
-          hw.fan.speed_ratio.limit{limit_type="low.degraded"}: percent2Ratio("10")
-          hw.fan.speed_ratio.limit{limit_type="low.critical"}: percent2Ratio("0")
-    collect:
-      type: multiInstance
-      sources:
-        source(1):
-          type: commandLine
-          commandLine: nvidia-smi -q
-          timeout: 90
-          computes:
-          - type: awk
-            script: ${file::nvidiaSmi.awk}
-            output: table
-          - type: keepOnlyMatchingLines
-            column: 1
-            regExp: ^FAN$
-      mapping:
-        source: ${source::monitors.fan.collect.sources.source(1)}
-        attributes:
-          id: $2
-        metrics:
-          hw.fan.speed_ratio: percent2Ratio($3)
 
 # Tools an AI assistant runs through the MetricsHub MCP server
 tools:

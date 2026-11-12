@@ -1,5 +1,5 @@
 {
-  "total" : 5,
+  "total" : 4,
   "monitors" : [ {
     "metrics" : {
       "metricshub.connector.status" : {
@@ -36,103 +36,6 @@
     "endpointHost" : false,
     "endpoint" : false,
     "connector" : true,
-    "is_endpoint" : false
-  }, {
-    "metrics" : {
-      "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}" : {
-        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.degraded\"}",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : 1791830129090,
-        "attributes" : {
-          "limit_type" : "low.degraded"
-        },
-        "resetMetricTime" : true,
-        "metricType" : "Gauge",
-        "value" : 0.1,
-        "previousValue" : 0.1,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.status{hw.type=\"fan\", state=\"present\"}" : {
-        "name" : "hw.status{hw.type=\"fan\", state=\"present\"}",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : 1791830129090,
-        "attributes" : {
-          "state" : "present",
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "metricType" : "UpDownCounter",
-        "value" : 1.0,
-        "previousValue" : 1.0,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed_ratio" : {
-        "name" : "hw.fan.speed_ratio",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : null,
-        "attributes" : { },
-        "resetMetricTime" : false,
-        "metricType" : "Gauge",
-        "value" : 0.0,
-        "previousValue" : null,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}" : {
-        "name" : "hw.fan.speed_ratio.limit{limit_type=\"low.critical\"}",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : 1791830129090,
-        "attributes" : {
-          "limit_type" : "low.critical"
-        },
-        "resetMetricTime" : true,
-        "metricType" : "Gauge",
-        "value" : 0.0,
-        "previousValue" : 0.0,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      },
-      "hw.power{hw.type=\"fan\"}" : {
-        "name" : "hw.power{hw.type=\"fan\"}",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "hw.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "metricType" : "Gauge",
-        "value" : 0.0,
-        "previousValue" : null,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
-      }
-    },
-    "attributes" : {
-      "__display_id" : "GPU8D",
-      "hw.parent.type" : "enclosure",
-      "sensor_location" : "gpu",
-      "name" : "GPU8D (gpu)",
-      "connector_id" : "NvidiaSmi",
-      "id" : "GPU8D",
-      "__id_count" : "1"
-    },
-    "conditionalCollection" : { },
-    "legacyTextParameters" : { },
-    "alertRules" : { },
-    "discoveryTime" : 1791830129090,
-    "type" : "fan",
-    "id" : "NvidiaSmi_fan_GPU8D",
-    "identifyingAttributeKeys" : [ "id" ],
-    "endpointHost" : false,
-    "endpoint" : false,
-    "connector" : false,
     "is_endpoint" : false
   }, {
     "metrics" : {
@@ -386,23 +289,6 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791830129090,
-        "previousCollectTime" : 1791830129090,
-        "attributes" : {
-          "job.type" : "discovery",
-          "connector_id" : "NvidiaSmi",
-          "monitor.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "metricType" : "Gauge",
-        "value" : 0.001,
-        "previousValue" : 0.001,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : false
-      },
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}",
         "collectTime" : 1791830129090,
@@ -579,23 +465,6 @@
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : false
-      },
-      "metricshub.job.duration{job.type=\"collect\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"collect\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791830134224,
-        "previousCollectTime" : null,
-        "attributes" : {
-          "job.type" : "collect",
-          "connector_id" : "NvidiaSmi",
-          "monitor.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "metricType" : "Gauge",
-        "value" : 0.037,
-        "previousValue" : null,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : true
       },
       "hw.host.power{quality=\"estimated\"}" : {
         "name" : "hw.host.power{quality=\"estimated\"}",

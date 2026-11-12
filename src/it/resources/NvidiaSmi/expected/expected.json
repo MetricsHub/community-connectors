@@ -289,23 +289,6 @@
     "is_endpoint" : false
   }, {
     "metrics" : {
-      "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}" : {
-        "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"fan\", connector_id=\"NvidiaSmi\"}",
-        "collectTime" : 1791830122361,
-        "previousCollectTime" : 1791830122361,
-        "attributes" : {
-          "job.type" : "discovery",
-          "connector_id" : "NvidiaSmi",
-          "monitor.type" : "fan"
-        },
-        "resetMetricTime" : false,
-        "metricType" : "Gauge",
-        "value" : 0.005,
-        "previousValue" : 0.005,
-        "rate" : null,
-        "type" : "NumberMetric",
-        "updated" : false
-      },
       "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}" : {
         "name" : "metricshub.job.duration{job.type=\"discovery\", monitor.type=\"temperature\", connector_id=\"NvidiaSmi\"}",
         "collectTime" : 1791830122361,
