@@ -63,7 +63,6 @@ monitors:
             # __PATH;DeviceID;Model;FirmwareVersion;SerialNumber;Size
           - type: awk
             script: ${file::diskController.awk}
-            input: table
             output: table
         source(2):
           # Source(2) = Win32_DiskDrive
@@ -323,7 +322,6 @@ monitors:
             # DeviceID;Label;Filesystem;Size;
           - type: awk
             script: ${file::logicalDiskDiscovery.awk}
-            input: table
             output: table
       mapping:
         # InstanceTable = Source(1)
@@ -366,7 +364,6 @@ monitors:
             # DeviceID;Status;StatusInformation;SizeRemaning;
           - type: awk
             script: ${file::logicalDiskCollect.awk}
-            input: table
             output: table
       mapping:
         # ValueTable = Source(1)
@@ -413,7 +410,6 @@ monitors:
             # DeviceId;TemperatureType;WarningThreshold;AlarmThreshold;
           - type: awk
             script: ${file::temperature.awk}
-            input: table
             output: table
       mapping:
         # InstanceTable = Source(2)

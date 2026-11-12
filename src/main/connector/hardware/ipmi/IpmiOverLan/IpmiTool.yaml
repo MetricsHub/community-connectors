@@ -524,7 +524,6 @@ monitors:
             # from the vendor, the type and the size that are known
             # Memory module;DeviceID;Entity ID;Vendor;Model;Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo;Description
           - type: awk
-            input: table
             output: table
             script: |
               $11 == "" { $11 = $6 }

@@ -131,7 +131,6 @@ monitors:
             # SensorId;Name;WarningThreshold;AlarmThreshold;
           - type: awk
             script: ${file::temperature.awk}
-            input: table
             output: table
       mapping:
         # Instance table
@@ -367,7 +366,6 @@ monitors:
             # CpuDeviceID;AverageClock
           - type: awk
             script: ${file::cpu.awk}
-            input: table
             output: table
         source(2):
           # SensorName;CpuDeviceID;CPUPowerConsumption
@@ -543,7 +541,6 @@ monitors:
           # Name, gpuId, Value, SensorType
           - type: awk
             script: ${file::gpu.awk}
-            input: table
             output: table
       mapping:
         # Value Table

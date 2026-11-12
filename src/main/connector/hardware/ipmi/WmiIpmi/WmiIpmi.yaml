@@ -34,7 +34,6 @@ monitors:
           namespace: root\cimv2
           computes:
             - type: awk
-              input: table
               output: table
               script: |
                 BEGIN { FS=";"; OFS=";" }
@@ -50,7 +49,6 @@ monitors:
           namespace: root\hardware
           computes:
             - type: awk
-              input: table
               output: table
               script: ${file::numeric_sensors.awk}
 
@@ -60,7 +58,6 @@ monitors:
           namespace: root\hardware
           computes:
             - type: awk
-              input: table
               output: table
               script: ${file::discrete_sensors.awk}
 
@@ -73,5 +70,4 @@ monitors:
           computes:
             - type: awk
               script: ${file::../interpret_sensors.awk}
-              input: table
               output: table

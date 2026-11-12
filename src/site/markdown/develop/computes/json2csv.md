@@ -126,6 +126,3 @@ Some documents cannot be read this way and are processed as with `tree`, with th
 - [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml)
 
 <!-- MACRO{snippet|id=json2CsvCompute|file=src/main/connector/hardware/Redfish/Redfish.yaml} -->
-
-> [!NOTE]
-> Redfish still writes `json2csv`, the lowercase spelling of the deprecated `json2Csv` alias. Use `json2Table` in new connectors (see [Legacy and Compatibility](../legacy-and-compatibility.html)).
