@@ -43,23 +43,23 @@ sources:
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
 | `input` | No | None | Deprecated and ignored: the script reads the source result as it is (a text the traditional way, a table structured). Still accepted so that existing connectors load. To read a table as `;`-separated lines, write a [toText](./to-text.html) before the `awk`. |
-| `output` | No | `text` | What the script produces: `text` (the printed lines, filtered with `keep`, `exclude`, `separators` and `selectColumns`, each ending with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, filtered with `keep`, `exclude`, `separators` and `selectColumns`, each ending with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
 
 ## Table Input And Output
 
-The script reads the source result as it is. A text is read the traditional way: each line is a record, split into fields on `FS`. A table is read structured: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` plays no part, and `$0` is only synthesized (cells joined with `OFS`, a space by default) when the script reads it.
+The script reads the source result as it is. A text is read the traditional way: each line is a record, split into fields on `FS`. A table is read structured: each row is one record, each cell one field (`$1..$NF`), whatever it contains. `FS` does not split the row, and `$0` is only synthesized when the script reads it: the cells joined with the `FS` in effect when the row was read (a space by default), or with `OFS` once the script assigns a field or `NF`.
 
 To parse a table as text (the `;`-joined line, for instance with `split($0, a, ";")`), write a [toText](./to-text.html) before the `awk`: it serializes each row as `;`-separated cells ending with `;`, and turns a `;` inside a cell into `,`.
 
 By default the script prints text. When the result is read as a table (by a table compute, the `mapping`, ...), the printed lines go through `toTable`, which splits them on `;`: a `;` inside a printed value therefore moves the following columns.
 
-With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (or `print $0`) is one row with a single cell holding the whole record: print the fields instead (`print $1, $2, $3`).
+With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (and a pattern without action) writes the record's fields `$1..$NF` as the cells, as the script left them: assigned fields and a changed `NF` included, a record without fields giving one empty cell. `$2 != "" { print }` keeps the rows whose second cell is not empty, and `{ $3 = toupper($3); print }` rewrites a column. `print $0` is one row with a single cell holding the whole record.
 
-The text written by `printf` is split into rows on `ORS` and into cells on `OFS` (the `OFS` in effect when the row began), so a value that holds the `OFS` is split too. Use `printf` for a row whose number of cells varies, with `OFS = SUBSEP` (a character that never appears in data): each value stays one cell, even when it holds a `;`.
+The text written by `printf` is split into rows on `ORS` and into cells on `OFS` (the `OFS` in effect when the row began), so a value that holds the `OFS` is split too. Use `printf` for a row built piece by piece, with `OFS = SUBSEP` (a character that never appears in data): each value stays one cell, even when it holds a `;`. To write the record's fields, a `print` without argument is simpler.
 
 ```awk
 BEGIN { OFS = SUBSEP }
-{ printf "%s", $1; for (i = 2; i <= NF; i++) printf "%s%s", OFS, $i; printf "\n" }
+{ printf "%s", $1; for (i = 3; i <= NF; i += 2) printf "%s%s", OFS, $i; printf "\n" }
 ```
 
 ```yaml
@@ -78,7 +78,7 @@ sources:
 `output: table` does not depend on the input: a script reading a text can produce a table, and the reverse.
 
 > [!NOTE]
-> An `awk` compute that follows a table reads the rows, not `;`-separated lines: `NF` is the number of cells (no trailing empty field), a `;` inside a cell stays in its field, and `$0` is the cells joined with `OFS`. A script written for the `;` lines (`FS = ";"`, `split($0, a, ";")`, `print $0`) needs an explicit `toText` before it. `input: table` is no longer needed and is ignored.
+> An `awk` compute that follows a table reads the rows, not `;`-separated lines: `NF` is the number of cells (no trailing empty field), a `;` inside a cell stays in its field, and `$0` is the cells joined with `FS` (a space by default). A script written for the `;` lines (`FS = ";"`, `split($0, a, ";")`, `print $0`) needs an explicit `toText` before it. `input: table` is no longer needed and is ignored.
 
 ## Variables
 
@@ -142,9 +142,9 @@ The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` rem
 ## Common Mistakes
 
 - Relying on GNU awk extensions (`gensub`, `asort`, coprocesses...) that JAWK does not provide.
-- Using `split($0, a, ";")` or `print $0` in a script that follows a table: the fields are the cells already, and `$0` is the cells joined with `OFS` (a space by default), not with `;`. Read `$1..$NF`, or write a `toText` before the `awk` to parse the `;` lines.
+- Using `split($0, a, ";")` or `print $0` in a script that follows a table: the fields are the cells already, and `$0` is the cells joined with `FS` (a space by default), with no trailing `;`. Read `$1..$NF`, or write a `toText` before the `awk` to parse the `;` lines.
 - Printing a `;`-joined string with `output: table`: `print $1 ";" $2` gives one cell holding `a;b`, not two cells. Print the values as separate arguments.
-- Writing a row with `printf` and `OFS = ";"` with `output: table`: a value holding a `;` becomes two cells. Use `print` with one argument per cell, or set `OFS = SUBSEP` for a `printf` row.
+- Writing a row with `printf` and `OFS = ";"` with `output: table`: a value holding a `;` becomes two cells. Use `print` with one argument per cell, a `print` without argument for the record's fields, or set `OFS = SUBSEP` for a `printf` row.
 - Setting `selectColumns` without `separators`: the lines are never split, so the selection does nothing.
 - Expecting `keep`/`exclude` to filter the script's *input* — they filter its *output*. Filter input inside the script itself.
 - A script that prints nothing empties the table, and every downstream compute and mapping silently gets no rows.
