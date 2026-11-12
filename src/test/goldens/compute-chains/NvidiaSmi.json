@@ -16,39 +16,6 @@
         }
       }
     },
-    "${source::monitors.fan.collect.sources.source(1)}" : {
-      "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines" ],
-      "outputs" : {
-        "commandLine" : {
-          "table" : [ ]
-        },
-        "commandLineWide" : {
-          "table" : [ ]
-        },
-        "empty" : {
-          "table" : [ ]
-        }
-      }
-    },
-    "${source::monitors.fan.discovery.sources.source(1)}" : {
-      "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines" ],
-      "outputs" : {
-        "csv" : {
-          "table" : [ ]
-        },
-        "csvSeparatorInCell" : {
-          "table" : [ ]
-        },
-        "csvWide" : {
-          "table" : [ ]
-        },
-        "empty" : {
-          "table" : [ ]
-        }
-      }
-    },
     "${source::monitors.gpu.collect.sources.source(1)}" : {
       "source" : "commandLine",
       "computes" : [ "awk", "keepOnlyMatchingLines" ],
