@@ -11,9 +11,9 @@ A source result is either **text** (lines, as produced by `http`, `file`, `ipmi`
 
 Each line of the text becomes a row and is split on `separator`, taken literally (a multi-character separator is one separator). Lines can be filtered with `keep` and `exclude` as on the [`commandLine` source](../sources/command-line.html), and the columns selected with `selectColumns`.
 
-MetricsHub inserts this conversion, with its default properties, where the text of a `commandLine` source, an `awk` source or an `awk` compute is read as a table (see the [content types](./index.html#content-types)). It inserts nothing between the text of `http`, `file` or `ipmi` and a table compute. Write it explicitly in new connectors: the chain then says what it does.
+MetricsHub inserts this conversion, with its default properties, where the text of a `commandLine` source, an `awk` source or an `awk` compute is read as a table (see the [content types](./index.html#content-types)). It inserts nothing between the text of `http`, `file` or `ipmi` and a table compute. Write it explicitly: the chain then says what it does, and a text read as a table without it is reported (`TEXT_FEEDS_TABLE`, see [Strict Content Types](../design-principles.html#strict-content-types)).
 
-On a table, `toTable` without properties leaves the table unchanged. With `keep`, `exclude`, `selectColumns` or a `separator` other than `;`, it applies them to the table written as [toText](./to-text.html) writes it.
+On a table, `toTable` without properties leaves the table unchanged. With `keep`, `exclude`, `selectColumns` or a `separator` other than `;`, it applies them to the table written as [toText](./to-text.html) writes it. A `toTable` on a table is reported (`TABLE_FEEDS_TEXT`, whose hint reads "write a toText"): remove it, or, when its properties are meant to apply to the serialized table, write a `toText` before it.
 
 ## Syntax
 

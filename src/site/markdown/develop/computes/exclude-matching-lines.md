@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: ${file::diskpart-list.bat}
     computes:
+    - type: toTable
     - type: excludeMatchingLines
       column: 4
       valueList: CD-ROM,DVD-ROM,Removable

@@ -11,6 +11,8 @@ Use `tableJoin` to enrich one source table with columns from another using key c
 
 `leftKeyColumn` and `rightKeyColumn` are **1-based column indexes**.
 
+Both inputs must be tables. A text, such as a command output, needs a `toTable` (or an `awk` with `output: table`) in its source before the join: a text input is reported (`TEXT_FEEDS_TABLE`, see [Strict Content Types](../design-principles.html#strict-content-types)).
+
 ## Syntax
 
 ```yaml
@@ -29,8 +31,8 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `tableJoin`. |
-| `leftTable` | Yes | None | Left source table reference. |
-| `rightTable` | Yes | None | Right source table reference. |
+| `leftTable` | Yes | None | Left table: a source reference, or a table literal written as a list of rows. See [Writing a Table Literal](#writing-a-table-literal). |
+| `rightTable` | Yes | None | Right table: a source reference, or a table literal written as a list of rows. |
 | `leftKeyColumn` | Yes | None | Join key column in left table (1-based). |
 | `rightKeyColumn` | Yes | None | Join key column in right table (1-based). |
 | `defaultRightLine` | No | None | Fallback right-side row when no match is found: a list of cells (recommended), or a legacy string split on `;`. Without it, unmatched left rows are dropped (inner join). See [Writing `defaultRightLine`](#writing-defaultrightline). |
@@ -96,6 +98,22 @@ Older connectors write `defaultRightLine` as a string. It is split on `;`, and e
 | `;;;` | 3 empty fields |
 
 An all-empty line therefore needs **one semicolon per column** of the right table: `;;;;` for a 4-column right table. With one semicolon less, the unmatched rows are one column short of the matched ones. A cell cannot hold a `;` in this form. Prefer the list form in new connectors.
+
+## Writing a Table Literal
+
+`leftTable` or `rightTable` can be a table written in the connector, as a YAML list of rows, each row a list of cells. It gives exactly these rows and cells, `;` included (MetricsHub Community 3.9.09 or later):
+
+```yaml
+sources:
+  tableIds:
+    type: tableJoin
+    leftTable: ${source::monitors.enclosure.discovery.sources.tables}
+    rightTable: [ [ MSHW_TableID ] ]
+    leftKeyColumn: 1
+    rightKeyColumn: 1
+```
+
+A list that is not a list of rows is rejected when the connector loads. Cells, quoting and the older `;` string form (`rightTable: MSHW_TableID;`, reported `STRING_LITERAL_ROWS`) follow the rules of [Writing Table Literals](./table-union.html#writing-table-literals).
 
 ## Recommended Pattern
 

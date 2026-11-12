@@ -19,7 +19,7 @@ sources:
     path: /api/v1/sensors
     resultContent: body
     computes:
-    - type: json2Csv
+    - type: json2Table
       entryKey: /sensors
       properties: /id;/encodedName;/status
     # Column 3 (/encodedName) holds a Base64-encoded display name
@@ -38,7 +38,7 @@ sources:
 
 ## Table Transformation Example
 
-With `column: 3` and `encoding: base64` (columns shown after `json2Csv`, whose leading entry column is column 1):
+With `column: 3` and `encoding: base64` (columns shown after `json2Table`, whose leading entry column is column 1):
 
 > [!TABS]
 >
@@ -65,7 +65,7 @@ With `encoding: url`, a value such as `sensor%20bay%201` becomes `sensor bay 1`.
 ## Common Mistakes
 
 - Decoding the wrong column after an upstream compute changed the table shape (indexes are 1-based and shift when columns are added or removed).
-- Forgetting the leading entry column produced by `json2Csv`: the first JSON property sits in column 2, so the decoded field is one column further right than expected.
+- Forgetting the leading entry column produced by `json2Table`: the first JSON property sits in column 2, so the decoded field is one column further right than expected.
 - Applying `base64` decoding to plain text: the result is binary garbage that silently corrupts the row.
 - Confusing direction: `decode` recovers original text; use [`encode`](./encode.html) to produce Base64/URL-encoded values.
 

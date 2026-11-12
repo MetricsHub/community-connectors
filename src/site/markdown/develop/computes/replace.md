@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: powershell -command "Get-VM | ForEach-Object { ... }"
     computes:
+    - type: toTable
       # Remove the double quotes around the VM name
     - type: replace
       column: 1
