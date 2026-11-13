@@ -9,7 +9,7 @@ description: Runs an AWK script over the source result with optional scalar, lis
 
 Use the `awk` compute for parsing jobs that simpler computes cannot express: reshaping free-form command output into semicolon-separated rows, correlating multi-line records, or computing derived values. The script receives the source's current result as its input, as it is: a text (e.g. `commandLine` output) is read the traditional way, one record per line split on `FS`; a table is read structured, one record per row, one field per cell. Its printed output becomes the new result.
 
-MetricsHub embeds **JAWK**, a Java implementation of the AWK language, extended with a few MetricsHub utility functions. Standard AWK constructs work; do not assume GNU awk (`gawk`) extensions are available.
+MetricsHub embeds **JAWK**, a Java implementation of the AWK language, with a few MetricsHub utility functions and the GNU awk (`gawk`) functions listed in [Functions](#functions). JAWK implements only part of gawk: do not assume that a gawk feature or function that is not listed there is available.
 
 This compute transforms an existing source's result. If the script itself *is* the source (computing over an explicit `input`), use the [`awk` source](../sources/awk.html) instead.
 
@@ -103,6 +103,29 @@ For a text input `disk0;100` and hostname `server01`, the output table contains 
 
 To access another source's table, add a variable such as `aTable: ${source::monitors.disk.discovery.sources.raw}` and read `aTable[0][0]` for its first cell or `length(aTable)` for its row count. Ensure that source has already run. The compute still receives its current source result as normal AWK input; variables provide additional data. See the [source-table example and empty-source behavior](../sources/awk.html#variables).
 
+## Functions
+
+Besides the POSIX AWK functions (`length`, `substr`, `split`, `sprintf`, `tolower`...), a script can call:
+
+| Functions | Description |
+| --- | --- |
+| `join(separator, value, ...)` | The values joined with the separator: `join(" ", $2, $3)`. |
+| `base64Encode(text)` | The Base64 encoding of the UTF-8 text. |
+| `bytes2HumanFormatBase2(bytes)`, `bytes2HumanFormatBase10(bytes)` | A size in bytes as text with 2 decimals and a binary (`1.00 GiB`) or decimal (`1.00 GB`) unit. |
+| `mebiBytes2HumanFormat(mebibytes)` | A size in MiB as text: `1.00 TiB`. |
+| `megaHertz2HumanFormat(megahertz)` | A frequency in MHz as text: `4.00 GHz`. |
+| `asort`, `asorti` | Sort an array by value or by index (`n = asorti(ids, sorted)`). |
+| `gensub(regexp, replacement, how [, target])` | The substituted text, with `\\1`..`\\9` back-references, without changing the target. |
+| `patsplit(string, array [, fieldpat [, seps]])` | Split a string by the content of its fields rather than by separators. |
+| `strtonum(text)` | A number from decimal, `0x` hexadecimal or `0` octal text. |
+| `systime()`, `mktime(datespec [, utc])`, `strftime([format [, timestamp [, utc]]])` | The current time, a `"YYYY MM DD HH MM SS"` date as seconds since the epoch, and a timestamp formatted with `strftime(3)` conversions. |
+| `typeof(x)`, `isarray(x)`, `mkbool(x)` | The type of a value, whether it is an array, and a boolean value. |
+| `bindtextdomain`, `dcgettext`, `dcngettext` | gawk's message translation functions. With no message catalog, they return the text untranslated. |
+
+The gawk functions are available from MetricsHub Community 3.9.09. Earlier versions have only the MetricsHub functions, and `asorti(source, dest)` since 3.9.01. The names of the gawk functions are reserved: a script cannot name a variable or a function `asort`, `asorti`, `gensub`, `patsplit`, `strtonum`, `systime`, `mktime`, `strftime`, `typeof`, `isarray`, `mkbool`, `bindtextdomain`, `dcgettext` or `dcngettext`.
+
+An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `executeHttpRequest`, `json2csv`, `getVariable`...
+
 ## Table Transformation Example
 
 Suppose `diskPart.awk` prints one `MSHW;`-prefixed line per volume; `keep`, `separators`, and `selectColumns` then clean up its output:
@@ -141,7 +164,8 @@ The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` rem
 
 ## Common Mistakes
 
-- Relying on GNU awk extensions (`gensub`, `asort`, coprocesses...) that JAWK does not provide.
+- Naming a variable or a function after a gawk function (`gensub`, `asort`, `strftime`...): these names are reserved since MetricsHub Community 3.9.09, and the script no longer compiles.
+- Relying on a gawk feature or function that [Functions](#functions) does not list: JAWK implements only part of gawk.
 - Using `split($0, a, ";")` or `print $0` in a script that follows a table: the fields are the cells already, and `$0` is the cells joined with `FS` (a space by default), with no trailing `;`. Read `$1..$NF`, or write a `toText` before the `awk` to parse the `;` lines.
 - Printing a `;`-joined string with `output: table`: `print $1 ";" $2` gives one cell holding `a;b`, not two cells. Print the values as separate arguments.
 - Writing a row with `printf` and `OFS = ";"` with `output: table`: a value holding a `;` becomes two cells. Use `print` with one argument per cell, a `print` without argument for the record's fields, or set `OFS = SUBSEP` for a `printf` row.
