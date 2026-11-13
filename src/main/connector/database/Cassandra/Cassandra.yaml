@@ -46,7 +46,6 @@ beforeAll:
     - Name
     computes:
     - type: awk
-      output: table
       script: |
         {
             if (split($1, part, "@") == 2 && part[1] ~ /^[0-9]+$/) {
@@ -64,6 +63,9 @@ beforeAll:
     objectName: org.apache.cassandra.db:type=StorageService
     attributes:
     - ClusterName
+    computes:
+    - type: awk
+      script: "{ print $1 }"
 
   # Release version of the Cassandra instance
   # ReleaseVersion;
@@ -73,6 +75,9 @@ beforeAll:
     objectName: org.apache.cassandra.db:type=StorageService
     attributes:
     - ReleaseVersion
+    computes:
+    - type: awk
+      script: "{ print $1 }"
 
 monitors:
   cassandra:

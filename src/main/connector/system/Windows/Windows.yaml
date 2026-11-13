@@ -79,6 +79,9 @@ monitors:
           type: wmi
           namespace: root\CIMv2
           query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
+          computes:
+          - type: awk
+            script: "{ print $1 }"
         calculatedMemoryInformation:
         # Free;Free%;Cached;Cached%;Used;Used%;Total
           type: wmi
@@ -351,6 +354,9 @@ monitors:
           type: wmi
           namespace: root\CIMv2
           query: SELECT SystemUpTime FROM Win32_PerfFormattedData_PerfOS_System
+          computes:
+          - type: awk
+            script: "{ print $1 }"
         # SerialNumber;Caption;Version;BuildNumber
         osInformation:
           type: wmi
