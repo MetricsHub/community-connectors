@@ -31,7 +31,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `awk`. |
-| `script` | Yes | None | Inline AWK script or `${file::...}` reference. |
+| `script` | Yes | None | Inline AWK script or `${file::...}` reference. No other reference is replaced in a script: pass values through `variables`, see [Compilation](#compilation). |
 | `input` | No | Empty | Input text, or a single source reference such as `${source::beforeAll.inventoryRaw}`: the script reads that source as it is at run time, a table structured (each row is a record whose cells are `$1..$NF`, and `$0` is the row as the reference gives it: cells joined with `;`, the trailing `;` kept unless the row has a single cell), a text the traditional way (lines split on `FS`). A reference inside a longer text (a template such as `MODE;${source::raw}`) is replaced by the source's text: it must reference a text, a table there is reported (`TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). |
 | `inputFormat` | No | None | Deprecated and ignored: an input that is a single source reference is read as that source is. Still accepted so that existing connectors load, and reported (`DEPRECATED_SYNTAX`): remove it. |
 | `output` | No | `text` | What the script produces: `text` (the printed lines as they are, which MetricsHub splits on `;` with a `toTable` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; a `print` without argument is one row of the record's fields `$1..$NF`, while `print $0` is the row as the reference gives it, in one cell; `printf` text is split into rows on `ORS` and into cells on `OFS`, so a `printf` row sets `OFS = SUBSEP`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
@@ -210,7 +210,17 @@ A script that holds one of these statements is rejected as a whole, even when th
 
 MetricsHub compiles the scripts when it loads the connector. A script that does not compile (a syntax error, a statement the sandbox rejects, an unknown function) is logged then as an error, with the connector, the source and the line, and its source or compute gives no result.
 
-An inline compute script that holds a reference, such as `${param::days}` or `${attribute::id}`, is compiled when it runs, once the reference is replaced.
+A script is code, so MetricsHub replaces no reference in it: a `${param::days}`, `${attribute::id}` or `${source::...}` written in a script stays there as text, and is reported when the connector loads. Give the script such a value through [`variables`](#variables), and read it by name:
+
+```yaml
+- type: awk
+  variables:
+    days: ${param::days}
+  script: |
+    END { if (!count) print "No event in the last " days " days" }
+```
+
+A `${file::...}` reference is not concerned: as the whole `script` value it names the script, and inside a script it names an embedded file passed to a function, such as the `header` of `executeHttpRequest`.
 
 ## Recommended Pattern
 
