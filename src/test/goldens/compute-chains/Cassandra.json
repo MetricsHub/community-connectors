@@ -1,6 +1,42 @@
 {
   "connector" : "Cassandra",
   "sources" : {
+    "${source::beforeAll.dbClusterName}" : {
+      "source" : "jmx",
+      "computes" : [ "awk" ],
+      "outputs" : {
+        "csvReplaceSeparator" : {
+          "table" : [ [ "a" ], [ "x" ], [ "1" ], [ "only" ] ]
+        },
+        "csvReplaceSeparatorSeparatorInCell" : {
+          "table" : [ [ "a" ], [ "cell", "with", "sep" ] ]
+        },
+        "csvReplaceSeparatorWide" : {
+          "table" : [ [ "r1c1" ], [ "r2c1" ], [ "r3c1" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
+        }
+      }
+    },
+    "${source::beforeAll.dbReleaseVersion}" : {
+      "source" : "jmx",
+      "computes" : [ "awk" ],
+      "outputs" : {
+        "csvReplaceSeparator" : {
+          "table" : [ [ "a" ], [ "x" ], [ "1" ], [ "only" ] ]
+        },
+        "csvReplaceSeparatorSeparatorInCell" : {
+          "table" : [ [ "a" ], [ "cell", "with", "sep" ] ]
+        },
+        "csvReplaceSeparatorWide" : {
+          "table" : [ [ "r1c1" ], [ "r2c1" ], [ "r3c1" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
+        }
+      }
+    },
     "${source::beforeAll.dbServerName}" : {
       "source" : "jmx",
       "computes" : [ "awk" ],
