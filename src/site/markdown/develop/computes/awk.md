@@ -132,6 +132,14 @@ MSHW;1;Data;D;Partition;NTFS;999784378368;Healthy
 
 The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` removes the `MSHW` marker column.
 
+## Functions And Sandbox
+
+A compute script can call the MetricsHub functions available [in every script](../sources/awk.html#in-every-script): `bytes2HumanFormatBase2`, `join`, `base64Encode`, `sleep`, and the others. The functions that query the monitored resource (`executeHttpRequest`, ...) belong to the [`awk` source](../sources/awk.html#in-the-awk-source) only.
+
+A script runs in a [sandbox](../sources/awk.html#sandbox): it cannot run a command (`system()`, `"command" | getline`), nor read or write a file (`getline < "file"`, `print > "file"`).
+
+MetricsHub [compiles the script when it loads the connector](../sources/awk.html#compilation), and logs a script that does not compile then.
+
 ## Recommended Pattern
 
 - Prefix intentional output lines with a marker (`MSHW;` by convention) and filter with `keep: ^MSHW;` — this is the standard community pattern (DiskPart, lmsensors, LinuxNetwork).

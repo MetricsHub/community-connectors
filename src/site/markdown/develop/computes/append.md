@@ -32,7 +32,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `append`. |
-| `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
+| `column` | On a table | None | **1-based** index of the column to modify. Applied to every row. Omit it to append to a text, see [On A Text](#on-a-text). |
 | `value` | Yes | None | String appended to the end of the column content. Accepts a literal, a `$n` reference to another column of the same row (e.g. `$5`), or a `${source::...}` reference to a text, whose content is appended (a table there is reported, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
@@ -52,6 +52,27 @@ With `column: 2` and `value: _0`:
 >   | PhysicalDiskName | PnPAddress |
 >   | --- | --- |
 >   | Disk0 | SCSI\DISK&VEN_MSFT&PROD_VIRTUAL_DISK\1&2AFD7D61&3&000001_0 |
+
+## On A Text
+
+Without `column`, `append` works on a **text** (the result of an `http`, a `commandLine`, an `awk` without `output: table`, ...): the value is added once, at the end of the whole text, and the result is still a text.
+
+```yaml
+sources:
+  firmwareLabel:
+    # The body is the bare version: 2.4.1
+    type: http
+    method: get
+    path: /api/version
+    computes:
+    # 2.4.1 -> 2.4.1 (REST)
+    - type: append
+      value: " (REST)"
+```
+
+- The value goes after the last character of the text, whatever it is: after the final line feed of a command output, and after the `;` that an `awk` compute writes at the end of each line of its text. To add a value at the end of each line, use an `awk`.
+- `$n` is not a column reference here: a text has no column.
+- `column` and the content must agree: an `append` without `column` after a table, or with `column` after a text, is reported when the connector loads (see [Strict Content Types](../design-principles.html#strict-content-types)).
 
 ## Recommended Pattern
 
