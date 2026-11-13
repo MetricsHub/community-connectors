@@ -140,27 +140,29 @@ A source script can also query the monitored resource. Each `execute...` functio
 | Function | Runs |
 | --- | --- |
 | `executeHttpRequest(args)` | An [http](./http.html) source: `args["method"]`, `args["path"]`, `args["header"]`, `args["body"]`, `args["resultContent"]`, ... |
-| `executeHttpJsonRequest(args, response)` | The same request, with its result parsed as JSON into the `response` array. See [Read JSON](#read-json). |
+| `executeHttpJsonRequest(args, response)` | The same request, with its body parsed as JSON into the `response` array. Returns the HTTP status code. See [Read JSON](#read-json). |
 | `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. |
 | `executeSnmpTable(args)` | An [snmpTable](./snmp-table.html) source: `args["oid"]`, `args["selectColumns"]`. |
 | `executeWbemRequest(args)` | A [wbem](./wbem.html) source: `args["query"]`, `args["namespace"]`. |
 | `executeWmiRequest(args)` | A [wmi](./wmi.html) source: `args["query"]`, `args["namespace"]`. |
 | `executeIpmiRequest()` | An [ipmi](./ipmi.html) source. |
 | `getVariable(name)` | The value of a connector variable. |
-| `json2Table(json, entryKey, properties, rows)` | Fills `rows` with the entries of a JSON document. See [Read JSON](#read-json). |
-| `json2List(json, list)` | Fills `list` with every value of a JSON document, indexed by its path. See [Read JSON](#read-json). |
+| `json2Table(json, entryKey, properties, rows)` | Fills `rows` with the entries of a JSON document, and returns their number. See [Read JSON](#read-json). |
+| `json2List(json, list)` | Fills `list` with every value of a JSON document, indexed by its path, and returns their number. See [Read JSON](#read-json). |
 
 ### Read JSON
 
-Three functions read a JSON document without flattening it to text. Each one fills the array given as its last argument, as `split()` does, and returns the number of elements it holds. The array is emptied first.
+Three functions read a JSON document without flattening it to text. Each one fills the array given as its last argument, as `split()` does. The array is emptied first.
 
-**`executeHttpJsonRequest(args, response)`** runs the request and gives the whole document. A JSON object is an array indexed by its keys, a JSON array is an array indexed from 0. A string is a string, a number is a number, `true` and `false` are 1 and 0, and `null` is an empty string. When the result is not a JSON object or array, `response` stays empty and a warning is logged.
+**`status = executeHttpJsonRequest(args, response)`** runs the request, returns its HTTP status code (`200`, `401`, `404`, ...) and gives the whole document. The status is 0 when the request got no response (the host does not answer, the request times out). The body of an error response is parsed like any other, since it often says what went wrong. `args["resultContent"]` is ignored.
+
+A JSON object is an array indexed by its keys, a JSON array is an array indexed from 0. A string is a string, a number is a number, `true` and `false` are 1 and 0, and `null` is an empty string. When the body is not a JSON object or array, `response` stays empty and a warning is logged.
 
 ```awk
 BEGIN {
   args["method"] = "get"
   args["path"] = "/api/v1/systems"
-  executeHttpJsonRequest(args, response)
+  if (executeHttpJsonRequest(args, response) != 200) exit
   for (i = 0; i < length(response["items"]); i++) {
     print response["items"][i]["id"], response["items"][i]["status"]["health"]
   }
