@@ -77,7 +77,7 @@ sources:
 
 - The positions count every character of the text, line feeds included.
 - `start` and `length` are numbers here: `$n` is not a column reference, a text has no column.
-- `column` and the content must agree: a `substring` without `column` after a table, or with `column` after a text, is reported when the connector loads (see [Strict Content Types](../design-principles.html#strict-content-types)).
+- The content decides, not the compute: a text stays a text, a table stays a table. A `column` on a text is reported when the connector loads (`COLUMN_ON_TEXT`), and so is a missing `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 

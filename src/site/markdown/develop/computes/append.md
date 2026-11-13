@@ -72,7 +72,7 @@ sources:
 
 - The value goes after the last character of the text, whatever it is: after the final line feed of a command output, and after the `;` that an `awk` compute writes at the end of each line of its text. To add a value at the end of each line, use an `awk`.
 - `$n` is not a column reference here: a text has no column.
-- `column` and the content must agree: an `append` without `column` after a table, or with `column` after a text, is reported when the connector loads (see [Strict Content Types](../design-principles.html#strict-content-types)).
+- The content decides, not the compute: a text stays a text, a table stays a table. A `column` on a text is reported when the connector loads (`COLUMN_ON_TEXT`), and so is a missing `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 
