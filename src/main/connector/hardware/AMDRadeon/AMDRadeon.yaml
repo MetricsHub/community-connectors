@@ -71,7 +71,6 @@ monitors:
           computes:
           - type: awk
             script: ${file::rocmSmiTemperature.awk}
-            input: table
             output: table
       mapping:
         source: ${source::sensors}

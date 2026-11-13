@@ -46,7 +46,6 @@ beforeAll:
     - Name
     computes:
     - type: awk
-      input: table
       output: table
       script: |
         {
@@ -220,7 +219,6 @@ monitors:
             - ${source::connectedNativeClients}
           computes:
             - type: awk
-              input: table
               output: table
               script: |
                 # Table output splits printf text on OFS: SUBSEP, which no cell contains, keeps a ";" in its cell
@@ -457,7 +455,6 @@ monitors:
           computes:
             - type: awk
               script: "${file::nodes.awk}"
-              input: table
               output: table
 
       mapping:
@@ -522,7 +519,6 @@ tools:
         computes:
         # pool;path;active;maxThreads;pending;currentlyBlocked;totalBlocked;completed
         - type: awk
-          input: table
           output: table
           script: |
             NF >= 3 { answered = 1; k = $1 ";" $2; pool[k] = $1; path[k] = $2; v[k, $3] = $4 }
@@ -553,7 +549,6 @@ tools:
         computes:
         # Every message type has a row, even with 0 drops, when JMX answers
         - type: awk
-          input: table
           output: table
           script: |
             $2 + 0 > 0 { print $1, $2, $3, $4 }
@@ -577,7 +572,6 @@ tools:
         computes:
         # keyspace;table;operation;completed;total;unit;progressPercent;compactionId
         - type: awk
-          input: table
           output: table
           script: |
             {
@@ -707,7 +701,6 @@ tools:
         # meanPartitionBytes;partitions;liveDiskBytes;pendingCompactions;sortKey
         # (sortKey last and never empty: keepColumns leaves the whole table unchanged when a row is short)
         - type: awk
-          input: table
           output: table
           script: |
             BEGIN {
@@ -759,7 +752,6 @@ tools:
         computes:
         # address;status;state;load;hostId;schemaVersion;localOperationMode
         - type: awk
-          input: table
           output: table
           script: |
             function list(s, out,   n, i, a) {

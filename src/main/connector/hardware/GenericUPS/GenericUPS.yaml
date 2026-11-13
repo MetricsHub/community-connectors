@@ -49,7 +49,6 @@ monitors:
           computes:
           - type: awk
             script: ${file::enclosure.awk}
-            input: table
             output: table
             # MSHW;PowerConsumption;
         source(3):
@@ -187,7 +186,6 @@ monitors:
             # ID;UPSConfigInputVoltage;
           - type: awk
             script: ${file::voltage.awk}
-            input: table
             output: table
             # Create Thresholds
             # ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
@@ -213,7 +211,6 @@ monitors:
             # ID;UPSConfigOutputVoltage;
           - type: awk
             script: ${file::voltage.awk}
-            input: table
             output: table
             # Create Thresholds
             # ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
