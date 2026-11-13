@@ -454,8 +454,10 @@ tools:
         - type: toText
         # pid;ppid;cpuPercent;memoryPercent;workingSetKiB;privateKiB;handles;threads;started;command;sortKey
         - type: awk
+          variables:
+            sortBy: ${param::sortBy}
           script: |
-            BEGIN { FS = ";"; sortBy = "${param::sortBy}" }
+            BEGIN { FS = ";" }
             # yyyy-mm-ddThh:mm:ss from seconds since 1970-01-01
             function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
               s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
@@ -1379,11 +1381,13 @@ tools:
         # The days since 0000-03-01, less the period, then back to a date
         - type: toText
         - type: awk
+          variables:
+            days: ${param::days}
           script: |
             BEGIN { FS = ";" }
             {
               y = $1 - ($2 <= 2); m = $2 > 2 ? $2 - 3 : $2 + 9; yoe = y % 400
-              z = int(y / 400) * 146097 + yoe * 365 + int(yoe / 4) - int(yoe / 100) + int((153 * m + 2) / 5) + $3 - 1 - ${param::days}
+              z = int(y / 400) * 146097 + yoe * 365 + int(yoe / 4) - int(yoe / 100) + int((153 * m + 2) / 5) + $3 - 1 - days
               era = int(z / 146097); doe = z - era * 146097
               yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
               doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
@@ -1401,6 +1405,8 @@ tools:
         - type: toText
         # time;id;provider;message, a message on one line
         - type: awk
+          variables:
+            days: ${param::days}
           script: |
             BEGIN { FS = ";" }
             function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
@@ -1421,7 +1427,7 @@ tools:
               next
             }
             { gsub(/;/, ","); event = event " " $0 }
-            END { flush(); if (!count) print "No start, shutdown or reboot event in the last ${param::days} days" }
+            END { flush(); if (!count) print "No start, shutdown or reboot event in the last " days " days" }
         - type: toTable
         - type: sort
           column: 1

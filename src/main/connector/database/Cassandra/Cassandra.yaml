@@ -709,11 +709,13 @@ tools:
         - type: awk
           input: table
           output: table
+          variables:
+            sortBy: ${param::sortBy}
           script: |
             BEGIN {
               split("readLatency:4 writeLatency:6 sstables:7 sstablesPerRead:8 tombstones:9 partitionSize:13 diskSpace:16 pendingCompactions:17", s, " ")
               for (i in s) { split(s[i], kv, ":"); column[kv[1]] = kv[2] }
-              sortColumn = column["${param::sortBy}"]
+              sortColumn = column[sortBy]
               # The values of columns 3 to 17: metric name and attribute number
               n = split("ReadLatency:1 ReadLatency:2 WriteLatency:1 WriteLatency:2 LiveSSTableCount:1 SSTablesPerReadHistogram:1 TombstoneScannedHistogram:1 TombstoneScannedHistogram:2 TombstoneWarnings:1 TombstoneFailures:1 MaxPartitionSize:1 MeanPartitionSize:1 EstimatedPartitionCount:1 LiveDiskSpaceUsed:1 PendingCompactions:1", metric, " ")
             }
