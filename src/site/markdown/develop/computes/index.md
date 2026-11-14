@@ -36,23 +36,23 @@ fan02;Fan B;3
 After translation/replace, mapping consumes the transformed table.
 
 > [!NOTE]
-> A compute changes the cells of the table, never its text: a `;` or a line feed that `append`, `prepend`, `replace` or `translate` writes into a cell stays in that cell, and adds no column and no row. This holds for a `${source::...}` reference in the value as well: a table of several cells is written into the cell as its serialized text (`a;b;c;`), and the reference is reported (`TABLE_INTERPOLATED`, a value must reference a text). Use [insertColumn](./insert-column.html) to add a column, and a [tableJoin](../sources/table-join.html) to combine the columns of two sources.
+> A compute changes the cells of the table, never its text: a `;` or a line feed that `append`, `prepend`, `replace` or `translate` writes into a cell stays in that cell, and adds no column and no row. This holds for a `${source::...}` reference in the value as well. A value must reference a text: a table there is rejected when the connector loads (`TABLE_INTERPOLATED`). Use [insertColumn](./insert-column.html) to add a column, and a [tableJoin](../sources/table-join.html) to combine the columns of two sources.
 
 ## Content Types
 
 A source result, and the result of each compute, is either **text** (lines) or a **table** (rows of cells), never both:
 
-- `commandLine`, `http`, `file`, `ipmi` and the `awk` source with the default `output: text` produce text (`commandLine` after its own `keep`, `exclude`, `separators` and `selectColumns`), and so does a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`; every other source produces a table (`sql`, `wmi`, `snmpTable`, `static`, the `awk` source with `output: table`, ...); a `copy` produces what it copies, a [textUnion](../sources/text-union.html) is a text, and so is a `tableUnion` of texts (see [tableUnion](../sources/table-union.html#texts-in-a-union));
+- `commandLine`, `http`, `file`, `ipmi` and the `awk` source with the default `output: text` produce text (`commandLine` after its own `keep`, `exclude`, `separators` and `selectColumns`), and so does a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`; every other source produces a table (`sql`, `wmi`, `snmpTable`, `static`, the `awk` source with `output: table`, ...); a `copy` produces what the chain of the source it copies ends in, a [textUnion](../sources/text-union.html) is a text, and a [tableUnion](../sources/table-union.html) is always a table;
 - `awk` reads its input as it is (a text the traditional way, a table structured, see [awk](./awk.html#table-input-and-output)) and writes text unless it declares `output: table`; `json2Table`, `json2List`, `xml2Csv` and `toTable` read text and write a table; `toText` reads a table and writes text; every other compute reads and writes a table.
 
-Convert with [toTable](./to-table.html) and [toText](./to-text.html) when a compute does not read what the previous step produced. MetricsHub checks every chain when it loads a connector and reports a step that reads the wrong type (see [Strict Content Types](../design-principles.html#strict-content-types)). In this release, it still inserts these conversions itself, and they behave exactly like written ones; a later release rejects the connector instead, so write them:
+Convert with [toTable](./to-table.html) and [toText](./to-text.html) when a compute does not read what the previous step produced. MetricsHub inserts no conversion: it checks every chain when it loads a connector, and a connector with a step that reads the wrong type does not load (see [Strict Content Types](../design-principles.html#strict-content-types)). Write:
 
-- a `toTable` with its default properties (one row per line, cells split on `;`) after the text of a `commandLine` source, an `awk` source or an `awk` compute: before the next table compute, and at the end of the source, so that the `mapping`, a `tableJoin` or a variable reads a table. A source that only `copy` sources and text unions read, or that a tool without columns returns, keeps its text at the end: the copies and unions convert it where they need a table, and the tool returns the text;
-- a `toTable` with its default properties before a table compute that follows an explicit `toText`.
+- a `toTable` (one row per line, cells split on `;` by default) after the text of a `commandLine` source, an `awk` source or an `awk` compute, or declare `output: table` on the `awk`: before the next table compute, and at the end of the source when the `mapping`, a `tableJoin`, a `tableUnion`, a tool with `columns`, an `awk` variable, `executeForEachEntryOf` or an `internalDbQuery` reads it as a table. A source that only `copy` sources and text unions read, or that a tool without columns returns, keeps its text at the end: a copy that needs a table writes its own `toTable`, and the tool returns the text;
+- a `toTable` before a table compute that follows a `toText`.
 
-Nothing is inserted before an `awk` compute: it reads the text or the table it receives. Write a `toText` before an `awk` whose script parses a table as `;`-separated lines.
+An `awk` compute reads the text or the table it receives. Write a `toText` before an `awk` whose script parses a table as `;`-separated lines.
 
-Nothing is inserted between a table compute or the `mapping` and the text of `http`, `file` or `ipmi`, of a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`, or of a text union with such a source among its members: convert it with `json2Table`, `json2List`, `xml2Csv`, `toTable` or `awk` (with `output: table`). A step that reads the wrong type sees nothing: a table compute (or the `mapping`) on text reads no rows and produces an empty table, and `json2Table`, `json2List` or `xml2Csv` on a table leaves the table unchanged.
+Convert the text of `http`, `file` or `ipmi`, of a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`, or of a text union, with `json2Table`, `json2List`, `xml2Csv`, `toTable` or `awk` (with `output: table`) before a table compute or the `mapping` reads it.
 
 A source that returns nothing, or fails, gives an empty result of its own type: after a failed `commandLine`, an `awk` compute still runs its `BEGIN` and `END` blocks.
 
@@ -105,7 +105,7 @@ A source that returns nothing, or fails, gives an empty result of its own type: 
 
 | Compute | Purpose |
 | --- | --- |
-| [json2Table](./json2csv.html) | Flatten a JSON payload into table rows (prepends an entry column). Formerly `json2Csv`, still accepted as a deprecated alias. |
+| [json2Table](./json2csv.html) | Flatten a JSON payload into table rows (prepends an entry column). Formerly `json2Csv`, a name rejected from MetricsHub Community 3.9.09. |
 | [json2List](./json2list.html) | List every value of a JSON document as a row: its key path and the value. |
 | [xml2Csv](./xml2csv.html) | Flatten an XML payload into table rows. |
 | [toTable](./to-table.html) | Turn a text result into a table (one row per line, split on a separator). |

@@ -33,7 +33,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `append`. |
 | `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
-| `value` | Yes | None | String appended to the end of the column content. Accepts a literal, a `$n` reference to another column of the same row (e.g. `$5`), or a `${source::...}` reference to a text, whose content is appended (a table there is reported, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
+| `value` | Yes | None | String appended to the end of the column content. Accepts a literal, a `$n` reference to another column of the same row (e.g. `$5`), or a `${source::...}` reference to a text, whose content is appended (a table there is rejected, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
 
@@ -64,7 +64,7 @@ With `column: 2` and `value: _0`:
 
 - Forgetting that `column` is 1-based: `column: 1` targets the first column.
 - Expecting a `;` in `value` to add columns: `value: ;;` on the cell `OK` gives the single cell `OK;;`. Use [insertColumn](./insert-column.html).
-- Appending a `${source::...}` reference to a table of several cells to bring its columns in: the cell receives the serialized row (`OK` becomes `OKa;b;`), and the reference is reported (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
+- Appending a `${source::...}` reference to a table to bring its columns in: the connector does not load (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
 - Writing `value: $5` expecting a literal `$5`: `$n` is interpreted as a column reference.
 - Leaving an unquoted value that YAML truncates or mangles (a ` #` inside the value starts a comment; leading/trailing spaces are stripped — quote such values: `value: ' - '`).
 

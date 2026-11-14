@@ -104,7 +104,7 @@ For each row of the referenced table, the engine clones the enclosing source, re
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `source` | Yes | None | Reference to the source whose table drives the loop. It must be a table: a text there is reported (`TEXT_FEEDS_TABLE`). |
+| `source` | Yes | None | Reference to the source whose table drives the loop. It must be a table: a text there is rejected (`TEXT_FEEDS_TABLE`). |
 | `concatMethod` | No | `list` | How per-entry results are combined (see below). |
 | `sleep` | No | None | Milliseconds to pause after each entry — throttles chatty APIs. |
 | `maxParallel` | No | None (one entry at a time) | Maximum number of entries executed concurrently (capped at 50). Results are still concatenated in the row order. MetricsHub Community 3.9.09 or later. |

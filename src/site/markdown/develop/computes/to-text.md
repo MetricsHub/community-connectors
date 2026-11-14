@@ -9,7 +9,7 @@ description: The toText compute turns a table into text, one semicolon-separated
 
 A source result is either **text** (lines) or a **table** (rows of cells). Use `toText` to turn a table into text before a compute that reads text, in practice before an [`awk` compute](./awk.html) whose script parses the rows of a table produced by `snmpTable`, `wmi`, `wbem`, `sql`, `json2Table`, ... as `;`-separated lines. Write it also at the end of a table source that a [textUnion](../sources/text-union.html) reads.
 
-Each row becomes a line, the cells are joined with `;` and the line ends with a `;`. A `;` inside a cell is replaced by `,` so that the number of columns does not change. The result is text only: the table is gone until a `toTable` rebuilds one. An `awk` compute writes text as well, so when its output is meant as a table, follow it with an explicit `toTable` (MetricsHub inserts one where the text is read as a table, and reports it, see the [content types](./index.html#content-types)), or declare `output: table` on the `awk`. On a text, `toText` changes nothing, and it is reported (`TEXT_FEEDS_TABLE`, whose hint reads "write a toTable"): remove the `toText`.
+Each row becomes a line, the cells are joined with `;` and the line ends with a `;`. A `;` inside a cell is replaced by `,` so that the number of columns does not change. The result is text only: the table is gone until a `toTable` rebuilds one. An `awk` compute writes text as well, so when its output is meant as a table, follow it with a `toTable` (MetricsHub inserts none, and a text read as a table is rejected, see the [content types](./index.html#content-types)), or declare `output: table` on the `awk`. A `toText` on a text is rejected (`TEXT_FEEDS_TABLE`, whose hint reads "write a toTable"): remove the `toText`.
 
 MetricsHub inserts nothing before an `awk` compute: without `toText`, an `awk` that follows a table reads it structured, one record per row and one field per cell (`$1..$NF`). Write `toText` only for a script that parses the `;`-separated lines.
 
@@ -63,4 +63,4 @@ sources:
 
 - Reading the cells with the default AWK field separator (whitespace): set `FS = ";"`.
 - Expecting a `;` inside a cell to survive: it becomes `,`.
-- Following `toText` with a table compute: MetricsHub converts the text back with a `toTable`: the round trip changes nothing, except that a `;` inside a cell comes back as a `,` and a line feed inside a cell splits its row. Ending the chain with `toText`: the `mapping` reads no rows.
+- Following `toText` with a table compute, or ending a chain that the `mapping` reads with `toText`: the connector does not load (`TEXT_FEEDS_TABLE`). A `toTable` written in between converts the text back, but a `;` inside a cell comes back as a `,` and a line feed inside a cell splits its row.

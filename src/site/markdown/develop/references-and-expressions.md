@@ -24,7 +24,7 @@ leftTable: ${source::monitors.network.discovery.sources.ports}
 rightTable: ${source::monitors.network.discovery.sources.aliases}
 ```
 
-A reference that is the whole value of a source field (`leftTable`, `tables`, `texts`, `mapping.source`, ...) reads that source as it is. A reference inside a string field (`url`, `header`, `commandLine`, a compute `value`, a mapping attribute, ...) is replaced by the text of the source: it must reference a text, and a table there is reported. A reference to a source the connector does not have is reported too. See [Strict Content Types](design-principles.html#strict-content-types).
+A reference that is the whole value of a source field (`leftTable`, `tables`, `texts`, `mapping.source`, ...) reads that source as it is. A reference inside a string field (`url`, `header`, `commandLine`, a compute `value`, a mapping attribute, ...) is replaced by the text of the source: it must reference a text, and a table there is rejected when the connector loads. A reference to a source the connector does not have is rejected too. See [Strict Content Types](design-principles.html#strict-content-types).
 
 ### Relative vs Absolute
 
@@ -184,7 +184,7 @@ sources:
 
 #### Append content from another source
 
-The following example appends the content of another source to the value in column `2`. The referenced source must produce a text: a table there is reported (`TABLE_INTERPOLATED`, see [Strict Content Types](design-principles.html#strict-content-types)).
+The following example appends the content of another source to the value in column `2`. The referenced source must produce a text: a table there is rejected (`TABLE_INTERPOLATED`, see [Strict Content Types](design-principles.html#strict-content-types)).
 
 ```yaml
 sources:

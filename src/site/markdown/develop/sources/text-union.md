@@ -39,7 +39,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `textUnion`. |
-| `texts` | Yes | None | Ordered list of the sources to concatenate, each written as exactly one `${source::...}` reference. A literal, or a reference with other text around it, is rejected when the connector loads. |
+| `texts` | Yes | None | Ordered list of the sources to concatenate, each written as exactly one `${source::...}` reference. A literal, a reference with other text around it, or a reference to a source the connector does not have (`UNRESOLVED_REFERENCE`) is rejected when the connector loads. |
 | `computes` | No | `[]` | Post-union processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
@@ -70,12 +70,12 @@ A blank line does not mark where one member ends and the next starts: to tell th
 ## Recommended Pattern
 
 - List command outputs, `http` bodies or `awk` results that one script parses together.
-- Leave the members as texts: no `toTable` in a member, which would give the union `;`-separated rows instead of the command output.
-- When another source also needs a member as a table, give it a [`copy`](./copy.html) of that member with its own `toTable`, so the member stays a text. Without the copy, this release appends a `toTable` to the member read as a table: the union then joins that member as [toText](../computes/to-text.html) writes it (`;`-terminated lines, a `;` inside a cell turned into `,`), and only the table read is reported.
+- Leave the members as texts: no `toTable` in a member, which would make it a table, rejected as a member (`TABLE_FEEDS_TEXT`).
+- When another source also needs a member as a table, give it a [`copy`](./copy.html) of that member with its own `toTable`, so the member stays a text. Without the copy, the other source reads a text as a table, and the connector does not load (`TEXT_FEEDS_TABLE`).
 - Convert the union explicitly (`toTable`, or `awk` with `output: table`) before any table consumer.
 
 ## Common Mistakes
 
-- Using `tableUnion` for command outputs: it still joins them the same way, but it is reported (`TABLE_UNION_OF_TEXTS`, see [Strict Content Types](../design-principles.html#strict-content-types)).
-- A table as a member (`snmpTable`, `wmi`, a source ending in `toTable`): it is joined as [toText](../computes/to-text.html) writes it and reported (`TABLE_FEEDS_TEXT`). Write the `toText` in that source.
-- Mapping the union, or joining it, without a conversion: it is reported (`TEXT_FEEDS_TABLE`). In this release, a `textUnion` read as a table, or interpolated in a field of a source or a compute, still behaves like a `tableUnion` of the same texts: MetricsHub appends a `toTable` to it when its members are command or `awk` outputs. Do not rely on it: a later release rejects a text read as a table.
+- Using `tableUnion` for command outputs: the connector does not load (`TABLE_UNION_OF_TEXTS`, see [Strict Content Types](../design-principles.html#strict-content-types)).
+- A table as a member (`snmpTable`, `wmi`, a source ending in `toTable`): the connector does not load (`TABLE_FEEDS_TEXT`). Write a [toText](../computes/to-text.html) in that source.
+- Mapping the union, or joining it, without a conversion: the connector does not load (`TEXT_FEEDS_TABLE`).

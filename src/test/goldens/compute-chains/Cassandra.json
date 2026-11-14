@@ -6,16 +6,16 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a" ], [ "x" ], [ "1" ], [ "only" ] ]
+          "text" : "a;\nx;\n1;\nonly;"
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a" ], [ "cell", "with", "sep" ] ]
+          "text" : "a;\ncell;with;sep;"
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1" ], [ "r2c1" ], [ "r3c1" ] ]
+          "text" : "r1c1;\nr2c1;\nr3c1;"
         },
         "empty" : {
-          "table" : [ ]
+          "text" : ""
         }
       }
     },
@@ -24,16 +24,16 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "a" ], [ "x" ], [ "1" ], [ "only" ] ]
+          "text" : "a;\nx;\n1;\nonly;"
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "a" ], [ "cell", "with", "sep" ] ]
+          "text" : "a;\ncell;with;sep;"
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "r1c1" ], [ "r2c1" ], [ "r3c1" ] ]
+          "text" : "r1c1;\nr2c1;\nr3c1;"
         },
         "empty" : {
-          "table" : [ ]
+          "text" : ""
         }
       }
     },
@@ -42,16 +42,16 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "csvReplaceSeparator" : {
-          "table" : [ [ "" ], [ "" ], [ "" ], [ "" ] ]
+          "text" : ";\n;\n;\n;"
         },
         "csvReplaceSeparatorSeparatorInCell" : {
-          "table" : [ [ "" ], [ "" ] ]
+          "text" : ";\n;"
         },
         "csvReplaceSeparatorWide" : {
-          "table" : [ [ "" ], [ "" ], [ "" ] ]
+          "text" : ";\n;\n;"
         },
         "empty" : {
-          "table" : [ ]
+          "text" : ""
         }
       }
     },

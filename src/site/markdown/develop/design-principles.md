@@ -98,10 +98,10 @@ From MetricsHub Community 3.9.08, an instance that a trusted `discovery` or `sim
 
 ## Strict Content Types
 
-Every source result, and the result of every compute, is either a **text** or a **table** (see the [content types](computes/index.html#content-types)). From MetricsHub Community 3.9.09, MetricsHub checks every connector when it loads it and reports each place where a step reads the wrong type, a table is interpolated in a string, or a reference names no source.
+Every source result, and the result of every compute, is either a **text** or a **table** (see the [content types](computes/index.html#content-types)). From MetricsHub Community 3.9.09, MetricsHub checks every connector when it loads it and rejects each place where a step reads the wrong type, a table is interpolated in a string, or a reference names no source.
 
 > [!IMPORTANT]
-> In this release, the findings are only reported: the connector loads and behaves as before, and MetricsHub still inserts the conversions it can (see the [content types](computes/index.html#content-types)). A later release rejects these connectors when it loads them. Write the conversions now.
+> Every rule of this section is a load error: a connector that breaks any of them does not load. MetricsHub inserts no conversion: write each `toTable`, `toText` or other conversion the chain needs (see the [content types](computes/index.html#content-types)).
 
 ### Text Sources and Table Sources
 
@@ -112,14 +112,14 @@ What a source produces is the type at the end of its chain, as written:
 | `commandLine`, `http`, `file`, `ipmi`, the `awk` source with the default `output: text`, [`textUnion`](sources/text-union.html), a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` | every other source: `snmpTable`, `wmi`, `sql`, `static`, `tableJoin`, `tableUnion`, `internalDbQuery`, the `awk` source with `output: table`, ... |
 | a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute |
 
-A `copy` produces what the source it copies produces. A `tableUnion` whose members are all texts still produces a text, and is reported (see [Texts in a Union](sources/table-union.html#texts-in-a-union)).
+A `copy` produces what the chain of the source it copies ends in, also when that source fails or comes back empty: an empty text for a text, an empty table for a table. A `tableUnion` is always a table: a union whose members are texts is rejected (see [Texts in a Union](sources/table-union.html#texts-in-a-union)).
 
 ### Table Consumers
 
-These read a table. A text there is reported (`TEXT_FEEDS_TABLE`): end its source with a `toTable`, or an `awk` with `output: table`, a `json2Table` or an `xml2Csv`.
+These read a table. A text there is rejected (`TEXT_FEEDS_TABLE`): end its source with a `toTable`, or an `awk` with `output: table`, a `json2Table` or an `xml2Csv`.
 
 - `leftTable` and `rightTable` of a [`tableJoin`](sources/table-join.html);
-- the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is reported once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is reported `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
+- the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is rejected once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is rejected `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
 - `mapping.source`;
 - the result source of a tool that declares `columns` (see [tools](tools.html));
 - the computes that work on columns: every compute but `awk`, `json2Table`, `json2List`, `xml2Csv` and `toTable` (`toText` included);
@@ -129,7 +129,7 @@ These read a table. A text there is reported (`TEXT_FEEDS_TABLE`): end its sourc
 
 ### Text Consumers
 
-These read a text. A table there is reported (`TABLE_FEEDS_TEXT`): end its source with a [`toText`](computes/to-text.html).
+These read a text. A table there is rejected (`TABLE_FEEDS_TEXT`): end its source with a [`toText`](computes/to-text.html).
 
 - the members of a [`textUnion`](sources/text-union.html);
 - `json2Table`, `json2List`, `xml2Csv` and `toTable`.
@@ -138,7 +138,7 @@ An `awk` compute reads either type as it is, and so does an `awk` source whose `
 
 ### Interpolated Fields
 
-A `${source::...}` reference inside a string field is replaced by the text of that source. These fields must reference texts: a table there is reported (`TABLE_INTERPOLATED`). Convert the table with an explicit `toText` in its source, or extract the value as a text, for example with an `awk` that prints it.
+A `${source::...}` reference inside a string field is replaced by the text of that source. These fields must reference texts: a table there is rejected (`TABLE_INTERPOLATED`). Convert the table with an explicit `toText` in its source, or extract the value as a text, for example with an `awk` that prints it.
 
 - `url`, `path`, `header`, `body` and `authenticationToken` of an `http` source (see [Authentication Token](sources/http.html#authentication-token));
 - the command line of a `commandLine` source, and the other string fields of a source;
@@ -150,11 +150,11 @@ The sources that read their references as sources interpolate nothing: `copy`, `
 
 ### Unresolved References
 
-A `${source::...}` reference to a source the connector does not have is reported (`UNRESOLVED_REFERENCE`), wherever it is: a source, a compute, an `awk` variable, `executeForEachEntryOf`, a mapping or a tool result. MetricsHub looks the reference up exactly as it does when the connector runs: a short reference (`${source::name}`) is made absolute when the connector loads, and one that cannot be made absolute stays short and finds no source. There is no other fallback.
+A `${source::...}` reference to a source the connector does not have is rejected (`UNRESOLVED_REFERENCE`), wherever it is: a source, a member of a `textUnion`, a compute, an `awk` variable, `executeForEachEntryOf`, a mapping or a tool result. MetricsHub looks the reference up exactly as it does when the connector runs: a short reference (`${source::name}`) is made absolute when the connector loads, and one that cannot be made absolute stays short and finds no source. There is no other fallback.
 
 ### Rules and Hints
 
-| Rule | Hint | Reported for |
+| Rule | Hint | Rejected for |
 | --- | --- | --- |
 | `TEXT_FEEDS_TABLE` | write a toTable | A text read by a table consumer. |
 | `TABLE_FEEDS_TEXT` | write a toText | A table read by a text consumer. |
@@ -163,9 +163,9 @@ A `${source::...}` reference to a source the connector does not have is reported
 | `STRING_LITERAL_ROWS` | write a list of rows | A `;` string literal in `tables`, `leftTable` or `rightTable` (see [Writing Table Literals](sources/table-union.html#writing-table-literals)). |
 | `TABLE_INTERPOLATED` | interpolate a text | A table referenced in an interpolated field. |
 | `UNRESOLVED_REFERENCE` | reference an existing source | A reference to a source the connector does not have. |
-| `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` compute type (rename it `json2Table`), the ignored `input` of an `awk` compute and `inputFormat` of an `awk` source (remove them). |
+| `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` or `json2csv` compute type (rename it `json2Table`), the `input` property of an `awk` compute and the `inputFormat` property of an `awk` source (remove them). |
 
-Each finding is logged when the connector loads, at WARN, or at INFO for `DEPRECATED_SYNTAX`. The message names the rule, the source, the location, the expected and actual types, and the hint:
+Each finding is logged at ERROR when the connector loads, and the load error lists every finding. The message names the rule, the source, the location, the expected and actual types, and the hint:
 
 ```text
 Connector MyConnector - Content type check: TEXT_FEEDS_TABLE in ${source::monitors.disk.discovery.sources.disks} at keepColumns #0: expected TABLE, actual TEXT (write a toTable)
@@ -173,7 +173,7 @@ Connector MyConnector - Content type check: TEXT_FEEDS_TABLE in ${source::monito
 
 The location is a compute with its position among the written computes, counted from 0 (`keepColumns #0`, `append #1 value`), a field (`tables[1]`, `leftTable`, `header`, `authenticationToken`, `variables.rows`), a mapping (`monitors.disk.discovery.mapping`, `monitors.disk.discovery.mapping.attributes.name`) or a tool result (`tools.listDisks.result`), followed by `-> ${source::...}` when a reference is at fault. For a mapping or a tool, the source named is the one the mapping or the tool reads.
 
-The monitors defined in the configuration of a resource are checked too, with `(monitors of a resource)` as the connector. For MetricsHub developers, the compute-chain golden check of the engine (`GoldenCheck --report`) prints the same findings for each connector, with the totals per rule.
+The monitors defined in the configuration of a resource are checked too, with `(monitors of a resource)` as the connector: monitors that break a rule do not load. For MetricsHub developers, the compute-chain golden check of the engine (`GoldenCheck`) prints each connector that does not load, with its findings.
 
 ## Anti-Patterns To Avoid
 
