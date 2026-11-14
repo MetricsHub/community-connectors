@@ -43,7 +43,7 @@ value: [ "DDN", "Data Direct Networks", "Disk Array" ]
 
 A line break in a cell, from a reference that resolves to several lines, becomes a space.
 
-A string `value` holding a source reference (`${source::...}`) copies that source's table. The text of an `http`, `file` or `ipmi` source gives no rows.
+A string `value` holding a source reference (`${source::...}`) copies that source's table. A source that ends in text gives no rows: end it with a `toTable`.
 
 ### Legacy string form
 

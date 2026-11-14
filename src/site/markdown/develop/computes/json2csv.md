@@ -11,7 +11,7 @@ Use `json2Table` to turn a raw JSON payload — typically the `body` of an [`htt
 
 This is almost always the **first** compute in an HTTP source pipeline: parse the payload into a table immediately, then filter and reshape with regular table computes.
 
-`json2Table` is the name of this compute from MetricsHub Community 3.9.09. `json2Csv`, its former name, still works as a deprecated alias with the same behavior and is reported (`DEPRECATED_SYNTAX`, see [Strict Content Types](../design-principles.html#strict-content-types)). Earlier versions only know `json2Csv`.
+`json2Table` is the name of this compute from MetricsHub Community 3.9.09. `json2Csv` (or `json2csv`), its former name, is rejected from that version (`DEPRECATED_SYNTAX`, see [Strict Content Types](../design-principles.html#strict-content-types)): a connector that uses it does not load. Earlier versions only know `json2Csv`.
 
 ## Syntax
 
@@ -32,7 +32,7 @@ sources:
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `type` | Yes | None | `json2Table` (`json2Csv` is a deprecated alias). |
+| `type` | Yes | None | `json2Table` (`json2Csv` in versions before MetricsHub Community 3.9.09, rejected from 3.9.09). |
 | `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
 | `properties` | Yes | None | Semicolon-separated list of JSON pointers, each resolved **relative to one entry** (`/id;/name;/operationalStatus`). Nested values use full pointer paths, including array indexes (`/Links/Storage[0]/@odata.id`). The list order defines the column order. |
 | `separator` | No | `;` | Deprecated and ignored (MetricsHub Community 3.9.09 or later): each property gives exactly one cell, whatever its value holds. Still accepted, so existing connectors keep working; omit it in new connectors. Earlier versions split the rows on it, so a value holding the separator shifted the columns. |
@@ -118,7 +118,7 @@ Some documents cannot be read this way and are processed as with `tree`, with th
 - Writing property pointers relative to the document root instead of relative to one entry under `entryKey`.
 - Separating `properties` with commas: the list is semicolon-separated.
 - Leaving `entryKey` pointing at a single object when the payload nests the records one level deeper, which yields a single mostly-empty row instead of one row per record.
-- Placing `json2Table` after a compute that already produced a table: there is nothing to parse and the table is unchanged. It is reported (`TABLE_FEEDS_TEXT`). A payload that does not parse gives an empty table.
+- Placing `json2Table` after a compute that already produced a table: there is nothing to parse, and the connector does not load (`TABLE_FEEDS_TEXT`). A payload that does not parse gives an empty table.
 - Rejoining rows or cells of `json2Table` in a following `awk`: since MetricsHub Community 3.9.09 a value with a line feed or a separator no longer cuts its row. An `awk` that follows reads each cell as is; only a `toText` before it shows a value with a line feed as several records, and a `;` as `,`: drop the `toText` rather than rejoining.
 
 ## Community Examples

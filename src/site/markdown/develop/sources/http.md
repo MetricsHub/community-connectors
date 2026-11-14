@@ -49,10 +49,7 @@ The fields `url`, `path`, `header`, `body` and `authenticationToken` interpolate
 
 ## Authentication Token
 
-`authenticationToken` usually references the source that extracts the token from a login response. MetricsHub reads the token from that source:
-
-- from a text, its whole first line, without its LF or CR LF ending (a lone CR does not end the line), MetricsHub Community 3.9.09 or later; earlier versions took the text up to its first `;`;
-- from a table, its first cell. A table there is reported (`TABLE_INTERPOLATED`).
+`authenticationToken` usually references the source that extracts the token from a login response. That source must end in text: the token is its whole first line, without its LF or CR LF ending (a lone CR does not end the line), and without the trailing `;` that an `awk` text output ends a line of one value with. The line loses its `;` only when that `;` is its last and only one, the same rule as for a reference in a `header` or a `path`; a `;` elsewhere in the line is part of the token. This holds from MetricsHub Community 3.9.09; earlier versions took the text up to its first `;`. A table there is rejected (`TABLE_INTERPOLATED`).
 
 Extract the token as a text, for example with a [json2List](../computes/json2list.html) and an `awk` that prints only the token:
 
@@ -78,8 +75,6 @@ monitors:
           authenticationToken: ${source::beforeAll.login}
 ```
 
-In this release, MetricsHub still appends a `toTable` to the text of an `awk` or `commandLine` that a field references, as to a text read as a table: the token is then the first cell of the first line, which ends at a `;`.
-
 ## Recommended Pattern
 
 - Use `beforeAll` for login/session bootstrap, then reuse tokens/headers.
@@ -92,8 +87,8 @@ In this release, MetricsHub still appends a `toTable` to the text of an `awk` or
 - Pulling huge payloads and filtering later.
 - Mixing relative `path` and absolute `url` inconsistently in one connector.
 - Forgetting `resultContent` and trying to parse headers as body.
-- Applying a table compute, or the `mapping`, to the HTTP result directly: it is text, so it reads no rows. Convert it first with `json2Table`, `xml2Csv`, `toTable` or `awk` (with `output: table`).
-- Referencing a table in `url`, `path`, `header`, `body` or `authenticationToken`: it is reported (`TABLE_INTERPOLATED`). Reference a source that ends in text, such as an `awk` that prints the value.
+- Applying a table compute, or the `mapping`, to the HTTP result directly: it is text, and the connector does not load (`TEXT_FEEDS_TABLE`). Convert it first with `json2Table`, `xml2Csv`, `toTable` or `awk` (with `output: table`).
+- Referencing a table in `url`, `path`, `header`, `body` or `authenticationToken`: the connector does not load (`TABLE_INTERPOLATED`). Reference a source that ends in text, such as an `awk` that prints the value.
 - Using body parsing for simple health checks.
 
 ## Community Examples

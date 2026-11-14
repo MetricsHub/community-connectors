@@ -11,7 +11,7 @@ Use `tableJoin` to enrich one source table with columns from another using key c
 
 `leftKeyColumn` and `rightKeyColumn` are **1-based column indexes**.
 
-Both inputs must be tables. A text, such as a command output, needs a `toTable` (or an `awk` with `output: table`) in its source before the join: a text input is reported (`TEXT_FEEDS_TABLE`, see [Strict Content Types](../design-principles.html#strict-content-types)).
+Both inputs must be tables. A text, such as a command output, needs a `toTable` (or an `awk` with `output: table`) in its source before the join: a text input is rejected (`TEXT_FEEDS_TABLE`, see [Strict Content Types](../design-principles.html#strict-content-types)).
 
 ## Syntax
 
@@ -113,7 +113,7 @@ sources:
     rightKeyColumn: 1
 ```
 
-A list that is not a list of rows is rejected when the connector loads. Cells, quoting and the older `;` string form (`rightTable: MSHW_TableID;`, reported `STRING_LITERAL_ROWS`) follow the rules of [Writing Table Literals](./table-union.html#writing-table-literals).
+A list that is not a list of rows is rejected when the connector loads, and so is the older `;` string form (`rightTable: MSHW_TableID;`, `STRING_LITERAL_ROWS`). Cells and quoting follow the rules of [Writing Table Literals](./table-union.html#writing-table-literals).
 
 ## Recommended Pattern
 
