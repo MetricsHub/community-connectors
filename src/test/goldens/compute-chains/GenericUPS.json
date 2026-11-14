@@ -222,16 +222,16 @@
       "computes" : [ "multiply", "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ]
+          "text" : ""
         },
         "table" : {
-          "table" : [ [ "a" ], [ "x" ], [ "1000.0" ], [ "only" ] ]
+          "text" : "a;\nx;\n1000.0;\nonly;"
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a" ], [ "cell", "with", "sep" ] ]
+          "text" : "a;\ncell;with;sep;"
         },
         "tableWide" : {
-          "table" : [ [ "r1c1" ], [ "r2c1" ], [ "r3c1" ] ]
+          "text" : "r1c1;\nr2c1;\nr3c1;"
         }
       }
     },
@@ -258,16 +258,16 @@
       "computes" : [ "multiply", "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ]
+          "text" : ""
         },
         "table" : {
-          "table" : [ [ "a" ], [ "x" ], [ "1000.0" ], [ "only" ] ]
+          "text" : "a;\nx;\n1000.0;\nonly;"
         },
         "tableSeparatorInCell" : {
-          "table" : [ [ "a" ], [ "cell", "with", "sep" ] ]
+          "text" : "a;\ncell;with;sep;"
         },
         "tableWide" : {
-          "table" : [ [ "r1c1" ], [ "r2c1" ], [ "r3c1" ] ]
+          "text" : "r1c1;\nr2c1;\nr3c1;"
         }
       }
     },

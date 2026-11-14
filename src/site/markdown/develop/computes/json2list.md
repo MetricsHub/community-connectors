@@ -29,7 +29,7 @@ beforeAll:
       script: '$1 == "/data/token" { print $2; exit }'
 ```
 
-The `awk` compute reads the table one row per record: `$1` is the key path and `$2` the value. It prints the token, so `login` is a text, ready for `authenticationToken: ${source::beforeAll.login}` (see [HTTP Authentication Token](../sources/http.html#authentication-token)). In this release, MetricsHub still turns that text into a table before it reads the token, so a token that holds a `;` stops at it.
+The `awk` compute reads the table one row per record: `$1` is the key path and `$2` the value. It prints the token, so `login` is a text, ready for `authenticationToken: ${source::beforeAll.login}` (see [HTTP Authentication Token](../sources/http.html#authentication-token)). The token is the whole first line of that text, without the `;` that the `awk` text output ends it with: a `;` inside the token is kept.
 
 ## Properties
 
@@ -86,5 +86,5 @@ The `awk` compute reads the table one row per record: `$1` is the key path and `
 
 - Expecting `/items/0/name`: an array index is written in brackets, `/items[0]/name`.
 - Comparing key paths case-insensitively: `/Data/Token` and `/data/token` are different paths, as in the document.
-- Placing `json2List` after a compute that already produced a table: there is nothing to parse and the table is unchanged. It is reported (`TABLE_FEEDS_TEXT`).
+- Placing `json2List` after a compute that already produced a table: there is nothing to parse, and the connector does not load (`TABLE_FEEDS_TEXT`).
 - A key that holds a `/` (`"a/b"`) gives the same path as a nested key (`/a/b`): select such values by their position, or with another part of the path.
