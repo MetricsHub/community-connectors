@@ -210,7 +210,7 @@ A script that holds one of these statements is rejected as a whole, even when th
 
 ## Compilation
 
-MetricsHub compiles the scripts when it loads the connector. A script that does not compile (a syntax error, a statement the sandbox rejects, an unknown function) is logged then as an error, with the connector, the source and the line, and its source or compute gives no result.
+MetricsHub compiles a script the first time it runs, and keeps the compiled program for the next runs. A script that does not compile (a syntax error, a statement the sandbox rejects, an unknown function) is logged as an error when its source or compute first runs, with the connector, the source and the line, and that source or compute gives no result. Nothing reports it before: run the connector, or its integration test, after changing a script.
 
 A script is code, so MetricsHub replaces no reference in it: a `${param::days}`, `${attribute::id}` or `${source::...}` written in a script stays there as text, and is reported when the connector loads. Give the script such a value through [`variables`](#variables), and read it by name:
 
