@@ -1,0 +1,13 @@
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=31536000; includeSubdomains
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'self';connect-src 'self';frame-src 'self' data:;img-src 'self' data:;object-src 'self';font-src 'self' data:;script-src 'self' 'unsafe-inline' 'unsafe-eval';style-src 'self' 'unsafe-inline';worker-src 'self' blob:;
+X-Auth-Token: redfish-test-token
+OData-Version: 4.0
+X-XSS-Protection: 1; mode=block
+Content-Length: 246
+Date: Fri, 06 Nov 2026 10:14:40 GMT
+Location: /redfish/v1/SessionService/Sessions/1
+Content-Type: application/json
+
+{"@odata.context":"/redfish/v1/$metadata#Session.Session","@odata.type":"#Session.v1_0_0.Session","@odata.id":"/redfish/v1/SessionService/Sessions/1","Id":"1","Name":"User Session","Description":"Manager User Session","UserName":"admin","Oem":{}}

@@ -10,7 +10,10 @@ image:
     method: GET
     path: /redfish/v1/Systems
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 38888837-03ce-45a4-b20e-ea2e1671c1c2.txt
     resultContent: body
@@ -18,7 +21,10 @@ image:
     method: GET
     path: /redfish/v1/Chassis
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 055b5e89-d883-48ef-8dba-759cc0c8e51b.txt
     resultContent: body
@@ -26,7 +32,10 @@ image:
     method: GET
     path: /redfish/v1/Chassis/1
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 61eb5248-2121-4bff-8c93-aeb257c23e4d.txt
     resultContent: body
@@ -34,7 +43,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 7daf8f0a-e3f2-467d-8404-a85eb5701e12.txt
     resultContent: body
@@ -42,7 +54,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/Processors
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: ad33be8d-4952-4f2a-8da0-5047826fc2d2.txt
     resultContent: body
@@ -50,7 +65,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/Processors/1
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 1e2b3c49-9e07-44cb-9d1c-d8db3eac5fb7.txt
     resultContent: body
@@ -58,7 +76,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/Memory
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 5d75e1fc-cf81-4d95-afa4-d88de6604b69.txt
     resultContent: body
@@ -66,7 +87,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/Memory/1
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: f230ac44-04b3-4c92-a12e-0813a69a7aa7.txt
     resultContent: body
@@ -74,7 +98,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/Memory/2
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: f3259d33-aa7e-43da-8af7-9773e325f8f9.txt
     resultContent: body
@@ -82,7 +109,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/Memory/3
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 1c0a1958-837d-400c-ae46-223ef2fbd62e.txt
     resultContent: body
@@ -90,7 +120,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/Memory/4
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: fc6c4261-2e2e-4f57-a15f-d3db21a9504f.txt
     resultContent: body
@@ -98,7 +131,10 @@ image:
     method: GET
     path: /redfish/v1/Chassis/1/Thermal
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: dc6d57f6-da8e-44ff-aef6-2c368ce2f409.txt
     resultContent: body
@@ -106,7 +142,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/SimpleStorage
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: ce161610-5c73-48b1-bbe2-304983319bcf.txt
     resultContent: body
@@ -114,7 +153,10 @@ image:
     method: GET
     path: /redfish/v1/Chassis/1/Power
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: cde6919a-4730-4f49-ba58-4e5e2e18f727.txt
     resultContent: body
@@ -122,7 +164,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/EthernetInterfaces
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: e1518c86-7332-49ed-9ee5-37900f184d08.txt
     resultContent: body
@@ -130,7 +175,10 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/EthernetInterfaces/1
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 88c6908c-0f24-43e2-96ed-8fe070cdbddc.txt
     resultContent: body
@@ -138,7 +186,44 @@ image:
     method: GET
     path: /redfish/v1/Systems/1/EthernetInterfaces/2
     headers:
-      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
   response:
     file: 78b0b8ee-fbcc-43d2-8935-546cd0c88750.txt
+    resultContent: body
+- request:
+    method: POST
+    path: /redfish/v1/SessionService/Sessions
+    body: |
+      {
+      "UserName":"username",
+      "Password":"password"
+      }
+    headers:
+      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+      OData-Version: 4.0
+      Content-Type: application/json
+  response:
+    file: d6a85066-a9f3-467b-bc2d-ea4846931d0b.txt
+    resultContent: all
+- request:
+    method: DELETE
+    path: /redfish/v1/SessionService/Sessions/1
+    headers:
+      Accept: application/json
+      X-Auth-Token: redfish-test-token
+      OData-Version: 4.0
+      Content-Type: application/json
+  response:
+    file: f67f3708-d44a-442d-bd35-eafba3067195.txt
+    resultContent: body
+- request:
+    method: GET
+    path: /redfish/v1/Systems
+    headers:
+      Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+  response:
+    file: 38888837-03ce-45a4-b20e-ea2e1671c1c2.txt
     resultContent: body
