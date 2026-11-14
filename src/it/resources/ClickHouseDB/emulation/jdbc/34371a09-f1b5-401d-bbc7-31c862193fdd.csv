@@ -1,0 +1,9 @@
+lab;replicated_events;clickhouse-01;ok;0;0;0;0;0;2;2;0;0;0;0;0;0;0;0;0;0;0;1;1;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;session_expired_events;session-expired;failed;0;0;0;0;0;2;2;0;0;0;0;0;0;0;0;0;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;readonly_events;readonly;degraded;0;0;0;0;0;2;2;0;0;0;0;0;0;0;0;0;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;zookeeper_exception_events;zookeeper-exception;degraded;0;0;0;0;0;2;2;0;0;0;0;0;0;0;0;0;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;active_queue_exception_events;active-queue-exception;degraded;1;0;0;0;15;2;2;0;0;0;15;0;1;0;1;0;30;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;retained_queue_exception_events;retained-queue-exception;ok;0;0;0;0;0;2;2;0;0;0;0;0;0;0;0;0;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;missing_active_replica_events;missing-active-replica;degraded;0;0;0;0;0;2;1;0;0;0;0;0;0;0;0;0;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;parts_to_check_events;parts-to-check;degraded;0;0;0;0;0;2;2;0;0;1;0;0;0;0;0;0;0;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+lab;failed_queue_operation_events;failed-queue-operation;degraded;1;0;0;0;0;2;2;0;0;0;120;1;3;0;1;0;30;0;0;0;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
