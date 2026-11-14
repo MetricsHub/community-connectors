@@ -49,7 +49,6 @@ monitors:
           computes:
           - type: awk
             script: ${file::enclosure.awk}
-            input: table
             output: table
             # MSHW;PowerConsumption;
         source(3):
@@ -172,6 +171,8 @@ monitors:
           - type: multiply
             column: 1
             value: 1000
+          - type: awk
+            script: "{ print $1 }"
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.3.3.1
@@ -187,7 +188,6 @@ monitors:
             # ID;UPSConfigInputVoltage;
           - type: awk
             script: ${file::voltage.awk}
-            input: table
             output: table
             # Create Thresholds
             # ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
@@ -198,6 +198,8 @@ monitors:
           - type: multiply
             column: 1
             value: 1000
+          - type: awk
+            script: "{ print $1 }"
         source(4):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
@@ -213,7 +215,6 @@ monitors:
             # ID;UPSConfigOutputVoltage;
           - type: awk
             script: ${file::voltage.awk}
-            input: table
             output: table
             # Create Thresholds
             # ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;

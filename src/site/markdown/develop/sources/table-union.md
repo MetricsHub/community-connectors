@@ -52,14 +52,14 @@ sources:
 - A cell cannot hold a line break. A null cell (`~`), a cell that is a list or a map, an empty row and an empty table are rejected when the connector loads, as is a blank member.
 - In a flow list (`[ ... ]`), quote the source references: `{` and `}` are YAML flow indicators, as in `tables: [ [ [ a, b ] ], "${source::supplies}" ]`.
 
-Older connectors write a literal as a string: lines are rows, each split on `;` (`"in;ac;AC Input"`). This form still works but is reported (`STRING_LITERAL_ROWS`, see [Strict Content Types](../design-principles.html#strict-content-types)), and a cell cannot hold a `;` in it.
+Older connectors write a literal as a string: lines are rows, each split on `;` (`"in;ac;AC Input"`). From MetricsHub Community 3.9.09, this form is rejected when the connector loads (`STRING_LITERAL_ROWS`, see [Strict Content Types](../design-principles.html#strict-content-types)): write a list of rows.
 
 ## Texts in a Union
 
-A union whose members are not all tables still works as in earlier versions, but is reported (see [Strict Content Types](../design-principles.html#strict-content-types)):
+A `tableUnion` is always a table: the rows of its members. A union whose members are not all tables is rejected when the connector loads (see [Strict Content Types](../design-principles.html#strict-content-types)):
 
-- When every member ends in text, the empty ones aside, the union joins the texts exactly as a [textUnion](./text-union.html) does, and its result is a text. It is reported once (`TABLE_UNION_OF_TEXTS`): replace `type: tableUnion` and `tables` with `type: textUnion` and `texts`.
-- A union of texts and tables is reported once (`MIXED_UNION`), and each text member too (`TEXT_FEEDS_TABLE`). Its result is the rows of the tables. The text of an `http`, `file` or `ipmi` member contributes no rows, and a `commandLine` or `awk` member contributes rows only through the `toTable` that MetricsHub appends to it. Convert each text member in its own source (`toTable`, `json2Table`, `awk` with `output: table`, ...).
+- A union whose members are all texts is rejected once (`TABLE_UNION_OF_TEXTS`): replace `type: tableUnion` and `tables` with `type: textUnion` and `texts`.
+- A union of texts and tables is rejected once (`MIXED_UNION`), and each text member too (`TEXT_FEEDS_TABLE`). Convert each text member in its own source (`toTable`, `json2Table`, `awk` with `output: table`, ...).
 
 ## Recommended Pattern
 

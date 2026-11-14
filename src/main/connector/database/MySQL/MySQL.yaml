@@ -355,9 +355,10 @@ tools:
         - type: toText
         # Type;Name;Status, the Status spanning many lines. A section title stands between two lines of dashes.
         - type: awk
+          variables:
+            section: ${param::section}
           script: |
             BEGIN {
-              section = "${param::section}"
               # Only these titles start a section: others (e.g. INDIVIDUAL BUFFER POOL INFO) are sub-sections
               k = split("BACKGROUND THREAD|SEMAPHORES|LATEST FOREIGN KEY ERROR|LATEST DETECTED DEADLOCK|TRANSACTIONS|FILE I/O|INSERT BUFFER AND ADAPTIVE HASH INDEX|LOG|BUFFER POOL AND MEMORY|ROW OPERATIONS", t, "|")
               for (j = 1; j <= k; j++) titles[t[j]] = 1
@@ -391,9 +392,11 @@ tools:
         computes:
         - type: toText
         - type: awk
+          variables:
+            id: ${param::id}
           script: |
             { sub(/;$/, ""); print }
-            END { if (NR == 0) print "No plan: session ${param::id} runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" }
+            END { if (NR == 0) print "No plan: session " id " runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" }
         - type: toTable
     result:
       source: ${source::plan}
@@ -645,10 +648,12 @@ tools:
         computes:
         - type: toText
         - type: awk
+          variables:
+            id: ${param::id}
           script: |
-            /^;/ { print "There is no session ${param::id} (any more)"; next }
+            /^;/ { print "There is no session " id " (any more)"; next }
             { print }
-            END { if (NR == 0) print "Could not check session ${param::id}: it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" }
+            END { if (NR == 0) print "Could not check session " id ": it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" }
         - type: toTable
     result:
       source: ${source::session}

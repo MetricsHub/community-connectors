@@ -45,7 +45,7 @@ monitors:
           resultContent: body
           # START SNIPPET: json2CsvCompute
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.id;
             separator: ;
@@ -64,7 +64,7 @@ monitors:
           path: $2
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /
             properties: /@odata.id;/Name;/SerialNumber;/PartNumber;/Manufacturer;/Model;
             separator: ;
@@ -76,7 +76,7 @@ monitors:
           path: /redfish/v1/Chassis
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.id;
             separator: ;
@@ -90,7 +90,7 @@ monitors:
             concatMethod: json_array_extended
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: "/@odata.id;/Links/ComputerSystems[0]/@odata.id;"
             separator: ;
@@ -105,7 +105,7 @@ monitors:
             concatMethod: json_array_extended
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: "/@odata.id;/Links/Storage[0]/@odata.id;"
             separator: ;
@@ -132,7 +132,7 @@ monitors:
           path: /redfish/v1/Systems
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.id;
             separator: ;
@@ -149,7 +149,7 @@ monitors:
           path: $2
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /
             properties: /@odata.id;/Status/Health;/Status/Health;
             separator: ;
@@ -167,7 +167,7 @@ monitors:
           path: /redfish/v1/Chassis
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.id;
             separator: ;
@@ -181,7 +181,7 @@ monitors:
             concatMethod: json_array_extended
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: "/@odata.id;/Links/ComputerSystems[0]/@odata.id;"
             separator: ;
@@ -211,7 +211,7 @@ monitors:
           path: $2/Processors
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Members
             properties: ../../Column(2);/@odata.id;
             separator: ;
@@ -226,7 +226,7 @@ monitors:
           path: $3
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: ../Column(2);/Id;/Socket;/Manufacturer;/Model;/MaxSpeedMHz;
             separator: ;
@@ -257,7 +257,7 @@ monitors:
           path: $2/Processors
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.Id;
             separator: ;
@@ -271,7 +271,7 @@ monitors:
           path: $2
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /
             properties: /Id;/Status/Health;/Status/Health;
             separator: ;
@@ -306,7 +306,7 @@ monitors:
           path: $2/Memory
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Members
             properties: ../../Column(2);/@odata.id;
             separator: ;
@@ -320,7 +320,7 @@ monitors:
           path: $3
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: ../Column(2);/Id;/DeviceLocator;/CapacityMiB;/Manufacturer;/PartNumber;/SerialNumber;/MemoryDeviceType;
             separator: ;
@@ -353,7 +353,7 @@ monitors:
           path: $2/Memory
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.Id;
             separator: ;
@@ -367,7 +367,7 @@ monitors:
           path: $2
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /
             properties: /Id;/Status/Health;/Status/Health;
             separator: ;
@@ -402,7 +402,7 @@ monitors:
           path: $2/Thermal
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Fans
             properties: ../../Column(3);/MemberId;/Name;/Status/State;LowerThresholdNonCritical;LowerThresholdCritical;/MinReadingRange
             separator: ;
@@ -439,7 +439,7 @@ monitors:
           path: $2/Thermal
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Fans
             properties: /MemberId;/Status/Health;/Status/Health;/Reading;/Reading;/MinReadingRange;/MaxReadingRange;
             separator: ;
@@ -486,7 +486,7 @@ monitors:
           path: $2/SimpleStorage
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Members
             properties: ../../Column(2);/@odata.id;
             separator: ;
@@ -500,7 +500,7 @@ monitors:
           path: $3
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Devices
             properties: ../../Column(2);/Name;/Manufacturer;/Model;
             separator: ;
@@ -514,7 +514,7 @@ monitors:
           path: $2
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Links/Drives
             properties: ../../../Column(2);/@odata.id;
             separator: ;
@@ -528,7 +528,7 @@ monitors:
           path: $3
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: ../../Column(2);/Id;/Manufacturer;/Model;
             separator: ;
@@ -563,7 +563,7 @@ monitors:
           path: $2/SimpleStorage
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.id;
             separator: ;
@@ -577,7 +577,7 @@ monitors:
           path: $2
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Devices
             properties: /Name;/Status/Health;/Status/Health;
             separator: ;
@@ -597,7 +597,7 @@ monitors:
           path: $3
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: /Id;/Status/Health;/Status/Health;
             separator: ;
@@ -637,7 +637,7 @@ monitors:
           path: $2/Power
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: Entry/Value/PowerSupplies
             properties: ../../Column(3);/MemberId;/Name;/Status/State;/PowerSupplyType;/LineInputVoltage;/Model;/firmwareVersion;/SerialNumber;
             separator: ;
@@ -681,7 +681,7 @@ monitors:
           path: $2/Power
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /PowerSupplies
             properties: /MemberId;/Status/Health;/Status/Health;
             separator: ;
@@ -716,7 +716,7 @@ monitors:
           path: $2/Thermal
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Temperatures
             properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;/ReadingCelsius;
             separator: ;
@@ -752,7 +752,7 @@ monitors:
           path: $2/Thermal
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Temperatures
             properties: /MemberId;/Status/Health;/Status/Health;/ReadingCelsius;/Status/State;
             separator: ;
@@ -764,7 +764,6 @@ monitors:
             translationTable: "${translation::StatusInformationTranslationTable}"
           # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
           - type: awk
-            input: table
             output: table
             script: |
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
@@ -795,7 +794,7 @@ monitors:
           path: $2/Power
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value/Voltages
             properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;
             separator: ;
@@ -827,7 +826,7 @@ monitors:
           path: $2/Power
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Voltages
             properties: /MemberId;/Status/Health;/Status/Health;/ReadingVolts;/Status/State;
             separator: ;
@@ -842,7 +841,6 @@ monitors:
             value: 1000
           # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
           - type: awk
-            input: table
             output: table
             script: |
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
@@ -873,7 +871,7 @@ monitors:
           path: $2/EthernetInterfaces
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: Entry/Value/Members
             properties: ../../Column(2);/@odata.id;
             separator: ;
@@ -887,7 +885,7 @@ monitors:
           path: $3
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Entry/Value
             properties: ../Column(2);/Id;/Name;/MACAddress;/Status/State
             separator: ;
@@ -922,7 +920,7 @@ monitors:
           path: $2/EthernetInterfaces
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /Members
             properties: /@odata.id;
             separator: ;
@@ -936,7 +934,7 @@ monitors:
           path: $2
           resultContent: body
           computes:
-          - type: json2csv
+          - type: json2Table
             entryKey: /
             properties: /Id;/Status/State;/Status/State;/Status/Health;/SpeedMbps;
             separator: ;

@@ -450,8 +450,10 @@ tools:
         # pid;ppid;user;cpuPercent;memoryPercent;residentKiB;elapsed;state;command;sortKey
         # The fields of /proc/<pid>/stat counted after the process name, which may hold spaces and parentheses
         - type: awk
+          variables:
+            sortBy: ${param::sortBy}
           script: |
-            BEGIN { hz = 100; sortBy = "${param::sortBy}" }
+            BEGIN { hz = 100 }
             $0 == "---" { phase++; next }
             phase == 0 { hz = $1; next }
             phase < 3 && NF == 2 { uptime[phase] = $1; next }

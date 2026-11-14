@@ -59,11 +59,9 @@ monitors:
           computes:
           - type: awk
             script: ${file::translateIpmi.awk}
-            input: table
             output: table
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            input: table
             output: table
 
 # The command that %{SUDO:...} elevates, when the configuration enables sudo for it

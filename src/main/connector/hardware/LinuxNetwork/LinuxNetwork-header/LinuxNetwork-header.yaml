@@ -89,7 +89,6 @@ monitors:
             column: 7
             translationTable: ${translation::NetworkStateTranslationTable}
           - type: awk
-            input: table
             output: table
             script: |
               {

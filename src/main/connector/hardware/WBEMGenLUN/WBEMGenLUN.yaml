@@ -44,7 +44,6 @@ monitors:
             # MPIOID;LunPathCount;NAAID;
           - type: awk
             script: "${file::lunAssociation1.awk}"
-            input: table
             output: table
         source(2):
           # Source (2) = Win32_LogicalDisk
@@ -87,7 +86,6 @@ monitors:
             # LunId(WithDevice);PnPAddress;
           - type: awk
             script: ${file::lunToUpper.awk}
-            input: table
             output: table
         source(7):
           # Source 7 = 2 Joined to 3 with Win32_LogicalDisk
@@ -139,7 +137,6 @@ monitors:
             # MPIOID;VolumeList;
           - type: awk
             script: ${file::lunAssociation2.awk}
-            input: table
             output: table
         source(11):
           # Join the MPIO Discovered list with the Volume List
@@ -186,7 +183,6 @@ monitors:
             # MPIOID;LunPathCount;NAAID;
           - type: awk
             script: ${file::lunAssociation1.awk}
-            input: table
             output: table
       mapping:
         # ValueTable = Source(1)

@@ -33,7 +33,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `append`. |
 | `column` | On a table | None | **1-based** index of the column to modify. Applied to every row. Omit it to append to a text, see [On A Text](#on-a-text). |
-| `value` | Yes | None | String appended to the end of the column content. Accepts a literal, a `$n` reference to another column of the same row (e.g. `$5`), or a `${source::...}` reference to a text, whose content is appended (a table there is reported, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
+| `value` | Yes | None | String appended to the end of the column content. Accepts a literal, a `$n` reference to another column of the same row (e.g. `$5`), or a `${source::...}` reference to a text, whose content is appended (a table there is rejected, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
 
@@ -72,7 +72,7 @@ sources:
 
 - The value goes after the last character of the text, whatever it is: after the final line feed of a command output, and after the `;` that an `awk` compute writes at the end of each line of its text. To add a value at the end of each line, use an `awk`.
 - `$n` is not a column reference here: a text has no column.
-- The content decides, not the compute: a text stays a text, a table stays a table. A `column` on a text is reported when the connector loads (`COLUMN_ON_TEXT`), and so is a missing `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
+- The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 
@@ -85,7 +85,7 @@ sources:
 
 - Forgetting that `column` is 1-based: `column: 1` targets the first column.
 - Expecting a `;` in `value` to add columns: `value: ;;` on the cell `OK` gives the single cell `OK;;`. Use [insertColumn](./insert-column.html).
-- Appending a `${source::...}` reference to a table of several cells to bring its columns in: the cell receives the serialized row (`OK` becomes `OKa;b;`), and the reference is reported (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
+- Appending a `${source::...}` reference to a table to bring its columns in: the connector does not load (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
 - Writing `value: $5` expecting a literal `$5`: `$n` is interpreted as a column reference.
 - Leaving an unquoted value that YAML truncates or mangles (a ` #` inside the value starts a comment; leading/trailing spaces are stripped — quote such values: `value: ' - '`).
 

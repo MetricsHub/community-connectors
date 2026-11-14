@@ -55,7 +55,7 @@ tools:
 | `<toolName>.sources` | Yes | None | Named sources with their computes, like a monitor job's `sources`. |
 | `<toolName>.executionOrder` | No | Dependency order | Explicit source order, like a monitor job's. |
 | `<toolName>.result.source` | Yes | None | Reference of the source whose result is returned, e.g. `${source::processes}`. |
-| `<toolName>.result.columns` | No | None | Names of the table columns, in order, so that the rows read as records. Without `columns`, a result source that ends in text (a command output, a free-form `awk`, or a [`textUnion`](sources/text-union.html) of such outputs) is returned as text; one that ends in a table is returned as rows. With `columns`, the result source must end in a table (a `toTable`, an `awk` with `output: table`, ...): a text there is reported (`TEXT_FEEDS_TABLE`, see [Strict Content Types](design-principles.html#strict-content-types)). |
+| `<toolName>.result.columns` | No | None | Names of the table columns, in order, so that the rows read as records. Without `columns`, a result source that ends in text (a command output, a free-form `awk`, or a [`textUnion`](sources/text-union.html) of such outputs) is returned as text; one that ends in a table is returned as rows. With `columns`, the result source must end in a table (a `toTable`, an `awk` with `output: table`, ...): a text there is rejected when the connector loads (`TEXT_FEEDS_TABLE`, see [Strict Content Types](design-principles.html#strict-content-types)). |
 
 ### Parameters
 
@@ -220,4 +220,4 @@ tools:
 - Leaving `destructive` unset on a tool that acts on the host.
 - Widening a `pattern` (spaces, quotes, `/`) and inserting the parameter without the escape of its field, or outside the quotes the connector writes.
 - Passing a parameter where it is not mere data: see What the Review Checks above.
-- Returning raw command output without a parsing compute: the assistant gets a single-column table of lines.
+- Returning raw command output that has a structure without a parsing compute: the assistant gets the whole text, not records. Split it with a `toTable` and name the `columns`.

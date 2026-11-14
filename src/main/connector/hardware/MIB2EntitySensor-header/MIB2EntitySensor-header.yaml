@@ -188,7 +188,6 @@ monitors:
             # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;ORIGINAL_ID;
           - type: awk
             script: ${file::fan.awk}
-            input: table
             output: table
         source(2):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
@@ -204,7 +203,6 @@ monitors:
             columnNumbers: 2,7,8,9,14,21,22,23
           - type: awk
             script: ${file::fan-info.awk}
-            input: table
             output: table
       mapping:
         # Instance Table
@@ -228,7 +226,6 @@ monitors:
           # Substract 11 from ID to get FRU Parent
           - type: awk
             script: ${file::fan.awk}
-            input: table
             output: table
       mapping:
         # ValueTable = Enclosure.Collect.Source(1)

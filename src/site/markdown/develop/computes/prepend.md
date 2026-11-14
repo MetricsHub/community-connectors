@@ -33,7 +33,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `prepend`. |
 | `column` | On a table | None | **1-based** index of the column to modify. Applied to every row. Omit it to prepend to a text, see [On A Text](#on-a-text). |
-| `value` | Yes | None | String inserted at the beginning of the column content. Accepts a literal, a `$n` reference to another column of the same row, or a `${source::...}` reference to a text, whose content is prepended (a table there is reported, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
+| `value` | Yes | None | String inserted at the beginning of the column content. Accepts a literal, a `$n` reference to another column of the same row, or a `${source::...}` reference to a text, whose content is prepended (a table there is rejected, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
 
@@ -76,7 +76,7 @@ beforeAll:
 
 - The value goes before the first character of the text, not at the beginning of each line. To add a value to each line, use an `awk`.
 - `$n` is not a column reference here: a text has no column.
-- The content decides, not the compute: a text stays a text, a table stays a table. A `column` on a text is reported when the connector loads (`COLUMN_ON_TEXT`), and so is a missing `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
+- The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 
@@ -87,7 +87,7 @@ beforeAll:
 ## Common Mistakes
 
 - Expecting a `;` in `value` to insert columns: `value: MSHW;` on the cell `1` gives the single cell `MSHW;1`. Use [insertColumn](./insert-column.html).
-- Prepending a `${source::...}` reference to a table of several cells to bring its columns in: the cell receives the serialized row (`1` becomes `a;b;1`), and the reference is reported (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
+- Prepending a `${source::...}` reference to a table to bring its columns in: the connector does not load (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
 - Forgetting that `column` is 1-based.
 - Writing `value: $2` expecting a literal `$2`: `$n` is interpreted as a column reference.
 - Losing a trailing space by leaving the value unquoted: write `value: "Model: "`, not `value: Model: `.
