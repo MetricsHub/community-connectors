@@ -110,7 +110,7 @@ What a source produces is the type at the end of its chain, as written:
 | Text | Table |
 | --- | --- |
 | `commandLine`, `http`, `file`, `ipmi`, the `awk` source with the default `output: text`, [`textUnion`](sources/text-union.html), a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` | every other source: `snmpTable`, `wmi`, `sql`, `static`, `tableJoin`, `tableUnion`, `internalDbQuery`, the `awk` source with `output: table`, ... |
-| a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute |
+| a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute (but `append`, `prepend`, `replace` and `substring` without a `column`, which keep the text they read, see [Text Or Table](#text-or-table)) |
 
 A `copy` produces what the chain of the source it copies ends in, also when that source fails or comes back empty: an empty text for a text, an empty table for a table. A `tableUnion` is always a table: a union whose members are texts is rejected (see [Texts in a Union](sources/table-union.html#texts-in-a-union)).
 
@@ -122,7 +122,7 @@ These read a table. A text there is rejected (`TEXT_FEEDS_TABLE`): end its sourc
 - the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is rejected once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is rejected `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
 - `mapping.source`;
 - the result source of a tool that declares `columns` (see [tools](tools.html));
-- the computes that work on columns: every compute but `awk`, `json2Table`, `json2List`, `xml2Csv` and `toTable` (`toText` included);
+- the computes that work on columns: every compute but `awk`, `json2Table`, `json2List`, `xml2Csv` and `toTable` (`toText` included), except `append`, `prepend`, `replace` and `substring` without a `column` (see [Text Or Table](#text-or-table));
 - the tables of an [`internalDbQuery`](sources/internal-db-query.html);
 - the `source` of `executeForEachEntryOf`;
 - a `${source::...}` reference in the `variables` of an `awk`.
@@ -133,6 +133,10 @@ These read a text. A table there is rejected (`TABLE_FEEDS_TEXT`): end its sourc
 
 - the members of a [`textUnion`](sources/text-union.html);
 - `json2Table`, `json2List`, `xml2Csv` and `toTable`.
+
+### Text Or Table
+
+`append`, `prepend`, `replace` and `substring` read a table with a `column`, and a text without. The two other combinations are rejected (`COLUMN_ON_TEXT`, `NO_COLUMN_ON_TABLE`): write no `toTable` before the form without `column`.
 
 An `awk` compute reads either type as it is, and so does an `awk` source whose `input` is a single reference.
 

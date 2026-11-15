@@ -13,6 +13,7 @@ Connectors use references to wire data across sections and runtime contexts.
 | --- | --- | --- |
 | Load-time substitutions | `${constant::}`, `${var::}` | Inlined once, when the connector is parsed and loaded. |
 | Job-time references | `${source::}`, `${file::}`, `${translation::}`, `$1`/`$2` column refs, `${attribute::}`, `${protocol::}`, `${resource.attribute::}`, `${awk::}` | Evaluated during job execution — e.g. `${source::...}` yields the referenced source's current output for that cycle. Relative `${source::}` paths are normalized to their absolute form at load time. |
+| No reference | An AWK script | MetricsHub replaces no reference in a script, but `${file::}`: give the script a `${source::}`, `${attribute::}` or other value through its `variables`, see [Compilation](sources/awk.html#compilation). |
 | Runtime credential macros | `%{USERNAME}`, `%{PASSWORD}`, `%{BASIC_AUTH_BASE64}`, ... | At execution time, per request, from the resource's configured credentials. |
 
 ## Source References

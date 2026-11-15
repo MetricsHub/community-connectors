@@ -32,7 +32,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `prepend`. |
-| `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
+| `column` | On a table | None | **1-based** index of the column to modify. Applied to every row. Omit it to prepend to a text, see [On A Text](#on-a-text). |
 | `value` | Yes | None | String inserted at the beginning of the column content. Accepts a literal, a `$n` reference to another column of the same row, or a `${source::...}` reference to a text, whose content is prepended (a table there is rejected, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
@@ -54,6 +54,27 @@ With `column: 1` and `value: 'Input '`:
 >   | --- |
 >   | Input 1 |
 >   | Input 2 |
+
+## On A Text
+
+Without `column`, `prepend` works on a **text** (the result of an `http`, a `commandLine`, an `awk` without `output: table`, ...): the value is added once, at the beginning of the whole text, and the result is still a text.
+
+```yaml
+beforeAll:
+  authorization:
+    # The body is the bare token: abc123
+    type: http
+    method: post
+    path: /api/login
+    computes:
+    # abc123 -> Bearer abc123
+    - type: prepend
+      value: "Bearer "
+```
+
+- The value goes before the first character of the text, not at the beginning of each line. To add a value to each line, use an `awk`. An `awk` compute ends each line of its text with a `;`, which would stay after the token here.
+- `$n` is not a column reference here: a text has no column.
+- The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 

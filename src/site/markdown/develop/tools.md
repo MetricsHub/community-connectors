@@ -68,7 +68,7 @@ tools:
 | `pattern` | No | Default pattern for a `string` without `enum` | A Java regular expression the **whole** value must match. A `string` declaring neither a `pattern` nor an `enum` takes the default pattern: letters, digits and `_ . @ : -` (see Validation and Review). |
 | `enum` | No | None | The only values accepted, each of the parameter's `type`, e.g. `[ TERM, KILL, HUP ]`. |
 
-The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. The `enum` is advertised in the tool's JSON schema and the `pattern` in the parameter's description. Every argument is checked against `type`, `pattern` and `enum` before the tool runs: an invalid argument is reported to the assistant and nothing runs.
+The invocation arguments replace `${param::<name>}` in the tool's sources and computes, exactly where a mono-instance collect replaces `${attribute::<name>}`. An AWK script is the exception: nothing is replaced in it, so an `awk` compute receives a parameter through its [`variables`](sources/awk.html#compilation) (`days: ${param::days}`) and the script reads `days`. The `enum` is advertised in the tool's JSON schema and the `pattern` in the parameter's description. Every argument is checked against `type`, `pattern` and `enum` before the tool runs: an invalid argument is reported to the assistant and nothing runs.
 
 ## Validation and Review
 

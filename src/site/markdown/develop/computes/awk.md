@@ -126,7 +126,7 @@ Besides the POSIX AWK functions (`length`, `substr`, `split`, `sprintf`, `tolowe
 
 The gawk functions are available from MetricsHub Community 3.9.09. Earlier versions have only the MetricsHub functions, and `asorti(source, dest)` since 3.9.01. The names of the gawk functions are reserved: a script cannot name a variable or a function `asort`, `asorti`, `gensub`, `patsplit`, `strtonum`, `systime`, `mktime`, `strftime`, `typeof`, `isarray`, `mkbool`, `bindtextdomain`, `dcgettext` or `dcngettext`.
 
-An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `executeHttpRequest`, `json2csv`, `getVariable`...
+An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `executeHttpRequest`, `json2Table(json, entryKey, properties, rows)`, `getVariable`...
 
 ## Table Transformation Example
 
@@ -156,6 +156,14 @@ MSHW;1;Data;D;Partition;NTFS;999784378368;Healthy
 ```
 
 The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` removes the `MSHW` marker column.
+
+## Functions And Sandbox
+
+A compute script can call the MetricsHub functions available [in every script](../sources/awk.html#in-every-script): `bytes2HumanFormatBase2`, `join`, `base64Encode`, `sleep`, and the others. The functions that query the monitored resource (`executeHttpRequest`, ...) belong to the [`awk` source](../sources/awk.html#in-the-awk-source) only.
+
+A script runs in a [sandbox](../sources/awk.html#sandbox): it cannot run a command (`system()`, `"command" | getline`), nor read or write a file (`getline < "file"`, `print > "file"`).
+
+MetricsHub [compiles the script the first time it runs](../sources/awk.html#compilation), and logs a script that does not compile then. It replaces no reference in a script: pass a `${param::...}`, an `${attribute::...}` or a `${source::...}` through [`variables`](#variables).
 
 ## Recommended Pattern
 
