@@ -156,7 +156,7 @@ Three functions read a JSON document without flattening it to text. Each one fil
 
 **`status = executeHttpJsonRequest(args, response)`** runs the request, returns its HTTP status code (`200`, `401`, `404`, ...) and gives the whole document. The status is 0 when the request got no response (the host does not answer, the request times out). The body of an error response is parsed like any other, since it often says what went wrong. `args["resultContent"]` is ignored.
 
-A JSON object is an array indexed by its keys, a JSON array is an array indexed from 0. A string is a string, a number is a number, `true` and `false` are 1 and 0, and `null` is an empty string. When the body is not a JSON object or array, `response` stays empty and a warning is logged.
+A JSON object is an array indexed by its keys, a JSON array is an array indexed from 0. A string is a string, and `true` and `false` are 1 and 0. A number computes and compares as a number, and prints as the document writes it (`1234567.891`, where AWK would print `1.23457e+06`); the result of a computation prints as any AWK number, with `OFMT`. A `null` property is left out of its array: it reads as an empty string, or as an empty array where the script expects an object (`member["Status"]["Health"]`), and `"Status" in member` is false. A `null` in a JSON array is an empty string. When the body is not a JSON object or array, `response` stays empty and a warning is logged.
 
 ```awk
 BEGIN {
