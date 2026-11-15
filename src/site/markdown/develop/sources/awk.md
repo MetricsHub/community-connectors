@@ -135,7 +135,7 @@ These functions are available to the `awk` source, to the [`awk` compute](../com
 
 ### In The awk Source
 
-A source script can also query the monitored resource. Each `execute...` function takes an array holding the properties of the corresponding source, and returns its result as text: the body of the response, or the rows of a table joined with `;`. `executeHttpJsonRequest` is the exception: it fills an array and returns the HTTP status code.
+A source script can also query the monitored resource. Each `execute...` function takes an array holding the properties of the corresponding source (`executeIpmiRequest` takes no argument), and returns its result as text: the body of the response, or the rows of a table joined with `;`. `executeHttpJsonRequest` is the exception: it fills an array and returns the HTTP status code.
 
 | Function | Runs |
 | --- | --- |

@@ -110,7 +110,7 @@ What a source produces is the type at the end of its chain, as written:
 | Text | Table |
 | --- | --- |
 | `commandLine`, `http`, `file`, `ipmi`, the `awk` source with the default `output: text`, [`textUnion`](sources/text-union.html), a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` | every other source: `snmpTable`, `wmi`, `sql`, `static`, `tableJoin`, `tableUnion`, `internalDbQuery`, the `awk` source with `output: table`, ... |
-| a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute |
+| a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute (but `append`, `prepend`, `replace` and `substring` without a `column`, which keep the text they read, see [Text Or Table](#text-or-table)) |
 
 A `copy` produces what the chain of the source it copies ends in, also when that source fails or comes back empty: an empty text for a text, an empty table for a table. A `tableUnion` is always a table: a union whose members are texts is rejected (see [Texts in a Union](sources/table-union.html#texts-in-a-union)).
 
