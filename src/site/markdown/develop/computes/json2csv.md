@@ -1,4 +1,4 @@
-keywords: json2Table, json2Csv, compute, json, table, rest api, entryKey, parsingMode
+keywords: json2Table, json2Csv, compute, json, table, rest api, entryKey, large payloads
 description: json2Table flattens a JSON payload into a table, producing one row per JSON entry plus a leading entry-path column, one cell per property.
 
 # json2Table (Compute)
@@ -36,7 +36,7 @@ sources:
 | `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
 | `properties` | Yes | None | Semicolon-separated list of JSON pointers, each resolved **relative to one entry** (`/id;/name;/operationalStatus`). Nested values use full pointer paths, including array indexes (`/Links/Storage[0]/@odata.id`). The list order defines the column order. |
 | `separator` | No | `;` | Deprecated and ignored (MetricsHub Community 3.9.09 or later): each property gives exactly one cell, whatever its value holds. Still accepted, so existing connectors keep working; omit it in new connectors. Earlier versions split the rows on it, so a value holding the separator shifted the columns. |
-| `parsingMode` | No | `tree` | How the JSON document is read: `tree` loads the whole document in memory, `events` reads it as a stream and keeps only one entry at a time. The rows are the same. See [Large Payloads](#large-payloads). |
+| `parsingMode` | No | None | Rejected from MetricsHub Community 3.9.09 (`DEPRECATED_SYNTAX`): the compute chooses how to read the document from its size, see [Large Payloads](#large-payloads). In 3.9.08, `tree` (the default) or `events`. |
 
 > [!IMPORTANT]
 > `json2Table` prepends one extra column identifying the JSON entry each row was built from (its path in the document). Your first property therefore lands in **column 2**: reference it as `$2` in `mapping` and in subsequent computes.
@@ -77,39 +77,26 @@ Equivalent serialized output:
 
 ## Large Payloads
 
-With the default `parsingMode: tree`, `json2Table` builds a map of every node of the document before it writes the rows. This takes about 20 times the size of the payload in memory, even when only a few values are read per entry.
+`json2Table` reads a payload of 64 KiB or more as a stream of JSON events (MetricsHub Community 3.9.09 or later):
 
-For a REST API that returns large lists (thousands of objects, several MB), set `parsingMode: events`:
-
-```yaml
-    computes:
-    - type: json2Table
-      entryKey: /items
-      properties: /metadata/name;/metadata/namespace;/status/phase
-      parsingMode: events
-```
-
-The document is then read as a stream of JSON events:
-
-- Only one element of the array at the start of `entryKey` (`/items` above) is flattened at a time.
+- Only one element of the array at the start of `entryKey` (`/items` in `entryKey: /items`) is flattened at a time.
 - The nodes that neither `entryKey` nor `properties` can reach are skipped.
 
-Memory stays close to the size of the payload and the conversion is faster. The rows are the same as with `tree`, in the same order.
+Memory stays close to the size of the payload, and a large list is converted faster. A smaller payload is loaded whole as a tree of its nodes, about 20 times its size in memory, which is faster for a few KB. The rows are the same either way, in the same order.
 
-Some documents cannot be read this way and are processed as with `tree`, with the same memory usage:
+Some documents cannot be read as events and are loaded as a tree whatever their size:
 
 - the payload is an array, `entryKey` is `/`, or the first element of `entryKey` is `*` or contains an index (`/items[0]/...`);
 - a property refers to a node above the array element, for example `../kind` with `entryKey: /items` (`../../metadata/name` with `entryKey: /items/status/conditions` stays inside the element and is fine);
 - an object of an element has a duplicate key.
 
-`parsingMode` is available from MetricsHub Community 3.9.08. Earlier versions ignore it and read the document as a tree, so the connector still works.
+MetricsHub Community 3.9.08 loads every payload as a tree, unless the compute sets `parsingMode: events`. Earlier versions always load a tree. From 3.9.09, `parsingMode` is rejected: remove it.
 
 ## Recommended Pattern
 
 - Set `resultContent: body` on the HTTP source and put `json2Table` first in its `computes` pipeline.
 - Point `entryKey` at the array of records and keep every property pointer relative to a single record.
 - Account for the leading entry column: the first property is `$2`, not `$1`.
-- Add `parsingMode: events` when the payload can be large (a list of all the objects of a kind).
 - Quote the `properties` value when a pointer contains YAML-sensitive characters such as `[0]` (for example `properties: "/@odata.id;/Links/Storage[0]/@odata.id"`).
 
 ## Common Mistakes
