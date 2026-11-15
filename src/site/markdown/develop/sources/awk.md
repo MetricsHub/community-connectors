@@ -135,7 +135,7 @@ These functions are available to the `awk` source, to the [`awk` compute](../com
 
 ### In The awk Source
 
-A source script can also query the monitored resource. Each `execute...` function takes an array holding the properties of the corresponding source, and returns its result as text: the body of the response, or the rows of a table joined with `;`.
+A source script can also query the monitored resource. Each `execute...` function takes an array holding the properties of the corresponding source, and returns its result as text: the body of the response, or the rows of a table joined with `;`. `executeHttpJsonRequest` is the exception: it fills an array and returns the HTTP status code.
 
 | Function | Runs |
 | --- | --- |
@@ -164,12 +164,12 @@ BEGIN {
   args["path"] = "/api/v1/systems"
   if (executeHttpJsonRequest(args, response) != 200) exit
   for (i = 0; i < length(response["items"]); i++) {
-    print response["items"][i]["id"], response["items"][i]["status"]["health"]
+    print response["items"][i]["id"] ";" response["items"][i]["status"]["health"]
   }
 }
 ```
 
-**`json2Table(json, entryKey, properties, rows)`** extracts rows from a JSON text, as the [json2Table](../computes/json2csv.html) compute does. `properties` is a `;`-separated list. `rows[i][0]` is the path of the entry and `rows[i][1]` its first property: both indexes start at 0. A cell holds its value whole, even when the value holds a `;` or a line feed. An optional fifth argument, `"events"`, selects the events parsing mode for large documents.
+**`json2Table(json, entryKey, properties, rows)`** extracts rows from a JSON text, as the [json2Table](../computes/json2csv.html) compute does. `properties` is a `;`-separated list. `rows[i][0]` is the path of the entry and `rows[i][1]` its first property: both indexes start at 0. A cell holds its value whole, even when the value holds a `;` or a line feed.
 
 ```awk
 {
@@ -177,7 +177,7 @@ BEGIN {
   args["path"] = "/redfish/v1/Chassis/" $1 "/Sensors"
   n = json2Table(executeHttpRequest(args), "/Members", "Id;Reading;Status/Health", rows)
   for (i = 0; i < n; i++) {
-    print $1, rows[i][1], rows[i][2], rows[i][3]
+    print $1 ";" rows[i][1] ";" rows[i][2] ";" rows[i][3]
   }
 }
 ```
@@ -206,7 +206,7 @@ A script runs in a sandbox, in the `awk` source, in the `awk` compute and in `${
 - read or write a file: `getline < "file"`, `print > "file"`, `printf >> "file"`;
 - include another script with `@include`.
 
-A script that holds one of these statements is rejected as a whole, even when the statement would never run. To wait between two requests, call `sleep(seconds)`. To reach the monitored resource, call the `execute...` functions.
+A script that holds one of these statements is rejected as a whole, even when the statement would never run. To wait between two requests, call `sleep(seconds)`. To reach the monitored resource, call the `execute...` functions, which only an `awk` source has.
 
 ## Compilation
 

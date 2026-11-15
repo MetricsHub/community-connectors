@@ -126,7 +126,7 @@ Besides the POSIX AWK functions (`length`, `substr`, `split`, `sprintf`, `tolowe
 
 The gawk functions are available from MetricsHub Community 3.9.09. Earlier versions have only the MetricsHub functions, and `asorti(source, dest)` since 3.9.01. The names of the gawk functions are reserved: a script cannot name a variable or a function `asort`, `asorti`, `gensub`, `patsplit`, `strtonum`, `systime`, `mktime`, `strftime`, `typeof`, `isarray`, `mkbool`, `bindtextdomain`, `dcgettext` or `dcngettext`.
 
-An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `executeHttpRequest`, `json2csv`, `getVariable`...
+An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `executeHttpRequest`, `json2Table(json, entryKey, properties, rows)`, `getVariable`...
 
 ## Table Transformation Example
 
