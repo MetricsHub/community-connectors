@@ -139,8 +139,8 @@ A source script can also query the monitored resource. Each `execute...` functio
 
 | Function | Runs |
 | --- | --- |
-| `executeHttpRequest(args)` | An [http](./http.html) source: `args["method"]`, `args["path"]`, `args["header"]`, `args["body"]`, `args["resultContent"]`, ... |
-| `executeHttpJsonRequest(args, response)` | The same request, with its body parsed as JSON into the `response` array. Returns the HTTP status code. See [Read JSON](#read-json). |
+| `executeHttpRequest(args)` | An [http](./http.html) source: `args["method"]`, `args["path"]`, `args["header"]`, `args["body"]`, `args["resultContent"]`, ... The body may be an array: see [Send JSON](#send-json). |
+| `executeHttpJsonRequest(args, response)` | The same request, with the body of its response parsed as JSON into the `response` array. Returns the HTTP status code. See [Read JSON](#read-json). |
 | `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. |
 | `executeSnmpTable(args)` | An [snmpTable](./snmp-table.html) source: `args["oid"]`, `args["selectColumns"]`. |
 | `executeWbemRequest(args)` | A [wbem](./wbem.html) source: `args["query"]`, `args["namespace"]`. |
@@ -197,6 +197,44 @@ BEGIN {
 > A function cannot return an array to a variable: `rows = json2Table(...)` fails. Pass the array as the last argument.
 
 The former `json2csv(args)` function, which returned the rows as `;`-joined lines, no longer exists: use `json2Table`.
+
+### Send JSON
+
+The body of a request may be an array instead of a text: `executeHttpJsonRequest` and `executeHttpRequest` write it as JSON. Every value is escaped, so a `"` or a `\` in a name or a password cannot break the document, as it does in a body built by joining strings.
+
+```awk
+{
+  args["method"] = "post"
+  args["path"] = "/api/v1/metrics"
+  args["body"]["systemId"] = $2
+  args["body"]["startDate"] = $3 + 0
+  args["body"]["average"] = mkbool(1)
+  args["body"]["metrics"][0] = "Reads"
+  args["body"]["metrics"][1] = "Writes"
+  if (executeHttpJsonRequest(args, response) != 200) next
+  print $2, response["result"][0]["Reads"], response["result"][0]["Writes"]
+}
+```
+
+The request above sends `{"average":true,"metrics":["Reads","Writes"],"startDate":1700000000,"systemId":"000123"}`.
+
+An array is written the way a response is read, the other way round:
+
+| In the array | In the JSON body |
+| --- | --- |
+| An array whose indexes are 0 to n-1 | An array |
+| Any other array, an empty one included | An object, its properties in alphabetical order |
+| A number | A number: `3`, never `3.0` |
+| A string, and a field or any other text read from the input, even when it looks like a number (`$2` holding `000123`) | A string: `"000123"` |
+| `mkbool(1)`, `mkbool(0)`, and a `true` or a `false` read from a response | `true`, `false` |
+| An element without a value | An empty string: `""` |
+
+- To send a field as a number, add 0 to it: `$3 + 0`. To send a number as a string, join it with an empty string: `count ""`.
+- The result of `split()` is indexed from 1, which makes it an object: copy it to indexes that start at 0 to send an array.
+- `null` and an empty array (`[]`) cannot be written. Give the body as a text when the request needs one.
+- A decimal read from a response prints as the document writes it because it is a text that computes as a number: sent back as it is, it is a string. Add 0 to send it as a number.
+- `Content-Type: application/json` is added to the header of the request, unless `args["header"]` already names a content type.
+- The script keeps its array: `args["body"]` is the same after the call.
 
 ## Sandbox
 
