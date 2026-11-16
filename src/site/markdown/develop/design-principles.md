@@ -167,7 +167,7 @@ A `${source::...}` reference to a source the connector does not have is rejected
 | `STRING_LITERAL_ROWS` | write a list of rows | A `;` string literal in `tables`, `leftTable` or `rightTable` (see [Writing Table Literals](sources/table-union.html#writing-table-literals)). |
 | `TABLE_INTERPOLATED` | interpolate a text | A table referenced in an interpolated field. |
 | `UNRESOLVED_REFERENCE` | reference an existing source | A reference to a source the connector does not have. |
-| `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` or `json2csv` compute type (rename it `json2Table`), the `input` property of an `awk` compute and the `inputFormat` property of an `awk` source (remove them). |
+| `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` or `json2csv` compute type (rename it `json2Table`), the `parsingMode` property of a `json2Table` compute, the `input` property of an `awk` compute and the `inputFormat` property of an `awk` source (remove them). |
 
 Each finding is logged at ERROR when the connector loads, and the load error lists every finding. The message names the rule, the source, the location, the expected and actual types, and the hint:
 

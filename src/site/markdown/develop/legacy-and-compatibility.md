@@ -25,6 +25,7 @@ This page explains what to use now and how to migrate safely.
 | Union of texts | `type: textUnion` with `texts` | `type: tableUnion` with `tables` of texts | Use `textUnion`. The legacy form is rejected (`TABLE_UNION_OF_TEXTS`). |
 | Table literal | List of rows: `[ [ a, b ], [ c, d ] ]` | `;` string: `"a;b\nc;d"` | Use the list of rows in `tables`, `leftTable` and `rightTable`. The legacy form is rejected (`STRING_LITERAL_ROWS`). |
 | AWK input | No property: an `awk` reads its source as it is | `input` (compute), `inputFormat` (source) | Remove them: they are rejected (`DEPRECATED_SYNTAX`). |
+| JSON parsing | No property: `json2Table` reads a payload of 64 KiB or more as events | `parsingMode` | Remove it: it is rejected (`DEPRECATED_SYNTAX`). |
 
 From MetricsHub Community 3.9.09, a connector that uses a legacy form marked rejected above does not load: these forms are checked when the connector loads, together with the other rules of the [Strict Content Types](design-principles.html#strict-content-types). Earlier versions do not know `json2Table`, `textUnion` or the list of rows.
 
