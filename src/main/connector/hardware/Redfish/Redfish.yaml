@@ -52,6 +52,8 @@ beforeAll:
     computes:
       - type: awk
         script: "${file::extractSessionLocation.awk}"
+      - type: toTable
+        separator: ";"
 afterAll:
   source(1):
     type: http
