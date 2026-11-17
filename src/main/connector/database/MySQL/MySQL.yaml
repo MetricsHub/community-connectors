@@ -285,13 +285,11 @@ tools:
           ) q ON TRUE
           ORDER BY GREATEST(q.seconds, IFNULL(q.trxSeconds, 0)) DESC
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            /^;/ { next }
-            { print }
+            $1 != "" { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
-        - type: toTable
     result:
       source: ${source::sessions}
       columns: [ id, user, host, db, command, seconds, state, trxSeconds, trxState, trxRowsLocked, trxRowsModified, statement ]
@@ -329,13 +327,11 @@ tools:
           ) q ON TRUE
           ORDER BY q.waitSeconds DESC, q.blockingId
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            /^;/ { next }
-            { print }
+            $1 != "" { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege and SELECT on performance_schema" }
-        - type: toTable
     result:
       source: ${source::waits}
       columns: [ lockType, waitingId, waitSeconds, lockedObject, lockMode, waitingStatement, blockingId, blockingSeconds, blockingStatement ]
@@ -352,9 +348,9 @@ tools:
         type: sql
         query: SHOW ENGINE INNODB STATUS
         computes:
-        - type: toText
-        # Type;Name;Status, the Status spanning many lines. A section title stands between two lines of dashes.
+        # Type, Name, Status: the report is the Status, on many lines. A section title stands between two lines of dashes.
         - type: awk
+          output: table
           variables:
             section: ${param::section}
           script: |
@@ -363,8 +359,8 @@ tools:
               k = split("BACKGROUND THREAD|SEMAPHORES|LATEST FOREIGN KEY ERROR|LATEST DETECTED DEADLOCK|TRANSACTIONS|FILE I/O|INSERT BUFFER AND ADAPTIVE HASH INDEX|LOG|BUFFER POOL AND MEMORY|ROW OPERATIONS", t, "|")
               for (j = 1; j <= k; j++) titles[t[j]] = 1
             }
-            NR == 1 && /^InnoDB;/ { next }
-            { sub(/;$/, ""); line[++n] = $0 }
+            # A row per line, without the line breaks that start and end the report
+            { text = $3; gsub(/^(\r?\n)+|(\r?\n)+$/, "", text); n = split(text, line, /\r?\n/) }
             END {
               if (NR == 0) { print "SHOW ENGINE INNODB STATUS failed: it needs the PROCESS privilege"; exit }
               for (i = 1; i <= n; i++) {
@@ -373,9 +369,9 @@ tools:
               }
               if (!found) print "No " section " section in the output (e.g. no deadlock since the server started)"
             }
-        - type: toTable
     result:
       source: ${source::status}
+      columns: [ line ]
 
   explainQuery:
     description: Returns the execution plan of the statement that a session runs now (EXPLAIN FORMAT=TREE FOR CONNECTION), one line per row, with the estimated costs and rows of each step. Use it on a long-running query found with MySQL_sessions, to see a full table scan or a missing index. A statement of a stored procedure or an event has no plan here. Needs MySQL 8.0.16 or later (FORMAT=TREE).
@@ -390,16 +386,17 @@ tools:
         type: sql
         query: EXPLAIN FORMAT=TREE FOR CONNECTION ${param::id}
         computes:
-        - type: toText
         - type: awk
+          output: table
           variables:
             id: ${param::id}
           script: |
-            { sub(/;$/, ""); print }
+            # A row per line of the plan, without the line break that ends it
+            { text = $1; gsub(/^(\r?\n)+|(\r?\n)+$/, "", text); n = split(text, line, /\r?\n/); for (i = 1; i <= n; i++) print line[i] }
             END { if (NR == 0) print "No plan: session " id " runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" }
-        - type: toTable
     result:
       source: ${source::plan}
+      columns: [ line ]
 
   topStatements:
     description: Lists the statements that cost the most since the server started (or the statistics were reset), from performance_schema, grouped by their normalized text, with the schema, the normalized text, the executions, the total seconds, the average and maximum milliseconds, the lock milliseconds, the rows examined, sent and affected, the errors, the warnings, the executions without a good index, the temporary tables on disk, and when they ran first and last. Use it when the server is busy or slow without one long-running query, to find the statements to tune, then MySQL_explainQuery while one runs.
@@ -441,13 +438,11 @@ tools:
           ) q ON TRUE
           ORDER BY q.sortKey DESC
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            /^;/ { next }
-            { print }
+            $1 != "" { print }
             END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
-        - type: toTable
         # Without the sort key
         - type: keepColumns
           columnNumbers: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
@@ -482,13 +477,12 @@ tools:
           ) q ON TRUE
           ORDER BY q.channel
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            /^;/ { print "No replication channel: this server is not a replica"; next }
+            $1 == "" { print "No replication channel: this server is not a replica"; next }
             { print }
             END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
-        - type: toTable
     result:
       source: ${source::channels}
       columns: [ channel, source, receiverState, applierState, lagSeconds, receiverError, applierErrors, lastHeartbeat ]
@@ -524,13 +518,11 @@ tools:
           ) q ON TRUE
           ORDER BY GREATEST(IFNULL(q.diskBytes, 0), IFNULL(q.dataBytes, 0) + IFNULL(q.indexBytes, 0)) DESC
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            /^;/ { next }
-            { print }
+            $1 != "" { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
-        - type: toTable
     result:
       source: ${source::schemas}
       columns: [ name, tables, rows, dataBytes, indexBytes, diskBytes ]
@@ -571,13 +563,11 @@ tools:
           ) q ON TRUE
           ORDER BY q.sortKey DESC
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            /^;/ { next }
-            { print }
+            $1 != "" { print }
             END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
-        - type: toTable
         # Without the sort key
         - type: keepColumns
           columnNumbers: 1,2,3,4,5,6,7,8
@@ -606,13 +596,12 @@ tools:
           ) q ON TRUE
           ORDER BY q.name
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            /^;/ { print "No variable matches"; next }
+            $1 == "" { print "No variable matches"; next }
             { print }
             END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
-        - type: toTable
     result:
       source: ${source::variables}
       columns: [ name, value, source, file, setTime ]
@@ -646,15 +635,14 @@ tools:
             WHERE ID = ${param::id}
           ) q ON TRUE
         computes:
-        - type: toText
         - type: awk
+          output: table
           variables:
             id: ${param::id}
           script: |
-            /^;/ { print "There is no session " id " (any more)"; next }
+            $1 == "" { print "There is no session " id " (any more)"; next }
             { print }
             END { if (NR == 0) print "Could not check session " id ": it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" }
-        - type: toTable
     result:
       source: ${source::session}
       columns: [ id, user, host, db, command, seconds, state, statement ]

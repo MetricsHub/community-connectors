@@ -548,6 +548,7 @@ tools:
         - ${source::errors}
     result:
       source: ${source::all}
+      columns: [ megabytes, path ]
 
   deletedOpenFiles:
     description: Lists the deleted files that processes still hold open or map, the largest first, with the process and, through lsof, the size in bytes. Their space is only freed when the process closes them or stops. Use it when Linux_fileSystemUsage shows a full file system and Linux_largestFiles finds less than what is used. Without lsof, the command, the user and the size are missing, and find needs root or sudo to see the processes of other users.
@@ -675,6 +676,8 @@ tools:
         - ${source::states}
     result:
       source: ${source::all}
+      # A line of ss, or a TCP state and the number of connections in it
+      columns: [ lineOrState, count ]
 
   timeSync:
     description: Shows the time and the time zone of the host, whether its clock is synchronized, and its offset to the time sources of chrony, ntpd or systemd-timesyncd. Use it when TLS, Kerberos or cluster errors point to a clock drift.
