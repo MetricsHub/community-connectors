@@ -108,11 +108,11 @@ monitors:
           # Union of both fan formats
           type: tableUnion
           tables:
-          - ${source::monitors.fan.simple.sources.source(1)}
-          - ${source::monitors.fan.simple.sources.source(2)}
+          - ${source::source(1)}
+          - ${source::source(2)}
 
       mapping:
-        source: ${source::monitors.fan.simple.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $2
           __display_id: $3

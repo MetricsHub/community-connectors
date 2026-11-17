@@ -44,7 +44,7 @@ monitors:
       mapping:
         # InstanceTable = Source(1)
         # LunName;LunInfo;NumberPaths;LunStatus;LunStatusInfo;AvailablePaths
-        source: ${source::monitors.lun.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           array_name: $2
@@ -67,7 +67,7 @@ monitors:
       mapping:
         # ValueTable = Source(1)
         # LunName;LunInfo;NumberPaths;LunStatus;LunStatusInfo;AvailablePaths
-        source: ${source::monitors.lun.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:

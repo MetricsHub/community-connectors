@@ -91,8 +91,8 @@ monitors:
           # Source 7 = 2 Joined to 3 with Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;
           type: tableJoin
-          leftTable: ${source::monitors.lun.discovery.sources.source(2)}
-          rightTable: ${source::monitors.lun.discovery.sources.source(3)}
+          leftTable: ${source::source(2)}
+          rightTable: ${source::source(3)}
           leftKeyColumn: 1
           rightKeyColumn: 2
           keyType: Wbem
@@ -101,8 +101,8 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;
           type: tableJoin
-          leftTable: ${source::monitors.lun.discovery.sources.source(7)}
-          rightTable: ${source::monitors.lun.discovery.sources.source(4)}
+          leftTable: ${source::source(7)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 4
           rightKeyColumn: 2
           keyType: Wbem
@@ -111,8 +111,8 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7          #         8          #      9          10
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;Win32_DiskDrive;PhysicalDiskName;PnPAddress;
           type: tableJoin
-          leftTable: ${source::monitors.lun.discovery.sources.source(8)}
-          rightTable: ${source::monitors.lun.discovery.sources.source(5)}
+          leftTable: ${source::source(8)}
+          rightTable: ${source::source(5)}
           leftKeyColumn: 6
           rightKeyColumn: 1
           keyType: Wbem
@@ -121,8 +121,8 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7          #         8          #      9          10           11          #  12
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;Win32_DiskDrive;PhysicalDiskName;PnPAddress;LunId(WithDevice);PnPAddress;
           type: tableJoin
-          leftTable: ${source::monitors.lun.discovery.sources.source(9)}
-          rightTable: ${source::monitors.lun.discovery.sources.source(6)}
+          leftTable: ${source::source(9)}
+          rightTable: ${source::source(6)}
           leftKeyColumn: 10
           rightKeyColumn: 2
           computes:
@@ -142,8 +142,8 @@ monitors:
           # Join the MPIO Discovered list with the Volume List
           # MPIOID;LunPathCount;NAAID;MPIOID;VolumeList;
           type: tableJoin
-          leftTable: ${source::monitors.lun.discovery.sources.source(1)}
-          rightTable: ${source::monitors.lun.discovery.sources.source(10)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(10)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "", No Volumes ]
@@ -161,7 +161,7 @@ monitors:
       mapping:
         # InstanceTable = Source(1)
         # MPIOID-VolumeList;LunPathCount;NAAID;MPIOID;VolumeList;
-        source: ${source::monitors.lun.discovery.sources.source(11)}
+        source: ${source::source(11)}
         attributes:
           id: $3
           __display_id: $3
@@ -187,7 +187,7 @@ monitors:
       mapping:
         # ValueTable = Source(1)
         # LUNID;NumberPaths
-        source: ${source::monitors.lun.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $3
         metrics:
