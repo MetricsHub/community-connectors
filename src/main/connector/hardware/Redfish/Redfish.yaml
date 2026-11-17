@@ -47,8 +47,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
           # END SNIPPET: json2CsvCompute
         source(2):
           type: copy
@@ -66,8 +65,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /
-            properties: /@odata.id;/Name;/SerialNumber;/PartNumber;/Manufacturer;/Model;
-            separator: ;
+            properties: [ /@odata.id, /Name, /SerialNumber, /PartNumber, /Manufacturer, /Model ]
         source(4):
           # For use in other Discoveries
           type: http
@@ -78,8 +76,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(5):
           type: http
           method: GET
@@ -92,8 +89,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: "/@odata.id;/Links/ComputerSystems[0]/@odata.id;"
-            separator: ;
+            properties: [ /@odata.id, "/Links/ComputerSystems[0]/@odata.id" ]
         #now get the storage groups
         source(6):
           type: http
@@ -107,8 +103,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: "/@odata.id;/Links/Storage[0]/@odata.id;"
-            separator: ;
+            properties: [ /@odata.id, "/Links/Storage[0]/@odata.id" ]
       mapping:
         # Enclosure Instance Table
         # Json;odata.id;Name;SerialNumber;PartNumber;Manufacturer;Model
@@ -134,8 +129,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(2):
           type: copy
           from: "${source::source(1)}"
@@ -151,8 +145,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /
-            properties: /@odata.id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /@odata.id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -169,8 +162,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(5):
           type: http
           method: GET
@@ -183,8 +175,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: "/@odata.id;/Links/ComputerSystems[0]/@odata.id;"
-            separator: ;
+            properties: [ /@odata.id, "/Links/ComputerSystems[0]/@odata.id" ]
       mapping:
         # Enclosure Value Table
         # JsonID;odata.id;PatrolStatus;StatusInformation
@@ -213,8 +204,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           # JsonID;<System>;@odata.id
           type: http
@@ -228,8 +218,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../Column(2);/Id;/Socket;/Manufacturer;/Model;/MaxSpeedMHz;
-            separator: ;
+            properties: [ ../Column(2), /Id, /Socket, /Manufacturer, /Model, /MaxSpeedMHz ]
       mapping:
         # JSONID;<system>;Id;Socket;Manufacturer;Model;MaxSpeedMHz
         source: "${source::source(2)}"
@@ -259,8 +248,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.Id;
-            separator: ;
+            properties: [ /@odata.Id ]
         source(2):
           type: http
           method: GET
@@ -273,8 +261,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /
-            properties: /Id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -308,8 +295,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
           method: GET
@@ -322,8 +308,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../Column(2);/Id;/DeviceLocator;/CapacityMiB;/Manufacturer;/PartNumber;/SerialNumber;/MemoryDeviceType;
-            separator: ;
+            properties: [ ../Column(2), /Id, /DeviceLocator, /CapacityMiB, /Manufacturer, /PartNumber, /SerialNumber, /MemoryDeviceType ]
       mapping:
         # JSON;<System>;Id;DeviceLocator;CapacityMiB;Manufacturer;PartNumber;SerialNumber;MemoryDeviceType;
         source: "${source::source(2)}"
@@ -355,8 +340,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.Id;
-            separator: ;
+            properties: [ /@odata.Id ]
         source(2):
           type: http
           method: GET
@@ -369,8 +353,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /
-            properties: /Id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -404,8 +387,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Fans
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;LowerThresholdNonCritical;LowerThresholdCritical;/MinReadingRange
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, LowerThresholdNonCritical, LowerThresholdCritical, /MinReadingRange ]
           # Remove Fans that are not populated
           - type: keepOnlyMatchingLines
             column: 5
@@ -441,8 +423,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Fans
-            properties: /MemberId;/Status/Health;/Status/Health;/Reading;/Reading;/MinReadingRange;/MaxReadingRange;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health, /Reading, /Reading, /MinReadingRange, /MaxReadingRange ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -488,8 +469,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
           method: GET
@@ -502,8 +482,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Devices
-            properties: ../../Column(2);/Name;/Manufacturer;/Model;
-            separator: ;
+            properties: [ ../../Column(2), /Name, /Manufacturer, /Model ]
         source(3):
           type: http
           method: GET
@@ -516,8 +495,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Links/Drives
-            properties: ../../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../../Column(2), /@odata.id ]
         source(4):
           type: http
           method: GET
@@ -530,8 +508,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../../Column(2);/Id;/Manufacturer;/Model;
-            separator: ;
+            properties: [ ../../Column(2), /Id, /Manufacturer, /Model ]
         source(5):
           type: tableUnion
           tables:
@@ -565,8 +542,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(2):
           type: http
           method: GET
@@ -579,8 +555,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Devices
-            properties: /Name;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Name, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -599,8 +574,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: /Id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -639,8 +613,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: Entry/Value/PowerSupplies
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;/PowerSupplyType;/LineInputVoltage;/Model;/firmwareVersion;/SerialNumber;
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /PowerSupplyType, /LineInputVoltage, /Model, /firmwareVersion, /SerialNumber ]
           # Exclude PowerSupplies that are marked as "Absent" at discovery
           - type: excludeMatchingLines
             column: 5
@@ -683,8 +656,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /PowerSupplies
-            properties: /MemberId;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -718,8 +690,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Temperatures
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;/ReadingCelsius;
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /UpperThresholdNoncritical, /UpperThresholdCritical, /ReadingCelsius ]
           # Exclude only the unpopulated slots: a sensor that is not Enabled (StandbyOffline while the host is off, ...)
           # or has no valid reading still exists, and keeps its monitor
           - type: excludeMatchingLines
@@ -754,8 +725,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Temperatures
-            properties: /MemberId;/Status/Health;/Status/Health;/ReadingCelsius;/Status/State;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health, /ReadingCelsius, /Status/State ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -796,8 +766,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Voltages
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /UpperThresholdNoncritical, /UpperThresholdCritical ]
           # Exclude only the unpopulated slots: a sensor that is not Enabled (StandbyOffline while the host is off, ...) still exists
           - type: excludeMatchingLines
             column: 5
@@ -828,8 +797,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Voltages
-            properties: /MemberId;/Status/Health;/Status/Health;/ReadingVolts;/Status/State;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health, /ReadingVolts, /Status/State ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -873,8 +841,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
           method: GET
@@ -887,8 +854,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../Column(2);/Id;/Name;/MACAddress;/Status/State
-            separator: ;
+            properties: [ ../Column(2), /Id, /Name, /MACAddress, /Status/State ]
           - type: translate
             column: 6
             translationTable: "${translation::LinkSpeedDeactivationTranslationTable}"
@@ -922,8 +888,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(2):
           type: http
           method: GET
@@ -936,8 +901,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /
-            properties: /Id;/Status/State;/Status/State;/Status/Health;/SpeedMbps;
-            separator: ;
+            properties: [ /Id, /Status/State, /Status/State, /Status/Health, /SpeedMbps ]
           - type: translate
             column: 3
             translationTable: "${translation::NetworkCardStatusTranslationTable}"
