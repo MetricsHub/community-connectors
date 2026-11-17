@@ -234,7 +234,7 @@ An array is written the way a response is read, the other way round:
 - `null` and an empty array (`[]`) cannot be written. Give the body as a text when the request needs one.
 - A decimal read from a response prints as the document writes it because it is a text that computes as a number: sent back as it is, it is a string. Add 0 to send it as a number.
 - `Content-Type: application/json` is added to the header of the request, unless `args["header"]` already names a content type, in its text or in the embedded file it refers to.
-- A credential macro in a value, such as `%{USERNAME}` or `%{PASSWORD}`, is escaped as JSON when the request replaces it: write the macro alone, without `esc(json)`. A macro that names another escape, such as `${esc(url)::PASSWORD}`, keeps it.
+- A credential macro in a value, such as `%{USERNAME}` or `%{PASSWORD}`, is escaped as JSON when the request replaces it: write the macro alone, without `esc(json)`. A macro that names another escape, such as `${esc(url)::PASSWORD}`, keeps that escape only: its value is not escaped as JSON.
 - A value cannot refer to an embedded file: `${file::...}` in a value is not replaced by the content of the file.
 - The script keeps its array: `args["body"]` is the same after the call.
 
