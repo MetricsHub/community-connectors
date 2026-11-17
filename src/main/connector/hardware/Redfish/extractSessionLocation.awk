@@ -5,7 +5,7 @@ $1 ~ /^[Ll][Oo][Cc][Aa][Tt][Ii][Oo][Nn]$/ {
     gsub(/^[ \t]+|[ \t\r]+$/, "", location)
 
     # Ne garder que le chemin Redfish
-    sub(/^https?:\/\/[^\/]+/, "", location)
+    sub(/^[Hh][Tt][Tt][Pp][Ss]?:\/\/[^\/]+/, "", location)
 
     print location
 }
