@@ -35,18 +35,21 @@ monitors:
           computes:
           - type: awk
             script: ${file::chassis_status.awk}
+            output: table
         allFrus:
           type: commandLine
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open fru
           computes:
           - type: awk
             script: ${file::frus_formatter.awk}
+            output: table
         sdr:
           type: commandLine
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open -v sdr elist all
           computes:
           - type: awk
             script: ${file::sdr_formatter.awk}
+            output: table
         interpretedSensors:
           type: tableUnion
           tables:
@@ -56,11 +59,10 @@ monitors:
           computes:
           - type: awk
             script: ${file::translateIpmi.awk}
+            output: table
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11
+            output: table
 
 # The command that %{SUDO:...} elevates, when the configuration enables sudo for it
 sudoCommands:

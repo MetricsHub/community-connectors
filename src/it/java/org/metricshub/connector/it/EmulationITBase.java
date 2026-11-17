@@ -2,10 +2,13 @@ package org.metricshub.connector.it;
 
 import org.metricshub.agent.context.AgentContext;
 import org.metricshub.agent.context.MetricDefinitions;
+import org.metricshub.agent.helper.ConfigHelper;
 import org.metricshub.agent.opentelemetry.MetricsExporter;
 import org.metricshub.agent.service.task.MonitoringTask;
 import org.metricshub.agent.service.task.MonitoringTaskInfo;
 import org.metricshub.configuration.YamlConfigurationProvider;
+import org.metricshub.engine.common.helpers.ThreadHelper;
+import org.metricshub.engine.connector.model.ConnectorStore;
 import org.metricshub.engine.extension.ExtensionManager;
 import org.metricshub.engine.extension.ICompositeSourceScriptExtension;
 import org.metricshub.engine.extension.IProtocolExtension;
@@ -29,7 +32,33 @@ import java.util.NoSuchElementException;
  */
 public class EmulationITBase extends AbstractITJob {
 
+	/**
+	 * The connectors patch directory of every IT configuration (<code>patchDirectory</code> in each
+	 * <code>config/*.yaml</code>). The shared connector store is built from it, so an IT configuration pointing
+	 * elsewhere would not see its connectors.
+	 */
+	private static final String PATCH_DIRECTORY = "src/main/connector";
+
+	/**
+	 * The connector store, built once per JVM: building it parses the whole library and costs seconds, the
+	 * replay itself well under one. Each resource still gets its own copy of it.
+	 */
+	private static ConnectorStore connectorStore;
+
 	private MonitoringTaskInfo monitoringTaskInfo;
+
+	/**
+	 * Returns the connector store shared by the ITs of this JVM, building it on the first call.
+	 *
+	 * @param extensionManager The extension manager providing the extension connectors
+	 * @return the shared connector store
+	 */
+	private static synchronized ConnectorStore connectorStore(final ExtensionManager extensionManager) {
+		if (connectorStore == null) {
+			connectorStore = ConfigHelper.buildConnectorStore(extensionManager, PATCH_DIRECTORY);
+		}
+		return connectorStore;
+	}
 
 	/**
 	 * Constructor for the Emulation IT Base
@@ -66,8 +95,8 @@ public class EmulationITBase extends AbstractITJob {
 		// Create the extension manager with all required extensions for the IT tests
 		final ExtensionManager extensionManager = createExtensionManger();
 
-		// Initialize the application context
-		final var agentContext = new AgentContext(configFileDirectory, extensionManager);
+		// Initialize the application context with the connector store shared by every IT of this JVM
+		final var agentContext = new AgentContext(configFileDirectory, extensionManager, connectorStore(extensionManager));
 
 		// Get the first resource group entry
 		final var firstGroupEntry = agentContext
@@ -154,6 +183,8 @@ public class EmulationITBase extends AbstractITJob {
 	 * @return ITJob An integration test job instance
 	 */
 	protected ITJob executeStrategies() {
+		// The request counters are kept per host name for the life of the JVM, which the ITs share: start from zero
+		ThreadHelper.clearStats(monitoringTaskInfo.getTelemetryManager().getHostname());
 		new MonitoringTask(monitoringTaskInfo).run();
 		return this;
 	}

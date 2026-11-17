@@ -53,7 +53,7 @@ function pick_vendor() {
 /^###ENDDEVICE$/ {
     if (current_device != "") {
         # Emit one inventory row per completed device block.
-        print "MSHW", current_device, pick_vendor(), serial, current_extra
+        print current_device, pick_vendor(), serial, current_extra
     }
     reset_record()
     next

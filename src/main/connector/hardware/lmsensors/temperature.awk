@@ -13,7 +13,7 @@ BEGIN {
 		Name = $1
 	}
 	if (NF == 1 && $0 ~ /:/ && TEMP == 1) {
-		print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Max ";" Critical ";")
+		print Name "-" Type, Type, Value, Max, Critical
 		Value = ""
 		Max = ""
 		Critical = ""
@@ -24,7 +24,7 @@ BEGIN {
 		gsub(/:/, "", Type)
 	}
 	if (NF == 2 && $2 ~ /:/ && TEMP == 1) {
-		print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Max ";" Critical ";")
+		print Name "-" Type, Type, Value, Max, Critical
 		Value = ""
 		Max = ""
 		Critical = ""
@@ -63,7 +63,7 @@ BEGIN {
 			if (Max == 0 && Critical > 0) {
 				Max = Critical - Critical / 10
 			}
-			print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Max ";" Critical ";")
+			print Name "-" Type, Type, Value, Max, Critical
 			Value = ""
 			Max = ""
 			Critical = ""
@@ -71,21 +71,21 @@ BEGIN {
 		}
 	}
 	if (NF == 1 && TEMP == 1 && $0 !~ /temp/) {
-		print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Max ";" Critical ";")
+		print Name "-" Type, Type, Value, Max, Critical
 		Value = ""
 		Max = ""
 		Critical = ""
 		TEMP = 0
 	}
 	if (NF == 0 && TEMP == 1 && $0 !~ /temp/) {
-		print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Max ";" Critical ";")
+		print Name "-" Type, Type, Value, Max, Critical
 		Value = ""
 		Max = ""
 		Critical = ""
 		TEMP = 0
 	}
 	if (NF >= 3 && TEMP == 1 && $0 !~ /temp/) {
-		print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Max ";" Critical ";")
+		print Name "-" Type, Type, Value, Max, Critical
 		Value = ""
 		Max = ""
 		Critical = ""
@@ -99,7 +99,7 @@ BEGIN {
 
 END {
 	if (TEMP == 1) {
-		print ("MSHW;" Name "-" Type ";" Type ";" Value ";" Max ";" Critical ";")
+		print Name "-" Type, Type, Value, Max, Critical
 		Value = ""
 		Max = ""
 		Critical = ""

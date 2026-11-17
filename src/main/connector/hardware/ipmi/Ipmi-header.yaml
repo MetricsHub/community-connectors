@@ -57,14 +57,18 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;
-          - type: append
-            column: 3
-            value: ;;
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
-          - type: append
-            column: 9
-            value: ;
+          - type: insertColumn
+            column: 4
+            value: ""
+            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 5
+            value: ""
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 10
+            value: ""
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
 
         source(2):
           # Handle the "Fan Device" and "Fan/cooling device" (HP through WMI) formats: status only
@@ -83,10 +87,22 @@ monitors:
             column: 4
             conversion: array2SimpleStatus
             # Fan Device;DeviceID;DisplayID;Status;StatusInformation;AdditionalInformation1;
-          - type: append
-            column: 5
-            value: ;;;;
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
+          - type: insertColumn
+            column: 6
+            value: ""
+            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;AdditionalInformation1;
+          - type: insertColumn
+            column: 7
+            value: ""
+            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;AdditionalInformation1;
+          - type: insertColumn
+            column: 8
+            value: ""
+            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;WarningThreshold;AdditionalInformation1;
+          - type: insertColumn
+            column: 9
+            value: ""
+            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
 
         source(3):
           # Union of both fan formats

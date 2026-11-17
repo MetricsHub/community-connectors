@@ -1,7 +1,3 @@
-BEGIN {
-	FS = ";"
-}
-
 {
 	warningThreshold = ""
 	alarmThreshold = $2
@@ -15,6 +11,6 @@ BEGIN {
 			alarmThreshold = 50
 		}
 	}
-	print "MSHW;" $1 ";" model ";" warningThreshold ";" alarmThreshold
+	print $1, model, warningThreshold, alarmThreshold
 }
 

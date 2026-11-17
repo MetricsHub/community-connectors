@@ -22,7 +22,7 @@ function emit_record() {
         if (warning_threshold == "") {
             warning_threshold = 53
         }
-        print "MSHW", current_device, warning_threshold, current_extra
+        print current_device,warning_threshold, current_extra
     }
 }
 

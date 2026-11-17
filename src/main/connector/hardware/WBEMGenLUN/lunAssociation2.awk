@@ -1,7 +1,3 @@
-BEGIN {
-	FS = "[;]"
-}
-
 $3 ~ /.Device.MPIO/ {
 	DriveLetter = $1
 	DriveName = $2
@@ -13,7 +9,7 @@ $3 ~ /.Device.MPIO/ {
 END {
 	for (MPIOID in MPIOInfo) {
 		if (MPIOInfo[MPIOID] != "") {
-			print ("MSHW;" MPIOID ";" MPIOInfo[MPIOID] ";")
+			print MPIOID, MPIOInfo[MPIOID]
 		}
 	}
 }

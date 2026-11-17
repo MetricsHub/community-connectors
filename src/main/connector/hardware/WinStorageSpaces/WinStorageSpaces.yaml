@@ -63,9 +63,7 @@ monitors:
             # __PATH;DeviceID;Model;FirmwareVersion;SerialNumber;Size
           - type: awk
             script: ${file::diskController.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7
+            output: table
         source(2):
           # Source(2) = Win32_DiskDrive
           # SerialNumber;PnPDeviceID;
@@ -186,7 +184,7 @@ monitors:
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(10)}
           leftKeyColumn: 2
           rightKeyColumn: 1
-          defaultRightLine: ;;;;;;
+          defaultRightLine: [ "", "", "", "", "", "" ]
       mapping:
         # The instance table = Source(1)
         # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Controller;DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
@@ -289,7 +287,7 @@ monitors:
           rightTable: ${source::monitors.physical_disk.collect.sources.source(2)}
           leftKeyColumn: 2
           rightKeyColumn: 1
-          defaultRightLine: ;;;;
+          defaultRightLine: [ "", "", "", "" ]
       mapping:
         # ValueTable = Source(3)
         # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
@@ -324,9 +322,7 @@ monitors:
             # DeviceID;Label;Filesystem;Size;
           - type: awk
             script: ${file::logicalDiskDiscovery.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
+            output: table
       mapping:
         # InstanceTable = Source(1)
         source: ${source::monitors.logical_disk.discovery.sources.source(1)}
@@ -368,9 +364,7 @@ monitors:
             # DeviceID;Status;StatusInformation;SizeRemaning;
           - type: awk
             script: ${file::logicalDiskCollect.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
+            output: table
       mapping:
         # ValueTable = Source(1)
         source: ${source::monitors.logical_disk.collect.sources.source(1)}
@@ -416,9 +410,7 @@ monitors:
             # DeviceId;TemperatureType;WarningThreshold;AlarmThreshold;
           - type: awk
             script: ${file::temperature.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5"
+            output: table
       mapping:
         # InstanceTable = Source(2)
         source: ${source::monitors.temperature.discovery.sources.source(2)}
@@ -709,13 +701,15 @@ tools:
         rightTable: ${source::counters}
         leftKeyColumn: 2
         rightKeyColumn: 1
-        defaultRightLine: ;;;;;;
+        defaultRightLine: [ "", "", "", "", "", "" ]
         computes:
+        - type: toText
         # DeviceId without its prefix, size in GB
         - type: awk
           script: |
             BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
             { print substr($2, 3), $3, $4, $5, $6, sprintf("%.0f", $7 / 1073741824), $8, $9, $10, $12, $13, $14, $15, $16 }
+        - type: toTable
     result:
       source: ${source::table}
       columns: [ deviceId, name, serialNumber, mediaType, busType, sizeGB, usage, health, operationalStatus, temperature, wearPercent, readErrors, writeErrors, powerOnHours ]
@@ -736,11 +730,13 @@ tools:
           column: 4
           translationTable: ${translation::StorageOperationalStatusTranslationTable}
           resultSeparator: ', '
+        - type: toText
         # The columns of the result; booleans in lowercase, as WinRM gives them (WMI gives True/False)
         - type: awk
           script: |
             BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
             { print "pool", $1, $3, $4, $6, $7, tolower($2), tolower($5), "", "", "", "", "", "", "", "", "" }
+        - type: toTable
       virtualDisks:
         # FriendlyName;ResiliencySettingName;NumberOfDataCopies;PhysicalDiskRedundancy;HealthStatus;OperationalStatus;DetachedReason;Size;FootprintOnPool
         type: wmi
@@ -757,10 +753,12 @@ tools:
         - type: translate
           column: 7
           translationTable: ${translation::DetachedReasonTranslationTable}
+        - type: toText
         - type: awk
           script: |
             BEGIN { FS = ";"; OFS = ";"; ORS = ";\n" }
             { print "virtualDisk", $1, $5, $6, $8, $9, "", "", $2, $3, $4, $7, "", "", "", "", "" }
+        - type: toTable
       jobs:
         # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal
         type: wmi
@@ -783,8 +781,9 @@ tools:
         rightTable: ${source::elapsed}
         leftKeyColumn: 1
         rightKeyColumn: 1
-        defaultRightLine: ;;
+        defaultRightLine: [ "", "" ]
         computes:
+        - type: toText
         # The elapsed time comes as seconds over WMI, as an ISO 8601 duration (P1DT2H3M4.5S) over WinRM
         - type: awk
           script: |
@@ -801,6 +800,7 @@ tools:
               return sprintf("%.0f", total)
             }
             { print "job", $2, "", "", "", "", "", "", "", "", "", "", $3, $4, $5, $6, seconds($8) }
+        - type: toTable
       all:
         type: tableUnion
         tables:

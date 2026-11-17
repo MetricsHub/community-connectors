@@ -70,7 +70,7 @@
 
 	<properties>
 		<maven.compiler.release>25</maven.compiler.release>
-		<metricshub-community.version>3.9.08</metricshub-community.version>
+		<metricshub-community.version>3.9.09-SNAPSHOT</metricshub-community.version>
 		<!-- Reproducible Build -->
 		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
 		<project.build.outputTimestamp>2026-11-02T14:30:58Z</project.build.outputTimestamp>
@@ -274,8 +274,10 @@
                 </executions>
                 <configuration>
 					<skipITs>false</skipITs>
+                    <!-- A single reused JVM: EmulationITBase builds the connector store once per JVM, and the replays
+                         themselves take well under a second. More forks would each build the store at the same time. -->
                     <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                     <includes>
                         <include>**/*IT.java</include>
                     </includes>

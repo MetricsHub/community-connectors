@@ -44,8 +44,8 @@ tools:
         commandLine: "%{SUDO:ethtool} /usr/sbin/ethtool -S ${param::interface} 2>&1"
         exclude: ': 0$'
       interface:
-        type: tableUnion
-        tables:
+        type: textUnion
+        texts:
         - ${source::details}
         - ${source::counters}
     result:

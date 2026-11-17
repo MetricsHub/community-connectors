@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: /usr/sbin/lsdev -c disk -F 'name physloc'
     computes:
+    - type: toTable
       # Keep only the first 5 chars of the disk path to obtain the controller ID
       # DeviceID;controllerID;
     - type: substring
@@ -32,7 +33,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `substring`. |
-| `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
+| `column` | On a table | None | **1-based** index of the column to modify. Applied to every row. Omit it to keep a portion of a text, see [On A Text](#on-a-text). |
 | `start` | Yes | None | **1-based** position of the first character to keep (`start: 1` starts at the beginning of the value). |
 | `length` | Yes | None | Number of characters to keep from `start`. |
 
@@ -55,6 +56,28 @@ With `column: 2`, `start: 1`, and `length: 5`:
 >   | --- | --- |
 >   | hdisk0 | scsi0 |
 >   | hdisk1 | scsi1 |
+
+## On A Text
+
+Without `column`, `substring` works on a **text** (the result of an `http`, a `commandLine`, an `awk` without `output: table`, ...): it keeps a portion of the whole text, selected by `start` and `length` exactly as in a column, and the result is still a text.
+
+```yaml
+sources:
+  serialPrefix:
+    # The body is the bare serial number: CZ3412ABCD
+    type: http
+    method: get
+    path: /api/serial
+    computes:
+    # CZ3412ABCD -> CZ34
+    - type: substring
+      start: 1
+      length: 4
+```
+
+- The positions count every character of the text, line feeds included.
+- `start` and `length` are numbers here: `$n` is not a column reference, a text has no column.
+- The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 

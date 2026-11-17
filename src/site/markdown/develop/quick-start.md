@@ -173,7 +173,7 @@ monitors:
           # Post-processing of the HTTP data source:
           # Convert the JSON body into a table
           computes:
-          - type: json2Csv
+          - type: json2Table
             entryKey: /records
             properties: /id;/name;/model;/serial;/status
       # Mapping: one enclosure instance per row in ${source::inventory}
@@ -181,7 +181,7 @@ monitors:
       mapping:
         source: ${source::inventory}
         # Attributes attached to each resource
-        # (json2Csv prepends an entry column, so the first property is $2)
+        # (json2Table prepends an entry column, so the first property is $2)
         attributes:
           id: $2
           name: $3

@@ -72,7 +72,7 @@ longer needed.
 
 - Confusing `column` (the 1-based index that is overwritten) with `value: $n` (the operand that is
   only read).
-- Forgetting that upstream computes (`keepColumns`, `awk`, `json2Csv`) may have renumbered the
+- Forgetting that upstream computes (`keepColumns`, `awk`, `json2Table`) may have renumbered the
   columns, so `column` and `$n` point to the wrong data.
 - Applying `add` to a column that contains non-numeric text such as an empty string or a label.
 

@@ -68,9 +68,7 @@ monitors:
             # Active;AdapterID;UniquePortId;PortSpeed;PortWWN-Decimal;PortWWN-Hex;PortType;
           - type: awk
             script: ${file::network.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5,6,7,8"
+            output: table
         source(2):
           # Source(2) = MSFC_FCAdapterHBAAttributes class  (FC Adapters)
           # AdapterID;Manufacturer;Model;Serial

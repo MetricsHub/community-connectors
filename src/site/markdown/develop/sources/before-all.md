@@ -15,7 +15,7 @@ Typical use cases:
 - Shared discovery lists reused by multiple monitor tasks.
 - Expensive command output collected once per cycle.
 
-`beforeAll` sources still return tables and can be referenced anywhere with `${source::beforeAll.<name>}`.
+`beforeAll` sources return what their chain produces, a text or a table (see [Strict Content Types](../design-principles.html#strict-content-types)), and can be referenced anywhere with `${source::beforeAll.<name>}`.
 
 ## Syntax
 

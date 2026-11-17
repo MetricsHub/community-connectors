@@ -1,5 +1,5 @@
 BEGIN {
-	FS = OFS = ";"
+	OFS = ";"
 }
 
 {

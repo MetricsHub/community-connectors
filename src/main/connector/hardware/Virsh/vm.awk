@@ -10,7 +10,7 @@ BEGIN {
 # a missing row would remove the vm monitor
 function printDomain() {
 	if (vmName != "") {
-		print vmName ";" powerState ";" powerShare ";" (uuid == "" ? "" : "UUID: " uuid)
+		print vmName, powerState, powerShare, (uuid == "" ? "" : "UUID: " uuid)
 	}
 	vmName = ""
 	uuid = ""

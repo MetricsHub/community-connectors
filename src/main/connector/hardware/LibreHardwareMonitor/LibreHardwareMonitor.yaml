@@ -131,9 +131,7 @@ monitors:
             # SensorId;Name;WarningThreshold;AlarmThreshold;
           - type: awk
             script: ${file::temperature.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5
+            output: table
       mapping:
         # Instance table
         # SensorId;Name;WarningThreshold;AlarmThreshold;
@@ -328,7 +326,7 @@ monitors:
           rightTable: ${source::monitors.cpu.discovery.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 2
-          defaultRightLine: ;;;;
+          defaultRightLine: [ "", "", "", "" ]
           computes:
           # If CPUPowerConsumption < 1 then disable PowerConsumption parameter
           - type: extract
@@ -368,9 +366,7 @@ monitors:
             # CpuDeviceID;AverageClock
           - type: awk
             script: ${file::cpu.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3"
+            output: table
         source(2):
           # SensorName;CpuDeviceID;CPUPowerConsumption
           type: wmi
@@ -385,7 +381,7 @@ monitors:
           rightTable: ${source::monitors.cpu.collect.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 2
-          defaultRightLine: ;;;;
+          defaultRightLine: [ "", "", "", "" ]
       mapping:
         # The Collect Table
         # CpuDeviceID;AverageClock;SensorName;CpuDeviceID;CPUPowerConsumption
@@ -518,7 +514,7 @@ monitors:
           rightTable: ${source::monitors.gpu.discovery.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;
+          defaultRightLine: [ "", "", "" ]
       mapping:
         # Instance table
         # Identifier, Name, HardwareType, ParentSensor, SensorName, MemorySize
@@ -545,9 +541,7 @@ monitors:
           # Name, gpuId, Value, SensorType
           - type: awk
             script: ${file::gpu.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4,5,6,7,8,9"
+            output: table
       mapping:
         # Value Table
         # gpuID, VideoDecode, VideoEncode, Memory, PowerConsumption, ReveivedBytes, TransmittedBytes, UsedTimePercent

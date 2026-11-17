@@ -29,5 +29,5 @@ $1 ~ /\/dev/ {
 	reserved = size - (used + free)
 	if (reserved < 0) reserved = 0
 
-	print $1 "(" mountpoint ")" ";" mountpoint ";" fstype ";" used ";" free ";" used / size ";" free / size ";" reserved ";" reserved / size
+	print $1 "(" mountpoint ")", mountpoint, fstype, used, free, used / size, free / size, reserved, reserved / size
 }

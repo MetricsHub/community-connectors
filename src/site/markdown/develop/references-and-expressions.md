@@ -13,6 +13,7 @@ Connectors use references to wire data across sections and runtime contexts.
 | --- | --- | --- |
 | Load-time substitutions | `${constant::}`, `${var::}` | Inlined once, when the connector is parsed and loaded. |
 | Job-time references | `${source::}`, `${file::}`, `${translation::}`, `$1`/`$2` column refs, `${attribute::}`, `${protocol::}`, `${resource.attribute::}`, `${awk::}` | Evaluated during job execution — e.g. `${source::...}` yields the referenced source's current output for that cycle. Relative `${source::}` paths are normalized to their absolute form at load time. |
+| No reference | An AWK script | MetricsHub replaces no reference in a script, but `${file::}`: give the script a `${source::}`, `${attribute::}` or other value through its `variables`, see [Compilation](sources/awk.html#compilation). |
 | Runtime credential macros | `%{USERNAME}`, `%{PASSWORD}`, `%{BASIC_AUTH_BASE64}`, ... | At execution time, per request, from the resource's configured credentials. |
 
 ## Source References
@@ -23,6 +24,8 @@ Use `${source::...}` to reference a source output table.
 leftTable: ${source::monitors.network.discovery.sources.ports}
 rightTable: ${source::monitors.network.discovery.sources.aliases}
 ```
+
+A reference that is the whole value of a source field (`leftTable`, `tables`, `texts`, `mapping.source`, ...) reads that source as it is. A reference inside a string field (`url`, `header`, `commandLine`, a compute `value`, a mapping attribute, ...) is replaced by the text of the source: it must reference a text, and a table there is rejected when the connector loads. A reference to a source the connector does not have is rejected too. See [Strict Content Types](design-principles.html#strict-content-types).
 
 ### Relative vs Absolute
 
@@ -163,7 +166,7 @@ ${source::<source-name>}
 
 #### Replace a value with a protocol property
 
-The following example replaces the value `PORT` in column `1` with the HTTP port configured for the protocol:
+The following example turns the JSON body into a table, then replaces the value `PORT` in column `2` with the HTTP port configured for the protocol:
 
 ```yaml
 sources:
@@ -171,15 +174,18 @@ sources:
     type: http
     path: /api/device
     computes:
+      - type: json2Table
+        entryKey: /
+        properties: /url
       - type: replace
-        column: 1
+        column: 2
         existingValue: "PORT"
         newValue: ${protocol::http.port}
 ```
 
 #### Append content from another source
 
-The following example appends the content of another source to the value in column `1`:
+The following example appends the content of another source to the value in column `2`. The referenced source must produce a text: a table there is rejected (`TABLE_INTERPOLATED`, see [Strict Content Types](design-principles.html#strict-content-types)).
 
 ```yaml
 sources:
@@ -187,14 +193,17 @@ sources:
     type: http
     path: /api/device
     computes:
+      - type: json2Table
+        entryKey: /
+        properties: /name
       - type: append
-        column: 1
+        column: 2
         value: " - ${source::monitors.enclosure.simple.sources.source_discovery}"
 ```
 
 #### Reference a resource attribute
 
-The following example keeps only the lines whose value in column `3` matches the URL built from the `host.name` resource attribute:
+The following example keeps only the hosts whose URL, in column `3`, matches the URL built from the `host.name` resource attribute:
 
 ```yaml
 sources:
@@ -202,6 +211,9 @@ sources:
     type: http
     path: /api/hosts
     computes:
+      - type: json2Table
+        entryKey: /hosts
+        properties: /id;/url
       - type: keepOnlyMatchingLines
         column: 3
         valueList: "https://${resource.attribute::host.name}"
@@ -257,20 +269,23 @@ The related `%{SUDO:command}` macro (command elevation) is tied to the connector
 
 ## Serialization Side Effects (Advanced but Important)
 
-Tables are internally list-of-list-of-strings, but many transformations pass through semicolon-separated serialized rows.
-Because semicolon is the column separator, appending `;value` to a column payload can effectively create a new materialized column once the row is re-parsed.
-
-Example:
+Tables are internally list-of-list-of-strings. They are serialized as semicolon-separated rows only where text is expected (a `${source::...}` reference, a `toText`), and only a conversion (`toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table.
+A `;` that a compute writes into a cell is therefore an ordinary character of that cell: appending `;value` to a column adds no column. The serialized text shows the side effect:
 
 ```text
-# original row
-node01;ClusterA;ok
+# original row (3 cells: node01, ClusterA, ok)
+node01;ClusterA;ok;
 
-# after append on column 2 with value ';PowerStore'
-node01;ClusterA;PowerStore;ok
+# after append on column 2 with value ';rack1' (still 3 cells: node01, ClusterA;rack1, ok)
+
+# written by toText: the ; in the cell becomes a ,
+node01;ClusterA,rack1;ok;
+
+# written by a ${source::...} reference: the ; is kept, so a reader splitting on ; sees 4 fields
+node01;ClusterA;rack1;ok;
 ```
 
-Use this behavior intentionally and carefully; it is powerful but easy to misuse.
+Use [insertColumn](computes/insert-column.html) to add a column.
 
 > [!TIP]
 > Keep inline AWK expressions short.

@@ -1,7 +1,3 @@
-BEGIN {
-	FS = ";"
-}
-
 {
 	__Path = $1
 	busType = $2
@@ -32,6 +28,6 @@ BEGIN {
 	# Bus Type
 	model = model " - " busType
 	# Output
-	print "MSHW;" __Path ";" deviceId ";" model ";" firmwareVersion ";" serialNumber ";" size
+	print __Path, deviceId, model, firmwareVersion, serialNumber, size
 }
 

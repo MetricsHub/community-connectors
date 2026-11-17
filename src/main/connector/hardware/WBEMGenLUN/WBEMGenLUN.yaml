@@ -44,9 +44,7 @@ monitors:
             # MPIOID;LunPathCount;NAAID;
           - type: awk
             script: "${file::lunAssociation1.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3,4"
+            output: table
         source(2):
           # Source (2) = Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;
@@ -88,9 +86,7 @@ monitors:
             # LunId(WithDevice);PnPAddress;
           - type: awk
             script: ${file::lunToUpper.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: "2,3"
+            output: table
         source(7):
           # Source 7 = 2 Joined to 3 with Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;
@@ -141,9 +137,7 @@ monitors:
             # MPIOID;VolumeList;
           - type: awk
             script: ${file::lunAssociation2.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3
+            output: table
         source(11):
           # Join the MPIO Discovered list with the Volume List
           # MPIOID;LunPathCount;NAAID;MPIOID;VolumeList;
@@ -152,7 +146,7 @@ monitors:
           rightTable: ${source::monitors.lun.discovery.sources.source(10)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;No Volumes;
+          defaultRightLine: [ "", No Volumes ]
           computes:
             # Right concat " - " to the first MPIO ID
             # MPIOID;LunPathCount;NAAID;MPIOID;VolumeList;
@@ -189,9 +183,7 @@ monitors:
             # MPIOID;LunPathCount;NAAID;
           - type: awk
             script: ${file::lunAssociation1.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4
+            output: table
       mapping:
         # ValueTable = Source(1)
         # LUNID;NumberPaths

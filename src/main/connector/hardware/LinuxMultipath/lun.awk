@@ -1,3 +1,4 @@
+# One row per LUN: LunName;LunInfo;NumberPaths;LunStatus;LunStatusInfo;AvailablePaths
 BEGIN {
 	NumberPaths = 0
 	LunName = ""
@@ -32,7 +33,7 @@ BEGIN {
 #   `- 1:0:3:3  sdag 66:0   active undef running
 $1 ~ /^[0-9A-Za-z][0-9A-Za-z]/ && $1 !~ /[=\[]/ {
 	if (LunName != "") {
-		print ("MSHW;" LunName ";" LunInfo ";" NumberPaths ";" LunStatus ";" LunStatusInfo ";" AvailablePaths ";")
+		print LunName, LunInfo, NumberPaths, LunStatus, LunStatusInfo, AvailablePaths
 	}
 	NumberPaths = 0
 	LunName = ""
@@ -77,7 +78,7 @@ $1 ~ /^[0-9A-Za-z][0-9A-Za-z]/ && $1 !~ /[=\[]/ {
 
 END {
 	if (LunName != "") {
-		print ("MSHW;" LunName ";" LunInfo ";" NumberPaths ";" LunStatus ";" LunStatusInfo ";" AvailablePaths ";")
+		print LunName, LunInfo, NumberPaths, LunStatus, LunStatusInfo, AvailablePaths
 	}
 }
 

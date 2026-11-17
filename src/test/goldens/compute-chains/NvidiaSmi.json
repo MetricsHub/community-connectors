@@ -6,40 +6,13 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
-        }
-      }
-    },
-    "${source::monitors.fan.collect.sources.source(1)}" : {
-      "source" : "commandLine",
-      "computes" : [ "awk", "keepOnlyMatchingLines" ],
-      "outputs" : {
-        "commandLine" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
-        },
-        "empty" : {
-          "table" : [ ],
-          "rawData" : null
-        }
-      }
-    },
-    "${source::monitors.fan.discovery.sources.source(1)}" : {
-      "source" : "copy",
-      "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines" ],
-      "outputs" : {
-        "csv" : {
-          "table" : [ ],
-          "rawData" : ""
-        },
-        "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -48,12 +21,13 @@
       "computes" : [ "awk", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -62,12 +36,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -76,12 +54,13 @@
       "computes" : [ "awk", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -90,12 +69,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -104,12 +87,13 @@
       "computes" : [ "awk", "keepOnlyMatchingLines" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
@@ -118,12 +102,16 @@
       "computes" : [ "keepOnlyMatchingLines", "keepOnlyMatchingLines" ],
       "outputs" : {
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     }

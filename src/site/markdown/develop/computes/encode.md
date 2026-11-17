@@ -21,7 +21,7 @@ sources:
     type: http
     path: /api/volumes
     computes:
-    - type: json2Csv
+    - type: json2Table
       entryKey: /volumes
       properties: /name
     - type: encode

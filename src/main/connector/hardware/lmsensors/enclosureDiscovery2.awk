@@ -14,7 +14,7 @@ BEGIN {
 	}
 	if ($1 ~ /Release Date/) {
 		Date = $2
-		print ("MSHW;" "Vendor:" Vendor " Version:" Version " Date:" Date)
+		print "MSHW", "Vendor:" Vendor " Version:" Version " Date:" Date
 	}
 }
 

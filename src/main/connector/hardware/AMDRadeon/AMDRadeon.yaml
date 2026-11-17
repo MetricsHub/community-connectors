@@ -31,6 +31,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::rocmSmi.awk}
+            output: table
           - type : divide
             column: 14
             value: 1000000000
@@ -70,6 +71,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::rocmSmiTemperature.awk}
+            output: table
       mapping:
         source: ${source::sensors}
         attributes:
@@ -100,6 +102,7 @@ monitors:
           computes:
           - type: awk
             script: ${file::rocmSmiFan.awk}
+            output: table
       mapping:
         source: ${source::source(1)}
         attributes:

@@ -25,6 +25,7 @@ sources:
     type: copy
     from: ${source::monitors.sensor.collect.sources.rawSensors}
     computes:
+    - type: toTable
     - type: keepOnlyMatchingLines
       column: 3
       regExp: "(ok|degraded|failed)"
@@ -35,9 +36,13 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `copy`. |
-| `from` | Yes | None | Source reference or inline serialized table to duplicate. |
+| `from` | Yes | None | Source reference to duplicate, or an inline table written as `;`-separated text. |
 | `computes` | No | `[]` | Additional transforms applied after copy. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+
+A copy produces what the chain of the source it copies ends in, also when that source fails or comes back empty: a copy of a text is a text (an empty text), a copy of a table is a table (an empty table). A copy of an inline value is a table. The copy is separate from the original: the computes of the copy do not change the original source.
+
+In the example above, `rawSensors` ends with the text of an `awk` compute and only a copy reads it, so it stays text: the copy converts it with its own `toTable`, before `keepOnlyMatchingLines`. Without it, the `keepOnlyMatchingLines` of the copy reads a text, and the connector does not load (`TEXT_FEEDS_TABLE`, see the [content types](../computes/index.html#content-types)).
 
 ## Recommended Pattern
 

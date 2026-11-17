@@ -31,7 +31,7 @@ Use source composition to minimize remote calls:
 
 - `beforeAll` for login/bootstrap/shared data
 - `copy` for branching
-- `tableJoin` and `tableUnion` for composition
+- `tableJoin` and `tableUnion` for composition, `textUnion` to parse several command outputs together
 - `internalDbQuery` for dedup/aggregation when joins alone are not enough
 
 ## 4. Normalize Early
@@ -66,7 +66,8 @@ For new or heavily revised connectors:
 
 - prefer explicit source names (`ports`, `inventory`, `clusterInfo`)
 - prefer `simple` jobs when two-phase behavior is not required
-- prefer canonical type names (`commandLine`, `json2Csv`, `xml2Csv`)
+- prefer canonical type names (`commandLine`, `json2Table`, `xml2Csv`)
+- write every conversion between text and table (see [Strict Content Types](#strict-content-types))
 
 ## 7. Design for Reviewability
 
@@ -95,6 +96,89 @@ From MetricsHub Community 3.9.08, an instance that a trusted `discovery` or `sim
 - In a fan-out, a failed request must not drop the entity's row. Join the `executeForEachEntryOf` result back onto the inventory (left table, `defaultRightLine`); in an `awk` script calling `executeHttpRequest`, print the row with empty cells instead of skipping it with `next`.
 - Entities defined by their activity (sessions, connected replicas, running queries) have no inventory: set [`removalDelay`](monitors-and-jobs.html#removaldelay) on the monitor, and prefer gauges to `rate()` / `fakeCounter()`, whose state restarts each time the instance is recreated.
 
+## Strict Content Types
+
+Every source result, and the result of every compute, is either a **text** or a **table** (see the [content types](computes/index.html#content-types)). From MetricsHub Community 3.9.09, MetricsHub checks every connector when it loads it and rejects each place where a step reads the wrong type, a table is interpolated in a string, or a reference names no source.
+
+> [!IMPORTANT]
+> Every rule of this section is a load error: a connector that breaks any of them does not load. MetricsHub inserts no conversion: write each `toTable`, `toText` or other conversion the chain needs (see the [content types](computes/index.html#content-types)).
+
+### Text Sources and Table Sources
+
+What a source produces is the type at the end of its chain, as written:
+
+| Text | Table |
+| --- | --- |
+| `commandLine`, `http`, `file`, `ipmi`, the `awk` source with the default `output: text`, [`textUnion`](sources/text-union.html), a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` | every other source: `snmpTable`, `wmi`, `sql`, `static`, `tableJoin`, `tableUnion`, `internalDbQuery`, the `awk` source with `output: table`, ... |
+| a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute (but `append`, `prepend`, `replace` and `substring` without a `column`, which keep the text they read, see [Text Or Table](#text-or-table)) |
+
+A `copy` produces what the chain of the source it copies ends in, also when that source fails or comes back empty: an empty text for a text, an empty table for a table. A `tableUnion` is always a table: a union whose members are texts is rejected (see [Texts in a Union](sources/table-union.html#texts-in-a-union)).
+
+### Table Consumers
+
+These read a table. A text there is rejected (`TEXT_FEEDS_TABLE`): end its source with a `toTable`, or an `awk` with `output: table`, a `json2Table` or an `xml2Csv`.
+
+- `leftTable` and `rightTable` of a [`tableJoin`](sources/table-join.html);
+- the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is rejected once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is rejected `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
+- `mapping.source`;
+- the result source of a tool that declares `columns` (see [tools](tools.html));
+- the computes that work on columns: every compute but `awk`, `json2Table`, `json2List`, `xml2Csv` and `toTable` (`toText` included), except `append`, `prepend`, `replace` and `substring` without a `column` (see [Text Or Table](#text-or-table));
+- the tables of an [`internalDbQuery`](sources/internal-db-query.html);
+- the `source` of `executeForEachEntryOf`;
+- a `${source::...}` reference in the `variables` of an `awk`.
+
+### Text Consumers
+
+These read a text. A table there is rejected (`TABLE_FEEDS_TEXT`): end its source with a [`toText`](computes/to-text.html).
+
+- the members of a [`textUnion`](sources/text-union.html);
+- `json2Table`, `json2List`, `xml2Csv` and `toTable`.
+
+### Text Or Table
+
+`append`, `prepend`, `replace` and `substring` read a table with a `column`, and a text without. The two other combinations are rejected (`COLUMN_ON_TEXT`, `NO_COLUMN_ON_TABLE`): write no `toTable` before the form without `column`.
+
+An `awk` compute reads either type as it is, and so does an `awk` source whose `input` is a single reference.
+
+### Interpolated Fields
+
+A `${source::...}` reference inside a string field is replaced by the text of that source. These fields must reference texts: a table there is rejected (`TABLE_INTERPOLATED`). Convert the table with an explicit `toText` in its source, or extract the value as a text, for example with an `awk` that prints it.
+
+- `url`, `path`, `header`, `body` and `authenticationToken` of an `http` source (see [Authentication Token](sources/http.html#authentication-token));
+- the command line of a `commandLine` source, and the other string fields of a source;
+- the values of computes, such as the `value` of `append` or `prepend`;
+- the fields of a `mapping` other than `source`: attributes, metrics, ...;
+- the `input` of an `awk` source written as a template, such as `MODE;${source::raw}`.
+
+The sources that read their references as sources interpolate nothing: `copy`, `static`, `tableUnion`, `textUnion`, `tableJoin`, and an `awk` source whose `input` is a single reference.
+
+### Unresolved References
+
+A `${source::...}` reference to a source the connector does not have is rejected (`UNRESOLVED_REFERENCE`), wherever it is: a source, a member of a `textUnion`, a compute, an `awk` variable, `executeForEachEntryOf`, a mapping or a tool result. MetricsHub looks the reference up exactly as it does when the connector runs: a short reference (`${source::name}`) is made absolute when the connector loads, and one that cannot be made absolute stays short and finds no source. There is no other fallback.
+
+### Rules and Hints
+
+| Rule | Hint | Rejected for |
+| --- | --- | --- |
+| `TEXT_FEEDS_TABLE` | write a toTable | A text read by a table consumer. |
+| `TABLE_FEEDS_TEXT` | write a toText | A table read by a text consumer. |
+| `TABLE_UNION_OF_TEXTS` | use textUnion | A `tableUnion` whose members are all texts, once per union. |
+| `MIXED_UNION` | convert the members to one type | A `tableUnion` of texts and tables, once per union, plus a `TEXT_FEEDS_TABLE` for each text member. |
+| `STRING_LITERAL_ROWS` | write a list of rows | A `;` string literal in `tables`, `leftTable` or `rightTable` (see [Writing Table Literals](sources/table-union.html#writing-table-literals)). |
+| `TABLE_INTERPOLATED` | interpolate a text | A table referenced in an interpolated field. |
+| `UNRESOLVED_REFERENCE` | reference an existing source | A reference to a source the connector does not have. |
+| `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` or `json2csv` compute type (rename it `json2Table`), the `parsingMode` property of a `json2Table` compute, the `input` property of an `awk` compute and the `inputFormat` property of an `awk` source (remove them). |
+
+Each finding is logged at ERROR when the connector loads, and the load error lists every finding. The message names the rule, the source, the location, the expected and actual types, and the hint:
+
+```text
+Connector MyConnector - Content type check: TEXT_FEEDS_TABLE in ${source::monitors.disk.discovery.sources.disks} at keepColumns #0: expected TABLE, actual TEXT (write a toTable)
+```
+
+The location is a compute with its position among the written computes, counted from 0 (`keepColumns #0`, `append #1 value`), a field (`tables[1]`, `leftTable`, `header`, `authenticationToken`, `variables.rows`), a mapping (`monitors.disk.discovery.mapping`, `monitors.disk.discovery.mapping.attributes.name`) or a tool result (`tools.listDisks.result`), followed by `-> ${source::...}` when a reference is at fault. For a mapping or a tool, the source named is the one the mapping or the tool reads.
+
+The monitors defined in the configuration of a resource are checked too, with `(monitors of a resource)` as the connector: monitors that break a rule do not load. For MetricsHub developers, the compute-chain golden check of the engine (`GoldenCheck`) prints each connector that does not load, with its findings.
+
 ## Anti-Patterns To Avoid
 
 - many scalar queries where one table query would do
@@ -103,3 +187,4 @@ From MetricsHub Community 3.9.08, an instance that a trusted `discovery` or `sim
 - hidden dependency on locale-specific output text
 - filtering the rows that create monitors on a state or a value
 - an inner join or a fan-out that drops the row of an entity whose statistics are missing
+- a text read as a table, or a table interpolated in a string, without an explicit conversion

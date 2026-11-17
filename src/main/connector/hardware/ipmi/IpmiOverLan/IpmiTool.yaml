@@ -39,9 +39,7 @@ monitors:
           # Process IPMI result througn an AWK script to interpret what can be interpreted
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
+            output: table
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
@@ -76,9 +74,7 @@ monitors:
           # Post-processing of the IPMI mess (which has already been greatly sorted out!)
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
+            output: table
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
@@ -121,18 +117,22 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
-          # START SNIPPET: appendEmptyColumnsCompute
+          # START SNIPPET: insertEmptyColumnsCompute
             # Add empty Status and StatusInformation columns
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;
-          - type: append
-            column: 3
-            value: ;;
-          # END SNIPPET: appendEmptyColumnsCompute
+            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 4
+            value: ""
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 5
+            value: ""
+          # END SNIPPET: insertEmptyColumnsCompute
             # Add empty AdditionalInformation1 column at the very end
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
-          - type: append
-            column: 9
-            value: ;
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
+          - type: insertColumn
+            column: 10
+            value: ""
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
@@ -144,14 +144,26 @@ monitors:
             column: 1
             valueList: Fan Device
             # Keep only interesting columns
-            # Fan Device;DeviceID;StatusArray;StatusInformation;AdditionalInformation1;
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;AdditionalInformation1
           - type: keepColumns
             columnNumbers: 1,2,3,7,8,9
             # Add empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
-          - type: append
-            column: 5
-            value: ;;;;
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;AdditionalInformation1
+          - type: insertColumn
+            column: 6
+            value: ""
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;AdditionalInformation1
+          - type: insertColumn
+            column: 7
+            value: ""
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AdditionalInformation1
+          - type: insertColumn
+            column: 8
+            value: ""
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
+          - type: insertColumn
+            column: 9
+            value: ""
         source(3):
           # Source(3) = Table Union of Source(1) and Source(2)
           # Fan;DeviceID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
@@ -191,10 +203,14 @@ monitors:
             column: 1
             valueList: fan
             # Add empty Status and StatusInformation columns
+            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 4
+            value: ""
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: append
-            column: 3
-            value: ;;
+          - type: insertColumn
+            column: 5
+            value: ""
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
@@ -210,15 +226,23 @@ monitors:
           - type: keepColumns
             columnNumbers: 1,2,7,8,9
             # Add an empty "SensorName" column
-            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: append
-            column: 2
-            value: ;
+            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1
+          - type: insertColumn
+            column: 3
+            value: ""
             # Add empty FanSpeed, WarningThreshold and AlarmThreshold columns
+            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed
+          - type: insertColumn
+            column: 7
+            value: ""
+            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold
+          - type: insertColumn
+            column: 8
+            value: ""
             # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: append
-            column: 6
-            value: ;;;
+          - type: insertColumn
+            column: 9
+            value: ""
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Fan Device;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           - type: convert
@@ -500,11 +524,10 @@ monitors:
             # from the vendor, the type and the size that are known
             # Memory module;DeviceID;Entity ID;Vendor;Model;Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo;Description
           - type: awk
+            output: table
             script: |
-              BEGIN { FS=";"; OFS=";" }
               $11 == "" { $11 = $6 }
-              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print }
-            separators: ;
+              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15 }
       mapping:
         # InstanceTable = Source(1)
         # The size and the type come from the SPD data of the memory module FRU, when the BMC provides it

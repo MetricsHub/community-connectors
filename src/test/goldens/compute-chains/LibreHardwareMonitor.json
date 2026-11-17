@@ -6,12 +6,16 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "", "0" ], [ "b", "0" ], [ "2.5", "3" ] ],
-          "rawData" : ";0;\nb;0;\n2.5;3;"
+          "table" : [ [ "", "0" ], [ "b", "0" ], [ "2.5", "3" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "", "0" ], [ "b", "0" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r3c2", "0" ], [ "r1c2", "0" ], [ "r2c2", "0" ] ]
         }
       }
     },
@@ -20,12 +24,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         }
       }
     },
@@ -34,12 +42,16 @@
       "computes" : [ "extract", "replace" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell", "with", "sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -48,12 +60,16 @@
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "x", "", "z", "" ] ],
-          "rawData" : "x;;z;;"
+          "table" : [ [ "x", "", "z", "" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -62,12 +78,16 @@
       "computes" : [ "prepend", "prepend" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c2 - r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c2 - r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c2 - r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -76,12 +96,16 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         }
       }
     },
@@ -90,12 +114,16 @@
       "computes" : [ "keepOnlyMatchingLines", "replace" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         }
       }
     },
@@ -104,12 +132,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         }
       }
     },
@@ -118,12 +150,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         }
       }
     },
@@ -132,12 +168,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         }
       }
     },
@@ -146,12 +186,16 @@
       "computes" : [ "keepColumns", "add", "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "5632.0", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;5632.0;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "5632.0", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c2", "r1c3", "r1c6" ], [ "r2c2", "r2c3", "r2c6" ], [ "r3c2", "r3c3", "r3c6" ] ]
         }
       }
     },
@@ -160,12 +204,16 @@
       "computes" : [ "keepOnlyMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         }
       }
     },
@@ -174,12 +222,16 @@
       "computes" : [ "awk" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "  - b", "" ], [ "1", "  - 2.5", "" ], [ "cell,with,sep", " ", "" ], [ "x", " ", "" ], [ "only", " ", "" ] ],
-          "rawData" : "a;  - b;;\n1;  - 2.5;;\ncell,with,sep; ;;\nx; ;;\nonly; ;;"
+          "table" : [ [ "a", "  - b", "", "" ], [ "1", "  - 2.5", "", "" ], [ "x", " ", "", "" ], [ "only", " ", "", "" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "  - b", "", "" ], [ "cell;with;sep", " ", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c7 r1c5 - r1c2", "", "" ], [ "r2c1", "r2c7 r2c5 - r2c2", "", "" ], [ "r3c1", "r3c7 r3c5 - r3c2", "", "" ] ]
         }
       }
     },
@@ -188,12 +240,16 @@
       "computes" : [ "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2500.0", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2500.0;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2500.0", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -202,12 +258,16 @@
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "x", "", "z", "" ] ],
-          "rawData" : "x;;z;;"
+          "table" : [ [ "x", "", "z", "" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     }

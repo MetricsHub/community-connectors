@@ -6,12 +6,16 @@
       "computes" : [ "excludeMatchingLines", "extract", "divide", "divide", "divide" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "", "b", "c" ], [ "", "", "z", "" ], [ "", "2.5E-7", "3.0E-7" ], [ "", "", "" ], [ "" ] ],
-          "rawData" : ";b;c;\n;;z;;\n;2.5E-7;3.0E-7;\n;;;\n;"
+          "table" : [ [ "", "b", "c" ], [ "", "", "z", "" ], [ "", "2.5E-7", "3.0E-7" ], [ "" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "", "b", "c" ], [ "", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -20,26 +24,52 @@
       "computes" : [ "subtract", "duplicateColumn", "divide", "divide" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::monitors.memory.simple.sources.calculatedMemoryInformation}" : {
       "source" : "wmi",
-      "computes" : [ "prepend", "multiply", "duplicateColumn", "subtract", "duplicateColumn", "divide", "divide", "divide" ],
+      "computes" : [ "append", "multiply", "duplicateColumn", "subtract", "duplicateColumn", "divide", "divide", "divide" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c5", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c5", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c5", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        }
+      }
+    },
+    "${source::monitors.memory.simple.sources.totalMemory}" : {
+      "source" : "wmi",
+      "computes" : [ "awk" ],
+      "outputs" : {
+        "empty" : {
+          "text" : ""
+        },
+        "table" : {
+          "text" : "a;\nx;\n1;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "text" : "a;\ncell;with;sep;"
+        },
+        "tableWide" : {
+          "text" : "r1c1;\nr2c1;\nr3c1;"
         }
       }
     },
@@ -48,12 +78,16 @@
       "computes" : [ "divide" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -62,12 +96,16 @@
       "computes" : [ "duplicateColumn", "subtract", "duplicateColumn", "duplicateColumn", "divide", "divide", "multiply", "multiply", "multiply" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "b", "b", "c", "c" ], [ "x", "", "", "", "z", "z", "" ], [ "1", "2621440.0", "-524288.0", "-0.2", "3145728.0", "1.2" ], [ "cell;with;sep", "", "", "", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;b;b;c;c;\nx;;;;z;z;;\n1;2621440.0;-524288.0;-0.2;3145728.0;1.2;\ncell;with;sep;;;;;;\nonly;"
+          "table" : [ [ "a", "b", "b", "b", "c", "c" ], [ "x", "", "", "", "z", "z", "" ], [ "1", "2621440.0", "-524288.0", "-0.2", "3145728.0", "1.2" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "b", "b", "c", "c" ], [ "cell;with;sep", "", "", "", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c2", "r1c2", "r1c3", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c2", "r2c2", "r2c3", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c2", "r3c2", "r3c3", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -76,12 +114,16 @@
       "computes" : [ "subtract" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -90,12 +132,16 @@
       "computes" : [ "divide", "divide", "divide" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
@@ -104,40 +150,85 @@
       "computes" : [ "prepend" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;;\n1;2.5;3;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        }
+      }
+    },
+    "${source::monitors.system.simple.sources.uptime}" : {
+      "source" : "wmi",
+      "computes" : [ "awk" ],
+      "outputs" : {
+        "empty" : {
+          "text" : ""
+        },
+        "table" : {
+          "text" : "a;\nx;\n1;\nonly;"
+        },
+        "tableSeparatorInCell" : {
+          "text" : "a;\ncell;with;sep;"
+        },
+        "tableWide" : {
+          "text" : "r1c1;\nr2c1;\nr3c1;"
+        }
+      }
+    },
+    "${source::tools.eventLog.sources.events}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
         }
       }
     },
     "${source::tools.fileSystemUsage.sources.volumes}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c", "0.0", "0.0", "0.0" ], [ "x", "", "z", "0.0", "0.0", "0.0" ], [ "1", "2.5", "3", "0.0", "0.0", "0.0" ], [ "cell,with,sep", "", "", "0.0", "0.0", "0.0" ], [ "only", "", "", "0.0", "0.0", "0.0" ] ],
-          "rawData" : "a;b;c;0.0;0.0;0.0;\nx;;z;0.0;0.0;0.0;\n1;2.5;3;0.0;0.0;0.0;\ncell,with,sep;;;0.0;0.0;0.0;\nonly;;;0.0;0.0;0.0;"
+          "table" : [ [ "a", "b", "c", "0.0", "0.0", "0.0" ], [ "x", "", "z", "0.0", "0.0", "0.0" ], [ "1", "2.5", "3", "0.0", "0.0", "0.0" ], [ "only", "", "", "0.0", "0.0", "0.0" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c", "0.0", "0.0", "0.0" ], [ "cell,with,sep", "", "", "0.0", "0.0", "0.0" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "0.0", "0.0", "nan" ], [ "r2c1", "r2c2", "r2c3", "0.0", "0.0", "nan" ], [ "r3c1", "r3c2", "r3c3", "0.0", "0.0", "nan" ] ]
         }
       }
     },
     "${source::tools.installedUpdates.sources.updates}" : {
       "source" : "wmi",
-      "computes" : [ "awk", "sort" ],
+      "computes" : [ "toText", "awk", "toTable", "sort" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "x", "", "z" ], [ "a", "b", "c" ], [ "1", "2.5", "3" ], [ "cell,with,sep", "", "" ], [ "only", "", "" ] ],
-          "rawData" : "x;;z;\na;b;c;\n1;2.5;3;\ncell,with,sep;;;\nonly;;;"
+          "table" : [ [ "x", "", "z" ], [ "a", "b", "c" ], [ "1", "2.5", "3" ], [ "only", "", "" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r3c1", "r3c2", "r3c3", "r3c4" ], [ "r2c1", "r2c2", "r2c3", "r2c4" ], [ "r1c1", "r1c2", "r1c3", "r1c4" ] ]
         }
       }
     },
@@ -145,13 +236,32 @@
       "source" : "copy",
       "computes" : [ "excludeMatchingLines" ],
       "outputs" : {
-        "commandLine" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "" ], [ "val", "with,comma" ], [ "only" ] ],
-          "rawData" : "a;b;c;\nx;;z;\n;\nval;with,comma;\nonly;"
+        "csv" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "only" ] ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "csvWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
+        }
+      }
+    },
+    "${source::tools.largestFiles.sources.scan}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
         }
       }
     },
@@ -159,13 +269,17 @@
       "source" : "copy",
       "computes" : [ "keepOnlyMatchingLines", "sort", "head" ],
       "outputs" : {
-        "commandLine" : {
-          "table" : [ [ "1", "2.5", "3" ] ],
-          "rawData" : "1;2.5;3;"
+        "csv" : {
+          "table" : [ [ "1", "2.5", "3" ] ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         }
       }
     },
@@ -174,562 +288,805 @@
       "computes" : [ "keepColumns", "sort" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "1", "2.5", "3" ], [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : "1;2.5;3;\na;b;c;\nx;;z;;\ncell;with;sep;;;\nonly;"
+          "table" : [ [ "1", "2.5", "3" ], [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "b", "c" ], [ "cell;with;sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c6" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c6" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c6" ] ]
         }
       }
     },
     "${source::tools.networkSockets.sources.states}" : {
       "source" : "wmi",
-      "computes" : [ "awk", "sort" ],
+      "computes" : [ "toText", "awk", "toTable", "sort" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "1" ], [ "cell,with,sep", "1" ], [ "Closed", "1" ], [ "x", "1" ], [ "only", "1" ] ],
-          "rawData" : "a;1;\ncell,with,sep;1;\nClosed;1;\nx;1;\nonly;1;"
+          "table" : [ [ "a", "1" ], [ "Closed", "1" ], [ "x", "1" ], [ "only", "1" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "a", "1" ], [ "cell,with,sep", "1" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "r1c1", "1" ], [ "r2c1", "1" ], [ "r3c1", "1" ] ]
         }
       }
     },
     "${source::tools.networkSockets.sources.tcp}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "tcp", "a", "b", "c" ], [ "tcp", "x", "", "z", "" ], [ "tcp", "1", "2.5", "3" ], [ "tcp", "cell,with,sep", "", "" ], [ "tcp", "only" ] ],
-          "rawData" : "tcp;a;b;c;\ntcp;x;;z;;\ntcp;1;2.5;3;\ntcp;cell,with,sep;;;\ntcp;only;"
+          "table" : [ [ "tcp", "a", "b", "c" ], [ "tcp", "x", "", "z", "" ], [ "tcp", "1", "2.5", "3" ], [ "tcp", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "tcp", "a", "b", "c" ], [ "tcp", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "tcp", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "tcp", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "tcp", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.networkSockets.sources.udp}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "udp", "x", "", "z", "" ], [ "udp", "1", "2.5", "3" ], [ "udp", "cell,with,sep", "", "" ], [ "udp", "only" ], [ "udp", "1 endpoints", "49152-65535", "c" ] ],
-          "rawData" : "udp;x;;z;;\nudp;1;2.5;3;\nudp;cell,with,sep;;;\nudp;only;\nudp;1 endpoints;49152-65535;c;"
+          "table" : [ [ "udp", "x", "", "z", "" ], [ "udp", "1", "2.5", "3" ], [ "udp", "only" ], [ "udp", "1 endpoints", "49152-65535", "c" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "udp", "cell,with,sep", "", "" ], [ "udp", "1 endpoints", "49152-65535", "c" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "udp", "1 endpoints", "49152-65535", "r2c3" ], [ "udp", "1 endpoints", "49152-65535", "r3c3" ], [ "udp", "1 endpoints", "49152-65535", "r1c3" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.disk1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "1", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "1", "PerfDisk_PhysicalDisk", "x", "", "z", "" ], [ "1", "PerfDisk_PhysicalDisk", "1", "2.5", "3" ], [ "1", "PerfDisk_PhysicalDisk", "cell,with,sep", "", "" ], [ "1", "PerfDisk_PhysicalDisk", "only" ] ],
-          "rawData" : "1;PerfDisk_PhysicalDisk;a;b;c;\n1;PerfDisk_PhysicalDisk;x;;z;;\n1;PerfDisk_PhysicalDisk;1;2.5;3;\n1;PerfDisk_PhysicalDisk;cell,with,sep;;;\n1;PerfDisk_PhysicalDisk;only;"
+          "table" : [ [ "1", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "1", "PerfDisk_PhysicalDisk", "x", "", "z", "" ], [ "1", "PerfDisk_PhysicalDisk", "1", "2.5", "3" ], [ "1", "PerfDisk_PhysicalDisk", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "1", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "1", "PerfDisk_PhysicalDisk", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "1", "PerfDisk_PhysicalDisk", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "1", "PerfDisk_PhysicalDisk", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "1", "PerfDisk_PhysicalDisk", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.disk2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "2", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "2", "PerfDisk_PhysicalDisk", "x", "", "z", "" ], [ "2", "PerfDisk_PhysicalDisk", "1", "2.5", "3" ], [ "2", "PerfDisk_PhysicalDisk", "cell,with,sep", "", "" ], [ "2", "PerfDisk_PhysicalDisk", "only" ] ],
-          "rawData" : "2;PerfDisk_PhysicalDisk;a;b;c;\n2;PerfDisk_PhysicalDisk;x;;z;;\n2;PerfDisk_PhysicalDisk;1;2.5;3;\n2;PerfDisk_PhysicalDisk;cell,with,sep;;;\n2;PerfDisk_PhysicalDisk;only;"
+          "table" : [ [ "2", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "2", "PerfDisk_PhysicalDisk", "x", "", "z", "" ], [ "2", "PerfDisk_PhysicalDisk", "1", "2.5", "3" ], [ "2", "PerfDisk_PhysicalDisk", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "2", "PerfDisk_PhysicalDisk", "a", "b", "c" ], [ "2", "PerfDisk_PhysicalDisk", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "2", "PerfDisk_PhysicalDisk", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "2", "PerfDisk_PhysicalDisk", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "2", "PerfDisk_PhysicalDisk", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.memory1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "1", "PerfOS_Memory", "", "a", "b", "c" ], [ "1", "PerfOS_Memory", "", "x", "", "z", "" ], [ "1", "PerfOS_Memory", "", "1", "2.5", "3" ], [ "1", "PerfOS_Memory", "", "cell,with,sep", "", "" ], [ "1", "PerfOS_Memory", "", "only" ] ],
-          "rawData" : "1;PerfOS_Memory;;a;b;c;\n1;PerfOS_Memory;;x;;z;;\n1;PerfOS_Memory;;1;2.5;3;\n1;PerfOS_Memory;;cell,with,sep;;;\n1;PerfOS_Memory;;only;"
+          "table" : [ [ "1", "PerfOS_Memory", "", "a", "b", "c" ], [ "1", "PerfOS_Memory", "", "x", "", "z", "" ], [ "1", "PerfOS_Memory", "", "1", "2.5", "3" ], [ "1", "PerfOS_Memory", "", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "1", "PerfOS_Memory", "", "a", "b", "c" ], [ "1", "PerfOS_Memory", "", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "1", "PerfOS_Memory", "", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "1", "PerfOS_Memory", "", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "1", "PerfOS_Memory", "", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.memory2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "2", "PerfOS_Memory", "", "a", "b", "c" ], [ "2", "PerfOS_Memory", "", "x", "", "z", "" ], [ "2", "PerfOS_Memory", "", "1", "2.5", "3" ], [ "2", "PerfOS_Memory", "", "cell,with,sep", "", "" ], [ "2", "PerfOS_Memory", "", "only" ] ],
-          "rawData" : "2;PerfOS_Memory;;a;b;c;\n2;PerfOS_Memory;;x;;z;;\n2;PerfOS_Memory;;1;2.5;3;\n2;PerfOS_Memory;;cell,with,sep;;;\n2;PerfOS_Memory;;only;"
+          "table" : [ [ "2", "PerfOS_Memory", "", "a", "b", "c" ], [ "2", "PerfOS_Memory", "", "x", "", "z", "" ], [ "2", "PerfOS_Memory", "", "1", "2.5", "3" ], [ "2", "PerfOS_Memory", "", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "2", "PerfOS_Memory", "", "a", "b", "c" ], [ "2", "PerfOS_Memory", "", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "2", "PerfOS_Memory", "", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "2", "PerfOS_Memory", "", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "2", "PerfOS_Memory", "", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.pagingFile}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "2", "PerfOS_PagingFile", "a", "b", "c" ], [ "2", "PerfOS_PagingFile", "x", "", "z", "" ], [ "2", "PerfOS_PagingFile", "1", "2.5", "3" ], [ "2", "PerfOS_PagingFile", "cell,with,sep", "", "" ], [ "2", "PerfOS_PagingFile", "only" ] ],
-          "rawData" : "2;PerfOS_PagingFile;a;b;c;\n2;PerfOS_PagingFile;x;;z;;\n2;PerfOS_PagingFile;1;2.5;3;\n2;PerfOS_PagingFile;cell,with,sep;;;\n2;PerfOS_PagingFile;only;"
+          "table" : [ [ "2", "PerfOS_PagingFile", "a", "b", "c" ], [ "2", "PerfOS_PagingFile", "x", "", "z", "" ], [ "2", "PerfOS_PagingFile", "1", "2.5", "3" ], [ "2", "PerfOS_PagingFile", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "2", "PerfOS_PagingFile", "a", "b", "c" ], [ "2", "PerfOS_PagingFile", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "2", "PerfOS_PagingFile", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "2", "PerfOS_PagingFile", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "2", "PerfOS_PagingFile", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        }
+      }
+    },
+    "${source::tools.performanceSnapshot.sources.pause}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.processor1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "1", "PerfOS_Processor", "a", "b", "c" ], [ "1", "PerfOS_Processor", "x", "", "z", "" ], [ "1", "PerfOS_Processor", "1", "2.5", "3" ], [ "1", "PerfOS_Processor", "cell,with,sep", "", "" ], [ "1", "PerfOS_Processor", "only" ] ],
-          "rawData" : "1;PerfOS_Processor;a;b;c;\n1;PerfOS_Processor;x;;z;;\n1;PerfOS_Processor;1;2.5;3;\n1;PerfOS_Processor;cell,with,sep;;;\n1;PerfOS_Processor;only;"
+          "table" : [ [ "1", "PerfOS_Processor", "a", "b", "c" ], [ "1", "PerfOS_Processor", "x", "", "z", "" ], [ "1", "PerfOS_Processor", "1", "2.5", "3" ], [ "1", "PerfOS_Processor", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "1", "PerfOS_Processor", "a", "b", "c" ], [ "1", "PerfOS_Processor", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "1", "PerfOS_Processor", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "1", "PerfOS_Processor", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "1", "PerfOS_Processor", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.processor2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "2", "PerfOS_Processor", "a", "b", "c" ], [ "2", "PerfOS_Processor", "x", "", "z", "" ], [ "2", "PerfOS_Processor", "1", "2.5", "3" ], [ "2", "PerfOS_Processor", "cell,with,sep", "", "" ], [ "2", "PerfOS_Processor", "only" ] ],
-          "rawData" : "2;PerfOS_Processor;a;b;c;\n2;PerfOS_Processor;x;;z;;\n2;PerfOS_Processor;1;2.5;3;\n2;PerfOS_Processor;cell,with,sep;;;\n2;PerfOS_Processor;only;"
+          "table" : [ [ "2", "PerfOS_Processor", "a", "b", "c" ], [ "2", "PerfOS_Processor", "x", "", "z", "" ], [ "2", "PerfOS_Processor", "1", "2.5", "3" ], [ "2", "PerfOS_Processor", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "2", "PerfOS_Processor", "a", "b", "c" ], [ "2", "PerfOS_Processor", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "2", "PerfOS_Processor", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "2", "PerfOS_Processor", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "2", "PerfOS_Processor", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.snapshot}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk", "sort", "sort" ],
+      "computes" : [ "toText", "awk", "toTable", "sort", "sort" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "awkSourceWide" : {
+          "table" : [ ]
         },
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "csvReplaceSeparatorSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvReplaceSeparatorWide" : {
+          "table" : [ ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "textWide" : {
+          "table" : [ ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.system1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "1", "PerfOS_System", "", "a", "b", "c" ], [ "1", "PerfOS_System", "", "x", "", "z", "" ], [ "1", "PerfOS_System", "", "1", "2.5", "3" ], [ "1", "PerfOS_System", "", "cell,with,sep", "", "" ], [ "1", "PerfOS_System", "", "only" ] ],
-          "rawData" : "1;PerfOS_System;;a;b;c;\n1;PerfOS_System;;x;;z;;\n1;PerfOS_System;;1;2.5;3;\n1;PerfOS_System;;cell,with,sep;;;\n1;PerfOS_System;;only;"
+          "table" : [ [ "1", "PerfOS_System", "", "a", "b", "c" ], [ "1", "PerfOS_System", "", "x", "", "z", "" ], [ "1", "PerfOS_System", "", "1", "2.5", "3" ], [ "1", "PerfOS_System", "", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "1", "PerfOS_System", "", "a", "b", "c" ], [ "1", "PerfOS_System", "", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "1", "PerfOS_System", "", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "1", "PerfOS_System", "", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "1", "PerfOS_System", "", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.performanceSnapshot.sources.system2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "2", "PerfOS_System", "", "a", "b", "c" ], [ "2", "PerfOS_System", "", "x", "", "z", "" ], [ "2", "PerfOS_System", "", "1", "2.5", "3" ], [ "2", "PerfOS_System", "", "cell,with,sep", "", "" ], [ "2", "PerfOS_System", "", "only" ] ],
-          "rawData" : "2;PerfOS_System;;a;b;c;\n2;PerfOS_System;;x;;z;;\n2;PerfOS_System;;1;2.5;3;\n2;PerfOS_System;;cell,with,sep;;;\n2;PerfOS_System;;only;"
+          "table" : [ [ "2", "PerfOS_System", "", "a", "b", "c" ], [ "2", "PerfOS_System", "", "x", "", "z", "" ], [ "2", "PerfOS_System", "", "1", "2.5", "3" ], [ "2", "PerfOS_System", "", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "2", "PerfOS_System", "", "a", "b", "c" ], [ "2", "PerfOS_System", "", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "2", "PerfOS_System", "", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "2", "PerfOS_System", "", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "2", "PerfOS_System", "", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.processDetails.sources.connections}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "TCP", "a:b c: " ], [ "TCP", "x: z: " ], [ "TCP", "1:2.5 3: " ], [ "TCP", "cell,with,sep: : " ], [ "TCP", "only: : " ] ],
-          "rawData" : "TCP;a:b c: ;\nTCP;x: z: ;\nTCP;1:2.5 3: ;\nTCP;cell,with,sep: : ;\nTCP;only: : ;"
+          "table" : [ [ "TCP", "a:b c: " ], [ "TCP", "x: z: " ], [ "TCP", "1:2.5 3: " ], [ "TCP", "only: : " ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "TCP", "a:b c: " ], [ "TCP", "cell,with,sep: : " ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "TCP", "r1c1:r1c2 r1c3:r1c4 r1c5" ], [ "TCP", "r2c1:r2c2 r2c3:r2c4 r2c5" ], [ "TCP", "r3c1:r3c2 r3c3:r3c4 r3c5" ] ]
         }
       }
     },
     "${source::tools.processDetails.sources.process}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ [ "Error", "No such process" ] ],
-          "rawData" : "Error;No such process;"
+          "table" : [ [ "Error", "No such process" ] ]
         },
         "table" : {
-          "table" : [ [ "ProcessId", "a" ], [ "ParentProcessId", "b" ], [ "Name", "c" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "x" ], [ "ParentProcessId", "(not available)" ], [ "Name", "z" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "1" ], [ "ParentProcessId", "2.5" ], [ "Name", "3" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "cell,with,sep" ], [ "ParentProcessId", "(not available)" ], [ "Name", "(not available)" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "only" ], [ "ParentProcessId", "(not available)" ], [ "Name", "(not available)" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ] ],
-          "rawData" : "ProcessId;a;\nParentProcessId;b;\nName;c;\nExecutablePath;(not available);\nCommandLine;(not available);\nStarted;(not available);\nSessionId;(not available);\nKernelModeSeconds;0.0;\nUserModeSeconds;0.0;\nWorkingSetKiB;0;\nPeakWorkingSetKiB;(not available);\nPrivateKiB;0;\nVirtualSizeKiB;0;\nHandles;(not available);\nThreads;(not available);\nReadBytes;(not available);\nWrittenBytes;(not available);\nProcessId;x;\nParentProcessId;(not available);\nName;z;\nExecutablePath;(not available);\nCommandLine;(not available);\nStarted;(not available);\nSessionId;(not available);\nKernelModeSeconds;0.0;\nUserModeSeconds;0.0;\nWorkingSetKiB;0;\nPeakWorkingSetKiB;(not available);\nPrivateKiB;0;\nVirtualSizeKiB;0;\nHandles;(not available);\nThreads;(not available);\nReadBytes;(not available);\nWrittenBytes;(not available);\nProcessId;1;\nParentProcessId;2.5;\nName;3;\nExecutablePath;(not available);\nCommandLine;(not available);\nStarted;(not available);\nSessionId;(not available);\nKernelModeSeconds;0.0;\nUserModeSeconds;0.0;\nWorkingSetKiB;0;\nPeakWorkingSetKiB;(not available);\nPrivateKiB;0;\nVirtualSizeKiB;0;\nHandles;(not available);\nThreads;(not available);\nReadBytes;(not available);\nWrittenBytes;(not available);\nProcessId;cell,with,sep;\nParentProcessId;(not available);\nName;(not available);\nExecutablePath;(not available);\nCommandLine;(not available);\nStarted;(not available);\nSessionId;(not available);\nKernelModeSeconds;0.0;\nUserModeSeconds;0.0;\nWorkingSetKiB;0;\nPeakWorkingSetKiB;(not available);\nPrivateKiB;0;\nVirtualSizeKiB;0;\nHandles;(not available);\nThreads;(not available);\nReadBytes;(not available);\nWrittenBytes;(not available);\nProcessId;only;\nParentProcessId;(not available);\nName;(not available);\nExecutablePath;(not available);\nCommandLine;(not available);\nStarted;(not available);\nSessionId;(not available);\nKernelModeSeconds;0.0;\nUserModeSeconds;0.0;\nWorkingSetKiB;0;\nPeakWorkingSetKiB;(not available);\nPrivateKiB;0;\nVirtualSizeKiB;0;\nHandles;(not available);\nThreads;(not available);\nReadBytes;(not available);\nWrittenBytes;(not available);"
+          "table" : [ [ "ProcessId", "a" ], [ "ParentProcessId", "b" ], [ "Name", "c" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "x" ], [ "ParentProcessId", "(not available)" ], [ "Name", "z" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "1" ], [ "ParentProcessId", "2.5" ], [ "Name", "3" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "only" ], [ "ParentProcessId", "(not available)" ], [ "Name", "(not available)" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "ProcessId", "a" ], [ "ParentProcessId", "b" ], [ "Name", "c" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ], [ "ProcessId", "cell,with,sep" ], [ "ParentProcessId", "(not available)" ], [ "Name", "(not available)" ], [ "ExecutablePath", "(not available)" ], [ "CommandLine", "(not available)" ], [ "Started", "(not available)" ], [ "SessionId", "(not available)" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "(not available)" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "(not available)" ], [ "Threads", "(not available)" ], [ "ReadBytes", "(not available)" ], [ "WrittenBytes", "(not available)" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "ProcessId", "r1c1" ], [ "ParentProcessId", "r1c2" ], [ "Name", "r1c3" ], [ "ExecutablePath", "r1c4" ], [ "CommandLine", "(not available)" ], [ "Started", "r1c5" ], [ "SessionId", "r1c6" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "r1c10" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "r1c13" ], [ "Threads", "r1c14" ], [ "ReadBytes", "r1c15" ], [ "WrittenBytes", "r1c16" ], [ "ProcessId", "r2c1" ], [ "ParentProcessId", "r2c2" ], [ "Name", "r2c3" ], [ "ExecutablePath", "r2c4" ], [ "CommandLine", "(not available)" ], [ "Started", "r2c5" ], [ "SessionId", "r2c6" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "r2c10" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "r2c13" ], [ "Threads", "r2c14" ], [ "ReadBytes", "r2c15" ], [ "WrittenBytes", "r2c16" ], [ "ProcessId", "r3c1" ], [ "ParentProcessId", "r3c2" ], [ "Name", "r3c3" ], [ "ExecutablePath", "r3c4" ], [ "CommandLine", "(not available)" ], [ "Started", "r3c5" ], [ "SessionId", "r3c6" ], [ "KernelModeSeconds", "0.0" ], [ "UserModeSeconds", "0.0" ], [ "WorkingSetKiB", "0" ], [ "PeakWorkingSetKiB", "r3c10" ], [ "PrivateKiB", "0" ], [ "VirtualSizeKiB", "0" ], [ "Handles", "r3c13" ], [ "Threads", "r3c14" ], [ "ReadBytes", "r3c15" ], [ "WrittenBytes", "r3c16" ] ]
         }
       }
     },
     "${source::tools.processDetails.sources.services}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "Service", "a (b, c) " ], [ "Service", "x (, z) " ], [ "Service", "1 (2.5, 3) " ], [ "Service", "cell,with,sep (, ) " ], [ "Service", "only (, ) " ] ],
-          "rawData" : "Service;a (b, c) ;\nService;x (, z) ;\nService;1 (2.5, 3) ;\nService;cell,with,sep (, ) ;\nService;only (, ) ;"
+          "table" : [ [ "Service", "a (b, c) " ], [ "Service", "x (, z) " ], [ "Service", "1 (2.5, 3) " ], [ "Service", "only (, ) " ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "Service", "a (b, c) " ], [ "Service", "cell,with,sep (, ) " ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "Service", "r1c1 (r1c2, r1c3) r1c4,r1c5,r1c6,r1c7,r1c8,r1c9,r1c10,r1c11,r1c12,r1c13,r1c14,r1c15,r1c16" ], [ "Service", "r2c1 (r2c2, r2c3) r2c4,r2c5,r2c6,r2c7,r2c8,r2c9,r2c10,r2c11,r2c12,r2c13,r2c14,r2c15,r2c16" ], [ "Service", "r3c1 (r3c2, r3c3) r3c4,r3c5,r3c6,r3c7,r3c8,r3c9,r3c10,r3c11,r3c12,r3c13,r3c14,r3c15,r3c16" ] ]
         }
       }
     },
     "${source::tools.processes.sources.cpu1}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "S1", "a", "b", "c" ], [ "S1", "x", "", "z", "" ], [ "S1", "1", "2.5", "3" ], [ "S1", "cell,with,sep", "", "" ], [ "S1", "only" ] ],
-          "rawData" : "S1;a;b;c;\nS1;x;;z;;\nS1;1;2.5;3;\nS1;cell,with,sep;;;\nS1;only;"
+          "table" : [ [ "S1", "a", "b", "c" ], [ "S1", "x", "", "z", "" ], [ "S1", "1", "2.5", "3" ], [ "S1", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "S1", "a", "b", "c" ], [ "S1", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "S1", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "S1", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "S1", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.processes.sources.cpu2}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "S2", "a", "b", "c" ], [ "S2", "x", "", "z", "" ], [ "S2", "1", "2.5", "3" ], [ "S2", "cell,with,sep", "", "" ], [ "S2", "only" ] ],
-          "rawData" : "S2;a;b;c;\nS2;x;;z;;\nS2;1;2.5;3;\nS2;cell,with,sep;;;\nS2;only;"
+          "table" : [ [ "S2", "a", "b", "c" ], [ "S2", "x", "", "z", "" ], [ "S2", "1", "2.5", "3" ], [ "S2", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "S2", "a", "b", "c" ], [ "S2", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "S2", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "S2", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "S2", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.processes.sources.list}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "P", "a", "b", "c" ], [ "P", "x", "", "z", "" ], [ "P", "1", "2.5", "3" ], [ "P", "cell,with,sep", "", "" ], [ "P", "only" ] ],
-          "rawData" : "P;a;b;c;\nP;x;;z;;\nP;1;2.5;3;\nP;cell,with,sep;;;\nP;only;"
+          "table" : [ [ "P", "a", "b", "c" ], [ "P", "x", "", "z", "" ], [ "P", "1", "2.5", "3" ], [ "P", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "P", "a", "b", "c" ], [ "P", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "P", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "P", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "P", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.processes.sources.memory}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "M", "a", "b", "c" ], [ "M", "x", "", "z", "" ], [ "M", "1", "2.5", "3" ], [ "M", "cell,with,sep", "", "" ], [ "M", "only" ] ],
-          "rawData" : "M;a;b;c;\nM;x;;z;;\nM;1;2.5;3;\nM;cell,with,sep;;;\nM;only;"
+          "table" : [ [ "M", "a", "b", "c" ], [ "M", "x", "", "z", "" ], [ "M", "1", "2.5", "3" ], [ "M", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "M", "a", "b", "c" ], [ "M", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "M", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "M", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "M", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        }
+      }
+    },
+    "${source::tools.processes.sources.pause}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
         }
       }
     },
     "${source::tools.processes.sources.processes}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk", "sort", "head", "keepColumns" ],
+      "computes" : [ "toText", "awk", "toTable", "sort", "head", "keepColumns" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "awkSourceWide" : {
+          "table" : [ ]
         },
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "csv" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "csvReplaceSeparatorSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvReplaceSeparatorWide" : {
+          "table" : [ ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "csvWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ ]
+        },
+        "tableWide" : {
+          "table" : [ ]
         },
         "text" : {
-          "table" : [ ],
-          "rawData" : ""
+          "table" : [ ]
+        },
+        "textWide" : {
+          "table" : [ ]
         }
       }
     },
     "${source::tools.rebootHistory.sources.boot}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "Up since a" ], [ "Up since x" ], [ "Up since 1970-01-01T00:00:01Z" ], [ "Up since cell,with,sep" ], [ "Up since only" ] ],
-          "rawData" : "Up since a;\nUp since x;\nUp since 1970-01-01T00:00:01Z;\nUp since cell,with,sep;\nUp since only;"
+          "table" : [ [ "Up since a" ], [ "Up since x" ], [ "Up since 1970-01-01T00:00:01Z" ], [ "Up since only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "Up since a" ], [ "Up since cell,with,sep" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "Up since r1c1" ], [ "Up since r2c1" ], [ "Up since r3c1" ] ]
         }
       }
     },
     "${source::tools.rebootHistory.sources.events}" : {
       "source" : "wmi",
-      "computes" : [ "awk", "sort", "head" ],
+      "computes" : [ "toText", "awk", "toTable", "sort", "head" ],
       "outputs" : {
         "empty" : {
-          "table" : [ [ "No start, shutdown or reboot event in the last ${param::days} days" ] ],
-          "rawData" : "No start, shutdown or reboot event in the last ${param::days} days;"
+          "table" : [ [ "No start, shutdown or reboot event in the last ${param::days} days" ] ]
         },
         "table" : {
-          "table" : [ [ " a,b,c x,,z, 1,2.5,3 cell,with,sep,, only" ] ],
-          "rawData" : " a,b,c x,,z, 1,2.5,3 cell,with,sep,, only;"
+          "table" : [ [ " a,b,c x,,z, 1,2.5,3 only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ " a,b,c cell,with,sep,," ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ " r1c1,r1c2,r1c3,r1c4,r1c5,r1c6,r1c7,r1c8,r1c9,r1c10,r1c11,r1c12,r1c13,r1c14,r1c15,r1c16 r2c1,r2c2,r2c3,r2c4,r2c5,r2c6,r2c7,r2c8,r2c9,r2c10,r2c11,r2c12,r2c13,r2c14,r2c15,r2c16 r3c1,r3c2,r3c3,r3c4,r3c5,r3c6,r3c7,r3c8,r3c9,r3c10,r3c11,r3c12,r3c13,r3c14,r3c15,r3c16" ] ]
         }
       }
     },
     "${source::tools.rebootHistory.sources.pending}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ ],
-          "rawData" : "a;b;c\nx;;z;\n\n1;2.5;3\nval;with,comma\nonly"
+          "table" : [ ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
     "${source::tools.rebootHistory.sources.since}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "a", "b", "c" ], [ "x", "", "z", "" ], [ "1", "2.5", "3" ], [ "cell;with;sep", "", "" ], [ "only" ] ],
-          "rawData" : null
+          "table" : [ [ "000101-31000000.000000+000" ], [ "000101-30000000.000000+000" ], [ "00010217000000.000000+000" ], [ "000101-30000000.000000+000" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "000101-31000000.000000+000" ], [ "000101-30000000.000000+000" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "000101-31000000.000000+000" ], [ "000101-31000000.000000+000" ], [ "000101-31000000.000000+000" ] ]
         }
       }
     },
     "${source::tools.serviceDetails.sources.delayed}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "Y", "b" ], [ "Y" ], [ "Y", "2.5" ], [ "Y" ], [ "Y" ] ],
-          "rawData" : "Y;b;\nY;\nY;2.5;\nY;\nY;"
+          "table" : [ [ "Y", "b" ], [ "Y" ], [ "Y", "2.5" ], [ "Y" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "Y", "b" ], [ "Y" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "Y", "r1c2" ], [ "Y", "r2c2" ], [ "Y", "r3c2" ] ]
         }
       }
     },
     "${source::tools.serviceDetails.sources.dependencies}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "D", "a", "b", "c" ], [ "D", "x", "", "z", "" ], [ "D", "1", "2.5", "3" ], [ "D", "cell,with,sep", "", "" ], [ "D", "only" ] ],
-          "rawData" : "D;a;b;c;\nD;x;;z;;\nD;1;2.5;3;\nD;cell,with,sep;;;\nD;only;"
+          "table" : [ [ "D", "a", "b", "c" ], [ "D", "x", "", "z", "" ], [ "D", "1", "2.5", "3" ], [ "D", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "D", "a", "b", "c" ], [ "D", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "D", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "D", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "D", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.serviceDetails.sources.details}" : {
       "source" : "tableUnion",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "awkSource" : {
-          "table" : [ [ "Error", "No such service" ] ],
-          "rawData" : "Error;No such service;"
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "awkSourceWide" : {
+          "table" : [ [ "Error", "No such service" ] ]
         },
         "commandLine" : {
-          "table" : [ [ "Error", "No such service" ] ],
-          "rawData" : "Error;No such service;"
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "Error", "No such service" ] ]
         },
         "csv" : {
-          "table" : [ [ "Error", "No such service" ] ],
-          "rawData" : "Error;No such service;"
+          "table" : [ [ "Error", "No such service" ] ]
         },
         "csvReplaceSeparator" : {
-          "table" : [ [ "Error", "No such service" ] ],
-          "rawData" : "Error;No such service;"
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "csvReplaceSeparatorSeparatorInCell" : {
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "csvReplaceSeparatorWide" : {
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "csvSeparatorInCell" : {
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "csvWide" : {
+          "table" : [ [ "Error", "No such service" ] ]
         },
         "empty" : {
-          "table" : [ [ "Error", "No such service" ] ],
-          "rawData" : "Error;No such service;"
+          "table" : [ [ "Error", "No such service" ] ]
         },
         "table" : {
-          "table" : [ [ "Error", "No such service" ] ],
-          "rawData" : "Error;No such service;"
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "Error", "No such service" ] ]
         },
         "text" : {
-          "table" : [ [ "Error", "No such service" ] ],
-          "rawData" : "Error;No such service;"
+          "table" : [ [ "Error", "No such service" ] ]
+        },
+        "textWide" : {
+          "table" : [ [ "Error", "No such service" ] ]
         }
       }
     },
     "${source::tools.serviceDetails.sources.recovery}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "Recovery", "a", "b", "c" ], [ "Recovery", "x", "", "z" ], [ "Recovery", "1", "2.5", "3" ], [ "Recovery", "val", "with,comma" ], [ "Recovery", "only" ] ],
-          "rawData" : "Recovery;a;b;c;\nRecovery;x;;z;\nRecovery;1;2.5;3;\nRecovery;val;with,comma;\nRecovery;only;"
+          "table" : [ [ "Recovery", "a", "b", "c" ], [ "Recovery", "x", "", "z" ], [ "Recovery", "1", "2.5", "3" ], [ "Recovery", "val", "with,comma" ], [ "Recovery", "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "Recovery", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Recovery", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Recovery", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
     "${source::tools.serviceDetails.sources.service}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "S", "a", "b", "c" ], [ "S", "x", "", "z", "" ], [ "S", "1", "2.5", "3" ], [ "S", "cell,with,sep", "", "" ], [ "S", "only" ] ],
-          "rawData" : "S;a;b;c;\nS;x;;z;;\nS;1;2.5;3;\nS;cell,with,sep;;;\nS;only;"
+          "table" : [ [ "S", "a", "b", "c" ], [ "S", "x", "", "z", "" ], [ "S", "1", "2.5", "3" ], [ "S", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "S", "a", "b", "c" ], [ "S", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "S", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "S", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "S", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.serviceDetails.sources.states}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "B", "a", "b", "c" ], [ "B", "x", "", "z", "" ], [ "B", "1", "2.5", "3" ], [ "B", "cell,with,sep", "", "" ], [ "B", "only" ] ],
-          "rawData" : "B;a;b;c;\nB;x;;z;;\nB;1;2.5;3;\nB;cell,with,sep;;;\nB;only;"
+          "table" : [ [ "B", "a", "b", "c" ], [ "B", "x", "", "z", "" ], [ "B", "1", "2.5", "3" ], [ "B", "only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "B", "a", "b", "c" ], [ "B", "cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "B", "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "B", "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "B", "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     },
     "${source::tools.timeSync.sources.clock}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "Local time: a" ], [ "Local time: x" ], [ "Local time: 1970-01-01T00:02:31+00:02" ], [ "Local time: cell,with,sep" ], [ "Local time: only" ] ],
-          "rawData" : "Local time: a;\nLocal time: x;\nLocal time: 1970-01-01T00:02:31+00:02;\nLocal time: cell,with,sep;\nLocal time: only;"
+          "table" : [ [ "Local time: a" ], [ "Local time: x" ], [ "Local time: 1970-01-01T00:02:31+00:02" ], [ "Local time: only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "Local time: a" ], [ "Local time: cell,with,sep" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "Local time: r1c1" ], [ "Local time: r2c1" ], [ "Local time: r3c1" ] ]
+        }
+      }
+    },
+    "${source::tools.timeSync.sources.offset}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
         }
       }
     },
     "${source::tools.timeSync.sources.server}" : {
       "source" : "commandLine",
-      "computes" : [ "awk" ],
+      "computes" : [ "awk", "toTable" ],
       "outputs" : {
         "commandLine" : {
-          "table" : [ [ "only" ] ],
-          "rawData" : "only;"
+          "table" : [ [ "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ ]
         },
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         }
       }
     },
     "${source::tools.timeSync.sources.service}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "Windows Time service: a (b)" ], [ "Windows Time service: x ()" ], [ "Windows Time service: 1 (2.5)" ], [ "Windows Time service: cell,with,sep ()" ], [ "Windows Time service: only ()" ] ],
-          "rawData" : "Windows Time service: a (b);\nWindows Time service: x ();\nWindows Time service: 1 (2.5);\nWindows Time service: cell,with,sep ();\nWindows Time service: only ();"
+          "table" : [ [ "Windows Time service: a (b)" ], [ "Windows Time service: x ()" ], [ "Windows Time service: 1 (2.5)" ], [ "Windows Time service: only ()" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "Windows Time service: a (b)" ], [ "Windows Time service: cell,with,sep ()" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "Windows Time service: r1c1 (r1c2)" ], [ "Windows Time service: r2c1 (r2c2)" ], [ "Windows Time service: r3c1 (r3c2)" ] ]
+        }
+      }
+    },
+    "${source::tools.timeSync.sources.status}" : {
+      "source" : "commandLine",
+      "computes" : [ "toTable" ],
+      "outputs" : {
+        "commandLine" : {
+          "table" : [ [ "a", "b", "c" ], [ "x", "", "z" ], [ "1", "2.5", "3" ], [ "val", "with,comma" ], [ "only" ] ]
+        },
+        "commandLineWide" : {
+          "table" : [ [ "r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
+        },
+        "empty" : {
+          "table" : [ ]
         }
       }
     },
     "${source::tools.timeSync.sources.zone}" : {
       "source" : "wmi",
-      "computes" : [ "awk" ],
+      "computes" : [ "toText", "awk", "toTable" ],
       "outputs" : {
         "empty" : {
-          "table" : [ ],
-          "rawData" : null
+          "table" : [ ]
         },
         "table" : {
-          "table" : [ [ "Time zone: a", "b", "c" ], [ "Time zone: x", "", "z", "" ], [ "Time zone: 1", "2.5", "3" ], [ "Time zone: cell,with,sep", "", "" ], [ "Time zone: only" ] ],
-          "rawData" : "Time zone: a;b;c;\nTime zone: x;;z;;\nTime zone: 1;2.5;3;\nTime zone: cell,with,sep;;;\nTime zone: only;"
+          "table" : [ [ "Time zone: a", "b", "c" ], [ "Time zone: x", "", "z", "" ], [ "Time zone: 1", "2.5", "3" ], [ "Time zone: only" ] ]
+        },
+        "tableSeparatorInCell" : {
+          "table" : [ [ "Time zone: a", "b", "c" ], [ "Time zone: cell,with,sep", "", "" ] ]
+        },
+        "tableWide" : {
+          "table" : [ [ "Time zone: r1c1", "r1c2", "r1c3", "r1c4", "r1c5", "r1c6", "r1c7", "r1c8", "r1c9", "r1c10", "r1c11", "r1c12", "r1c13", "r1c14", "r1c15", "r1c16" ], [ "Time zone: r2c1", "r2c2", "r2c3", "r2c4", "r2c5", "r2c6", "r2c7", "r2c8", "r2c9", "r2c10", "r2c11", "r2c12", "r2c13", "r2c14", "r2c15", "r2c16" ], [ "Time zone: r3c1", "r3c2", "r3c3", "r3c4", "r3c5", "r3c6", "r3c7", "r3c8", "r3c9", "r3c10", "r3c11", "r3c12", "r3c13", "r3c14", "r3c15", "r3c16" ] ]
         }
       }
     }

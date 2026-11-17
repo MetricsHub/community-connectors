@@ -27,7 +27,7 @@ $1 ~ /link.ether/ {
 END {
 	for (deviceID in ports) {
 		if (ports[deviceID] != "" && portActive[deviceID] == 1) {
-			print "MSHW;" deviceID ";" macAddress[deviceID] ";" ipAddress[deviceID] ";"
+			print deviceID, macAddress[deviceID], ipAddress[deviceID]
 		}
 	}
 }

@@ -33,6 +33,8 @@ beforeAll:
   files:
     type: commandLine
     commandLine: "${file::detection.sh} \"${var::matchPath}\""
+    computes:
+    - type: toTable
 
 monitors:
   file:
@@ -45,6 +47,8 @@ monitors:
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
             concatMethod: list
+          computes:
+          - type: toTable
         # file.path;file.lines
         source(2):
           type: commandLine
@@ -52,6 +56,8 @@ monitors:
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
             concatMethod: list
+          computes:
+          - type: toTable
         # file.path;file.name;file.size;file.atime;file.mtime;file.ctime;file.lines
         filedetails:
           type: tableJoin
@@ -84,6 +90,8 @@ monitors:
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
             concatMethod: list
+          computes:
+          - type: toTable
       mapping:
         source: ${source::patternMatchingSource}
         attributes:
