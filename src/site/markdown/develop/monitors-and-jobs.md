@@ -182,7 +182,7 @@ monitors:
       mapping:
         source: ${source::smartHealth}
         metrics:
-          hw.status{hw.type="physical_disk", state="predicted_failure"}: $1
+          hw.status{hw.type="physical_disk", state="predicted_failure"}: boolean($1)
 ```
 
 Because the run is already bound to one instance, the mapping does not need to re-map `id`.
