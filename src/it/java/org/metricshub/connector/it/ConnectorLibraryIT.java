@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -57,12 +59,17 @@ class ConnectorLibraryIT {
 	@Test
 	void everyConnectorFileLoads() throws IOException {
 		final List<String> unloaded = new ArrayList<>();
+		// The store is keyed by file name, case-insensitive: of two files with the same name, only one loads
+		final Map<String, Path> ids = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 		try (Stream<Path> files = Files.walk(CONNECTOR_DIRECTORY)) {
 			for (final Path file : files.sorted().toList()) {
 				final String name = file.getFileName().toString();
 				if (name.toLowerCase().endsWith(".yaml") && isConnector(file)) {
 					final String id = name.substring(0, name.length() - ".yaml".length());
-					if (!connectorStore.getStore().containsKey(id)) {
+					final Path other = ids.putIfAbsent(id, file);
+					if (other != null) {
+						unloaded.add(file + ": its id is also that of " + other);
+					} else if (!connectorStore.getStore().containsKey(id)) {
 						unloaded.add(file + ": " + loadError(id, file));
 					}
 				}
@@ -73,16 +80,21 @@ class ConnectorLibraryIT {
 
 	/** The engine only logs that a connector does not load: the file is parsed again for the reason. */
 	private static String loadError(final String id, final Path file) {
+		IntermediateConnector connector = null;
 		try {
-			composer.parseConnector(
+			connector =
 				new IntermediateConnector(
 					id,
 					ConnectorParser.withNodeProcessorAndUpdateChain(file.getParent()).parseRaw(file.toFile())
-				)
-			);
+				);
+			composer.parseConnector(connector);
 			return "it parses alone, see the other files";
 		} catch (Exception e) {
-			return e.getClass().getSimpleName() + ": " + e.getMessage();
+			// This parse does not substitute the variables: an error may then come from a placeholder
+			final String caveat = connector != null && connector.hasVariables()
+				? " (variables not substituted here, the engine log at debug level has the reason)"
+				: "";
+			return e.getClass().getSimpleName() + ": " + e.getMessage() + caveat;
 		}
 	}
 
