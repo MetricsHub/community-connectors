@@ -91,7 +91,7 @@ sources:
     computes:
     - type: json2Table
       entryKey: /Members
-      properties: /@odata.id
+      properties: [ /@odata.id ]
   details:
     type: http
     path: $2                     # bound to column 2 of each row of "members"

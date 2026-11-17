@@ -25,7 +25,7 @@ sources:
     computes:
     - type: json2Table
       entryKey: /switches
-      properties: /id;/name;/operationalStatus
+      properties: [ /id, /name, /operationalStatus ]
 ```
 
 ## Properties
@@ -34,8 +34,8 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `json2Table` (`json2Csv` in versions before MetricsHub Community 3.9.09, rejected from 3.9.09). |
 | `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
-| `properties` | Yes | None | Semicolon-separated list of JSON pointers, each resolved **relative to one entry** (`/id;/name;/operationalStatus`). Nested values use full pointer paths, including array indexes (`/Links/Storage[0]/@odata.id`). The list order defines the column order. |
-| `separator` | No | `;` | Deprecated and ignored (MetricsHub Community 3.9.09 or later): each property gives exactly one cell, whatever its value holds. Still accepted, so existing connectors keep working; omit it in new connectors. Earlier versions split the rows on it, so a value holding the separator shifted the columns. |
+| `properties` | Yes | None | List of JSON pointers, each resolved **relative to one entry** (`[ /id, /name, /operationalStatus ]`). Nested values use full pointer paths, including array indexes (`"/Links/Storage[0]/@odata.id"`). The list order defines the column order. Versions before MetricsHub Community 3.9.09 only accept a string with a `;` between the pointers (`/id;/name;/operationalStatus`). |
+| `separator` | No | `;` | Deprecated and ignored (MetricsHub Community 3.9.09 or later): each property gives exactly one cell, whatever its value holds. Still accepted, omit it. Earlier versions split the rows on it, so a value holding the separator shifted the columns. |
 | `parsingMode` | No | None | Rejected from MetricsHub Community 3.9.09 (`DEPRECATED_SYNTAX`): the compute chooses how to read the document from its size, see [Large Payloads](#large-payloads). In 3.9.08, `tree` (the default) or `events`. |
 
 > [!IMPORTANT]
@@ -44,7 +44,7 @@ sources:
 > [!NOTE]
 > Each value lands whole in its cell (MetricsHub Community 3.9.09 or later): a value that holds a line feed or a `;` stays in one cell of one row, and empty values, including the last property, give empty cells. Earlier versions cut a value with a line feed into extra rows and a value with the separator into extra cells. An `awk` compute that follows reads each cell as is (`$1..$NF`). To parse the rows as text instead, write a [toText](./to-text.html) before the `awk`: it turns a `;` inside a cell into `,` and writes a line feed as is, so that value spans several AWK records. A `${source::}` reference to the table keeps the `;` and the line feed.
 
-You may encounter two shorthand styles in examples: property pointers written without the leading `/` (`properties: id;name;status`), which resolve against each entry's top level, and array traversal expressed inside the property itself (`properties: Members[*].@odata.id`). Prefer the canonical form used by real connectors: `entryKey` pointing at the array, plus one leading-slash pointer per column (`entryKey: /Members` with `properties: /@odata.id`).
+You may encounter two shorthand styles in examples: property pointers written without the leading `/` (`properties: [ id, name, status ]`), which resolve against each entry's top level, and array traversal expressed inside the property itself (`properties: [ "Members[*].@odata.id" ]`). Prefer the canonical form used by real connectors: `entryKey` pointing at the array, plus one leading-slash pointer per column (`entryKey: /Members` with `properties: [ /@odata.id ]`).
 
 ## Table Transformation Example
 
@@ -97,13 +97,13 @@ MetricsHub Community 3.9.08 loads every payload as a tree, unless the compute se
 - Set `resultContent: body` on the HTTP source and put `json2Table` first in its `computes` pipeline.
 - Point `entryKey` at the array of records and keep every property pointer relative to a single record.
 - Account for the leading entry column: the first property is `$2`, not `$1`.
-- Quote the `properties` value when a pointer contains YAML-sensitive characters such as `[0]` (for example `properties: "/@odata.id;/Links/Storage[0]/@odata.id"`).
+- Quote a pointer that contains YAML-sensitive characters such as `[0]` (for example `properties: [ /@odata.id, "/Links/Storage[0]/@odata.id" ]`).
 
 ## Common Mistakes
 
 - Off-by-one column references in `mapping` or later computes because the leading entry column was forgotten.
 - Writing property pointers relative to the document root instead of relative to one entry under `entryKey`.
-- Separating `properties` with commas: the list is semicolon-separated.
+- Writing `properties` as one string with commas between the pointers (`/id,/name`): it is a YAML list, one pointer per item.
 - Leaving `entryKey` pointing at a single object when the payload nests the records one level deeper, which yields a single mostly-empty row instead of one row per record.
 - Placing `json2Table` after a compute that already produced a table: there is nothing to parse, and the connector does not load (`TABLE_FEEDS_TEXT`). A payload that does not parse gives an empty table.
 - Rejoining rows or cells of `json2Table` in a following `awk`: since MetricsHub Community 3.9.09 a value with a line feed or a separator no longer cuts its row. An `awk` that follows reads each cell as is; only a `toText` before it shows a value with a line feed as several records, and a `;` as `,`: drop the `toText` rather than rejoining.
