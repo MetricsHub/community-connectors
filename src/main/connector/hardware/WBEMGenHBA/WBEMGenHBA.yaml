@@ -86,8 +86,8 @@ monitors:
           # Source(3) = Table joint of Source(1) and Source(2)
           # Active;AdapterID;UniquePortId;PortSpeed;PortWWN-Decimal;PortWWN-Hex;PortType;AdapterID;Manufacturer;Model;Serial
           type: tableJoin
-          leftTable: ${source::monitors.network.discovery.sources.source(1)}
-          rightTable: ${source::monitors.network.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 2
           rightKeyColumn: 1
         source(4):
@@ -115,15 +115,15 @@ monitors:
           # Source(5) = Table joint of Source(3) and Source(4)
           # Active;AdapterID;UniquePortId;PortSpeed;PortWWN-Decimal;PortWWN-Hex;PortType;AdapterID;Manufacturer;Model;Serial;InstanceName;TxFrames;RxFrames;ErrorCount;
           type: tableJoin
-          leftTable: ${source::monitors.network.discovery.sources.source(3)}
-          rightTable: ${source::monitors.network.discovery.sources.source(4)}
+          leftTable: ${source::source(3)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 2
           rightKeyColumn: 1
       mapping:
         # Changed from UniquePortID to PortWWN as device ID as it seems this UniqueID is not fixed.
         # InstanceTable = Source(3)
         # Active;AdapterID;UniquePortId;PortSpeed;PortWWN-Decimal;PortWWN-Hex;PortType;AdapterID;Manufacturer;Model;Serial;InstanceName;TxFrames;RxFrames;ErrorCount;
-        source: ${source::monitors.network.discovery.sources.source(5)}
+        source: ${source::source(5)}
         attributes:
           id: $5
           vendor: $9
@@ -192,14 +192,14 @@ monitors:
           # Source (3) = Table Joint of 1 & 2
           # AdapterID;Status;StatusInformation;LinkStatus;PortSpeed;PortWWN-Decimal;InstanceName;TxFrames;RxFrames;ErrorCount;
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(1)}
-          rightTable: ${source::monitors.network.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
       mapping:
         # INSTANCE TABLE
         # AdapterID;Status;StatusInformation;LinkStatus;PortSpeed;PortWWN-Decimal;InstanceName;TxFrames;RxFrames;ErrorCount;
-        source: ${source::monitors.network.collect.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $6
         metrics:

@@ -51,7 +51,7 @@ monitors:
             value: "File System: "
       mapping:
         # The InstanceTable
-        source: ${source::monitors.logical_disk.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           __display_id: $2
@@ -89,7 +89,7 @@ monitors:
             translationTable: ${translation::LogicalDiskTranslationTable}
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.logical_disk.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
