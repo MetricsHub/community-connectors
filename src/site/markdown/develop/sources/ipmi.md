@@ -20,7 +20,8 @@ sources:
     forceSerialization: true
     computes:
     - type: awk
-      script: ${file::sdr_formatter.awk}
+      script: ${file::../interpret_sensors.awk}
+      output: table
 ```
 
 ## Properties
@@ -34,7 +35,7 @@ sources:
 
 ## Recommended Pattern
 
-- Parse IPMI command output into semicolon-delimited tables quickly.
+- Turn the IPMI output into a table quickly, with an `awk` compute that declares `output: table`.
 - Branch with `copy` for multiple monitor views (status, thresholds, counters).
 - Keep translation logic in reusable translation tables.
 

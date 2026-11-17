@@ -81,12 +81,12 @@ monitors:
   enclosure:
     discovery:
       sources:
-        source(1):
+        upsIdentity:
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.1
           selectColumns: "1,2,3,5"
       mapping:
-        source: ${source::monitors.enclosure.discovery.sources.source(1)}
+        source: ${source::upsIdentity}
         attributes:
           id: $4
           vendor: $1
@@ -128,23 +128,24 @@ monitors:
     collect:
       type: multiInstance
       sources:
-        source(1):
+        volumeStatus:
           type: commandLine
           commandLine: CHCP 437&&DISKPART.EXE /S ${file::listVolume.txt}
           computes:
+          # ID;Status
           - type: awk
             script: ${file::diskPart.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,8
-          - type: toTable
+            output: table
+            variables:
+              collect: 1
+          # ID;Status;Status
           - type: duplicateColumn
             column: 2
           - type: translate
             column: 2
             translationTable: ${translation::LogicalDiskTranslationTable}
       mapping:
-        source: ${source::monitors.logical_disk.collect.sources.source(1)}
+        source: ${source::volumeStatus}
         attributes:
           id: $1              # matches rows to instances discovered with the same id
         metrics:
@@ -167,21 +168,19 @@ monitors:
     collect:
       type: monoInstance
       sources:
-        source(1):
+        smartHealth:
           type: commandLine
           commandLine: "/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}"
           computes:
+          # SMARTstatus
           - type: awk
             script: "${file::physical_disk_smart_health.awk}"
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2
-          - type: toTable
+            output: table
           - type: translate
             column: 1
             translationTable: "${translation::PhysicalDiskPredictedFailureTranslationTable}"
       mapping:
-        source: ${source::monitors.physical_disk.collect.sources.source(1)}
+        source: ${source::smartHealth}
         metrics:
           hw.status{hw.type="physical_disk", state="predicted_failure"}: $1
 ```
@@ -282,7 +281,7 @@ Declare it in the **`discovery`** (or `simple`) mapping: the availability check 
 ```yaml
     discovery:
       mapping:
-        source: ${source::monitors.physical_disk.discovery.sources.source(1)}
+        source: ${source::disks}
         attributes:
           id: $1
         metrics:
@@ -292,7 +291,7 @@ Declare it in the **`discovery`** (or `simple`) mapping: the availability check 
     collect:
       type: multiInstance
       mapping:
-        source: ${source::monitors.physical_disk.collect.sources.source(1)}
+        source: ${source::diskCounters}
         attributes:
           id: $1
         metrics:
