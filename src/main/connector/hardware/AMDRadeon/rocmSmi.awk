@@ -1,6 +1,5 @@
 BEGIN {
     FS = ",";
-    OFS = ";"
 }
 # Skip headers and global system line
 $1 == "device" { next }
