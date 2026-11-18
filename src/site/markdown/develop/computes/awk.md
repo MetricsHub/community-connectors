@@ -111,7 +111,7 @@ Besides the POSIX AWK functions (`length`, `substr`, `split`, `sprintf`, `tolowe
 | `bytes2HumanFormatBase2(bytes)`, `bytes2HumanFormatBase10(bytes)` | A size in bytes as text with 2 decimals and a binary (`1.00 GiB`) or decimal (`1.00 GB`) unit. |
 | `mebiBytes2HumanFormat(mebibytes)` | A size in MiB as text: `1.00 TiB`. |
 | `megaHertz2HumanFormat(megahertz)` | A frequency in MHz as text: `4.00 GHz`. |
-| `sleep(seconds)` | Pauses the script and returns 0. The duration can have a fractional part (`sleep(0.1)` is 100 ms), and one call pauses for 60 seconds at most. |
+| `sleep(seconds)` | Pauses the script and returns 0, or -1 for a negative duration. The duration can have a fractional part (`sleep(0.1)` is 100 ms), and one call pauses for 60 seconds at most. |
 | `asort`, `asorti` | Sort an array by value or by index (`n = asorti(ids, sorted)`). |
 | `gensub(regexp, replacement, how [, target])` | The substituted text, with `\\1`..`\\9` back-references, without changing the target. |
 | `patsplit(string, array [, fieldpat [, seps]])` | Split a string by the content of its fields rather than by separators. |
