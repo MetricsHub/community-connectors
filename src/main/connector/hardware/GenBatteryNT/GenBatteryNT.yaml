@@ -43,7 +43,7 @@ monitors:
             translationTable: ${translation::ChemistryTranslationTable}
       mapping:
         # 
-        source: ${source::monitors.battery.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           chemistry: $1
@@ -87,7 +87,7 @@ monitors:
             newValue: ""
       mapping:
         # Battery StatusInformation (not used anymore at this point), DeviceID, Charge, Time Left (mins), Status, StatusInformation
-        source: ${source::monitors.battery.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:

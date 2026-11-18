@@ -50,14 +50,14 @@ monitors:
         source(3):
           # "MSHW";"Manufacturer";"Type";"SN";"MSHW";"Bios Info"
           type: tableJoin
-          leftTable: ${source::monitors.enclosure.discovery.sources.source(1)}
-          rightTable: ${source::monitors.enclosure.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
       mapping:
         # Enclosure Instance Table
         # "MSHW";"Manufacturer";"Type";"SN";"MSHW";"Bios Info"
-        source: ${source::monitors.enclosure.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: Computer
           __display_id: $3
@@ -81,7 +81,7 @@ monitors:
       mapping:
         # Temperature Instance Table
         # "Name";"Type";"Value";"Max";"Critical"
-        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           __display_id: $1
@@ -105,7 +105,7 @@ monitors:
       mapping:
         # Temperature Value Table
         # "Name";"Type";"Value";"Max";"Critical"
-        source: ${source::monitors.temperature.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
@@ -126,7 +126,7 @@ monitors:
       mapping:
         # Voltage Instance Table
         # "Name";"Type";"Value";"Lower";"Upper"
-        source: ${source::monitors.voltage.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           __display_id: $1
@@ -151,7 +151,7 @@ monitors:
       mapping:
         # Voltage Value Table
         # "Name";"Type";"Value";"Lower";"Upper"
-        source: ${source::monitors.voltage.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
@@ -172,7 +172,7 @@ monitors:
       mapping:
         # FAN Instance Table
         # "DName-FName";"Value";"Min";"Max";"Alarm"
-        source: ${source::monitors.fan.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           __display_id: $1
@@ -197,7 +197,7 @@ monitors:
       mapping:
         # FAN Value Table
         # "DName-FName";"Value";"Min";"Max";"Alarm"
-        source: ${source::monitors.fan.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
