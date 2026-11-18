@@ -1,7 +1,3 @@
-BEGIN {
-    OFS = ";";
-}
-
 # Helpers: trim and validity check (treat "N/A" case-insensitively as empty)
 function ltrim(s) { sub("^[ \t]+", "", s); return s }
 function rtrim(s) { sub(/[ \t]+$/, "", s); return s }

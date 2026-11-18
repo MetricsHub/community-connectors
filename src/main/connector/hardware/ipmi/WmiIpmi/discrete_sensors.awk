@@ -26,8 +26,6 @@
 #
 ###############################################################################
 
-BEGIN { FS=";"; OFS=";" }
-
 function parse_desc(description,
                     openParenPos,
                     fullDescription,
