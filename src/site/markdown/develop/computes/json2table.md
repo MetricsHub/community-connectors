@@ -1,0 +1,106 @@
+keywords: json2Table, json2Csv, compute, json, table, rest api, entryKey, large payloads
+description: json2Table flattens a JSON payload into a table, producing one row per JSON entry plus a leading entry-path column, one cell per property.
+
+# json2Table (Compute)
+
+<!-- MACRO{toc|fromDepth=2|toDepth=3|id=toc} -->
+
+## When To Use
+
+Use `json2Table` to turn a raw JSON payload — typically the `body` of an [`http`](../sources/http.html) source — into the tabular form that mapping and other computes expect. Point `entryKey` at the JSON array (or object) holding the entries, and list in `properties` the values to extract from each entry: the compute emits one row per entry, one column per property.
+
+This is almost always the **first** compute in an HTTP source pipeline: parse the payload into a table immediately, then filter and reshape with regular table computes.
+
+`json2Csv` (or `json2csv`), the former name of this compute, is rejected (`DEPRECATED_SYNTAX`, see [Strict Content Types](../design-principles.html#strict-content-types)): a connector that uses it does not load.
+
+## Syntax
+
+```yaml
+sources:
+  switches:
+    type: http
+    method: get
+    path: /api/v1/inventory/switches
+    resultContent: body
+    computes:
+    - type: json2Table
+      entryKey: /switches
+      properties: [ /id, /name, /operationalStatus ]
+```
+
+## Properties
+
+| Property | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | None | `json2Table`. |
+| `entryKey` | No | None | JSON pointer to the node containing the entries to convert. Point at an array (`/switches`, `/Members`) to get one row per element; use `/` to treat the whole document as a single entry. Always set it explicitly. |
+| `properties` | Yes | None | List of JSON pointers, each resolved **relative to one entry** (`[ /id, /name, /operationalStatus ]`). Nested values use full pointer paths, including array indexes (`"/Links/Storage[0]/@odata.id"`). The list order defines the column order. |
+| `separator` | No | None | Ignored: each property gives exactly one cell, whatever its value holds. Omit it. |
+| `parsingMode` | No | None | Rejected (`DEPRECATED_SYNTAX`): the compute chooses how to read the document from its size, see [Large Payloads](#large-payloads). Remove it. |
+
+> [!IMPORTANT]
+> `json2Table` prepends one extra column identifying the JSON entry each row was built from (its path in the document). Your first property therefore lands in **column 2**: reference it as `$2` in `mapping` and in subsequent computes.
+
+> [!NOTE]
+> Each value lands whole in its cell: a value that holds a line feed or a `;` stays in one cell of one row, and empty values, including the last property, give empty cells. An `awk` compute that follows reads each cell as is (`$1..$NF`).
+
+You may encounter two shorthand styles in examples: property pointers written without the leading `/` (`properties: [ id, name, status ]`), which resolve against each entry's top level, and array traversal expressed inside the property itself (`properties: [ "Members[*].@odata.id" ]`). Prefer the canonical form used by real connectors: `entryKey` pointing at the array, plus one leading-slash pointer per column (`entryKey: /Members` with `properties: [ /@odata.id ]`).
+
+## Table Transformation Example
+
+> [!TABS]
+>
+> - <span class="fa-solid fa-code"></span> Input (JSON body)
+>
+>   ```json
+>   {
+>     "switches": [
+>       { "id": "sw-01", "name": "edge-01", "operationalStatus": "ok" },
+>       { "id": "sw-02", "name": "core-01", "operationalStatus": "degraded" }
+>     ]
+>   }
+>   ```
+>
+> - <span class="fa-solid fa-table-list"></span> Result
+>
+>   | Entry (col 1) | id (col 2) | name (col 3) | operationalStatus (col 4) |
+>   | --- | --- | --- | --- |
+>   | /switches[0] | sw-01 | edge-01 | ok |
+>   | /switches[1] | sw-02 | core-01 | degraded |
+
+## Large Payloads
+
+`json2Table` reads a payload of 64 KiB or more as a stream of JSON events:
+
+- Only one element of the array at the start of `entryKey` (`/items` in `entryKey: /items`) is flattened at a time.
+- The nodes that neither `entryKey` nor `properties` can reach are skipped.
+
+Memory stays close to the size of the payload, and a large list is converted faster. A smaller payload is loaded whole as a tree of its nodes, about 20 times its size in memory, which is faster for a few KB. The rows are the same either way, in the same order.
+
+Some documents cannot be read as events and are loaded as a tree whatever their size:
+
+- the payload is an array, `entryKey` is `/`, or the first element of `entryKey` is `*` or contains an index (`/items[0]/...`);
+- a property refers to a node above the array element, for example `../kind` with `entryKey: /items` (`../../metadata/name` with `entryKey: /items/status/conditions` stays inside the element and is fine);
+- an object of an element has a duplicate key.
+
+## Recommended Pattern
+
+- Set `resultContent: body` on the HTTP source and put `json2Table` first in its `computes` pipeline.
+- Point `entryKey` at the array of records and keep every property pointer relative to a single record.
+- Account for the leading entry column: the first property is `$2`, not `$1`.
+- Quote a pointer that contains YAML-sensitive characters such as `[0]` (for example `properties: [ /@odata.id, "/Links/Storage[0]/@odata.id" ]`).
+
+## Common Mistakes
+
+- Off-by-one column references in `mapping` or later computes because the leading entry column was forgotten.
+- Writing property pointers relative to the document root instead of relative to one entry under `entryKey`.
+- Writing `properties` as one string with commas between the pointers (`/id,/name`): it is a YAML list, one pointer per item.
+- Leaving `entryKey` pointing at a single object when the payload nests the records one level deeper, which yields a single mostly-empty row instead of one row per record.
+- Placing `json2Table` after a compute that already produced a table: there is nothing to parse, and the connector does not load (`TABLE_FEEDS_TEXT`). A payload that does not parse gives an empty table.
+- Rejoining rows or cells of `json2Table` in a following `awk`: a value with a line feed or a `;` never cuts its row, and an `awk` that follows reads each cell as is. A `toText` before the `awk` turns a `;` in a cell into `,` and a line feed into a space: drop it rather than repairing the cells.
+
+## Community Examples
+
+- [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml)
+
+<!-- MACRO{snippet|id=json2CsvCompute|file=src/main/connector/hardware/Redfish/Redfish.yaml} -->
