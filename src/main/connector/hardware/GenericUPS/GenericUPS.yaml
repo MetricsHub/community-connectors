@@ -24,7 +24,7 @@ monitors:
           oid: 1.3.6.1.2.1.33.1.1
           selectColumns: "1,2,3,5"
       mapping:
-        source: ${source::monitors.enclosure.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $4
           vendor: $1
@@ -38,9 +38,10 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.6.1.0
           computes:
-          - type: prepend
+          - type: insertColumn
             column: 1
-            value: MSHW;
+            value: MSHW
+            # MSHW;AlarmsPresent;
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
@@ -48,13 +49,15 @@ monitors:
           computes:
           - type: awk
             script: ${file::enclosure.awk}
+            output: table
+            # MSHW;PowerConsumption;
         source(3):
           type: tableJoin
-          leftTable: ${source::monitors.enclosure.collect.sources.source(1)}
-          rightTable: ${source::monitors.enclosure.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;
+          defaultRightLine: [ "" ]
           computes:
           - type: translate
             column: 2
@@ -64,18 +67,19 @@ monitors:
           oid: 1.3.6.1.2.1.33.1.6.2.1
           selectColumns: 2
           computes:
-          - type: prepend
+          - type: insertColumn
             column: 1
-            value: MSHW;
+            value: MSHW
+            # MSHW;AlarmDescription;
         source(5):
           type: tableJoin
-          leftTable: ${source::monitors.enclosure.collect.sources.source(3)}
-          rightTable: ${source::monitors.enclosure.collect.sources.source(4)}
+          leftTable: ${source::source(3)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;
+          defaultRightLine: [ "" ]
       mapping:
-        source: ${source::monitors.enclosure.collect.sources.source(5)}
+        source: ${source::source(5)}
         metrics:
           hw.status{hw.type="enclosure"}: $2
           hw.enclosure.power: $4
@@ -89,7 +93,7 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.1.0
       mapping:
-        source: ${source::monitors.battery.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: UPS Battery
           __display_id: UPS Battery
@@ -102,23 +106,25 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.1.0
           computes:
-          - type: prepend
+          - type: insertColumn
             column: 1
-            value: MSHW;
+            value: MSHW
+            # MSHW;BatteryStatus;
         source(2):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.4.0
           computes:
-          - type: prepend
+          - type: insertColumn
             column: 1
-            value: MSHW;
+            value: MSHW
+            # MSHW;EstimatedChargeRemaining;
         source(3):
           type: tableJoin
-          leftTable: ${source::monitors.battery.collect.sources.source(1)}
-          rightTable: ${source::monitors.battery.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;
+          defaultRightLine: [ "" ]
           computes:
           - type: duplicateColumn
             column: 2
@@ -132,18 +138,19 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.3.0
           computes:
-          - type: prepend
+          - type: insertColumn
             column: 1
-            value: MSHW;
+            value: MSHW
+            # MSHW;EstimatedMinutesRemaining;
         source(5):
           type: tableJoin
-          leftTable: ${source::monitors.battery.collect.sources.source(3)}
-          rightTable: ${source::monitors.battery.collect.sources.source(4)}
+          leftTable: ${source::source(3)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;
+          defaultRightLine: [ "" ]
       mapping:
-        source: ${source::monitors.battery.collect.sources.source(5)}
+        source: ${source::source(5)}
         attributes:
           id: UPS Battery
         metrics:
@@ -164,6 +171,8 @@ monitors:
           - type: multiply
             column: 1
             value: 1000
+          - type: awk
+            script: "{ print $1 }"
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.3.3.1
@@ -171,14 +180,17 @@ monitors:
           computes:
           - type: prepend
             column: 1
-            value: 'MSHW;Input '
+            value: 'Input '
+            # ID;
           - type: append
-            column: 3
-            value: ${source::monitors.voltage.discovery.sources.source(1)}
-            # Create Thresholds
-            # MSHW;ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
+            column: 2
+            value: ${source::source(1)}
+            # ID;UPSConfigInputVoltage;
           - type: awk
             script: ${file::voltage.awk}
+            output: table
+            # Create Thresholds
+            # ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
         source(3):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.9.3.0
@@ -186,6 +198,8 @@ monitors:
           - type: multiply
             column: 1
             value: 1000
+          - type: awk
+            script: "{ print $1 }"
         source(4):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
@@ -193,21 +207,25 @@ monitors:
           computes:
           - type: prepend
             column: 1
-            value: 'MSHW;Output '
+            value: 'Output '
+            # ID;
           - type: append
-            column: 3
-            value: ${source::monitors.voltage.discovery.sources.source(3)}
-            # Create Thresholds
-            # MSHW;ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
+            column: 2
+            value: ${source::source(3)}
+            # ID;UPSConfigOutputVoltage;
           - type: awk
             script: ${file::voltage.awk}
+            output: table
+            # Create Thresholds
+            # ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
         source(5):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
           computes:
-          - type: prepend
+          - type: insertColumn
             column: 1
-            value: MSHW;Battery Voltage;
+            value: Battery Voltage
+            # ID;UPSBatteryVoltage;
         source(6):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.5.3.1
@@ -215,27 +233,28 @@ monitors:
           computes:
           - type: prepend
             column: 1
-            value: 'MSHW;Bypass '
+            value: 'Bypass '
+            # ID;
         source(7):
           type: tableUnion
           tables:
-          - ${source::monitors.voltage.discovery.sources.source(2)}
-          - ${source::monitors.voltage.discovery.sources.source(4)}
-          - ${source::monitors.voltage.discovery.sources.source(5)}
-          - ${source::monitors.voltage.discovery.sources.source(6)}
+          - ${source::source(2)}
+          - ${source::source(4)}
+          - ${source::source(5)}
+          - ${source::source(6)}
       mapping:
         # InstanceTable = Source(7)
-        # MSHW;ID;Voltage;UpperThreshold;LowerThreshold;
-        source: ${source::monitors.voltage.discovery.sources.source(7)}
+        # ID;Voltage;UpperThreshold;LowerThreshold;
+        source: ${source::source(7)}
         attributes:
-          id: $2
-          __display_id: $2
+          id: $1
+          __display_id: $1
           sensor_location: UPS
           hw.parent.type: enclosure
-          name: "${awk::sprintf(\"%s (%s)\", $2, \"UPS\")}"
+          name: "${awk::sprintf(\"%s (%s)\", $1, \"UPS\")}"
         metrics:
-          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($4)
-          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($5)
+          hw.voltage.limit{limit_type="high.critical"}: milliVolt2Volt($3)
+          hw.voltage.limit{limit_type="low.critical"}: milliVolt2Volt($4)
     collect:
       # Voltage Collect
       type: multiInstance
@@ -244,13 +263,13 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
           computes:
-          - type: prepend
+          - type: insertColumn
             column: 1
-            value: MSHW;Battery Voltage;
+            value: Battery Voltage
             # UPSBatteryVoltage is in 0.1v, so multiply by 100 to get mv (1000 mv = 1 v)
-            # MSHW;ID;UPSBatteryVoltage;
+            # ID;UPSBatteryVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 100
         source(2):
           type: snmpTable
@@ -259,9 +278,10 @@ monitors:
           computes:
           - type: prepend
             column: 1
-            value: 'MSHW;Input '
+            value: 'Input '
+            # ID;UPSInputVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 1000
         source(3):
           type: snmpTable
@@ -270,9 +290,10 @@ monitors:
           computes:
           - type: prepend
             column: 1
-            value: 'MSHW;Output '
+            value: 'Output '
+            # ID;UPSOutputVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 1000
         source(4):
           type: snmpTable
@@ -281,27 +302,27 @@ monitors:
           computes:
           - type: prepend
             column: 1
-            value: 'MSHW;Bypass '
+            value: 'Bypass '
             # upsBypassVoltage is in Volts, so multiply by 1000 to get mv.
-            # MSHW;ID;UPSBypassVoltage;
+            # ID;UPSBypassVoltage;
           - type: multiply
-            column: 3
+            column: 2
             value: 1000
         source(5):
           type: tableUnion
           tables:
-          - ${source::monitors.voltage.collect.sources.source(1)}
-          - ${source::monitors.voltage.collect.sources.source(2)}
-          - ${source::monitors.voltage.collect.sources.source(3)}
-          - ${source::monitors.voltage.collect.sources.source(4)}
+          - ${source::source(1)}
+          - ${source::source(2)}
+          - ${source::source(3)}
+          - ${source::source(4)}
       mapping:
         # ValueTable = Source(5)
-        # MSHW;ID;Voltage;
-        source: ${source::monitors.voltage.collect.sources.source(5)}
+        # ID;Voltage;
+        source: ${source::source(5)}
         attributes:
-          id: $2
+          id: $1
         metrics:
-          hw.voltage: milliVolt2Volt($3)
+          hw.voltage: milliVolt2Volt($2)
   temperature:
     keys:
     - id
@@ -311,7 +332,7 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
       mapping:
-        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: UPS Battery Temperature
           __display_id: UPS Battery Temperature
@@ -329,7 +350,7 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
       mapping:
-        source: ${source::monitors.temperature.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: UPS Battery Temperature
         metrics:

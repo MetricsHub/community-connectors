@@ -28,7 +28,7 @@ monitors:
       mapping:
         # InstanceTable = Source(1)
         # PortID;Description;PortType;MacAddress;AdminStatus;
-        source: ${source::monitors.network.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           __display_id: $2

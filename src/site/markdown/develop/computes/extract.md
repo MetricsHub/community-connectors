@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: ${file::list-disks.sh}
     computes:
+    - type: toTable
     # Column 5 contains "Model|Size"; keep only "Model"
     - type: extract
       column: 5

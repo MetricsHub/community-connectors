@@ -57,7 +57,7 @@ monitors:
           type: http
           path: /api/fans
           computes:
-          - type: json2Csv
+          - type: json2Table
             entryKey: /records
             properties: /id;/name;/status;/rpm
       mapping:
@@ -137,6 +137,7 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: 2,8
+          - type: toTable
           - type: duplicateColumn
             column: 2
           - type: translate
@@ -175,6 +176,7 @@ monitors:
             keep: ^MSHW;
             separators: ;
             selectColumns: 2
+          - type: toTable
           - type: translate
             column: 1
             translationTable: "${translation::PhysicalDiskPredictedFailureTranslationTable}"

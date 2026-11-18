@@ -199,9 +199,9 @@ metrics:
     unit: By
 
   hw.network.bandwidth.limit:
-    description: Speed that the network adapter and its remote counterpart currently use to communicate with each other.
+    description: Link speed.
     type: UpDownCounter
-    unit: By
+    unit: By/s
 
   hw.network.bandwidth.utilization:
     description: Utilization of the network bandwidth as a fraction.

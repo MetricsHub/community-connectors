@@ -49,15 +49,15 @@ monitors:
           # Join the 32bit MIB2 table with the 64 bit IfXTable
           # PortID;Description;TypeCode;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;
           type: tableJoin
-          leftTable: ${source::monitors.network.discovery.sources.source(1)}
-          rightTable: ${source::monitors.network.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;
+          defaultRightLine: [ "", "", "" ]
       mapping:
         # InstanceTable = Source(3)
         # PortID;Description;TypeCode;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;
-        source: ${source::monitors.network.discovery.sources.source(3)}
+        source: ${source::source(3)}
         conditionalCollection:
           hw.network.bandwidth.limit: $6
 
@@ -144,11 +144,11 @@ monitors:
           # Source(3) = Table Joint of (1) and (2)
           # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(1)}
-          rightTable: ${source::monitors.network.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;;;;
+          defaultRightLine: [ "", "", "", "", "", "" ]
           computes:
             # Now add MSHW to the Left and Right of the ifMIBObjects SpeedMBS
             # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;
@@ -174,7 +174,7 @@ monitors:
         source(4):
           # Make a copy of Source(3)
           type: copy
-          from: ${source::monitors.network.collect.sources.source(3)}
+          from: ${source::source(3)}
           computes:
             # Keep only interfaces with 64bit counters
             #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20   #21               #22
@@ -207,7 +207,7 @@ monitors:
         source(5):
           # Make a copy of Source(3)
           type: copy
-          from: ${source::monitors.network.collect.sources.source(3)}
+          from: ${source::source(3)}
           computes:
             # Exclude interfaces with 64bit counters
             #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20   #21               #22
@@ -220,11 +220,11 @@ monitors:
           # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableUnion
           tables:
-          - ${source::monitors.network.collect.sources.source(4)}
-          - ${source::monitors.network.collect.sources.source(5)}
+          - ${source::source(4)}
+          - ${source::source(5)}
       mapping:
         # ValueTable = Source(6)
-        source: ${source::monitors.network.collect.sources.source(6)}
+        source: ${source::source(6)}
         attributes:
           id: $1
         metrics:

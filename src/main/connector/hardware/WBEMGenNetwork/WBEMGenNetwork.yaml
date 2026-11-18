@@ -87,8 +87,8 @@ monitors:
           # Source(3) = Table joint of Source(1) and Source(2)
           # MACAddress;Name;PNPDeviceID;MSNdisID;PNPDeviceID;
           type: tableJoin
-          leftTable: ${source::monitors.network.discovery.sources.source(1)}
-          rightTable: ${source::monitors.network.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 3
           rightKeyColumn: 2
           computes:
@@ -99,7 +99,7 @@ monitors:
             value: "PnP Device Id: "
       mapping:
         # InstanceTable = Source(3)
-        source: ${source::monitors.network.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $4
           model: $2
@@ -169,27 +169,27 @@ monitors:
           # Source(7) = Source(3) + Source(4)
           # DeviceID;TransmitError;DeviceID;ReceiveError
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(3)}
-          rightTable: ${source::monitors.network.collect.sources.source(4)}
+          leftTable: ${source::source(3)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
         source(8):
           # Source(8) = Source(5) + Source(6)
           # DeviceID;TransmitsOK;DeviceID;ReceivesOK
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(5)}
-          rightTable: ${source::monitors.network.collect.sources.source(6)}
+          leftTable: ${source::source(5)}
+          rightTable: ${source::source(6)}
           leftKeyColumn: 1
           rightKeyColumn: 1
         source(9):
           # Source(9) = Source(8) + Source(7)
           # DeviceID;TransmitsOK;DeviceID;ReceivesOK;DeviceID;TransmitError;DeviceID;ReceiveError;
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(8)}
-          rightTable: ${source::monitors.network.collect.sources.source(7)}
+          leftTable: ${source::source(8)}
+          rightTable: ${source::source(7)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;0;;0;
+          defaultRightLine: [ "", "0", "", "0" ]
           computes:
             # Computes TransmittedPackets ( = TransmitErrors + TransmitsOK )
             # DeviceID;TransmittedPackets;DeviceID;ReceivesOK;DeviceID;TransmitError;DeviceID;ReceiveError
@@ -210,11 +210,11 @@ monitors:
           # Join LinkStatus and Status tables
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(2)}
-          rightTable: ${source::monitors.network.collect.sources.source(1)}
+          leftTable: ${source::source(2)}
+          rightTable: ${source::source(1)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;
+          defaultRightLine: [ "", "", "" ]
         source(11):
           # Link Speed
           # DeviceID;LinkSpeed
@@ -231,19 +231,19 @@ monitors:
           # Join Status/LinkStatus with LinkSpeed
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation;DeviceID;LinkSpeed;
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(10)}
-          rightTable: ${source::monitors.network.collect.sources.source(11)}
+          leftTable: ${source::source(10)}
+          rightTable: ${source::source(11)}
           leftKeyColumn: 1
           rightKeyColumn: 1
         source(13):
           # Join Source(12) + Source(9)
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation;DeviceID;LinkSpeed;DeviceID;TransmittedPackets;DeviceID;ReceivedPackets;DeviceID;TotalError;DeviceID;ReceiveError;
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(12)}
-          rightTable: ${source::monitors.network.collect.sources.source(9)}
+          leftTable: ${source::source(12)}
+          rightTable: ${source::source(9)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: ;;;;;;;;
+          defaultRightLine: [ "", "", "", "", "", "", "", "" ]
           computes:
             # Now replace some "special" chars in one of the DeviceID columns with underscores
             # as it looks like the perfmon instances can't have '#' or '/'
@@ -276,14 +276,14 @@ monitors:
           # Final Join: Source(13) + Source(14)
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation;DeviceID;LinkSpeed;DeviceID;TransmittedPackets;DeviceID;ReceivedPackets;DeviceID;TotalError;DeviceID;ReceiveError;Name;BytesReceived;BytesTransmitted
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(13)}
-          rightTable: ${source::monitors.network.collect.sources.source(14)}
+          leftTable: ${source::source(13)}
+          rightTable: ${source::source(14)}
           leftKeyColumn: 8
           rightKeyColumn: 1
-          defaultRightLine: ;;;
+          defaultRightLine: [ "", "", "" ]
       mapping:
         # And here is the ValueTable (at last!)
-        source: ${source::monitors.network.collect.sources.source(15)}
+        source: ${source::source(15)}
         attributes:
           id: $1
         metrics:

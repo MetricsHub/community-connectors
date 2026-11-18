@@ -20,6 +20,7 @@ sources:
     # Enclosure;Vendor;Model;SerialNumber;Status;StatusInformation;PowerConsumption
     type: ipmi
     computes:
+    - type: toTable
     - type: keepOnlyMatchingLines
       column: 1
       valueList: enclosure

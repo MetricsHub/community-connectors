@@ -1,5 +1,5 @@
 keywords: append, compute, concatenate, suffix, add column, string
-description: The append compute concatenates a value to the end of every cell in a column, and can materialize new columns when the value contains semicolons.
+description: The append compute concatenates a value to the end of every cell in a column.
 
 # append (Compute)
 
@@ -7,9 +7,9 @@ description: The append compute concatenates a value to the end of every cell in
 
 ## When To Use
 
-Use `append` to concatenate a value to the **end** of a column's content, on every row of the table. Typical uses are adding a fixed suffix to build an identifier (e.g. appending `_0` to a PnP address so it matches another source), merging two columns by appending `$n` (the content of column *n*) to another column, or adding empty placeholder columns so the table matches the column layout expected by `mapping` or by a `tableJoin`.
+Use `append` to concatenate a value to the **end** of a column's content, on every row of the table. Typical uses are adding a fixed suffix to build an identifier (e.g. appending `_0` to a PnP address so it matches another source), or merging two columns by appending `$n` (the content of column *n*) to another column.
 
-Because a table is serialized as semicolon-separated text, appending a value that contains `;` effectively **creates new columns** to the right of the target column — a deliberate and widely used trick in real connectors.
+The value is added to the cell as it is: a `;` or a line feed in it is an ordinary character of the cell, and adds no column and no row. To add a column (an empty placeholder, a constant), use [insertColumn](./insert-column.html).
 
 ## Syntax
 
@@ -32,8 +32,8 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `append`. |
-| `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
-| `value` | Yes | None | String appended to the end of the column content. Accepts a literal, a `$n` reference to another column of the same row (e.g. `$5`), or a `${source::...}` reference whose content is appended. A value containing `;` adds new columns (see below). |
+| `column` | On a table | None | **1-based** index of the column to modify. Applied to every row. Omit it to append to a text, see [On A Text](#on-a-text). |
+| `value` | Yes | None | String appended to the end of the column content. Accepts a literal, a `$n` reference to another column of the same row (e.g. `$5`), or a `${source::...}` reference to a text, whose content is appended (a table there is rejected, `TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). A `;` or a line feed in the value stays in the cell. |
 
 ## Table Transformation Example
 
@@ -53,34 +53,44 @@ With `column: 2` and `value: _0`:
 >   | --- | --- |
 >   | Disk0 | SCSI\DISK&VEN_MSFT&PROD_VIRTUAL_DISK\1&2AFD7D61&3&000001_0 |
 
-**Semicolon trick:** since rows serialize as semicolon-separated text, `- type: append` with `column: 2` and `value: ;;` on the row `fan1;OK` produces:
+## On A Text
 
-```text
-fan1;OK;;
+Without `column`, `append` works on a **text** (the result of an `http`, a `commandLine`, an `awk` without `output: table`, ...): the value is added once, at the end of the whole text, and the result is still a text.
+
+```yaml
+sources:
+  firmwareLabel:
+    # The body is the bare version: 2.4.1
+    type: http
+    method: get
+    path: /api/version
+    computes:
+    # 2.4.1 -> 2.4.1 (REST)
+    - type: append
+      value: " (REST)"
 ```
 
-which re-parses as 4 columns — two new empty columns now follow column 2. Real connectors use this to insert empty `Status`/`StatusInformation` placeholders (e.g. `value: ;;` in IpmiTool) or a constant extra column (`value: ;joinValue` in SmartMonLinux).
+- The value goes after the last character of the text, whatever it is: after the final line feed of a command output, and after the `;` that an `awk` compute writes at the end of each line of its text. To add a value at the end of each line, use an `awk`.
+- `$n` is not a column reference here: a text has no column.
+- The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 
-- Keep a `# Column1;Column2;...` comment before and after each `append` that adds columns, so the evolving table layout stays readable.
+- Keep a `# Column1;Column2;...` comment before the `append`, so the table layout stays readable.
 - Use `$n` values to merge columns (e.g. append `$5` to column 1 to build a composite identifier).
-- Prefer `append` with `;` padding over more complex sources when `mapping` simply needs extra empty columns.
+- Use [insertColumn](./insert-column.html) to add a column (an empty placeholder, a constant).
 - Quote values that start or end with spaces or contain YAML-significant characters: `value: ' - '`.
 
 ## Common Mistakes
 
 - Forgetting that `column` is 1-based: `column: 1` targets the first column.
-- Not realizing a `;` in `value` changes the column count — every later compute and the `mapping` section must use the **new** indexes.
+- Expecting a `;` in `value` to add columns: `value: ;;` on the cell `OK` gives the single cell `OK;;`. Use [insertColumn](./insert-column.html).
+- Appending a `${source::...}` reference to a table to bring its columns in: the connector does not load (`TABLE_INTERPOLATED`). Combine sources with a [tableJoin](../sources/table-join.html).
 - Writing `value: $5` expecting a literal `$5`: `$n` is interpreted as a column reference.
 - Leaving an unquoted value that YAML truncates or mangles (a ` #` inside the value starts a comment; leading/trailing spaces are stripped — quote such values: `value: ' - '`).
 
 ## Community Examples
 
 - [WBEMGenLUN](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WBEMGenLUN/WBEMGenLUN.yaml)
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
+- [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
 - [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)
-
-From IpmiTool (adding empty columns with the semicolon trick):
-
-<!-- MACRO{snippet|id=appendEmptyColumnsCompute|file=src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml} -->

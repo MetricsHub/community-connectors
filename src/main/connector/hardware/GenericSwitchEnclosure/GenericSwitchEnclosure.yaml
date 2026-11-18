@@ -29,7 +29,7 @@ monitors:
           oid: 1.3.6.1.2.1.1
           selectColumns: 1
       mapping:
-        source: ${source::monitors.enclosure.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: EthernetSwitch
           __display_id: $1
@@ -52,13 +52,13 @@ monitors:
         source(5):
           # PortID;OperationalStatus;PortID;Description;TypeCode;MacAddress;AdminStatus;Bandwidth;ID;Name;Alias;
           type: tableJoin
-          leftTable: ${source::monitors.network.discovery.sources.source(4)}
-          rightTable: ${source::monitors.network.discovery.sources.source(3)}
+          leftTable: ${source::source(4)}
+          rightTable: ${source::source(3)}
           leftKeyColumn: 1
           rightKeyColumn: 1
       mapping:
         # PortID;OperationalStatus;PortID;Description;TypeCode;MacAddress;AdminStatus;Bandwidth;ID;Name;Alias;
-        source: ${source::monitors.network.discovery.sources.source(5)}
+        source: ${source::source(5)}
         attributes:
           id: $1
           __display_id: $9

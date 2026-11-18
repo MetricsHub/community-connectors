@@ -35,7 +35,7 @@ BEGIN {
 
 END {
 	if (deviceID != "") {
-		print "MSHW;" deviceID ";" linkStatus ";" linkSpeed ";" duplexMode ";"
+		print deviceID, linkStatus, linkSpeed, duplexMode
 	}
 }
 

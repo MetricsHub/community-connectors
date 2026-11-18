@@ -14,7 +14,6 @@ BEGIN {
 	memoryUtilization = ""
 	encoderUtilization = ""
 	decoderUtilization = ""
-	fanSpeed = ""
 	voltage = ""
 	temperature = ""
 	warnTemperature = ""
@@ -151,12 +150,6 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 #  IF (/Memory/) getline; memoryClock = $2; gsub(/ MHz/,"",memoryClock);
 #  IF (/Video/) getline; videoClock = $2; gsub(/ MHz/,"",videoClock); }
 
-#Collection of fan class values and removal of units of measurement.
-/Fan Speed/ && /[0-9]/ {
-	fanSpeed = $2
-	gsub(/ %/, "", fanSpeed)
-}
-
 #Collection of voltage class values and removal of units of measurement.
 /Voltage/ {
 	getline
@@ -190,10 +183,9 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 	if (totalMemory > 0 && freeMemory != "") {
 		memoryUtilization = (totalMemory - freeMemory) * 100 / totalMemory
 	}
-	print "MSHW_GPU;" "GPU" gpuID ";" (transferredBytes * 1024) ";" (receivedBytes * 1024) ";" gpuUtilization ";" memoryUtilization ";" encoderUtilization ";" decoderUtilization ";" powerConsumption ";" minPowerLimit ";" maxPowerLimit ";" correctable ";" uncorrectable ";" model ";" serialNumber ";" gpuUuid vBios ";" driverVersion ";" cudaVersion ";" firmwareVersion ";" totalMemory ";" usedMemory ";" reservedMemory ";" freeMemory
-	print "MSHW_TEMP;" "GPU" gpuID ";" temperature ";" warnTemperature ";" critTemperature
-	print "MSHW_VOLTAGE;" "GPU" gpuID ";" voltage
-	print "MSHW_FAN;" "GPU" gpuID ";" fanSpeed
+	print "GPU", "GPU" gpuID, (transferredBytes * 1024), (receivedBytes * 1024), gpuUtilization, memoryUtilization, encoderUtilization, decoderUtilization, powerConsumption, minPowerLimit, maxPowerLimit, correctable, uncorrectable, model, serialNumber, gpuUuid vBios, driverVersion, cudaVersion, firmwareVersion, totalMemory, usedMemory, reservedMemory, freeMemory
+	print "TEMPERATURE", "GPU" gpuID, temperature, warnTemperature, critTemperature
+	print "VOLTAGE", "GPU" gpuID, voltage
 	gpuID = ""
 	model = ""
 	serialNumber = ""
@@ -206,7 +198,6 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 	memoryUtilization = ""
 	encoderUtilization = ""
 	decoderUtilization = ""
-	fanSpeed = ""
 	voltage = ""
 	temperature = ""
 	warnTemperature = ""

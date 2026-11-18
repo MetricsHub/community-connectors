@@ -13,7 +13,7 @@ BEGIN {
 	}
 	if ($1 ~ /Serial Number/) {
 		SN = $2
-		print ("MSHW;" Manufacturer ";" Type ";" SN ";")
+		print "MSHW", Manufacturer, Type, SN
 	}
 }
 

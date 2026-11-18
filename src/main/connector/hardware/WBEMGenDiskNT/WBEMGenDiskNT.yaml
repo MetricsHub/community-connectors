@@ -53,8 +53,8 @@ monitors:
           # of the disks that supports S.M.A.R.T.
           # InstanceName;PnPDeviceID;InstanceName
           type: tableJoin
-          leftTable: ${source::monitors.disk_controller.discovery.sources.source(1)}
-          rightTable: ${source::monitors.disk_controller.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 2
         source(4):
@@ -83,8 +83,8 @@ monitors:
           # Source(5) = jointure of source(4) with source(3)
           # ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskPnPDeviceID;DiskInstanceName
           type: tableJoin
-          leftTable: ${source::monitors.disk_controller.discovery.sources.source(4)}
-          rightTable: ${source::monitors.disk_controller.discovery.sources.source(3)}
+          leftTable: ${source::source(4)}
+          rightTable: ${source::source(3)}
           leftKeyColumn: 2
           rightKeyColumn: 2
           computes:
@@ -108,12 +108,12 @@ monitors:
           # Source(7) = jointure of source(6) and source(5) (will contain only one line per disk controller)
           # ControllerName;ControllerPnPDeviceID;ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskInstanceName;DiskPnPDeviceID
           type: tableJoin
-          leftTable: ${source::monitors.disk_controller.discovery.sources.source(6)}
-          rightTable: ${source::monitors.disk_controller.discovery.sources.source(5)}
+          leftTable: ${source::source(6)}
+          rightTable: ${source::source(5)}
           leftKeyColumn: 2
           rightKeyColumn: 1
       mapping:
-        source: ${source::monitors.disk_controller.discovery.sources.source(7)}
+        source: ${source::source(7)}
         attributes:
           id: $2
           controller_number: $2
@@ -135,7 +135,7 @@ monitors:
           # ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskPnPDeviceID;DiskInstanceName;DiskIndex;DiskManufacturer;DiskModel;DiskPNPDeviceID;DiskSize;
           type: tableJoin
           leftTable: ${source::monitors.disk_controller.discovery.sources.source(5)}
-          rightTable: ${source::monitors.physical_disk.discovery.sources.source(1)}
+          rightTable: ${source::source(1)}
           leftKeyColumn: 2
           rightKeyColumn: 4
         source(3):
@@ -143,13 +143,13 @@ monitors:
           # disks attached to actual disk controllers that are not HBAs
           # ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskPnPDeviceID;DiskInstanceName;DiskIndex;DiskManufacturer;DiskModel;DiskPNPDeviceID;DiskSize;ControllerName;ControllerPnPDeviceID;
           type: tableJoin
-          leftTable: ${source::monitors.physical_disk.discovery.sources.source(2)}
+          leftTable: ${source::source(2)}
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(6)}
           leftKeyColumn: 1
           rightKeyColumn: 2
       mapping:
         # The instance table...
-        source: ${source::monitors.physical_disk.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $3
           __display_id: $6
@@ -173,7 +173,7 @@ monitors:
           # in order to link PnPDeviceID with InstanceName in the WMI namespace
           # PnPDeviceID;Status;PnPDeviceID;InstanceName
           type: tableJoin
-          leftTable: ${source::monitors.physical_disk.collect.sources.source(1)}
+          leftTable: ${source::source(1)}
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
@@ -189,8 +189,8 @@ monitors:
           # in the same table
           # PnPDeviceID;Status;PnPDeviceID;InstanceName;InstanceName;PredictFailure
           type: tableJoin
-          leftTable: ${source::monitors.physical_disk.collect.sources.source(2)}
-          rightTable: ${source::monitors.physical_disk.collect.sources.source(3)}
+          leftTable: ${source::source(2)}
+          rightTable: ${source::source(3)}
           leftKeyColumn: 4
           rightKeyColumn: 1
           computes:
@@ -210,7 +210,7 @@ monitors:
             translationTable: ${translation::PhysicalDiskInformationStatusTranslationTable}
       mapping:
         # And here is the ValueTable
-        source: ${source::monitors.physical_disk.collect.sources.source(4)}
+        source: ${source::source(4)}
         attributes:
           id: $6
         metrics:

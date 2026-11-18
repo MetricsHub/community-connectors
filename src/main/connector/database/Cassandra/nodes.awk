@@ -15,19 +15,19 @@ BEGIN {
     movingNodes = 0
 }
 
+# Number of nodes in a list cell such as [host1, host2]
+function count(list,   arr) {
+    # Remove surrounding blanks and square brackets
+    gsub(/^[ \t]+|[ \t]+$|\[|\]/, "", list)
+    return list == "" ? 0 : split(list, arr, ",")
+}
+
 {
-    gsub(/^[ \t]+|[ \t]+$/, "", $0)
-
-    # Remove square brackets
-    gsub(/\[|\]/, "", $0)
-
-    split($0, fields, ";")
-
-    liveNodes        += (fields[1] == "" ? 0 : split(fields[1], arr1, ","))
-    unreachableNodes += (fields[2] == "" ? 0 : split(fields[2], arr2, ","))
-    joiningNodes     += (fields[3] == "" ? 0 : split(fields[3], arr3, ","))
-    leavingNodes     += (fields[4] == "" ? 0 : split(fields[4], arr4, ","))
-    movingNodes      += (fields[5] == "" ? 0 : split(fields[5], arr5, ","))
+    liveNodes        += count($1)
+    unreachableNodes += count($2)
+    joiningNodes     += count($3)
+    leavingNodes     += count($4)
+    movingNodes      += count($5)
 }
 
 END {

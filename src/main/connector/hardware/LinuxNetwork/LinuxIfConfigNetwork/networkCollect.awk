@@ -45,7 +45,8 @@ $1 == "RX" && $2 == "errors" {
 $1 == "TX" && $2 == "errors" {
 	transmitErrors = $3
 }
-unavailableIpState = " "
+
 END {
-	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes ";" unavailableIpState
+	# ifconfig gives no IP state: empty 7th cell, the next steps read the ethtool columns from $8
+	print deviceID, receivePackets, transmitPackets, (receiveErrors + transmitErrors), receiveBytes, transmitBytes, ""
 }

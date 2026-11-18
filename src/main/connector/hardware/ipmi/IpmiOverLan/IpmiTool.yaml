@@ -39,13 +39,11 @@ monitors:
           # Process IPMI result througn an AWK script to interpret what can be interpreted
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
+            output: table
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
-          from: ${source::monitors.enclosure.discovery.sources.source(1)}
+          from: ${source::source(1)}
           computes:
             # Keep only the enclosure line
             # Enclosure;Vendor;Model;SerialNumber;Status;StatusInformation;PowerConsumption;AdditionalInformation
@@ -54,7 +52,7 @@ monitors:
             valueList: enclosure
       mapping:
         # InstanceTable = Source(2)
-        source: ${source::monitors.enclosure.discovery.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: IPMI
           vendor: $2
@@ -76,13 +74,11 @@ monitors:
           # Post-processing of the IPMI mess (which has already been greatly sorted out!)
           - type: awk
             script: ${file::../interpret_sensors.awk}
-            keep: ^MSHW;
-            separators: ;
-            selectColumns: 2,3,4,5,6,7,8,9,10,11,12,13,14
+            output: table
         source(2):
           # Source(2) = copy of Source(1)
           type: copy
-          from: ${source::monitors.enclosure.collect.sources.source(1)}
+          from: ${source::source(1)}
           computes:
             # Keep only the enclosure line
             # Enclosure;Vendor;Model;SerialNumber;StatusArray;StatusInformation;PowerConsumption
@@ -96,7 +92,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(2)
-        source: ${source::monitors.enclosure.collect.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: IPMI
         metrics:
@@ -121,18 +117,22 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
-          # START SNIPPET: appendEmptyColumnsCompute
+          # START SNIPPET: insertEmptyColumnsCompute
             # Add empty Status and StatusInformation columns
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;
-          - type: append
-            column: 3
-            value: ;;
-          # END SNIPPET: appendEmptyColumnsCompute
+            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 4
+            value: ""
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 5
+            value: ""
+          # END SNIPPET: insertEmptyColumnsCompute
             # Add empty AdditionalInformation1 column at the very end
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
-          - type: append
-            column: 9
-            value: ;
+            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
+          - type: insertColumn
+            column: 10
+            value: ""
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
@@ -144,24 +144,36 @@ monitors:
             column: 1
             valueList: Fan Device
             # Keep only interesting columns
-            # Fan Device;DeviceID;StatusArray;StatusInformation;AdditionalInformation1;
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;AdditionalInformation1
           - type: keepColumns
             columnNumbers: 1,2,3,7,8,9
             # Add empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
-          - type: append
-            column: 5
-            value: ;;;;
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;AdditionalInformation1
+          - type: insertColumn
+            column: 6
+            value: ""
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;AdditionalInformation1
+          - type: insertColumn
+            column: 7
+            value: ""
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AdditionalInformation1
+          - type: insertColumn
+            column: 8
+            value: ""
+            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
+          - type: insertColumn
+            column: 9
+            value: ""
         source(3):
           # Source(3) = Table Union of Source(1) and Source(2)
           # Fan;DeviceID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
           type: tableUnion
           tables:
-          - ${source::monitors.fan.discovery.sources.source(1)}
-          - ${source::monitors.fan.discovery.sources.source(2)}
+          - ${source::source(1)}
+          - ${source::source(2)}
       mapping:
         # The instance table
-        source: ${source::monitors.fan.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $2
           __display_id: $3
@@ -191,10 +203,14 @@ monitors:
             column: 1
             valueList: fan
             # Add empty Status and StatusInformation columns
+            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: insertColumn
+            column: 4
+            value: ""
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: append
-            column: 3
-            value: ;;
+          - type: insertColumn
+            column: 5
+            value: ""
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
@@ -210,15 +226,23 @@ monitors:
           - type: keepColumns
             columnNumbers: 1,2,7,8,9
             # Add an empty "SensorName" column
-            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: append
-            column: 2
-            value: ;
+            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1
+          - type: insertColumn
+            column: 3
+            value: ""
             # Add empty FanSpeed, WarningThreshold and AlarmThreshold columns
+            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed
+          - type: insertColumn
+            column: 7
+            value: ""
+            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold
+          - type: insertColumn
+            column: 8
+            value: ""
             # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: append
-            column: 6
-            value: ;;;
+          - type: insertColumn
+            column: 9
+            value: ""
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Fan Device;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           - type: convert
@@ -229,12 +253,12 @@ monitors:
           # Fan;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           type: tableUnion
           tables:
-          - ${source::monitors.fan.collect.sources.source(1)}
-          - ${source::monitors.fan.collect.sources.source(2)}
+          - ${source::source(1)}
+          - ${source::source(2)}
       mapping:
         # CollectTable = Source(3)
         # Fan;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
-        source: ${source::monitors.fan.collect.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $2
         metrics:
@@ -262,7 +286,7 @@ monitors:
           # END SNIPPET: keepOnlyMatchingLinesCompute
       mapping:
         # The instance table
-        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $3
@@ -290,7 +314,7 @@ monitors:
             valueList: temperature
       mapping:
         # CollectTable = Source(1)
-        source: ${source::monitors.temperature.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -313,7 +337,7 @@ monitors:
             valueList: voltage
       mapping:
         # The instance table
-        source: ${source::monitors.voltage.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $3
@@ -341,7 +365,7 @@ monitors:
             valueList: voltage
       mapping:
         # CollectTable = Source(1)
-        source: ${source::monitors.voltage.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -369,7 +393,7 @@ monitors:
             value: "Model: "
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.power_supply.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           info: ${awk::join(" ", $9, $6, $5)}
@@ -397,7 +421,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.power_supply.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -424,7 +448,7 @@ monitors:
             value: "SerialNumber: "
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.cpu.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $3
@@ -456,7 +480,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.cpu.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -500,15 +524,14 @@ monitors:
             # from the vendor, the type and the size that are known
             # Memory module;DeviceID;Entity ID;Vendor;Model;Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo;Description
           - type: awk
+            output: table
             script: |
-              BEGIN { FS=";"; OFS=";" }
               $11 == "" { $11 = $6 }
-              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print }
-            separators: ;
+              { $15 = $4; if ($12 != "") $15 = $15 " - " $12; if ($11 != "") $15 = $15 " - " $11 " MB"; print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15 }
       mapping:
         # InstanceTable = Source(1)
         # The size and the type come from the SPD data of the memory module FRU, when the BMC provides it
-        source: ${source::monitors.memory.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $3
@@ -543,7 +566,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.memory.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -567,7 +590,7 @@ monitors:
             valueList: Disk or disk bay,Disk or Disk Bay,Disk Drive Bay
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.physical_disk.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           vendor: $4
@@ -597,7 +620,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.physical_disk.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -624,7 +647,7 @@ monitors:
             valueList: led
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.led.simple.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $3
@@ -660,7 +683,7 @@ monitors:
             value: "Serial Number: "
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.other_device.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           device_type: $1
           id: $2
@@ -690,7 +713,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.other_device.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -714,7 +737,7 @@ monitors:
             valueList: "Blade,Processing Blade"
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.blade.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           model: $5
@@ -744,7 +767,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.blade.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -771,7 +794,7 @@ monitors:
             value: "serialNumber: "
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.battery.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $3
@@ -800,7 +823,7 @@ monitors:
             conversion: array2SimpleStatus
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.battery.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:

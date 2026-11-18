@@ -33,5 +33,5 @@ $1 ~ /TX:/ && $2 ~ /bytes/ && $3 ~ /packets/ {
 }
 
 END {
-	print "MSHW;" deviceID ";" receivePackets ";" transmitPackets ";" (receiveErrors + transmitErrors) ";" receiveBytes ";" transmitBytes ";" ipState
+	print deviceID, receivePackets, transmitPackets, (receiveErrors + transmitErrors), receiveBytes, transmitBytes, ipState
 }

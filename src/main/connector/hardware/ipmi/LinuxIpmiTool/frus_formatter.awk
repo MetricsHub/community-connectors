@@ -1,6 +1,7 @@
 BEGIN {
     fru = "FRU"
-    OFS = ";"
+    # Table output splits printf text on OFS: SUBSEP, which no cell contains, keeps a ";" in its cell
+    OFS = SUBSEP
 }
 
 function ltrim(ltrimString) {
@@ -15,18 +16,23 @@ function trim(trimString) {
     return rtrim(ltrim(trimString));
 }
 
+# One row, a cell per OFS-separated item (variable count, hence printf)
+function printRow(row) {
+    printf "%s\n", row
+}
+
 /FRU Device Description/ {
     if (fru != "FRU") {
-        print fru
+        printRow(fru)
         fru = "FRU"
     }
 }
 
 {
     line = trim($0)
-    fru = fru ";" line
+    fru = fru OFS line
 }
 
 END {
-    print fru
+    printRow(fru)
 }

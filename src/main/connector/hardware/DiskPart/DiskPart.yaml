@@ -39,9 +39,7 @@ monitors:
             # ID;Label;Letter;VolumeType;FileSystem;Size;Status;MoreInformation
           - type: awk
             script: ${file::diskPart.awk}
-            separators: ;
-            keep: ^MSHW;
-            selectColumns: 2,3,4,5,6,7,8,9
+            output: table
           # END SNIPPET: awkCompute
             # Exclude DVDs and stupid stuff
             # ID;Label;Letter;VolumeType;FileSystem;Size;Status;MoreInformation
@@ -51,12 +49,9 @@ monitors:
           - type: prepend
             column: 5
             value: "File System: "
-          - type: prepend
-            column: 8
-            value: "Volume Information: "
       mapping:
         # The InstanceTable
-        source: ${source::monitors.logical_disk.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           __display_id: $2
@@ -80,9 +75,9 @@ monitors:
             # ID;Status;
           - type: awk
             script: ${file::diskPart.awk}
-            separators: ;
-            keep: ^MSHW;
-            selectColumns: 2,8
+            output: table
+            variables:
+              collect: 1
             # Duplicate the status column
             # ID;Status;Status
           - type: duplicateColumn
@@ -94,7 +89,7 @@ monitors:
             translationTable: ${translation::LogicalDiskTranslationTable}
       mapping:
         # ValueTable = Source(1)
-        source: ${source::monitors.logical_disk.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:

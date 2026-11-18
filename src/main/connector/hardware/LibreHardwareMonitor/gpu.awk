@@ -1,7 +1,3 @@
-BEGIN {
-	FS = ";"
-}
-
 {
 	if ($2 ~ /gpu-/) {
 		gpuId = $2
@@ -39,7 +35,7 @@ BEGIN {
 
 END {
 	for (gpuId in gpuIds) {
-		print ("MSHW;" gpuId ";" VideoDecode[gpuId] ";" VideoEncode[gpuId] ";" Memory[gpuId] ";" PowerConsumption[gpuId] ";" int(ReceivedBytes[gpuId]) ";" int(TransmittedBytes[gpuId]) ";" UsedTimePercent[gpuId] ";")
+		print gpuId, VideoDecode[gpuId], VideoEncode[gpuId], Memory[gpuId], PowerConsumption[gpuId], int(ReceivedBytes[gpuId]), int(TransmittedBytes[gpuId]), UsedTimePercent[gpuId]
 	}
 }
 

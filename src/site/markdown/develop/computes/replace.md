@@ -19,6 +19,7 @@ sources:
     type: commandLine
     commandLine: powershell -command "Get-VM | ForEach-Object { ... }"
     computes:
+    - type: toTable
       # Remove the double quotes around the VM name
     - type: replace
       column: 1
@@ -31,7 +32,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `replace`. |
-| `column` | Yes | None | **1-based** index of the column to modify. Applied to every row. |
+| `column` | On a table | None | **1-based** index of the column to modify. Applied to every row. Omit it to replace in a text, see [On A Text](#on-a-text). |
 | `existingValue` | Yes | None | Literal string to search for in the column content (not a regular expression). Every occurrence is replaced. Accepts a `$n` reference to match the current content of column *n*. |
 | `newValue` | Yes | None | Replacement string. Accepts a literal (including `""` to delete the matched text) or a `$n` reference to another column of the same row. |
 
@@ -54,6 +55,26 @@ With `column: 1`, `existingValue: '"'`, and `newValue: ""`:
 >   | --- | --- |
 >   | VM-WEB-01 | Operating normally |
 >   | VM-DB-02 | Operating normally |
+
+## On A Text
+
+Without `column`, `replace` works on a **text** (the result of an `http`, a `commandLine`, an `awk` without `output: table`, ...): every occurrence of `existingValue` in the whole text is replaced with `newValue`, and the result is still a text.
+
+```yaml
+sources:
+  inventory:
+    type: commandLine
+    commandLine: /opt/vendor/bin/inventory --csv
+    computes:
+    # "disk0","SSD","100" -> disk0,SSD,100
+    - type: replace
+      existingValue: '"'
+      newValue: ""
+```
+
+- `existingValue` is a literal string, as on a table, and it is searched in the whole text, line feeds included.
+- `$n` is not a column reference here: a text has no column.
+- The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
 ## Recommended Pattern
 

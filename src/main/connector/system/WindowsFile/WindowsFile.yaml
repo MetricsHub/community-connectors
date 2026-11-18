@@ -34,6 +34,8 @@ beforeAll:
   files:
     type: commandLine
     commandLine: PowerShell.exe -ExecutionPolicy Bypass -File "${file::detection.ps1}" "${var::matchPath}"
+    computes:
+    - type: toTable
 
 monitors:
   file:
@@ -46,6 +48,8 @@ monitors:
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
             concatMethod: list
+          computes:
+          - type: toTable
         # file.path;file.lines
         source(2):
           type: commandLine
@@ -53,7 +57,9 @@ monitors:
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
             concatMethod: list
-        # file.path;file.name;file.size;file.atime;file.mtime;file.ctime;file.lines
+          computes:
+          - type: toTable
+        # file.path;file.name;file.size;file.atime;file.mtime;file.ctime;file.path;file.lines
         filedetails:
           type: tableJoin
           leftTable: ${source::source(1)}
@@ -85,6 +91,8 @@ monitors:
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
             concatMethod: list
+          computes:
+          - type: toTable
       mapping:
         source: ${source::patternMatchingSource}
         attributes:

@@ -73,6 +73,13 @@ BEGIN {
 	if (type == "Partition") {
 		type = ""
 	}
-	print "MSHW;" volumeID ";" displayID ";" letter ";" type ";" fs ";" size ";" status ";" info ";"
+	if (info != "") {
+		info = "Volume Information: " info
+	}
+	if (collect) {
+		print volumeID, status
+	} else {
+		print volumeID, displayID, letter, type, fs, size, status, info
+	}
 }
 
