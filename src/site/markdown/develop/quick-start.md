@@ -175,7 +175,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /records
-            properties: /id;/name;/model;/serial;/status
+            properties: [ /id, /name, /model, /serial, /status ]
       # Mapping: one enclosure instance per row in ${source::inventory}
       # Each enclosure instance is exported as an OpenTelemetry Resource
       mapping:

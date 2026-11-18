@@ -23,7 +23,7 @@ sources:
     computes:
     - type: json2Table
       entryKey: /volumes
-      properties: /name
+      properties: [ /name ]
     - type: encode
       column: 2
       encoding: url

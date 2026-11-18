@@ -176,7 +176,7 @@ sources:
     computes:
       - type: json2Table
         entryKey: /
-        properties: /url
+        properties: [ /url ]
       - type: replace
         column: 2
         existingValue: "PORT"
@@ -195,7 +195,7 @@ sources:
     computes:
       - type: json2Table
         entryKey: /
-        properties: /name
+        properties: [ /name ]
       - type: append
         column: 2
         value: " - ${source::firmwareVersion}"
@@ -213,7 +213,7 @@ sources:
     computes:
       - type: json2Table
         entryKey: /hosts
-        properties: /id;/url
+        properties: [ /id, /url ]
       - type: keepOnlyMatchingLines
         column: 3
         valueList: "https://${resource.attribute::host.name}"

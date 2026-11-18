@@ -59,7 +59,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /records
-            properties: /id;/name;/status;/rpm
+            properties: [ /id, /name, /status, /rpm ]
       mapping:
         source: ${source::fans}
         attributes:

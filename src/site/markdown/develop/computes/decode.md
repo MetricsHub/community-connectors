@@ -21,7 +21,7 @@ sources:
     computes:
     - type: json2Table
       entryKey: /sensors
-      properties: /id;/encodedName;/status
+      properties: [ /id, /encodedName, /status ]
     # Column 3 (/encodedName) holds a Base64-encoded display name
     - type: decode
       column: 3

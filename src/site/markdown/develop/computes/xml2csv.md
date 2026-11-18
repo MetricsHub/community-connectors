@@ -23,7 +23,7 @@ sources:
     computes:
     - type: xml2Csv
       recordTag: /inventory/fans
-      properties: fan>id;fan>speedRpm;fan>status
+      properties: [ fan>id, fan>speedRpm, fan>status ]
 ```
 
 ## Properties
@@ -32,7 +32,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `xml2Csv`. |
 | `recordTag` | No | None | Slash-separated absolute path of the element under which the records are read (for example `/inventory/fans`). Use `/` to read records directly under the document root. |
-| `properties` | Yes | None | Semicolon-separated list of value selectors, each resolved **relative to `recordTag`**. Use `>` to descend into nested elements (`fan>speedRpm`); a name matches the child element text or the attribute with that name. The list order defines the column order. |
+| `properties` | Yes | None | List of value selectors, each resolved **relative to `recordTag`**. Use `>` to descend into nested elements (`fan>speedRpm`); a name matches the child element text or the attribute with that name. The list order defines the column order. Versions before MetricsHub Community 3.9.09 only accept a string with a `;` between the selectors (`fan>id;fan>speedRpm;fan>status`). |
 
 Unlike `json2Table`, `xml2Csv` does **not** prepend an extra entry column: the first selector in `properties` becomes column 1.
 
@@ -74,7 +74,7 @@ fan-2;3900;degraded
 
 ## Common Mistakes
 
-- Separating `properties` with commas: the list is semicolon-separated.
+- Writing `properties` as one string with commas between the selectors (`fan>id,fan>status`): it is a YAML list, one selector per item.
 - Using `/` inside a property selector: `recordTag` uses `/` for its path, but property selectors descend with `>`.
 - Pointing `recordTag` at the record element itself when the selectors already start with that element name (the element would then be looked up one level too deep) — keep `recordTag` on the parent container in that style.
 - Expecting a leading entry column as with `json2Table`: here the first captured property is `$1`.
