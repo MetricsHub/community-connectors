@@ -24,7 +24,7 @@ monitors:
           oid: 1.3.6.1.2.1.33.1.1
           selectColumns: "1,2,3,5"
       mapping:
-        source: ${source::monitors.enclosure.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $4
           vendor: $1
@@ -53,8 +53,8 @@ monitors:
             # MSHW;PowerConsumption;
         source(3):
           type: tableJoin
-          leftTable: ${source::monitors.enclosure.collect.sources.source(1)}
-          rightTable: ${source::monitors.enclosure.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "" ]
@@ -73,13 +73,13 @@ monitors:
             # MSHW;AlarmDescription;
         source(5):
           type: tableJoin
-          leftTable: ${source::monitors.enclosure.collect.sources.source(3)}
-          rightTable: ${source::monitors.enclosure.collect.sources.source(4)}
+          leftTable: ${source::source(3)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "" ]
       mapping:
-        source: ${source::monitors.enclosure.collect.sources.source(5)}
+        source: ${source::source(5)}
         metrics:
           hw.status{hw.type="enclosure"}: $2
           hw.enclosure.power: $4
@@ -93,7 +93,7 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.1.0
       mapping:
-        source: ${source::monitors.battery.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: UPS Battery
           __display_id: UPS Battery
@@ -120,8 +120,8 @@ monitors:
             # MSHW;EstimatedChargeRemaining;
         source(3):
           type: tableJoin
-          leftTable: ${source::monitors.battery.collect.sources.source(1)}
-          rightTable: ${source::monitors.battery.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "" ]
@@ -144,13 +144,13 @@ monitors:
             # MSHW;EstimatedMinutesRemaining;
         source(5):
           type: tableJoin
-          leftTable: ${source::monitors.battery.collect.sources.source(3)}
-          rightTable: ${source::monitors.battery.collect.sources.source(4)}
+          leftTable: ${source::source(3)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "" ]
       mapping:
-        source: ${source::monitors.battery.collect.sources.source(5)}
+        source: ${source::source(5)}
         attributes:
           id: UPS Battery
         metrics:
@@ -184,7 +184,7 @@ monitors:
             # ID;
           - type: append
             column: 2
-            value: ${source::monitors.voltage.discovery.sources.source(1)}
+            value: ${source::source(1)}
             # ID;UPSConfigInputVoltage;
           - type: awk
             script: ${file::voltage.awk}
@@ -211,7 +211,7 @@ monitors:
             # ID;
           - type: append
             column: 2
-            value: ${source::monitors.voltage.discovery.sources.source(3)}
+            value: ${source::source(3)}
             # ID;UPSConfigOutputVoltage;
           - type: awk
             script: ${file::voltage.awk}
@@ -238,14 +238,14 @@ monitors:
         source(7):
           type: tableUnion
           tables:
-          - ${source::monitors.voltage.discovery.sources.source(2)}
-          - ${source::monitors.voltage.discovery.sources.source(4)}
-          - ${source::monitors.voltage.discovery.sources.source(5)}
-          - ${source::monitors.voltage.discovery.sources.source(6)}
+          - ${source::source(2)}
+          - ${source::source(4)}
+          - ${source::source(5)}
+          - ${source::source(6)}
       mapping:
         # InstanceTable = Source(7)
         # ID;Voltage;UpperThreshold;LowerThreshold;
-        source: ${source::monitors.voltage.discovery.sources.source(7)}
+        source: ${source::source(7)}
         attributes:
           id: $1
           __display_id: $1
@@ -311,14 +311,14 @@ monitors:
         source(5):
           type: tableUnion
           tables:
-          - ${source::monitors.voltage.collect.sources.source(1)}
-          - ${source::monitors.voltage.collect.sources.source(2)}
-          - ${source::monitors.voltage.collect.sources.source(3)}
-          - ${source::monitors.voltage.collect.sources.source(4)}
+          - ${source::source(1)}
+          - ${source::source(2)}
+          - ${source::source(3)}
+          - ${source::source(4)}
       mapping:
         # ValueTable = Source(5)
         # ID;Voltage;
-        source: ${source::monitors.voltage.collect.sources.source(5)}
+        source: ${source::source(5)}
         attributes:
           id: $1
         metrics:
@@ -332,7 +332,7 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
       mapping:
-        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: UPS Battery Temperature
           __display_id: UPS Battery Temperature
@@ -350,7 +350,7 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
       mapping:
-        source: ${source::monitors.temperature.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: UPS Battery Temperature
         metrics:

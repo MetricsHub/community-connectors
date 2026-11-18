@@ -40,7 +40,7 @@ monitors:
             script: ${file::vm.awk}
             output: table
       mapping:
-        source: ${source::monitors.vm.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
           __display_id: $1
@@ -68,7 +68,7 @@ monitors:
             column: 2
             translationTable: ${translation::stateTranslationTable}
       mapping:
-        source: ${source::monitors.vm.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:

@@ -17,8 +17,8 @@ monitors:
         source(3):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
           type: tableJoin
-          leftTable: ${source::monitors.enclosure.discovery.sources.source(1)}
-          rightTable: ${source::monitors.enclosure.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "", "", "" ]
@@ -30,7 +30,7 @@ monitors:
         source(4):
           # Keep Source 3 clean for other classes
           type: copy
-          from: ${source::monitors.enclosure.discovery.sources.source(3)}
+          from: ${source::source(3)}
           computes:
             # Keep only units of type 3 (chassis)
             # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;
@@ -39,7 +39,7 @@ monitors:
             valueList: 3
       mapping:
         # Instance Table
-        source: ${source::monitors.enclosure.discovery.sources.source(4)}
+        source: ${source::source(4)}
         attributes:
           id: ${constant::_DEVICE_ID}
           __display_id: $2
@@ -69,7 +69,7 @@ monitors:
         source(2):
           # For use in all other classes
           type: copy
-          from: ${source::monitors.enclosure.collect.sources.source(1)}
+          from: ${source::source(1)}
           computes:
             # Translate state status into a Status
             # ID;type;precision;Value;PATROLStatus;StatusInformation;
@@ -84,7 +84,7 @@ monitors:
       mapping:
         # No status for chassis is available therefore it is not collected.
         # ValueTable = Source(2)
-        source: ${source::monitors.enclosure.collect.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: ${constant::_DEVICE_ID}
   temperature:
@@ -104,7 +104,7 @@ monitors:
             valueList: 8
       mapping:
         # Instance Table
-        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $11
           __display_id: $2
@@ -139,7 +139,7 @@ monitors:
             valueList: 3,4
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.voltage.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $11
           __display_id: $2
@@ -161,7 +161,7 @@ monitors:
             value: 1000
       mapping:
         # Value Table
-        source: ${source::monitors.voltage.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
@@ -192,7 +192,7 @@ monitors:
         source(2):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
           type: tableJoin
-          leftTable: ${source::monitors.fan.discovery.sources.source(1)}
+          leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(3)}
           leftKeyColumn: 1
           rightKeyColumn: 1
@@ -206,7 +206,7 @@ monitors:
             output: table
       mapping:
         # Instance Table
-        source: ${source::monitors.fan.discovery.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           # fan-info.awk outputs ID;name;info
           id: $1
@@ -229,7 +229,7 @@ monitors:
             output: table
       mapping:
         # ValueTable = Enclosure.Collect.Source(1)
-        source: ${source::monitors.fan.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $14
         metrics:

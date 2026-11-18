@@ -42,7 +42,7 @@ monitors:
       mapping:
         # InstanceTable
         # Manufacturer, Model
-        source: ${source::monitors.enclosure.discovery.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: PC
           type: Computer
@@ -69,14 +69,14 @@ monitors:
           # Source 2 = Merge source 1 (voltage) and enclosure Hardware source
           # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
           type: tableJoin
-          leftTable: ${source::monitors.voltage.discovery.sources.source(1)}
+          leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 3
           rightKeyColumn: 1
       mapping:
         # Instance table
         # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
-        source: ${source::monitors.voltage.discovery.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: $1
           __display_id: $6
@@ -102,7 +102,7 @@ monitors:
       mapping:
         # Value Table
         # Identifier, Value
-        source: ${source::monitors.voltage.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
@@ -122,7 +122,7 @@ monitors:
           # Source 3 = Merge Source 1 and 2 Together
           # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
           type: tableJoin
-          leftTable: ${source::monitors.temperature.discovery.sources.source(1)}
+          leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 3
           rightKeyColumn: 1
@@ -135,7 +135,7 @@ monitors:
       mapping:
         # Instance table
         # SensorId;Name;WarningThreshold;AlarmThreshold;
-        source: ${source::monitors.temperature.discovery.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: $1
           __display_id: $1
@@ -158,7 +158,7 @@ monitors:
       mapping:
         # Value Table
         # Identifier, Value
-        source: ${source::monitors.temperature.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
@@ -189,14 +189,14 @@ monitors:
           # Source 3 = Table join to keep only disks that do have an Endurance Remaining sensor
           # Identifier, Name, HardwareType, Identifier
           type: tableJoin
-          leftTable: ${source::monitors.physical_disk.discovery.sources.source(1)}
-          rightTable: ${source::monitors.physical_disk.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
       mapping:
         # Instance table
         # Identifier, Name, HardwareType
-        source: ${source::monitors.physical_disk.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $1
           __display_id: $1
@@ -220,14 +220,14 @@ monitors:
           # Match SensorParent with HardwareIdentifier
           # TableJoint = SensorIdentifier, SensorParent, SensorValue, SensorName, HardwareIdentifier,  HardwareName, HardwareType
           type: tableJoin
-          leftTable: ${source::monitors.physical_disk.collect.sources.source(1)}
+          leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 2
           rightKeyColumn: 1
       mapping:
         # Instance table
         # SensorIdentifier, SensorParent, SensorValue, SensorName, HardwareIdentifier,  HardwareName, HardwareType
-        source: ${source::monitors.physical_disk.collect.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: $2
         metrics:
@@ -254,7 +254,7 @@ monitors:
           # Source 3 = Merge Source 1 and 2 Together
           # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
           type: tableJoin
-          leftTable: ${source::monitors.fan.discovery.sources.source(1)}
+          leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 3
           rightKeyColumn: 1
@@ -271,7 +271,7 @@ monitors:
       mapping:
         # Instance table
         # SensorIdentifier, SensorName, SensorParent, HardwareIdentifier, HardwareName, HardwareType
-        source: ${source::monitors.fan.discovery.sources.source(2)}
+        source: ${source::source(2)}
         attributes:
           id: $1
           __display_id: $6
@@ -290,7 +290,7 @@ monitors:
       mapping:
         # Value Table
         # Identifier, Value
-        source: ${source::monitors.fan.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:
@@ -322,8 +322,8 @@ monitors:
           # Source 2 : CPUPowerConsumption
           # HardwareIdentifier, HardwareName, HardwareType, Name, Parent, CPUPowerConsumption
           type: tableJoin
-          leftTable: ${source::monitors.cpu.discovery.sources.source(1)}
-          rightTable: ${source::monitors.cpu.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 2
           defaultRightLine: [ "", "", "", "" ]
@@ -341,7 +341,7 @@ monitors:
       mapping:
         # Instance table
         # HardwareIdentifier, HardwareName, HardwareType, Name, Parent, CPUPowerConsumption
-        source: ${source::monitors.cpu.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $1
           __display_id: $1
@@ -377,15 +377,15 @@ monitors:
           # Source 2 : CPUPowerConsumption
           # CpuDeviceID;AverageClock;SensorName;CpuDeviceID;CPUPowerConsumption
           type: tableJoin
-          leftTable: ${source::monitors.cpu.collect.sources.source(1)}
-          rightTable: ${source::monitors.cpu.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 2
           defaultRightLine: [ "", "", "", "" ]
       mapping:
         # The Collect Table
         # CpuDeviceID;AverageClock;SensorName;CpuDeviceID;CPUPowerConsumption
-        source: ${source::monitors.cpu.collect.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $1
         metrics:
@@ -416,7 +416,7 @@ monitors:
           # Keep only Memory Available
           # Name, Parent, MemoryAvailable
           type: copy
-          from: ${source::monitors.memory.discovery.sources.source(2)}
+          from: ${source::source(2)}
           computes:
           - type: keepOnlyMatchingLines
             column: 1
@@ -425,7 +425,7 @@ monitors:
           # Keep only ram
           # Name, Parent, MemoryUsed
           type: copy
-          from: ${source::monitors.memory.discovery.sources.source(2)}
+          from: ${source::source(2)}
           computes:
           - type: keepOnlyMatchingLines
             column: 1
@@ -435,8 +435,8 @@ monitors:
           # Source 3 : MemoryUsed
           # Name, Parent, MemoryAvailable, Name, Parent, MemoryUsed
           type: tableJoin
-          leftTable: ${source::monitors.memory.discovery.sources.source(3)}
-          rightTable: ${source::monitors.memory.discovery.sources.source(4)}
+          leftTable: ${source::source(3)}
+          rightTable: ${source::source(4)}
           leftKeyColumn: 2
           rightKeyColumn: 2
           computes:
@@ -459,14 +459,14 @@ monitors:
           # Source 6 : MemorySize
           # Identifier, Name, HardwareType, Parent, MemorySize; MemoryUsed
           type: tableJoin
-          leftTable: ${source::monitors.memory.discovery.sources.source(1)}
-          rightTable: ${source::monitors.memory.discovery.sources.source(5)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(5)}
           leftKeyColumn: 1
           rightKeyColumn: 1
       mapping:
         # Instance table
         # Identifier, Name, HardwareType, Parent, MemorySize; MemoryUsed
-        source: ${source::monitors.memory.discovery.sources.source(6)}
+        source: ${source::source(6)}
         attributes:
           id: $1
           __display_id: $2
@@ -510,15 +510,15 @@ monitors:
           # Source 2 : Get the Memory Size
           # Identifier, Name, HardwareType, ParentSensor, SensorName, MemorySize
           type: tableJoin
-          leftTable: ${source::monitors.gpu.discovery.sources.source(1)}
-          rightTable: ${source::monitors.gpu.discovery.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "", "", "" ]
       mapping:
         # Instance table
         # Identifier, Name, HardwareType, ParentSensor, SensorName, MemorySize
-        source: ${source::monitors.gpu.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $1
           __display_id: $2
@@ -545,7 +545,7 @@ monitors:
       mapping:
         # Value Table
         # gpuID, VideoDecode, VideoEncode, Memory, PowerConsumption, ReveivedBytes, TransmittedBytes, UsedTimePercent
-        source: ${source::monitors.gpu.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $1
         metrics:

@@ -35,7 +35,7 @@ monitors:
             script: ${file::nvidiaSmi.awk}
             output: table
       mapping:
-        source: ${source::monitors.enclosure.discovery.sources.source(1)}
+        source: ${source::source(1)}
   gpu:
     keys:
     - id
@@ -49,7 +49,7 @@ monitors:
             column: 1
             regExp: ^GPU$
       mapping:
-        source: ${source::monitors.gpu.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           vendor: NVIDIA
           id: $2
@@ -81,7 +81,7 @@ monitors:
             column: 1
             regExp: ^GPU$
       mapping:
-        source: ${source::monitors.gpu.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -109,7 +109,7 @@ monitors:
             column: 1
             regExp: ^TEMPERATURE$
       mapping:
-        source: ${source::monitors.temperature.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $2
@@ -134,7 +134,7 @@ monitors:
             column: 1
             regExp: ^TEMPERATURE$
       mapping:
-        source: ${source::monitors.temperature.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
@@ -155,7 +155,7 @@ monitors:
             column: 3
             regExp: .
       mapping:
-        source: ${source::monitors.voltage.discovery.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
           __display_id: $2
@@ -177,7 +177,7 @@ monitors:
             column: 1
             regExp: ^VOLTAGE$
       mapping:
-        source: ${source::monitors.voltage.collect.sources.source(1)}
+        source: ${source::source(1)}
         attributes:
           id: $2
         metrics:
