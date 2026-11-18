@@ -1242,8 +1242,8 @@ tools:
         - ${source::states}
     result:
       source: ${source::all}
-      # The rows of the states only have a state and a count
-      columns: [ protocol, address, port, pid, process ]
+      # An endpoint, or a TCP state and the number of connections in it
+      columns: [ protocolOrState, addressOrCount, port, pid, process ]
 
   timeSync:
     description: Shows the local time and the time zone of the host, the state of the Windows Time service, its time source and synchronization status, its peers, and the offset of the clock to its time source over 3 samples, when that source is a time server. Use it when Kerberos, TLS or cluster errors point to a clock drift.
