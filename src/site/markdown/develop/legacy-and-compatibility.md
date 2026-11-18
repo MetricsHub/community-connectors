@@ -33,7 +33,6 @@ From MetricsHub Community 3.9.09, a connector that uses a legacy form marked rej
 
 The guide includes low-usage/legacy constructs for completeness:
 
-- source types: `eventLog`, `file`
 - compute types: `encode`, `decode`
 
 They are not preferred for new connectors unless there is a strong compatibility reason.

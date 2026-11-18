@@ -1,5 +1,5 @@
 keywords: xml2Csv, compute, xml, csv, recordTag
-description: xml2Csv flattens an XML payload into a semicolon-separated table, producing one row per record element and one column per selected value.
+description: xml2Csv flattens an XML payload into a table, producing one row per record element and one column per selected value.
 
 # xml2Csv (Compute)
 

@@ -21,10 +21,12 @@ sources:
   normalizeInventory:
     type: awk
     input: ${source::beforeAll.inventoryRaw}
+    output: table
     script: |
-      BEGIN { FS=";"; OFS=";" }
       NF >= 3 { print $1, $2, tolower($3) }
 ```
+
+Here `inventoryRaw` is a table: each of its rows is a record whose cells are `$1..$NF`, and each `print` writes one row.
 
 ## Properties
 
@@ -36,16 +38,12 @@ sources:
 | `inputFormat` | No | None | Rejected from MetricsHub Community 3.9.09 (`DEPRECATED_SYNTAX`): a connector that sets it does not load. Remove it: an input that is a single source reference is read as that source is. |
 | `output` | No | `text` | What the script produces: `text` (the printed lines as they are: write a `toTable` in `computes` to split them on `;` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; a `print` without argument is one row of the record's fields `$1..$NF`, while `print $0` is the row as the reference gives it, in one cell; `printf` text is split into rows on `ORS` and into cells on `OFS`, so a `printf` row sets `OFS = SUBSEP`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
-| `separators` | No | None | Compatibility property; usually unnecessary for source-level AWK. |
-| `keep` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |
-| `exclude` | No | None | Schema-compatibility filter property; prefer compute-level filtering. |
-| `selectColumns` | No | None | Schema-compatibility selection property; prefer compute-level selection. |
 | `executeForEachEntryOf` | No | None | Run once per row from another source table. |
 | `computes` | No | `[]` | Optional post-processing computes. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
-> [!TIP]
-> If you need `keep`, `exclude`, `separators`, or `selectColumns` behavior, prefer compute-level `awk` in the source `computes` pipeline.
+> [!NOTE]
+> An `awk` source does not filter or split what its script prints: `keep`, `exclude`, `separators` and `selectColumns` have no effect on it. Filter in the script, and declare `output: table` to write columns.
 
 ## Variables
 
@@ -67,6 +65,7 @@ Assuming `monitors.disk.discovery.sources.raw` has already run and contains at l
 sources:
   merged:
     type: awk
+    output: table
     variables:
       hostname: ${resource.attribute::host.name}
       someConstant: "365.25"
@@ -74,12 +73,12 @@ sources:
     script: |
       BEGIN {
         for (row = 0; row < length(aTable); row++) {
-          print aTable[row][0] ";" aTable[row][2] ";" hostname ";" (someConstant * 2)
+          print aTable[row][0], aTable[row][2], hostname, someConstant * 2
         }
       }
 ```
 
-For a row `disk0;SSD;100` and hostname `server01`, the output is `disk0;100;server01;730.5`. No `input` is needed here: the `BEGIN` block reads the table variable directly. By contrast, `input: ${source::...}` feeds that source to the script's normal record processing: its rows as records for a table, its lines for a text.
+For a row `disk0`, `SSD`, `100` and hostname `server01`, the script writes the row `disk0`, `100`, `server01`, `730.5`. No `input` is needed here: the `BEGIN` block reads the table variable directly. By contrast, `input: ${source::...}` feeds that source to the script's normal record processing: its rows as records for a table, its lines for a text.
 
 A referenced source must produce a table: a source that ends in text is rejected (`TEXT_FEEDS_TABLE`). End it with a [toTable](../computes/to-table.html), or an `awk` with `output: table`. An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
 
@@ -164,10 +163,12 @@ BEGIN {
   args["path"] = "/api/v1/systems"
   if (executeHttpJsonRequest(args, response) != 200) exit
   for (i = 0; i < length(response["items"]); i++) {
-    print response["items"][i]["id"] ";" response["items"][i]["status"]["health"]
+    print response["items"][i]["id"], response["items"][i]["status"]["health"]
   }
 }
 ```
+
+The source of this script declares `output: table`: each `print` is one row, and its two arguments are the cells.
 
 **`json2Table(json, entryKey, properties, rows)`** extracts rows from a JSON text, as the [json2Table](../computes/json2csv.html) compute does. `properties` is a `;`-separated list. `rows[i][0]` is the path of the entry and `rows[i][1]` its first property: both indexes start at 0. A cell holds its value whole, even when the value holds a `;` or a line feed.
 
@@ -177,7 +178,7 @@ BEGIN {
   args["path"] = "/redfish/v1/Chassis/" $1 "/Sensors"
   n = json2Table(executeHttpRequest(args), "/Members", "Id;Reading;Status/Health", rows)
   for (i = 0; i < n; i++) {
-    print $1 ";" rows[i][1] ";" rows[i][2] ";" rows[i][3]
+    print $1, rows[i][1], rows[i][2], rows[i][3]
   }
 }
 ```
@@ -266,7 +267,7 @@ A `${file::...}` reference is not concerned: as the whole `script` value it name
 
 ## Recommended Pattern
 
-- Emit semicolon-separated rows from the script.
+- Declare `output: table` when the result is read as a table, and print one argument per cell.
 - Keep source-level AWK focused on one transformation concern.
 - Move complex business logic to dedicated `.awk` files with `${file::...}`.
 
@@ -279,7 +280,7 @@ A `${file::...}` reference is not concerned: as the whole `script` value it name
 
 ## Community Examples
 
-No current community connector uses source-level `awk` directly.
+- [MariaDB](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/MariaDB/MariaDB.yaml): in its tools, `awk` sources that read another source through `variables`
 
 Relevant AWK-heavy connectors (compute-level AWK patterns):
 
