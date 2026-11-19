@@ -263,51 +263,51 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
           computes:
-          - type: insertColumn
-            column: 1
-            value: Battery Voltage
-            # UPSBatteryVoltage is in 0.1v, so multiply by 100 to get mv (1000 mv = 1 v)
-            # ID;UPSBatteryVoltage;
-          - type: multiply
-            column: 2
-            value: 100
+          # UPSBatteryVoltage is in 0.1v, so multiply by 100 to get mv (1000 mv = 1 v)
+          # ID;UPSBatteryVoltage;
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              { if (isNumber($1)) $1 = $1 * 100; print "Battery Voltage", $1 }
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.3.3.1
           selectColumns: "ID,3"
           computes:
-          - type: prepend
-            column: 1
-            value: 'Input '
-            # ID;UPSInputVoltage;
-          - type: multiply
-            column: 2
-            value: 1000
+          # ID;UPSInputVoltage;
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              { if (isNumber($2)) $2 = $2 * 1000; print "Input " $1, $2 }
         source(3):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: ID,2
           computes:
-          - type: prepend
-            column: 1
-            value: 'Output '
-            # ID;UPSOutputVoltage;
-          - type: multiply
-            column: 2
-            value: 1000
+          # ID;UPSOutputVoltage;
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              { if (isNumber($2)) $2 = $2 * 1000; print "Output " $1, $2 }
         source(4):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.5.3.1
           selectColumns: ID,2
           computes:
-          - type: prepend
-            column: 1
-            value: 'Bypass '
-            # upsBypassVoltage is in Volts, so multiply by 1000 to get mv.
-            # ID;UPSBypassVoltage;
-          - type: multiply
-            column: 2
-            value: 1000
+          # upsBypassVoltage is in Volts, so multiply by 1000 to get mv.
+          # ID;UPSBypassVoltage;
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              { if (isNumber($2)) $2 = $2 * 1000; print "Bypass " $1, $2 }
         source(5):
           type: tableUnion
           tables:
