@@ -1,5 +1,4 @@
 BEGIN {
-	OFS = ";"
 	pgfault = 0
 	pgmajfault = 0
 	pswpin = 0

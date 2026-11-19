@@ -1,6 +1,5 @@
 # Extract disk error counters from smartctl output.
 BEGIN {
-    OFS = ";"
     in_error_log = 0
 
     # Read-side counters.

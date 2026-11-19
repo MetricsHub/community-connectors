@@ -21,16 +21,16 @@ Connectors use references to wire data across sections and runtime contexts.
 Use `${source::...}` to reference a source output table.
 
 ```yaml
-leftTable: ${source::monitors.network.discovery.sources.ports}
-rightTable: ${source::monitors.network.discovery.sources.aliases}
+leftTable: ${source::ports}
+rightTable: ${source::aliases}
 ```
 
 A reference that is the whole value of a source field (`leftTable`, `tables`, `texts`, `mapping.source`, ...) reads that source as it is. A reference inside a string field (`url`, `header`, `commandLine`, a compute `value`, a mapping attribute, ...) is replaced by the text of the source: it must reference a text, and a table there is rejected when the connector loads. A reference to a source the connector does not have is rejected too. See [Strict Content Types](design-principles.html#strict-content-types).
 
 ### Relative vs Absolute
 
-- Prefer absolute paths when crossing monitor/job boundaries.
-- Relative forms are acceptable for local same-job references.
+- Inside a job (`discovery`, `collect` or `simple`), reference a source of the same job by its name: `${source::ports}`, in the sources and in the `mapping` of the job. The same goes for a source of `beforeAll` read in `beforeAll`, of `afterAll` read in `afterAll`, and of a tool read in that tool. MetricsHub makes such a short reference absolute when it loads the connector.
+- Write the absolute path only to read a source of another job or section: `${source::monitors.network.discovery.sources.ports}` from the `collect` job or from another monitor, `${source::beforeAll.inventory}` from a monitor job.
 
 ## Column and Entry References
 
@@ -170,13 +170,13 @@ The following example turns the JSON body into a table, then replaces the value 
 
 ```yaml
 sources:
-  source(1):
+  deviceUrl:
     type: http
     path: /api/device
     computes:
       - type: json2Table
         entryKey: /
-        properties: /url
+        properties: [ /url ]
       - type: replace
         column: 2
         existingValue: "PORT"
@@ -185,20 +185,20 @@ sources:
 
 #### Append content from another source
 
-The following example appends the content of another source to the value in column `2`. The referenced source must produce a text: a table there is rejected (`TABLE_INTERPOLATED`, see [Strict Content Types](design-principles.html#strict-content-types)).
+The following example appends the content of another source of the same job to the value in column `2`. The referenced source must produce a text: a table there is rejected (`TABLE_INTERPOLATED`, see [Strict Content Types](design-principles.html#strict-content-types)).
 
 ```yaml
 sources:
-  source(1):
+  deviceName:
     type: http
     path: /api/device
     computes:
       - type: json2Table
         entryKey: /
-        properties: /name
+        properties: [ /name ]
       - type: append
         column: 2
-        value: " - ${source::monitors.enclosure.simple.sources.source_discovery}"
+        value: " - ${source::firmwareVersion}"
 ```
 
 #### Reference a resource attribute
@@ -207,13 +207,13 @@ The following example keeps only the hosts whose URL, in column `3`, matches the
 
 ```yaml
 sources:
-  source(1):
+  hosts:
     type: http
     path: /api/hosts
     computes:
       - type: json2Table
         entryKey: /hosts
-        properties: /id;/url
+        properties: [ /id, /url ]
       - type: keepOnlyMatchingLines
         column: 3
         valueList: "https://${resource.attribute::host.name}"

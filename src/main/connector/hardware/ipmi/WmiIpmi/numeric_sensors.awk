@@ -6,7 +6,7 @@
 #   equivalents) and normalize them into the simplified format expected by
 #   interpret_sensors.awk.
 #
-# Input format (9 fields, ';' separated):
+# Input format (9 columns):
 #   BaseUnits;CurrentReading;Description;LowerThresholdCritical;
 #   LowerThresholdNonCritical;SensorType;UnitModifier;
 #   UpperThresholdCritical;UpperThresholdNonCritical
@@ -32,8 +32,6 @@
 #   - CurrentReading == 0 is treated as invalid and skipped
 #
 ###############################################################################
-
-BEGIN { FS=";"; OFS=";" }
 
 function isNumeric(value) { return (value ~ /^-?[0-9]+(\.[0-9]+)?$/) }
 
