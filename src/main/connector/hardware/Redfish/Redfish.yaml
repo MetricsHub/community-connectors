@@ -84,12 +84,11 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
           # END SNIPPET: json2CsvCompute
         source(2):
           type: copy
-          from: "${source::monitors.enclosure.discovery.sources.source(1)}"
+          from: "${source::source(1)}"
         source(3):
           # Enclosure.Discovery.Source(2).Column(2) = Systems
           type: http
@@ -97,15 +96,14 @@ monitors:
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.enclosure.discovery.sources.source(2)}"
+            source: "${source::source(2)}"
             concatMethod: json_array
           path: $2
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /
-            properties: /@odata.id;/Name;/SerialNumber;/PartNumber;/Manufacturer;/Model;
-            separator: ;
+            properties: [ /@odata.id, /Name, /SerialNumber, /PartNumber, /Manufacturer, /Model ]
         source(4):
           # For use in other Discoveries
           type: http
@@ -117,8 +115,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(5):
           type: http
           method: GET
@@ -126,14 +123,13 @@ monitors:
           authenticationToken: ${source::beforeAll.login}
           path: $2
           executeForEachEntryOf:
-            source: "${source::monitors.enclosure.discovery.sources.source(4)}"
+            source: "${source::source(4)}"
             concatMethod: json_array_extended
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: "/@odata.id;/Links/ComputerSystems[0]/@odata.id;"
-            separator: ;
+            properties: [ /@odata.id, "/Links/ComputerSystems[0]/@odata.id" ]
         #now get the storage groups
         source(6):
           type: http
@@ -142,18 +138,17 @@ monitors:
           authenticationToken: ${source::beforeAll.login}
           path: $2
           executeForEachEntryOf:
-            source: "${source::monitors.enclosure.discovery.sources.source(4)}"
+            source: "${source::source(4)}"
             concatMethod: json_array_extended
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: "/@odata.id;/Links/Storage[0]/@odata.id;"
-            separator: ;
+            properties: [ /@odata.id, "/Links/Storage[0]/@odata.id" ]
       mapping:
         # Enclosure Instance Table
         # Json;odata.id;Name;SerialNumber;PartNumber;Manufacturer;Model
-        source: "${source::monitors.enclosure.discovery.sources.source(3)}"
+        source: "${source::source(3)}"
         attributes:
           id: $2
           __display_id: $3
@@ -176,26 +171,24 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(2):
           type: copy
-          from: "${source::monitors.enclosure.collect.sources.source(1)}"
+          from: "${source::source(1)}"
         source(3):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.enclosure.collect.sources.source(2)}"
+            source: "${source::source(2)}"
             concatMethod: json_array
           path: $2
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /
-            properties: /@odata.id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /@odata.id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -213,8 +206,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(5):
           type: http
           method: GET
@@ -222,18 +214,17 @@ monitors:
           authenticationToken: ${source::beforeAll.login}
           path: $2
           executeForEachEntryOf:
-            source: "${source::monitors.enclosure.collect.sources.source(4)}"
+            source: "${source::source(4)}"
             concatMethod: json_array_extended
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: "/@odata.id;/Links/ComputerSystems[0]/@odata.id;"
-            separator: ;
+            properties: [ /@odata.id, "/Links/ComputerSystems[0]/@odata.id" ]
       mapping:
         # Enclosure Value Table
         # JsonID;odata.id;PatrolStatus;StatusInformation
-        source: "${source::monitors.enclosure.collect.sources.source(3)}"
+        source: "${source::source(3)}"
         attributes:
           id: $2
         metrics:
@@ -259,8 +250,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           # JsonID;<System>;@odata.id
           type: http
@@ -268,18 +258,17 @@ monitors:
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.cpu.discovery.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array_extended
           path: $3
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../Column(2);/Id;/Socket;/Manufacturer;/Model;/MaxSpeedMHz;
-            separator: ;
+            properties: [ ../Column(2), /Id, /Socket, /Manufacturer, /Model, /MaxSpeedMHz ]
       mapping:
         # JSONID;<system>;Id;Socket;Manufacturer;Model;MaxSpeedMHz
-        source: "${source::monitors.cpu.discovery.sources.source(2)}"
+        source: "${source::source(2)}"
         attributes:
           id: $3
           vendor: $5
@@ -307,23 +296,21 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.Id;
-            separator: ;
+            properties: [ /@odata.Id ]
         source(2):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.cpu.collect.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array
           path: $2
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /
-            properties: /Id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -333,7 +320,7 @@ monitors:
       mapping:
         # CPU value table
         # JSONID;ID;PatrolStatus;StatusInformation;
-        source: "${source::monitors.cpu.collect.sources.source(2)}"
+        source: "${source::source(2)}"
         attributes:
           id: $2
         metrics:
@@ -358,26 +345,24 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.memory.discovery.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array_extended
           path: $3
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../Column(2);/Id;/DeviceLocator;/CapacityMiB;/Manufacturer;/PartNumber;/SerialNumber;/MemoryDeviceType;
-            separator: ;
+            properties: [ ../Column(2), /Id, /DeviceLocator, /CapacityMiB, /Manufacturer, /PartNumber, /SerialNumber, /MemoryDeviceType ]
       mapping:
         # JSON;<System>;Id;DeviceLocator;CapacityMiB;Manufacturer;PartNumber;SerialNumber;MemoryDeviceType;
-        source: "${source::monitors.memory.discovery.sources.source(2)}"
+        source: "${source::source(2)}"
         attributes:
           id: $3
           __display_id: $4
@@ -407,23 +392,21 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.Id;
-            separator: ;
+            properties: [ /@odata.Id ]
         source(2):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.memory.collect.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array
           path: $2
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /
-            properties: /Id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -433,7 +416,7 @@ monitors:
       mapping:
         # Memory Value Table
         # JSONID;ID;PatrolStatus;StatusInformation;
-        source: "${source::monitors.memory.collect.sources.source(2)}"
+        source: "${source::source(2)}"
         attributes:
           id: $2
         metrics:
@@ -458,8 +441,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Fans
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;LowerThresholdNonCritical;LowerThresholdCritical;/MinReadingRange
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, LowerThresholdNonCritical, LowerThresholdCritical, /MinReadingRange ]
           # Remove Fans that are not populated
           - type: keepOnlyMatchingLines
             column: 5
@@ -467,7 +449,7 @@ monitors:
       mapping:
         # Fan Instance Table
         # JsonID;<System>;MemberId;FanName;Status/State;LowerThresholdNonCritical;LowerThresholdCritical;Reading
-        source: "${source::monitors.fan.discovery.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $3
           __display_id: $4
@@ -496,8 +478,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Fans
-            properties: /MemberId;/Status/Health;/Status/Health;/Reading;/Reading;/MinReadingRange;/MaxReadingRange;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health, /Reading, /Reading, /MinReadingRange, /MaxReadingRange ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -517,7 +498,7 @@ monitors:
       mapping:
         # Fan Value Table
         # JSONID;MemberId;PatrolStatus;StatusInformation;Reading;MinReadingRange;MaxReadingRange;
-        source: "${source::monitors.fan.collect.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $2
         metrics:
@@ -544,23 +525,21 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.physical_disk.discovery.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array_extended
           path: $3
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Devices
-            properties: ../../Column(2);/Name;/Manufacturer;/Model;
-            separator: ;
+            properties: [ ../../Column(2), /Name, /Manufacturer, /Model ]
         source(3):
           type: http
           method: GET
@@ -574,32 +553,30 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Links/Drives
-            properties: ../../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../../Column(2), /@odata.id ]
         source(4):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.physical_disk.discovery.sources.source(3)}"
+            source: "${source::source(3)}"
             concatMethod: json_array_extended
           path: $3
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../../Column(2);/Id;/Manufacturer;/Model;
-            separator: ;
+            properties: [ ../../Column(2), /Id, /Manufacturer, /Model ]
         source(5):
           type: tableUnion
           tables:
-          - "${source::monitors.physical_disk.discovery.sources.source(2)}"
-          - "${source::monitors.physical_disk.discovery.sources.source(4)}"
+          - "${source::source(2)}"
+          - "${source::source(4)}"
       mapping:
         # PhysicalDisk Instance Table
         # JSONID;<System>;Name;Manufacturer;Model;
-        source: "${source::monitors.physical_disk.discovery.sources.source(5)}"
+        source: "${source::source(5)}"
         attributes:
           id: $3
           __display_id: $3
@@ -625,23 +602,21 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(2):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.physical_disk.collect.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array
           path: $2
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Devices
-            properties: /Name;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Name, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -661,8 +636,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: /Id;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /Id, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -672,12 +646,12 @@ monitors:
         source(4):
           type: tableUnion
           tables:
-          - "${source::monitors.physical_disk.collect.sources.source(2)}"
-          - "${source::monitors.physical_disk.collect.sources.source(3)}"
+          - "${source::source(2)}"
+          - "${source::source(3)}"
       mapping:
         # PhysicalDisk Value Table
         # JSONID;Name;PatrolStatus;StatusInformation;
-        source: "${source::monitors.physical_disk.collect.sources.source(4)}"
+        source: "${source::source(4)}"
         attributes:
           id: $2
         metrics:
@@ -702,8 +676,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: Entry/Value/PowerSupplies
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;/PowerSupplyType;/LineInputVoltage;/Model;/firmwareVersion;/SerialNumber;
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /PowerSupplyType, /LineInputVoltage, /Model, /firmwareVersion, /SerialNumber ]
           # Exclude PowerSupplies that are marked as "Absent" at discovery
           - type: excludeMatchingLines
             column: 5
@@ -719,7 +692,7 @@ monitors:
             value: "Serial Number: "
       mapping:
         # PowerSupply Instance Table
-        source: "${source::monitors.power_supply.discovery.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $3
           __display_id: $4
@@ -747,8 +720,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /PowerSupplies
-            properties: /MemberId;/Status/Health;/Status/Health;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -758,7 +730,7 @@ monitors:
       mapping:
         # PowerSupply Value Table
         # JSONID;MemberId;PatrolStatus;StatusInformation;
-        source: "${source::monitors.power_supply.collect.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $2
         metrics:
@@ -783,8 +755,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Temperatures
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;/ReadingCelsius;
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /UpperThresholdNoncritical, /UpperThresholdCritical, /ReadingCelsius ]
           # Exclude only the unpopulated slots: a sensor that is not Enabled (StandbyOffline while the host is off, ...)
           # or has no valid reading still exists, and keeps its monitor
           - type: excludeMatchingLines
@@ -793,7 +764,7 @@ monitors:
       mapping:
         # Temperature Instance Table
         # JSONID;<System>;MemberId;Name;State;UpperThresholdNoncritical;UpperThresholdCritical;
-        source: "${source::monitors.temperature.discovery.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $3
           __display_id: $4
@@ -820,8 +791,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Temperatures
-            properties: /MemberId;/Status/Health;/Status/Health;/ReadingCelsius;/Status/State;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health, /ReadingCelsius, /Status/State ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -837,7 +807,7 @@ monitors:
       mapping:
         # Temperature Value Table
         # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingCelsius;State;
-        source: "${source::monitors.temperature.collect.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $2
         metrics:
@@ -863,8 +833,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Entry/Value/Voltages
-            properties: ../../Column(3);/MemberId;/Name;/Status/State;/UpperThresholdNoncritical;/UpperThresholdCritical;
-            separator: ;
+            properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /UpperThresholdNoncritical, /UpperThresholdCritical ]
           # Exclude only the unpopulated slots: a sensor that is not Enabled (StandbyOffline while the host is off, ...) still exists
           - type: excludeMatchingLines
             column: 5
@@ -872,7 +841,7 @@ monitors:
       mapping:
         # Voltage Instance Table
         # JSONID;<System>;MemberId;Name;State;UpperThresholdNoncritical;UpperThresholdCritical;
-        source: "${source::monitors.voltage.discovery.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $3
           __display_id: $4
@@ -896,8 +865,7 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Voltages
-            properties: /MemberId;/Status/Health;/Status/Health;/ReadingVolts;/Status/State;
-            separator: ;
+            properties: [ /MemberId, /Status/Health, /Status/Health, /ReadingVolts, /Status/State ]
           - type: translate
             column: 3
             translationTable: "${translation::StatusTranslationTable}"
@@ -916,7 +884,7 @@ monitors:
       mapping:
         # Voltage Value Table
         # JSONID;MemberID;PatrolStatus;StatusInformation;ReadingVolts;State;
-        source: "${source::monitors.voltage.collect.sources.source(1)}"
+        source: "${source::source(1)}"
         attributes:
           id: $2
         metrics:
@@ -942,30 +910,28 @@ monitors:
           computes:
           - type: json2Table
             entryKey: Entry/Value/Members
-            properties: ../../Column(2);/@odata.id;
-            separator: ;
+            properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.network.discovery.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array_extended
           path: $3
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /Entry/Value
-            properties: ../Column(2);/Id;/Name;/MACAddress;/Status/State
-            separator: ;
+            properties: [ ../Column(2), /Id, /Name, /MACAddress, /Status/State ]
           - type: translate
             column: 6
             translationTable: "${translation::LinkSpeedDeactivationTranslationTable}"
       mapping:
         # NetworkCard Instance Table
         # JsonID;System;Id;Name;MACAddress;State;
-        source: "${source::monitors.network.discovery.sources.source(2)}"
+        source: "${source::source(2)}"
         attributes:
           id: $3
           __display_id: $4
@@ -993,23 +959,21 @@ monitors:
           computes:
           - type: json2Table
             entryKey: /Members
-            properties: /@odata.id;
-            separator: ;
+            properties: [ /@odata.id ]
         source(2):
           type: http
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
-            source: "${source::monitors.network.collect.sources.source(1)}"
+            source: "${source::source(1)}"
             concatMethod: json_array
           path: $2
           resultContent: body
           computes:
           - type: json2Table
             entryKey: /
-            properties: /Id;/Status/State;/Status/State;/Status/Health;/SpeedMbps;
-            separator: ;
+            properties: [ /Id, /Status/State, /Status/State, /Status/Health, /SpeedMbps ]
           - type: translate
             column: 3
             translationTable: "${translation::NetworkCardStatusTranslationTable}"
@@ -1022,7 +986,7 @@ monitors:
       mapping:
         # NetworkCard Value Table
         # JSONID;Id;NetworkCardStatus;LinkStatus;StatusInformation;SpeedMbps;
-        source: "${source::monitors.network.collect.sources.source(2)}"
+        source: "${source::source(2)}"
         attributes:
           id: $2
         metrics:

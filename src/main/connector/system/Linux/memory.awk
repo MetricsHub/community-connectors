@@ -8,7 +8,6 @@ BEGIN {
     memUsedUtilization = 0
     memBuffersUtilization = 0
     memCachedUtilization = 0
-    OFS = ";"
 }
 
 /^##MEM##$/ { insec = 1; next }

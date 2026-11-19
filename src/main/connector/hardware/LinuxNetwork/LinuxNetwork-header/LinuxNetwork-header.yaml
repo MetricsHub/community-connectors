@@ -35,13 +35,13 @@ monitors:
           - type: toTable
         source(3):
           type: tableJoin
-          leftTable: ${source::monitors.network.discovery.sources.source(2)}
-          rightTable: ${source::monitors.network.discovery.sources.source(1)}
+          leftTable: ${source::source(2)}
+          rightTable: ${source::source(1)}
           leftKeyColumn: 1
           rightKeyColumn: 1
       mapping:
         # InstanceTable = Source(1)
-        source: ${source::monitors.network.discovery.sources.source(3)}
+        source: ${source::source(3)}
         attributes:
           id: $1
           physical_address: $3
@@ -79,8 +79,8 @@ monitors:
           # Source(3) = table joint of Source(1) and Source(2)
           # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;IPState;DeviceID;LinkStatus;LinkSpeed;DuplexMode;
           type: tableJoin
-          leftTable: ${source::monitors.network.collect.sources.source(1)}
-          rightTable: ${source::monitors.network.collect.sources.source(2)}
+          leftTable: ${source::source(1)}
+          rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "", "", "", "" ]
@@ -103,7 +103,7 @@ monitors:
 
       mapping:
         # And here is the ValueTable
-        source: ${source::monitors.network.collect.sources.source(3)}
+        source: ${source::source(3)}
         metrics:
           hw.network.packets{direction="receive"}: $2
           hw.network.packets{direction="transmit"}: $3

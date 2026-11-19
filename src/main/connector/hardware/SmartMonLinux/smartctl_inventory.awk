@@ -1,5 +1,4 @@
 BEGIN {
-    OFS = ";"
     reset_record()
 }
 

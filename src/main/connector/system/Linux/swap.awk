@@ -1,7 +1,3 @@
-BEGIN {
-	OFS = ";"
-}
-
 /^##SWAPS##$/ { insec = 1; next }
 /^##[A-Z_]+##$/ { if (insec) exit; next }
 

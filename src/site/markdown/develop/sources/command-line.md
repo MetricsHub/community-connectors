@@ -25,9 +25,10 @@ sources:
     keep: ^cpu[0-9] # Keep only lines that start with cpuN
     selectColumns: 1,2,3,4,5,6 # Keep the columns from 1 to 6 (default separator: blank spaces)
     computes:
-    - type: awk
-      script: '{ sub("cpu","",$1); print $1 ";" $2/100 ";" $3/100 ";" $4/100 ";" $5/100 ";" $6/100 }'
     - type: toTable
+    - type: awk
+      output: table
+      script: '{ sub("cpu", "", $1); print $1, $2 / 100, $3 / 100, $4 / 100, $5 / 100, $6 / 100 }'
 ```
 
 ## Properties
@@ -51,7 +52,7 @@ sources:
 ## Recommended Pattern
 
 - Return the smallest possible dataset from the command.
-- Normalize early to semicolon-separated rows.
+- Turn the output into a table early: `selectColumns` followed by a `toTable`, or an `awk` compute with `output: table`.
 - Use `executeForEachEntryOf` for controlled fan-out instead of huge one-shot scripts.
 - Keep command portability in mind (`bash` vs `PowerShell` differences).
 

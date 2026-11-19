@@ -23,7 +23,7 @@ sources:
     computes:
     - type: json2Table
       entryKey: /Members
-      properties: /@odata.id
+      properties: [ /@odata.id ]
 ```
 
 ## Properties

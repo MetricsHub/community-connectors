@@ -559,12 +559,11 @@ tools:
         query: SELECT COUNT(*) FROM information_schema.INNODB_TRX
       denied:
         type: awk
+        output: table
         variables:
           check: ${source::processCheck}
         script: |
           BEGIN { if (length(check) == 0) print "The connection user lacks the PROCESS privilege: only its own sessions are listed" }
-        computes:
-        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -603,12 +602,11 @@ tools:
         query: SELECT COUNT(*) FROM information_schema.INNODB_TRX
       denied:
         type: awk
+        output: table
         variables:
           check: ${source::processCheck}
         script: |
           BEGIN { if (length(check) == 0) print "The connection user lacks the PROCESS privilege needed to read the InnoDB transactions" }
-        computes:
-        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -623,16 +621,14 @@ tools:
     sources:
       status:
         type: sql
-        # No compute: a compute reads the row as ;-separated text, and the report may hold a ;
         query: SHOW ENGINE INNODB STATUS
       denied:
         type: awk
+        output: table
         variables:
           check: ${source::status}
         script: |
           BEGIN { if (length(check) == 0) print "SHOW ENGINE INNODB STATUS returned nothing: the connection user lacks the PROCESS privilege" }
-        computes:
-        - type: toTable
       all:
         type: tableUnion
         tables:
@@ -682,12 +678,11 @@ tools:
         query: SELECT COUNT(*) FROM performance_schema.setup_consumers
       denied:
         type: awk
+        output: table
         variables:
           check: ${source::readCheck}
         script: |
-          BEGIN { if (length(check) == 0) print ";The connection user cannot read performance_schema (GRANT SELECT ON performance_schema.* to it)" }
-        computes:
-        - type: toTable
+          BEGIN { if (length(check) == 0) print "", "The connection user cannot read performance_schema (GRANT SELECT ON performance_schema.* to it)" }
       all:
         type: tableUnion
         tables:
@@ -702,16 +697,14 @@ tools:
     sources:
       replicas:
         type: sql
-        # No compute: a compute reads the row as ;-separated text, and the thread states hold a ;
         query: SHOW ALL SLAVES STATUS
       none:
         type: awk
+        output: table
         variables:
           check: ${source::replicas}
         script: |
           BEGIN { if (length(check) == 0) print "No replication connection: this server is not a replica, or the connection user lacks the REPLICA MONITOR privilege" }
-        computes:
-        - type: toTable
       all:
         type: tableUnion
         tables:

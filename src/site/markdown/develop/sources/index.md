@@ -91,12 +91,12 @@ sources:
     computes:
     - type: json2Table
       entryKey: /Members
-      properties: /@odata.id
+      properties: [ /@odata.id ]
   details:
     type: http
     path: $2                     # bound to column 2 of each row of "members"
     executeForEachEntryOf:
-      source: ${source::monitors.enclosure.discovery.sources.members}
+      source: ${source::members}
       concatMethod: json_array
 ```
 
@@ -149,10 +149,10 @@ monitors:
           commandLine: cat /proc/net/dev
           computes:
           - type: awk
-            script: '/:/{gsub(/:/,"",$1); print $1 ";" $2}'
-          - type: toTable
+            output: table
+            script: '/:/ { gsub(/:/, "", $1); print $1, $2 }'
       mapping:
-        source: ${source::monitors.network.simple.sources.rxBytes}
+        source: ${source::rxBytes}
         attributes:
           id: $1
           network.interface.name: $1

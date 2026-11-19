@@ -1,5 +1,5 @@
 keywords: awk, compute, JAWK, script, parsing, variables, arrays, keep, selectColumns
-description: Runs an AWK script over the source result with optional scalar, list, map and source-table variables, then rebuilds the table with line filtering and column selection.
+description: Runs an AWK script over the source result with optional scalar, list, map and source-table variables, and gives what the script prints as a text or as a table.
 
 # awk (Compute)
 
@@ -7,7 +7,7 @@ description: Runs an AWK script over the source result with optional scalar, lis
 
 ## When To Use
 
-Use the `awk` compute for parsing jobs that simpler computes cannot express: reshaping free-form command output into semicolon-separated rows, correlating multi-line records, or computing derived values. The script receives the source's current result as its input, as it is: a text (e.g. `commandLine` output) is read the traditional way, one record per line split on `FS`; a table is read structured, one record per row, one field per cell. Its printed output becomes the new result.
+Use the `awk` compute for parsing jobs that simpler computes cannot express: turning free-form command output into rows, correlating multi-line records, or computing derived values. The script receives the source's current result as its input, as it is: a text (e.g. `commandLine` output) is read the traditional way, one record per line split on `FS`; a table is read structured, one record per row, one field per cell. Its printed output becomes the new result.
 
 MetricsHub embeds **JAWK**, a Java implementation of the AWK language, with a few MetricsHub utility functions and the GNU awk (`gawk`) functions listed in [Functions](#functions). JAWK implements only part of gawk: do not assume that a gawk feature or function that is not listed there is available.
 
@@ -21,13 +21,11 @@ sources:
     type: commandLine
     commandLine: cmd /c ${file::diskpart.bat}
     computes:
-    # The script prints: MSHW;ID;Label;Letter;VolumeType;FileSystem;Size;Status
+    # Each print of the script is one row
+    # ID;Label;Letter;VolumeType;FileSystem;Size;Status;MoreInformation
     - type: awk
       script: ${file::diskPart.awk}
-      keep: ^MSHW;
-      separators: ;
-      selectColumns: "2,3,4,5,6,7,8"
-    - type: toTable
+      output: table
 ```
 
 `script` may also be written inline as a YAML block scalar (see LinuxService for a real example).
@@ -85,23 +83,20 @@ sources:
 
 AWK computes accept the same `variables` map as [AWK sources](../sources/awk.html#variables): literals and resolved resource/monitor attributes or protocol properties become scalars, source references become arrays accessed as `aTable[row][column]` with **zero-based** indexes, and [YAML lists and maps](../sources/awk.html#lists-and-maps) become arrays. Variables are available before `BEGIN` runs and work with both inline scripts and embedded `.awk` files.
 
-For example, append the hostname and a scaled value to each semicolon-separated input row:
+For example, scale the second value of each input row and add the hostname:
 
 ```yaml
 computes:
   - type: awk
+    output: table
     variables:
       hostname: ${resource.attribute::host.name}
       scale: "2"
     script: |
-      {
-        split($0, fields, ";")
-        print fields[1] ";" (fields[2] * scale) ";" hostname
-      }
-  - type: toTable
+      { print $1, $2 * scale, hostname }
 ```
 
-For a text input `disk0;100` and hostname `server01`, the output table contains `disk0`, `200`, and `server01`. The script uses `split()` to read the input fields and prints semicolon-separated values, which the `toTable` turns into the table columns (see the [content types](./index.html#content-types)). After a table, read the cells as `$1` and `$2` instead of splitting `$0`.
+For the input row `disk0`, `100` (a table row, or the text line `disk0 100`) and hostname `server01`, the result row holds `disk0`, `200`, and `server01`: with `output: table`, each argument of `print` is one cell (see [Table Input And Output](#table-input-and-output)).
 
 To access another source's table, add a variable such as `aTable: ${source::monitors.disk.discovery.sources.raw}` and read `aTable[0][0]` for its first cell or `length(aTable)` for its row count. Ensure that source has already run. The compute still receives its current source result as normal AWK input; variables provide additional data. See the [source-table example and empty-source behavior](../sources/awk.html#variables).
 
@@ -116,6 +111,7 @@ Besides the POSIX AWK functions (`length`, `substr`, `split`, `sprintf`, `tolowe
 | `bytes2HumanFormatBase2(bytes)`, `bytes2HumanFormatBase10(bytes)` | A size in bytes as text with 2 decimals and a binary (`1.00 GiB`) or decimal (`1.00 GB`) unit. |
 | `mebiBytes2HumanFormat(mebibytes)` | A size in MiB as text: `1.00 TiB`. |
 | `megaHertz2HumanFormat(megahertz)` | A frequency in MHz as text: `4.00 GHz`. |
+| `sleep(seconds)` | Pauses the script and returns 0, or -1 for a negative duration. The duration can have a fractional part (`sleep(0.1)` is 100 ms), and one call pauses for 60 seconds at most. |
 | `asort`, `asorti` | Sort an array by value or by index (`n = asorti(ids, sorted)`). |
 | `gensub(regexp, replacement, how [, target])` | The substituted text, with `\\1`..`\\9` back-references, without changing the target. |
 | `patsplit(string, array [, fieldpat [, seps]])` | Split a string by the content of its fields rather than by separators. |
@@ -130,32 +126,27 @@ An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `e
 
 ## Table Transformation Example
 
-Suppose `diskPart.awk` prints one `MSHW;`-prefixed line per volume; `keep`, `separators`, and `selectColumns` then clean up its output:
+The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of DiskPart and, for each volume, calls `print volumeID, displayID, letter, type, fs, size, status, info`:
 
 > [!TABS]
 >
-> - <span class="fa-solid fa-table-list"></span> Input (raw command output)
+> - <span class="fa-regular fa-file-lines"></span> Input (raw command output)
 >
->   | Raw line |
->   | --- |
->   | Volume 0 &nbsp; C &nbsp; System &nbsp; NTFS &nbsp; Partition &nbsp; 237 GB &nbsp; Healthy |
->   | Volume 1 &nbsp; D &nbsp; Data &nbsp; NTFS &nbsp; Partition &nbsp; 931 GB &nbsp; Healthy |
+>   ```text
+>     Volume ###  Ltr  Label        Fs     Type        Size     Status     Info
+>     ----------  ---  -----------  -----  ----------  -------  ---------  --------
+>     Volume 0     C   System       NTFS   Partition    237 GB  Healthy    Boot
+>     Volume 1     D   Data         NTFS   Partition    931 GB  Healthy
+>   ```
 >
 > - <span class="fa-solid fa-table-list"></span> Result
 >
->   | ID | Label | Letter | VolumeType | FileSystem | Size | Status |
->   | --- | --- | --- | --- | --- | --- | --- |
->   | 0 | System | C | Partition | NTFS | 254568116160 | Healthy |
->   | 1 | Data | D | Partition | NTFS | 999784378368 | Healthy |
+>   | ID | Label | Letter | VolumeType | FileSystem | Size | Status | MoreInformation |
+>   | --- | --- | --- | --- | --- | --- | --- | --- |
+>   | 0 | C: - System | C: | | NTFS | 254476812288 | Healthy | Volume Information: Boot |
+>   | 1 | D: - Data | D: | | NTFS | 999653638144 | Healthy | |
 
-Between the two, the script's serialized output looked like:
-
-```text
-MSHW;0;System;C;Partition;NTFS;254568116160;Healthy
-MSHW;1;Data;D;Partition;NTFS;999784378368;Healthy
-```
-
-The `keep: ^MSHW;` filter drops any stray script output, and `selectColumns` removes the `MSHW` marker column.
+With `output: table`, each `print` is one row and each of its arguments one cell, an empty one included. The script prints nothing for the other lines (the header, the dashes): the result needs no marker column, no `keep`, no `selectColumns` and no `toTable`.
 
 ## Functions And Sandbox
 
@@ -167,8 +158,8 @@ MetricsHub [compiles the script the first time it runs](../sources/awk.html#comp
 
 ## Recommended Pattern
 
-- Prefix intentional output lines with a marker (`MSHW;` by convention) and filter with `keep: ^MSHW;` — this is the standard community pattern (DiskPart, lmsensors, LinuxNetwork).
-- Emit semicolon-separated values with a constant column count so mapping stays predictable.
+- Declare `output: table` when the result is read as a table, and print one argument per cell (`print id, name, status`): this is what the community connectors do (DiskPart, lmsensors, SmartMonLinux).
+- Print the same number of cells in every row, so mapping stays predictable.
 - Keep long scripts in dedicated `.awk` embedded files referenced with `${file::...}`; reserve inline block scalars for short scripts.
 - Put the `awk` compute first in the pipeline, then refine with cheaper computes (`translate`, `keepOnlyMatchingLines`...).
 

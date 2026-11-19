@@ -177,7 +177,7 @@ Connector MyConnector - Content type check: TEXT_FEEDS_TABLE in ${source::monito
 
 The location is a compute with its position among the written computes, counted from 0 (`keepColumns #0`, `append #1 value`), a field (`tables[1]`, `leftTable`, `header`, `authenticationToken`, `variables.rows`), a mapping (`monitors.disk.discovery.mapping`, `monitors.disk.discovery.mapping.attributes.name`) or a tool result (`tools.listDisks.result`), followed by `-> ${source::...}` when a reference is at fault. For a mapping or a tool, the source named is the one the mapping or the tool reads.
 
-The monitors defined in the configuration of a resource are checked too, with `(monitors of a resource)` as the connector: monitors that break a rule do not load. For MetricsHub developers, the compute-chain golden check of the engine (`GoldenCheck`) prints each connector that does not load, with its findings.
+The monitors defined in the configuration of a resource are checked too, with `(monitors of a resource)` as the connector: monitors that break a rule do not load.
 
 ## Anti-Patterns To Avoid
 

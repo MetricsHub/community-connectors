@@ -7,7 +7,6 @@
 # Column 5: "MovingNodes"
 
 BEGIN {
-    OFS = ";"
     liveNodes = 0
     unreachableNodes = 0
     joiningNodes = 0

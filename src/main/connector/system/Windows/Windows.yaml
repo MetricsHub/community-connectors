@@ -408,11 +408,9 @@ tools:
         namespace: root\CIMv2
         query: SELECT IDProcess, PercentProcessorTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfProc_Process
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "S1;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: S1
       pause:
         type: commandLine
         # ping waits a second between two echoes: 1 + (seconds - 1) seconds
@@ -424,31 +422,25 @@ tools:
         namespace: root\CIMv2
         query: SELECT IDProcess, PercentProcessorTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfProc_Process
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "S2;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: S2
       memory:
         type: wmi
         namespace: root\CIMv2
         query: SELECT TotalVisibleMemorySize FROM Win32_OperatingSystem
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "M;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: M
       list:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessId, ParentProcessId, WorkingSetSize, PrivatePageCount, HandleCount, ThreadCount, CreationDate, Name, CommandLine FROM Win32_Process
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "P;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: P
       processes:
         type: tableUnion
         tables:
@@ -457,13 +449,12 @@ tools:
         - ${source::memory}
         - ${source::list}
         computes:
-        - type: toText
-        # pid;ppid;cpuPercent;memoryPercent;workingSetKiB;privateKiB;handles;threads;started;command;sortKey
+        # pid, ppid, cpuPercent, memoryPercent, workingSetKiB, privateKiB, handles, threads, started, command, sortKey
         - type: awk
+          output: table
           variables:
             sortBy: ${param::sortBy}
           script: |
-            BEGIN { FS = ";" }
             # yyyy-mm-ddThh:mm:ss from seconds since 1970-01-01
             function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
               s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
@@ -471,17 +462,14 @@ tools:
               doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
               return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
             }
-            # The rows of a table end with a ";"
-            { sub(/;$/, "") }
             $1 == "S1" { first[$2] = $3; time1 = $4; next }
             $1 == "S2" { second[$2] = $3; time2 = $4; next }
             # The physical memory
             $1 == "M" { totalKiB = $2; next }
             # Not the System Idle Process (PID 0)
             $1 == "P" && $2 > 0 {
-              # The command line, which may hold semicolons, else the name
-              command = $10; for (i = 11; i <= NF; i++) command = command "," $i
-              if (command == "") command = $9
+              # The command line, else the name
+              command = $10 == "" ? $9 : $10
               # A process born after the first sample spent all its CPU time in between
               cpu = 0
               if (($2 in second) && time2 > time1) cpu = (second[$2] - first[$2]) * 100 / (time2 - time1)
@@ -492,9 +480,8 @@ tools:
               # To the second: 2026-11-03T10:15:30.123456+01:00 (WinRM) keeps its offset, seconds since 1970 (WMI) shown in UTC
               started = $8
               if (started ~ /^[0-9]+$/) started = iso(started) "Z"; else sub(/\.[0-9]*/, "", started)
-              printf "%s;%s;%.1f;%.1f;%.0f;%.0f;%s;%s;%s;%s;%s\n", $2, $3, cpu, memory, workingSet, privateKiB, $6, $7, started, command, (sortBy == "memory" ? privateKiB : cpu)
+              print $2, $3, sprintf("%.1f", cpu), sprintf("%.1f", memory), sprintf("%.0f", workingSet), sprintf("%.0f", privateKiB), $6, $7, started, command, (sortBy == "memory" ? privateKiB : cpu)
             }
-        - type: toTable
         - type: sort
           column: 11
           numeric: true
@@ -521,10 +508,9 @@ tools:
         namespace: root\CIMv2
         query: SELECT ProcessId, ParentProcessId, Name, ExecutablePath, CreationDate, SessionId, KernelModeTime, UserModeTime, WorkingSetSize, PeakWorkingSetSize, PrivatePageCount, VirtualSize, HandleCount, ThreadCount, ReadTransferCount, WriteTransferCount, CommandLine FROM Win32_Process WHERE ProcessId = ${param::pid}
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
             # yyyy-mm-ddThh:mm:ss from seconds since 1970-01-01
             function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
               s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
@@ -532,65 +518,51 @@ tools:
               doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
               return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
             }
-            # An empty value would leave the row without its value column
-            function show(name, value) { print name ";" (value == "" ? "(not available)" : value) }
-            # The rows of a table end with a ";"
-            { sub(/;$/, "") }
+            function show(name, value) { print name, (value == "" ? "(not available)" : value) }
             {
               found = 1
-              # The command line, which may hold semicolons
-              command = $17; for (i = 18; i <= NF; i++) command = command "," $i
               show("ProcessId", $1)
               show("ParentProcessId", $2)
               show("Name", $3)
               show("ExecutablePath", $4)
-              show("CommandLine", command)
+              show("CommandLine", $17)
               # 2026-11-03T10:15:30.123456+01:00 (WinRM), or seconds since 1970 (WMI) shown in UTC
               show("Started", ($5 ~ /^[0-9]+$/) ? iso($5) "Z" : $5)
               show("SessionId", $6)
               # 100 ns units; bytes, but kilobytes for the peak working set
-              printf "KernelModeSeconds;%.1f\n", $7 / 10000000
-              printf "UserModeSeconds;%.1f\n", $8 / 10000000
-              printf "WorkingSetKiB;%.0f\n", $9 / 1024
+              print "KernelModeSeconds", sprintf("%.1f", $7 / 10000000)
+              print "UserModeSeconds", sprintf("%.1f", $8 / 10000000)
+              print "WorkingSetKiB", sprintf("%.0f", $9 / 1024)
               show("PeakWorkingSetKiB", $10)
-              printf "PrivateKiB;%.0f\n", $11 / 1024
-              printf "VirtualSizeKiB;%.0f\n", $12 / 1024
+              print "PrivateKiB", sprintf("%.0f", $11 / 1024)
+              print "VirtualSizeKiB", sprintf("%.0f", $12 / 1024)
               show("Handles", $13)
               show("Threads", $14)
               show("ReadBytes", $15)
               show("WrittenBytes", $16)
             }
-            END { if (!found) print "Error;No such process" }
-        - type: toTable
+            END { if (!found) print "Error", "No such process" }
       services:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, State, StartMode, DisplayName FROM Win32_Service WHERE ProcessId = ${param::pid}
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
-            # The rows of a table end with a ";"
-            { sub(/;$/, "") }
-            { name = $4; for (i = 5; i <= NF; i++) name = name "," $i; print "Service;" $1 " (" $2 ", " $3 ") " name }
-        - type: toTable
+            { print "Service", $1 " (" $2 ", " $3 ") " $4 }
       connections:
         type: wmi
         namespace: root\StandardCimv2
         query: SELECT LocalAddress, LocalPort, RemoteAddress, RemotePort, State FROM MSFT_NetTCPConnection WHERE OwningProcess = ${param::pid}
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN {
-              FS = ";"
-              split("Closed;Listen;SynSent;SynReceived;Established;FinWait1;FinWait2;CloseWait;Closing;LastAck;TimeWait;DeleteTCB", names, ";")
-            }
+            BEGIN { split("Closed;Listen;SynSent;SynReceived;Established;FinWait1;FinWait2;CloseWait;Closing;LastAck;TimeWait;DeleteTCB", names, ";") }
             # An IPv6 address in brackets
             function endpoint(address, port) { return (address ~ /:/ ? "[" address "]" : address) ":" port }
-            { print "TCP;" endpoint($1, $2) " " endpoint($3, $4) " " (($5 in names) ? names[$5] : ($5 == 100 ? "Bound" : $5)) }
-        - type: toTable
+            { print "TCP", endpoint($1, $2) " " endpoint($3, $4) " " (($5 in names) ? names[$5] : ($5 == 100 ? "Bound" : $5)) }
       details:
         type: tableUnion
         tables:
@@ -651,11 +623,9 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, DisplayName, State, Status, StartMode, ExitCode, ServiceSpecificExitCode, ProcessId, StartName, PathName, Description FROM Win32_Service WHERE Name = '${esc(wql)::param::service}'
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "S;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: S
       # Apart: before Windows 10 and Server 2016, the property does not exist and fails the whole query. WMI leaves it
       # empty unless StartMode is selected too
       delayed:
@@ -663,34 +633,29 @@ tools:
         namespace: root\CIMv2
         query: SELECT StartMode, DelayedAutoStart FROM Win32_Service WHERE Name = '${esc(wql)::param::service}'
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            BEGIN { FS = ";" }
-            { print "Y;" $2 }
-        - type: toTable
+        - type: keepColumns
+          columnNumbers: 2
+        - type: insertColumn
+          column: 1
+          value: Y
       # Every dependency: ASSOCIATORS OF returns nothing through WinRM
       dependencies:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Antecedent, Dependent FROM Win32_DependentService
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "D;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: D
       # The state of the services and of the drivers
       states:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, State FROM Win32_BaseService
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "B;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: B
       details:
         type: tableUnion
         tables:
@@ -699,52 +664,47 @@ tools:
         - ${source::dependencies}
         - ${source::states}
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";"; split("Name;DisplayName;State;Status;StartMode;ExitCode;ServiceSpecificExitCode;ProcessId;StartName;PathName", names, ";") }
-            # An empty value would leave the row without its value column
-            function show(name, value) { print name ";" (value == "" ? "(not available)" : value) }
+            BEGIN { split("Name;DisplayName;State;Status;StartMode;ExitCode;ServiceSpecificExitCode;ProcessId;StartName;PathName", names, ";") }
+            function show(name, value) { print name, (value == "" ? "(not available)" : value) }
             # The name in a reference, Win32_Service.Name="RpcSs" through WMI, .../cimv2/Win32_ServiceRpcSs through WinRM
             function nameOf(reference) {
               if (match(reference, /Name="[^"]*"/)) return substr(reference, RSTART + 6, RLENGTH - 7)
               sub(/.*\/Win32_(TerminalService|Service|SystemDriver)/, "", reference)
               return reference
             }
-            # The rows of a table end with a ";"
-            { sub(/;$/, "") }
             $1 == "S" {
               service = tolower($2)
               for (i = 1; i <= 10; i++) value[i] = $(i + 1)
-              # The description, which may hold semicolons
-              text = $12; for (i = 13; i <= NF; i++) text = text "," $i
+              text = $12
               next
             }
             $1 == "Y" { delayed = $2; next }
             $1 == "D" { n++; antecedent[n] = nameOf($2); dependent[n] = nameOf($3); next }
             $1 == "B" { state[tolower($2)] = $3 }
             END {
-              if (service == "") { print "Error;No such service"; exit }
+              if (service == "") { print "Error", "No such service"; exit }
               for (i = 1; i <= 10; i++) {
                 show(names[i], value[i])
                 if (names[i] == "StartMode" && delayed != "") show("DelayedAutoStart", delayed)
               }
               show("Description", text)
-              for (k = 1; k <= n; k++) if (tolower(dependent[k]) == service) print "Depends on;" antecedent[k] " (" state[tolower(antecedent[k])] ")"
-              for (k = 1; k <= n; k++) if (tolower(antecedent[k]) == service) print "Depended on by;" dependent[k] " (" state[tolower(dependent[k])] ")"
+              for (k = 1; k <= n; k++) if (tolower(dependent[k]) == service) print "Depends on", antecedent[k] " (" state[tolower(antecedent[k])] ")"
+              for (k = 1; k <= n; k++) if (tolower(antecedent[k]) == service) print "Depended on by", dependent[k] " (" state[tolower(dependent[k])] ")"
             }
-        - type: toTable
       recovery:
         type: commandLine
         # Fails, and returns nothing, for a service that does not exist
         commandLine: sc.exe qfailure ${param::service}
         computes:
         - type: awk
+          output: table
           script: |
             # The recovery actions, without the blank lines
-            { sub(/;$/, ""); gsub(/^[ \t\r]+|[ \t\r]+$/, "") }
-            $0 != "" { print "Recovery;" $0 }
-        - type: toTable
+            { gsub(/^[ \t\r]+|[ \t\r]+$/, "") }
+            $0 != "" { print "Recovery", $0 }
       all:
         type: tableUnion
         tables:
@@ -881,17 +841,15 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, Label, FileSystem, Capacity, FreeSpace FROM Win32_Volume WHERE DriveType = 3
         computes:
-        - type: toText
-        # volume;label;fileSystem;sizeGB;freeGB;usedPercent
+        # volume, label, fileSystem, sizeGB, freeGB, usedPercent
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
             {
               used = 0
               if ($4 > 0) used = ($4 - $5) * 100 / $4
-              printf "%s;%s;%s;%.1f;%.1f;%.1f\n", $1, $2, $3, $4 / 1073741824, $5 / 1073741824, used
+              print $1, $2, $3, sprintf("%.1f", $4 / 1073741824), sprintf("%.1f", $5 / 1073741824), sprintf("%.1f", used)
             }
-        - type: toTable
     result:
       source: ${source::volumes}
       columns: [ volume, label, fileSystem, sizeGB, freeGB, usedPercent ]
@@ -967,6 +925,7 @@ tools:
         - ${source::errors}
     result:
       source: ${source::all}
+      columns: [ megabytes, path ]
 
   # Activity
   performanceSnapshot:
@@ -985,41 +944,53 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "1;PerfOS_Processor;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "1"
+        - type: insertColumn
+          column: 2
+          value: PerfOS_Processor
       system1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "1;PerfOS_System;;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "1"
+        - type: insertColumn
+          column: 2
+          value: PerfOS_System
+        # No instance
+        - type: insertColumn
+          column: 3
+          value: ""
       memory1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "1;PerfOS_Memory;;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "1"
+        - type: insertColumn
+          column: 2
+          value: PerfOS_Memory
+        # No instance
+        - type: insertColumn
+          column: 3
+          value: ""
       disk1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "1;PerfDisk_PhysicalDisk;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "1"
+        - type: insertColumn
+          column: 2
+          value: PerfDisk_PhysicalDisk
       pause:
         type: commandLine
         # ping waits a second between two echoes: 1 + (seconds - 1) seconds
@@ -1031,51 +1002,64 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "2;PerfOS_Processor;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "2"
+        - type: insertColumn
+          column: 2
+          value: PerfOS_Processor
       system2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "2;PerfOS_System;;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "2"
+        - type: insertColumn
+          column: 2
+          value: PerfOS_System
+        # No instance
+        - type: insertColumn
+          column: 3
+          value: ""
       memory2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "2;PerfOS_Memory;;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "2"
+        - type: insertColumn
+          column: 2
+          value: PerfOS_Memory
+        # No instance
+        - type: insertColumn
+          column: 3
+          value: ""
       disk2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "2;PerfDisk_PhysicalDisk;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "2"
+        - type: insertColumn
+          column: 2
+          value: PerfDisk_PhysicalDisk
       pagingFile:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentUsage, PercentUsage_Base, PercentUsagePeak, PercentUsagePeak_Base FROM Win32_PerfRawData_PerfOS_PagingFile
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "2;PerfOS_PagingFile;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: "2"
+        - type: insertColumn
+          column: 2
+          value: PerfOS_PagingFile
       snapshot:
         type: tableUnion
         tables:
@@ -1089,13 +1073,12 @@ tools:
         - ${source::disk2}
         - ${source::pagingFile}
         computes:
-        - type: toText
-        # object;instance;counter;value, with the formula of each counter type: a rate over the 100 ns timer, a rate per
+        # object, instance, counter, value, with the formula of each counter type: a rate over the 100 ns timer, a rate per
         # second, an average time per operation, or the value of the second sample
         - type: awk
+          output: table
           script: |
             BEGIN {
-              FS = ";"
               # The columns of each query, after the sample, the object and the instance
               columns["PerfOS_Processor"] = "PercentProcessorTime;PercentUserTime;PercentPrivilegedTime;PercentInterruptTime;PercentDPCTime;Timestamp_Sys100NS"
               columns["PerfOS_System"] = "ProcessorQueueLength;ContextSwitchesPersec;Processes;Threads;Timestamp_PerfTime;Frequency_PerfTime"
@@ -1106,7 +1089,7 @@ tools:
             ($2 in columns) {
               count = split(columns[$2], names, ";")
               for (k = 1; k <= count; k++) value[$1, $2, $3, names[k]] = $(k + 3)
-              instances[$2 ";" $3] = 1
+              instances[$2, $3] = 1
             }
             function last(name) { return value[2, o, i, name] }
             function delta(name) { return value[2, o, i, name] - value[1, o, i, name] }
@@ -1117,7 +1100,7 @@ tools:
             function latency(name) { return delta(name "_Base") > 0 ? delta(name) * 1000 / frequency / delta(name "_Base") : 0 }
             # A percentage of its base, in the second sample
             function ratio(name) { return last(name "_Base") > 0 ? last(name) * 100 / last(name "_Base") : 0 }
-            function out(counter, v) { printf "%s;%s;%s;%.1f\n", label, i, counter, v }
+            function out(counter, v) { print label, i, counter, sprintf("%.1f", v) }
             # 100 less an idle percentage, over its own 100 ns base when it has one
             function busy(name) {
               if (delta(name "_Base") > 0) v = 100 - delta(name) * 100 / delta(name "_Base")
@@ -1126,7 +1109,7 @@ tools:
             }
             END {
               for (k in instances) {
-                split(k, parts, ";"); o = parts[1]; i = parts[2]
+                split(k, parts, SUBSEP); o = parts[1]; i = parts[2]
                 dt100ns = delta("Timestamp_Sys100NS")
                 frequency = last("Frequency_PerfTime")
                 seconds = frequency > 0 ? delta("Timestamp_PerfTime") / frequency : 0
@@ -1177,7 +1160,6 @@ tools:
                 }
               }
             }
-        - type: toTable
         # By object, then by instance
         - type: sort
           column: 2
@@ -1196,11 +1178,9 @@ tools:
         # 2: Listen
         query: SELECT LocalAddress, LocalPort, OwningProcess FROM MSFT_NetTCPConnection WHERE State = 2
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "tcp;" $0 }
-        - type: toTable
+        - type: insertColumn
+          column: 1
+          value: tcp
       udp:
         type: wmi
         namespace: root\StandardCimv2
@@ -1208,14 +1188,15 @@ tools:
         computes:
         # The endpoints in the dynamic port range (client sockets, the 2500 of a DNS server socket pool) are counted in
         # one line per process
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
-            $2 < 49152 { print "udp;" $0; next }
+            $2 < 49152 { print; next }
             { count[$3]++ }
-            END { for (pid in count) print "udp;" count[pid] " endpoints;49152-65535;" pid }
-        - type: toTable
+            END { for (pid in count) print count[pid] " endpoints", "49152-65535", pid }
+        - type: insertColumn
+          column: 1
+          value: udp
       endpoints:
         type: tableUnion
         tables:
@@ -1244,16 +1225,12 @@ tools:
         query: SELECT State FROM MSFT_NetTCPConnection
         computes:
         # The TCP connections counted in each state, the most frequent first
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN {
-              FS = ";"
-              split("Closed;Listen;SynSent;SynReceived;Established;FinWait1;FinWait2;CloseWait;Closing;LastAck;TimeWait;DeleteTCB", names, ";")
-            }
+            BEGIN { split("Closed;Listen;SynSent;SynReceived;Established;FinWait1;FinWait2;CloseWait;Closing;LastAck;TimeWait;DeleteTCB", names, ";") }
             { state = ($1 in names) ? names[$1] : ($1 == 100 ? "Bound" : $1); count[state]++ }
-            END { for (state in count) print state ";" count[state] }
-        - type: toTable
+            END { for (state in count) print state, count[state] }
         - type: sort
           column: 2
           numeric: true
@@ -1265,6 +1242,8 @@ tools:
         - ${source::states}
     result:
       source: ${source::all}
+      # An endpoint, or a TCP state and the number of connections in it
+      columns: [ protocolOrState, addressOrCount, port, pid, process ]
 
   timeSync:
     description: Shows the local time and the time zone of the host, the state of the Windows Time service, its time source and synchronization status, its peers, and the offset of the clock to its time source over 3 samples, when that source is a time server. Use it when Kerberos, TLS or cluster errors point to a clock drift.
@@ -1274,10 +1253,9 @@ tools:
         namespace: root\CIMv2
         query: SELECT LocalDateTime, CurrentTimeZone FROM Win32_OperatingSystem
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
             # yyyy-mm-ddThh:mm:ss from seconds since 1970-01-01
             function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
               s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
@@ -1289,30 +1267,25 @@ tools:
             $1 !~ /^[0-9]+$/ { print "Local time: " $1; next }
             {
               offset = $2 < 0 ? -$2 : $2
-              printf "Local time: %s%s%02d:%02d\n", iso($1 + $2 * 60), ($2 < 0 ? "-" : "+"), int(offset / 60), offset % 60
+              print sprintf("Local time: %s%s%02d:%02d", iso($1 + $2 * 60), ($2 < 0 ? "-" : "+"), int(offset / 60), offset % 60)
             }
-        - type: toTable
       zone:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Caption FROM Win32_TimeZone
         computes:
-        - type: toText
-        - type: awk
-          script: |
-            { print "Time zone: " $0 }
-        - type: toTable
+        - type: prepend
+          column: 1
+          value: "Time zone: "
       service:
         type: wmi
         namespace: root\CIMv2
         query: SELECT State, StartMode FROM Win32_Service WHERE Name = 'W32Time'
         computes:
-        - type: toText
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
             { print "Windows Time service: " $1 " (" $2 ")" }
-        - type: toTable
       # Fails, and returns nothing, when the Windows Time service is stopped
       status:
         type: commandLine
@@ -1349,6 +1322,7 @@ tools:
         - ${source::offset}
     result:
       source: ${source::time}
+      columns: [ line ]
 
   rebootHistory:
     description: Shows when the host started, then its starts, shutdowns and reboots over the last days (time in UTC;event ID;source;message, the latest 200, the latest first) with who or what asked for them and why (event 1074), the unexpected ones (6008, and 41 when Windows restarted without a clean shutdown), and whether a reboot is pending, for updates, a Windows feature, file renames or a computer rename. Use it when a host restarted unexpectedly, or before planning a reboot.
@@ -1364,11 +1338,10 @@ tools:
         namespace: root\CIMv2
         query: SELECT LastBootUpTime FROM Win32_OperatingSystem
         computes:
-        - type: toText
         # 2026-10-08T13:46:33.5+02:00 (WinRM), or seconds since 1970 (WMI) shown in UTC
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
             function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
               s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
               yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
@@ -1376,7 +1349,6 @@ tools:
               return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
             }
             { print "Up since " (($1 ~ /^[0-9]+$/) ? iso($1) "Z" : $1) }
-        - type: toTable
       # The start of the period, in UTC, as a WMI date (yyyymmddhhmmss.000000+000): WMI reads the System log from the latest
       # event back to that date, not the whole log
       since:
@@ -1385,21 +1357,19 @@ tools:
         query: SELECT Year, Month, Day, Hour, Minute, Second FROM Win32_UTCTime
         computes:
         # The days since 0000-03-01, less the period, then back to a date
-        - type: toText
         - type: awk
+          output: table
           variables:
             days: ${param::days}
           script: |
-            BEGIN { FS = ";" }
             {
               y = $1 - ($2 <= 2); m = $2 > 2 ? $2 - 3 : $2 + 9; yoe = y % 400
               z = int(y / 400) * 146097 + yoe * 365 + int(yoe / 4) - int(yoe / 100) + int((153 * m + 2) / 5) + $3 - 1 - days
               era = int(z / 146097); doe = z - era * 146097
               yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
               doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
-              printf "%04d%02d%02d%02d%02d%02d.000000+000\n", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, $4, $5, $6
+              print sprintf("%04d%02d%02d%02d%02d%02d.000000+000", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, $4, $5, $6)
             }
-        - type: toTable
       events:
         type: wmi
         namespace: root\CIMv2
@@ -1408,33 +1378,24 @@ tools:
           source: ${source::since}
           concatMethod: list
         computes:
-        - type: toText
-        # time;id;provider;message, a message on one line
+        # time, id, provider, message, a message on one line
         - type: awk
+          output: table
           variables:
             days: ${param::days}
           script: |
-            BEGIN { FS = ";" }
             function iso(t,  z, era, doe, yoe, doy, mp, m, s) {
               s = t % 86400; z = int(t / 86400) + 719468; era = int(z / 146097); doe = z - era * 146097
               yoe = int((doe - int(doe / 1460) + int(doe / 36524) - int(doe / 146096)) / 365)
               doy = doe - (365 * yoe + int(yoe / 4) - int(yoe / 100)); mp = int((5 * doy + 2) / 153); m = mp < 10 ? mp + 3 : mp - 9
               return sprintf("%04d-%02d-%02dT%02d:%02d:%02d", yoe + era * 400 + (m <= 2), m, doy - int((153 * mp + 2) / 5) + 1, int(s / 3600), int(s % 3600 / 60), s % 60)
             }
-            function flush() { if (event != "") { gsub(/[ \t]+/, " ", event); print event; count++ }; event = "" }
-            # The rows of a table end with a ";"
-            { sub(/;$/, "") }
-            # An event starts with its time, 2026-10-08T11:46:47.642527Z (WinRM) or seconds since 1970 (WMI), and its ID;
-            # the next lines of its message follow
-            $1 ~ /^[0-9]{4}-?[0-9]{2}-?[0-9]{2}/ && $2 ~ /^[0-9]+$/ {
-              flush()
-              event = (($1 ~ /^[0-9]+$/) ? iso($1) "Z" : $1) ";" $2 ";" $3 ";" $4
-              for (i = 5; i <= NF; i++) event = event "," $i
-              next
+            # The time is 2026-10-08T11:46:47.642527Z (WinRM) or seconds since 1970 (WMI)
+            {
+              message = $4; gsub(/[ \t\r\n]+/, " ", message)
+              print (($1 ~ /^[0-9]+$/) ? iso($1) "Z" : $1), $2, $3, message
             }
-            { gsub(/;/, ","); event = event " " $0 }
-            END { flush(); if (!count) print "No start, shutdown or reboot event in the last " days " days" }
-        - type: toTable
+            END { if (NR == 0) print "No start, shutdown or reboot event in the last " days " days" }
         - type: sort
           column: 1
           descending: true
@@ -1471,6 +1432,8 @@ tools:
         - ${source::pending}
     result:
       source: ${source::history}
+      # The boot time, the pending reboots and "no event" are rows of one cell
+      columns: [ time, id, provider, message ]
 
   installedUpdates:
     description: Lists the installed updates (hotfixes) with their KB number, type, installation date (yyyy-mm-dd) and who installed them, the latest first. Use it when a problem started after an update.
@@ -1480,17 +1443,15 @@ tools:
         namespace: root\CIMv2
         query: SELECT HotFixID, Description, InstalledOn, InstalledBy FROM Win32_QuickFixEngineering
         computes:
-        - type: toText
         # The date as yyyy-mm-dd, from m/d/yyyy
         - type: awk
+          output: table
           script: |
-            BEGIN { FS = ";" }
             {
               date = $3
               if (split($3, d, "/") == 3) date = sprintf("%04d-%02d-%02d", d[3], d[1], d[2])
-              print $1 ";" $2 ";" date ";" $4
+              print $1, $2, date, $4
             }
-        - type: toTable
         - type: sort
           column: 3
           descending: true

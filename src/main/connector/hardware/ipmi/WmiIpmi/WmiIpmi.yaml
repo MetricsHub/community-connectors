@@ -36,8 +36,6 @@ monitors:
             - type: awk
               output: table
               script: |
-                BEGIN { FS=";"; OFS=";" }
-
                 # Expect: IdentifyingNumber;Name;Vendor
                 NF >= 3 {
                   print "FRU", $3, $2, $1
