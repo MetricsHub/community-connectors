@@ -151,7 +151,7 @@ A compute script can call the MetricsHub functions available [in every script](.
 
 A script runs in a [sandbox](../sources/awk.html#sandbox): it cannot run a command (`system()`, `"command" | getline`), nor read or write a file (`getline < "file"`, `print > "file"`).
 
-MetricsHub [compiles the script the first time it runs](../sources/awk.html#compilation), and logs a script that does not compile then. It replaces no reference in a script, `${file::...}` included: pass a `${param::...}`, an `${attribute::...}`, a `${source::...}` or a `${file::...}` through [`variables`](#variables).
+MetricsHub [compiles the script the first time it runs](../sources/awk.html#compilation), and logs a script that does not compile then. It replaces no `${param::...}`, `${attribute::...}` or `${source::...}` written in a script. A `${file::...}` written in a script does not give the text of the file: inside a script that is an embedded file, it stays as text; anywhere in an inline script, it makes MetricsHub run that file as the whole script instead of the inline text. Pass each of these values through [`variables`](#variables).
 
 ## Recommended Pattern
 

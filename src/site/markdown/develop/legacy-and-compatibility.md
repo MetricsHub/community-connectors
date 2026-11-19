@@ -29,7 +29,7 @@ This page explains what to use now and how to migrate safely.
 | Hard-coded table where a source is read | A `static` source, and its reference | A literal in `mapping.source`, `copy.from`, `executeForEachEntryOf.source`, a tool `result.source` or the `source` of an `internalDbQuery` table | Move the table to a `static` source. A literal is rejected (`NOT_A_REFERENCE`). |
 | AWK input | No property: an `awk` reads its source as it is | `input` (compute), `inputFormat` (source) | Remove them: they are rejected (`DEPRECATED_SYNTAX`). |
 | AWK output filtering | The script selects its lines, and prints one argument per cell with `output: table` | `keep`, `exclude`, `separators`, `selectColumns` (compute), `separators` (source) | Remove them: they are rejected (`DEPRECATED_SYNTAX`). |
-| Embedded file in an AWK script | A variable: `variables: { header: "${file::header.txt}" }` | `${file::header.txt}` written in the script | Pass the file through `variables`: a reference written in a script is not replaced. |
+| Embedded file in an AWK script | A variable: `variables: { header: "${file::header.txt}" }` | `${file::header.txt}` written in the script | Pass the file through `variables`. A reference written in a script does not give the text of the file: inside a script that is an embedded file, it stays as text; anywhere in an inline script, it makes MetricsHub run that file as the whole script instead of the inline text. |
 | AWK JSON function | `json2Table(json, entryKey, properties, rows)` | `json2csv(args)`, which returned `;`-joined lines | Use `json2Table`: `json2csv` no longer exists. |
 | JSON parsing | No property: `json2Table` reads a payload of 64 KiB or more as events | `parsingMode` | Remove it: it is rejected (`DEPRECATED_SYNTAX`). |
 
@@ -47,7 +47,10 @@ The reference pages of this guide describe the current syntax. What changed, and
 | 3.9.09 | The strict content types are checked when a connector loads, and every legacy form marked rejected above makes it fail to load. |
 | 3.9.09 | `static.value` and `defaultRightLine` are lists only, and a text result always has LF line endings. |
 | 3.9.09 | The token of `authenticationToken` keeps a `;` that is not the last character of its line: earlier versions took the text up to its first `;`. |
-| 3.9.09 | A `${file::...}` reference written inside an AWK script is no longer replaced: pass the file through `variables`. |
+| 3.9.09 | `properties` of `json2Table` and `xml2Csv` can be a YAML list: earlier versions accept only a string with a `;` between the properties. |
+| 3.9.09 | `json2Table` puts each value whole in its cell and ignores `separator`: earlier versions cut a value with a line feed into extra rows, and a value with the separator into extra cells. |
+| 3.9.09 | `json2Table` reads a payload of 64 KiB or more as a stream of JSON events, and `parsingMode` is rejected. 3.9.08 loads every payload as a tree unless the compute sets `parsingMode: events`; earlier versions always load a tree. |
+| 3.9.09 | A `${file::...}` reference written in the content of an embedded file is no longer resolved, and `executeHttpRequest` no longer reads the file that a `${file::...}` header names. A variable of an `awk` whose value is one `${file::...}` reference holds the text of that file: pass the file through `variables`. |
 
 ## Rare/Legacy Features Still Documented
 

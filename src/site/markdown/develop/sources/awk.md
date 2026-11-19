@@ -261,7 +261,12 @@ A script is code, so MetricsHub replaces no reference in it: a `${param::days}`,
     END { if (!count) print "No event in the last " days " days" }
 ```
 
-As the whole `script` value, a `${file::...}` reference names the script. Written inside a script, it is not replaced either: give the script the text of an embedded file through a variable whose value is that one reference, for instance the header of a request:
+As the whole `script` value, a `${file::...}` reference names the script. Written inside a script, it does not give the text of the file:
+
+- Inside a script that is an embedded file, it stays as text.
+- Anywhere in an inline script, it makes MetricsHub run that file as the whole script instead of the inline text. The file is loaded with the connector, so a missing file stops the connector from loading. With references to two different files, the script does not run.
+
+Give the script the text of an embedded file through a variable whose value is that one reference, for instance the header of a request:
 
 ```yaml
 sources:

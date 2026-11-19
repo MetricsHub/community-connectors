@@ -36,10 +36,10 @@ connector:
 
 ## Runtime Behavior
 
-The values of the requested attributes form a table of one row, one cell per attribute in the order of `attributes`, serialized before matching as the other table criteria do: each cell followed by `;` (see [Table Serialization Model](index.html#table-serialization-model)).
+The values of the requested attributes form a table of one row per MBean matching `objectName`, one cell per attribute in the order of `attributes`, serialized before matching as the other table criteria do: each cell followed by `;` (see [Table Serialization Model](index.html#table-serialization-model)).
 
 - No `expectedResult`: success if serialized result is non-empty.
-- With `expectedResult`: case-insensitive regex match.
+- With `expectedResult`: case-insensitive regex match. `^` and `$` anchor at the start and the end of the whole text, not of each line.
 
 See below example on how a JMX result is converted to text before matching with `expectedResult`:
 
@@ -68,7 +68,7 @@ See below example on how a JMX result is converted to text before matching with 
 >   123456;bytes;
 >   ```
 >
->   ✅ The criterion passes because the serialized text contains a line that matches `expectedResult: ^[0-9]+;`.
+>   ✅ The criterion passes because the serialized text starts with a match of `expectedResult: ^[0-9]+;`.
 
 ## Recommended Pattern
 
