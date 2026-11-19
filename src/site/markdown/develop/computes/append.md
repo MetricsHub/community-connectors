@@ -93,4 +93,3 @@ sources:
 
 - [WBEMGenLUN](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WBEMGenLUN/WBEMGenLUN.yaml)
 - [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
-- [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)

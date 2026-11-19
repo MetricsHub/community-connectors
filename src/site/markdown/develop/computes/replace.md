@@ -92,9 +92,7 @@ sources:
 
 ## Community Examples
 
-- [HyperV](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/HyperV/HyperV.yaml)
 - [MIB2](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2/MIB2.yaml)
-- [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)
 
 From MIB2 (filling a blank placeholder column from another column), included directly from the connector source:
 

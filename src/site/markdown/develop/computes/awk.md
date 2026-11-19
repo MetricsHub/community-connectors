@@ -123,7 +123,7 @@ An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `e
 
 ## Table Transformation Example
 
-The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of DiskPart and, for each volume, calls `print volumeID, displayID, letter, type, fs, size, status, info`:
+The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of DiskPart and, for each volume that is not a `CD-ROM`, a `DVD-ROM` or `Removable`, calls `print volumeID, displayID, letter, type, "File System: " fs, size, status, info`:
 
 > [!TABS]
 >
@@ -134,16 +134,17 @@ The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of D
 >     ----------  ---  -----------  -----  ----------  -------  ---------  --------
 >     Volume 0     C   System       NTFS   Partition    237 GB  Healthy    Boot
 >     Volume 1     D   Data         NTFS   Partition    931 GB  Healthy
+>     Volume 2     E                       DVD-ROM         0 B  No Media
 >   ```
 >
 > - <span class="fa-solid fa-table-list"></span> Result
 >
 >   | ID | Label | Letter | VolumeType | FileSystem | Size | Status | MoreInformation |
 >   | --- | --- | --- | --- | --- | --- | --- | --- |
->   | 0 | C: - System | C: | | NTFS | 254476812288 | Healthy | Volume Information: Boot |
->   | 1 | D: - Data | D: | | NTFS | 999653638144 | Healthy | |
+>   | 0 | C: - System | C: | | File System: NTFS | 254476812288 | Healthy | Volume Information: Boot |
+>   | 1 | D: - Data | D: | | File System: NTFS | 999653638144 | Healthy | |
 
-With `output: table`, each `print` is one row and each of its arguments one cell, an empty one included. The script prints nothing for the other lines (the header, the dashes): the result needs no marker column and no `toTable`.
+With `output: table`, each `print` is one row and each of its arguments one cell, an empty one included. The script prints nothing for the other lines (the header, the dashes, the DVD-ROM): the result needs no marker column, no `toTable`, and no `excludeMatchingLines` or `prepend` after the script. The collect of DiskPart runs the same script with the variable `collect` set to `1`, and the script then prints `volumeID, status, status` for every volume.
 
 ## Functions And Sandbox
 
@@ -158,7 +159,7 @@ MetricsHub [compiles the script the first time it runs](../sources/awk.html#comp
 - Declare `output: table` when the result is read as a table, and print one argument per cell (`print id, name, status`): this is what the community connectors do (DiskPart, lmsensors, SmartMonLinux).
 - Print the same number of cells in every row, so mapping stays predictable.
 - Keep long scripts in dedicated `.awk` embedded files referenced with `${file::...}`; reserve inline block scalars for short scripts.
-- Put the `awk` compute first in the pipeline, then refine with cheaper computes (`translate`, `keepOnlyMatchingLines`...).
+- Write the filters, the column edits and the arithmetic that the source needs before or after the script in the script itself, and keep `translate`, `arrayTranslate` and `perBitTranslation` as computes (see [Awk Or Computes](./index.html#awk-or-computes)). A script shared by several sources tells them apart with a variable, as `diskPart.awk` does with `collect`.
 
 ## Common Mistakes
 

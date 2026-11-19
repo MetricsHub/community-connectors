@@ -132,15 +132,12 @@ monitors:
           type: commandLine
           commandLine: CHCP 437&&DISKPART.EXE /S ${file::listVolume.txt}
           computes:
-          # ID;Status
+          # ID;Status;Status
           - type: awk
             script: ${file::diskPart.awk}
             output: table
             variables:
               collect: 1
-          # ID;Status;Status
-          - type: duplicateColumn
-            column: 2
           - type: translate
             column: 2
             translationTable: ${translation::LogicalDiskTranslationTable}
@@ -172,7 +169,7 @@ monitors:
           type: commandLine
           commandLine: "/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}"
           computes:
-          # SMARTstatus
+          # SMARTstatus;SMARTstatus
           - type: awk
             script: "${file::physical_disk_smart_health.awk}"
             output: table

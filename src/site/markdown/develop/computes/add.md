@@ -79,7 +79,6 @@ longer needed.
 ## Community Examples
 
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
-- [WindowsProcess](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/WindowsProcess/WindowsProcess.yaml)
 - [MIB2-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2-header/MIB2-header.yaml)
 
 From `MIB2-header.yaml`, accumulating the multicast and broadcast packet counters into the unicast packets column, included directly from the connector source:

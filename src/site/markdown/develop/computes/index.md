@@ -49,6 +49,55 @@ Convert the text of `http`, `file` or `ipmi`, of a source with `executeForEachEn
 
 A source that returns nothing, or fails, gives an empty result of its own type: after a failed `commandLine`, an `awk` compute still runs its `BEGIN` and `END` blocks.
 
+## Awk Or Computes
+
+One compute that does what the source needs stays a compute. When a source needs two or more consecutive computes that AWK expresses directly (`add`, `subtract`, `multiply`, `divide`, `duplicateColumn`, `insertColumn`, `keepColumns`, `append`, `prepend`, `replace`, `keepOnlyMatchingLines`, `excludeMatchingLines`, `head`, or an `awk` next to them), write one [awk](./awk.html) compute with `output: table` instead: the whole transformation reads in one place.
+
+These stay computes, and end the run: the computes before them and after them are written as separate scripts.
+
+- `translate`, `arrayTranslate` and `perBitTranslation`, with their translation tables;
+- the conversions (`convert`, `extract`, `extractPropertyFromWbemPath`, `json2Table`, `json2List`, `xml2Csv`, `toTable`, `toText`, `encode`, `decode`), `and` (AWK has no bitwise AND), `sort` and `tail`;
+- a compute whose value is a `${source::...}` reference;
+- a `keepOnlyMatchingLines` or `excludeMatchingLines` whose `regExp` comes from a variable (`${var::...}`, `${param::...}`): the user writes it for the compute.
+
+Instead of:
+
+```yaml
+- type: subtract
+  column: 8
+  value: $7
+- type: divide
+  column: 6
+  value: $8
+- type: multiply
+  column: 6
+  value: 100
+```
+
+Write:
+
+```yaml
+- type: awk
+  output: table
+  script: |
+    BEGIN { OFMT = "%.15g" }
+    function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+    {
+      if (isNumber($8) && isNumber($7)) $8 = $8 - $7
+      if (isNumber($6) && isNumber($8) && $8 + 0 != 0) $6 = $6 / $8
+      if (isNumber($6)) $6 = $6 * 100
+      print
+    }
+```
+
+The script takes care of what the computes do on their own:
+
+- An arithmetic compute leaves a cell as it is when an operand is empty or not a number, or when it would divide by 0. AWK computes with such an operand anyway (as 0, or as the number it starts with), and a division by 0 gives `inf`: test the operands before computing, as `isNumber` does above.
+- `print` writes a computed number that is not a whole number (an argument, or a field the script assigned) with `OFMT`, 6 significant digits by default. Set `OFMT = "%.15g"`: 15 digits keep the value, and a computed 0.3 prints `0.3` (17 digits would print `0.29999999999999999`). A whole number prints without decimals (`8000`, where `multiply` writes `8000.0`), and a number concatenated into a text uses `CONVFMT` (`%.6g`): format it with `sprintf` there.
+- `keepOnlyMatchingLines` and `excludeMatchingLines` ignore case: `regExp` matches anywhere in the cell (`tolower($2) ~ /gpu/`), a `valueList` compares whole cells (`tolower($1) == "fan"`).
+- `replace` replaces every occurrence of a literal text, and `gsub` takes a regular expression: escape its special characters (`gsub(/[|]/, ".", $5)`).
+- `print $1, $2, $3` writes three cells, empty ones for a shorter row, and `print` without argument writes the row as it is.
+
 ## Compute Pages
 
 ### Arithmetic and Bitwise

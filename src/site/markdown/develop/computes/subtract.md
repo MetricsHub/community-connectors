@@ -78,7 +78,6 @@ original total remains available for the mapping.
 ## Community Examples
 
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
-- [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml)
 
 From `Windows.yaml`, deriving used memory from total and free, included directly from the connector source:
 

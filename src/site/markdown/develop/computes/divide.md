@@ -78,7 +78,6 @@ With `column: 3` and `value: 10000000`, column 3 of each row is divided by 10,00
 ## Community Examples
 
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
-- [WindowsProcess](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/WindowsProcess/WindowsProcess.yaml)
 - [Cassandra](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/Cassandra/Cassandra.yaml)
 
 From `Windows.yaml`, computing memory utilization ratios against the total held in column 7, included directly from the connector source:
