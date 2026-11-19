@@ -156,7 +156,7 @@ The sources that read their references as sources interpolate nothing: `copy`, `
 
 ### Source References
 
-These fields name the source that MetricsHub reads: anything else than a source reference there is rejected (`NOT_A_REFERENCE`). A hard-coded table belongs in a [`static`](sources/static.html) source, which they reference.
+These fields name the source that MetricsHub reads: anything but a source reference there is rejected (`NOT_A_REFERENCE`). A hard-coded table belongs in a [`static`](sources/static.html) source, which they reference.
 
 - `mapping.source`;
 - the `source` of a tool `result`;
