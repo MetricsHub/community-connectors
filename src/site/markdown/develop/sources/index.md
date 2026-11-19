@@ -11,7 +11,7 @@ In MetricsHub connectors, a source produces a **table** or a text (`commandLine`
 
 Most compute operations modify one table column at a time, which is why they usually require `column:`.
 
-`mapping.source` is a reference to a source that ends in a table (anything else does not load, `NOT_A_REFERENCE`: a hard-coded table belongs in a [static](./static.html) source), and **each row creates one monitor instance** exported as one OpenTelemetry Resource (a mapping without `source` creates exactly one instance from constants and texts, see [The Simple Mapping](../monitors-and-jobs.html#the-simple-mapping)):
+`mapping.source` is a reference to a source that ends in a table (anything else does not load, `NOT_A_REFERENCE`: a hard-coded table belongs in a [static](./static.html) source), and **each row creates one monitor instance** exported as one OpenTelemetry Resource (a mapping without `source` maps exactly one instance from constants and texts, see [The Simple Mapping](../monitors-and-jobs.html#the-simple-mapping)):
 
 - Row cells are mapped to attributes and metrics with `$1`, `$2`, `$3`, and so on.
 - If your table has 20 rows, you get 20 instances for a `multiInstance` monitor.
