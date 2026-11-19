@@ -26,13 +26,6 @@ Table example:
 | fan01 | Fan A | 1 |
 | fan02 | Fan B | 3 |
 
-Serialized:
-
-```text
-fan01;Fan A;1
-fan02;Fan B;3
-```
-
 After translation/replace, mapping consumes the transformed table.
 
 > [!NOTE]
@@ -105,11 +98,11 @@ A source that returns nothing, or fails, gives an empty result of its own type: 
 
 | Compute | Purpose |
 | --- | --- |
-| [json2Table](./json2csv.html) | Flatten a JSON payload into table rows (prepends an entry column). Formerly `json2Csv`, a name rejected from MetricsHub Community 3.9.09. |
+| [json2Table](./json2table.html) | Flatten a JSON payload into table rows (prepends an entry column). |
 | [json2List](./json2list.html) | List every value of a JSON document as a row: its key path and the value. |
 | [xml2Csv](./xml2csv.html) | Flatten an XML payload into table rows. |
 | [toTable](./to-table.html) | Turn a text result into a table (one row per line, split on a separator). |
-| [toText](./to-text.html) | Turn a table into semicolon-separated text for an `awk` compute. |
+| [toText](./to-text.html) | Turn a table into text, one line per row, for an `awk` script that parses lines. |
 | [encode](./encode.html) | Encode a column as `base64` or `url`. |
 | [decode](./decode.html) | Decode a `base64` or `url` column. |
 
