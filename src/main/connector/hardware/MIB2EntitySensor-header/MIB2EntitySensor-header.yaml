@@ -188,9 +188,10 @@ monitors:
             # Keep only Fan sensors (type 10), and substract 11 from ID to get FRU Parent
             # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;ORIGINAL_ID;
           - type: awk
+            script: ${file::fan.awk}
             output: table
-            script: |
-              $12 == "10" { print $1 - 11, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $1 }
+            variables:
+              type: "10"
         source(2):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
           type: tableJoin

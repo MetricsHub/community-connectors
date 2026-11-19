@@ -94,11 +94,13 @@ monitors:
           query: SELECT Identifier, Value FROM Sensor WHERE SensorType = 'Voltage'
           namespace: root\LibreHardwareMonitor
           computes:
+          # START SNIPPET: multiplyVoltsCompute
             # Convert volts to millivolts
             # Identifier, Value, SensorType
           - type: multiply
             column: 2
             value: 1000
+          # END SNIPPET: multiplyVoltsCompute
       mapping:
         # Value Table
         # Identifier, Value

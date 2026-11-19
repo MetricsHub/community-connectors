@@ -106,10 +106,12 @@ monitors:
           leftKeyColumn: 1
           rightKeyColumn: 1
           computes:
+            # START SNIPPET: insertJoinKeyColumnCompute
             # 1;PredictedFailure;1;Status;StatusInformation;joinValue
             - type: insertColumn
               column: 6
               value: joinValue
+            # END SNIPPET: insertJoinKeyColumnCompute
         source(4):
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"

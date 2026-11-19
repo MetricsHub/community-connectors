@@ -94,32 +94,21 @@ monitors:
           - type: append
             column: 5
             value: ${source::totalMemory}
-          # Converting total to bytes and making a copy for used memory
-          - type: multiply
-            column: 5
-            value: 1024
-          - type: duplicateColumn
-            column: 5
-          # START SNIPPET: subtractUsedMemoryCompute
-          # Finding used memory and making a copy for utilization
-          - type: subtract
-            column: 5
-            value: $1
-          # END SNIPPET: subtractUsedMemoryCompute
-          - type: duplicateColumn
-            column: 5
-          # START SNIPPET: divideByTotalMemoryCompute
-          # Calculate utilization by dividing usage by total memory
-          - type: divide
-            column: 2
-            value: $7
-          - type: divide
-            column: 4
-            value: $7
-          - type: divide
-            column: 6
-            value: $7
-          # END SNIPPET: divideByTotalMemoryCompute
+          # Total into bytes, Used = Total - Free, and the utilizations (an operand blank or not a number, or a Total of 0, leaves the cell unchanged)
+          # Free;Free%;Cached;Cached%;Used;Used%;Total
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.15g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              function ratio(x) { return isNumber(x) && isNumber(total) && total + 0 != 0 ? x / total : x }
+              {
+                total = $5
+                if (isNumber(total)) total = total * 1024
+                used = total
+                if (isNumber(used) && isNumber($1)) used = used - $1
+                print $1, ratio($2), $3, ratio($4), used, ratio(used), total
+              }
       mapping:
         source: ${source::calculatedMemoryInformation}
         attributes:
@@ -182,47 +171,21 @@ monitors:
           namespace: root\CIMv2
           query: SELECT Name,AllocatedBaseSize,CurrentUsage FROM Win32_PageFileUsage
           computes:
-
-          # START SNIPPET: duplicatePagefileColumnCompute
-          # Duplicate AllocatedBaseSize to calculate free space
-          # PageFileName;AllocatedBaseSizeMB;AllocatedBaseSizeMB;UsedMB
-          - type: duplicateColumn
-            column: 2
-          # END SNIPPET: duplicatePagefileColumnCompute
-
-          # Subtracting current usage from allocated base size to get free space
-          # PageFileName;AllocatedBaseSizeMB;FreeMB;UsedMB
-          - type: subtract
-            column: 3
-            value: $4
-
-          # Duplicate Free and Used columns for utilization calculations
-          # PageFileName;AllocatedBaseSizeMB;FreeMB;FreeMB;UsedMB;UsedMB
-          - type: duplicateColumn
-            column: 3
-          - type: duplicateColumn
-            column: 5
-
-          # Calculate utilization by dividing free and used space by allocated base size
-          # PageFileName;AllocatedBaseSizeMB;FreeMB;FreeUtilization;UsedMB;UsedUtilization
-          - type: divide
-            column: 4
-            value: $2
-          - type: divide
-            column: 6
-            value: $2
-
-          # Convert MB values to bytes
+          # Free = AllocatedBaseSize - Used, the utilizations, and the sizes from MB into bytes
+          # (an operand blank or not a number, or an AllocatedBaseSize of 0, leaves the cell unchanged)
           # PageFileName;AllocatedBaseSize;Free;FreeUtilization;Used;UsedUtilization
-          - type: multiply
-            column: 2
-            value: 1048576
-          - type: multiply
-            column: 3
-            value: 1048576
-          - type: multiply
-            column: 5
-            value: 1048576
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.15g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              function ratio(x) { return isNumber(x) && isNumber($2) && $2 + 0 != 0 ? x / $2 : x }
+              function bytes(x) { return isNumber(x) ? x * 1048576 : x }
+              {
+                free = $2
+                if (isNumber(free) && isNumber($3)) free = free - $3
+                print $1, bytes($2), bytes(free), ratio(free), bytes($3), ratio($3)
+              }
 
       mapping:
         source: ${source::Win32_PageFileUsage}
@@ -245,10 +208,12 @@ monitors:
           namespace: root\CIMv2
           query: SELECT PagesInputPersec,PagesOutputPersec,PageFaultsPersec,PageReadsPersec FROM Win32_PerfRawData_PerfOS_Memory
           computes:
+          # START SNIPPET: subtractMinorPageFaultsCompute
           # Subtracting PageReads from totalPageFaults to get minor page faults
           - type: subtract
             column: 3
             value: $4
+          # END SNIPPET: subtractMinorPageFaultsCompute
 
       mapping:
         source: ${source::pagingActivity}

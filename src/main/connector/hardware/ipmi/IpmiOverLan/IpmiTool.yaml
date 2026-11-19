@@ -112,27 +112,12 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only fans
-            # Fan;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: fan
-          # START SNIPPET: insertEmptyColumnsCompute
-            # Add empty Status and StatusInformation columns
-            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 4
-            value: ""
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 5
-            value: ""
-          # END SNIPPET: insertEmptyColumnsCompute
-            # Add empty AdditionalInformation1 column at the very end
+            # Keep only fans, with empty StatusArray, StatusInformation and AdditionalInformation1 columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
-          - type: insertColumn
-            column: 10
-            value: ""
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "fan" { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
@@ -445,16 +430,13 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only memory lines
-            # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Memory module,Memory Device
-          # START SNIPPET: extractSubColumnCompute
-            # Duplicate the "Model" column because it may be in the form of Model|Size
+            # Keep only memory lines, and duplicate the "Model" column because it may be in the form of Model|Size
             # Memory module;DeviceID;Entity ID;Vendor;Model|Size;Model|Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
-          - type: duplicateColumn
-            column: 5
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "memory module" || tolower($1) == "memory device" { for (i = NF; i >= 5; i--) $(i + 1) = $i; print }
+          # START SNIPPET: extractSubColumnCompute
             # Now extract "Model" from "Model|Size"
             # Memory module;DeviceID;Entity ID;Vendor;Model;Model|Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
           - type: extract

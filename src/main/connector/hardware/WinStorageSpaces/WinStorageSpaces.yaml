@@ -69,12 +69,14 @@ monitors:
           query: SELECT __PATH,SerialNumber,PnPDeviceID FROM Win32_DiskDrive
           namespace: root\cimv2
           computes:
+          # START SNIPPET: replaceSpacesCompute
             # Remove extraneous spaces
             # __PATH;SerialNumber;PnPDeviceID;
           - type: replace
             column: 2
             existingValue: ' '
             newValue: ""
+          # END SNIPPET: replaceSpacesCompute
         source(3):
           # Source(3) = jointure of source(1) and source(2) on SerialNumber in order to
           # have the PnPDeviceID of the disk instances from MSFT_PhysicalDisk
@@ -262,21 +264,18 @@ monitors:
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,ReadErrorsTotal,Wear,WriteErrorsTotal FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter
           computes:
-            # TotalErrors = Read + Write
-            # DeviceId;TotalErrors;Wear;WriteErrors;
-          - type: add
-            column: 2
-            value: $4
-          # START SNIPPET: wearToEnduranceRemaining
-            # Convert Wear into EnduranceRemaining (Endurance Remaining = 100 - Wear)
+            # TotalErrors = Read + Write, and EnduranceRemaining = 100 - Wear (a blank or non-numeric operand leaves the cell unchanged)
             # DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
-          - type: multiply
-            column: 3
-            value: -1
-          - type: add
-            column: 3
-            value: 100
-          # END SNIPPET: wearToEnduranceRemaining
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.15g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              {
+                if (isNumber($2) && isNumber($4)) $2 = $2 + $4
+                if (isNumber($3)) $3 = 100 - $3
+                print
+              }
         source(3):
           # Source(3) = Table join of Source(1) and Source(2)
           # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;

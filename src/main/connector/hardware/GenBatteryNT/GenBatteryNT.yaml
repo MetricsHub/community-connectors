@@ -61,9 +61,11 @@ monitors:
           namespace: root\cimv2
           query: SELECT BatteryStatus, DeviceID, EstimatedChargeRemaining, EstimatedRunTime, Status FROM Win32_Battery
           computes:
+          # START SNIPPET: duplicateStatusColumnCompute
           # Duplicate Status to translate it
           - type: duplicateColumn
             column: 5
+          # END SNIPPET: duplicateStatusColumnCompute
           # Translate Status in an OK, WARN, ALARM status
           - type: translate
             column: 5
