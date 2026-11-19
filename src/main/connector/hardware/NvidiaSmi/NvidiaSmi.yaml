@@ -148,12 +148,11 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-          - type: keepOnlyMatchingLines
-            column: 1
-            regExp: ^VOLTAGE$
-          - type: keepOnlyMatchingLines
-            column: 3
-            regExp: .
+          # The voltages that have a value
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "voltage" && $3 ~ /./ { print }
       mapping:
         source: ${source::source(1)}
         attributes:
