@@ -19,8 +19,8 @@ Both inputs must be tables. A text, such as a command output, needs a `toTable` 
 sources:
   joinedDisks:
     type: tableJoin
-    leftTable: ${source::monitors.disk.discovery.sources.diskInventory}
-    rightTable: ${source::monitors.disk.collect.sources.diskHealth}
+    leftTable: ${source::diskInventory}
+    rightTable: ${source::diskHealth}
     leftKeyColumn: 1
     rightKeyColumn: 1
     defaultRightLine: [ "", "unknown" ]
@@ -88,7 +88,7 @@ The list needs one cell at least, and a cell is a scalar other than null (`~`). 
 sources:
   tableIds:
     type: tableJoin
-    leftTable: ${source::monitors.enclosure.discovery.sources.tables}
+    leftTable: ${source::tables}
     rightTable: [ [ MSHW_TableID ] ]
     leftKeyColumn: 1
     rightKeyColumn: 1

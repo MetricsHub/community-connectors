@@ -22,7 +22,7 @@ sources:
   mergedInventory:
     type: internalDbQuery
     tables:
-    - source: ${source::monitors.disk.discovery.sources.diskRaw}
+    - source: ${source::diskRaw}
       alias: D
       columns:
       - name: id
@@ -31,7 +31,7 @@ sources:
       - name: size_bytes
         number: 4
         type: BIGINT
-    - source: ${source::monitors.disk.collect.sources.healthRaw}
+    - source: ${source::healthRaw}
       alias: H
       columns:
       - name: id

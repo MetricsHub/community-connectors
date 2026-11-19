@@ -23,7 +23,7 @@ sources:
 
   sensorStatus:
     type: copy
-    from: ${source::monitors.sensor.collect.sources.rawSensors}
+    from: ${source::rawSensors}
     computes:
     - type: toTable
     - type: keepOnlyMatchingLines

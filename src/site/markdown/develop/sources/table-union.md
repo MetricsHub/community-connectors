@@ -22,8 +22,8 @@ sources:
   allSensors:
     type: tableUnion
     tables:
-    - ${source::monitors.hw.collect.sources.fanSensors}
-    - ${source::monitors.hw.collect.sources.psuSensors}
+    - ${source::fanSensors}
+    - ${source::psuSensors}
 ```
 
 ## Properties
@@ -45,7 +45,7 @@ sources:
     type: tableUnion
     tables:
     - [ [ in, ac, AC Input ], [ out, ac, AC Output ] ]
-    - ${source::monitors.power.discovery.sources.supplies}
+    - ${source::supplies}
 ```
 
 - Cells are YAML scalars: quote a number that must keep its text, such as a code or a version. YAML reads `01` as `1` and `1.10` as `1.1`: write `'01'` and `'1.10'`.

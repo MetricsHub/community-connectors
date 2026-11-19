@@ -11,7 +11,7 @@ This page explains how raw source columns become structured telemetry exported a
 
 ```yaml
 mapping:
-  source: ${source::monitors.fan.simple.sources.sensors}
+  source: ${source::sensors}
   attributes:
     id: $1
     name: $2
