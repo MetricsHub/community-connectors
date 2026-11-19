@@ -180,7 +180,7 @@ monitors:
       mapping:
         source: ${source::mysqlInfo}
         attributes:
-          db.system.name: mysql
+          db.system: mysql
           db.server.name: $59
           id: $59
           db.namespace: $1

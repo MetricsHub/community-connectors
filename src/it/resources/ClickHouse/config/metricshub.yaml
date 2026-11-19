@@ -10,5 +10,5 @@ resources:
     protocols:
       emulation:
         jdbc:
-          directory: src/it/resources/ClickHouseDB/emulation/jdbc
-    connectors: [ +ClickHouseDB ]
+          directory: src/it/resources/ClickHouse/emulation/jdbc
+    connectors: [ +ClickHouse ]
