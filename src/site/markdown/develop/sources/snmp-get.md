@@ -54,7 +54,7 @@ sources:
       translationTable: ${translation::BatteryStatusTranslationTable}
 ```
 
-`toTable` splits a line on `;` and makes a row of each line. When the value is a free text that may hold a `;` or a line break (a model, a serial number, a description), keep it in one cell instead: a [static](./static.html) source whose cell references the text, followed by an [excludeMatchingLines](../computes/exclude-matching-lines.html) on `^$` so that no answer gives no row.
+`toTable` splits a line on `;` and makes a row of each line. When the value is a free text that may hold a `;` or a line break (a model, a serial number, a description), keep it in one cell instead: a [static](./static.html) source whose cell references the text, followed by an [excludeMatchingLines](../computes/exclude-matching-lines.html) on `^$` so that no answer gives no row. The cell keeps every `;` and line break of the value, except a `;` that ends a line holding no other `;`, trailing line breaks, and `$$`, which becomes `$`.
 
 ```yaml
 sources:
