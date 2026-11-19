@@ -1,6 +1,6 @@
 BEGIN {
     FS = ",";
-    OFMT = "%.17g";
+    OFMT = "%.15g";
 }
 function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
 # Skip headers and global system line

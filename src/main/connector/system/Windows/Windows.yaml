@@ -50,7 +50,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               {
                 for (i = 2; i <= 4; i++) if (isNumber($i)) $i = $i / 10000000
@@ -147,7 +147,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               {
                 used = $4
@@ -330,7 +330,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               {
                 for (i = 6; i <= 8; i++) if (isNumber($i) && isNumber($9) && $9 + 0 != 0) $i = $i / $9

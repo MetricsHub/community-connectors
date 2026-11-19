@@ -434,7 +434,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               {
                 if (isNumber($8) && isNumber($7)) $8 = $8 - $7
@@ -803,7 +803,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               isNumber($5) { $5 = $5 * 1000 }
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }

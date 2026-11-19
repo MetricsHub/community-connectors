@@ -268,7 +268,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               { if (isNumber($1)) $1 = $1 * 100; print "Battery Voltage", $1 }
         source(2):
@@ -280,7 +280,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               { if (isNumber($2)) $2 = $2 * 1000; print "Input " $1, $2 }
         source(3):
@@ -292,7 +292,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               { if (isNumber($2)) $2 = $2 * 1000; print "Output " $1, $2 }
         source(4):
@@ -305,7 +305,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.17g" }
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               { if (isNumber($2)) $2 = $2 * 1000; print "Bypass " $1, $2 }
         source(5):

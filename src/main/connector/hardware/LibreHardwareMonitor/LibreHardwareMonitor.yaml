@@ -438,17 +438,16 @@ monitors:
           rightKeyColumn: 2
           computes:
             # Clean duplicate column, sum up MemoryAvailable and MemoryUsed to get MemorySize, and convert it to MB
-            # (the shortest of 15 to 17 significant digits that gives the same number, as it shows in the name)
             # Parent, MemorySize; MemoryUsed
           - type: awk
             output: table
             script: |
+              BEGIN { OFMT = "%.15g" }
               function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
-              function format(x) { return sprintf("%.15g", x) + 0 == x ? sprintf("%.15g", x) : sprintf("%.17g", x) }
               {
                 size = $3
                 if (isNumber(size) && isNumber($6)) size = size + $6
-                if (isNumber(size)) size = format(size * 1024)
+                if (isNumber(size)) size = size * 1024
                 print $2, size, $6
               }
         source(6):
