@@ -46,7 +46,7 @@ sources:
 - Normalize lines with computes before mapping.
 
 > [!NOTE]
-> A `discovery` or `simple` job that reads a `file` source in `LOG` mode, directly or through `${source::...}` references, never removes its instances: the source only returns the lines added since the previous poll, so a missing row does not mean a missing entity. `FLAT` mode is not incremental: a rotated or truncated file that returns fewer rows removes the instances of the missing rows (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
+> A `discovery` or `simple` job that reads a `file` source in `LOG` mode, directly or through `${source::...}` references, never removes its instances: the source only returns the lines added since the previous poll, so a missing row does not mean a missing entity. `FLAT` mode is not incremental: a rotated or truncated file that returns fewer rows removes the instances of the missing rows (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
 
 ## Common Mistakes
 

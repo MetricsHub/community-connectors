@@ -7,7 +7,7 @@ description: Reference for the textUnion source, which concatenates the texts of
 
 ## When To Use
 
-Use `textUnion` to concatenate the texts of several sources into one text, typically the outputs of several commands that one `awk` script parses in one pass. MetricsHub Community 3.9.09 or later.
+Use `textUnion` to concatenate the texts of several sources into one text, typically the outputs of several commands that one `awk` script parses in one pass.
 
 The result is a text. Convert it before anything that reads a table (the `mapping`, a `tableJoin`, a `tableUnion`, a table compute): end the chain with a `toTable`, or declare `output: table` on the `awk` that parses it.
 
@@ -47,7 +47,6 @@ sources:
 
 - Each member starts on a new line: a line feed is added between two members only when the text so far does not end with one, so the join never adds a blank line.
 - The blank lines of each member are kept. A script can end a section on a blank line of a command output (`NF == 0`).
-- CRLF line endings become LF.
 - An empty member, or one that returned nothing or failed, adds nothing.
 
 | Member | Text |
@@ -55,7 +54,7 @@ sources:
 | `version` | `v1.2` and a line feed |
 | `environment` | empty |
 | `status` | `ok`, no final line feed |
-| `fans` | `fan1 ok` and CRLF |
+| `fans` | `fan1 ok` and a line feed |
 
 gives:
 

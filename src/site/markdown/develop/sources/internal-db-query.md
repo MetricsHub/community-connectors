@@ -48,7 +48,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `internalDbQuery`. |
-| `tables` | Yes | None | SQL table definitions backed by source tables. |
+| `tables` | Yes | None | SQL table definitions backed by source tables. The `source` of each is a reference to a source that ends in a table: anything else does not load (`NOT_A_REFERENCE`, a hard-coded table belongs in a [static](./static.html) source), nor does a text (`TEXT_FEEDS_TABLE`). |
 | `query` | Yes | None | SQL query executed on internal in-memory tables. |
 | `parameters` | No | `[]` | Optional query parameters (schema-level support). |
 | `computes` | No | `[]` | Post-processing pipeline. |

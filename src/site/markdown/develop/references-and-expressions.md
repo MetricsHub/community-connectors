@@ -13,7 +13,7 @@ Connectors use references to wire data across sections and runtime contexts.
 | --- | --- | --- |
 | Load-time substitutions | `${constant::}`, `${var::}` | Inlined once, when the connector is parsed and loaded. |
 | Job-time references | `${source::}`, `${file::}`, `${translation::}`, `$1`/`$2` column refs, `${attribute::}`, `${protocol::}`, `${resource.attribute::}`, `${awk::}` | Evaluated during job execution — e.g. `${source::...}` yields the referenced source's current output for that cycle. Relative `${source::}` paths are normalized to their absolute form at load time. |
-| No reference | An AWK script | MetricsHub replaces no reference in a script, but `${file::}`: give the script a `${source::}`, `${attribute::}` or other value through its `variables`, see [Compilation](sources/awk.html#compilation). |
+| No reference | An AWK script | MetricsHub replaces no reference in a script, `${file::}` included: give the script a `${source::}`, `${attribute::}`, `${file::}` or other value through its `variables`, see [Compilation](sources/awk.html#compilation). |
 | Runtime credential macros | `%{USERNAME}`, `%{PASSWORD}`, `%{BASIC_AUTH_BASE64}`, ... | At execution time, per request, from the resource's configured credentials. |
 
 ## Source References
@@ -50,7 +50,7 @@ These positions refer to the current table shape at that pipeline stage.
 
 If computes add, remove, or reorder columns, these references must be updated accordingly.
 
-The example below shows the same row as a table and as serialized text:
+The example below shows a row as a table:
 
 > [!TABS]
 >
@@ -61,12 +61,6 @@ The example below shows the same row as a table and as serialized text:
 >   | disk01 | SSD | ok |
 >
 >   In this row, `$1` is `disk01`, `$2` is `SSD`, and `$3` is `ok`.
->
-> - <span class="fa-regular fa-file-lines"></span> Serialized Text
->
->   ```text
->   disk01;SSD;ok
->   ```
 
 ## File References
 
@@ -267,23 +261,9 @@ The [tools](tools.html#validation-and-review) section lists which escape each fi
 
 The related `%{SUDO:command}` macro (command elevation) is tied to the connector's `sudoCommands` list — see [Reuse and Configuration](reuse-and-configuration.html).
 
-## Serialization Side Effects (Advanced but Important)
+## A `;` in a Cell
 
-Tables are internally list-of-list-of-strings. They are serialized as semicolon-separated rows only where text is expected (a `${source::...}` reference, a `toText`), and only a conversion (`toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table.
-A `;` that a compute writes into a cell is therefore an ordinary character of that cell: appending `;value` to a column adds no column. The serialized text shows the side effect:
-
-```text
-# original row (3 cells: node01, ClusterA, ok)
-node01;ClusterA;ok;
-
-# after append on column 2 with value ';rack1' (still 3 cells: node01, ClusterA;rack1, ok)
-
-# written by toText: the ; in the cell becomes a ,
-node01;ClusterA,rack1;ok;
-
-# written by a ${source::...} reference: the ; is kept, so a reader splitting on ; sees 4 fields
-node01;ClusterA;rack1;ok;
-```
+A `;` that a compute writes into a cell is an ordinary character of that cell: appending `;value` to a column adds no column, and only a conversion (`toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` with `output: table`) turns a text into a table. Where a table becomes a text, see [Serialization Details](sources/index.html#serialization-details-you-must-know).
 
 Use [insertColumn](computes/insert-column.html) to add a column.
 

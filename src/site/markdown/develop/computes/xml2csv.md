@@ -32,7 +32,7 @@ sources:
 | --- | --- | --- | --- |
 | `type` | Yes | None | `xml2Csv`. |
 | `recordTag` | No | None | Slash-separated absolute path of the element under which the records are read (for example `/inventory/fans`). Use `/` to read records directly under the document root. |
-| `properties` | Yes | None | List of value selectors, each resolved **relative to `recordTag`**. Use `>` to descend into nested elements (`fan>speedRpm`); a name matches the child element text or the attribute with that name. The list order defines the column order. Versions before MetricsHub Community 3.9.09 only accept a string with a `;` between the selectors (`fan>id;fan>speedRpm;fan>status`). |
+| `properties` | Yes | None | List of value selectors, each resolved **relative to `recordTag`**. Use `>` to descend into nested elements (`fan>speedRpm`); a name matches the child element text or the attribute with that name. The list order defines the column order. |
 
 Unlike `json2Table`, `xml2Csv` does **not** prepend an extra entry column: the first selector in `properties` becomes column 1.
 
@@ -57,13 +57,6 @@ Unlike `json2Table`, `xml2Csv` does **not** prepend an extra entry column: the f
 >   | --- | --- | --- |
 >   | fan-1 | 4200 | ok |
 >   | fan-2 | 3900 | degraded |
-
-Equivalent serialized output:
-
-```text
-fan-1;4200;ok
-fan-2;3900;degraded
-```
 
 ## Recommended Pattern
 

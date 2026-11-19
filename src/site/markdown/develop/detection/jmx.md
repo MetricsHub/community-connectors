@@ -36,7 +36,7 @@ connector:
 
 ## Runtime Behavior
 
-JMX query results are treated as a table (`List<Map<String,String>>`) and serialized as `=`-separated name-value pairs before matching.
+The values of the requested attributes form a table of one row, one cell per attribute in the order of `attributes`, serialized before matching as the other table criteria do: each cell followed by `;` (see [Table Serialization Model](index.html#table-serialization-model)).
 
 - No `expectedResult`: success if serialized result is non-empty.
 - With `expectedResult`: case-insensitive regex match.
@@ -53,7 +53,7 @@ See below example on how a JMX result is converted to text before matching with 
 >     attributes:
 >     - Count
 >     - Unit
->     expectedResult: Count=[0-9]+
+>     expectedResult: ^[0-9]+;
 >   ```
 >
 > - <span class="fa-solid fa-table-list"></span> Result
@@ -65,11 +65,10 @@ See below example on how a JMX result is converted to text before matching with 
 > - <span class="fa-regular fa-file-lines"></span> Result As Text
 >
 >   ```text
->   Count=123456
->   Unit=bytes
+>   123456;bytes;
 >   ```
 >
->   ✅ The criterion passes because the serialized text contains a line that matches `expectedResult: Count=[0-9]+`.
+>   ✅ The criterion passes because the serialized text contains a line that matches `expectedResult: ^[0-9]+;`.
 
 ## Recommended Pattern
 

@@ -51,13 +51,6 @@ Here, `$1` through `$5` refer to the first through fifth columns of each row.
 >   | --- | --- | --- | --- | --- |
 >   | fan01 | Fan A | ok | 10200 | Nominal |
 >   | fan02 | Fan B | failed | 0 | Not spinning |
->
-> - <span class="fa-regular fa-file-lines"></span> Serialized Text
->
->   ```text
->   fan01;Fan A;ok;10200;Nominal
->   fan02;Fan B;failed;0;Not spinning
->   ```
 
 With mapping:
 
@@ -75,7 +68,7 @@ two monitor instances are produced, one for `fan01`, one for `fan02`. In practic
 - Resource 1: attributes such as `id=fan01` and `name=Fan A`, with metrics attached from `$3` and `$4`
 - Resource 2: attributes such as `id=fan02` and `name=Fan B`, with metrics attached from `$3` and `$4`
 
-The converse also holds from MetricsHub Community 3.9.08: when a trusted run of a `discovery` or `simple` job no longer returns the row of an instance, the instance is removed, at the next collect for a `simple` job and at the next discovery cycle for a `discovery` job. See [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed).
+The converse also holds: when a trusted run of a `discovery` or `simple` job no longer returns the row of an instance, the instance is removed, at the next collect for a `simple` job and at the next discovery cycle for a `discovery` job. See [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed).
 
 ## Property Semantics
 

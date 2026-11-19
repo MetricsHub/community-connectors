@@ -11,7 +11,7 @@ In MetricsHub connectors, a source produces a **table**, or a text that its comp
 
 Most compute operations modify one table column at a time, which is why they usually require `column:`.
 
-`mapping.source` also expects a table, and **each row creates one monitor instance** exported as one OpenTelemetry Resource:
+`mapping.source` is a reference to a source that ends in a table (anything else does not load, `NOT_A_REFERENCE`: a hard-coded table belongs in a [static](./static.html) source), and **each row creates one monitor instance** exported as one OpenTelemetry Resource:
 
 - Row cells are mapped to attributes and metrics with `$1`, `$2`, `$3`, and so on.
 - If your table has 20 rows, you get 20 instances for a `multiInstance` monitor.
@@ -25,7 +25,7 @@ Example logical table:
 
 ## Serialization Details You Must Know
 
-A source result is either text or a table (see the [content types](../computes/index.html#content-types)). A text has LF line endings, whatever produced it. A table stays a table from one step to the next: it becomes a text only where a text is expected, and is then written one line per row, the cells joined with `;`:
+A source result is either text or a table (see the [content types](../computes/index.html#content-types)). A text has LF line endings, whatever produced it: a CRLF becomes LF. A table stays a table from one step to the next: it becomes a text only where a text is expected, and is then written one line per row, the cells joined with `;`:
 
 ```text
 psu01;PSU 1;ok;
