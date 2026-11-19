@@ -259,15 +259,12 @@ monitors:
           leftKeyColumn: 3
           rightKeyColumn: 1
           computes:
-          # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
-          - type: prepend
-            column: 6
-            value: ' - '
             # Concatenate SensorName and HardwareName
             # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
-          - type: prepend
-            column: 6
-            value: $2
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, $4, $5, $2 " - " $6, $7 }
       mapping:
         # Instance table
         # SensorIdentifier, SensorName, SensorParent, HardwareIdentifier, HardwareName, HardwareType
@@ -440,20 +437,20 @@ monitors:
           leftKeyColumn: 2
           rightKeyColumn: 2
           computes:
-            # Clean duplicate column
-            # Parent, MemoryAvailable; MemoryUsed
-          - type: keepColumns
-            columnNumbers: 2,3,6
-            # Sum up MemoryAvailable and MemoryUsed to get MemorySize
+            # Clean duplicate column, sum up MemoryAvailable and MemoryUsed to get MemorySize, and convert it to MB
+            # (the shortest of 15 to 17 significant digits that gives the same number, as it shows in the name)
             # Parent, MemorySize; MemoryUsed
-          - type: add
-            column: 2
-            value: $3
-            # Convert to GB
-            # Parent, MemorySize; MemoryUsed
-          - type: multiply
-            column: 2
-            value: 1024
+          - type: awk
+            output: table
+            script: |
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              function format(x) { return sprintf("%.15g", x) + 0 == x ? sprintf("%.15g", x) : sprintf("%.17g", x) }
+              {
+                size = $3
+                if (isNumber(size) && isNumber($6)) size = size + $6
+                if (isNumber(size)) size = format(size * 1024)
+                print $2, size, $6
+              }
         source(6):
           # Source 1 : MemoryName
           # Source 6 : MemorySize
@@ -487,17 +484,12 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only GPU
+            # Keep only GPU (case-insensitive), and remove the gpu word in HardwareVendor
             # Identifier, Name, HardwareType
-          - type: keepOnlyMatchingLines
-            column: 3
-            regExp: gpu
-            # Remove the Gpu word in HardwareVendor
-            # Identifier, Name, HardwareType
-          - type: replace
-            column: 3
-            existingValue: gpu
-            newValue: ""
+          - type: awk
+            output: table
+            script: |
+              tolower($3) ~ /gpu/ { gsub(/gpu/, "", $3); print $1, $2, $3 }
         source(2):
           # Source 2 = Retrieve GPU Memory Size from Sensor
           # Parent, Name, Value
