@@ -50,7 +50,7 @@ value:
 ```
 
 - A list holds either cells or rows, not both, and a row has one cell at least. An empty list (`value: []`) is an empty table.
-- A cell is a YAML scalar other than null (`~`), and may hold a line break. Quote a number that must keep its text: YAML reads `01` as `1`.
+- A cell is a YAML scalar other than null (`~`), and may hold a line break.
 - A cell may hold a reference, such as `${attribute::id}`, or `${source::...}` of a source that ends in text: the cell holds that text, line breaks included. A source that ends in a table cannot be referenced in a cell (`TABLE_INTERPOLATED`): read a table with a [copy](./copy.html).
 - A string `value` (`value: "a;b"`, or `value: ${source::...}`) does not load: write a list.
 
