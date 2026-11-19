@@ -65,12 +65,18 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 10
             regExp: ${var::matchCommand}
-          - type: add
-            column: 13
-            value: $14
-          - type: divide
-            column: 13 #  unit = 100-nanosecond intervals
-            value: 10000000 # divide by 10000000 to get a result in seconds
+          # KernelModeTime + UserModeTime, in 100-nanosecond intervals: divide by 10000000 to get a result in seconds
+          # (unchanged when an operand is blank or not a number)
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              {
+                if (isNumber($13) && isNumber($14)) $13 = $13 + $14
+                if (isNumber($13)) $13 = $13 / 10000000
+                print
+              }
         sessionProcessQuery:
           type: wmi
           namespace: root\CIMv2
