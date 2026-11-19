@@ -22,8 +22,8 @@ monitors:
       sources:
         source(3):
           computes:
-            # Replace a blank ifMIBObjects Name with the ifTable Description
-            # PortID;Description;PortType;MacAddress;AdminStatus;ID;Name;Alias;
+            # When the port has no ifXTable row (blank ifXTable index in column 7), use the ifTable Description
+            # PortID;Description;PortType;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;
           - type: awk
             output: table
             script: |
