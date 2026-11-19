@@ -54,55 +54,36 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: fan
-          - type: insertColumn
-            column: 4
-            value: ""
-            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 5
-            value: ""
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 10
-            value: ""
+            # Keep only fans, with empty StatusArray, StatusInformation and AdditionalInformation1 columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "fan" { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
 
         source(2):
           # Handle the "Fan Device" and "Fan/cooling device" (HP through WMI) formats: status only
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Fan Device,Fan/cooling device
             # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: keepColumns
-            columnNumbers: 1,2,3,7,8,9
+            # Keep only the fan devices, and their interesting columns
             # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "fan device" || tolower($1) == "fan/cooling device" { print $1, $2, $3, $7, $8, $9 }
             # Convert StatusArray to a simple (unique) PATROLStatus
           - type: convert
             column: 4
             conversion: array2SimpleStatus
             # Fan Device;DeviceID;DisplayID;Status;StatusInformation;AdditionalInformation1;
-          - type: insertColumn
-            column: 6
-            value: ""
-            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;AdditionalInformation1;
-          - type: insertColumn
-            column: 7
-            value: ""
-            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;AdditionalInformation1;
-          - type: insertColumn
-            column: 8
-            value: ""
-            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;WarningThreshold;AdditionalInformation1;
-          - type: insertColumn
-            column: 9
-            value: ""
+            # Add empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, $4, $5, "", "", "", "", $6 }
 
         source(3):
           # Union of both fan formats
@@ -204,17 +185,12 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
-            # Keep only power supply lines
+            # Keep only power supply lines, with labelled Model and SerialNumber
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Power supply
-          - type: prepend
-            column: 6
-            value: "SerialNumber: "
-          - type: prepend
-            column: 5
-            value: "Model: "
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "power supply" { $5 = "Model: " $5; $6 = "SerialNumber: " $6; print }
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation;AdditionalInformation1;
           - type: convert
@@ -246,14 +222,12 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
-            # Keep only processor lines
+            # Keep only processor lines, with a labelled SerialNumber
             # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Processor
-          - type: prepend
-            column: 6
-            value: "SerialNumber: "
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "processor" { $6 = "SerialNumber: " $6; print }
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
           - type: convert
@@ -288,13 +262,12 @@ monitors:
           computes:
             # Keep only memory lines
             # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Memory module,Memory Device
-            # Duplicate the "Model" column because it is in the form of Model|Speed
+            # and duplicate the "Model" column because it is in the form of Model|Speed
             # Memory module;DeviceID;Entity ID;Vendor;Model|Speed;Model|Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: duplicateColumn
-            column: 5
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "memory module" || tolower($1) == "memory device" { for (i = NF; i >= 5; i--) $(i + 1) = $i; print }
             # Now extract "Model" from "Model|Size"
             # Memory module;DeviceID;Entity ID;Vendor;Model;Model|Speed;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: extract
@@ -415,14 +388,13 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
-            # Exclude what we know already
+            # Exclude what we know already (case-insensitive), and label the SerialNumber
             # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: excludeMatchingLines
-            column: 1
-            valueList: Battery,Disk or Disk Bay,Disk or disk bay,Disk Drive Bay,Memory module,Memory Device,LED,Temperature,Voltage,Power supply,Fan,Fan Device,Fan/cooling device,Enclosure,FRU,Processor,Current,PowerConsumption,EnergyUsage,Blade,Processing Blade
-          - type: prepend
-            column: 6
-            value: "Serial Number: "
+          - type: awk
+            output: table
+            script: |
+              BEGIN { n = split(tolower("Battery,Disk or Disk Bay,Disk or disk bay,Disk Drive Bay,Memory module,Memory Device,LED,Temperature,Voltage,Power supply,Fan,Fan Device,Fan/cooling device,Enclosure,FRU,Processor,Current,PowerConsumption,EnergyUsage,Blade,Processing Blade"), types, ","); for (i = 1; i <= n; i++) known[types[i]] = 1 }
+              !(tolower($1) in known) { $6 = "Serial Number: " $6; print }
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Disk or disk bay;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
           - type: convert
@@ -493,14 +465,12 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
-            # Keep only battery lines
+            # Keep only battery lines, with a labelled SerialNumber
             # Battery;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: battery
-          - type: prepend
-            column: 6
-            value: "serialNumber: "
+          - type: awk
+            output: table
+            script: |
+              tolower($1) == "battery" { $6 = "serialNumber: " $6; print }
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Battery;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation
           - type: convert
