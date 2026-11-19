@@ -430,16 +430,18 @@ monitors:
           - type: translate
             column: 4
             translationTable: "${translation::StatusInformationTranslationTable}"
-          # Compute 4 - 5 (Get RPM range and convert to Speed Percentage)
-          - type: subtract
-            column: 8
-            value: $7
-          - type: divide
-            column: 6
-            value: $8
-          - type: multiply
-            column: 6
-            value: 100
+          # Get RPM range and convert to Speed Percentage (unchanged when an operand is blank or not a number, or the range is 0)
+          - type: awk
+            output: table
+            script: |
+              BEGIN { OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              {
+                if (isNumber($8) && isNumber($7)) $8 = $8 - $7
+                if (isNumber($6) && isNumber($8) && $8 + 0 != 0) $6 = $6 / $8
+                if (isNumber($6)) $6 = $6 * 100
+                print
+              }
       mapping:
         # Fan Value Table
         # JSONID;MemberId;PatrolStatus;StatusInformation;Reading;MinReadingRange;MaxReadingRange;
@@ -614,19 +616,11 @@ monitors:
           - type: json2Table
             entryKey: Entry/Value/PowerSupplies
             properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /PowerSupplyType, /LineInputVoltage, /Model, /firmwareVersion, /SerialNumber ]
-          # Exclude PowerSupplies that are marked as "Absent" at discovery
-          - type: excludeMatchingLines
-            column: 5
-            regExp: Absent
-          - type: prepend
-            column: 8
-            value: "Model: "
-          - type: prepend
-            column: 9
-            value: "Firmware Version: "
-          - type: prepend
-            column: 10
-            value: "Serial Number: "
+          # Exclude PowerSupplies that are marked as "Absent" (case-insensitive) at discovery, and label Model, Firmware Version and Serial Number
+          - type: awk
+            output: table
+            script: |
+              tolower($5) !~ /absent/ { $8 = "Model: " $8; $9 = "Firmware Version: " $9; $10 = "Serial Number: " $10; print }
       mapping:
         # PowerSupply Instance Table
         source: "${source::source(1)}"
@@ -804,13 +798,14 @@ monitors:
           - type: translate
             column: 4
             translationTable: "${translation::StatusInformationTranslationTable}"
-          - type: multiply
-            column: 5
-            value: 1000
+          # Volts into mV (unchanged when blank or not a number)
           # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
           - type: awk
             output: table
             script: |
+              BEGIN { OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              isNumber($5) { $5 = $5 * 1000 }
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
               { print $1, $2, $3, $4, $5, $6 }
       mapping:
