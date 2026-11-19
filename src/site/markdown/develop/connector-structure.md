@@ -132,7 +132,7 @@ Connector pipelines are table-based end to end.
 
 - A source typically outputs rows and columns. Some sources (`commandLine`, `http`, `file`, `ipmi`, `awk`) output text, which a compute turns into a table (see the [content types](computes/index.html#content-types)).
 - Computes generally transform rows/columns.
-- Mapping expects a table and uses column references (`$1`, `$2`, ...).
+- Mapping expects a table and uses column references (`$1`, `$2`, ...). The exception is the simple mapping, without `source`: one instance from constants and texts (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)).
 
 Internally, a table is represented as `List<List<String>>`. The example below shows the same data in its internal form and as a logical table:
 
@@ -158,7 +158,7 @@ Where a text is expected, a table is written as described in [Serialization Deta
 
 ## `mapping` Block Inside Jobs
 
-`mapping` is the bridge between a source table and exported telemetry. Each row of the mapped table represents one monitor instance. That instance is exported as one OpenTelemetry Resource, with attributes from `attributes` and metrics from `metrics`.
+`mapping` is the bridge between a source table and exported telemetry. Each row of the mapped table represents one monitor instance; a mapping without `source` represents exactly one instance (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)). That instance is exported as one OpenTelemetry Resource, with attributes from `attributes` and metrics from `metrics`.
 
 ```yaml
 mapping:

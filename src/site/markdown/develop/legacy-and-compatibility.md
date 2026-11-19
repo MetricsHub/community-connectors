@@ -51,6 +51,8 @@ The reference pages of this guide describe the current syntax. What changed, and
 | 3.9.09 | `json2Table` puts each value whole in its cell and ignores `separator`: earlier versions cut a value with a line feed into extra rows, and a value with the separator into extra cells. |
 | 3.9.09 | `json2Table` reads a payload of 64 KiB or more as a stream of JSON events, and `parsingMode` is rejected. 3.9.08 loads every payload as a tree unless the compute sets `parsingMode: events`; earlier versions always load a tree. |
 | 3.9.09 | A `${file::...}` reference written in the content of an embedded file is no longer resolved, and `executeHttpRequest` no longer reads the file that a `${file::...}` header names. A variable of an `awk` whose value is one `${file::...}` reference holds the text of that file: pass the file through `variables`. |
+| 3.9.09 | A mapping without `source` is the [simple mapping](monitors-and-jobs.html#the-simple-mapping): it creates exactly one instance, or the connector does not load when a value reads a column or a key attribute is missing or holds a source reference. Earlier versions skip such a mapping in a `discovery` or `simple` job (warning "No instance tables found") and fail on it in a `collect` job. |
+| 3.9.09 | A mapping value that is exactly one `${source::...}` reference is the text of that source as is: earlier versions read that text as mapping syntax, like any other value. |
 
 ## Rare/Legacy Features Still Documented
 

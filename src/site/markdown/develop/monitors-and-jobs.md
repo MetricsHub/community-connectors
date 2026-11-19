@@ -7,7 +7,7 @@ description: How monitors, jobs, and instance identity work: simple vs discovery
 
 A **monitor** defines how MetricsHub discovers and collects metrics for one type of component: `fan`, `disk`, `battery`, `enclosure`, `network`, etc. Each monitor produces **instances** — one per physical or logical component found — and each instance is exported as one OpenTelemetry Resource.
 
-This page explains the job models (`simple` vs `discovery` + `collect`), instance identity (`keys`), collect modes (`multiInstance` vs `monoInstance`), and two additional mapping features (`conditionalCollection`, `legacyTextParameters`).
+This page explains the job models (`simple` vs `discovery` + `collect`), instance identity (`keys`), collect modes (`multiInstance` vs `monoInstance`), the simple mapping (one instance, no table), and two additional mapping features (`conditionalCollection`, `legacyTextParameters`).
 
 ## Monitor Anatomy
 
@@ -44,7 +44,7 @@ monitors:
 
 ## The `simple` Job
 
-One pipeline produces both attributes and metrics; each mapped row creates (or refreshes) one instance and collects its metrics at the same time.
+One pipeline produces both attributes and metrics; each mapped row creates (or refreshes) one instance and collects its metrics at the same time. A mapping without `source` creates exactly one instance instead (see [The Simple Mapping](#the-simple-mapping)).
 
 Because the job runs on every collect, an instance that disappears is removed at the next collect, when a trusted run no longer returns it. See [When Instances Are Removed](#when-instances-are-removed).
 
@@ -154,7 +154,7 @@ monitors:
           StatusInformation: $3
 ```
 
-Rows whose key values match no discovered instance are ignored; instances with no matching row simply get no new metric values this cycle.
+Rows whose key values match no discovered instance are ignored; instances with no matching row simply get no new metric values this cycle. A `multiInstance` collect with a mapping without `source` reads no table: it sets the metrics of the one instance whose keys it writes as constants (see [The Simple Mapping](#the-simple-mapping)).
 
 ### `monoInstance`: one run per instance
 
@@ -189,6 +189,58 @@ Because the run is already bound to one instance, the mapping does not need to r
 
 > [!WARNING]
 > `monoInstance` multiplies the number of requests by the number of instances. Keep the per-instance sources minimal, and prefer `multiInstance` whenever a single bulk query can return all instances at once.
+
+## The Simple Mapping
+
+A mapping without `source` is the simple mapping: it creates exactly one monitor instance at each run of its job, not zero, not two. There is no keyword: leaving out `mapping.source` is enough. Use it for a component that the resource has once, whose values come from sources that end in a text (see [Strict Content Types](design-principles.html#strict-content-types)), with no table to build.
+
+```yaml
+monitors:
+  memory:
+    simple:
+      sources:
+        memoryLimit:
+          # any source that ends in a text
+        vendor:
+          # any source that ends in a text
+      mapping:
+        attributes:
+          id: memory
+          vendor: ${source::vendor}
+        metrics:
+          system.memory.limit: ${source::memoryLimit}
+```
+
+It works in every job: `simple`, `discovery` and `collect` (`monoInstance` and `multiInstance`).
+
+- Each value is a constant or a `${source::<text source>}` reference, resolved when the job runs. A simple mapping has no row, so `$1` has no meaning.
+- A value that is exactly one `${source::...}` reference is the text of that source as is: it is not read as mapping syntax. A device text such as `Refresh rate(Hz)`, `costs $15` or `$3` stays what it is. This holds in every mapping, with or without `source`. A value that mixes a reference with other characters (`Settings of ${source::vendor}`) is interpolated first, then read like any other mapping value.
+
+### Identity of the Instance
+
+The key attributes of the job ([`keys`](#instance-identity-keys), `id` by default) are written in `attributes` as constants, so the identity of the instance never depends on a source. A constant here is a value that holds no `${source::...}` reference.
+
+- In a `discovery` or a `simple` job, the constant keys identify the one instance.
+- A `monoInstance` collect needs no attribute: it runs once for each monitor of its type and is given that monitor. Its simple mapping sets the metrics of that monitor from the texts of that run, and its sources can read the monitor's attributes with `${attribute::...}`.
+- A `multiInstance` collect finds its monitor by the same constant key attributes as the discovery.
+
+### A Text That Fails
+
+A referenced text source that fails or returns nothing gives an empty attribute value, and the metric that reads it is not collected at that run. The instance still exists and is the same one, also when the source answered at a previous run and now fails after its retry.
+
+### Load Errors
+
+The connector does not load, and neither do the `monitors` of a resource in `metricshub.yaml`, when a mapping without `source` breaks one of these rules (see [Rules and Hints](design-principles.html#rules-and-hints)):
+
+| Rule | Hint | Rejected for |
+| --- | --- | --- |
+| `COLUMN_IN_SIMPLE_MAPPING` | set the mapping source, or reference a text source | A value that reads a column: `$1` anywhere in the value (also inside `${awk::...}` or a function such as `rate($1)`), or a value that is `$0`. |
+| `NO_CONSTANT_KEY_IN_SIMPLE_MAPPING` | write the key attribute as a constant, or set the mapping source | In a `discovery`, a `simple` job or a `multiInstance` collect, a key attribute of the job that `attributes` does not write (actual `none`), or whose value holds a `${source::...}` reference (actual `a source reference`). |
+| `TABLE_INTERPOLATED` | interpolate a text | A value that references a source that ends in a table. Write a `toText` in that source, or set `source`. |
+
+```text
+Connector MyConnector - Content type check: NO_CONSTANT_KEY_IN_SIMPLE_MAPPING in none at monitors.memory.simple.mapping.attributes.id: expected a constant, actual none (write the key attribute as a constant, or set the mapping source)
+```
 
 ## Instance Identity: `keys`
 
@@ -264,8 +316,8 @@ Use `removalDelay` only when no inventory exists: entities defined by their acti
 
 | Property | Jobs | Required | Description |
 | --- | --- | --- | --- |
-| `sources` | all | Yes | Named sources forming the job's table pipeline. See [Sources](sources/index.html). |
-| `mapping` | all | Yes | Turns the final table into instances, attributes, and metrics. See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
+| `sources` | all | No | Named sources forming the job's table pipeline. See [Sources](sources/index.html). A [simple mapping](#the-simple-mapping) whose values are all constants needs none. |
+| `mapping` | all | Yes | Turns the table of its `source` into instances, attributes, and metrics, or creates exactly one instance when it has no `source` ([The Simple Mapping](#the-simple-mapping)). See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
 | `type` | `simple`, `collect` | No | `multiInstance` or `monoInstance`. When omitted on a `collect` job, defaults to `monoInstance` — declare it explicitly in new connectors. |
 | `executionOrder` | all | No | Array of source names forcing a specific order. By default the engine runs a job's sources sequentially, ordered by their `${source::...}` dependencies; use `executionOrder` only when a dependency is invisible to the engine, and list **every** source of the job. |
 
@@ -317,6 +369,8 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 
 - Omitting `type` on the `collect` job of a multi-instance monitor — the engine then defaults to `monoInstance`, silently changing the execution model. State `multiInstance` or `monoInstance` explicitly.
 - Forgetting to re-map `id` (or the other `keys`) in a `multiInstance` collect mapping, so no row matches any instance and no metric is ever collected.
+- Leaving out `mapping.source` by accident: the mapping becomes a [simple mapping](#the-simple-mapping), and the connector does not load when its values read columns (`$1`, `COLUMN_IN_SIMPLE_MAPPING`) or when it does not write a key attribute (`NO_CONSTANT_KEY_IN_SIMPLE_MAPPING`).
+- Writing a key attribute of a simple mapping as `${source::...}`: the identity would follow the text, and the connector does not load (`NO_CONSTANT_KEY_IN_SIMPLE_MAPPING`). Write the key as a constant and the text in another attribute.
 - Mapping an unstable value (rotating index, display label) as `id`, which creates a new instance at every discovery cycle (the previous one is removed, so its counters restart every time).
 - Using `monoInstance` with expensive sources on monitors that can have dozens of instances.
 - Putting heavy inventory work in `collect` instead of `discovery` — collect runs on every cycle.

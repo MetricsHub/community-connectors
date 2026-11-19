@@ -25,7 +25,7 @@ leftTable: ${source::ports}
 rightTable: ${source::aliases}
 ```
 
-A reference that is the whole value of a source field (`leftTable`, `tables`, `texts`, `mapping.source`, ...) reads that source as it is. A reference inside a string field (`url`, `header`, `commandLine`, a compute `value`, a mapping attribute, ...) is replaced by the text of the source: it must reference a text, and a table there is rejected when the connector loads. A reference to a source the connector does not have is rejected too. See [Strict Content Types](design-principles.html#strict-content-types).
+A reference that is the whole value of a source field (`leftTable`, `tables`, `texts`, `mapping.source`, ...) reads that source as it is. A reference inside a string field (`url`, `header`, `commandLine`, a compute `value`, a mapping attribute, ...) is replaced by the text of the source: it must reference a text, and a table there is rejected when the connector loads. A mapping value that is exactly one reference is the text of that source as is, not read as mapping syntax (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)). A reference to a source the connector does not have is rejected too. See [Strict Content Types](design-principles.html#strict-content-types).
 
 ### Relative vs Absolute
 

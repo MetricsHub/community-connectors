@@ -67,7 +67,7 @@ Most connector logic is table-oriented:
 - most sources output a **table**
 - most computes transform a **table**
 - mapping consumes a **table**
-- each mapped row becomes one monitor instance exported as one OpenTelemetry Resource
+- each mapped row becomes one monitor instance exported as one OpenTelemetry Resource (a mapping without `source` creates exactly one instance, see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping))
 
 Internally, tables are represented as a **list of lists of strings**. The example below shows the same data in its internal form and as a table:
 
@@ -203,7 +203,7 @@ This keeps mapping declarative and easier to review.
 
 ## Step 5 - Validate the Table You Expect
 
-Your `mapping.source` is a table. For each row, MetricsHub creates one monitor instance, and that instance is exported as one OpenTelemetry Resource.
+Your `mapping.source` references a table. For each row, MetricsHub creates one monitor instance, and that instance is exported as one OpenTelemetry Resource.
 
 Within that row, columns are referenced by position:
 
