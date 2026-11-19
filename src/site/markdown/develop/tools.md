@@ -166,7 +166,7 @@ PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
 ...
 ```
 
-MetricsHub Central receives the same results as JSON, the response of each host holding its `type`, `table` or `text`.
+MetricsHub Central receives the same results as JSON. The response of each host has a `type`: `table`, with the `columns` and `rows` of the table, or `text`, with the `text` itself.
 
 ## Destructive Tools
 
