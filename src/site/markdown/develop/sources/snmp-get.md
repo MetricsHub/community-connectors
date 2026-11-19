@@ -75,7 +75,7 @@ sources:
 - Use for true scalar values only.
 - Group related scalar fetches logically and map directly.
 - Keep OID comments next to source definitions for maintainability.
-- Read a value that the mapping only shows (a model, a firmware version) as a text, `${source::upsModel}` in a mapping value, when the mapping has a source of its own.
+- Read a value that the mapping only shows (a model, a firmware version) as a text, `${source::upsModelValue}` (the `snmpGet` of the example above, not its `static` source) in a mapping value, when the mapping has a source of its own.
 
 ## Common Mistakes
 
