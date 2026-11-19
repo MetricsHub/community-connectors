@@ -131,7 +131,7 @@ monitors:
         source: ${source::postgresqlDatabase}
         attributes:
           db.namespace: $1
-          db.system: postgresql
+          db.system.name: postgresql
         metrics:
           db.server.commits: $2
           db.server.rollbacks: $3
@@ -189,7 +189,7 @@ monitors:
       mapping:
         source: ${source::postgresqlInfo}
         attributes:
-          db.system: postgresql
+          db.system.name: postgresql
           id: $1
           db.namespace: $1
           db.version: $2
@@ -234,7 +234,7 @@ monitors:
       mapping:
         source: ${source::replication}
         attributes:
-          db.system: postgresql
+          db.system.name: postgresql
           db.user.name: $1
           db.server.application_name: $2
           db.replication.host.name: $3
@@ -264,7 +264,7 @@ monitors:
       mapping:
         source: ${source::postgresqlLock}
         attributes:
-          db.system: postgresql
+          db.system.name: postgresql
           db.namespace: $1
           db.server.lock.relation: $2
           db.server.lock.type: $3
