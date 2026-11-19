@@ -77,9 +77,11 @@ BEGIN {
 		info = "Volume Information: " info
 	}
 	if (collect) {
-		print volumeID, status
-	} else {
-		print volumeID, displayID, letter, type, fs, size, status, info
+		# The status twice: the first one is translated, the second one is the StatusInformation
+		print volumeID, status, status
+	} else if (tolower(type) != "cd-rom" && tolower(type) != "dvd-rom" && tolower(type) != "removable") {
+		# Exclude DVDs and stupid stuff
+		print volumeID, displayID, letter, type, "File System: " fs, size, status, info
 	}
 }
 
