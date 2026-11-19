@@ -37,7 +37,7 @@ sources:
 
 ## Writing Table Literals
 
-A member of `tables` can be a table written in the connector, as a YAML list of rows, each row a list of cells. It gives exactly these rows and cells, `;` included (MetricsHub Community 3.9.09 or later):
+A member of `tables` can be a table written in the connector, as a YAML list of rows, each row a list of cells. It gives exactly these rows and cells, `;` included:
 
 ```yaml
 sources:
@@ -49,10 +49,10 @@ sources:
 ```
 
 - Cells are YAML scalars: quote a number that must keep its text, such as a code or a version. YAML reads `01` as `1` and `1.10` as `1.1`: write `'01'` and `'1.10'`.
-- A cell cannot hold a line break. A null cell (`~`), a cell that is a list or a map, an empty row and an empty table are rejected when the connector loads, as is a blank member.
+- A cell may hold a line break. A null cell (`~`), a cell that is a list or a map, an empty row and an empty table are rejected when the connector loads, as is a blank member.
 - In a flow list (`[ ... ]`), quote the source references: `{` and `}` are YAML flow indicators, as in `tables: [ [ [ a, b ] ], "${source::supplies}" ]`.
 
-Older connectors write a literal as a string: lines are rows, each split on `;` (`"in;ac;AC Input"`). From MetricsHub Community 3.9.09, this form is rejected when the connector loads (`STRING_LITERAL_ROWS`, see [Strict Content Types](../design-principles.html#strict-content-types)): write a list of rows.
+A member written as a string that is not a source reference (`"in;ac;AC Input"`) is rejected when the connector loads (`STRING_LITERAL_ROWS`, see [Strict Content Types](../design-principles.html#strict-content-types)): write a list of rows.
 
 ## Texts in a Union
 
