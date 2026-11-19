@@ -77,9 +77,8 @@ monitors:
           - type: awk
             script: ${file::nvidiaSmi.awk}
             output: table
-          - type: keepOnlyMatchingLines
-            column: 1
-            regExp: ^GPU$
+            variables:
+              keep: GPU
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -130,9 +129,8 @@ monitors:
           - type: awk
             script: ${file::nvidiaSmi.awk}
             output: table
-          - type: keepOnlyMatchingLines
-            column: 1
-            regExp: ^TEMPERATURE$
+            variables:
+              keep: TEMPERATURE
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -172,9 +170,8 @@ monitors:
           - type: awk
             script: ${file::nvidiaSmi.awk}
             output: table
-          - type: keepOnlyMatchingLines
-            column: 1
-            regExp: ^VOLTAGE$
+            variables:
+              keep: VOLTAGE
       mapping:
         source: ${source::source(1)}
         attributes:

@@ -183,9 +183,10 @@ section ~ /^    (GPU )?Power Readings/ && /Power Draw/ && /[0-9]/ {
 	if (totalMemory > 0 && freeMemory != "") {
 		memoryUtilization = (totalMemory - freeMemory) * 100 / totalMemory
 	}
-	print "GPU", "GPU" gpuID, (transferredBytes * 1024), (receivedBytes * 1024), gpuUtilization, memoryUtilization, encoderUtilization, decoderUtilization, powerConsumption, minPowerLimit, maxPowerLimit, correctable, uncorrectable, model, serialNumber, gpuUuid vBios, driverVersion, cudaVersion, firmwareVersion, totalMemory, usedMemory, reservedMemory, freeMemory
-	print "TEMPERATURE", "GPU" gpuID, temperature, warnTemperature, critTemperature
-	print "VOLTAGE", "GPU" gpuID, voltage
+	#With the variable keep (GPU, TEMPERATURE or VOLTAGE), only the rows of that class.
+	if (keep == "" || keep == "GPU") print "GPU", "GPU" gpuID, (transferredBytes * 1024), (receivedBytes * 1024), gpuUtilization, memoryUtilization, encoderUtilization, decoderUtilization, powerConsumption, minPowerLimit, maxPowerLimit, correctable, uncorrectable, model, serialNumber, gpuUuid vBios, driverVersion, cudaVersion, firmwareVersion, totalMemory, usedMemory, reservedMemory, freeMemory
+	if (keep == "" || keep == "TEMPERATURE") print "TEMPERATURE", "GPU" gpuID, temperature, warnTemperature, critTemperature
+	if (keep == "" || keep == "VOLTAGE") print "VOLTAGE", "GPU" gpuID, voltage
 	gpuID = ""
 	model = ""
 	serialNumber = ""

@@ -7,9 +7,9 @@ BEGIN {
 }
 
 # One row per domain of virsh list, even when its virsh dominfo failed (no state, no CPU count):
-# a missing row would remove the vm monitor
+# a missing row would remove the vm monitor. With collect set, only the domains that have a state.
 function printDomain() {
-	if (vmName != "") {
+	if (vmName != "" && (!collect || powerState != "")) {
 		print vmName, powerState, powerShare, (uuid == "" ? "" : "UUID: " uuid)
 	}
 	vmName = ""
