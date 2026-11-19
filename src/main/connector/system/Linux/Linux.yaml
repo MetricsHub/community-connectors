@@ -272,17 +272,15 @@ monitors:
           computes:
           - type: awk
           # Replace Network interfaces with a negative value by an empty string.
+          # Convert speed from Mbps to bytes per second (unchanged when not a number)
+          # Interface;SpeedBytesPerSecond
             script: |
-              BEGIN { FS=";"; OFS=";" }
+              BEGIN { FS=";"; OFS=";"; OFMT = "%.17g" }
+              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               /^##LINKSPEED##$/ { insec = 1; next }
               /^##[A-Z_]+##$/ { if (insec) exit; next }
-              insec { if ($2 == "" || ($2 + 0) == -1) print $1; else print $1, $2 }
+              insec { if ($2 == "" || ($2 + 0) == -1) print $1; else print $1, (isNumber($2) ? $2 * 125000 : $2) }
             output: table
-          # Convert speed from Mbps to bytes per second
-          # Interface;SpeedBytesPerSecond
-          - type: multiply
-            value: 125000
-            column: 2
 
         # Now join the three sources together
         networkTempJoin:
@@ -473,10 +471,13 @@ tools:
           column: 10
           numeric: true
           descending: true
-        - type: head
-          lines: ${param::count}
-        - type: keepColumns
-          columnNumbers: 1,2,3,4,5,6,7,8,9
+        # The first count processes, without their sortKey
+        - type: awk
+          variables:
+            count: ${param::count}
+          script: |
+            NR <= count + 0 { print $1, $2, $3, $4, $5, $6, $7, $8, $9 }
+          output: table
     result:
       source: ${source::processes}
       columns: [ pid, ppid, user, cpuPercent, memoryPercent, residentKiB, elapsed, state, command ]
