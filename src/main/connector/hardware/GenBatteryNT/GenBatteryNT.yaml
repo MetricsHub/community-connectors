@@ -77,14 +77,11 @@ monitors:
             column: 1
             translationTable: ${translation::BatteryStatusTranslationTable}
           # Merge Status StatusInformation and BatteryStatus StatusInformation
-          - type: append
-            column: 6
-            value: $1
           # A time left of 71582788 indicates that it is charging. Ignore it.
-          - type: replace
-            column: 4
-            existingValue: 71582788
-            newValue: ""
+          - type: awk
+            output: table
+            script: |
+              { gsub(/71582788/, "", $4); print $1, $2, $3, $4, $5, $6 $1 }
       mapping:
         # Battery StatusInformation (not used anymore at this point), DeviceID, Charge, Time Left (mins), Status, StatusInformation
         source: ${source::source(1)}
