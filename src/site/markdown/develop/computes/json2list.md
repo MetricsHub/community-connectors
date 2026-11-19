@@ -9,9 +9,7 @@ description: json2List turns a JSON document into a two-column table, one row pe
 
 Use `json2List` to pick a few values out of a JSON document, such as an authentication token, an identifier to put in a URL or a header value. Each value in the document gets its own row with two cells: its key path and the value. A following [`awk`](./awk.html) compute can then select the rows it needs.
 
-To get one row per entry of an array, with one column per property, use [json2Table](./json2csv.html) instead.
-
-`json2List` is available from MetricsHub Community 3.9.09.
+To get one row per entry of an array, with one column per property, use [json2Table](./json2table.html) instead.
 
 ## Syntax
 
@@ -29,7 +27,7 @@ beforeAll:
       script: '$1 == "/data/token" { print $2; exit }'
 ```
 
-The `awk` compute reads the table one row per record: `$1` is the key path and `$2` the value. It prints the token, so `login` is a text, ready for `authenticationToken: ${source::beforeAll.login}` (see [HTTP Authentication Token](../sources/http.html#authentication-token)). The token is the whole first line of that text, without the `;` that the `awk` text output ends it with: a `;` inside the token is kept.
+The `awk` compute reads the table one row per record: `$1` is the key path and `$2` the value. It prints the token, so `login` is a text, ready for `authenticationToken: ${source::beforeAll.login}` (see [HTTP Authentication Token](../sources/http.html#authentication-token)). The token is the whole first line of that text, without the `;` that the `awk` text output ends it with when that `;` is the only one of the line: a token that holds a `;` keeps the trailing `;` as well.
 
 ## Properties
 

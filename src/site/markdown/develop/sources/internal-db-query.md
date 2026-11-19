@@ -22,7 +22,7 @@ sources:
   mergedInventory:
     type: internalDbQuery
     tables:
-    - source: ${source::monitors.disk.discovery.sources.diskRaw}
+    - source: ${source::diskRaw}
       alias: D
       columns:
       - name: id
@@ -31,7 +31,7 @@ sources:
       - name: size_bytes
         number: 4
         type: BIGINT
-    - source: ${source::monitors.disk.collect.sources.healthRaw}
+    - source: ${source::healthRaw}
       alias: H
       columns:
       - name: id
@@ -48,7 +48,7 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `internalDbQuery`. |
-| `tables` | Yes | None | SQL table definitions backed by source tables. |
+| `tables` | Yes | None | SQL table definitions backed by source tables. The `source` of each is a reference to a source that ends in a table: anything else does not load (`NOT_A_REFERENCE`, a hard-coded table belongs in a [static](./static.html) source), nor does a text (`TEXT_FEEDS_TABLE`). |
 | `query` | Yes | None | SQL query executed on internal in-memory tables. |
 | `parameters` | No | `[]` | Optional query parameters (schema-level support). |
 | `computes` | No | `[]` | Post-processing pipeline. |

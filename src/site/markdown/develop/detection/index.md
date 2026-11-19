@@ -77,12 +77,10 @@ When `expectedResult` is not provided, behavior depends on criterion type, but u
 
 ## Table Serialization Model
 
-Several criteria (`wmi`, `wbem`, `sql`) evaluate query results as a serialized table:
+Several criteria (`wmi`, `wbem`, `sql`, `jmx`) evaluate query results as a serialized table:
 
 - Internal table shape: `List<List<String>>`
-- Serialization: one row per line, columns separated by semicolons (`;`)
-
-`jmx` is the exception: its results are name-value pairs, serialized as `=`-separated lines — see [Detection by JMX](jmx.html).
+- Serialization: one row per line, each cell followed by `;`, a `;` inside a cell written `,`
 
 For example, the below table:
 
@@ -94,11 +92,11 @@ For example, the below table:
 Will be serialized as the below text form, for evaluating the regular expression in `expectedResult`:
 
 ```text
-disk0;ok;42
-disk1;failed;0
+disk0;ok;42;
+disk1;failed;0;
 ```
 
-Sources write a table out as text in a similar form, for example in a `${source::...}` reference (see [Serialization Details](../sources/index.html#serialization-details-you-must-know)).
+Sources write a table out as text in a similar form where a text is expected (see [Serialization Details](../sources/index.html#serialization-details-you-must-know)).
 
 > [!TIP]
 > Prefer regexes that explicitly account for semicolon separators and line boundaries when matching table-backed criteria.

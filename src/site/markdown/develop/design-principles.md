@@ -87,7 +87,7 @@ No connector change is complete until replay test behavior is understood.
 
 ## 9. Build Instances from an Inventory
 
-From MetricsHub Community 3.9.08, an instance that a trusted `discovery` or `simple` run no longer returns is removed (see [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed)). The rows that create the instances must list every entity that **exists**, not only the ones that are active, healthy, or reporting a value.
+An instance that a trusted `discovery` or `simple` run no longer returns is removed (see [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed)). The rows that create the instances must list every entity that **exists**, not only the ones that are active, healthy, or reporting a value.
 
 - Take the mapping source from an inventory, and attach the statistics to it:
   - keep the inventory as the **left** table of a [`tableJoin`](sources/table-join.html) and set a `defaultRightLine`, so an entity without statistics keeps its row with empty cells (or look the statistics up from the inventory in an `awk` compute);
@@ -98,7 +98,7 @@ From MetricsHub Community 3.9.08, an instance that a trusted `discovery` or `sim
 
 ## Strict Content Types
 
-Every source result, and the result of every compute, is either a **text** or a **table** (see the [content types](computes/index.html#content-types)). From MetricsHub Community 3.9.09, MetricsHub checks every connector when it loads it and rejects each place where a step reads the wrong type, a table is interpolated in a string, or a reference names no source.
+Every source result, and the result of every compute, is either a **text** or a **table** (see the [content types](computes/index.html#content-types)). MetricsHub checks every connector when it loads it and rejects each place where a step reads the wrong type, a table is interpolated in a string, a source reference is expected and something else is written, or a reference names no source.
 
 > [!IMPORTANT]
 > Every rule of this section is a load error: a connector that breaks any of them does not load. MetricsHub inserts no conversion: write each `toTable`, `toText` or other conversion the chain needs (see the [content types](computes/index.html#content-types)).
@@ -146,11 +146,22 @@ A `${source::...}` reference inside a string field is replaced by the text of th
 
 - `url`, `path`, `header`, `body` and `authenticationToken` of an `http` source (see [Authentication Token](sources/http.html#authentication-token));
 - the command line of a `commandLine` source, and the other string fields of a source;
+- the cells of a [`static`](sources/static.html) source;
 - the values of computes, such as the `value` of `append` or `prepend`;
 - the fields of a `mapping` other than `source`: attributes, metrics, ...;
 - the `input` of an `awk` source written as a template, such as `MODE;${source::raw}`.
 
-The sources that read their references as sources interpolate nothing: `copy`, `static`, `tableUnion`, `textUnion`, `tableJoin`, and an `awk` source whose `input` is a single reference.
+The sources that read their references as sources interpolate nothing: `copy`, `tableUnion`, `textUnion`, `tableJoin`, and an `awk` source whose `input` is a single reference.
+
+### Source References
+
+These fields name the source that MetricsHub reads: anything else than a source reference there is rejected (`NOT_A_REFERENCE`). A hard-coded table belongs in a [`static`](sources/static.html) source, which they reference.
+
+- `mapping.source`;
+- the `source` of a tool `result`;
+- the `source` of `executeForEachEntryOf`;
+- the `source` of each table of an `internalDbQuery`;
+- the `from` of a `copy`.
 
 ### Unresolved References
 
@@ -164,10 +175,11 @@ A `${source::...}` reference to a source the connector does not have is rejected
 | `TABLE_FEEDS_TEXT` | write a toText | A table read by a text consumer. |
 | `TABLE_UNION_OF_TEXTS` | use textUnion | A `tableUnion` whose members are all texts, once per union. |
 | `MIXED_UNION` | convert the members to one type | A `tableUnion` of texts and tables, once per union, plus a `TEXT_FEEDS_TABLE` for each text member. |
-| `STRING_LITERAL_ROWS` | write a list of rows | A `;` string literal in `tables`, `leftTable` or `rightTable` (see [Writing Table Literals](sources/table-union.html#writing-table-literals)). |
+| `STRING_LITERAL_ROWS` | write a list of rows | A string that is not a source reference in `tables`, `leftTable` or `rightTable` (see [Writing Table Literals](sources/table-union.html#writing-table-literals)). |
+| `NOT_A_REFERENCE` | reference a source, a static source holds a hard-coded table | Anything but a source reference in a field listed in [Source References](#source-references). |
 | `TABLE_INTERPOLATED` | interpolate a text | A table referenced in an interpolated field. |
 | `UNRESOLVED_REFERENCE` | reference an existing source | A reference to a source the connector does not have. |
-| `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` or `json2csv` compute type (rename it `json2Table`), the `parsingMode` property of a `json2Table` compute, the `input` property of an `awk` compute and the `inputFormat` property of an `awk` source (remove them). |
+| `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` or `json2csv` compute type (rename it `json2Table`), the `parsingMode` property of a `json2Table` compute, the `input`, `keep`, `exclude`, `separators` and `selectColumns` properties of an `awk` compute, and the `inputFormat` and `separators` properties of an `awk` source (remove them). See [Legacy and Compatibility](legacy-and-compatibility.html). |
 
 Each finding is logged at ERROR when the connector loads, and the load error lists every finding. The message names the rule, the source, the location, the expected and actual types, and the hint:
 
