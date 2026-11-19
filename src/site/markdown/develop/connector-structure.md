@@ -132,7 +132,7 @@ Connector pipelines are table-based end to end.
 
 - A source typically outputs rows and columns. Some sources (`commandLine`, `http`, `file`, `ipmi`, `awk`) output text, which a compute turns into a table (see the [content types](computes/index.html#content-types)).
 - Computes generally transform rows/columns.
-- Mapping expects a table and uses column references (`$1`, `$2`, ...). The exception is the simple mapping, without `source`: one instance from constants and texts (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)).
+- Mapping expects a table and uses column references (`$1`, `$2`, ...). The exception is the simple mapping, without `source`: one instance whose values read no column (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)).
 
 Internally, a table is represented as `List<List<String>>`. The example below shows the same data in its internal form and as a logical table:
 

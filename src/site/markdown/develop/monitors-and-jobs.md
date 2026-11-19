@@ -192,7 +192,7 @@ Because the run is already bound to one instance, the mapping does not need to r
 
 ## The Simple Mapping
 
-A mapping without `source` is the simple mapping: it reads no table and maps exactly one monitor instance at each run of its job. In a `discovery` or a `simple` job, it creates that instance: exactly one, not zero, not two. In a `collect` job, it creates nothing: it sets the metrics of one existing instance (see [Identity of the Instance](#identity-of-the-instance)). There is no keyword: leaving out `mapping.source` is enough. Use it for a component that the resource has once, whose values come from sources that end in a text (see [Strict Content Types](design-principles.html#strict-content-types)), with no table to build.
+A mapping without `source` is the simple mapping: it reads no table and maps a single monitor instance at each run of its job. In a `discovery` or a `simple` job, it creates that instance: exactly one, not zero, not two. In a `collect` job, it creates nothing: it sets the metrics of the existing instance it targets, and of none when no discovered instance matches (see [Identity of the Instance](#identity-of-the-instance)). There is no keyword: leaving out `mapping.source` is enough. Use it for a component that the resource has once, whose values come from sources that end in a text (see [Strict Content Types](design-principles.html#strict-content-types)), with no table to build.
 
 ```yaml
 monitors:
@@ -213,7 +213,7 @@ monitors:
 
 It works in every job: `simple`, `discovery` and `collect` (`monoInstance` and `multiInstance`).
 
-- Each value is a constant or a `${source::<text source>}` reference, resolved when the job runs. A simple mapping has no row, so `$1` has no meaning.
+- A value is written like any mapping value that reads no column: a constant, a `${source::<text source>}` reference, a text that holds references (`Settings of ${source::vendor}`), or a function on them (`boolean(${source::flag})`). References are resolved when the job runs. A simple mapping has no row, so `$1` has no meaning. Only the key attributes are restricted to plain constants (see [Identity of the Instance](#identity-of-the-instance)).
 - A value that is exactly one `${source::...}` reference is the text of that source as is: it is not read as mapping syntax. A device text such as `Refresh rate(Hz)`, `costs $15` or `$3` stays what it is. This holds in every mapping, with or without `source`. A value that mixes a reference with other characters (`Settings of ${source::vendor}`) is interpolated first, then read like any other mapping value.
 
 ### Identity of the Instance
@@ -317,7 +317,7 @@ Use `removalDelay` only when no inventory exists: entities defined by their acti
 | Property | Jobs | Required | Description |
 | --- | --- | --- | --- |
 | `sources` | all | No | Named sources forming the job's table pipeline. See [Sources](sources/index.html). A [simple mapping](#the-simple-mapping) whose values are all constants needs none. |
-| `mapping` | all | Yes | Turns the table of its `source` into instances, attributes, and metrics, or maps exactly one instance when it has no `source` ([The Simple Mapping](#the-simple-mapping)). See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
+| `mapping` | all | Yes | Turns the table of its `source` into instances, attributes, and metrics, or maps a single instance when it has no `source` ([The Simple Mapping](#the-simple-mapping)). See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
 | `type` | `simple`, `collect` | No | `multiInstance` or `monoInstance`. When omitted on a `collect` job, defaults to `monoInstance` — declare it explicitly in new connectors. |
 | `executionOrder` | all | No | Array of source names forcing a specific order. By default the engine runs a job's sources sequentially, ordered by their `${source::...}` dependencies; use `executionOrder` only when a dependency is invisible to the engine, and list **every** source of the job. |
 

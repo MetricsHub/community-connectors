@@ -24,7 +24,7 @@ mapping:
     hw.fan.speed: $4
 ```
 
-`source` is optional. A mapping without `source` is the simple mapping: it reads no table and maps exactly one instance (it creates it in a `discovery` or `simple` job, and sets the metrics of an existing one in a `collect`), whose values are constants and `${source::...}` references to sources that end in a text. See [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping).
+`source` is optional. A mapping without `source` is the simple mapping: it reads no table and maps a single instance (it creates it in a `discovery` or `simple` job, and sets the metrics of an existing one in a `collect`), whose values read no column: constants, `${source::...}` references to sources that end in a text, and functions on them. See [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping).
 
 ## From Table Rows to OpenTelemetry Resources
 
@@ -39,7 +39,7 @@ For a `multiInstance` monitor, each row of that table is treated as one instance
 ## One Row = One Monitor Instance
 
 A `mapping.source` must resolve to a source table.
-For multi-instance jobs, **each row creates one instance** of the monitor, and that instance is exported as one OpenTelemetry Resource. A mapping without `source` has no row: it maps exactly one instance (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)).
+For multi-instance jobs, **each row creates one instance** of the monitor, and that instance is exported as one OpenTelemetry Resource. A mapping without `source` has no row: it maps a single instance (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)).
 
 Example input table:
 
@@ -76,7 +76,7 @@ The converse also holds: when a trusted run of a `discovery` or `simple` job no 
 
 | Property | Purpose |
 | --- | --- |
-| `source` | Table used as mapping input, one instance per row. Without it, the mapping maps exactly one instance (the simple mapping). |
+| `source` | Table used as mapping input, one instance per row. Without it, the mapping maps a single instance (the simple mapping). |
 | `attributes` | Resource attributes exported on the OpenTelemetry Resource. |
 | `metrics` | Metric expressions and values attached to that Resource. |
 | `conditionalCollection` | Gate collection when key value is empty/invalid. |
