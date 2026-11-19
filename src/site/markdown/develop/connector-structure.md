@@ -130,7 +130,7 @@ See [Monitors and Jobs](monitors-and-jobs.html) for the complete job model: `dis
 
 Connector pipelines are table-based end to end.
 
-- A source typically outputs rows and columns. Some sources (`commandLine`, `http`, `file`, `ipmi`, `awk`) output text, which a compute turns into a table (see the [content types](computes/index.html#content-types)).
+- A source typically outputs rows and columns. Some sources (`commandLine`, `http`, `file`, `ipmi`, `snmpGet`, `awk`) output text, which a compute turns into a table (see the [content types](computes/index.html#content-types)).
 - Computes generally transform rows/columns.
 - Mapping expects a table and uses column references (`$1`, `$2`, ...).
 
