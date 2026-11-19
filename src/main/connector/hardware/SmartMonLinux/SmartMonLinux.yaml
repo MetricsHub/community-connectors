@@ -51,12 +51,9 @@ monitors:
           from: "${source::beforeAll.smartctlAll}"
           computes:
           - type: awk
-            # Output: deviceID; vendor; serialNumber; extraOptions
+            # Output: deviceID; vendor; serialNumber; extraOptions (no virtual disk)
             script: "${file::smartctl_inventory.awk}"
             output: table
-          - type: excludeMatchingLines
-            column: 2
-            regExp: "[Vv]irtual"
       mapping:
         # InstanceTable = Source(1)
         source: "${source::source(1)}"
@@ -75,15 +72,12 @@ monitors:
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}"
           computes:
-          # Process smartctl's output through awk physical_disk_smart_health.awk
-          # SMARTstatus
+          # Process smartctl's output through awk physical_disk_smart_health.awk, which prints the SMARTstatus twice:
+          # the first copy becomes the join key, the second the PredictedFailure value
+          # SMARTstatus;SMARTstatus
           - type: awk
             script: "${file::physical_disk_smart_health.awk}"
             output: table
-            # Duplicate the SMARTstatus: the first copy becomes the join key, the second the PredictedFailure value
-            # SMARTstatus;SMARTstatus
-          - type: duplicateColumn
-            column: 1
             # 1;SMARTstatus
           - type: translate
             column: 1
