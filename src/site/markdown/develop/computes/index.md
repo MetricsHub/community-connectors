@@ -51,7 +51,7 @@ A source that returns nothing, or fails, gives an empty result of its own type: 
 
 ## Awk Or Computes
 
-One compute that does what the source needs stays a compute. When a source needs two or more consecutive computes that AWK expresses directly (`add`, `subtract`, `multiply`, `divide`, `duplicateColumn`, `insertColumn`, `keepColumns`, `append`, `prepend`, `replace`, `keepOnlyMatchingLines`, `excludeMatchingLines`, `head`, or an `awk` next to them), write one [awk](./awk.html) compute with `output: table` instead: the whole transformation reads in one place.
+One compute that does what the source needs stays a compute. When a source needs two or more consecutive computes that AWK expresses directly (`add`, `subtract`, `multiply`, `divide`, `duplicateColumn`, `insertColumn`, `keepColumns`, `append`, `prepend`, `replace`, `substring`, `keepOnlyMatchingLines`, `excludeMatchingLines`, `head`, or an `awk` next to them), write one [awk](./awk.html) compute with `output: table` instead: the whole transformation reads in one place.
 
 These stay computes, and end the run: the computes before them and after them are written as separate scripts.
 

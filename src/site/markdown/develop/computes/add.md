@@ -55,16 +55,16 @@ With `column: 2` and `value: $4`, column 2 of each row becomes `column 2 + colum
 >   | disk0 | 17 | 3 | 5 |
 >   | disk1 | 0 | 1 | 0 |
 
-The operand column (here column 4) is left untouched; drop it later with `keepColumns` if it is no
-longer needed.
+The operand column (here column 4) is left untouched. When the source must also drop it, one
+[awk](./awk.html) compute does both (see [Awk Or Computes](./index.html#awk-or-computes)).
 
 ## Recommended Pattern
 
 - Use `value: $n` to sum two counter columns of the same row into a single metric column.
 - Comment the expected column layout above the compute (`# DeviceId;TotalErrors;Wear;WriteErrors`)
   so later index changes are easy to review.
-- Combine with `multiply` `value: -1` when you need `constant - column` (negate, then `add` the
-  constant), as no reversed-operand subtract exists.
+- For `constant - column`, write one [awk](./awk.html) compute (`$3 = 100 - $3`), as no
+  reversed-operand subtract exists.
 - Add derived columns via the source query (select a field twice) rather than overwriting a value
   you still need downstream.
 
@@ -78,9 +78,13 @@ longer needed.
 
 ## Community Examples
 
-- [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
-- [MIB2-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2-header/MIB2-header.yaml)
+No community connector uses `add` alone: each sums its counters in the `awk` compute that does the rest of the work of its source (see [Awk Or Computes](./index.html#awk-or-computes)). A source that only needs the sum writes one `add`:
 
-From `MIB2-header.yaml`, accumulating the multicast and broadcast packet counters into the unicast packets column, included directly from the connector source:
-
-<!-- MACRO{snippet|id=addPacketCountersCompute|file=src/main/connector/hardware/MIB2-header/MIB2-header.yaml} -->
+```yaml
+computes:
+# PortID;Description;ReceivedUnicastPackets;ReceivedNonUnicastPackets
+# ReceivedPackets = ReceivedUnicastPackets + ReceivedNonUnicastPackets
+- type: add
+  column: 3
+  value: $4
+```

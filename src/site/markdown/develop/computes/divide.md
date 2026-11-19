@@ -61,9 +61,10 @@ With `column: 3` and `value: 10000000`, column 3 of each row is divided by 10,00
 
 - Comment both the source unit and the target unit next to the compute
   (`# unit = 100-nanosecond intervals`, `# divide by 10000000 to get seconds`).
-- For utilization metrics, duplicate the usage column first (`duplicateColumn`), then `divide` the
-  copy by the capacity column with `value: $n` — keeping the raw usage for the usage metric.
-- Chain one `divide` per column when the same divisor applies to several columns of the row.
+- For a utilization metric that also needs the raw usage, select the usage twice in the source query
+  and `divide` one copy by the capacity column with `value: $n`. When the source needs more than
+  that (a `duplicateColumn` first, or several columns divided by the same capacity), write one
+  [awk](./awk.html) compute that does it all (see [Awk Or Computes](./index.html#awk-or-computes)).
 
 ## Common Mistakes
 
@@ -77,9 +78,9 @@ With `column: 3` and `value: 10000000`, column 3 of each row is divided by 10,00
 
 ## Community Examples
 
-- [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 - [Cassandra](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/Cassandra/Cassandra.yaml)
+- [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 
-From `Windows.yaml`, computing memory utilization ratios against the total held in column 7, included directly from the connector source:
+From `Cassandra.yaml`, converting the uptime of the instance from milliseconds into seconds, included directly from the connector source:
 
-<!-- MACRO{snippet|id=divideByTotalMemoryCompute|file=src/main/connector/system/Windows/Windows.yaml} -->
+<!-- MACRO{snippet|id=divideUptimeCompute|file=src/main/connector/database/Cassandra/Cassandra.yaml} -->
