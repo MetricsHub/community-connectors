@@ -42,6 +42,7 @@ Perform status and unit normalization before mapping:
 - `convert` for format conversions
 - `divide` / `multiply` for units
 - `keepOnlyMatchingLines` / `excludeMatchingLines` early to reduce volume
+- one `awk` compute with `output: table` when a source needs two or more consecutive computes that AWK expresses directly (column edits, arithmetic): a line filter, a `translate`, `arrayTranslate` or `perBitTranslation` stays a compute and ends the run, and the script does the math directly, a value the device does not report counting as 0 (see [Awk Or Computes](computes/index.html#awk-or-computes))
 
 ## 5. Make Mapping Boring
 
@@ -195,6 +196,7 @@ The monitors defined in the configuration of a resource are checked too, with `(
 
 - many scalar queries where one table query would do
 - long replacement chains instead of translation tables
+- a run of computes that one `awk` script writes
 - IDs derived from mutable names
 - hidden dependency on locale-specific output text
 - filtering the rows that create monitors on a state or a value

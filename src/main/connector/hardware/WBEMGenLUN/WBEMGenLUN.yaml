@@ -126,14 +126,7 @@ monitors:
           leftKeyColumn: 10
           rightKeyColumn: 2
           computes:
-            # Trim down to what we need
-            # FROM        1            #   2            3            #         4            # 5            #   6            # 7            #       8            #    9          10           11             12
-            # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;Win32_DiskDrive;PhysicalDiskName;PnPAddress;LunId(WithDevice);PnPAddress;
-            # TO
-            # PartitionLetter;PartitionName;LunId(WithDevice);
-          - type: keepColumns
-            columnNumbers: 2,3,11
-            # Take the list of volumes and associated them to the MPIO disk.
+            # Take the list of volumes (PartitionLetter, PartitionName, LunId(WithDevice)) and associated them to the MPIO disk.
             # MPIOID;VolumeList;
           - type: awk
             script: ${file::lunAssociation2.awk}
@@ -148,16 +141,12 @@ monitors:
           rightKeyColumn: 1
           defaultRightLine: [ "", No Volumes ]
           computes:
-            # Right concat " - " to the first MPIO ID
-            # MPIOID;LunPathCount;NAAID;MPIOID;VolumeList;
-          - type: append
-            column: 1
-            value: ' - '
-            # Right concat the volume list to the first MPIO ID
+            # Right concat " - " and the volume list to the first MPIO ID
             # MPIOID-VolumeList;LunPathCount;NAAID;MPIOID;VolumeList;
-          - type: append
-            column: 1
-            value: $5
+          - type: awk
+            output: table
+            script: |
+              { print $1 " - " $5, $2, $3, $4, $5 }
       mapping:
         # InstanceTable = Source(1)
         # MPIOID-VolumeList;LunPathCount;NAAID;MPIOID;VolumeList;

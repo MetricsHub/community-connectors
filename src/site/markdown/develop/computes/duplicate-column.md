@@ -9,7 +9,7 @@ description: The duplicateColumn compute inserts a copy of a column immediately 
 
 Use `duplicateColumn` when the same raw value must feed two different transformations or two different `mapping` fields. The compute inserts an exact copy of the column **immediately after the original**, so the copy sits at index `column + 1` and every column that was to the right shifts one position right.
 
-The canonical patterns are: duplicate a raw status column so one copy can be run through `translate` while the other is kept as human-readable status information, and duplicate a numeric column so one copy can be turned into a utilization ratio (`divide`, `subtract`) while the other keeps the absolute value.
+The canonical pattern is: duplicate a raw status column so one copy can be run through `translate` while the other is kept as human-readable status information. A numeric column copied so that one copy becomes a utilization ratio is a run of two computes (`duplicateColumn`, then `divide`): write one [awk](./awk.html) compute instead (see [Awk Or Computes](./index.html#awk-or-computes)).
 
 ## Syntax
 
@@ -58,9 +58,9 @@ With `column: 2`:
 
 ## Recommended Pattern
 
-- Duplicate before destructive computes (`translate`, `divide`, `substring`, `extractPropertyFromWbemPath`) so the raw value survives for another `mapping` field.
+- Duplicate before a compute that changes the column and ends a run (`translate`, `extract`, `extractPropertyFromWbemPath`) so the raw value survives for another `mapping` field. Before an arithmetic compute or a `substring`, the copy and the change go into one `awk` compute.
 - Immediately follow the duplication with a `# Column1;Column2;...` comment reflecting the new layout; the shifted indexes are the main source of errors.
-- When several copies are needed, apply successive `duplicateColumn` computes and re-check indexes after each one (duplicating column 3 then column 5 in the new layout duplicates two different original columns).
+- When several copies are needed, write one `awk` compute that prints each column where it goes (`print $1, $2, $2, $3, $3`) rather than successive `duplicateColumn` computes, whose indexes shift after each one.
 
 ## Common Mistakes
 
@@ -70,10 +70,9 @@ With `column: 2`:
 
 ## Community Examples
 
-- [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 - [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)
-- [DiskPart](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/DiskPart/DiskPart.yaml)
+- [WBEMGenNetwork](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WBEMGenNetwork/WBEMGenNetwork.yaml)
 
-From Windows (duplicating the allocated pagefile size so one copy can be turned into free space), included directly from the connector source:
+From `GenBatteryNT.yaml` (duplicating the status so that the next computes translate one copy into a status and the other into a status information), included directly from the connector source:
 
-<!-- MACRO{snippet|id=duplicatePagefileColumnCompute|file=src/main/connector/system/Windows/Windows.yaml} -->
+<!-- MACRO{snippet|id=duplicateStatusColumnCompute|file=src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml} -->

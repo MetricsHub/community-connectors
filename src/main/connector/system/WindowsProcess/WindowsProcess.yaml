@@ -65,12 +65,11 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 10
             regExp: ${var::matchCommand}
-          - type: add
-            column: 13
-            value: $14
-          - type: divide
-            column: 13 #  unit = 100-nanosecond intervals
-            value: 10000000 # divide by 10000000 to get a result in seconds
+          # KernelModeTime + UserModeTime, in 100-nanosecond intervals: divide by 10000000 to get a result in seconds
+          - type: awk
+            output: table
+            script: |
+              { $13 = ($13 + $14) / 10000000; print }
         sessionProcessQuery:
           type: wmi
           namespace: root\CIMv2
