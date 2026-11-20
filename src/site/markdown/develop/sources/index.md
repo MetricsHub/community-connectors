@@ -7,7 +7,7 @@ description: How source execution works in MetricsHub connectors and full source
 
 ## What A Source Produces
 
-In MetricsHub connectors, a source produces a **table**, or a text that its computes turn into a table (`commandLine`, `http`, `file`, `ipmi`, `awk`, `textUnion`, see the [content types](../computes/index.html#content-types)). Internally, a table is a list of rows, where each row is a list of strings.
+In MetricsHub connectors, a source produces a **table**, or a text that its computes turn into a table (`commandLine`, `http`, `file`, `ipmi`, `snmpGet`, `awk`, `textUnion`, see the [content types](../computes/index.html#content-types)). Internally, a table is a list of rows, where each row is a list of strings.
 
 Most compute operations modify one table column at a time, which is why they usually require `column:`.
 
@@ -119,7 +119,7 @@ Entries run one at a time by default. Set `maxParallel` when each entry is slow 
 - `json_array_extended` — like `json_array`, but merges the driving row's own columns into each JSON entry, so downstream computes can correlate result and origin.
 - custom object `{ concatStart: "...", concatEnd: "..." }` — wrap each entry's raw result; both wrappers may themselves use `$n`.
 
-With `list`, the result has the type of the source: a text for `http` or `commandLine` (the entries' texts joined with a line feed), a table for `snmpGet`, `wmi`, `sql`, ... (the entries' rows). With `json_array`, `json_array_extended` and a custom object, the result is text: an entry that returns a table contributes its text as [toText](../computes/to-text.html) writes it (see [Serialization Details](#serialization-details-you-must-know)).
+With `list`, the result has the type of the source: a text for `http`, `commandLine` or `snmpGet` (the entries' texts joined with a line feed), a table for `snmpTable`, `wmi`, `sql`, ... (the entries' rows). With `json_array`, `json_array_extended` and a custom object, the result is text: an entry that returns a table contributes its text as [toText](../computes/to-text.html) writes it (see [Serialization Details](#serialization-details-you-must-know)).
 
 > [!WARNING]
 > A failed entry adds nothing to the result: `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source looks answered, so when it feeds the mapping of a `discovery` or `simple` job, the run is trusted and the instances of the failed entity are removed (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Join the result back onto the inventory with a [`tableJoin`](./table-join.html) and a `defaultRightLine`, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) when no inventory exists.
