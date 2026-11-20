@@ -93,13 +93,13 @@ monitors:
           - type: translate
             column: 6
             translationTable: ${translation::PortLinkStatusInformationTranslationTable}
-            # Convert bits/sec into Mbps, add up ReceivedUnicastPackets and ReceivedNonUnicastPackets,
+            # Add up ReceivedUnicastPackets and ReceivedNonUnicastPackets,
             # TransmittedUnicastPackets and TransmittedNonUnicastPackets, ReceivedErrors and TransmittedErrors
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
+            # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           - type: awk
             output: table
             script: |
-              { print $1, $2, $3 / 1000000, $4, $5, $6, $7, $8 + $9, $9, $10 + $14, $11, $12 + $13, $13, $14, $15, $16 }
+              { print $1, $2, $3, $4, $5, $6, $7, $8 + $9, $9, $10 + $14, $11, $12 + $13, $13, $14, $15, $16 }
         source(2):
           # Source(2) = ifMIBObjects SNMP Table
           # PortID;SpeedMBs;ReceivedBytes64;ReceivedUnicastPackets64;ifHCInMulticastPkts64;ifHCInBroadcastPkts64;TransmittedBytes64;TransmittedPackets64;ifHCOutMulticastPkts;ifHCOutBroadcastPkts;
@@ -118,22 +118,13 @@ monitors:
               { print $1, $2, $3, $4, $7, $8 }
         source(3):
           # Source(3) = Table Joint of (1) and (2)
-          # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+          # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableJoin
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
           defaultRightLine: [ "", "", "", "", "", "" ]
-          computes:
-            # Replace a blank ifMIBObjects SpeedMBS with the ifTable value.
-            # This will use the old 32^2 limited value of link bps speed if a Mbps value is not available
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;
-          - type: awk
-            output: table
-            script: |
-              $18 == "" { $18 = $3 }
-              { print }
         source(4):
           # Make a copy of Source(3)
           type: copy
@@ -141,7 +132,7 @@ monitors:
           computes:
             # Keep only interfaces with 64bit counters
             #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20   #21               #22
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+            # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           - type: keepOnlyMatchingLines
             column: 20
             regExp: .
@@ -157,13 +148,13 @@ monitors:
           computes:
             # Exclude interfaces with 64bit counters
             #   1        2           3           4            # 5            # 6          7            # 8            # 9            #              10        11             12            #    13            #             # 14            #  15   16         17            #  18            #     19            #    20   #21               #22
-            # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+            # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           - type: excludeMatchingLines
             column: 22
             regExp: .
         source(6):
           # Union 32 and 64 bit tables
-          # PortID;Description;SpeedMBps;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
+          # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableUnion
           tables:
           - ${source::source(4)}
@@ -176,7 +167,8 @@ monitors:
         metrics:
           hw.status{hw.type="network"}: $4
           hw.network.up: legacyLinkStatus($6)
-          hw.network.bandwidth.limit: megaBit2Byte($18)
+          # ifHighSpeed (SpeedMBs, Mbit/s), or else the 32-bit ifSpeed (Speed, bit/s), in bytes/s; neither reported: no limit
+          hw.network.bandwidth.limit: '${awk::$18 != "" ? $18 * 125000 : ($3 == "" ? "" : $3 / 8)}'
           hw.errors{hw.type="network"}: $10
           hw.network.packets{direction="receive"}: $8
           hw.network.packets{direction="transmit"}: $12
