@@ -3,8 +3,8 @@ BEGIN {
 }
 
 {
-	# Convert Speed from Gbps to Mbps (unchanged when blank or not a number)
-	if ($4 + 0 == $4) $4 = $4 * 1000
+	# Convert Speed from Gbps to Mbps: a speed the port does not report stays empty, as it is the bandwidth attribute
+	if ($4 != "") $4 = $4 * 1000
 	# Remove the array pipes from the port WWN
 	gsub(/[|]/, ".", $5)
 	n = split($Column, PortWWN, "|")

@@ -46,14 +46,11 @@ monitors:
             column: 1
             subSeparators: ","
             subColumn: 2
-          # Convert 100ns to s (unchanged when blank or not a number)
+          # Convert 100ns to s
           - type: awk
             output: table
             script: |
-              {
-                for (i = 2; i <= 4; i++) if ($i + 0 == $i) $i = $i / 10000000
-                print $1, $2, $3, $4
-              }
+              { print $1, $2 / 10000000, $3 / 10000000, $4 / 10000000 }
       mapping:
         source: ${source::processorInformation}
         attributes:
@@ -92,18 +89,15 @@ monitors:
           - type: append
             column: 5
             value: ${source::totalMemory}
-          # Total into bytes, Used = Total - Free, and the utilizations (an operand blank or not a number, or a Total of 0, leaves the cell unchanged)
+          # Total into bytes, Used = Total - Free, and the utilizations
           # Free;Free%;Cached;Cached%;Used;Used%;Total
           - type: awk
             output: table
             script: |
-              function ratio(x) { return x + 0 == x && total + 0 == total && total + 0 != 0 ? x / total : x }
               {
-                total = $5
-                if (total + 0 == total) total = total * 1024
-                used = total
-                if (used + 0 == used && $1 + 0 == $1) used = used - $1
-                print $1, ratio($2), $3, ratio($4), used, ratio(used), total
+                total = $5 * 1024
+                used = total - $1
+                print $1, $2 / total, $3, $4 / total, used, used / total, total
               }
       mapping:
         source: ${source::calculatedMemoryInformation}
@@ -128,19 +122,11 @@ monitors:
           namespace: root\CIMv2
           query: SELECT DeviceID,FreeSpace,FreeSpace,Size,Size,VolumeName,FileSystem FROM Win32_LogicalDisk WHERE DriveType = 3
           computes:
-          # UsedSpace = Size - FreeSpace, and the utilizations (an operand blank or not a number, or a Size of 0, leaves the cell unchanged)
+          # UsedSpace = Size - FreeSpace, and the utilizations
           - type: awk
             output: table
             script: |
-              {
-                used = $4
-                if (used + 0 == used && $2 + 0 == $2) used = used - $2
-                free = $3
-                if (free + 0 == free && $5 + 0 == $5 && $5 + 0 != 0) free = free / $5
-                usedUtilization = used
-                if (used + 0 == used && $5 + 0 == $5 && $5 + 0 != 0) usedUtilization = used / $5
-                print $1, $2, free, used, usedUtilization, $5, $6, $7
-              }
+              { print $1, $2, $3 / $5, $4 - $2, ($4 - $2) / $5, $5, $6, $7 }
       mapping:
         source: ${source::fileSystemInformation}
         attributes:
@@ -166,17 +152,13 @@ monitors:
           query: SELECT Name,AllocatedBaseSize,CurrentUsage FROM Win32_PageFileUsage
           computes:
           # Free = AllocatedBaseSize - Used, the utilizations, and the sizes from MB into bytes
-          # (an operand blank or not a number, or an AllocatedBaseSize of 0, leaves the cell unchanged)
           # PageFileName;AllocatedBaseSize;Free;FreeUtilization;Used;UsedUtilization
           - type: awk
             output: table
             script: |
-              function ratio(x) { return x + 0 == x && $2 + 0 == $2 && $2 + 0 != 0 ? x / $2 : x }
-              function bytes(x) { return x + 0 == x ? x * 1048576 : x }
               {
-                free = $2
-                if (free + 0 == free && $3 + 0 == $3) free = free - $3
-                print $1, bytes($2), bytes(free), ratio(free), bytes($3), ratio($3)
+                free = $2 - $3
+                print $1, $2 * 1048576, free * 1048576, free / $2, $3 * 1048576, $3 / $2
               }
 
       mapping:
@@ -283,14 +265,11 @@ monitors:
           # *DiskTime values in Win32_PerfRawData_PerfDisk_PhysicalDisk are expressed in fraction of seconds
           # Fraction is defined in Frequency_PerfTime
           # We need to divide the values (PercentDiskTime, PercentDiskReadTime, PercentDiskWriteTime) by Frequency_PerfTime
-          # to convert to seconds (unchanged when an operand is blank or not a number, or the frequency is 0)
+          # to convert to seconds
           - type: awk
             output: table
             script: |
-              {
-                for (i = 6; i <= 8; i++) if ($i + 0 == $i && $9 + 0 == $9 && $9 + 0 != 0) $i = $i / $9
-                print $1, $2, $3, $4, $5, $6, $7, $8, $9
-              }
+              { print $1, $2, $3, $4, $5, $6 / $9, $7 / $9, $8 / $9, $9 }
       mapping:
         source: ${source::physicalDiskInformation}
         attributes:

@@ -266,16 +266,14 @@ monitors:
           namespace: root\Microsoft\Windows\Storage
           query: SELECT DeviceId,ReadErrorsTotal,Wear,WriteErrorsTotal FROM ASSOCIATORS OF {$1} WHERE ResultClass = MSFT_StorageReliabilityCounter
           computes:
-            # TotalErrors = Read + Write, and EnduranceRemaining = 100 - Wear (a blank or non-numeric operand leaves the cell unchanged)
+            # TotalErrors = Read + Write, and EnduranceRemaining = 100 - Wear. A Wear the disk does not report stays empty:
+            # 100 - 0 would report a disk with all its endurance left
             # DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
           - type: awk
             output: table
             script: |
-              {
-                if ($2 + 0 == $2 && $4 + 0 == $4) $2 = $2 + $4
-                if ($3 + 0 == $3) $3 = 100 - $3
-                print
-              }
+              $3 != "" { $3 = 100 - $3 }
+              { print $1, $2 + $4, $3, $4 }
         source(3):
           # Source(3) = Table join of Source(1) and Source(2)
           # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;

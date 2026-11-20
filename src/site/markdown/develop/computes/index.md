@@ -80,17 +80,12 @@ Write:
 - type: awk
   output: table
   script: |
-    {
-      if ($8 + 0 == $8 && $7 + 0 == $7) $8 = $8 - $7
-      if ($6 + 0 == $6 && $8 + 0 == $8 && $8 + 0 != 0) $6 = $6 / $8
-      if ($6 + 0 == $6) $6 = $6 * 100
-      print
-    }
+    { $8 = $8 - $7; $6 = $6 / $8 * 100; print }
 ```
 
 The script takes care of what the computes do on their own:
 
-- An arithmetic compute leaves a cell as it is when an operand is empty or not a number, or when it would divide by 0. AWK computes with such an operand anyway (as 0, or as the number it starts with), and a division by 0 gives `inf`: test the operands before computing, as above. `x + 0 == x` is true for a number read from a cell (`12`, `1.50`, ` 7 `, `1e3`) and false for an empty or non-numeric cell (`abc`, `0x1A`, `inf`), when `x` is a field or a variable assigned from one, or the result of a computation. It is wrong on a string built by concatenation or changed by `sub`, `gsub` or `substr`: test the field before changing it. It is also true for a field beyond the end of a shorter row, which counts as 0.
+- An arithmetic compute leaves an empty or non-numeric cell as it is, where AWK computes with it as 0. Do the math directly, without testing the operands: a value the device does not report becomes 0, which is right for a counter, a size, a sum, a rate or a capacity. A division by 0 gives `inf`, which MetricsHub does not collect, as an empty cell. Test a value (`$6 != "" { $6 = $6 * 1000 }`) only where its 0 is wrong in a way that matters, and that value only: a metric that the hardware rules judge (a fan speed of 0 is a failed fan, a voltage of 0 crosses its low limit), a value that derives a wrong one from it (`100 - $3` for an unreported wear is a disk with all its endurance left), or an attribute, an id, a join key, or the input of a line filter or a `translate`.
 - With `output: table`, `print` writes a computed number that is not a whole number with 15 significant digits (MetricsHub sets `OFMT` to `%.15g`): a computed 0.3 prints `0.3`. A whole number prints without decimals (`8000`, where `multiply` writes `8000.0`), and a number concatenated into a text uses `CONVFMT` (`%.6g`): format it with `sprintf` there.
 - `replace` replaces every occurrence of a literal text, and `gsub` takes a regular expression: escape its special characters (`gsub(/[|]/, ".", $5)`).
 - `print $1, $2, $3` writes three cells, empty ones for a shorter row, and `print` without argument writes the row as it is.

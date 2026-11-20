@@ -430,16 +430,13 @@ monitors:
           - type: translate
             column: 4
             translationTable: "${translation::StatusInformationTranslationTable}"
-          # Get RPM range and convert to Speed Percentage (unchanged when an operand is blank or not a number, or the range is 0)
+          # Convert the Reading into a Speed Percentage of the RPM range. A Reading the fan does not report stays empty:
+          # a speed ratio of 0 would be a failed fan
           - type: awk
             output: table
             script: |
-              {
-                if ($8 + 0 == $8 && $7 + 0 == $7) $8 = $8 - $7
-                if ($6 + 0 == $6 && $8 + 0 == $8 && $8 + 0 != 0) $6 = $6 / $8
-                if ($6 + 0 == $6) $6 = $6 * 100
-                print
-              }
+              $6 != "" { $6 = $6 / ($8 - $7) * 100 }
+              { print }
       mapping:
         # Fan Value Table
         # JSONID;MemberId;PatrolStatus;StatusInformation;Reading;MinReadingRange;MaxReadingRange;
@@ -800,12 +797,12 @@ monitors:
           - type: translate
             column: 4
             translationTable: "${translation::StatusInformationTranslationTable}"
-          # Volts into mV (unchanged when blank or not a number)
+          # Volts into mV
           # A sensor that is not Enabled (StandbyOffline while the host is off, ...) has no valid reading: report its state instead
           - type: awk
             output: table
             script: |
-              $5 + 0 == $5 { $5 = $5 * 1000 }
+              { $5 = $5 * 1000 }
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
               { print $1, $2, $3, $4, $5, $6 }
       mapping:

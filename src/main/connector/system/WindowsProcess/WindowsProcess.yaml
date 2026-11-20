@@ -66,15 +66,10 @@ monitors:
             column: 10
             regExp: ${var::matchCommand}
           # KernelModeTime + UserModeTime, in 100-nanosecond intervals: divide by 10000000 to get a result in seconds
-          # (unchanged when an operand is blank or not a number)
           - type: awk
             output: table
             script: |
-              {
-                if ($13 + 0 == $13 && $14 + 0 == $14) $13 = $13 + $14
-                if ($13 + 0 == $13) $13 = $13 / 10000000
-                print
-              }
+              { $13 = ($13 + $14) / 10000000; print }
         sessionProcessQuery:
           type: wmi
           namespace: root\CIMv2

@@ -272,13 +272,13 @@ monitors:
           computes:
           - type: awk
           # Replace Network interfaces with a negative value by an empty string.
-          # Convert speed from Mbps to bytes per second (unchanged when not a number)
+          # Convert speed from Mbps to bytes per second
           # Interface;SpeedBytesPerSecond
             script: |
               BEGIN { FS=";"; OFS=";" }
               /^##LINKSPEED##$/ { insec = 1; next }
               /^##[A-Z_]+##$/ { if (insec) exit; next }
-              insec { if ($2 == "" || ($2 + 0) == -1) print $1; else print $1, ($2 + 0 == $2 ? $2 * 125000 : $2) }
+              insec { if ($2 == "" || ($2 + 0) == -1) print $1; else print $1, $2 * 125000 }
             output: table
 
         # Now join the three sources together

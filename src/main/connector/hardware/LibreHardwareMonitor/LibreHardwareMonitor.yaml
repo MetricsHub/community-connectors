@@ -444,12 +444,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              {
-                size = $3
-                if (size + 0 == size && $6 + 0 == $6) size = size + $6
-                if (size + 0 == size) size = size * 1024
-                print $2, size, $6
-              }
+              { print $2, ($3 + $6) * 1024, $6 }
         source(6):
           # Source 1 : MemoryName
           # Source 6 : MemorySize
