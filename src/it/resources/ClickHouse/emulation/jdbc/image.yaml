@@ -1,0 +1,201 @@
+---
+image:
+- query: "SELECT count() AS is_clickhouse FROM system.build_options WHERE name = 'VERSION_FULL' AND value LIKE 'ClickHouse %';"
+  response: 08e9abf4-6dac-4d1f-bd90-f8f5730c6caf.csv
+- query: |
+    SELECT
+      currentDatabase() AS db_namespace, -- $1 retained to keep the leading column stable; deliberately not mapped
+      version(), hostName(), uptime(), -- $2-$4
+      (SELECT count() FROM system.databases WHERE name NOT IN ('system', 'information_schema', 'INFORMATION_SCHEMA')), -- $5
+      (SELECT maxIf(value, metric = 'TotalBytesOfMergeTreeTables') FROM system.asynchronous_metrics), -- $6
+      m.current_queries, m.tcp_connections, m.memory_usage, m.current_merges, m.readonly_replicas, m.replicated_fetches, m.replicated_sends, -- $7-$13
+      greatest(toInt64(e.queries) - toInt64(e.select_queries) - toInt64(e.insert_queries) - greatest(toInt64(e.failed_queries) - toInt64(e.failed_select_queries) - toInt64(e.failed_insert_queries), 0), 0), -- $14 other success
+      greatest(toInt64(e.failed_queries) - toInt64(e.failed_select_queries) - toInt64(e.failed_insert_queries), 0), -- $15 other failed
+      greatest(toInt64(e.select_queries) - toInt64(e.failed_select_queries), 0), e.failed_select_queries, -- $16-$17
+      greatest(toInt64(e.insert_queries) - toInt64(e.failed_insert_queries), 0), e.failed_insert_queries, -- $18-$19
+      e.selected_rows, e.inserted_rows, e.selected_bytes, e.inserted_bytes, e.network_receive_bytes, e.network_send_bytes, -- $20-$25
+      e.select_query_time_microseconds / 1000000.0, e.insert_query_time_microseconds / 1000000.0, e.other_query_time_microseconds / 1000000.0, -- $26-$28
+      s.memory_limit, greatest(toInt64(s.memory_limit) - toInt64(m.memory_usage), 0), m.merge_mutation_memory, -- $29-$31
+      m.background_merge_tasks, m.background_merge_size, m.background_fetch_tasks, m.background_fetch_size, m.background_distributed_tasks, m.background_distributed_size, -- $32-$37
+      m.keeper_sessions, m.keeper_requests, -- $38-$39
+      e.delayed_inserts, e.rejected_inserts, e.delayed_insert_milliseconds / 1000.0, -- $40-$42
+      e.distributed_delayed_inserts, e.distributed_rejected_inserts, e.distributed_delayed_insert_milliseconds / 1000.0, -- $43-$45
+      e.user_time_microseconds / 1000000.0, e.system_time_microseconds / 1000000.0, e.cpu_wait_microseconds / 1000000.0, e.io_wait_microseconds / 1000000.0, -- $46-$49
+      e.merge_time_milliseconds / 1000.0, e.keeper_hardware_exceptions, e.keeper_other_exceptions, e.keeper_wait_microseconds / 1000000.0, -- $50-$53
+      e.replicated_failed_fetches, e.replicated_data_loss, e.distributed_connection_failures, -- $54-$56
+      m.mark_cache_bytes, m.uncompressed_cache_bytes, m.query_cache_bytes, m.async_insert_queue_tasks, m.async_insert_queue_bytes, -- $57-$61
+      e.mark_cache_hits, e.mark_cache_misses, e.uncompressed_cache_hits, e.uncompressed_cache_misses, e.query_cache_hits, e.query_cache_misses, -- $62-$67
+      s.concurrent_queries_limit, s.connections_limit, toString(serverUUID()), m.open_files -- $68-$71
+    FROM (
+      SELECT
+        maxIf(value, metric = 'Query') AS current_queries,
+        maxIf(value, metric = 'TCPConnection') AS tcp_connections,
+        maxIf(value, metric = 'MemoryTracking') AS memory_usage,
+        maxIf(value, metric = 'Merge') AS current_merges,
+        maxIf(value, metric = 'ReadonlyReplica') AS readonly_replicas,
+        maxIf(value, metric = 'ReplicatedFetch') AS replicated_fetches,
+        maxIf(value, metric = 'ReplicatedSend') AS replicated_sends,
+        maxIf(value, metric = 'MergesMutationsMemoryTracking') AS merge_mutation_memory,
+        maxIf(value, metric = 'BackgroundMergesAndMutationsPoolTask') AS background_merge_tasks,
+        maxIf(value, metric = 'BackgroundMergesAndMutationsPoolSize') AS background_merge_size,
+        maxIf(value, metric = 'BackgroundFetchesPoolTask') AS background_fetch_tasks,
+        maxIf(value, metric = 'BackgroundFetchesPoolSize') AS background_fetch_size,
+        maxIf(value, metric = 'BackgroundDistributedSchedulePoolTask') AS background_distributed_tasks,
+        maxIf(value, metric = 'BackgroundDistributedSchedulePoolSize') AS background_distributed_size,
+        maxIf(value, metric = 'ZooKeeperSession') AS keeper_sessions,
+        maxIf(value, metric = 'ZooKeeperRequest') AS keeper_requests,
+        maxIf(value, metric = 'MarkCacheBytes') AS mark_cache_bytes,
+        maxIf(value, metric = 'UncompressedCacheBytes') AS uncompressed_cache_bytes,
+        maxIf(value, metric = 'QueryCacheBytes') AS query_cache_bytes,
+        maxIf(value, metric = 'AsynchronousInsertQueueSize') AS async_insert_queue_tasks,
+        maxIf(value, metric = 'AsynchronousInsertQueueBytes') AS async_insert_queue_bytes,
+        maxIf(value, metric = 'OpenFileForRead') + maxIf(value, metric = 'OpenFileForWrite') AS open_files
+      FROM system.metrics
+      WHERE metric IN ('Query','TCPConnection','MemoryTracking','Merge','ReadonlyReplica','ReplicatedFetch','ReplicatedSend','MergesMutationsMemoryTracking','BackgroundMergesAndMutationsPoolTask','BackgroundMergesAndMutationsPoolSize','BackgroundFetchesPoolTask','BackgroundFetchesPoolSize','BackgroundDistributedSchedulePoolTask','BackgroundDistributedSchedulePoolSize','ZooKeeperSession','ZooKeeperRequest','MarkCacheBytes','UncompressedCacheBytes','QueryCacheBytes','AsynchronousInsertQueueSize','AsynchronousInsertQueueBytes','OpenFileForRead','OpenFileForWrite')
+    ) AS m
+    CROSS JOIN (
+      SELECT
+        maxIf(value,event='Query') AS queries, maxIf(value,event='FailedQuery') AS failed_queries,
+        maxIf(value,event='SelectQuery') AS select_queries, maxIf(value,event='InsertQuery') AS insert_queries,
+        maxIf(value,event='FailedSelectQuery') AS failed_select_queries, maxIf(value,event='FailedInsertQuery') AS failed_insert_queries,
+        maxIf(value,event='SelectedRows') AS selected_rows, maxIf(value,event='InsertedRows') AS inserted_rows,
+        maxIf(value,event='SelectedBytes') AS selected_bytes, maxIf(value,event='InsertedBytes') AS inserted_bytes,
+        maxIf(value,event='NetworkReceiveBytes') AS network_receive_bytes, maxIf(value,event='NetworkSendBytes') AS network_send_bytes,
+        maxIf(value,event='SelectQueryTimeMicroseconds') AS select_query_time_microseconds,
+        maxIf(value,event='InsertQueryTimeMicroseconds') AS insert_query_time_microseconds,
+        maxIf(value,event='OtherQueryTimeMicroseconds') AS other_query_time_microseconds,
+        maxIf(value,event='DelayedInserts') AS delayed_inserts, maxIf(value,event='RejectedInserts') AS rejected_inserts,
+        maxIf(value,event='DelayedInsertsMilliseconds') AS delayed_insert_milliseconds,
+        maxIf(value,event='DistributedDelayedInserts') AS distributed_delayed_inserts,
+        maxIf(value,event='DistributedRejectedInserts') AS distributed_rejected_inserts,
+        maxIf(value,event='DistributedDelayedInsertsMilliseconds') AS distributed_delayed_insert_milliseconds,
+        maxIf(value,event='UserTimeMicroseconds') AS user_time_microseconds, maxIf(value,event='SystemTimeMicroseconds') AS system_time_microseconds,
+        maxIf(value,event='OSCPUWaitMicroseconds') AS cpu_wait_microseconds, maxIf(value,event='OSIOWaitMicroseconds') AS io_wait_microseconds,
+        maxIf(value,event='MergeTotalMilliseconds') AS merge_time_milliseconds,
+        maxIf(value,event='ZooKeeperHardwareExceptions') AS keeper_hardware_exceptions,
+        maxIf(value,event='ZooKeeperOtherExceptions') AS keeper_other_exceptions,
+        maxIf(value,event='ZooKeeperWaitMicroseconds') AS keeper_wait_microseconds,
+        maxIf(value,event='ReplicatedPartFailedFetches') AS replicated_failed_fetches,
+        maxIf(value,event='ReplicatedDataLoss') AS replicated_data_loss,
+        maxIf(value,event='DistributedConnectionFailAtAll') AS distributed_connection_failures,
+        maxIf(value,event='MarkCacheHits') AS mark_cache_hits, maxIf(value,event='MarkCacheMisses') AS mark_cache_misses,
+        maxIf(value,event='UncompressedCacheHits') AS uncompressed_cache_hits, maxIf(value,event='UncompressedCacheMisses') AS uncompressed_cache_misses,
+        maxIf(value,event='QueryCacheHits') AS query_cache_hits, maxIf(value,event='QueryCacheMisses') AS query_cache_misses
+      FROM system.events
+      WHERE event IN ('Query','FailedQuery','SelectQuery','InsertQuery','FailedSelectQuery','FailedInsertQuery','SelectedRows','InsertedRows','SelectedBytes','InsertedBytes','NetworkReceiveBytes','NetworkSendBytes','SelectQueryTimeMicroseconds','InsertQueryTimeMicroseconds','OtherQueryTimeMicroseconds','DelayedInserts','RejectedInserts','DelayedInsertsMilliseconds','DistributedDelayedInserts','DistributedRejectedInserts','DistributedDelayedInsertsMilliseconds','UserTimeMicroseconds','SystemTimeMicroseconds','OSCPUWaitMicroseconds','OSIOWaitMicroseconds','MergeTotalMilliseconds','ZooKeeperHardwareExceptions','ZooKeeperOtherExceptions','ZooKeeperWaitMicroseconds','ReplicatedPartFailedFetches','ReplicatedDataLoss','DistributedConnectionFailAtAll','MarkCacheHits','MarkCacheMisses','UncompressedCacheHits','UncompressedCacheMisses','QueryCacheHits','QueryCacheMisses')
+    ) AS e
+    CROSS JOIN (
+      SELECT
+        maxIf(toUInt64OrZero(value),name='max_server_memory_usage') AS memory_limit,
+        nullIf(maxIf(toUInt64OrZero(value),name='max_concurrent_queries'),0) AS concurrent_queries_limit,
+        maxIf(toUInt64OrZero(value),name='max_connections') AS connections_limit
+      FROM system.server_settings
+      WHERE name IN ('max_server_memory_usage','max_concurrent_queries','max_connections')
+    ) AS s;
+  response: b1e8b430-075c-428a-8e0a-fac9fbdae323.csv
+- query: |
+    SELECT d.name, d.engine, ifNull(t.table_count,0), ifNull(t.uncompressed_bytes,0), hostName(), toString(serverUUID())
+    FROM system.databases AS d
+    LEFT JOIN (
+      SELECT database, count() AS table_count,
+        sumIf(total_bytes_uncompressed,engine LIKE '%MergeTree') AS uncompressed_bytes
+      FROM system.tables
+      WHERE database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+      GROUP BY database
+    ) AS t ON t.database=d.name
+    WHERE d.name NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+      AND d.engine NOT IN ('MySQL','PostgreSQL');
+  response: 96720570-59c9-47a2-9db4-d272a51dae7c.csv
+- query: |
+    SELECT
+      r.database, r.table, r.replica_name,
+      multiIf(r.is_session_expired=1,'failed',r.is_readonly=1 OR r.last_queue_update_exception!='' OR r.parts_to_check>0 OR ifNull(q.persistent_failures,0)>0,'degraded','ok'),
+      r.inserts_in_queue, r.merges_in_queue, r.part_mutations_in_queue,
+      greatest(toInt64(r.queue_size)-toInt64(r.inserts_in_queue)-toInt64(r.merges_in_queue)-toInt64(r.part_mutations_in_queue),0),
+      r.absolute_delay, r.future_parts, r.parts_to_check,
+      q.oldest_age, ifNull(q.failed_operations,0), ifNull(q.retry_count,0), ifNull(q.postponed_operations,0),
+      ifNull(q.waiting_operations,0), ifNull(q.executing_operations,0), q.last_attempt_age, q.last_postpone_age,
+      r.is_leader, r.can_become_leader, r.zookeeper_path, hostName(), toString(serverUUID())
+    FROM system.replicas AS r
+    LEFT JOIN (
+      SELECT database, table, replica_name,
+        maxIfOrNull(dateDiff('second',create_time,now()),is_currently_executing=0) AS oldest_age,
+        countIf(last_exception!='' AND is_currently_executing=0) AS failed_operations,
+        countIf(last_exception!='' AND is_currently_executing=0 AND num_tries>5) AS persistent_failures,
+        sum(num_tries)-countIf(is_currently_executing=1) AS retry_count,
+        countIf(num_postponed>0 AND is_currently_executing=0) AS postponed_operations,
+        countIf(is_currently_executing=0) AS waiting_operations,
+        countIf(is_currently_executing=1) AS executing_operations,
+        maxIfOrNull(dateDiff('second',last_attempt_time,now()),is_currently_executing=0 AND last_attempt_time>toDateTime(0)) AS last_attempt_age,
+        maxIfOrNull(dateDiff('second',last_postpone_time,now()),is_currently_executing=0 AND last_postpone_time>toDateTime(0)) AS last_postpone_age
+      FROM system.replication_queue
+      GROUP BY database,table,replica_name
+    ) AS q ON q.database=r.database AND q.table=r.table AND q.replica_name=r.replica_name
+    SETTINGS join_use_nulls = 1;
+  # Row 1 is recorded from the lab. Rows 2-3 are synthetic, realistic table replicas
+  # retained solely to pin one failed and one degraded mapping result in replay mode.
+  response: 34371a09-f1b5-401d-bbc7-31c862193fdd.csv
+- query: |
+    SELECT name,path,type,
+      if(is_broken OR is_read_only,NULL,nullIf(total_space,toUInt64(-1))),
+      if(is_broken OR is_read_only,NULL,nullIf(free_space,toUInt64(-1))),
+      if(is_broken OR is_read_only,NULL,nullIf(total_space,toUInt64(-1))-nullIf(free_space,toUInt64(-1))),
+      if(is_broken OR is_read_only,NULL,nullIf(unreserved_space,toUInt64(-1))),
+      keep_free_space, if(is_broken=1,'failed','ok'), is_read_only, is_write_once, is_remote, is_encrypted,
+      hostName(), toString(serverUUID())
+    FROM system.disks;
+  response: 0c90dde3-e451-4101-a619-fedd4854a2d7.csv
+- query: |
+    SELECT t.database,t.name,t.engine,
+      if(t.engine LIKE '%MergeTree',ifNull(t.total_rows,0),NULL),
+      if(t.engine LIKE '%MergeTree',ifNull(t.total_bytes,0),NULL),
+      if(t.engine LIKE '%MergeTree',ifNull(t.active_parts,0),NULL),
+      if(t.engine LIKE '%MergeTree',ifNull(p.max_parts_per_partition,0),NULL),
+      if(t.engine LIKE '%MergeTree',if(ifNull(mu.failing_mutations,0)>0,'failed','ok'),NULL),
+      if(t.engine LIKE '%MergeTree',ifNull(mu.pending_mutations,0),NULL),
+      if(t.engine LIKE '%MergeTree',ifNull(mu.mutation_parts_to_do,0),NULL),
+      if(t.engine LIKE '%MergeTree',mu.oldest_mutation_age,NULL),
+      if(t.engine='Distributed',multiIf(ifNull(dq.broken_files,0)>0,'failed',ifNull(dq.blocked_destinations,0)>0 OR ifNull(dq.error_score,0)>0,'degraded','ok'),NULL),
+      if(t.engine='Distributed',ifNull(dq.pending_files,0),NULL),
+      if(t.engine='Distributed',ifNull(dq.pending_bytes,0),NULL),
+      if(t.engine='Distributed',ifNull(dq.broken_files,0),NULL),
+      if(t.engine='Distributed',ifNull(dq.broken_bytes,0),NULL),
+      if(t.engine='Distributed',ifNull(dq.error_score,0),NULL),
+      if(t.engine='Distributed',ifNull(dq.blocked_destinations,0),NULL),
+      if(t.engine='Distributed',ifNull(dq.unblocked_destinations,0),NULL),
+      if(t.engine='Distributed',dq.last_exception_age,NULL),
+      hostName(),toString(serverUUID())
+    FROM system.tables AS t
+    LEFT JOIN (
+      SELECT database,table,max(parts) AS max_parts_per_partition
+      FROM (SELECT database,table,partition_id,count() AS parts FROM system.parts
+            WHERE active AND database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+            GROUP BY database,table,partition_id)
+      GROUP BY database,table
+    ) AS p ON p.database=t.database AND p.table=t.name
+    LEFT JOIN (
+      SELECT database,table,count() AS pending_mutations,
+        countIf(latest_fail_reason!='' AND has(parts_to_do_names,latest_failed_part)) AS failing_mutations,
+        sum(parts_to_do) AS mutation_parts_to_do,max(dateDiff('second',create_time,now())) AS oldest_mutation_age
+      FROM system.mutations WHERE is_done=0 GROUP BY database,table
+    ) AS mu ON mu.database=t.database AND mu.table=t.name
+    LEFT JOIN (
+      SELECT database,table,sum(data_files) AS pending_files,sum(data_compressed_bytes) AS pending_bytes,
+        sum(broken_data_files) AS broken_files,sum(broken_data_compressed_bytes) AS broken_bytes,
+        sum(error_count) AS error_score,countIf(is_blocked=1) AS blocked_destinations,
+        countIf(is_blocked=0) AS unblocked_destinations,
+        if(max(last_exception_time)=toDateTime(0),NULL,dateDiff('second',max(last_exception_time),now())) AS last_exception_age
+      FROM system.distribution_queue GROUP BY database,table
+    ) AS dq ON dq.database=t.database AND dq.table=t.name
+    WHERE t.database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+      AND (t.engine LIKE '%MergeTree' OR t.engine='Distributed')
+    SETTINGS join_use_nulls = 1;
+  response: 58a8772d-c3d4-4219-a612-a73600ce0ce0.csv
+- query: |
+    SELECT cluster,shard_num,replica_num,host_name,host_address,port,
+      if(errors_count>0 OR slowdowns_count>0,'degraded','ok'),
+      errors_count,slowdowns_count,estimated_recovery_time,internal_replication,default_database, -- $12 retained for stable columns; not a metric namespace
+      hostName(),toString(serverUUID())
+    FROM system.clusters
+    WHERE is_local=0 AND cluster NOT LIKE 'all_groups.%';
+  response: deccd73c-b180-43b6-8c3b-212c73cdd16d.csv

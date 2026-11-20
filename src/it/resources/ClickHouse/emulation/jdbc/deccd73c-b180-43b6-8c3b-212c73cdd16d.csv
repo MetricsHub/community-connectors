@@ -1,0 +1,2 @@
+replication_lab;1;2;clickhouse-02;172.20.0.2;9000;ok;0;0;0;1;;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
+sharding_lab;2;1;clickhouse-02;172.20.0.2;9000;degraded;2;0;30;0;;clickhouse-01;d1965f14-b794-4177-beb8-3f5822d8e91b;
