@@ -58,7 +58,7 @@ These stay computes, and end the run: the computes before them and after them ar
 - `translate`, `arrayTranslate` and `perBitTranslation`, with their translation tables;
 - the conversions (`convert`, `extract`, `extractPropertyFromWbemPath`, `json2Table`, `json2List`, `xml2Csv`, `toTable`, `toText`, `encode`, `decode`), `and` (AWK has no bitwise AND), `sort` and `tail`;
 - a compute whose value is a `${source::...}` reference;
-- the line filters, `keepOnlyMatchingLines` and `excludeMatchingLines`: write the filter after the `awk` on a column that the script prints unchanged, or before it.
+- the line filters, `keepOnlyMatchingLines` and `excludeMatchingLines`: write the filter before the `awk`, so that the script reads only the rows it keeps, and after it only when the filter reads a column that the script produces.
 
 Instead of:
 

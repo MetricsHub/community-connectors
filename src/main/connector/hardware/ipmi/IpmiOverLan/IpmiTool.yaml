@@ -112,32 +112,33 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
+            # Keep only fans
+            # Fan;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: fan
             # Add empty StatusArray, StatusInformation and AdditionalInformation1 columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
           - type: awk
             output: table
             script: |
               { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
-            # Keep only fans
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: fan
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
+            # Keep only "Fan Device" lines
             # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan Device
             # The interesting columns and empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
           - type: awk
             output: table
             script: |
               { print $1, $2, $3, $7, $8, "", "", "", "", $9 }
-            # Keep only "Fan Device" lines
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Fan Device
         source(3):
           # Source(3) = Table Union of Source(1) and Source(2)
           # Fan;DeviceID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
@@ -171,32 +172,33 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.collect.sources.source(1)}
           computes:
+            # Keep only fans
+            # Fan;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: fan
             # Add empty Status and StatusInformation columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
           - type: awk
             output: table
             script: |
               { print $1, $2, $3, "", "", $4, $5, $6, $7 }
-            # Keep only fans
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: fan
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
           from: ${source::monitors.enclosure.collect.sources.source(1)}
           computes:
+            # Keep only "Fan Device" lines
             # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan Device
             # The interesting columns, an empty SensorName and empty FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           - type: awk
             output: table
             script: |
               { print $1, $2, "", $7, $8, $9, "", "", "" }
-            # Keep only "Fan Device" lines
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Fan Device
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Fan Device;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           - type: convert
@@ -334,16 +336,16 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Label Model and SerialNumber
+            # Keep only power supply lines
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Power supply
+            # Label Model and SerialNumber
           - type: awk
             output: table
             script: |
               { $5 = "Model: " $5; $6 = "SerialNumber: " $6; print }
-            # Keep only power supply lines
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Power supply
       mapping:
         # InstanceTable = Source(1)
         source: ${source::source(1)}

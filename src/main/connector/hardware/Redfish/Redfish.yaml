@@ -614,15 +614,15 @@ monitors:
           - type: json2Table
             entryKey: Entry/Value/PowerSupplies
             properties: [ ../../Column(3), /MemberId, /Name, /Status/State, /PowerSupplyType, /LineInputVoltage, /Model, /firmwareVersion, /SerialNumber ]
+          # Exclude PowerSupplies that are marked as "Absent" at discovery
+          - type: excludeMatchingLines
+            column: 5
+            regExp: Absent
           # Label Model, Firmware Version and Serial Number
           - type: awk
             output: table
             script: |
               { $8 = "Model: " $8; $9 = "Firmware Version: " $9; $10 = "Serial Number: " $10; print }
-          # Exclude PowerSupplies that are marked as "Absent" at discovery
-          - type: excludeMatchingLines
-            column: 5
-            regExp: Absent
       mapping:
         # PowerSupply Instance Table
         source: "${source::source(1)}"

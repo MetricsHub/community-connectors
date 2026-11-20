@@ -54,16 +54,15 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: fan
             # Add empty StatusArray, StatusInformation and AdditionalInformation1 columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
           - type: awk
             output: table
             script: |
               { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
-            # Keep only fans
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: fan
 
         source(2):
           # Handle the "Fan Device" and "Fan/cooling device" (HP through WMI) formats: status only
@@ -189,16 +188,16 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
-            # Label Model and SerialNumber
+            # Keep only power supply lines
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Power supply
+            # Label Model and SerialNumber
           - type: awk
             output: table
             script: |
               { $5 = "Model: " $5; $6 = "SerialNumber: " $6; print }
-            # Keep only power supply lines
-          - type: keepOnlyMatchingLines
-            column: 1
-            valueList: Power supply
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation;AdditionalInformation1;
           - type: convert
