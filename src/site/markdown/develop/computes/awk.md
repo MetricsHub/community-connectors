@@ -37,7 +37,7 @@ sources:
 | `type` | Yes | None | `awk`. |
 | `script` | Yes | None | The AWK script: an embedded-file reference `${file::script.awk}` (a file next to the connector), or the script text itself, typically as a YAML block scalar (`script: \|`). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
-| `output` | No | `text` | What the script produces: `text` (the printed lines, each ending with `;`: a `;` is added to a line that does not end with one) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, exactly as the script prints them) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`). |
 
 The script selects its lines and its columns itself: the `awk` compute has no `keep`, `exclude`, `separators`, `selectColumns` or `input` property, and a connector that sets one does not load (`DEPRECATED_SYNTAX`, see [Legacy and Compatibility](../legacy-and-compatibility.html)).
 
