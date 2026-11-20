@@ -35,7 +35,6 @@ Here `inventoryRaw` is a table: each of its rows is a record whose cells are `$1
 | `type` | Yes | None | `awk`. |
 | `script` | Yes | None | Inline AWK script or `${file::...}` reference. No other reference is replaced in a script: pass values through `variables`, see [Compilation](#compilation). |
 | `input` | No | Empty | Input text, or a single source reference such as `${source::beforeAll.inventoryRaw}`: the script reads that source as it is at run time, a table structured (each row is a record whose cells are `$1..$NF`, and `$0`, synthesized only when the script reads it, is the cells joined with `FS`, as in the [`awk` compute](../computes/awk.html#table-input-and-output)), a text the traditional way (lines split on `FS`). A reference inside a longer text (a template such as `MODE;${source::raw}`) is replaced by the source's text: it must reference a text, a table there is rejected (`TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). |
-| `inputFormat` | No | None | Rejected from MetricsHub Community 3.9.09 (`DEPRECATED_SYNTAX`): a connector that sets it does not load. Remove it: an input that is a single source reference is read as that source is. |
 | `output` | No | `text` | What the script produces: `text` (the printed lines as they are: write a `toTable` in `computes` to split them on `;` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; a `print` without argument is one row of the record's fields `$1..$NF`, while `print $0` writes `$0` in one cell; `printf` text is split into rows on `ORS` and into cells on `OFS`, so a `printf` row sets `OFS = SUBSEP`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
 | `executeForEachEntryOf` | No | None | Run once per row from another source table. |
@@ -43,7 +42,7 @@ Here `inventoryRaw` is a table: each of its rows is a record whose cells are `$1
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 > [!NOTE]
-> An `awk` source does not filter or split what its script prints: `keep`, `exclude`, `separators` and `selectColumns` have no effect on it. Filter in the script, and declare `output: table` to write columns.
+> An `awk` source does not filter or split what its script prints: filter in the script, and declare `output: table` to write columns. A connector that sets `separators` or `inputFormat` on an `awk` source does not load (`DEPRECATED_SYNTAX`, see [Legacy and Compatibility](../legacy-and-compatibility.html)).
 
 ## Variables
 
@@ -52,6 +51,7 @@ Both AWK sources and [AWK computes](../computes/awk.html#variables) accept a `va
 | Value | Available in AWK as |
 | --- | --- |
 | Literal text or a quoted number, such as `"365.25"` | A scalar, usable in string expressions or arithmetic. |
+| A reference to an embedded file, alone, such as `${file::header.txt}` | A scalar: the text of the file. See [Compilation](#compilation). |
 | A resource attribute, monitor attribute, or protocol property reference | A scalar resolved immediately before execution, e.g. `${resource.attribute::host.name}`, `${attribute::id}`, or `${protocol::http.port}`. |
 | A source reference, such as `${source::monitors.disk.discovery.sources.raw}` | An array of rows: `aTable[row][column]`, with **zero-based** row and column indexes. `length(aTable)` returns the row count. |
 | A YAML list | An array indexed from 0: `aList[0]`, `length(aList)`. See [Lists And Maps](#lists-and-maps). |
@@ -170,7 +170,7 @@ BEGIN {
 
 The source of this script declares `output: table`: each `print` is one row, and its two arguments are the cells.
 
-**`json2Table(json, entryKey, properties, rows)`** extracts rows from a JSON text, as the [json2Table](../computes/json2csv.html) compute does. `properties` is a `;`-separated list. `rows[i][0]` is the path of the entry and `rows[i][1]` its first property: both indexes start at 0. A cell holds its value whole, even when the value holds a `;` or a line feed.
+**`json2Table(json, entryKey, properties, rows)`** extracts rows from a JSON text, as the [json2Table](../computes/json2table.html) compute does. `properties` is a `;`-separated list. `rows[i][0]` is the path of the entry and `rows[i][1]` its first property: both indexes start at 0. A cell holds its value whole, even when the value holds a `;` or a line feed.
 
 ```awk
 {
@@ -196,8 +196,6 @@ BEGIN {
 
 > [!NOTE]
 > A function cannot return an array to a variable: `rows = json2Table(...)` fails. Pass the array as the last argument.
-
-The former `json2csv(args)` function, which returned the rows as `;`-joined lines, no longer exists: use `json2Table`.
 
 ### Send JSON
 
@@ -234,7 +232,7 @@ An array is written the way a response is read, the other way round:
 - The result of `split()` is indexed from 1, which makes it an object: copy it to indexes that start at 0 to send an array.
 - `null` and an empty array (`[]`) cannot be written. Give the body as a text when the request needs one.
 - A decimal read from a response prints as the document writes it because it is a text that computes as a number: sent back as it is, it is a string. Add 0 to send it as a number.
-- `Content-Type: application/json` is added to the header of the request, unless `args["header"]` already names a content type, in its text or in the embedded file it refers to.
+- `Content-Type: application/json` is added to the header of the request, unless `args["header"]` already names a content type.
 - A credential macro in a value, such as `%{USERNAME}` or `%{PASSWORD}`, is escaped as JSON when the request replaces it: write the macro alone, without `esc(json)`. A macro that names another escape, such as `${esc(url)::PASSWORD}`, keeps that escape only: its value is not escaped as JSON.
 - A value cannot refer to an embedded file: `${file::...}` in a value is not replaced by the content of the file.
 - The script keeps its array: `args["body"]` is the same after the call.
@@ -263,7 +261,27 @@ A script is code, so MetricsHub replaces no reference in it: a `${param::days}`,
     END { if (!count) print "No event in the last " days " days" }
 ```
 
-A `${file::...}` reference is not concerned: as the whole `script` value it names the script, and inside a script it names an embedded file passed to a function, such as the `header` of `executeHttpRequest`.
+As the whole `script` value, a `${file::...}` reference names the script. Written inside a script, it does not give the text of the file:
+
+- Inside a script that is an embedded file, it stays as text.
+- Anywhere in an inline script, it makes MetricsHub run that file as the whole script instead of the inline text. The file is loaded with the connector, so a missing file stops the connector from loading. With references to two different files, the script does not run.
+
+Give the script the text of an embedded file through a variable whose value is that one reference, for instance the header of a request:
+
+```yaml
+sources:
+  systems:
+    type: awk
+    variables:
+      header: ${file::header.txt}
+    script: |
+      BEGIN {
+        args["method"] = "get"
+        args["path"] = "/api/v1/systems"
+        args["header"] = header
+        printf "%s", executeHttpRequest(args)
+      }
+```
 
 ## Recommended Pattern
 

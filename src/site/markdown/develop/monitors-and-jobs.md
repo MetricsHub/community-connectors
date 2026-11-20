@@ -209,7 +209,7 @@ Every attribute listed in `keys` must be mapped in the discovery (or `simple`) `
 
 ### When Instances Are Removed
 
-From MetricsHub Community 3.9.08, a `discovery` or `simple` job removes the instances it no longer returns. At the end of each **trusted** run, the engine removes the instances of the job's monitor type, created by this connector, that the run did not create or refresh:
+A `discovery` or `simple` job removes the instances it no longer returns. At the end of each **trusted** run, the engine removes the instances of the job's monitor type, created by this connector, that the run did not create or refresh:
 
 | Job | An instance that disappears is removed |
 | --- | --- |
@@ -257,7 +257,6 @@ monitors:
 - The value is a duration (`30s`, `15m`, `1h`, `1d`, or combined such as `1h30m`) or a number of seconds. The default `0` removes the instance at the first trusted run that misses it. A negative value is rejected when the connector is loaded.
 - A trusted run removes the instance once the time since the last run that returned it exceeds the delay. The delay is wall-clock time, checked only at the end of a trusted run: a `discovery` job runs about once an hour by default, so a delay shorter than one discovery cycle keeps nothing. Use two discovery cycles or more (for example `2h`) to survive one missed cycle.
 - It is inherited and can be overridden through [`extends`](reuse-and-configuration.html), and it is also available for the custom monitors of `metricshub.yaml`.
-- MetricsHub versions older than 3.9.08 ignore it, so declaring it does not break a connector on an older agent.
 
 Use `removalDelay` only when no inventory exists: entities defined by their activity (sessions, connected replicas, running queries), or as a stopgap until the connector reads an inventory.
 
@@ -318,7 +317,7 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 
 - Omitting `type` on the `collect` job of a multi-instance monitor — the engine then defaults to `monoInstance`, silently changing the execution model. State `multiInstance` or `monoInstance` explicitly.
 - Forgetting to re-map `id` (or the other `keys`) in a `multiInstance` collect mapping, so no row matches any instance and no metric is ever collected.
-- Mapping an unstable value (rotating index, display label) as `id`, which creates a new instance at every discovery cycle (from MetricsHub Community 3.9.08, the previous one is removed, so its counters restart every time).
+- Mapping an unstable value (rotating index, display label) as `id`, which creates a new instance at every discovery cycle (the previous one is removed, so its counters restart every time).
 - Using `monoInstance` with expensive sources on monitors that can have dozens of instances.
 - Putting heavy inventory work in `collect` instead of `discovery` — collect runs on every cycle.
 - Filtering on a state or a value (`Enabled` only, `up` only, non-zero readings only, `virsh list` without `--all`) in a `discovery` or `simple` job. The instance is removed as soon as its state changes, which hides the very failure the state should report. Keep every row and map the state.

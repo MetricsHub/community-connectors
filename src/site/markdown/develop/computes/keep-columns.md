@@ -51,8 +51,6 @@ With `columnNumbers: 1,3,5`:
 >   | fan1 | Delta F1 | ok |
 >   | fan2 | Delta F1 | failed |
 
-Serialized, `fan1;front;Delta F1;1.02;ok` becomes `fan1;Delta F1;ok`.
-
 ## Recommended Pattern
 
 - Apply `keepColumns` as the **last** compute of the pipeline whenever possible: earlier computes reference columns by index, and dropping columns mid-pipeline renumbers everything after it.
