@@ -66,10 +66,8 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.15g" }
-              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               {
-                if (isNumber($4) && isNumber($3) && $3 + 0 != 0) $4 = $4 / $3
+                if ($4 + 0 == $4 && $3 + 0 == $3 && $3 + 0 != 0) $4 = $4 / $3
                 print $1, $2, $3, $4, $5, $5
               }
         source(2):

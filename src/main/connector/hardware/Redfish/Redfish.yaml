@@ -434,12 +434,10 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.15g" }
-              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               {
-                if (isNumber($8) && isNumber($7)) $8 = $8 - $7
-                if (isNumber($6) && isNumber($8) && $8 + 0 != 0) $6 = $6 / $8
-                if (isNumber($6)) $6 = $6 * 100
+                if ($8 + 0 == $8 && $7 + 0 == $7) $8 = $8 - $7
+                if ($6 + 0 == $6 && $8 + 0 == $8 && $8 + 0 != 0) $6 = $6 / $8
+                if ($6 + 0 == $6) $6 = $6 * 100
                 print
               }
       mapping:
@@ -803,9 +801,7 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.15g" }
-              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
-              isNumber($5) { $5 = $5 * 1000 }
+              $5 + 0 == $5 { $5 = $5 * 1000 }
               $6 != "" && $6 != "Enabled" { $5 = ""; if ($3 == "unknown") $4 = "State: " $6 }
               { print $1, $2, $3, $4, $5, $6 }
       mapping:

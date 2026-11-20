@@ -176,12 +176,10 @@ monitors:
           - type: awk
             output: table
             script: |
-              BEGIN { OFMT = "%.15g" }
-              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
               {
-                if (isNumber($2) && isNumber($6)) $2 = $2 + $6
-                if (isNumber($4) && isNumber($8)) $4 = $4 + $8
-                if (isNumber($6) && isNumber($8)) $6 = $6 + $8
+                if ($2 + 0 == $2 && $6 + 0 == $6) $2 = $2 + $6
+                if ($4 + 0 == $4 && $8 + 0 == $8) $4 = $4 + $8
+                if ($6 + 0 == $6 && $8 + 0 == $8) $6 = $6 + $8
                 print
               }
         source(10):

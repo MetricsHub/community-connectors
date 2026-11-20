@@ -275,11 +275,10 @@ monitors:
           # Convert speed from Mbps to bytes per second (unchanged when not a number)
           # Interface;SpeedBytesPerSecond
             script: |
-              BEGIN { FS=";"; OFS=";"; OFMT = "%.15g" }
-              function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
+              BEGIN { FS=";"; OFS=";" }
               /^##LINKSPEED##$/ { insec = 1; next }
               /^##[A-Z_]+##$/ { if (insec) exit; next }
-              insec { if ($2 == "" || ($2 + 0) == -1) print $1; else print $1, (isNumber($2) ? $2 * 125000 : $2) }
+              insec { if ($2 == "" || ($2 + 0) == -1) print $1; else print $1, ($2 + 0 == $2 ? $2 * 125000 : $2) }
             output: table
 
         # Now join the three sources together

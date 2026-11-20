@@ -1,13 +1,10 @@
 BEGIN {
 	Column = 6
-	OFMT = "%.15g"
 }
-
-function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
 
 {
 	# Convert Speed from Gbps to Mbps (unchanged when blank or not a number)
-	if (isNumber($4)) $4 = $4 * 1000
+	if ($4 + 0 == $4) $4 = $4 * 1000
 	# Remove the array pipes from the port WWN
 	gsub(/[|]/, ".", $5)
 	n = split($Column, PortWWN, "|")

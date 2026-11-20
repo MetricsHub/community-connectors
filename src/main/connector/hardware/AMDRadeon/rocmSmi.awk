@@ -1,8 +1,6 @@
 BEGIN {
     FS = ",";
-    OFMT = "%.15g";
 }
-function isNumber(x) { return x ~ /^[ \t]*[-+]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][-+]?[0-9]+)?[ \t]*$/ }
 # Skip headers and global system line
 $1 == "device" { next }
 $1 == "system" { next }
@@ -18,7 +16,7 @@ $1 ~ /^card[0-9]+$/ {
   gpuUse       = $21 # GPU use (%)
   gpuMemUse    = $22 # GPU memory use (%)
   memBw        = $24 # Avg. Memory Bandwidth, divided by 1000000000 when it is a number
-  if (isNumber(memBw)) memBw = memBw / 1000000000
+  if (memBw + 0 == memBw) memBw = memBw / 1000000000
   memVendor    = $25 # GPU memory vendor
   serialNumber = $27 # Serial Number
   voltage_mV   = $28 # Voltage (mV)
