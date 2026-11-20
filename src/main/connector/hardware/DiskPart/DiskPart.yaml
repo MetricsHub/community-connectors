@@ -41,7 +41,11 @@ monitors:
             script: ${file::diskPart.awk}
             output: table
           # END SNIPPET: awkCompute
-            # The script excludes DVDs and stupid stuff, and labels the FileSystem
+            # Exclude DVDs and stupid stuff (the script labels the FileSystem)
+            # ID;Label;Letter;VolumeType;FileSystem;Size;Status;MoreInformation
+          - type: excludeMatchingLines
+            column: 4
+            valueList: CD-ROM,DVD-ROM,Removable
       mapping:
         # The InstanceTable
         source: ${source::source(1)}

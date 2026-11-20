@@ -483,12 +483,17 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only GPU (case-insensitive), and remove the gpu word in HardwareVendor
+            # Keep only GPU
             # Identifier, Name, HardwareType
-          - type: awk
-            output: table
-            script: |
-              tolower($3) ~ /gpu/ { gsub(/gpu/, "", $3); print $1, $2, $3 }
+          - type: keepOnlyMatchingLines
+            column: 3
+            regExp: gpu
+            # Remove the Gpu word in HardwareVendor
+            # Identifier, Name, HardwareType
+          - type: replace
+            column: 3
+            existingValue: gpu
+            newValue: ""
         source(2):
           # Source 2 = Retrieve GPU Memory Size from Sensor
           # Parent, Name, Value

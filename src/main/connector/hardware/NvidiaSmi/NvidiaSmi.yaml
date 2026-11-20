@@ -77,8 +77,9 @@ monitors:
           - type: awk
             script: ${file::nvidiaSmi.awk}
             output: table
-            variables:
-              keep: GPU
+          - type: keepOnlyMatchingLines
+            column: 1
+            regExp: ^GPU$
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -129,8 +130,9 @@ monitors:
           - type: awk
             script: ${file::nvidiaSmi.awk}
             output: table
-            variables:
-              keep: TEMPERATURE
+          - type: keepOnlyMatchingLines
+            column: 1
+            regExp: ^TEMPERATURE$
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -146,11 +148,12 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-          # The voltages that have a value
-          - type: awk
-            output: table
-            script: |
-              tolower($1) == "voltage" && $3 ~ /./ { print }
+          - type: keepOnlyMatchingLines
+            column: 1
+            regExp: ^VOLTAGE$
+          - type: keepOnlyMatchingLines
+            column: 3
+            regExp: .
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -170,8 +173,9 @@ monitors:
           - type: awk
             script: ${file::nvidiaSmi.awk}
             output: table
-            variables:
-              keep: VOLTAGE
+          - type: keepOnlyMatchingLines
+            column: 1
+            regExp: ^VOLTAGE$
       mapping:
         source: ${source::source(1)}
         attributes:

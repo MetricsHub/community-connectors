@@ -44,18 +44,39 @@ monitors:
           namespace: root\cimv2
           query: SELECT AdapterType,MACAddress,Name,PNPDeviceID FROM Win32_NetworkAdapter
           computes:
+            # Keep only Ethernet cards
             # AdapterType;MACAddress;Name;PNPDeviceID;
-            # Keep only Ethernet cards (the matches are case-insensitive), and avoid any network interface:
-            # - whose PnPDeviceID looks like ROOT\something, which means that it's actually not a real device
-            # - whose PnPDeviceID looks like COMPOSITEBUS\something: these are virtual ports
-            # - whose PnPDeviceID looks like ...\MSRRAS\...: these are WAN ports (not physical)
-            # - whose name contains "Virtual": these are obviously virtual
+          - type: keepOnlyMatchingLines
+            column: 1
+            regExp: ^Ethernet 802\.3$
+            # Avoid any network interface whose PnPDeviceID looks like ROOT\something,
+            # which means that it's actually not a real device
+            # AdapterType;MACAddress;Name;PNPDeviceID;
+          - type: excludeMatchingLines
+            column: 4
+            regExp: ^ROOT\\
+            # Avoid any network interface whose PnPDeviceID looks like COMPOSITEBUS\something,
+            # These are virtual ports
+            # AdapterType;MACAddress;Name;PNPDeviceID;
+          - type: excludeMatchingLines
+            column: 4
+            regExp: ^COMPOSITEBUS\\
+            # Avoid any network interface whose PnPDeviceID looks like ...\MSRRAS\...,
+            # These are WAN ports (not physical)
+            # AdapterType;MACAddress;Name;PNPDeviceID;
+          - type: excludeMatchingLines
+            column: 4
+            regExp: \\MSRRAS\\
+            # Avoid any network interface whose name contains "Virtual"
+            # These are obviously virtual
+            # AdapterType;MACAddress;Name;PNPDeviceID;
+          - type: excludeMatchingLines
+            column: 3
+            regExp: Virtual
             # Keep only the network card name and PNPDeviceID (which will be referred to in the root/WMI namespace)
             # MACAddress;Name;PNPDeviceID;
-          - type: awk
-            output: table
-            script: |
-              tolower($1) == "ethernet 802.3" && toupper($4) !~ /^ROOT\\|^COMPOSITEBUS\\|\\MSRRAS\\/ && tolower($3) !~ /virtual/ { print $2, $3, $4 }
+          - type: keepColumns
+            columnNumbers: 2,3,4
         source(2):
           # Source(2) = Win32_PnPEntity WMI class
           # MSNdisID;PNPDeviceID;

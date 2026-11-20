@@ -51,9 +51,12 @@ monitors:
           from: "${source::beforeAll.smartctlAll}"
           computes:
           - type: awk
-            # Output: deviceID; vendor; serialNumber; extraOptions (no virtual disk)
+            # Output: deviceID; vendor; serialNumber; extraOptions
             script: "${file::smartctl_inventory.awk}"
             output: table
+          - type: excludeMatchingLines
+            column: 2
+            regExp: "[Vv]irtual"
       mapping:
         # InstanceTable = Source(1)
         source: "${source::source(1)}"

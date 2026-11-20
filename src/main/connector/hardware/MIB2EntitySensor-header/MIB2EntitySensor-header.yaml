@@ -183,13 +183,16 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(3)}
           computes:
-            # Keep only Fan sensors (type 10), and substract 11 from ID to get FRU Parent
+            # Keep only Fan sensors
+            # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;
+          - type: keepOnlyMatchingLines
+            column: 12
+            valueList: 10
+            # Substract 11 from ID to get FRU Parent
             # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;ORIGINAL_ID;
           - type: awk
             script: ${file::fan.awk}
             output: table
-            variables:
-              type: "10"
         source(2):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
           type: tableJoin

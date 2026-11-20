@@ -50,8 +50,8 @@ function pick_vendor() {
 }
 
 /^###ENDDEVICE$/ {
-    # Emit one inventory row per completed device block, except the virtual disks
-    if (current_device != "" && tolower(pick_vendor()) !~ /virtual/) {
+    if (current_device != "") {
+        # Emit one inventory row per completed device block.
         print current_device, pick_vendor(), serial, current_extra
     }
     reset_record()

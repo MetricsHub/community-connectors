@@ -112,25 +112,32 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only fans, with empty StatusArray, StatusInformation and AdditionalInformation1 columns
+            # Add empty StatusArray, StatusInformation and AdditionalInformation1 columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
           - type: awk
             output: table
             script: |
-              tolower($1) == "fan" { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
+              { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
+            # Keep only fans
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: fan
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only "Fan Device" lines
             # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-            # with the interesting columns and empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
+            # The interesting columns and empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
           - type: awk
             output: table
             script: |
-              tolower($1) == "fan device" { print $1, $2, $3, $7, $8, "", "", "", "", $9 }
+              { print $1, $2, $3, $7, $8, "", "", "", "", $9 }
+            # Keep only "Fan Device" lines
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan Device
         source(3):
           # Source(3) = Table Union of Source(1) and Source(2)
           # Fan;DeviceID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
@@ -164,25 +171,32 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.collect.sources.source(1)}
           computes:
-            # Keep only fans, with empty Status and StatusInformation columns
+            # Add empty Status and StatusInformation columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
           - type: awk
             output: table
             script: |
-              tolower($1) == "fan" { print $1, $2, $3, "", "", $4, $5, $6, $7 }
+              { print $1, $2, $3, "", "", $4, $5, $6, $7 }
+            # Keep only fans
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: fan
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
           from: ${source::monitors.enclosure.collect.sources.source(1)}
           computes:
-            # Keep only "Fan Device" lines
             # Fan Device;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-            # with the interesting columns, an empty SensorName and empty FanSpeed, WarningThreshold and AlarmThreshold columns
+            # The interesting columns, an empty SensorName and empty FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           - type: awk
             output: table
             script: |
-              tolower($1) == "fan device" { print $1, $2, "", $7, $8, $9, "", "", "" }
+              { print $1, $2, "", $7, $8, $9, "", "", "" }
+            # Keep only "Fan Device" lines
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Fan Device
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Fan Device;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           - type: convert
@@ -320,12 +334,16 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only power supply lines, with labelled Model and SerialNumber
+            # Label Model and SerialNumber
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
           - type: awk
             output: table
             script: |
-              tolower($1) == "power supply" { $5 = "Model: " $5; $6 = "SerialNumber: " $6; print }
+              { $5 = "Model: " $5; $6 = "SerialNumber: " $6; print }
+            # Keep only power supply lines
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Power supply
       mapping:
         # InstanceTable = Source(1)
         source: ${source::source(1)}
@@ -373,12 +391,14 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only processor lines, with a labelled SerialNumber
+            # Keep only processor lines
             # Processor;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
-          - type: awk
-            output: table
-            script: |
-              tolower($1) == "processor" { $6 = "SerialNumber: " $6; print }
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Processor
+          - type: prepend
+            column: 6
+            value: "SerialNumber: "
       mapping:
         # InstanceTable = Source(1)
         source: ${source::source(1)}
@@ -430,13 +450,16 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only memory lines, and duplicate the "Model" column because it may be in the form of Model|Size
-            # Memory module;DeviceID;Entity ID;Vendor;Model|Size;Model|Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
-          - type: awk
-            output: table
-            script: |
-              tolower($1) == "memory module" || tolower($1) == "memory device" { for (i = NF; i >= 5; i--) $(i + 1) = $i; print }
+            # Keep only memory lines
+            # Memory module;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: Memory module,Memory Device
           # START SNIPPET: extractSubColumnCompute
+            # Duplicate the "Model" column because it may be in the form of Model|Size
+            # Memory module;DeviceID;Entity ID;Vendor;Model|Size;Model|Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
+          - type: duplicateColumn
+            column: 5
             # Now extract "Model" from "Model|Size"
             # Memory module;DeviceID;Entity ID;Vendor;Model;Model|Size;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;MemorySize;MemoryType;CpuSpeed;CpuInfo
           - type: extract
@@ -603,13 +626,14 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Exclude what we know already (case-insensitive), and label the SerialNumber
+            # Exclude what we know already
             # DeviceType;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: awk
-            output: table
-            script: |
-              BEGIN { n = split(tolower("Battery,Disk or Disk Bay,Disk or disk bay,Disk Drive Bay,Memory module,Memory Device,LED,Temperature,Voltage,Power supply,Fan,Fan Device,Enclosure,FRU,Processor,Current,PowerConsumption,EnergyUsage,Blade,Processing Blade"), types, ","); for (i = 1; i <= n; i++) known[types[i]] = 1 }
-              !(tolower($1) in known) { $6 = "Serial Number: " $6; print }
+          - type: excludeMatchingLines
+            column: 1
+            valueList: Battery,Disk or Disk Bay,Disk or disk bay,Disk Drive Bay,Memory module,Memory Device,LED,Temperature,Voltage,Power supply,Fan,Fan Device,Enclosure,FRU,Processor,Current,PowerConsumption,EnergyUsage,Blade,Processing Blade
+          - type: prepend
+            column: 6
+            value: "Serial Number: "
       mapping:
         # InstanceTable = Source(1)
         source: ${source::source(1)}
@@ -713,12 +737,14 @@ monitors:
           type: copy
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
-            # Keep only battery lines, with a labelled SerialNumber
+            # Keep only battery lines
             # Battery;DeviceID;Entity ID;Vendor;Model;SerialNumber;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: awk
-            output: table
-            script: |
-              tolower($1) == "battery" { $6 = "serialNumber: " $6; print }
+          - type: keepOnlyMatchingLines
+            column: 1
+            valueList: battery
+          - type: prepend
+            column: 6
+            value: "serialNumber: "
       mapping:
         # InstanceTable = Source(1)
         source: ${source::source(1)}
