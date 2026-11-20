@@ -49,7 +49,7 @@ The fields `url`, `path`, `header`, `body` and `authenticationToken` interpolate
 
 ## Authentication Token
 
-`authenticationToken` usually references the source that extracts the token from a login response. That source must end in text: the token is its whole first line, without its LF or CR LF ending (a lone CR does not end the line), and without the trailing `;` that an `awk` text output ends a line of one value with. The line loses its `;` only when that `;` is its last and only one, the same rule as for a reference in a `header` or a `path`; a `;` elsewhere in the line is part of the token. This holds from MetricsHub Community 3.9.09; earlier versions took the text up to its first `;`. A table there is rejected (`TABLE_INTERPOLATED`).
+`authenticationToken` usually references the source that extracts the token from a login response. That source must end in text: the token is its whole first line as the script printed it, without its LF or CR LF ending (a lone CR does not end the line); a `;` in the line is part of the token. This holds from MetricsHub Community 3.9.09; earlier versions took the text up to its first `;`. A table there is rejected (`TABLE_INTERPOLATED`).
 
 Extract the token as a text, for example with a [json2List](../computes/json2list.html) and an `awk` that prints only the token:
 

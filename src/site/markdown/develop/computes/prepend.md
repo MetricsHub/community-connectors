@@ -72,7 +72,7 @@ beforeAll:
       value: "Bearer "
 ```
 
-- The value goes before the first character of the text, not at the beginning of each line. To add a value to each line, use an `awk`. An `awk` compute ends each line of its text with a `;`, which would stay after the token here.
+- The value goes before the first character of the text, not at the beginning of each line. To add a value to each line, use an `awk`.
 - `$n` is not a column reference here: a text has no column.
 - The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 

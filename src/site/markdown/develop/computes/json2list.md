@@ -29,7 +29,7 @@ beforeAll:
       script: '$1 == "/data/token" { print $2; exit }'
 ```
 
-The `awk` compute reads the table one row per record: `$1` is the key path and `$2` the value. It prints the token, so `login` is a text, ready for `authenticationToken: ${source::beforeAll.login}` (see [HTTP Authentication Token](../sources/http.html#authentication-token)). The token is the whole first line of that text, without the `;` that the `awk` text output ends it with: a `;` inside the token is kept.
+The `awk` compute reads the table one row per record: `$1` is the key path and `$2` the value. It prints the token, so `login` is a text, ready for `authenticationToken: ${source::beforeAll.login}` (see [HTTP Authentication Token](../sources/http.html#authentication-token)). The token is the whole first line of that text, as the script printed it.
 
 ## Properties
 

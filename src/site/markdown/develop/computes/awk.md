@@ -42,7 +42,7 @@ sources:
 | `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
 | `input` | No | None | Rejected from MetricsHub Community 3.9.09 (`DEPRECATED_SYNTAX`): a connector that sets it does not load. Remove it: the script reads the source result as it is (a text the traditional way, a table structured). To read a table as `;`-separated lines, write a [toText](./to-text.html) before the `awk`. |
-| `output` | No | `text` | What the script produces: `text` (the printed lines, filtered with `keep`, `exclude`, `separators` and `selectColumns`, each ending with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, exactly as the script prints them; before MetricsHub Community 3.9.09, each line ended with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
 
 ## Table Input And Output
 
