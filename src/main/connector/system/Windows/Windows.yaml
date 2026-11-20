@@ -89,14 +89,14 @@ monitors:
           - type: append
             column: 5
             value: ${source::totalMemory}
-          # Total into bytes, Used = Total - Free, and the utilizations
+          # Total into bytes, Used = Total - Free, and the utilizations. Without the total, Used stays empty (not -Free)
           # Free;Free%;Cached;Cached%;Used;Used%;Total
           - type: awk
             output: table
             script: |
               {
                 total = $5 * 1024
-                used = total - $1
+                used = $5 != "" ? total - $1 : ""
                 print $1, $2 / total, $3, $4 / total, used, used / total, total
               }
       mapping:

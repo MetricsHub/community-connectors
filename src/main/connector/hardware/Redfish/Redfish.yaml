@@ -430,12 +430,12 @@ monitors:
           - type: translate
             column: 4
             translationTable: "${translation::StatusInformationTranslationTable}"
-          # Convert the Reading into a Speed Percentage of the RPM range. A Reading the fan does not report stays empty:
-          # a speed ratio of 0 would be a failed fan
+          # Convert the Reading into a Speed Percentage of the RPM range. A Reading the fan does not report (empty, or NULL
+          # for a JSON null) stays as it is: a speed ratio of 0 would be a failed fan
           - type: awk
             output: table
             script: |
-              $6 != "" { $6 = $6 / ($8 - $7) * 100 }
+              $6 != "" && $6 != "NULL" { $6 = $6 / ($8 - $7) * 100 }
               { print }
       mapping:
         # Fan Value Table

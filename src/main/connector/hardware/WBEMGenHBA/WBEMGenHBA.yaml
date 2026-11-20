@@ -152,13 +152,15 @@ monitors:
           - type: translate
             column: 4
             translationTable: ${translation::PortStateToLinkStatusTranslationTable}
-            # Convert Speed from Gbps to Mbps (multiply by 1000)
+            # Convert Speed from Gbps to Mbps (multiply by 1000). A speed the port does not report stays empty: a bandwidth
+            # limit of 0 would estimate the power of the port at 2 W instead of 10 W
             # Remove the array pipes from the port WWN
             # AdapterID;Status;StatusInformation;LinkStatus;PortSpeed;PortWWN-Decimal;
           - type: awk
             output: table
             script: |
-              { gsub(/[|]/, ".", $6); print $1, $2, $3, $4, $5 * 1000, $6 }
+              $5 != "" { $5 = $5 * 1000 }
+              { gsub(/[|]/, ".", $6); print $1, $2, $3, $4, $5, $6 }
         source(2):
           # Source (2) = MSFC_FibrePortHBAStatistics
           # InstanceName;TxFrames;RxFrames;ErrorCount

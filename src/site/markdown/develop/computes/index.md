@@ -63,15 +63,15 @@ These stay computes, and end the run: the computes before them and after them ar
 Instead of:
 
 ```yaml
-- type: subtract
+- type: add
   column: 8
-  value: $7
-- type: divide
-  column: 6
-  value: $8
-- type: multiply
-  column: 6
-  value: 100
+  value: $9
+- type: add
+  column: 12
+  value: $13
+- type: add
+  column: 10
+  value: $14
 ```
 
 Write:
@@ -80,12 +80,12 @@ Write:
 - type: awk
   output: table
   script: |
-    { $8 = $8 - $7; $6 = $6 / $8 * 100; print }
+    { $8 = $8 + $9; $12 = $12 + $13; $10 = $10 + $14; print }
 ```
 
 The script takes care of what the computes do on their own:
 
-- An arithmetic compute leaves an empty or non-numeric cell as it is, where AWK computes with it as 0. Do the math directly, without testing the operands: a value the device does not report becomes 0, which is right for a counter, a size, a sum, a rate or a capacity. A division by 0 gives `inf`, which MetricsHub does not collect, as an empty cell. Test a value (`$6 != "" { $6 = $6 * 1000 }`) only where its 0 is wrong in a way that matters, and that value only: a metric that the hardware rules judge (a fan speed of 0 is a failed fan, a voltage of 0 crosses its low limit), a value that derives a wrong one from it (`100 - $3` for an unreported wear is a disk with all its endurance left), or an attribute, an id, a join key, or the input of a line filter or a `translate`.
+- An arithmetic compute leaves an empty or non-numeric cell as it is, where AWK computes with it as 0. Do the math directly, without testing the operands: a value the device does not report becomes 0, which is right for a counter, a size, a sum, a rate or a capacity. A division by 0 gives `inf` or `nan`, which MetricsHub does not collect, as an empty cell. Test a value (`$6 != "" { $6 = $6 * 1000 }`) only where its 0 is wrong in a way that matters, and that value only: a metric that the hardware rules judge (a fan speed of 0 is a failed fan, a voltage of 0 crosses its low limit), a value that derives a wrong one from it (`100 - $3` for an unreported wear is a disk with all its endurance left, a bandwidth limit of 0 makes the power estimate of a port 2 W instead of 10 W), or an attribute, an id, a join key, or the input of a line filter or a `translate`. After a `json2Table`, a JSON `null` is the text `NULL`, which AWK also computes as 0: test it too (`$6 != "" && $6 != "NULL"`).
 - With `output: table`, `print` writes a computed number that is not a whole number with 15 significant digits (MetricsHub sets `OFMT` to `%.15g`): a computed 0.3 prints `0.3`. A whole number prints without decimals (`8000`, where `multiply` writes `8000.0`), and a number concatenated into a text uses `CONVFMT` (`%.6g`): format it with `sprintf` there.
 - `replace` replaces every occurrence of a literal text, and `gsub` takes a regular expression: escape its special characters (`gsub(/[|]/, ".", $5)`).
 - `print $1, $2, $3` writes three cells, empty ones for a shorter row, and `print` without argument writes the row as it is.
