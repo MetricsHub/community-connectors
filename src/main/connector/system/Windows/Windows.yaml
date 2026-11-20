@@ -122,11 +122,11 @@ monitors:
           namespace: root\CIMv2
           query: SELECT DeviceID,FreeSpace,FreeSpace,Size,Size,VolumeName,FileSystem FROM Win32_LogicalDisk WHERE DriveType = 3
           computes:
-          # UsedSpace = Size - FreeSpace, and the utilizations
+          # UsedSpace = Size - FreeSpace (empty without the Size, never negative), and the utilizations
           - type: awk
             output: table
             script: |
-              { print $1, $2, $3 / $5, $4 - $2, ($4 - $2) / $5, $5, $6, $7 }
+              { print $1, $2, $3 / $5, ($4 != "" ? $4 - $2 : ""), ($4 - $2) / $5, $5, $6, $7 }
       mapping:
         source: ${source::fileSystemInformation}
         attributes:
