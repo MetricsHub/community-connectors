@@ -19,8 +19,8 @@ Both inputs must be tables. A text, such as a command output, needs a `toTable` 
 sources:
   joinedDisks:
     type: tableJoin
-    leftTable: ${source::monitors.disk.discovery.sources.diskInventory}
-    rightTable: ${source::monitors.disk.collect.sources.diskHealth}
+    leftTable: ${source::diskInventory}
+    rightTable: ${source::diskHealth}
     leftKeyColumn: 1
     rightKeyColumn: 1
     defaultRightLine: [ "", "unknown" ]
@@ -35,7 +35,7 @@ sources:
 | `rightTable` | Yes | None | Right table: a source reference, or a table literal written as a list of rows. |
 | `leftKeyColumn` | Yes | None | Join key column in left table (1-based). |
 | `rightKeyColumn` | Yes | None | Join key column in right table (1-based). |
-| `defaultRightLine` | No | None | Fallback right-side row when no match is found: a list of cells (recommended), or a legacy string split on `;`. Without it, unmatched left rows are dropped (inner join). See [Writing `defaultRightLine`](#writing-defaultrightline). |
+| `defaultRightLine` | No | None | Fallback right-side row when no match is found: a list of cells. Without it, unmatched left rows are dropped (inner join). See [Writing `defaultRightLine`](#writing-defaultrightline). |
 | `keyType` | No | None | Key comparison mode. Use `Wbem` for WBEM/WMI path keys. |
 | `isWbemKey` | No | None | Legacy compatibility flag in older connectors. Prefer `keyType: Wbem`. |
 | `computes` | No | `[]` | Post-join compute pipeline. |
@@ -63,13 +63,6 @@ Joined result with `defaultRightLine: [ "", "unknown" ]`:
 | d1 | NVMe A | d1 | ok |
 | d2 | NVMe B |  | unknown |
 
-Equivalent serialized output:
-
-```text
-d1;NVMe A;d1;ok
-d2;NVMe B;;unknown
-```
-
 ## Writing `defaultRightLine`
 
 Write `defaultRightLine` as a YAML list: one item per column of the right table, each item being exactly one cell, `;` included. An all-empty line for a 4-column right table is four empty cells:
@@ -85,35 +78,23 @@ defaultRightLine: [ "", "", "", "" ]
 | `[ "a", "" ]` | 2: `a`, empty |
 | `[ "a;b" ]` | 1: `a;b` |
 
-### Legacy string form
-
-Older connectors write `defaultRightLine` as a string. It is split on `;`, and each field ends with a `;`. The final `;` may be left out only when the last field is not empty:
-
-| `defaultRightLine` | Fields |
-| --- | --- |
-| `;unknown` or `;unknown;` | 2: empty, `unknown` |
-| `a;b` | 2: `a`, `b` |
-| `a;;` | 2: `a`, empty |
-| `;;;;` | 4 empty fields |
-| `;;;` | 3 empty fields |
-
-An all-empty line therefore needs **one semicolon per column** of the right table: `;;;;` for a 4-column right table. With one semicolon less, the unmatched rows are one column short of the matched ones. A cell cannot hold a `;` in this form. Prefer the list form in new connectors.
+The list needs one cell at least, and a cell is a scalar other than null (`~`). A string (`defaultRightLine: ";unknown"`) does not load: write a list.
 
 ## Writing a Table Literal
 
-`leftTable` or `rightTable` can be a table written in the connector, as a YAML list of rows, each row a list of cells. It gives exactly these rows and cells, `;` included (MetricsHub Community 3.9.09 or later):
+`leftTable` or `rightTable` can be a table written in the connector, as a YAML list of rows, each row a list of cells. It gives exactly these rows and cells, `;` included:
 
 ```yaml
 sources:
   tableIds:
     type: tableJoin
-    leftTable: ${source::monitors.enclosure.discovery.sources.tables}
+    leftTable: ${source::tables}
     rightTable: [ [ MSHW_TableID ] ]
     leftKeyColumn: 1
     rightKeyColumn: 1
 ```
 
-A list that is not a list of rows is rejected when the connector loads, and so is the older `;` string form (`rightTable: MSHW_TableID;`, `STRING_LITERAL_ROWS`). Cells and quoting follow the rules of [Writing Table Literals](./table-union.html#writing-table-literals).
+A list that is not a list of rows is rejected when the connector loads, and so is a string that is not a source reference (`rightTable: MSHW_TableID;`, `STRING_LITERAL_ROWS`). Cells and quoting follow the rules of [Writing Table Literals](./table-union.html#writing-table-literals).
 
 ## Recommended Pattern
 
@@ -125,8 +106,8 @@ A list that is not a list of rows is rejected when the connector loads, and so i
 ## Common Mistakes
 
 - Using wrong key column indexes after upstream compute changes.
-- Omitting `defaultRightLine` and silently losing unmatched rows. When the join feeds the mapping of a `discovery` or `simple` job, the instances of these rows are removed (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
-- Writing one semicolon per column minus one for an all-empty `defaultRightLine` in the legacy string form (`;;;` for a 4-column right table). The list form has no such trap: `[ "", "", "", "" ]`.
+- Omitting `defaultRightLine` and silently losing unmatched rows. When the join feeds the mapping of a `discovery` or `simple` job, the instances of these rows are removed (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
+- Writing fewer cells in `defaultRightLine` than the right table has columns: the unmatched rows are shorter than the matched ones. An all-empty line for a 4-column right table is `[ "", "", "", "" ]`.
 - Joining on transformed strings that are not unique.
 
 ## Community Examples

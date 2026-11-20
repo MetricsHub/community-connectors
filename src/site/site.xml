@@ -141,7 +141,7 @@
 				<item name="Extract WBEM Property" href="develop/computes/extract-wbem-property.html" />
 				<item name="Head" href="develop/computes/head.html" />
 				<item name="Insert Column" href="develop/computes/insert-column.html" />
-				<item name="JSON to Table" href="develop/computes/json2csv.html" />
+				<item name="JSON to Table" href="develop/computes/json2table.html" />
 				<item name="JSON to List" href="develop/computes/json2list.html" />
 				<item name="Keep Columns" href="develop/computes/keep-columns.html" />
 				<item name="Keep Only Matching Lines" href="develop/computes/keep-only-matching-lines.html" />

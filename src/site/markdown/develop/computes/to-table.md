@@ -41,7 +41,7 @@ sources:
 | `exclude` | No | None | Regular expression; the lines that match are dropped. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers or ranges to keep after the split, in that order, e.g. `"2,4-6,8-"` (`8-` means from column 8 to the last one). A selected column absent from a row gives an empty cell, so the row is kept. `0` selects nothing. |
 
-Blank lines never become rows, and CRLF line endings are read as LF.
+Blank lines never become rows.
 
 ## Table Transformation Example
 
