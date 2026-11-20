@@ -66,7 +66,7 @@ Note that `Temperature` is kept: `valueList` comparison is case-insensitive.
 - Filter as early as possible in the `computes` pipeline so subsequent computes process fewer rows.
 - Drive `regExp` from a connector variable (`regExp: ${var::serviceNames}`) when the user should choose what to monitor, as done in `LinuxService` and `WindowsProcess`.
 - Anchor the regex (`^value$`) when you need an exact match with regex features; otherwise `abc` also keeps `xabcy`.
-- In a `discovery` or `simple` job, whose rows create the instances, keep on a type, a class or a name, never on a state (`Enabled`, `up`, `running`) or a value. An instance whose row is filtered out is removed (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)), which hides the very failure the state should report. Keep every row and map the state as a metric.
+- In a `discovery` or `simple` job, whose rows create the instances, keep on a type, a class or a name, never on a state (`Enabled`, `up`, `running`) or a value. An instance whose row is filtered out is removed (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)), which hides the very failure the state should report. Keep every row and map the state as a metric.
 
 ## Common Mistakes
 
