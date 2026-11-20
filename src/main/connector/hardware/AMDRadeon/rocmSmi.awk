@@ -15,7 +15,7 @@ $1 ~ /^card[0-9]+$/ {
   avgPower     = $20 # Average Graphics Package Power (W)
   gpuUse       = $21 # GPU use (%)
   gpuMemUse    = $22 # GPU memory use (%)
-  memBw        = $24 # Avg. Memory Bandwidth
+  memBw        = $24 / 1000000000 # Avg. Memory Bandwidth
   memVendor    = $25 # GPU memory vendor
   serialNumber = $27 # Serial Number
   voltage_mV   = $28 # Voltage (mV)

@@ -77,9 +77,10 @@ BEGIN {
 		info = "Volume Information: " info
 	}
 	if (collect) {
-		print volumeID, status
+		# The status twice: the first one is translated, the second one is the StatusInformation
+		print volumeID, status, status
 	} else {
-		print volumeID, displayID, letter, type, fs, size, status, info
+		print volumeID, displayID, letter, type, "File System: " fs, size, status, info
 	}
 }
 

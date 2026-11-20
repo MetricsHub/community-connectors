@@ -54,7 +54,7 @@ With `columnNumbers: 1,3,5`:
 ## Recommended Pattern
 
 - Apply `keepColumns` as the **last** compute of the pipeline whenever possible: earlier computes reference columns by index, and dropping columns mid-pipeline renumbers everything after it.
-- Add a comment listing the kept column names right next to the compute (as `IpmiTool` and `WmiIpmi` do), so the mapping's `$1`, `$2`, ... references stay understandable.
+- Add a comment listing the kept column names right next to the compute (as `WinStorageSpaces` does), so the mapping's `$1`, `$2`, ... references stay understandable.
 - Trim `tableJoin` results with `keepColumns` to remove the duplicated key columns before mapping.
 
 ## Common Mistakes
@@ -67,7 +67,6 @@ With `columnNumbers: 1,3,5`:
 ## Community Examples
 
 - [Cassandra](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/database/Cassandra/Cassandra.yaml)
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
 
 From `Cassandra` (trimming a chain of `tableJoin` results before mapping), included directly from the connector source:

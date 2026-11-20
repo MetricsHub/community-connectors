@@ -57,18 +57,12 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
-          - type: insertColumn
-            column: 4
-            value: ""
-            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 5
-            value: ""
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 10
-            value: ""
+            # Add empty StatusArray, StatusInformation and AdditionalInformation1 columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
 
         source(2):
           # Handle the "Fan Device" and "Fan/cooling device" (HP through WMI) formats: status only
@@ -87,22 +81,12 @@ monitors:
             column: 4
             conversion: array2SimpleStatus
             # Fan Device;DeviceID;DisplayID;Status;StatusInformation;AdditionalInformation1;
-          - type: insertColumn
-            column: 6
-            value: ""
-            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;AdditionalInformation1;
-          - type: insertColumn
-            column: 7
-            value: ""
-            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;AdditionalInformation1;
-          - type: insertColumn
-            column: 8
-            value: ""
-            # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;WarningThreshold;AdditionalInformation1;
-          - type: insertColumn
-            column: 9
-            value: ""
+            # Add empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;DisplayID;Status;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, $4, $5, "", "", "", "", $6 }
 
         source(3):
           # Union of both fan formats
@@ -209,12 +193,11 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: Power supply
-          - type: prepend
-            column: 6
-            value: "SerialNumber: "
-          - type: prepend
-            column: 5
-            value: "Model: "
+            # Label Model and SerialNumber
+          - type: awk
+            output: table
+            script: |
+              { $5 = "Model: " $5; $6 = "SerialNumber: " $6; print }
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Power supply;DeviceID;Entity ID;Vendor;Model;SerialNumber;Status;StatusInformation;AdditionalInformation1;
           - type: convert

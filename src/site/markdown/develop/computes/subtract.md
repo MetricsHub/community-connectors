@@ -60,8 +60,9 @@ original total remains available for the mapping.
 
 ## Recommended Pattern
 
-- Select a field twice in the source query (or use `duplicateColumn`) when you need both the raw
-  value and the subtracted result downstream.
+- Select a field twice in the source query when you need both the raw value and the subtracted
+  result downstream. A `duplicateColumn` followed by the `subtract` is a run of two computes: write
+  one [awk](./awk.html) compute instead (see [Awk Or Computes](./index.html#awk-or-computes)).
 - Keep the operand column intact and reference it with `value: $n`; `subtract` only modifies
   `column`.
 - Comment the resulting column layout above the compute so the mapping indexes stay reviewable.
@@ -69,7 +70,7 @@ original total remains available for the mapping.
 ## Common Mistakes
 
 - Reversing the operands: `subtract` computes `column - value`, never `value - column`. For
-  `constant - column`, first `multiply` the column by `-1`, then `add` the constant.
+  `constant - column`, write one [awk](./awk.html) compute (`$3 = 100 - $3`).
 - Pointing `column` or `$n` at indexes that were shifted by an earlier compute such as
   `keepColumns` or `awk`.
 - Applying `subtract` to a column that contains non-numeric text such as an empty string or a
@@ -78,8 +79,7 @@ original total remains available for the mapping.
 ## Community Examples
 
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
-- [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml)
 
-From `Windows.yaml`, deriving used memory from total and free, included directly from the connector source:
+From `Windows.yaml`, deriving the minor page faults from all the page faults and the page reads, included directly from the connector source:
 
-<!-- MACRO{snippet|id=subtractUsedMemoryCompute|file=src/main/connector/system/Windows/Windows.yaml} -->
+<!-- MACRO{snippet|id=subtractMinorPageFaultsCompute|file=src/main/connector/system/Windows/Windows.yaml} -->

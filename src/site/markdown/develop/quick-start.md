@@ -270,7 +270,7 @@ See [Integration Testing](integration-testing.html) for the full recording and g
 
 - building a very large connector before first passing test
 - using unstable display strings as resource `id`
-- overusing custom AWK when built-in computes are enough
+- a run of computes that one `awk` compute writes, or an `awk` compute for what one compute does (see [Awk Or Computes](computes/index.html#awk-or-computes))
 - adding legacy aliases in new connector code
 
 ## Where to Go Next

@@ -72,7 +72,7 @@ beforeAll:
       value: "Bearer "
 ```
 
-- The value goes before the first character of the text, not at the beginning of each line. To add a value to each line, use an `awk`. An `awk` compute ends each line of its text with a `;`, which would stay after the token here.
+- The value goes before the first character of the text, not at the beginning of each line. To add a value to each line, use an `awk`.
 - `$n` is not a column reference here: a text has no column.
 - The content decides, not the compute: a text stays a text, a table stays a table. A connector with a `column` on a text does not load (`COLUMN_ON_TEXT`), nor does one with no `column` on a table (`NO_COLUMN_ON_TABLE`), see [Strict Content Types](../design-principles.html#strict-content-types).
 
@@ -80,7 +80,7 @@ beforeAll:
 
 - Quote values that end with a space, so YAML preserves them verbatim: `value: 'Input '`.
 - Use [insertColumn](./insert-column.html) with `column: 1` (`value: MSHW`) to add a constant leading key column to keyless single-value sources before a `tableJoin` or `mapping`.
-- Label human-readable fields (`"Model: "`, `"SerialNumber: "`) with `prepend` right before `mapping` rather than in AWK scripts — it keeps the pipeline declarative.
+- Label one human-readable field (`"Model: "`) with one `prepend`. Labels on several fields, or a label next to other computes that AWK expresses, go into one [awk](./awk.html) compute (`$8 = "Model: " $8; $9 = "Serial Number: " $9`), see [Awk Or Computes](./index.html#awk-or-computes).
 
 ## Common Mistakes
 
@@ -93,4 +93,4 @@ beforeAll:
 ## Community Examples
 
 - [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml) (`"Model: "` and `"SerialNumber: "` labels)
+- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml) (`"SerialNumber: "` label)

@@ -60,7 +60,7 @@ A cell holding `Fan 3`, a line break and `spare` is written `Fan 3 spare`.
 
 - Set `FS = ";"` in the AWK script that follows, and declare `output: table` on it when its result is read as a table, printing one argument per cell.
 - Write no `toText` before an `awk` that can read the cells as fields (`$1..$NF`): the cells keep their `;` and their line breaks.
-- Prefer the table computes (`translate`, `multiply`, `keepOnlyMatchingLines`, ...) when they can express the transformation: they keep the table typed and need no conversion.
+- Keep the table typed rather than converting it: one table compute (`translate`, `multiply`, `keepOnlyMatchingLines`, ...) when one is enough, one `awk` compute with `output: table` for two or more consecutive computes that AWK expresses (see [Awk Or Computes](./index.html#awk-or-computes)).
 
 ## Common Mistakes
 

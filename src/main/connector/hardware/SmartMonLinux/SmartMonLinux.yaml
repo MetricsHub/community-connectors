@@ -75,15 +75,12 @@ monitors:
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}"
           computes:
-          # Process smartctl's output through awk physical_disk_smart_health.awk
-          # SMARTstatus
+          # Process smartctl's output through awk physical_disk_smart_health.awk, which prints the SMARTstatus twice:
+          # the first copy becomes the join key, the second the PredictedFailure value
+          # SMARTstatus;SMARTstatus
           - type: awk
             script: "${file::physical_disk_smart_health.awk}"
             output: table
-            # Duplicate the SMARTstatus: the first copy becomes the join key, the second the PredictedFailure value
-            # SMARTstatus;SMARTstatus
-          - type: duplicateColumn
-            column: 1
             # 1;SMARTstatus
           - type: translate
             column: 1
@@ -112,10 +109,12 @@ monitors:
           leftKeyColumn: 1
           rightKeyColumn: 1
           computes:
+            # START SNIPPET: insertJoinKeyColumnCompute
             # 1;PredictedFailure;1;Status;StatusInformation;joinValue
             - type: insertColumn
               column: 6
               value: joinValue
+            # END SNIPPET: insertJoinKeyColumnCompute
         source(4):
           type: commandLine
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"

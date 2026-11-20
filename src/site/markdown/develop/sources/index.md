@@ -33,9 +33,10 @@ psu02;PSU 2;failed;
 ```
 
 - A [toText](../computes/to-text.html) ends each line with `;`, turns a `;` inside a cell into `,`, and a line break inside a cell into a space: each row is one line.
-- `$0` of an [awk](./awk.html) source whose `input` is a reference to a table ends the line with `;`, except when that trailing `;` is its only one (typically a row of a single cell), and keeps a `;` and a line break inside a cell. A table referenced in a string field is rejected (`TABLE_INTERPOLATED`); a referenced text gives its lines as they are, with the same exception for a line whose only `;` is its last character.
 - The `execute...` functions of an [awk](./awk.html#in-the-awk-source) source end each line with `;`, and keep a `;` and a line break inside a cell.
 - A source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` reads the table of an entry as `toText` writes it.
+
+A table referenced in a string field (`${source::...}`) is rejected (`TABLE_INTERPOLATED`); a referenced text is taken as it is, without its final line feeds. An [awk](./awk.html) source whose `input` is a reference to a table reads it structured, as the `awk` compute does: `$0` is the cells joined with `FS`.
 
 Only a conversion (`toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: if a compute appends `;42` to column 2, the cell holds `;42` at its end and the table keeps its columns. Add a column with [insertColumn](../computes/insert-column.html) or [duplicateColumn](../computes/duplicate-column.html).
 
