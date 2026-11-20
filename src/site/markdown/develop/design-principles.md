@@ -42,7 +42,7 @@ Perform status and unit normalization before mapping:
 - `convert` for format conversions
 - `divide` / `multiply` for units
 - `keepOnlyMatchingLines` / `excludeMatchingLines` early to reduce volume
-- one `awk` compute with `output: table` when a source needs two or more consecutive computes that AWK expresses directly (filters, column edits, arithmetic): a `translate`, `arrayTranslate` or `perBitTranslation` stays a compute and ends the run, and the script leaves a non-numeric or empty cell as it is and sets `OFMT` (see [Awk Or Computes](computes/index.html#awk-or-computes))
+- one `awk` compute with `output: table` when a source needs two or more consecutive computes that AWK expresses directly (column edits, arithmetic): a line filter, a `translate`, `arrayTranslate` or `perBitTranslation` stays a compute and ends the run, and the script leaves a non-numeric or empty cell as it is (see [Awk Or Computes](computes/index.html#awk-or-computes))
 
 ## 5. Make Mapping Boring
 

@@ -60,7 +60,7 @@ With `column: 5`, `subColumn: 1`, `subSeparators: '|'`:
 
 ## Recommended Pattern
 
-- Unpack a two-in-one column with two `extract` computes: copy the column first (a `duplicateColumn`, or the `awk` compute that already runs before), then extract sub-column 1 from the original and sub-column 2 from the copy (see `IpmiTool`, which splits `Model|Size` this way).
+- Chain two `extract` computes to unpack a two-in-one column: first `duplicateColumn`, then extract sub-column 1 from the original and sub-column 2 from the copy (see `IpmiTool`, which splits `Model|Size` this way).
 - Quote `subSeparators` whenever the character is meaningful in YAML (`'|'`, `'"'`, `':'`, `' '`).
 - Extract before numeric computes (`multiply`, `divide`): `2.5 GHz` must become `2.5` before you can do arithmetic on it.
 
@@ -77,6 +77,6 @@ With `column: 5`, `subColumn: 1`, `subSeparators: '|'`:
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 - [WBEMGenDiskNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WBEMGenDiskNT/WBEMGenDiskNT.yaml)
 
-From `IpmiTool` (column 5 contains `Model|Size`, and the `awk` compute that keeps the memory lines copies it into column 6; keep the model from the original and the size from the copy):
+From `IpmiTool` (column 5 contains `Model|Size`; duplicate the column, then keep the model from the original and the size from the copy):
 
 <!-- MACRO{snippet|id=extractSubColumnCompute|file=src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml} -->

@@ -64,7 +64,7 @@ With `column: 4` and `valueList: CD-ROM,DVD-ROM,Removable`:
 - In a `discovery` or `simple` job, whose rows create the instances, exclude on a type or a class only. A value or a state that can change (`N/A` or all-zero readings, a size of `0`, `Disabled`) removes the instance as soon as it matches (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Blank such a value instead of dropping the row, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) on the monitor.
 - In a `collect` job, dropping a row also drops the status and the other metrics it carries. When the row holds more than the unwanted value, blank the value instead: an [`awk`](awk.html) compute that empties the reading column, or a [`replace`](replace.html) compute when the exact value is known. Exclude the row only when it carries nothing but that value.
 - Prefer `valueList` when the unwanted values are a fixed set of literals; use `regExp` for actual patterns, e.g. `regExp: ^[0.]+$` to drop all-zero readings from rows that carry nothing else.
-- To filter on several columns, write one [awk](./awk.html) compute with one condition per column (`tolower($2) !~ /virtual/ && tolower($4) !~ /^usb/`) rather than one `excludeMatchingLines` per column, see [Awk Or Computes](./index.html#awk-or-computes).
+- Chain one `excludeMatchingLines` per column when you need to filter on several columns.
 
 ## Common Mistakes
 
@@ -76,6 +76,7 @@ With `column: 4` and `valueList: CD-ROM,DVD-ROM,Removable`:
 
 ## Community Examples
 
+- [DiskPart](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/DiskPart/DiskPart.yaml)
 - [LibreHardwareMonitor](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LibreHardwareMonitor/LibreHardwareMonitor.yaml)
 - [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
 
