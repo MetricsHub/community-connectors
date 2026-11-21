@@ -121,7 +121,7 @@ These read a table. A text there is rejected (`TEXT_FEEDS_TABLE`): end its sourc
 
 - `leftTable` and `rightTable` of a [`tableJoin`](sources/table-join.html);
 - the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is rejected once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is rejected `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
-- `mapping.source`, when the mapping has one (a mapping without `source` reads no table, see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping));
+- `mapping.source` (a `type: simple` mapping has none and reads no table, see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping));
 - the result source of a tool that declares `columns` (see [tools](tools.html));
 - the computes that work on columns: every compute but `awk`, `json2Table`, `json2List`, `xml2Csv` and `toTable` (`toText` included), except `append`, `prepend`, `replace` and `substring` without a `column` (see [Text Or Table](#text-or-table));
 - the tables of an [`internalDbQuery`](sources/internal-db-query.html);
@@ -180,8 +180,11 @@ A `${source::...}` reference to a source the connector does not have is rejected
 | `NOT_A_REFERENCE` | reference a source, a static source holds a hard-coded table | Anything but a source reference in a field listed in [Source References](#source-references). |
 | `TABLE_INTERPOLATED` | interpolate a text | A table referenced in an interpolated field. |
 | `UNRESOLVED_REFERENCE` | reference an existing source | A reference to a source the connector does not have. |
-| `COLUMN_IN_SIMPLE_MAPPING` | set the mapping source, or reference a text source | A column (`$1`, also inside `${awk::...}` or a function, or a value that is `$0`) in a mapping without `source` (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)). |
-| `NO_CONSTANT_KEY_IN_SIMPLE_MAPPING` | write the key attribute as a constant, or set the mapping source | A key attribute of the job that a mapping without `source` does not write with the exact case of the key (`Id` does not write the key `id`), or writes with a value that is not a plain constant (a `${source::...}` reference, `$index`, an `${awk::...}` or a function such as `lookup(...)`), in a `discovery`, a `simple` job or a `multiInstance` collect. |
+| `TABLE_MAPPING_WITHOUT_SOURCE` | set the source, or write type: simple | A mapping of the default type `table` without `source` (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)). |
+| `SOURCE_IN_SIMPLE_MAPPING` | remove the source, or the type: simple | A `type: simple` mapping with a `source`. |
+| `COLUMN_IN_SIMPLE_MAPPING` | write a table mapping with a source, or reference a text source | A column (`$1`, also inside `${awk::...}` or a function, or a value that is `$0`) in a `type: simple` mapping. |
+| `MIXED_MAPPING_TYPES` | give every mapping of the job the same type | A job whose mappings (`discovery`, `collect`) do not all have the same `type`. |
+| `KEYS_WITH_SIMPLE_MAPPING` | remove the keys | `keys` on a monitor whose job has a `type: simple` mapping, which has no key attributes. |
 | `DEPRECATED_SYNTAX` | remove or rename it | The `json2Csv` or `json2csv` compute type (rename it `json2Table`), the `parsingMode` property of a `json2Table` compute, the `input`, `keep`, `exclude`, `separators` and `selectColumns` properties of an `awk` compute, and the `inputFormat` and `separators` properties of an `awk` source (remove them). See [Legacy and Compatibility](legacy-and-compatibility.html). |
 
 Each finding is logged at ERROR when the connector loads, and the load error lists every finding. The message names the rule, the source, the location, the expected and actual types, and the hint:
