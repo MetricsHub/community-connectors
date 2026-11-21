@@ -231,7 +231,7 @@ A monitor type whose job has a simple mapping is a singleton for the connector: 
             license.count: 1
   ```
 
-- Every mapping of the job has the same type: a `discovery` and its `collect` are both `simple` or both `table` (`MIXED_MAPPING_TYPES`).
+- Every mapping of the monitor has the same type: its `discovery` and its `collect` are both `simple` or both `table` (`MIXED_MAPPING_TYPES`).
 
 It works in every job:
 
@@ -254,7 +254,7 @@ The connector does not load, and neither do the `monitors` of a resource in `met
 | `TABLE_MAPPING_WITHOUT_SOURCE` | set the source, or write type: simple | A mapping of the default type `table` without `source`. |
 | `SOURCE_IN_SIMPLE_MAPPING` | remove the source, or the type: simple | A `type: simple` mapping with a `source`. |
 | `COLUMN_IN_SIMPLE_MAPPING` | write a table mapping with a source, or reference a text source | A value of a simple mapping that reads a column: `$1` anywhere in the value (also inside `${awk::...}` or a function such as `rate($1)`), or a value that is `$0`. |
-| `MIXED_MAPPING_TYPES` | give every mapping of the job the same type | A job whose mappings do not all have the same type: a `simple` discovery with a `table` collect, for instance. |
+| `MIXED_MAPPING_TYPES` | give every mapping of the monitor the same type | A monitor whose mappings do not all have the same type: a `simple` discovery with a `table` collect, for instance. |
 | `KEYS_WITH_SIMPLE_MAPPING` | remove the keys | `keys` on a monitor whose job has a simple mapping. |
 | `TABLE_INTERPOLATED` | interpolate a text | A value that references a source that ends in a table. Write a `toText` in that source, or use a table mapping. |
 

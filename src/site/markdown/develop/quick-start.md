@@ -66,8 +66,8 @@ Most connector logic is table-oriented:
 
 - most sources output a **table**
 - most computes transform a **table**
-- mapping consumes a **table**
-- each mapped row becomes one monitor instance exported as one OpenTelemetry Resource (a `type: simple` mapping, without `source`, maps a single instance, see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping))
+- a table mapping consumes a **table**
+- each mapped row becomes one monitor instance exported as one OpenTelemetry Resource (a `type: simple` mapping has no `source`, reads no table and maps a single instance, see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping))
 
 Internally, tables are represented as a **list of lists of strings**. The example below shows the same data in its internal form and as a table:
 
