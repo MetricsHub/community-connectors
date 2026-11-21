@@ -10,8 +10,8 @@ description: The multiply compute multiplies every value of a column by a number
 Use `multiply` to multiply every value of one column by an operand, row by row. The operand is
 either a literal number or, with the `$n` syntax, the value of another column of the same row.
 It is the workhorse of unit conversion — kilobytes to bytes (`value: 1024`), megabytes to bytes
-(`value: 1048576`), ratios to percentages (`value: 100`) — and `value: -1` negates a column when
-you need to compute `constant - column` together with `add`. The column values must be numeric.
+(`value: 1048576`), ratios to percentages (`value: 100`) — and `value: -1` negates a column. The
+column values must be numeric.
 
 ## Syntax
 
@@ -20,12 +20,9 @@ sources:
   memoryUsage:
     type: wmi
     namespace: root\CIMv2
-    query: SELECT FreePhysicalMemory,TotalVisibleMemorySize FROM Win32_OperatingSystem
+    query: SELECT Caption,TotalVisibleMemorySize FROM Win32_OperatingSystem
     computes:
     # Convert kilobytes to bytes
-    - type: multiply
-      column: 1
-      value: 1024
     - type: multiply
       column: 2
       value: 1024
@@ -41,30 +38,31 @@ sources:
 
 ## Table Transformation Example
 
-With `column: 1` and `value: 1024`, then `column: 2` and `value: 1024`:
+With `column: 2` and `value: 1024`:
 
 > [!TABS]
 >
 > - <span class="fa-solid fa-table-list"></span> Input
 >
->   | FreePhysicalMemory (kB) | TotalVisibleMemorySize (kB) |
+>   | Caption | TotalVisibleMemorySize (kB) |
 >   | --- | --- |
->   | 4194304 | 16777216 |
+>   | Microsoft Windows Server 2022 | 16777216 |
 >
 > - <span class="fa-solid fa-table-list"></span> Result
 >
->   | FreePhysicalMemory (B) | TotalVisibleMemorySize (B) |
+>   | Caption | TotalVisibleMemorySize (B) |
 >   | --- | --- |
->   | 4294967296 | 17179869184 |
+>   | Microsoft Windows Server 2022 | 17179869184 |
 
 ## Recommended Pattern
 
 - Convert source units to the units expected by the metric right after collection, and record the
   conversion in a comment (`# Convert kilobytes to bytes`).
-- Use `value: -1` followed by `add` when you need `constant - column` (e.g. endurance remaining =
-  100 - wear), since `subtract` only computes `column - value`.
-- When the same conversion applies to several columns, chain one `multiply` per column in the same
-  `computes` list rather than post-processing in the mapping.
+- For `constant - column` (e.g. endurance remaining = 100 - wear), write one [awk](./awk.html)
+  compute (`$3 = 100 - $3`): `subtract` only computes `column - value`, and a `multiply` by `-1`
+  followed by an `add` is a run of two computes (see [Awk Or Computes](./index.html#awk-or-computes)).
+- When the same conversion applies to several columns, convert them all in one `awk` compute rather
+  than with one `multiply` per column.
 
 ## Common Mistakes
 
@@ -76,10 +74,9 @@ With `column: 1` and `value: 1024`, then `column: 2` and `value: 1024`:
 
 ## Community Examples
 
-- [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
-- [Windows](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/system/Windows/Windows.yaml)
-- [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
+- [LibreHardwareMonitor](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LibreHardwareMonitor/LibreHardwareMonitor.yaml)
+- [MIB2EntitySensor-header](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2EntitySensor-header/MIB2EntitySensor-header.yaml)
 
-From `WinStorageSpaces.yaml`, computing `100 - Wear` with a negation followed by an addition, included directly from the connector source:
+From `LibreHardwareMonitor.yaml`, converting volts into millivolts, included directly from the connector source:
 
-<!-- MACRO{snippet|id=wearToEnduranceRemaining|file=src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml} -->
+<!-- MACRO{snippet|id=multiplyVoltsCompute|file=src/main/connector/hardware/LibreHardwareMonitor/LibreHardwareMonitor.yaml} -->

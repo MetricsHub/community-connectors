@@ -78,8 +78,8 @@ sources:
 
 ## Recommended Pattern
 
-- Chain several `replace` computes for multi-step cleanup; they run in order, so a first pass can replace a placeholder (`MSHWMSHW` → `$2`) and a second pass can remove what remains (`MSHW` → `""`).
-- Use `existingValue: $n` with the same `column: n` to overwrite the entire column with `newValue` — a common way to copy another column (`newValue: $19`) into place.
+- One cleanup is one `replace`. A cleanup of several steps (replace a placeholder, then remove what remains) is a run of computes: write one [awk](./awk.html) compute with a `gsub` per step, or a test that says what the steps mean (`$7 == "" { $7 = $2 }`), see [Awk Or Computes](./index.html#awk-or-computes).
+- Use `existingValue: $n` with the same `column: n` to overwrite the entire column with `newValue`, for instance with the content of another column (`newValue: $19`).
 - Replace sentinel values (`4294967295`, `71582788`) with `0` or `""` before `mapping` interprets them as real measurements.
 - Quote YAML-sensitive values: `existingValue: '"'`, `newValue: ""`.
 
@@ -92,10 +92,9 @@ sources:
 
 ## Community Examples
 
-- [HyperV](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/HyperV/HyperV.yaml)
-- [MIB2](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/MIB2/MIB2.yaml)
-- [GenBatteryNT](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenBatteryNT/GenBatteryNT.yaml)
+- [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
+- [LibreHardwareMonitor](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/LibreHardwareMonitor/LibreHardwareMonitor.yaml)
 
-From MIB2 (filling a blank placeholder column from another column), included directly from the connector source:
+From `WinStorageSpaces.yaml` (removing the spaces of a serial number), included directly from the connector source:
 
-<!-- MACRO{snippet|id=replaceBlankColumnCompute|file=src/main/connector/hardware/MIB2/MIB2.yaml} -->
+<!-- MACRO{snippet|id=replaceSpacesCompute|file=src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml} -->
