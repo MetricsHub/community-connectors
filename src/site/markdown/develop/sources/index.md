@@ -7,11 +7,11 @@ description: How source execution works in MetricsHub connectors and full source
 
 ## What A Source Produces
 
-In MetricsHub connectors, a source produces a **table**, or a text that its computes turn into a table (`commandLine`, `http`, `file`, `ipmi`, `snmpGet`, `awk`, `textUnion`, see the [content types](../computes/index.html#content-types)). Internally, a table is a list of rows, where each row is a list of strings.
+In MetricsHub connectors, a source produces a **table** or a text (`commandLine`, `http`, `file`, `ipmi`, `snmpGet`, `awk`, `textUnion`, see the [content types](../computes/index.html#content-types)). A text is turned into a table by its computes where a table is read; a `${source::...}` reference in a string field (a value of a simple mapping, for instance) is replaced by the text. Internally, a table is a list of rows, where each row is a list of strings.
 
 Most compute operations modify one table column at a time, which is why they usually require `column:`.
 
-`mapping.source` is a reference to a source that ends in a table (anything else does not load, `NOT_A_REFERENCE`: a hard-coded table belongs in a [static](./static.html) source), and **each row creates one monitor instance** exported as one OpenTelemetry Resource:
+`mapping.source` is a reference to a source that ends in a table (anything else does not load, `NOT_A_REFERENCE`: a hard-coded table belongs in a [static](./static.html) source), and **each row creates one monitor instance** exported as one OpenTelemetry Resource (a `type: simple` mapping has no `source`, reads no table and maps a single instance, see [The Simple Mapping](../monitors-and-jobs.html#the-simple-mapping)):
 
 - Row cells are mapped to attributes and metrics with `$1`, `$2`, `$3`, and so on.
 - If your table has 20 rows, you get 20 instances for a `multiInstance` monitor.
