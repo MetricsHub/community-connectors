@@ -80,7 +80,7 @@ sources:
 
 For a row `disk0`, `SSD`, `100` and hostname `server01`, the script writes the row `disk0`, `100`, `server01`, `730.5`. No `input` is needed here: the `BEGIN` block reads the table variable directly. By contrast, `input: ${source::...}` feeds that source to the script's normal record processing: its rows as records for a table, its lines for a text.
 
-A referenced source must produce a table: a source that ends in text is rejected (`TEXT_FEEDS_TABLE`). End it with a [toTable](../computes/to-table.html), or an `awk` with `output: table`. An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
+A referenced source must produce a table: a source that ends in text is rejected (`TEXT_FEEDS_TABLE`). End it with a [toTable](../computes/to-table.html), or declare `output: table` on an `awk` or an [snmpGet](./snmp-get.html). An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
 
 ### Lists And Maps
 

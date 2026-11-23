@@ -34,16 +34,11 @@ monitors:
           name: "${awk::sprintf(\"Enclosure: (%s %s)\", $1, $2)}"
     collect:
       sources:
-        source(1)Value:
+        source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.6.1.0
-        source(1):
-          type: static
-          value: [ "${source::source(1)Value}" ]
+          output: table
           computes:
-          - type: excludeMatchingLines
-            column: 1
-            regExp: ^$
           - type: insertColumn
             column: 1
             value: MSHW
@@ -95,16 +90,10 @@ monitors:
   battery:
     discovery:
       sources:
-        source(1)Value:
+        source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.1.0
-        source(1):
-          type: static
-          value: [ "${source::source(1)Value}" ]
-          computes:
-          - type: excludeMatchingLines
-            column: 1
-            regExp: ^$
+          output: table
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -118,8 +107,8 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.1.0
+          output: table
           computes:
-          - type: toTable
           - type: insertColumn
             column: 1
             value: MSHW
@@ -127,8 +116,8 @@ monitors:
         source(2):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.4.0
+          output: table
           computes:
-          - type: toTable
           - type: insertColumn
             column: 1
             value: MSHW
@@ -152,8 +141,8 @@ monitors:
         source(4):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.3.0
+          output: table
           computes:
-          - type: toTable
           - type: insertColumn
             column: 1
             value: MSHW
@@ -184,12 +173,8 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.9.1.0
           computes:
-          - type: toTable
-          - type: multiply
-            column: 1
-            value: 1000
           - type: awk
-            script: "{ print $1 }"
+            script: "{ print $1 * 1000 }"
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.3.3.1
@@ -212,12 +197,8 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.9.3.0
           computes:
-          - type: toTable
-          - type: multiply
-            column: 1
-            value: 1000
           - type: awk
-            script: "{ print $1 }"
+            script: "{ print $1 * 1000 }"
         source(4):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
@@ -236,16 +217,11 @@ monitors:
             output: table
             # Create Thresholds
             # ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
-        source(5)Value:
+        source(5):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
-        source(5):
-          type: static
-          value: [ "${source::source(5)Value}" ]
+          output: table
           computes:
-          - type: excludeMatchingLines
-            column: 1
-            regExp: ^$
           - type: insertColumn
             column: 1
             value: Battery Voltage
@@ -283,16 +259,11 @@ monitors:
       # Voltage Collect
       type: multiInstance
       sources:
-        source(1)Value:
+        source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
-        source(1):
-          type: static
-          value: [ "${source::source(1)Value}" ]
+          output: table
           computes:
-          - type: excludeMatchingLines
-            column: 1
-            regExp: ^$
           # UPSBatteryVoltage is in 0.1v, so multiply by 100 to get mv (1000 mv = 1 v)
           # ID;UPSBatteryVoltage;
           - type: awk
@@ -354,16 +325,10 @@ monitors:
     - id
     discovery:
       sources:
-        source(1)Value:
+        source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
-        source(1):
-          type: static
-          value: [ "${source::source(1)Value}" ]
-          computes:
-          - type: excludeMatchingLines
-            column: 1
-            regExp: ^$
+          output: table
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -382,8 +347,7 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
-          computes:
-          - type: toTable
+          output: table
       mapping:
         source: ${source::source(1)}
         attributes:
