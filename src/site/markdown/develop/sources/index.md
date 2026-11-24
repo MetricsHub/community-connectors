@@ -121,8 +121,8 @@ Entries run one at a time by default. Set `maxParallel` when each entry is slow 
 
 With `list`, the result has the type of the source: a text for `http` or `commandLine` (the entries' texts joined with a line feed), a table for `snmpGet`, `wmi`, `sql`, ... (the entries' rows). With `json_array`, `json_array_extended` and a custom object, the result is text: an entry that returns a table contributes its text as [toText](../computes/to-text.html) writes it (see [Serialization Details](#serialization-details-you-must-know)).
 
-> [!WARNING]
-> With [`continueOnFailure: true`](#continueonfailure), a failed entry adds nothing to the result (without it, a failed entry makes the source fail): `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source looks answered, so when it feeds the mapping of a `discovery` or `simple` job, the run is trusted and the instances of the failed entity are removed (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Join the result back onto the inventory with a [`tableJoin`](./table-join.html) and a `defaultRightLine`, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) when no inventory exists.
+> [!NOTE]
+> With [`continueOnFailure: true`](#continueonfailure), a failed entry adds nothing to the result (without it, a failed entry makes the source fail): `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source then counts as not answered, so the jobs that read it do not remove the instances of the failed entity (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
 
 See [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml) for extensive real usage of `json_array` and `json_array_extended`.
 
@@ -148,12 +148,12 @@ An answer is not a failure, even an empty one: a command that prints nothing, an
   - In a monitor job (`discovery`, `collect`, `simple`), the computes of the source, the next sources of the job and the mapping are skipped. Discovery keeps the existing instances; collect leaves their metrics unset for this cycle.
   - In a [tool](../tools.html), the tool stops, and its result is the error, which the LLM receives.
   - With `executeForEachEntryOf`, a failed entry makes the source fail.
-- **`true`:** the source gives the empty result of its type (an empty text for a text source, an empty table otherwise), its computes run (an `awk` runs its `BEGIN` and `END` blocks), and the job goes on. With `executeForEachEntryOf`, a failed entry adds nothing to the result.
+- **`true`:** the source gives the empty result of its type (an empty text for a text source, an empty table otherwise), its computes run (an `awk` runs its `BEGIN` and `END` blocks), and the job goes on. With `executeForEachEntryOf`, a failed entry adds nothing to the result. Either way, the source counts as not answered: the jobs that read it do not remove instances.
 
 Set `continueOnFailure: true` on a source whose failure is part of the design, and on the sources of its job that it reads (their failure stops the job before it runs):
 
-- an `awk` compute of the source prints a fallback instance or a default value from its `BEGIN` or `END` block on an empty input;
-- the source feeds the right side of a [`tableJoin`](./table-join.html) with a `defaultRightLine`, or a [`tableUnion`](./table-union.html): a missing part leaves the rest;
+- in a `discovery`, an `awk` compute of the source prints a fallback instance from its `BEGIN` or `END` block on an empty input. Not in `collect` or `simple`: a default value (a `0` counter) would be published as a metric, where a failure should leave it unset;
+- the source feeds the right side of a [`tableJoin`](./table-join.html) with a `defaultRightLine`, or a [`tableUnion`](./table-union.html) of a monitor job: a missing part leaves the rest. Not the inputs of a union in a [tool](../tools.html): a failed input should give the LLM its error, not a partial or empty result;
 - the source has `executeForEachEntryOf`, and an entry may fail while the others answer;
 - the source only feeds other jobs (a source of the `enclosure` discovery that the other monitors read): the mapping of its job does not read it, directly or through other sources of the job, and its failure would skip that mapping for nothing.
 

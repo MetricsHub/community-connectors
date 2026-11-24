@@ -55,7 +55,6 @@ monitors:
             output: table
         interpretedSensors:
           type: tableUnion
-          continueOnFailure: true
           tables:
             - ${source::chassisStatus}
             - ${source::allFrus}

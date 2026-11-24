@@ -546,7 +546,6 @@ tools:
     sources:
       sessions:
         type: sql
-        continueOnFailure: true
         query: |
           SELECT ID, USER, HOST, DB, COMMAND, ROUND(TIME_MS / 1000, 1), STATE, MEMORY_USED, LEFT(INFO, 4096)
           FROM information_schema.PROCESSLIST
@@ -557,11 +556,9 @@ tools:
       # The INNODB_TRX view needs the PROCESS privilege, as the sessions of the other users do
       processCheck:
         type: sql
-        continueOnFailure: true
         query: SELECT COUNT(*) FROM information_schema.INNODB_TRX
       denied:
         type: awk
-        continueOnFailure: true
         output: table
         variables:
           check: ${source::processCheck}
@@ -581,7 +578,6 @@ tools:
     sources:
       transactions:
         type: sql
-        continueOnFailure: true
         query: |
           SELECT t.trx_mysql_thread_id, t.trx_id, t.trx_state, t.trx_started,
             TIMESTAMPDIFF(SECOND, t.trx_started, NOW()),
@@ -603,11 +599,9 @@ tools:
           ORDER BY t.trx_started, t.trx_id
       processCheck:
         type: sql
-        continueOnFailure: true
         query: SELECT COUNT(*) FROM information_schema.INNODB_TRX
       denied:
         type: awk
-        continueOnFailure: true
         output: table
         variables:
           check: ${source::processCheck}
@@ -627,11 +621,9 @@ tools:
     sources:
       status:
         type: sql
-        continueOnFailure: true
         query: SHOW ENGINE INNODB STATUS
       denied:
         type: awk
-        continueOnFailure: true
         output: table
         variables:
           check: ${source::status}
@@ -661,7 +653,6 @@ tools:
     sources:
       digests:
         type: sql
-        continueOnFailure: true
         query: |
           (SELECT SCHEMA_NAME, LEFT(DIGEST_TEXT, 2048), COUNT_STAR, ROUND(SUM_TIMER_WAIT / 1e12, 3),
             ROUND(AVG_TIMER_WAIT / 1e9, 3), ROUND(MAX_TIMER_WAIT / 1e9, 3),
@@ -684,11 +675,9 @@ tools:
           FROM performance_schema.setup_consumers WHERE NAME = 'statements_digest' AND ENABLED = 'NO'
       readCheck:
         type: sql
-        continueOnFailure: true
         query: SELECT COUNT(*) FROM performance_schema.setup_consumers
       denied:
         type: awk
-        continueOnFailure: true
         output: table
         variables:
           check: ${source::readCheck}
@@ -708,11 +697,9 @@ tools:
     sources:
       replicas:
         type: sql
-        continueOnFailure: true
         query: SHOW ALL SLAVES STATUS
       none:
         type: awk
-        continueOnFailure: true
         output: table
         variables:
           check: ${source::replicas}
@@ -814,7 +801,6 @@ tools:
     sources:
       before:
         type: sql
-        continueOnFailure: true
         query: |
           SELECT 'before', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
           FROM information_schema.PROCESSLIST WHERE ID = ${param::id}
@@ -826,7 +812,6 @@ tools:
         query: KILL QUERY ${param::id}
       after:
         type: sql
-        continueOnFailure: true
         query: |
           SELECT 'after', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
           FROM information_schema.PROCESSLIST WHERE ID = ${param::id}
@@ -855,7 +840,6 @@ tools:
     sources:
       before:
         type: sql
-        continueOnFailure: true
         query: |
           SELECT 'before', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
           FROM information_schema.PROCESSLIST WHERE ID = ${param::id}
@@ -867,7 +851,6 @@ tools:
         query: KILL CONNECTION ${param::id}
       after:
         type: sql
-        continueOnFailure: true
         query: |
           SELECT 'after', ID, USER, HOST, DB, COMMAND, TIME, STATE, LEFT(INFO, 1024)
           FROM information_schema.PROCESSLIST WHERE ID = ${param::id}

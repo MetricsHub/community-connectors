@@ -58,7 +58,6 @@ monitors:
         source(1):
           # Source(1) = output of the ipconfig or ip command for this interface
           type: commandLine
-          continueOnFailure: true
           commandLine: ${constant::COLLECT_COMMAND_LINE}
           computes:
             # Process the output of one of the two commands (ifconfig or ip) to retrieve statistics about the network interface

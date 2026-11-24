@@ -719,7 +719,6 @@ tools:
       pools:
         # FriendlyName;IsPrimordial;HealthStatus;OperationalStatus;IsReadOnly;Size;AllocatedSize
         type: wmi
-        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT FriendlyName,IsPrimordial,HealthStatus,OperationalStatus,IsReadOnly,Size,AllocatedSize FROM MSFT_StoragePool
         computes:
@@ -738,7 +737,6 @@ tools:
       virtualDisks:
         # FriendlyName;ResiliencySettingName;NumberOfDataCopies;PhysicalDiskRedundancy;HealthStatus;OperationalStatus;DetachedReason;Size;FootprintOnPool
         type: wmi
-        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT FriendlyName,ResiliencySettingName,NumberOfDataCopies,PhysicalDiskRedundancy,HealthStatus,OperationalStatus,DetachedReason,Size,FootprintOnPool FROM MSFT_VirtualDisk
         computes:
@@ -759,7 +757,6 @@ tools:
       jobs:
         # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal
         type: wmi
-        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT ObjectId,Name,JobState,PercentComplete,BytesProcessed,BytesTotal FROM MSFT_StorageJob
         computes:
@@ -776,7 +773,6 @@ tools:
       jobsElapsed:
         # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal;ObjectId;ElapsedTime
         type: tableJoin
-        continueOnFailure: true
         leftTable: ${source::jobs}
         rightTable: ${source::elapsed}
         leftKeyColumn: 1

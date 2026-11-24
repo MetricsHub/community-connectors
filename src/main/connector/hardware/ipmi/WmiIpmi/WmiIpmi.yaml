@@ -64,7 +64,6 @@ monitors:
 
         interpretedSensors:
           type: tableUnion
-          continueOnFailure: true
           tables:
             - ${source::computerSystems}
             - ${source::numericSensors}

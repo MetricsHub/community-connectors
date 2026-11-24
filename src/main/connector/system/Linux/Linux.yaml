@@ -168,7 +168,6 @@ monitors:
         memoryInfo:
           # memTotal;memFree;memUsed;memBuffers;memCached;memFreeUtilization;memUsedUtilization;memBuffersUtilization;memCachedUtilization
           type: copy
-          continueOnFailure: true
           from: "${source::beforeAll.systemSnapshot}"
           computes:
           - type: awk
@@ -221,7 +220,6 @@ monitors:
         # Get swap activity from /proc/vmstat
         swapActivity:
           type: copy
-          continueOnFailure: true
           from: "${source::beforeAll.systemSnapshot}"
           computes:
           # Output: pgfault;pgmajfault;pswpin;pswpout
@@ -514,7 +512,6 @@ tools:
     sources:
       du:
         type: commandLine
-        continueOnFailure: true
         commandLine: "%{SUDO:du} du -xam -t ${param::minimumMegabytes}M -- '${esc(bash)::param::path}' 2>&1"
         # du reads the whole tree
         timeout: 300
@@ -525,7 +522,6 @@ tools:
         - type: toTable
       sizes:
         type: copy
-        continueOnFailure: true
         from: ${source::du}
         computes:
         - type: keepOnlyMatchingLines
@@ -540,7 +536,6 @@ tools:
       # The errors, whatever the count
       errors:
         type: copy
-        continueOnFailure: true
         from: ${source::du}
         computes:
         - type: excludeMatchingLines
@@ -655,7 +650,6 @@ tools:
     sources:
       sockets:
         type: commandLine
-        continueOnFailure: true
         commandLine: |
           %{SUDO:ss} ss -tulpn 2>&1
           ss -s 2>&1
@@ -663,7 +657,6 @@ tools:
         - type: toTable
       states:
         type: commandLine
-        continueOnFailure: true
         commandLine: ss -tan 2>/dev/null
         computes:
         # The TCP connections counted in each state, the most frequent first

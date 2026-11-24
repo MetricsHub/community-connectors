@@ -70,7 +70,6 @@ monitors:
         source(1):
           # Source(1) = Get IPMI, will be re-used by all other collects
           type: ipmi
-          continueOnFailure: true
           forceSerialization: true
           computes:
           # Post-processing of the IPMI mess (which has already been greatly sorted out!)
