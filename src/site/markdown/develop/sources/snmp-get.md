@@ -33,7 +33,7 @@ sources:
 
 ## Result
 
-By default, `snmpGet` returns the value of the OID as a **text**, its line breaks as LF, which a `${source::...}` reference (in a mapping value, the `value` of a compute, a `static` cell) and an `awk` read (see [Serialization Details](./index.html#serialization-details-you-must-know)). When the request fails (no answer, an error, no SNMP configuration for the host), the result is empty, as for any source that fails.
+By default, `snmpGet` returns the value of the OID as a **text**, its line breaks as LF, which a `${source::...}` reference (in a mapping value, the `value` of a compute, a `static` cell) and an `awk` read (see [Serialization Details](./index.html#serialization-details-you-must-know)). When the request fails (no answer, an error, no SNMP configuration for the host), the text is empty.
 
 With `output: table`, it returns a **table** of one row and one cell that holds the value whole: a `;` or a line break in the value stays in the cell, and an empty value gives one row with an empty cell. When the request fails, the table has no row, so a mapping that reads it creates no instance and collects nothing.
 
