@@ -20,7 +20,7 @@ This page explains what to use now and how to migrate safely.
 | Compute type | `json2Table` | `json2Csv`, `json2csv` | Use `json2Table`. The legacy names are rejected (`DEPRECATED_SYNTAX`). |
 | Compute type | `xml2Csv` | `xml2csv` | Use `xml2Csv` in new code. |
 | Compute type | `keepOnlyMatchingLines` | `KeepOnlyMatchingLines` | Use canonical casing. |
-| TableJoin WBEM | `keyType: Wbem` | `isWbemKey: true` | Prefer `keyType`; keep legacy only when needed. |
+| TableJoin WBEM | `keyType: Wbem` | `isWbemKey: true` | Use `keyType`. The engine does not read `isWbemKey`: the keys are compared as plain strings. |
 | HTTP result content | `http_status` | `httpStatus` (older docs) | Use `http_status` in docs and new connectors. |
 | Union of texts | `type: textUnion` with `texts` | `type: tableUnion` with `tables` of texts | Use `textUnion`. The legacy form is rejected (`TABLE_UNION_OF_TEXTS`). |
 | Table literal | List of rows: `[ [ a, b ], [ c, d ] ]` | `;` string: `"a;b\nc;d"` | Use the list of rows in `tables`, `leftTable` and `rightTable`. The legacy form is rejected (`STRING_LITERAL_ROWS`). |

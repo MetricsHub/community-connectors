@@ -1,0 +1,45 @@
+---
+image:
+- request:
+    wql: SELECT Name FROM Win32_OperatingSystem
+    namespace: root\CIMv2
+  response: os.csv
+- request:
+    wql: SELECT Name FROM Win32_ComputerSystem
+    namespace: root\cimv2
+  response: computer-system.csv
+- request:
+    wql: |
+      SELECT
+      ProcessId,
+      Name,
+      ParentProcessId,
+      ThreadCount,
+      PageFaults,
+      ReadOperationCount,
+      ReadTransferCount,
+      WriteOperationCount,
+      WriteTransferCount,
+      CommandLine,
+      WorkingSetSize,
+      VirtualSize,
+      KernelModeTime,
+      UserModeTime,
+      HandleCount,
+      SessionId,
+      __PATH
+      FROM Win32_Process
+    namespace: root\CIMv2
+  response: process.csv
+- request:
+    wql: |
+      SELECT
+      Dependent,
+      Antecedent
+      FROM Win32_SessionProcess
+    namespace: root\CIMv2
+  response: session-process.csv
+- request:
+    wql: "SELECT\nAntecedent,\nDependent\nFROM Win32_LoggedOnUser \n"
+    namespace: root\CIMv2
+  response: logged-on-user.csv

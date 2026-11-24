@@ -79,30 +79,17 @@ monitors:
             Dependent,
             Antecedent
             FROM Win32_SessionProcess
+        # A process without a logon session (System, services) is kept, with the session "none":
+        # the next join drops a line whose key is empty
         joinedProcessAndSessionProcess:
+          # 1-17 processQuery; 18 Dependent (process); 19 Antecedent (logon session)
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::processQuery}
           rightTable: ${source::sessionProcessQuery}
           leftKeyColumn: 17
           rightKeyColumn: 1
-          isWbemKey: true
-        logonSessionQuery:
-          type: wmi
-          continueOnFailure: true
-          namespace: root\CIMv2
-          query: |
-            SELECT
-            __PATH
-            FROM Win32_LogonSession
-        joinedLogonSessionAndSessionProcess:
-          type: tableJoin
-          continueOnFailure: true
-          leftTable: ${source::joinedProcessAndSessionProcess}
-          rightTable:  ${source::logonSessionQuery}
-          leftKeyColumn: 19
-          rightKeyColumn: 1
-          isWbemKey: true
+          keyType: Wbem
+          defaultRightLine: [ "", "none" ]
         loggedOnUserQuery:
           type: wmi
           continueOnFailure: true
@@ -112,33 +99,36 @@ monitors:
             Antecedent,
             Dependent
             FROM Win32_LoggedOnUser 
-        joinedLogonSessionAndLoggedOnUser:
+        # A process without a user keeps empty Domain and Name, which the default .* matches
+        joinedProcessAndLoggedOnUser:
+          # 1-19 joinedProcessAndSessionProcess; 20 Antecedent (account); 21 Dependent (logon session)
+          # After the computes: 20 Domain; 21 Name; 22 Dependent (logon session)
           type: tableJoin
-          continueOnFailure: true
-          leftTable: ${source::joinedLogonSessionAndSessionProcess}
+          leftTable: ${source::joinedProcessAndSessionProcess}
           rightTable: ${source::loggedOnUserQuery}
           leftKeyColumn: 19
           rightKeyColumn: 2
-          isWbemKey: true
+          keyType: Wbem
+          defaultRightLine: [ "", "" ]
           computes:
           # START SNIPPET: extractWbemProperty
           - type: duplicateColumn
-            column: 21
+            column: 20
           - type: extractPropertyFromWbemPath
-            column: 21
+            column: 20
             property: Domain
           - type: extractPropertyFromWbemPath
-            column: 22
+            column: 21
             property: Name
           # END SNIPPET: extractWbemProperty
           - type: keepOnlyMatchingLines
-            column: 21
+            column: 20
             regExp: ${var::matchDomain}
           - type: keepOnlyMatchingLines
-            column: 22
+            column: 21
             regExp: ${var::matchUser}
       mapping:
-        source: ${source::processQuery}
+        source: ${source::joinedProcessAndLoggedOnUser}
         attributes:
           id: $1 # The process id is the monitor id
           process.id: $1
