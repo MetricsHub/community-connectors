@@ -314,6 +314,7 @@ monitors:
           # Source 2 = CPU Power Consumption
           # Name, Parent, CPUPowerConsumption
           type: wmi
+          continueOnFailure: true
           query: SELECT Name, Parent, Value FROM Sensor where SensorType='Power' and Name = 'CPU Package' or Name ='Package'
           namespace: root\LibreHardwareMonitor
         source(3):
@@ -369,6 +370,7 @@ monitors:
         source(2):
           # SensorName;CpuDeviceID;CPUPowerConsumption
           type: wmi
+          continueOnFailure: true
           query: SELECT Name, Parent, Value FROM Sensor where SensorType='Power' and Name = 'CPU Package' or Name ='Package'
           namespace: root\LibreHardwareMonitor
         source(3):
@@ -493,6 +495,7 @@ monitors:
           # Source 2 = Retrieve GPU Memory Size from Sensor
           # Parent, Name, Value
           type: wmi
+          continueOnFailure: true
           query: SELECT Parent, Name, Value FROM Sensor WHERE Name = 'GPU Memory Total'
           namespace: root\LibreHardwareMonitor
         source(3):

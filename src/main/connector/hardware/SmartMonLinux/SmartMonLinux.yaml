@@ -117,6 +117,7 @@ monitors:
             # END SNIPPET: insertJoinKeyColumnCompute
         source(4):
           type: commandLine
+          continueOnFailure: true
           commandLine: "%{SUDO:/usr/sbin/smartctl}/usr/sbin/smartctl -a ${attribute::id} ${attribute::__device_type_option}"
           computes:
             - type: awk

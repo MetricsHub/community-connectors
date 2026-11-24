@@ -397,7 +397,7 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 - Putting heavy inventory work in `collect` instead of `discovery` — collect runs on every cycle.
 - Filtering on a state or a value (`Enabled` only, `up` only, non-zero readings only, `virsh list` without `--all`) in a `discovery` or `simple` job. The instance is removed as soon as its state changes, which hides the very failure the state should report. Keep every row and map the state.
 - Joining the inventory with an inner `tableJoin` (no `defaultRightLine`) against a per-entity or optional source: an entity missing from the right table is removed. Keep the inventory on the left and add a `defaultRightLine`.
-- Building the instances from a fan-out (`executeForEachEntryOf`) whose failed entry drops the row: the source still answers, the run is trusted, and the instances of that entity are removed. Join the result back onto the inventory.
+- Building the instances from a fan-out (`executeForEachEntryOf` with `continueOnFailure: true`) whose failed entry drops the row: the source still answers, the run is trusted, and the instances of that entity are removed. Join the result back onto the inventory.
 
 ## Community Examples
 

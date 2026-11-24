@@ -144,7 +144,7 @@ A tool creates no monitor and its tables do not reach the monitor jobs: `mapping
 
 ## How the Assistant Calls It
 
-The agent adds two parameters to every tool: `hostname`, a list of configured hosts to run it on (**required**), and `poolSize`, the number of hosts run concurrently. For each host, the tool returns a table (the `columns` declared in `result` and the rows of the result source), a text (when the tool declares no columns and the result source ends in text), or an error.
+The agent adds two parameters to every tool: `hostname`, a list of configured hosts to run it on (**required**), and `poolSize`, the number of hosts run concurrently. For each host, the tool returns a table (the `columns` declared in `result` and the rows of the result source), a text (when the tool declares no columns and the result source ends in text), or an error: the error of a source that failed stops the tool (see [`continueOnFailure`](sources/index.html#continueonfailure)).
 
 The agent's MCP server answers with one text per host, in the order of `hostname`. Each starts with `## <hostname>`, followed by the table in Markdown, the text as it is, or `Error: <message>`. In the Markdown table, a column without a name is headed `Column N`, and in a cell a `|` is written `\|` and a line break `<br>`:
 

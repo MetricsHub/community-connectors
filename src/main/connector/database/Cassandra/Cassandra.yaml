@@ -87,6 +87,7 @@ monitors:
         # Storage metrics $1
         totalHints:
           type: jmx
+          continueOnFailure: true
           # Number of hint messages written to this node since [re]start.
           objectName: org.apache.cassandra.metrics:type=Storage,name=TotalHints
           attributes:
@@ -95,6 +96,7 @@ monitors:
         # $2
         storageLoad:
           type: jmx
+          continueOnFailure: true
           # Size, in bytes, of the on disk data size this node manages.
           objectName: org.apache.cassandra.metrics:type=Storage,name=Load
           attributes:
@@ -104,6 +106,7 @@ monitors:
         # $3
         readLatency:
           type: jmx
+          continueOnFailure: true
           # Latency of read operations, Count is the number of read operations
           objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency
           attributes:
@@ -112,6 +115,7 @@ monitors:
         # $4
         writeLatency:
           type: jmx
+          continueOnFailure: true
           # Latency of write operations, Count is the number of write operations
           objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency
           attributes:
@@ -120,6 +124,7 @@ monitors:
         # Table metrics $5
         tableBytesFlushed:
           type: jmx
+          continueOnFailure: true
           # Total number of bytes flushed since server [re]start.
           objectName: org.apache.cassandra.metrics:type=Table,name=BytesFlushed
           attributes:
@@ -128,6 +133,7 @@ monitors:
         # Compaction metrics $6
         pendingTasks:
           type: jmx
+          continueOnFailure: true
           # Estimated number of compactions remaining to perform
           objectName: org.apache.cassandra.metrics:type=Compaction,name=PendingTasks
           attributes:
@@ -136,6 +142,7 @@ monitors:
         # Memory metrics $7
         memtableOnHeapSize:
           type: jmx
+          continueOnFailure: true
           # Total amount of data stored in the memtable that resides on-heap, including
           # column related overhead and partitions overwritten.
           objectName: org.apache.cassandra.metrics:type=Table,name=MemtableOnHeapSize
@@ -145,6 +152,7 @@ monitors:
         # Memory metrics $8
         memtableOffHeapSize:
           type: jmx
+          continueOnFailure: true
           # Total amount of data stored in the memtable that resides off-heap, including
           # column related overhead and partitions overwritten.
           objectName: org.apache.cassandra.metrics:type=Table,name=MemtableOffHeapSize
@@ -154,6 +162,7 @@ monitors:
         # Timeout and error metrics $9
         readTimeouts:
           type: jmx
+          continueOnFailure: true
           # Number of Read timeouts encountered.
           objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Timeouts
           attributes:
@@ -162,6 +171,7 @@ monitors:
         # $10
         writeTimeouts:
           type: jmx
+          continueOnFailure: true
           # Number of Write timeouts encountered.
           objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Timeouts
           attributes:
@@ -170,6 +180,7 @@ monitors:
         # $11
         readUnavailable:
           type: jmx
+          continueOnFailure: true
           # Number of unavailable exceptions encountered for Read requests.
           objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Unavailables
           attributes:
@@ -178,6 +189,7 @@ monitors:
         # $12
         writeUnavailable:
           type: jmx
+          continueOnFailure: true
           # Number of unavailable exceptions encountered for Write requests.
           objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Unavailables
           attributes:
@@ -186,6 +198,7 @@ monitors:
         # System uptime $13
         uptime:
           type: jmx
+          continueOnFailure: true
           # Uptime of the Cassandra instance in milliseconds.
           objectName: java.lang:type=Runtime
           attributes:
@@ -201,6 +214,7 @@ monitors:
         # Connection metrics $14
         connectedNativeClients:
           type: jmx
+          continueOnFailure: true
           # Number of clients connected to this nodes native protocol server
           objectName: org.apache.cassandra.metrics:type=Client,name=connectedNativeClients
           attributes:
@@ -449,6 +463,7 @@ monitors:
       sources:
         clusterNodes:
           type: jmx
+          continueOnFailure: true
           # Cluster information including live, unreachable, joining, leaving, and moving nodes
           # Output format: LiveNodes;UnreachableNodes;JoiningNodes;LeavingNodes;MovingNodes
           # Example: [172.17.0.6, host1, host2];[host3];[host4, host5];[host6];[]
@@ -487,31 +502,37 @@ tools:
       # scope;path;name;Value or Count
       active:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=ThreadPools,path=*,scope=*,name=ActiveTasks
         attributes: [ Value ]
         keyProperties: [ scope, path, name ]
       maxThreads:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=ThreadPools,path=*,scope=*,name=MaxPoolSize
         attributes: [ Value ]
         keyProperties: [ scope, path, name ]
       pending:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=ThreadPools,path=*,scope=*,name=PendingTasks
         attributes: [ Value ]
         keyProperties: [ scope, path, name ]
       blocked:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=ThreadPools,path=*,scope=*,name=CurrentlyBlockedTasks
         attributes: [ Count ]
         keyProperties: [ scope, path, name ]
       totalBlocked:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=ThreadPools,path=*,scope=*,name=TotalBlockedTasks
         attributes: [ Count ]
         keyProperties: [ scope, path, name ]
       completed:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=ThreadPools,path=*,scope=*,name=CompletedTasks
         attributes: [ Value ]
         keyProperties: [ scope, path, name ]
@@ -560,7 +581,7 @@ tools:
           output: table
           script: |
             $2 + 0 > 0 { print $1, $2, $3, $4 }
-            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "" }
+            END { if (NR == 0) print "No DroppedMessage MBean on this node", "", "" }
         - type: sort
           column: 2
           numeric: true
@@ -600,7 +621,7 @@ tools:
               }
             }
             # The attribute always gives one row ([] when idle) when JMX answers
-            END { if (NR == 0) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "" }
+            END { if (NR == 0) print "No CompactionManager MBean on this node", "", "", "", "", "", "" }
     result:
       source: ${source::running}
       columns: [ keyspace, table, operation, completed, total, unit, progressPercent, compactionId ]
@@ -624,67 +645,80 @@ tools:
       # keyspace;table;metric;values
       readLatency:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=ReadLatency
         attributes: [ Count, 99thPercentile ]
         keyProperties: [ keyspace, scope, name ]
       writeLatency:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=WriteLatency
         attributes: [ Count, 99thPercentile ]
         keyProperties: [ keyspace, scope, name ]
       sstables:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=LiveSSTableCount
         attributes: [ Value ]
         keyProperties: [ keyspace, scope, name ]
       sstablesPerRead:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=SSTablesPerReadHistogram
         attributes: [ 99thPercentile ]
         keyProperties: [ keyspace, scope, name ]
       tombstones:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=TombstoneScannedHistogram
         attributes: [ 99thPercentile, Max ]
         keyProperties: [ keyspace, scope, name ]
       tombstoneWarnings:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=TombstoneWarnings
         attributes: [ Count ]
         keyProperties: [ keyspace, scope, name ]
       tombstoneFailures:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=TombstoneFailures
         attributes: [ Count ]
         keyProperties: [ keyspace, scope, name ]
       maxPartition:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=MaxPartitionSize
         attributes: [ Value ]
         keyProperties: [ keyspace, scope, name ]
       meanPartition:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=MeanPartitionSize
         attributes: [ Value ]
         keyProperties: [ keyspace, scope, name ]
       partitions:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=EstimatedPartitionCount
         attributes: [ Value ]
         keyProperties: [ keyspace, scope, name ]
       diskSpace:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=LiveDiskSpaceUsed
         attributes: [ Count ]
         keyProperties: [ keyspace, scope, name ]
       pendingCompactions:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.metrics:type=Table,keyspace=${param::keyspace},scope=${param::table},name=PendingCompactions
         attributes: [ Value ]
         keyProperties: [ keyspace, scope, name ]
       # Always one row when JMX answers, to tell "no table matches" from "no answer"
       sentinel:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.db:type=StorageService
         attributes: [ OperationMode ]
       tables:
@@ -746,11 +780,13 @@ tools:
     sources:
       storageService:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.db:type=StorageService
         # [a, b];[c];[];[];[];{a=1.2 MiB, b=3 GiB};{a=hostId, b=hostId};hostId;NORMAL
         attributes: [ LiveNodes, UnreachableNodes, JoiningNodes, LeavingNodes, MovingNodes, LoadMap, EndpointToHostId, LocalHostId, OperationMode ]
       schema:
         type: jmx
+        continueOnFailure: true
         objectName: org.apache.cassandra.db:type=StorageProxy
         # {version=[a, b], version2=[c]}
         attributes: [ SchemaVersions ]

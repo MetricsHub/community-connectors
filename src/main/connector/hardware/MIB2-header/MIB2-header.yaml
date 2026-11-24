@@ -43,6 +43,7 @@ monitors:
           # Get information from the ifXtable
           # ID;Name;Alias;
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.31.1.1.1
           selectColumns: "ID,1,18"
         source(3):
@@ -69,6 +70,7 @@ monitors:
           # Source(1) = ifTable SNMP Table
           # PortID;Description;Speed;OperationalStatus;ReceivedBytes;ReceivedUnicastPackets;ReceivedNonUnicastPackets;ReceivedErrors;TransmittedBytes;TransmittedUnicastPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.2.2.1
           selectColumns: ID,2,5,8,10,11,12,14,16,17,18,20,13,19
           computes:
@@ -104,6 +106,7 @@ monitors:
           # Source(2) = ifMIBObjects SNMP Table
           # PortID;SpeedMBs;ReceivedBytes64;ReceivedUnicastPackets64;ifHCInMulticastPkts64;ifHCInBroadcastPkts64;TransmittedBytes64;TransmittedPackets64;ifHCOutMulticastPkts;ifHCOutBroadcastPkts;
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.31.1.1.1
           selectColumns: ID,15,6,7,8,9,10,11,12,13
           computes:
@@ -120,6 +123,7 @@ monitors:
           # Source(3) = Table Joint of (1) and (2)
           # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
@@ -128,6 +132,7 @@ monitors:
         source(4):
           # Make a copy of Source(3)
           type: copy
+          continueOnFailure: true
           from: ${source::source(3)}
           computes:
             # Keep only interfaces with 64bit counters
@@ -144,6 +149,7 @@ monitors:
         source(5):
           # Make a copy of Source(3)
           type: copy
+          continueOnFailure: true
           from: ${source::source(3)}
           computes:
             # Exclude interfaces with 64bit counters

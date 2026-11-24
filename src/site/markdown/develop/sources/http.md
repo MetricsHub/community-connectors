@@ -41,6 +41,7 @@ sources:
 | `executeForEachEntryOf` | No | None | Execute request once per input row (`$1`, `$2`, ... placeholders). |
 | `computes` | No | `[]` | Post-processing pipeline (often `json2Table`/`xml2Csv`). |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 > [!IMPORTANT]
 > Define at least one of `path` or `url`. New connectors should generally prefer `path` with protocol configuration.

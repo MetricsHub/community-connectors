@@ -289,7 +289,6 @@ tools:
           output: table
           script: |
             $1 != "" { print }
-            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
     result:
       source: ${source::sessions}
       columns: [ id, user, host, db, command, seconds, state, trxSeconds, trxState, trxRowsLocked, trxRowsModified, statement ]
@@ -331,7 +330,6 @@ tools:
           output: table
           script: |
             $1 != "" { print }
-            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege and SELECT on performance_schema" }
     result:
       source: ${source::waits}
       columns: [ lockType, waitingId, waitSeconds, lockedObject, lockMode, waitingStatement, blockingId, blockingSeconds, blockingStatement ]
@@ -362,7 +360,6 @@ tools:
             # A row per line, without the line breaks that start and end the report
             { text = $3; gsub(/^(\r?\n)+|(\r?\n)+$/, "", text); n = split(text, line, /\r?\n/) }
             END {
-              if (NR == 0) { print "SHOW ENGINE INNODB STATUS failed: it needs the PROCESS privilege"; exit }
               for (i = 1; i <= n; i++) {
                 if (line[i] ~ /^--*$/ && i + 2 <= n && line[i + 2] ~ /^--*$/ && (line[i + 1] in titles)) current = line[i + 1]
                 if (section == "all" || current == section) { print line[i]; found++ }
@@ -393,7 +390,7 @@ tools:
           script: |
             # A row per line of the plan, without the line break that ends it
             { text = $1; gsub(/^(\r?\n)+|(\r?\n)+$/, "", text); n = split(text, line, /\r?\n/); for (i = 1; i <= n; i++) print line[i] }
-            END { if (NR == 0) print "No plan: session " id " runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, runs one in a stored program, does not exist, or belongs to another user (the PROCESS privilege shows the others), or the server is older than MySQL 8.0.16 (no FORMAT=TREE)" }
+            END { if (NR == 0) print "No plan: session " id " runs no SELECT, INSERT, UPDATE, DELETE or REPLACE now, or runs one in a stored program" }
     result:
       source: ${source::plan}
       columns: [ line ]
@@ -443,7 +440,6 @@ tools:
           output: table
           script: |
             $1 != "" { print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16 }
-            END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
     result:
       source: ${source::statements}
       columns: [ schema, statement, executions, totalSeconds, averageMs, maxMs, lockMs, rowsExamined, rowsSent, rowsAffected, errors, warnings, noIndexUsed, tmpDiskTables, firstSeen, lastSeen ]
@@ -480,7 +476,6 @@ tools:
           script: |
             $1 == "" { print "No replication channel: this server is not a replica"; next }
             { print }
-            END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
     result:
       source: ${source::channels}
       columns: [ channel, source, receiverState, applierState, lagSeconds, receiverError, applierErrors, lastHeartbeat ]
@@ -520,7 +515,6 @@ tools:
           output: table
           script: |
             $1 != "" { print }
-            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
     result:
       source: ${source::schemas}
       columns: [ name, tables, rows, dataBytes, indexBytes, diskBytes ]
@@ -566,7 +560,6 @@ tools:
           output: table
           script: |
             $1 != "" { print $1, $2, $3, $4, $5, $6, $7, $8 }
-            END { if (NR == 0) print "The query failed: it needs the PROCESS privilege" }
     result:
       source: ${source::tables}
       columns: [ schema, table, engine, rows, dataBytes, indexBytes, freeBytes, diskBytes ]
@@ -597,7 +590,6 @@ tools:
           script: |
             $1 == "" { print "No variable matches"; next }
             { print }
-            END { if (NR == 0) print "The query failed: it needs SELECT on performance_schema" }
     result:
       source: ${source::variables}
       columns: [ name, value, source, file, setTime ]
@@ -638,7 +630,6 @@ tools:
           script: |
             $1 == "" { print "There is no session " id " (any more)"; next }
             { print }
-            END { if (NR == 0) print "Could not check session " id ": it needs the PROCESS privilege. The KILL may have been refused too (killing the session of another user needs CONNECTION_ADMIN)" }
     result:
       source: ${source::session}
       columns: [ id, user, host, db, command, seconds, state, statement ]

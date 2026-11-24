@@ -31,6 +31,7 @@ monitors:
         chassisStatus:
           # Chassis;powerOn;powerFault;powerOverload;interlock;powerControlFault;coolingFault;driveFault;intrusion;frontPanelLockout;powerRestorePolicy;identifyState;lastPowerEvents
           type: commandLine
+          continueOnFailure: true
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open chassis status
           computes:
           - type: awk
@@ -38,6 +39,7 @@ monitors:
             output: table
         allFrus:
           type: commandLine
+          continueOnFailure: true
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open fru
           computes:
           - type: awk
@@ -45,6 +47,7 @@ monitors:
             output: table
         sdr:
           type: commandLine
+          continueOnFailure: true
           commandLine: PATH=$PATH:/usr/local/bin:/usr/sfw/bin;export PATH;%{SUDO:ipmitool} ipmitool -I open -v sdr elist all
           computes:
           - type: awk
@@ -52,6 +55,7 @@ monitors:
             output: table
         interpretedSensors:
           type: tableUnion
+          continueOnFailure: true
           tables:
             - ${source::chassisStatus}
             - ${source::allFrus}

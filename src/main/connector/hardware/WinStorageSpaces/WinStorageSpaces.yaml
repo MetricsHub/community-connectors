@@ -39,6 +39,7 @@ monitors:
           # Source(1) = MSFT_PhysicalDisk
           # __PATH;BusType;DeviceId;FirmwareVersion;MediaType;Model;SerialNumber;Size;SpindleSpeed;
           type: wmi
+          continueOnFailure: true
           namespace: root\Microsoft\Windows\Storage
           query: SELECT __PATH,BusType,DeviceId,FirmwareVersion,MediaType,Model,SerialNumber,Size,SpindleSpeed FROM MSFT_PhysicalDisk
           computes:
@@ -68,6 +69,7 @@ monitors:
           # Source(2) = Win32_DiskDrive
           # SerialNumber;PnPDeviceID;
           type: wmi
+          continueOnFailure: true
           query: SELECT __PATH,SerialNumber,PnPDeviceID FROM Win32_DiskDrive
           namespace: root\cimv2
           computes:
@@ -84,6 +86,7 @@ monitors:
           # have the PnPDeviceID of the disk instances from MSFT_PhysicalDisk
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 5
@@ -92,12 +95,14 @@ monitors:
           # Source(4) = Win32_PnpDevice
           # __PATH_Device;__PATH_PnP;
           type: wmi
+          continueOnFailure: true
           query: SELECT SameElement,SystemElement FROM Win32_PnpDevice
           namespace: root\cimv2
         source(5):
           # Source(5) = Join Source(3) and Source(4)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;__PATH_Win32_DiskDrive;__PATH_PnP;
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 7
@@ -107,12 +112,14 @@ monitors:
           # Source(6) = Table that links the PnP Devices (who controls who)
           # __PATH_ControllerPnPDeviceID;__PATH_DiskPnPDeviceID;
           type: wmi
+          continueOnFailure: true
           query: SELECT Antecedent,Dependent FROM CIM_ControlledBy
           namespace: root\cimv2
         source(7):
           # Source(7) = jointure of PnPDeviceID  source(3) with Dependant source(4)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;__PATH_Win32_DiskDrive;__PATH_PnP;__PATH_Controller;__PATH_DiskPnPDeviceID;
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(5)}
           rightTable: ${source::source(6)}
           leftKeyColumn: 11
@@ -143,6 +150,7 @@ monitors:
           # Source(10) = ASSOCIATORS of each MSFT_PhysicalDisk, from the MSFT_StorageReliabilityCounter table
           # DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
           type: wmi
+          continueOnFailure: true
           executeForEachEntryOf:
             source: ${source::source(7)}
             concatMethod: list
@@ -258,6 +266,7 @@ monitors:
           # because non real physical disks have been filtered out from it, thus preventing unnecessary WMI queries
           # DeviceId;ReadErrors;Wear;WriteErrors;
           type: wmi
+          continueOnFailure: true
           executeForEachEntryOf:
             source: ${source::monitors.disk_controller.discovery.sources.source(7)}
             concatMethod: list
@@ -422,6 +431,7 @@ monitors:
           # Source(1) = ASSOCIATORS of each MSFT_PhysicalDisk, from the MSFT_StorageReliabilityCounter table
           # DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
           type: wmi
+          continueOnFailure: true
           executeForEachEntryOf:
             source: ${source::monitors.disk_controller.discovery.sources.source(11)}
             concatMethod: list
@@ -641,6 +651,7 @@ tools:
       disks:
         # ObjectId;DeviceId;FriendlyName;SerialNumber;MediaType;BusType;Size;Usage;HealthStatus;OperationalStatus
         type: wmi
+        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT ObjectId,DeviceId,FriendlyName,SerialNumber,MediaType,BusType,Size,Usage,HealthStatus,OperationalStatus FROM MSFT_PhysicalDisk
         computes:
@@ -673,6 +684,7 @@ tools:
         # MSFT_StorageReliabilityCounter cannot be enumerated: one ASSOCIATORS OF query per disk
         # DeviceId;Temperature;Wear;ReadErrorsTotal;WriteErrorsTotal;PowerOnHours
         type: wmi
+        continueOnFailure: true
         executeForEachEntryOf:
           source: ${source::disks}
           concatMethod: list
@@ -706,6 +718,7 @@ tools:
       pools:
         # FriendlyName;IsPrimordial;HealthStatus;OperationalStatus;IsReadOnly;Size;AllocatedSize
         type: wmi
+        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT FriendlyName,IsPrimordial,HealthStatus,OperationalStatus,IsReadOnly,Size,AllocatedSize FROM MSFT_StoragePool
         computes:
@@ -724,6 +737,7 @@ tools:
       virtualDisks:
         # FriendlyName;ResiliencySettingName;NumberOfDataCopies;PhysicalDiskRedundancy;HealthStatus;OperationalStatus;DetachedReason;Size;FootprintOnPool
         type: wmi
+        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT FriendlyName,ResiliencySettingName,NumberOfDataCopies,PhysicalDiskRedundancy,HealthStatus,OperationalStatus,DetachedReason,Size,FootprintOnPool FROM MSFT_VirtualDisk
         computes:
@@ -744,6 +758,7 @@ tools:
       jobs:
         # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal
         type: wmi
+        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT ObjectId,Name,JobState,PercentComplete,BytesProcessed,BytesTotal FROM MSFT_StorageJob
         computes:
@@ -754,11 +769,13 @@ tools:
         # ObjectId;ElapsedTime, in a query of its own: over WMI, MetricsHub 3.9.08 and older (wmi-java 1.0.06 and older)
         # fail the whole query on a CIM interval value, which leaves the jobs without their elapsed time only
         type: wmi
+        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT ObjectId,ElapsedTime FROM MSFT_StorageJob
       jobsElapsed:
         # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal;ObjectId;ElapsedTime
         type: tableJoin
+        continueOnFailure: true
         leftTable: ${source::jobs}
         rightTable: ${source::elapsed}
         leftKeyColumn: 1

@@ -383,6 +383,7 @@ tools:
       # The query of the statements fails, and returns no rows, without the extension: say why
       check:
         type: sql
+        continueOnFailure: true
         query: |
           SELECT message FROM (
             SELECT CASE
@@ -402,6 +403,7 @@ tools:
           WHERE message IS NOT NULL
       statements:
         type: sql
+        continueOnFailure: true
         query: |
           SELECT r.rolname, d.datname, s.queryid, s.calls,
                  round(s.total_exec_time::numeric, 1), round(s.mean_exec_time::numeric, 2), round(s.max_exec_time::numeric, 1),

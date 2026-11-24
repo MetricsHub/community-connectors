@@ -39,8 +39,9 @@ sources:
 | `from` | Yes | None | Reference to the source to duplicate. Anything else does not load (`NOT_A_REFERENCE`): a hard-coded table belongs in a [static](./static.html) source. |
 | `computes` | No | `[]` | Additional transforms applied after copy. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
-A copy produces what the chain of the source it copies ends in, also when that source fails or comes back empty: a copy of a text is a text (an empty text), a copy of a table is a table (an empty table). The copy is separate from the original: the computes of the copy do not change the original source.
+A copy produces what the chain of the source it copies ends in, also when that source comes back empty, or fails with [`continueOnFailure: true`](./index.html#continueonfailure): a copy of a text is a text (an empty text), a copy of a table is a table (an empty table). The copy is separate from the original: the computes of the copy do not change the original source.
 
 In the example above, `rawSensors` ends with the text of an `awk` compute and only a copy reads it, so it stays text: the copy converts it with its own `toTable`, before `keepOnlyMatchingLines`. Without it, the `keepOnlyMatchingLines` of the copy reads a text, and the connector does not load (`TEXT_FEEDS_TABLE`, see the [content types](../computes/index.html#content-types)).
 

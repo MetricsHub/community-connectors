@@ -58,6 +58,7 @@ monitors:
         source(1):
           # Source(1) = output of the ipconfig or ip command for this interface
           type: commandLine
+          continueOnFailure: true
           commandLine: ${constant::COLLECT_COMMAND_LINE}
           computes:
             # Process the output of one of the two commands (ifconfig or ip) to retrieve statistics about the network interface
@@ -68,6 +69,7 @@ monitors:
         source(2):
           # Source(2) = output of ethtool
           type: commandLine
+          continueOnFailure: true
           commandLine: "%{SUDO:ethtool}/usr/sbin/ethtool ${attribute::id}"
           computes:
             # Process the output of ethtool through an AWK script

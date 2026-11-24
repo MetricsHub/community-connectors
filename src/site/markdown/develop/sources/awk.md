@@ -40,6 +40,7 @@ Here `inventoryRaw` is a table: each of its rows is a record whose cells are `$1
 | `executeForEachEntryOf` | No | None | Run once per row from another source table. |
 | `computes` | No | `[]` | Optional post-processing computes. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 > [!NOTE]
 > An `awk` source does not filter or split what its script prints: filter in the script, and declare `output: table` to write columns. A connector that sets `separators` or `inputFormat` on an `awk` source does not load (`DEPRECATED_SYNTAX`, see [Legacy and Compatibility](../legacy-and-compatibility.html)).

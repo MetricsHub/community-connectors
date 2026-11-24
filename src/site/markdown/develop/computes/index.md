@@ -47,7 +47,7 @@ An `awk` compute reads the text or the table it receives. Write a `toText` befor
 
 Convert the text of `http`, `file` or `ipmi`, of a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`, or of a text union, with `json2Table`, `json2List`, `xml2Csv`, `toTable` or `awk` (with `output: table`) before a table compute or the `mapping` reads it.
 
-A source that returns nothing, or fails, gives an empty result of its own type: after a failed `commandLine`, an `awk` compute still runs its `BEGIN` and `END` blocks.
+A source that returns nothing gives an empty result of its own type, and its computes run: an `awk` compute runs its `BEGIN` and `END` blocks. A source that fails skips its computes, unless it declares [`continueOnFailure: true`](../sources/index.html#continueonfailure).
 
 ## Awk Or Computes
 

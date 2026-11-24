@@ -116,6 +116,7 @@ monitors:
           # Status
           # DeviceID;HardwareStatus
           type: wmi
+          continueOnFailure: true
           namespace: root\wmi
           query: SELECT InstanceName,NdisHardwareStatus FROM MSNdis_HardwareStatus
           computes:
@@ -145,30 +146,35 @@ monitors:
           # Transmitted errors
           # DeviceID;TransmitError
           type: wmi
+          continueOnFailure: true
           namespace: root\wmi
           query: SELECT InstanceName,NdisTransmitsError FROM MSNdis_TransmitsError
         source(4):
           # Received errors
           # DeviceID;ReceiveError
           type: wmi
+          continueOnFailure: true
           namespace: root\wmi
           query: SELECT InstanceName,NdisReceiveError FROM MSNdis_ReceiveError
         source(5):
           # TransmitsOK
           # DeviceID;TransmitsOK
           type: wmi
+          continueOnFailure: true
           namespace: root\wmi
           query: SELECT InstanceName,NdisTransmitsOK FROM MSNdis_TransmitsOK
         source(6):
           # ReceivesOK
           # DeviceID;ReceivesOK
           type: wmi
+          continueOnFailure: true
           namespace: root\wmi
           query: SELECT InstanceName,NdisReceivesOK FROM MSNdis_ReceivesOK
         source(7):
           # Source(7) = Source(3) + Source(4)
           # DeviceID;TransmitError;DeviceID;ReceiveError
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
@@ -177,6 +183,7 @@ monitors:
           # Source(8) = Source(5) + Source(6)
           # DeviceID;TransmitsOK;DeviceID;ReceivesOK
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(5)}
           rightTable: ${source::source(6)}
           leftKeyColumn: 1
@@ -185,6 +192,7 @@ monitors:
           # Source(9) = Source(8) + Source(7)
           # DeviceID;TransmitsOK;DeviceID;ReceivesOK;DeviceID;TransmitError;DeviceID;ReceiveError;
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(8)}
           rightTable: ${source::source(7)}
           leftKeyColumn: 1
@@ -248,6 +256,7 @@ monitors:
           # Traffic in bytes (through performance counters)
           # Name;BytesReceived;BytesTransmitted
           type: wmi
+          continueOnFailure: true
           namespace: root\cimv2
           query: SELECT Name,BytesReceivedPersec,BytesSentPersec FROM Win32_PerfRawData_Tcpip_NetworkInterface
           computes:

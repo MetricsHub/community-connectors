@@ -42,6 +42,7 @@ sources:
 | `texts` | Yes | None | Ordered list of the sources to concatenate, each written as exactly one `${source::...}` reference. A literal, a reference with other text around it, or a reference to a source the connector does not have (`UNRESOLVED_REFERENCE`) is rejected when the connector loads. |
 | `computes` | No | `[]` | Post-union processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 ## How The Texts Are Joined
 

@@ -52,6 +52,7 @@ monitors:
           # Copy of Enclosure.Simple.interpretedSensors
           # SensorType;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
           type: copy
+          continueOnFailure: true
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
           - type: keepOnlyMatchingLines
@@ -67,6 +68,7 @@ monitors:
         source(2):
           # Handle the "Fan Device" and "Fan/cooling device" (HP through WMI) formats: status only
           type: copy
+          continueOnFailure: true
           from: ${source::monitors.enclosure.simple.sources.interpretedSensors}
           computes:
           - type: keepOnlyMatchingLines
