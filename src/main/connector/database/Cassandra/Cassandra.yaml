@@ -220,11 +220,13 @@ monitors:
           attributes:
           - Value
 
-        # Combine all metrics into a single source table
-        # Then transpose the table to have a single row with all metrics
+        # One row with the value of each source above at its position in the list ($1 to $14): a source that failed
+        # is empty and leaves its cell empty, so the other values keep their position
         dbMetrics:
-          type: tableUnion
-          tables:
+          type: awk
+          output: table
+          variables:
+            members:
             - ${source::totalHints}
             - ${source::storageLoad}
             - ${source::readLatency}
@@ -239,19 +241,13 @@ monitors:
             - ${source::writeUnavailable}
             - ${source::uptime}
             - ${source::connectedNativeClients}
-          computes:
-            - type: awk
-              output: table
-              script: |
-                # Table output splits printf text on OFS: SUBSEP, which no cell contains, keeps a ";" in its cell
-                BEGIN { OFS = SUBSEP }
-                {
-                    sub(/^[ \t]+/, "", $1)
-                    # A member without a value (an empty row) still holds its position
-                    if (NF == 0) cell[++n] = ""
-                    for (i = 1; i <= NF; i++) cell[++n] = $i
-                }
-                END { for (i = 1; i <= n; i++) printf "%s%s", cell[i], (i < n ? OFS : "\n") }
+          script: |
+            # Table output splits printf text on OFS: SUBSEP, which no cell contains, keeps a ";" in its cell
+            BEGIN {
+                OFS = SUBSEP
+                n = length(members)
+                for (i = 0; i < n; i++) printf "%s%s", (length(members[i]) ? members[i][0][0] : ""), (i < n - 1 ? OFS : "\n")
+            }
       mapping:
         source: ${source::dbMetrics}
         attributes:
