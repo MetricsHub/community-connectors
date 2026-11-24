@@ -7,7 +7,6 @@ monitors:
           # Source(1) = SNMP Table
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU
           type: snmpTable
-          continueOnFailure: true
           oid: 1.3.6.1.2.1.47.1.1.1.1
           selectColumns: ID,2,4,5,8,9,11,12,13,16
         source(2):
@@ -19,7 +18,6 @@ monitors:
         source(3):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1

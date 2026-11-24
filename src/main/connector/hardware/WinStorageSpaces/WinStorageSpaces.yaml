@@ -39,7 +39,6 @@ monitors:
           # Source(1) = MSFT_PhysicalDisk
           # __PATH;BusType;DeviceId;FirmwareVersion;MediaType;Model;SerialNumber;Size;SpindleSpeed;
           type: wmi
-          continueOnFailure: true
           namespace: root\Microsoft\Windows\Storage
           query: SELECT __PATH,BusType,DeviceId,FirmwareVersion,MediaType,Model,SerialNumber,Size,SpindleSpeed FROM MSFT_PhysicalDisk
           computes:
@@ -69,7 +68,6 @@ monitors:
           # Source(2) = Win32_DiskDrive
           # SerialNumber;PnPDeviceID;
           type: wmi
-          continueOnFailure: true
           query: SELECT __PATH,SerialNumber,PnPDeviceID FROM Win32_DiskDrive
           namespace: root\cimv2
           computes:
@@ -86,7 +84,6 @@ monitors:
           # have the PnPDeviceID of the disk instances from MSFT_PhysicalDisk
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 5
@@ -95,14 +92,12 @@ monitors:
           # Source(4) = Win32_PnpDevice
           # __PATH_Device;__PATH_PnP;
           type: wmi
-          continueOnFailure: true
           query: SELECT SameElement,SystemElement FROM Win32_PnpDevice
           namespace: root\cimv2
         source(5):
           # Source(5) = Join Source(3) and Source(4)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;__PATH_Win32_DiskDrive;__PATH_PnP;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 7
@@ -112,14 +107,12 @@ monitors:
           # Source(6) = Table that links the PnP Devices (who controls who)
           # __PATH_ControllerPnPDeviceID;__PATH_DiskPnPDeviceID;
           type: wmi
-          continueOnFailure: true
           query: SELECT Antecedent,Dependent FROM CIM_ControlledBy
           namespace: root\cimv2
         source(7):
           # Source(7) = jointure of PnPDeviceID  source(3) with Dependant source(4)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;__PATH_Win32_DiskDrive;__PATH_PnP;__PATH_Controller;__PATH_DiskPnPDeviceID;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(5)}
           rightTable: ${source::source(6)}
           leftKeyColumn: 11
@@ -652,7 +645,6 @@ tools:
       disks:
         # ObjectId;DeviceId;FriendlyName;SerialNumber;MediaType;BusType;Size;Usage;HealthStatus;OperationalStatus
         type: wmi
-        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT ObjectId,DeviceId,FriendlyName,SerialNumber,MediaType,BusType,Size,Usage,HealthStatus,OperationalStatus FROM MSFT_PhysicalDisk
         computes:
