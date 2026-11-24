@@ -153,7 +153,7 @@ An answer is not a failure, even an empty one: a command that prints nothing, an
 Set `continueOnFailure: true` on a source whose failure is part of the design, and on the sources of its job that it reads (their failure stops the job before it runs):
 
 - in a `discovery`, an `awk` compute of the source prints a fallback instance from its `BEGIN` or `END` block on an empty input. Not in `collect` or `simple`: a default value (a `0` counter) would be published as a metric, where a failure should leave it unset;
-- the source feeds the right side of a [`tableJoin`](./table-join.html) with a `defaultRightLine`, or a [`tableUnion`](./table-union.html) of a monitor job: a missing part leaves the rest. Not the inputs of a union in a [tool](../tools.html): a failed input should give the LLM its error, not a partial or empty result;
+- the source feeds the right side of a [`tableJoin`](./table-join.html) with a `defaultRightLine`, or a [`tableUnion`](./table-union.html) of a monitor job: a missing part leaves the rest. Not the inputs of a union in a [tool](../tools.html): a failed input should give the LLM its error, not a partial or empty result. Not a source that the mapping (or the tool's result) also needs through anything else, such as the left side of a join: its failure leaves nothing to map and must stop the job;
 - the source has `executeForEachEntryOf`, and an entry may fail while the others answer;
 - the source only feeds other jobs (a source of the `enclosure` discovery that the other monitors read): the mapping of its job does not read it, directly or through other sources of the job, and its failure would skip that mapping for nothing.
 
