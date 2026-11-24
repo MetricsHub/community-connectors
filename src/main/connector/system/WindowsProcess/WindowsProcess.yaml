@@ -72,6 +72,7 @@ monitors:
               { $13 = ($13 + $14) / 10000000; print }
         sessionProcessQuery:
           type: wmi
+          continueOnFailure: true
           namespace: root\CIMv2
           query: |
             SELECT
@@ -80,6 +81,7 @@ monitors:
             FROM Win32_SessionProcess
         joinedProcessAndSessionProcess:
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::processQuery}
           rightTable: ${source::sessionProcessQuery}
           leftKeyColumn: 17
@@ -87,6 +89,7 @@ monitors:
           isWbemKey: true
         logonSessionQuery:
           type: wmi
+          continueOnFailure: true
           namespace: root\CIMv2
           query: |
             SELECT
@@ -94,6 +97,7 @@ monitors:
             FROM Win32_LogonSession
         joinedLogonSessionAndSessionProcess:
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::joinedProcessAndSessionProcess}
           rightTable:  ${source::logonSessionQuery}
           leftKeyColumn: 19
@@ -101,6 +105,7 @@ monitors:
           isWbemKey: true
         loggedOnUserQuery:
           type: wmi
+          continueOnFailure: true
           namespace: root\CIMv2
           query: |
             SELECT
@@ -109,6 +114,7 @@ monitors:
             FROM Win32_LoggedOnUser 
         joinedLogonSessionAndLoggedOnUser:
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::joinedLogonSessionAndSessionProcess}
           rightTable: ${source::loggedOnUserQuery}
           leftKeyColumn: 19

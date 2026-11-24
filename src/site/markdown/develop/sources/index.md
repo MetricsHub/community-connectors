@@ -154,7 +154,8 @@ Set `continueOnFailure: true` on a source whose failure is part of the design, a
 
 - an `awk` compute of the source prints a fallback instance or a default value from its `BEGIN` or `END` block on an empty input;
 - the source feeds the right side of a [`tableJoin`](./table-join.html) with a `defaultRightLine`, or a [`tableUnion`](./table-union.html): a missing part leaves the rest;
-- the source has `executeForEachEntryOf`, and an entry may fail while the others answer.
+- the source has `executeForEachEntryOf`, and an entry may fail while the others answer;
+- the source only feeds other jobs (a source of the `enclosure` discovery that the other monitors read): the mapping of its job does not read it, directly or through other sources of the job, and its failure would skip that mapping for nothing.
 
 ## Minimal End-To-End Example
 

@@ -162,6 +162,7 @@ monitors:
           # Source(11) = Table join of DiskController.Discovery.Source(7) and DiskController.Discovery.Source(8)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(7)}
           rightTable: ${source::source(8)}
           leftKeyColumn: 8

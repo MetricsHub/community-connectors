@@ -31,6 +31,7 @@ monitors:
           # Hardware Discovery (no information about Enclosure)
           # Identifier, Name, HardwareType
           type: wmi
+          continueOnFailure: true
           query: SELECT Identifier, Name, HardwareType FROM Hardware
           namespace: root\LibreHardwareMonitor
         source(2):

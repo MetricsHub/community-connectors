@@ -70,6 +70,7 @@ monitors:
         source(4):
           # For use in other Discoveries
           type: http
+          continueOnFailure: true
           method: GET
           header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
           path: /redfish/v1/Chassis
@@ -159,6 +160,7 @@ monitors:
         source(4):
           # For use in other Collects
           type: http
+          continueOnFailure: true
           method: GET
           header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
           path: /redfish/v1/Chassis
