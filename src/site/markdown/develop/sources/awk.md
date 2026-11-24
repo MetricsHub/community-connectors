@@ -140,7 +140,7 @@ A source script can also query the monitored resource. Each `execute...` functio
 | --- | --- |
 | `executeHttpRequest(args)` | An [http](./http.html) source: `args["method"]`, `args["path"]`, `args["header"]`, `args["body"]`, `args["resultContent"]`, ... The body may be an array: see [Send JSON](#send-json). |
 | `executeHttpJsonRequest(args, response)` | The same request, with the body of its response parsed as JSON into the `response` array. Returns the HTTP status code. See [Read JSON](#read-json). |
-| `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. Returns the value as it is, or an empty string when the request fails. |
+| `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. Returns the value, its line breaks as LF, or an empty string when the request fails. |
 | `executeSnmpTable(args)` | An [snmpTable](./snmp-table.html) source: `args["oid"]`, `args["selectColumns"]`. |
 | `executeWbemRequest(args)` | A [wbem](./wbem.html) source: `args["query"]`, `args["namespace"]`. |
 | `executeWmiRequest(args)` | A [wmi](./wmi.html) source: `args["query"]`, `args["namespace"]`. |
