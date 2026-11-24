@@ -311,7 +311,7 @@ These instances are never removed:
 
 What this means for connector authors:
 
-- The rules above only catch whole failures. A row dropped for any other reason looks exactly like an entity that disappeared, and its instance is removed: a filter on a state or a value, an inner `tableJoin` against a source that misses some entities, a failed fan-out entry. Build the rows that create the instances from an inventory: see [Build Instances from an Inventory](design-principles.html#9-build-instances-from-an-inventory).
+- The rules above only catch whole failures. A row dropped for any other reason looks exactly like an entity that disappeared, and its instance is removed: a filter on a state or a value, an inner `tableJoin` against a source that misses some entities, a fan-out entry that answered without the entity. Build the rows that create the instances from an inventory: see [Build Instances from an Inventory](design-principles.html#9-build-instances-from-an-inventory).
 - An unstable `id` no longer only duplicates instances: the old instance is removed and a new one is created at every run, which restarts its counters and `rate()` state.
 - A removed instance is no longer exported; its series ends without a final data point. If the entity comes back, it is created again with fresh counters.
 
