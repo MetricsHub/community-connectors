@@ -1,0 +1,3 @@
+Win32_Process.Handle="1001";Win32_LogonSession.LogonId="111";
+Win32_Process.Handle="1002";Win32_LogonSession.LogonId="111";
+Win32_Process.Handle="2001";Win32_LogonSession.LogonId="222";

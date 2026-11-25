@@ -1,0 +1,2 @@
+Win32_Account.Domain="CONTOSO",Name="jsmith";Win32_LogonSession.LogonId="111";
+Win32_Account.Domain="CONTOSO",Name="admin";Win32_LogonSession.LogonId="222";

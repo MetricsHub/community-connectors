@@ -1,0 +1,717 @@
+{
+  "total" : 5,
+  "monitors" : [ {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "WindowsProcess.yaml",
+      "name" : "Windows - Processes (WMI)",
+      "connector_id" : "WindowsProcess",
+      "applies_to_os" : "windows",
+      "parent.id" : "localhost",
+      "id" : "WindowsProcess"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed WmiCriterion Criterion:\n- WQL Query: SELECT Name FROM Win32_OperatingSystem\n- Namespace: root\\CIMv2\n\nResult:\nMicrosoft Windows 11 Business|C:\\WINDOWS|\\Device\\Harddisk0\\Partition3;\n\nMessage:\n====================================\nWmiCriterion test succeeded:\n- WQL Query: SELECT Name FROM Win32_OperatingSystem\n- Namespace: root\\CIMv2\n\nResult: Microsoft Windows 11 Business|C:\\WINDOWS|\\Device\\Harddisk0\\Partition3;\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1795562470020,
+    "type" : "connector",
+    "id" : "connector_WindowsProcess",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : true,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"process\", connector_id=\"WindowsProcess\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"process\", connector_id=\"WindowsProcess\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "WindowsProcess",
+          "monitor.type" : "process"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.011,
+        "previousValue" : 0.211,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WindowsProcess\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"WindowsProcess\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "WindowsProcess",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.002,
+        "previousValue" : 0.002,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.002,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.observed" : {
+        "name" : "metricshub.host.observed",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "windows",
+      "host.name" : "localhost",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1795562475078,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "endpointHost" : true,
+    "endpoint" : true,
+    "connector" : false,
+    "is_endpoint" : true
+  }, {
+    "metrics" : {
+      "process.disk.io{disk.io.direction=\"read\"}" : {
+        "name" : "process.disk.io{disk.io.direction=\"read\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 65536.0,
+        "previousValue" : 65536.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__process.cpu.utilization.rate_from" : {
+        "name" : "__process.cpu.utilization.rate_from",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 8.0,
+        "previousValue" : 8.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.io{disk.io.direction=\"write\"}" : {
+        "name" : "process.disk.io{disk.io.direction=\"write\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "write"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 32768.0,
+        "previousValue" : 32768.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.operations{disk.io.direction=\"read\"}" : {
+        "name" : "process.disk.operations{disk.io.direction=\"read\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 300.0,
+        "previousValue" : 300.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.memory.virtual" : {
+        "name" : "process.memory.virtual",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 2.199023255552E12,
+        "previousValue" : 2.199023255552E12,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.memory.usage" : {
+        "name" : "process.memory.usage",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.048576E8,
+        "previousValue" : 1.048576E8,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.thread.count" : {
+        "name" : "process.thread.count",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 40.0,
+        "previousValue" : 40.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.operations{disk.io.direction=\"write\"}" : {
+        "name" : "process.disk.operations{disk.io.direction=\"write\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "write"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.handle.count" : {
+        "name" : "process.handle.count",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 2500.0,
+        "previousValue" : 2500.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.paging.faults" : {
+        "name" : "process.paging.faults",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 120000.0,
+        "previousValue" : 120000.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.cpu.utilization" : {
+        "name" : "process.cpu.utilization",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.cpu.time" : {
+        "name" : "process.cpu.time",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 8.0,
+        "previousValue" : 8.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "process.name" : "explorer.exe",
+      "process.parent.id" : "900",
+      "process.id" : "1001",
+      "process.match.domain" : ".*",
+      "process.match.name" : ".*",
+      "connector_id" : "WindowsProcess",
+      "id" : "1001",
+      "process.match.command" : ".*",
+      "process.match.user" : "^[jsmith]*$"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1795562475078,
+    "type" : "process",
+    "id" : "WindowsProcess_process_1001",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "process.disk.io{disk.io.direction=\"read\"}" : {
+        "name" : "process.disk.io{disk.io.direction=\"read\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 4096.0,
+        "previousValue" : 4096.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__process.cpu.utilization.rate_from" : {
+        "name" : "__process.cpu.utilization.rate_from",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 0.3,
+        "previousValue" : 0.3,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.io{disk.io.direction=\"write\"}" : {
+        "name" : "process.disk.io{disk.io.direction=\"write\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "write"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 1024.0,
+        "previousValue" : 1024.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.operations{disk.io.direction=\"read\"}" : {
+        "name" : "process.disk.operations{disk.io.direction=\"read\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 12.0,
+        "previousValue" : 12.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.memory.virtual" : {
+        "name" : "process.memory.virtual",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 2.199023255552E12,
+        "previousValue" : 2.199023255552E12,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.memory.usage" : {
+        "name" : "process.memory.usage",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 2.097152E7,
+        "previousValue" : 2.097152E7,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.thread.count" : {
+        "name" : "process.thread.count",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 5.0,
+        "previousValue" : 5.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.operations{disk.io.direction=\"write\"}" : {
+        "name" : "process.disk.operations{disk.io.direction=\"write\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "write"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 3.0,
+        "previousValue" : 3.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.handle.count" : {
+        "name" : "process.handle.count",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 250.0,
+        "previousValue" : 250.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.paging.faults" : {
+        "name" : "process.paging.faults",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 3000.0,
+        "previousValue" : 3000.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.cpu.utilization" : {
+        "name" : "process.cpu.utilization",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.cpu.time" : {
+        "name" : "process.cpu.time",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.3,
+        "previousValue" : 0.3,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "process.name" : "notepad.exe",
+      "process.parent.id" : "1001",
+      "process.id" : "1002",
+      "process.match.domain" : ".*",
+      "process.match.name" : ".*",
+      "connector_id" : "WindowsProcess",
+      "id" : "1002",
+      "process.match.command" : ".*",
+      "process.match.user" : "^[jsmith]*$"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1795562475078,
+    "type" : "process",
+    "id" : "WindowsProcess_process_1002",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  }, {
+    "metrics" : {
+      "process.disk.io{disk.io.direction=\"read\"}" : {
+        "name" : "process.disk.io{disk.io.direction=\"read\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 1000.0,
+        "previousValue" : 1000.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "__process.cpu.utilization.rate_from" : {
+        "name" : "__process.cpu.utilization.rate_from",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.io{disk.io.direction=\"write\"}" : {
+        "name" : "process.disk.io{disk.io.direction=\"write\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "write"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 2000.0,
+        "previousValue" : 2000.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.operations{disk.io.direction=\"read\"}" : {
+        "name" : "process.disk.operations{disk.io.direction=\"read\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 10.0,
+        "previousValue" : 10.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.memory.virtual" : {
+        "name" : "process.memory.virtual",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 4096.0,
+        "previousValue" : 4096.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.memory.usage" : {
+        "name" : "process.memory.usage",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 20480.0,
+        "previousValue" : 20480.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.thread.count" : {
+        "name" : "process.thread.count",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 150.0,
+        "previousValue" : 150.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.disk.operations{disk.io.direction=\"write\"}" : {
+        "name" : "process.disk.operations{disk.io.direction=\"write\"}",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : {
+          "disk.io.direction" : "write"
+        },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 20.0,
+        "previousValue" : 20.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.handle.count" : {
+        "name" : "process.handle.count",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 3000.0,
+        "previousValue" : 3000.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.paging.faults" : {
+        "name" : "process.paging.faults",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : 5000.0,
+        "previousValue" : 5000.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.cpu.utilization" : {
+        "name" : "process.cpu.utilization",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "process.cpu.time" : {
+        "name" : "process.cpu.time",
+        "collectTime" : 1795562475078,
+        "previousCollectTime" : 1795562470020,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "process.name" : "System",
+      "process.parent.id" : "0",
+      "process.id" : "4",
+      "process.match.domain" : ".*",
+      "process.match.name" : ".*",
+      "connector_id" : "WindowsProcess",
+      "id" : "4",
+      "process.match.command" : ".*",
+      "process.match.user" : "^[jsmith]*$"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1795562475078,
+    "type" : "process",
+    "id" : "WindowsProcess_process_4",
+    "identifyingAttributeKeys" : [ "id" ],
+    "endpointHost" : false,
+    "endpoint" : false,
+    "connector" : false,
+    "is_endpoint" : false
+  } ]
+}

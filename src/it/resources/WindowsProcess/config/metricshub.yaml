@@ -1,0 +1,18 @@
+#MetricsHub Configuration
+otel:
+  otel.exporter.otlp.metrics.protocol: noop
+patchDirectory: src/main/connector
+resources:
+  localhost:
+    attributes:
+      host.name: localhost
+      host.type: windows
+    protocols:
+      emulation:
+        wmi:
+          directory: src/it/resources/WindowsProcess/emulation/wmi
+    additionalConnectors:
+      WindowsProcess:
+        variables:
+          # A PSL regular expression: matches jsmith and the empty user of System, not admin
+          matchUser: ^[jsmith]*$
