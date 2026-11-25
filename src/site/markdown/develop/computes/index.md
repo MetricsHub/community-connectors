@@ -26,13 +26,6 @@ Table example:
 | fan01 | Fan A | 1 |
 | fan02 | Fan B | 3 |
 
-Serialized:
-
-```text
-fan01;Fan A;1
-fan02;Fan B;3
-```
-
 After translation/replace, mapping consumes the transformed table.
 
 > [!NOTE]
@@ -55,6 +48,47 @@ An `awk` compute reads the text or the table it receives. Write a `toText` befor
 Convert the text of `http`, `file` or `ipmi`, of a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod`, or of a text union, with `json2Table`, `json2List`, `xml2Csv`, `toTable` or `awk` (with `output: table`) before a table compute or the `mapping` reads it.
 
 A source that returns nothing, or fails, gives an empty result of its own type: after a failed `commandLine`, an `awk` compute still runs its `BEGIN` and `END` blocks.
+
+## Awk Or Computes
+
+One compute that does what the source needs stays a compute. When a source needs two or more consecutive computes that AWK expresses directly (`add`, `subtract`, `multiply`, `divide`, `duplicateColumn`, `insertColumn`, `keepColumns`, `append`, `prepend`, `replace`, `substring`, `head`, or an `awk` next to them), write one [awk](./awk.html) compute with `output: table` instead: the whole transformation reads in one place.
+
+These stay computes, and end the run: the computes before them and after them are written as separate scripts.
+
+- `translate`, `arrayTranslate` and `perBitTranslation`, with their translation tables;
+- the conversions (`convert`, `extract`, `extractPropertyFromWbemPath`, `json2Table`, `json2List`, `xml2Csv`, `toTable`, `toText`, `encode`, `decode`), `and` (AWK has no bitwise AND), `sort` and `tail`;
+- a compute whose value is a `${source::...}` reference;
+- the line filters, `keepOnlyMatchingLines` and `excludeMatchingLines`: write the filter before the `awk`, so that the script reads only the rows it keeps, and after it only when the filter reads a column that the script produces.
+
+Instead of:
+
+```yaml
+- type: add
+  column: 8
+  value: $9
+- type: add
+  column: 12
+  value: $13
+- type: add
+  column: 10
+  value: $14
+```
+
+Write:
+
+```yaml
+- type: awk
+  output: table
+  script: |
+    { $8 = $8 + $9; $12 = $12 + $13; $10 = $10 + $14; print }
+```
+
+The script takes care of what the computes do on their own:
+
+- An arithmetic compute leaves an empty or non-numeric cell as it is, where AWK computes with it as 0. Do the math directly, without testing the operands: a value the device does not report becomes 0, which is right for a counter, a size, a sum, a rate or a capacity. A division by 0 gives `inf` or `nan`, which MetricsHub does not collect, as an empty cell. Test a value (`$6 != "" { $6 = $6 * 1000 }`) only where its 0 is wrong in a way that matters, and that value only: a metric that the hardware rules judge (a fan speed of 0 is a failed fan, a voltage of 0 crosses its low limit), a value that derives a wrong one from it (`100 - $3` for an unreported wear is a disk with all its endurance left, a bandwidth limit of 0 makes the power estimate of a port 2 W instead of 10 W), or an attribute, an id, a join key, or the input of a line filter or a `translate`. After a `json2Table`, a JSON `null` is the text `NULL`, which AWK also computes as 0: test it too (`$6 != "" && $6 != "NULL"`).
+- With `output: table`, `print` writes a computed number that is not a whole number with 15 significant digits (MetricsHub sets `OFMT` to `%.15g`): a computed 0.3 prints `0.3`. A whole number prints without decimals (`8000`, where `multiply` writes `8000.0`), and a number concatenated into a text uses `CONVFMT` (`%.6g`): format it with `sprintf` there.
+- `replace` replaces every occurrence of a literal text, and `gsub` takes a regular expression: escape its special characters (`gsub(/[|]/, ".", $5)`).
+- `print $1, $2, $3` writes three cells, empty ones for a shorter row, and `print` without argument writes the row as it is.
 
 ## Compute Pages
 
@@ -105,11 +139,11 @@ A source that returns nothing, or fails, gives an empty result of its own type: 
 
 | Compute | Purpose |
 | --- | --- |
-| [json2Table](./json2csv.html) | Flatten a JSON payload into table rows (prepends an entry column). Formerly `json2Csv`, a name rejected from MetricsHub Community 3.9.09. |
+| [json2Table](./json2table.html) | Flatten a JSON payload into table rows (prepends an entry column). |
 | [json2List](./json2list.html) | List every value of a JSON document as a row: its key path and the value. |
 | [xml2Csv](./xml2csv.html) | Flatten an XML payload into table rows. |
 | [toTable](./to-table.html) | Turn a text result into a table (one row per line, split on a separator). |
-| [toText](./to-text.html) | Turn a table into semicolon-separated text for an `awk` compute. |
+| [toText](./to-text.html) | Turn a table into text, one line per row, for an `awk` script that parses lines. |
 | [encode](./encode.html) | Encode a column as `base64` or `url`. |
 | [decode](./decode.html) | Decode a `base64` or `url` column. |
 

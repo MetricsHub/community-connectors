@@ -191,21 +191,13 @@ monitors:
           rightKeyColumn: 1
           defaultRightLine: [ "", "0", "", "0" ]
           computes:
-            # Computes TransmittedPackets ( = TransmitErrors + TransmitsOK )
-            # DeviceID;TransmittedPackets;DeviceID;ReceivesOK;DeviceID;TransmitError;DeviceID;ReceiveError
-          - type: add
-            column: 2
-            value: $6
-            # Computes ReceivedPackets ( = ReceivedErrors + ReceivesOK)
-            # DeviceID;TransmittedPackets;DeviceID;ReceivedPackets;DeviceID;TransmitError;DeviceID;ReceiveError;
-          - type: add
-            column: 4
-            value: $8
-            # Computes totalErrors ( = TransmitError + ReceiveError )
+            # Computes TransmittedPackets ( = TransmitErrors + TransmitsOK ), ReceivedPackets ( = ReceivedErrors + ReceivesOK)
+            # and totalErrors ( = TransmitError + ReceiveError )
             # DeviceID;TransmittedPackets;DeviceID;ReceivedPackets;DeviceID;TotalError;DeviceID;ReceiveError;
-          - type: add
-            column: 6
-            value: $8
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2 + $6, $3, $4 + $8, $5, $6 + $8, $7, $8 }
         source(10):
           # Join LinkStatus and Status tables
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation
@@ -248,14 +240,10 @@ monitors:
             # Now replace some "special" chars in one of the DeviceID columns with underscores
             # as it looks like the perfmon instances can't have '#' or '/'
             # This allow us to make proper table join with Win32_PerfRawData_Tcpip_NetworkInterface
-          - type: replace
-            column: 8
-            existingValue: '#'
-            newValue: _
-          - type: replace
-            column: 8
-            existingValue: /
-            newValue: _
+          - type: awk
+            output: table
+            script: |
+              { gsub(/[#\/]/, "_", $8); print }
         source(14):
           # Traffic in bytes (through performance counters)
           # Name;BytesReceived;BytesTransmitted
@@ -264,14 +252,10 @@ monitors:
           query: SELECT Name,BytesReceivedPersec,BytesSentPersec FROM Win32_PerfRawData_Tcpip_NetworkInterface
           computes:
           # Replace [] with () (weird difference between these 2 WMI classes)
-          - type: replace
-            column: 1
-            existingValue: "["
-            newValue: (
-          - type: replace
-            column: 1
-            existingValue: "]"
-            newValue: )
+          - type: awk
+            output: table
+            script: |
+              { gsub(/\[/, "(", $1); gsub(/\]/, ")", $1); print $1, $2, $3 }
         source(15):
           # Final Join: Source(13) + Source(14)
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation;DeviceID;LinkSpeed;DeviceID;TransmittedPackets;DeviceID;ReceivedPackets;DeviceID;TotalError;DeviceID;ReceiveError;Name;BytesReceived;BytesTransmitted

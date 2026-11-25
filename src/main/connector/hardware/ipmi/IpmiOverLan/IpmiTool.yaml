@@ -117,22 +117,12 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: fan
-          # START SNIPPET: insertEmptyColumnsCompute
-            # Add empty Status and StatusInformation columns
-            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 4
-            value: ""
-            # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 5
-            value: ""
-          # END SNIPPET: insertEmptyColumnsCompute
-            # Add empty AdditionalInformation1 column at the very end
+            # Add empty StatusArray, StatusInformation and AdditionalInformation1 columns
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
-          - type: insertColumn
-            column: 10
-            value: ""
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, "", "", $4, $5, $6, $7, "" }
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
@@ -143,27 +133,12 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: Fan Device
-            # Keep only interesting columns
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;AdditionalInformation1
-          - type: keepColumns
-            columnNumbers: 1,2,3,7,8,9
-            # Add empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;AdditionalInformation1
-          - type: insertColumn
-            column: 6
-            value: ""
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;AdditionalInformation1
-          - type: insertColumn
-            column: 7
-            value: ""
-            # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AdditionalInformation1
-          - type: insertColumn
-            column: 8
-            value: ""
+            # The interesting columns and empty Location, FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;DisplayID;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1
-          - type: insertColumn
-            column: 9
-            value: ""
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, $7, $8, "", "", "", "", $9 }
         source(3):
           # Source(3) = Table Union of Source(1) and Source(2)
           # Fan;DeviceID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold;AdditionalInformation1;
@@ -203,14 +178,11 @@ monitors:
             column: 1
             valueList: fan
             # Add empty Status and StatusInformation columns
-            # Fan;SensorID;SensorName;StatusArray;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 4
-            value: ""
             # Fan;SensorID;SensorName;StatusArray;StatusInformation;Location;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 5
-            value: ""
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, "", "", $4, $5, $6, $7 }
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
@@ -221,28 +193,12 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: Fan Device
-            # Keep only interesting columns
-            # Fan Device;DeviceID;StatusArray;StatusInformation;AdditionalInformation1;
-          - type: keepColumns
-            columnNumbers: 1,2,7,8,9
-            # Add an empty "SensorName" column
-            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1
-          - type: insertColumn
-            column: 3
-            value: ""
-            # Add empty FanSpeed, WarningThreshold and AlarmThreshold columns
-            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed
-          - type: insertColumn
-            column: 7
-            value: ""
-            # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold
-          - type: insertColumn
-            column: 8
-            value: ""
+            # The interesting columns, an empty SensorName and empty FanSpeed, WarningThreshold and AlarmThreshold columns
             # Fan Device;DeviceID;SensorName;StatusArray;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
-          - type: insertColumn
-            column: 9
-            value: ""
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, "", $7, $8, $9, "", "", "" }
             # Convert StatusArray to a simple (unique) PATROLStatus
             # Fan Device;DeviceID;SensorName;Status;StatusInformation;AdditionalInformation1;FanSpeed;WarningThreshold;AlarmThreshold
           - type: convert
@@ -385,12 +341,11 @@ monitors:
           - type: keepOnlyMatchingLines
             column: 1
             valueList: Power supply
-          - type: prepend
-            column: 6
-            value: "SerialNumber: "
-          - type: prepend
-            column: 5
-            value: "Model: "
+            # Label Model and SerialNumber
+          - type: awk
+            output: table
+            script: |
+              { $5 = "Model: " $5; $6 = "SerialNumber: " $6; print }
       mapping:
         # InstanceTable = Source(1)
         source: ${source::source(1)}

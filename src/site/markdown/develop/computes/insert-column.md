@@ -22,13 +22,9 @@ sources:
     computes:
       # Name;IdentifyingNumber;
     - type: insertColumn
-      column: 1
-      value: Computer
-      # DeviceType;Name;IdentifyingNumber;
-    - type: insertColumn
-      column: 4
-      value: $2-$3
-      # DeviceType;Name;IdentifyingNumber;ID;
+      column: 3
+      value: $1-$2
+      # Name;IdentifyingNumber;ID;
 ```
 
 ## Properties
@@ -73,9 +69,9 @@ With `column: 2` and `value: ok`:
 
 ## Community Examples
 
-- [IpmiTool](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml)
+- [SmartMonLinux](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/SmartMonLinux/SmartMonLinux.yaml)
 - [GenericUPS](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/GenericUPS/GenericUPS.yaml)
 
-From `IpmiTool.yaml`, adding the empty `StatusArray` and `StatusInformation` placeholder columns, included directly from the connector source:
+From `SmartMonLinux.yaml`, adding the constant join key that the next `tableJoin` matches, included directly from the connector source:
 
-<!-- MACRO{snippet|id=insertEmptyColumnsCompute|file=src/main/connector/hardware/ipmi/IpmiOverLan/IpmiTool.yaml} -->
+<!-- MACRO{snippet|id=insertJoinKeyColumnCompute|file=src/main/connector/hardware/SmartMonLinux/SmartMonLinux.yaml} -->

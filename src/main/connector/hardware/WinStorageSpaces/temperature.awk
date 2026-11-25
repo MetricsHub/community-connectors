@@ -1,7 +1,8 @@
+# DeviceId ($1), TemperatureMax ($6) and Model ($9) of the join
 {
 	warningThreshold = ""
-	alarmThreshold = $2
-	model = $3
+	alarmThreshold = $6
+	model = $9
 	if (alarmThreshold == "" || alarmThreshold == 0) {
 		if (tolower(model) ~ /ssd|nvm/) {
 			warningThreshold = 65

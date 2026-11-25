@@ -191,9 +191,12 @@ monitors:
           attributes:
           - Uptime
           computes:
+          # START SNIPPET: divideUptimeCompute
+          # Milliseconds into seconds
           - type: divide
             column: 1
             value: 1000
+          # END SNIPPET: divideUptimeCompute
 
         # Connection metrics $14
         connectedNativeClients:

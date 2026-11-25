@@ -41,14 +41,11 @@ monitors:
             script: ${file::diskPart.awk}
             output: table
           # END SNIPPET: awkCompute
-            # Exclude DVDs and stupid stuff
+            # Exclude DVDs and stupid stuff (the script labels the FileSystem)
             # ID;Label;Letter;VolumeType;FileSystem;Size;Status;MoreInformation
           - type: excludeMatchingLines
             column: 4
             valueList: CD-ROM,DVD-ROM,Removable
-          - type: prepend
-            column: 5
-            value: "File System: "
       mapping:
         # The InstanceTable
         source: ${source::source(1)}
@@ -71,17 +68,13 @@ monitors:
           commandLine: CHCP 437&&DISKPART.EXE /S ${file::listVolume.txt}
           timeout: 120
           computes:
-            # Run Source(1) through an AWK script
-            # ID;Status;
+            # Run Source(1) through an AWK script, which prints the status twice
+            # ID;Status;Status
           - type: awk
             script: ${file::diskPart.awk}
             output: table
             variables:
               collect: 1
-            # Duplicate the status column
-            # ID;Status;Status
-          - type: duplicateColumn
-            column: 2
             # Now translate Status to Patrol Status
             # status
           - type: translate

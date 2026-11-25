@@ -29,12 +29,10 @@ monitors:
           commandLine: rocm-smi -a --csv
           timeout: 90
           computes:
+          # The script divides memBw by 1000000000
           - type: awk
             script: ${file::rocmSmi.awk}
             output: table
-          - type : divide
-            column: 14
-            value: 1000000000
       mapping:
         source: ${source::source(1)}
   gpu:

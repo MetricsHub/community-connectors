@@ -32,17 +32,10 @@ monitors:
           beginAtLineNumber: 3
           computes:
           - type: toTable
-          - type: replace
-            column: 1
-            existingValue: '"'
-            newValue: ""
-          - type: replace
-            column: 2
-            existingValue: '"'
-            newValue: ""
-          - type: prepend
-            column: 2
-            value: "GUID: "
+          - type: awk
+            output: table
+            script: |
+              { gsub(/"/, "", $1); gsub(/"/, "", $2); print $1, "GUID: " $2 }
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -63,18 +56,10 @@ monitors:
           beginAtLineNumber: 3
           computes:
           - type: toTable
-          - type: replace
-            column: 1
-            existingValue: '"'
-            newValue: ""
-          - type: replace
-            column: 2
-            existingValue: '"'
-            newValue: ""
-          - type: replace
-            column: 3
-            existingValue: '"'
-            newValue: ""
+          - type: awk
+            output: table
+            script: |
+              { gsub(/"/, "", $1); gsub(/"/, "", $2); gsub(/"/, "", $3); print $1, $2, $3 }
           - type: translate
             column: 3
             translationTable: ${translation::stateTranslationTable}

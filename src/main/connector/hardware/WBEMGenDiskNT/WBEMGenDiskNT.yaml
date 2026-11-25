@@ -71,14 +71,11 @@ monitors:
             column: 2
             subColumn: 2
             subSeparators: '"'
-          - type: replace
-            column: 1
-            existingValue: \\
-            newValue: \
-          - type: replace
-            column: 2
-            existingValue: \\
-            newValue: \
+            # Unescape the backslashes (\\ becomes \)
+          - type: awk
+            output: table
+            script: |
+              { gsub(/\\\\/, "\\", $1); gsub(/\\\\/, "\\", $2); print $1, $2 }
         source(5):
           # Source(5) = jointure of source(4) with source(3)
           # ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskPnPDeviceID;DiskInstanceName
@@ -196,10 +193,10 @@ monitors:
           computes:
             # Duplicate the Status column (to be translated two times)
             # PnPDeviceID;Status;PatrolStatus;InformationStatus;PnPDeviceID;InstanceName;InstanceName;PredictFailure
-          - type: duplicateColumn
-            column: 2
-          - type: duplicateColumn
-            column: 2
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $2, $2, $3, $4, $5, $6 }
           # Translate the WBEM Status field into PATROL status
           - type: translate
             column: 3

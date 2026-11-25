@@ -132,9 +132,9 @@ Connector pipelines are table-based end to end.
 
 - A source typically outputs rows and columns. Some sources (`commandLine`, `http`, `file`, `ipmi`, `awk`) output text, which a compute turns into a table (see the [content types](computes/index.html#content-types)).
 - Computes generally transform rows/columns.
-- Mapping expects a table and uses column references (`$1`, `$2`, ...).
+- Mapping expects a table and uses column references (`$1`, `$2`, ...). The exception is the simple mapping (`type: simple`), without `source`: one instance whose values read no column (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)).
 
-Internally, a table is represented as `List<List<String>>`. The example below shows the same data in its internal form, as a logical table, and as serialized text:
+Internally, a table is represented as `List<List<String>>`. The example below shows the same data in its internal form and as a logical table:
 
 > [!TABS]
 >
@@ -153,19 +153,12 @@ Internally, a table is represented as `List<List<String>>`. The example below sh
 >     ["eth1", "Uplink 2", "degraded", "1000000000"]
 >   ]
 >   ```
->
-> - <span class="fa-regular fa-file-lines"></span> Serialized Text
->
->   ```text
->   eth0;Uplink 1;ok;1000000000
->   eth1;Uplink 2;degraded;1000000000
->   ```
 
-The serialized text is how a table is written out where text is expected (a `${source::...}` reference, a `toText`), with the variations described in [Serialization Details](sources/index.html#serialization-details-you-must-know). Only a conversion (`toTable`, `json2Table`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: a `;` that a compute writes into a cell stays in that cell.
+Where a text is expected, a table is written as described in [Serialization Details](sources/index.html#serialization-details-you-must-know). Only a conversion (`toTable`, `json2Table`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: a `;` that a compute writes into a cell stays in that cell.
 
 ## `mapping` Block Inside Jobs
 
-`mapping` is the bridge between a source table and exported telemetry. Each row of the mapped table represents one monitor instance. That instance is exported as one OpenTelemetry Resource, with attributes from `attributes` and metrics from `metrics`.
+`mapping` is the bridge between a source table and exported telemetry. Each row of the mapped table represents one monitor instance; a `type: simple` mapping, without `source`, represents the single instance of its monitor type (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)). That instance is exported as one OpenTelemetry Resource, with attributes from `attributes` and metrics from `metrics`.
 
 ```yaml
 mapping:

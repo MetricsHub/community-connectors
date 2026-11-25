@@ -7,7 +7,7 @@ description: How monitors, jobs, and instance identity work: simple vs discovery
 
 A **monitor** defines how MetricsHub discovers and collects metrics for one type of component: `fan`, `disk`, `battery`, `enclosure`, `network`, etc. Each monitor produces **instances** — one per physical or logical component found — and each instance is exported as one OpenTelemetry Resource.
 
-This page explains the job models (`simple` vs `discovery` + `collect`), instance identity (`keys`), collect modes (`multiInstance` vs `monoInstance`), and two additional mapping features (`conditionalCollection`, `legacyTextParameters`).
+This page explains the job models (`simple` vs `discovery` + `collect`), instance identity (`keys`), collect modes (`multiInstance` vs `monoInstance`), the simple mapping (one instance, no table), and two additional mapping features (`conditionalCollection`, `legacyTextParameters`).
 
 ## Monitor Anatomy
 
@@ -44,7 +44,7 @@ monitors:
 
 ## The `simple` Job
 
-One pipeline produces both attributes and metrics; each mapped row creates (or refreshes) one instance and collects its metrics at the same time.
+One pipeline produces both attributes and metrics; each mapped row creates (or refreshes) one instance and collects its metrics at the same time. A simple mapping (`type: simple`) maps the single instance of the monitor type instead (see [The Simple Mapping](#the-simple-mapping)).
 
 Because the job runs on every collect, an instance that disappears is removed at the next collect, when a trusted run no longer returns it. See [When Instances Are Removed](#when-instances-are-removed).
 
@@ -132,15 +132,12 @@ monitors:
           type: commandLine
           commandLine: CHCP 437&&DISKPART.EXE /S ${file::listVolume.txt}
           computes:
-          # ID;Status
+          # ID;Status;Status
           - type: awk
             script: ${file::diskPart.awk}
             output: table
             variables:
               collect: 1
-          # ID;Status;Status
-          - type: duplicateColumn
-            column: 2
           - type: translate
             column: 2
             translationTable: ${translation::LogicalDiskTranslationTable}
@@ -154,7 +151,7 @@ monitors:
           StatusInformation: $3
 ```
 
-Rows whose key values match no discovered instance are ignored; instances with no matching row simply get no new metric values this cycle.
+Rows whose key values match no discovered instance are ignored; instances with no matching row simply get no new metric values this cycle. A `multiInstance` collect with a simple mapping reads no table: it sets the metrics of the single instance of the monitor type (see [The Simple Mapping](#the-simple-mapping)).
 
 ### `monoInstance`: one run per instance
 
@@ -172,7 +169,7 @@ monitors:
           type: commandLine
           commandLine: "/usr/sbin/smartctl -H ${attribute::id} ${attribute::__device_type_option}"
           computes:
-          # SMARTstatus
+          # SMARTstatus;SMARTstatus
           - type: awk
             script: "${file::physical_disk_smart_health.awk}"
             output: table
@@ -190,9 +187,86 @@ Because the run is already bound to one instance, the mapping does not need to r
 > [!WARNING]
 > `monoInstance` multiplies the number of requests by the number of instances. Keep the per-instance sources minimal, and prefer `multiInstance` whenever a single bulk query can return all instances at once.
 
+## The Simple Mapping
+
+A mapping has a `type`:
+
+- `table`, the default: the mapping reads the table of its `source`, which it requires, and maps one instance per row.
+- `simple`: the mapping has no `source` and reads no table. It maps the single instance of its monitor type for the connector, whose values are constants and references to sources that end in a text (see [Strict Content Types](design-principles.html#strict-content-types)). Use it for a component that the resource has once, with no table to build.
+
+```yaml
+monitors:
+  memory:
+    simple:
+      sources:
+        memoryLimit:
+          # any source that ends in a text
+        vendor:
+          # any source that ends in a text
+      mapping:
+        type: simple
+        attributes:
+          vendor: ${source::vendor}
+        metrics:
+          system.memory.limit: ${source::memoryLimit}
+```
+
+- A value is written like any mapping value that reads no column: a constant, a `${source::<text source>}` reference, a text that holds references (`Settings of ${source::vendor}`), or a function on them (`boolean(${source::flag})`). References are resolved when the job runs. A simple mapping has no row, so `$1` has no meaning.
+- A value that is exactly one `${source::...}` reference is the text of that source as is: it is not read as mapping syntax. A device text such as `Refresh rate(Hz)`, `costs $15` or `$3` stays what it is. This holds in every mapping, `table` or `simple`. A value that mixes a reference with other characters (`Settings of ${source::vendor}`) is interpolated first, then read like any other mapping value.
+
+### A Singleton Without Key Attributes
+
+A monitor type whose job has a simple mapping is a singleton for the connector: one instance, which the engine identifies by the connector and the monitor type only. It has no key attributes:
+
+- The default `keys` (`[ id ]`) do not apply, and the monitor does not load when it writes `keys` (`KEYS_WITH_SIMPLE_MAPPING`).
+- The attributes are the connector developer's choice: `id`, `hw.id`, `name`, or none at all. They are exported on the instance but never used to find or to create it: an attribute whose text changes between runs leaves the same instance. A mapping that writes metrics only is valid:
+
+  ```yaml
+  monitors:
+    license:
+      simple:
+        mapping:
+          type: simple
+          metrics:
+            license.count: 1
+  ```
+
+- Every mapping of the monitor has the same type: its `discovery` and its `collect` are both `simple` or both `table` (`MIXED_MAPPING_TYPES`).
+
+It works in every job:
+
+- In a `simple` or a `discovery` job, it creates the instance at the first run and refreshes it at the next.
+- A `monoInstance` collect runs once for the instance. Its simple mapping sets the metrics of that instance from the texts of that run, and its sources can read the instance's attributes with `${attribute::...}`.
+- A `multiInstance` collect sets the metrics of the instance directly, without matching any attribute. It sets none until the discovery has created it.
+
+Other monitors find a parent by its `id` attribute: a child's `hw.parent.id` must match it. A singleton that is the parent of other instances writes `id` (`id: memory`, for instance). Without `id`, it cannot be a parent, and MetricsHub shows the instance under its internal identifier, made of the connector and the monitor type.
+
+### A Text That Fails
+
+A referenced text source that fails or returns nothing gives an empty attribute value, and the metric that reads it is not collected at that run. The instance still exists and is the same one, also when the source answered at a previous run and now fails after its retry.
+
+### Load Errors
+
+The connector does not load, and neither do the `monitors` of a resource in `metricshub.yaml`, when a mapping breaks one of these rules (see [Rules and Hints](design-principles.html#rules-and-hints)):
+
+| Rule | Hint | Rejected for |
+| --- | --- | --- |
+| `TABLE_MAPPING_WITHOUT_SOURCE` | set the source, or write type: simple | A mapping of the default type `table` without `source`. |
+| `SOURCE_IN_SIMPLE_MAPPING` | remove the source, or the type: simple | A `type: simple` mapping with a `source`. |
+| `COLUMN_IN_SIMPLE_MAPPING` | write a table mapping with a source, or reference a text source | A value of a simple mapping that reads a column: `$1` or `$0` anywhere in the value, also inside `${awk::...}` or a function such as `rate($1)` (`$$` escapes a literal `$`). |
+| `MIXED_MAPPING_TYPES` | give every mapping of the monitor the same type | A monitor whose mappings do not all have the same type: a `simple` discovery with a `table` collect, for instance. |
+| `KEYS_WITH_SIMPLE_MAPPING` | remove the keys | `keys` on a monitor whose job has a simple mapping. |
+| `TABLE_INTERPOLATED` | interpolate a text | A value that references a source that ends in a table. Write a `toText` in that source, or use a table mapping. |
+
+A `type` other than `table` and `simple` does not load either: the connector file cannot be read.
+
+```text
+Connector MyConnector - Content type check: TABLE_MAPPING_WITHOUT_SOURCE in none at monitors.memory.simple.mapping: expected a source, actual none (set the source, or write type: simple)
+```
+
 ## Instance Identity: `keys`
 
-`keys` (monitor level, default `[ id ]`) defines which attributes uniquely identify an instance. The engine uses it to:
+`keys` (monitor level, default `[ id ]`) defines which attributes uniquely identify an instance of a table mapping (a simple mapping has no key attributes, see [A Singleton Without Key Attributes](#a-singleton-without-key-attributes)). The engine uses it to:
 
 - match `multiInstance` collect rows to discovered instances
 - recognize the same instance across discovery cycles (instead of creating duplicates)
@@ -209,7 +283,7 @@ Every attribute listed in `keys` must be mapped in the discovery (or `simple`) `
 
 ### When Instances Are Removed
 
-From MetricsHub Community 3.9.08, a `discovery` or `simple` job removes the instances it no longer returns. At the end of each **trusted** run, the engine removes the instances of the job's monitor type, created by this connector, that the run did not create or refresh:
+A `discovery` or `simple` job removes the instances it no longer returns. At the end of each **trusted** run, the engine removes the instances of the job's monitor type, created by this connector, that the run did not create or refresh:
 
 | Job | An instance that disappears is removed |
 | --- | --- |
@@ -257,7 +331,6 @@ monitors:
 - The value is a duration (`30s`, `15m`, `1h`, `1d`, or combined such as `1h30m`) or a number of seconds. The default `0` removes the instance at the first trusted run that misses it. A negative value is rejected when the connector is loaded.
 - A trusted run removes the instance once the time since the last run that returned it exceeds the delay. The delay is wall-clock time, checked only at the end of a trusted run: a `discovery` job runs about once an hour by default, so a delay shorter than one discovery cycle keeps nothing. Use two discovery cycles or more (for example `2h`) to survive one missed cycle.
 - It is inherited and can be overridden through [`extends`](reuse-and-configuration.html), and it is also available for the custom monitors of `metricshub.yaml`.
-- MetricsHub versions older than 3.9.08 ignore it, so declaring it does not break a connector on an older agent.
 
 Use `removalDelay` only when no inventory exists: entities defined by their activity (sessions, connected replicas, running queries), or as a stopgap until the connector reads an inventory.
 
@@ -265,8 +338,8 @@ Use `removalDelay` only when no inventory exists: entities defined by their acti
 
 | Property | Jobs | Required | Description |
 | --- | --- | --- | --- |
-| `sources` | all | Yes | Named sources forming the job's table pipeline. See [Sources](sources/index.html). |
-| `mapping` | all | Yes | Turns the final table into instances, attributes, and metrics. See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
+| `sources` | all | No | Named sources forming the job's table pipeline. See [Sources](sources/index.html). A [simple mapping](#the-simple-mapping) whose values are all constants needs none. |
+| `mapping` | all | Yes | Turns the table of its `source` into instances, attributes, and metrics, or maps the single instance of the monitor type with `type: simple` ([The Simple Mapping](#the-simple-mapping)). See [Mapping, Metrics, and Semconv](mapping-metrics-semconv.html). |
 | `type` | `simple`, `collect` | No | `multiInstance` or `monoInstance`. When omitted on a `collect` job, defaults to `monoInstance` — declare it explicitly in new connectors. |
 | `executionOrder` | all | No | Array of source names forcing a specific order. By default the engine runs a job's sources sequentially, ordered by their `${source::...}` dependencies; use `executionOrder` only when a dependency is invisible to the engine, and list **every** source of the job. |
 
@@ -318,7 +391,8 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 
 - Omitting `type` on the `collect` job of a multi-instance monitor — the engine then defaults to `monoInstance`, silently changing the execution model. State `multiInstance` or `monoInstance` explicitly.
 - Forgetting to re-map `id` (or the other `keys`) in a `multiInstance` collect mapping, so no row matches any instance and no metric is ever collected.
-- Mapping an unstable value (rotating index, display label) as `id`, which creates a new instance at every discovery cycle (from MetricsHub Community 3.9.08, the previous one is removed, so its counters restart every time).
+- Confusing the job `type` (`multiInstance`, `monoInstance`) with the mapping `type` (`table`, `simple`): a mapping without `source` needs `type: simple` in the `mapping` block, or the connector does not load (`TABLE_MAPPING_WITHOUT_SOURCE`).
+- Mapping an unstable value (rotating index, display label) as `id`, which creates a new instance at every discovery cycle (the previous one is removed, so its counters restart every time).
 - Using `monoInstance` with expensive sources on monitors that can have dozens of instances.
 - Putting heavy inventory work in `collect` instead of `discovery` — collect runs on every cycle.
 - Filtering on a state or a value (`Enabled` only, `up` only, non-zero readings only, `virsh list` without `--all`) in a `discovery` or `simple` job. The instance is removed as soon as its state changes, which hides the very failure the state should report. Keep every row and map the state.

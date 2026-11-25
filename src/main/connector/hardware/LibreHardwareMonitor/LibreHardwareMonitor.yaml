@@ -94,11 +94,13 @@ monitors:
           query: SELECT Identifier, Value FROM Sensor WHERE SensorType = 'Voltage'
           namespace: root\LibreHardwareMonitor
           computes:
+          # START SNIPPET: multiplyVoltsCompute
             # Convert volts to millivolts
             # Identifier, Value, SensorType
           - type: multiply
             column: 2
             value: 1000
+          # END SNIPPET: multiplyVoltsCompute
       mapping:
         # Value Table
         # Identifier, Value
@@ -259,15 +261,12 @@ monitors:
           leftKeyColumn: 3
           rightKeyColumn: 1
           computes:
-          # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
-          - type: prepend
-            column: 6
-            value: ' - '
             # Concatenate SensorName and HardwareName
             # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
-          - type: prepend
-            column: 6
-            value: $2
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, $4, $5, $2 " - " $6, $7 }
       mapping:
         # Instance table
         # SensorIdentifier, SensorName, SensorParent, HardwareIdentifier, HardwareName, HardwareType
@@ -440,20 +439,12 @@ monitors:
           leftKeyColumn: 2
           rightKeyColumn: 2
           computes:
-            # Clean duplicate column
-            # Parent, MemoryAvailable; MemoryUsed
-          - type: keepColumns
-            columnNumbers: 2,3,6
-            # Sum up MemoryAvailable and MemoryUsed to get MemorySize
+            # Clean duplicate column, sum up MemoryAvailable and MemoryUsed to get MemorySize, and convert it to MB
             # Parent, MemorySize; MemoryUsed
-          - type: add
-            column: 2
-            value: $3
-            # Convert to GB
-            # Parent, MemorySize; MemoryUsed
-          - type: multiply
-            column: 2
-            value: 1024
+          - type: awk
+            output: table
+            script: |
+              { print $2, ($3 + $6) * 1024, $6 }
         source(6):
           # Source 1 : MemoryName
           # Source 6 : MemorySize
