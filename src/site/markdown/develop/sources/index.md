@@ -138,11 +138,15 @@ Every source accepts `continueOnFailure: true|false`, `false` by default.
 
 A source **fails** when its request is not executed:
 
-- an exception, a timeout or an interruption;
+- an exception or a timeout;
 - no configuration for its protocol on the host, or no extension for the source;
 - an error answer of the protocol: an HTTP error status, a WMI or WBEM error (invalid class or namespace), an SQL error, an SNMP error.
 
-An answer is not a failure, even an empty one: a command that prints nothing, an empty table, an `snmpGet` whose OID has no value, a command that exits with a non-zero code. A source that reads a failed source (a `copy`, a `tableJoin`, a `tableUnion`, a `${source::...}` reference) fails as well. The error says what failed and why, and is logged.
+An answer is not a failure, even an empty one: a command that prints nothing, an empty table, an `snmpGet` whose OID has no value, a command that exits with a non-zero code. A source that reads a failed source (a `copy`, a `tableJoin`, a `tableUnion`, a `${source::...}` reference) fails as well, until the failed source answers again: a collect source that reads a discovery source fails until the next discovery. The error says what failed and why, and is logged.
+
+An interrupted job (its timeout, a shutdown) is not a failure: its remaining sources and its mapping are skipped, whatever `continueOnFailure` says.
+
+Two sources that read each other across runs (a job reading a source of a later job, which reads it back) would keep failing once one of them failed. An `afterAll` that fails puts back its earlier tables, so a cycle through `afterAll` needs nothing. Any other such cycle needs `continueOnFailure: true` on one of its sources.
 
 - **`false` (default):** a failure interrupts the processing.
   - In a monitor job (`discovery`, `collect`, `simple`), the computes of the source, the next sources of the job and the mapping are skipped. Discovery keeps the existing instances; collect leaves their metrics unset for this cycle.
