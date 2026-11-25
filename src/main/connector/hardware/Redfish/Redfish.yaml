@@ -92,6 +92,7 @@ monitors:
         source(3):
           # Enclosure.Discovery.Source(2).Column(2) = Systems
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -107,6 +108,7 @@ monitors:
         source(4):
           # For use in other Discoveries
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -118,6 +120,7 @@ monitors:
             properties: [ /@odata.id ]
         source(5):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -133,6 +136,7 @@ monitors:
         #now get the storage groups
         source(6):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -177,6 +181,7 @@ monitors:
           from: "${source::source(1)}"
         source(3):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -198,6 +203,7 @@ monitors:
         source(4):
           # For use in other Collects
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -209,6 +215,7 @@ monitors:
             properties: [ /@odata.id ]
         source(5):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -239,6 +246,7 @@ monitors:
         source(1):
           # Discovery
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -254,6 +262,7 @@ monitors:
         source(2):
           # JsonID;<System>;@odata.id
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -285,6 +294,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -299,6 +309,7 @@ monitors:
             properties: [ /@odata.Id ]
         source(2):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -334,6 +345,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -348,6 +360,7 @@ monitors:
             properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -381,6 +394,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -395,6 +409,7 @@ monitors:
             properties: [ /@odata.Id ]
         source(2):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -430,6 +445,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -467,6 +483,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -511,6 +528,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -525,6 +543,7 @@ monitors:
             properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -539,6 +558,7 @@ monitors:
             properties: [ ../../Column(2), /Name, /Manufacturer, /Model ]
         source(3):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -553,6 +573,7 @@ monitors:
             properties: [ ../../../Column(2), /@odata.id ]
         source(4):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -588,6 +609,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -602,6 +624,7 @@ monitors:
             properties: [ /@odata.id ]
         source(2):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -622,6 +645,7 @@ monitors:
             translationTable: "${translation::StatusInformationTranslationTable}"
         source(3):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -662,6 +686,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -702,6 +727,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -737,6 +763,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -773,6 +800,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -815,6 +843,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -847,6 +876,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -891,6 +921,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -905,6 +936,7 @@ monitors:
             properties: [ ../../Column(2), /@odata.id ]
         source(2):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -940,6 +972,7 @@ monitors:
       sources:
         source(1):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}
@@ -954,6 +987,7 @@ monitors:
             properties: [ /@odata.id ]
         source(2):
           type: http
+          continueOnFailure: true
           method: GET
           header: "${file::httpHeader.txt}"
           authenticationToken: ${source::beforeAll.login}

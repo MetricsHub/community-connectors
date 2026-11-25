@@ -44,6 +44,7 @@ monitors:
         # file.path;file.name;file.size;file.atime;file.mtime;file.ctime
         source(1):
           type: commandLine
+          continueOnFailure: true
           commandLine: PowerShell.exe -ExecutionPolicy Bypass -Command "$file='$1'; if (Test-Path -Path $file -PathType Leaf) { $item = Get-Item -Path $file; $name = $item.Name; $size = $item.Length; $atime = [DateTimeOffset]::new($item.LastAccessTime).ToUnixTimeSeconds(); $mtime = [DateTimeOffset]::new($item.LastWriteTime).ToUnixTimeSeconds(); $ctime = [DateTimeOffset]::new($item.CreationTime).ToUnixTimeSeconds(); Write-Output \"$file;$name;$size;$atime;$mtime;$ctime\" }"
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
@@ -53,6 +54,7 @@ monitors:
         # file.path;file.lines
         source(2):
           type: commandLine
+          continueOnFailure: true
           commandLine: PowerShell.exe -ExecutionPolicy Bypass -Command "$file='$1'; if (Test-Path -Path $file -PathType Leaf) { $lines = (Get-Content -Path $file -ErrorAction SilentlyContinue | Measure-Object -Line).Lines; Write-Output \"$file;$lines\" }"
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
@@ -87,6 +89,7 @@ monitors:
         #file.path;file.name;keyword;keyword.count
         patternMatchingSource:
           type: commandLine
+          continueOnFailure: true
           commandLine: PowerShell.exe -ExecutionPolicy Bypass -File "${file::patternmatching.ps1}" "$1" "${var::contentPattern}"
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"

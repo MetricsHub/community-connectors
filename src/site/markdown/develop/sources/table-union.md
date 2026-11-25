@@ -34,6 +34,7 @@ sources:
 | `tables` | Yes | None | Ordered list of the tables to concatenate: source references, or table literals written as lists of rows (see [Writing Table Literals](#writing-table-literals)). |
 | `computes` | No | `[]` | Post-union processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 ## Writing Table Literals
 

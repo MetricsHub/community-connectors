@@ -39,6 +39,7 @@ sources:
 | `executeForEachEntryOf` | No | None | Execute with fan-out context from another source. |
 | `computes` | No | `[]` | Post-processing computes. |
 | `forceSerialization` | No | `true` | Always on: the IPMI requests of a connector to a host are serialized whatever the value, since a BMC accepts few simultaneous sessions. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 `netFn`, `command` and each `data` byte are decimal, or hexadecimal with the `0x` prefix. Macros (`${esc.d}`, `${source::...}`, attributes) apply to the three properties.
 

@@ -107,6 +107,8 @@ header: "Authorization: Bearer ${resource.attribute::api.token}"
 - `${protocol::<type>.<property>}` accesses configured protocol data.
 - `${resource.attribute::<key>}` accesses host/resource-level attributes.
 
+A failed source quotes its request (command line, URL, query) in the agent's log and in the answer of a [tool](tools.html), with these references already replaced. Put a credential in a request with the runtime credential macros (`%{...}`, below), replaced only when the request is sent: the error shows `%{PASSWORD}`, not the password. A credential from `${protocol::...}` belongs in the `variables` of an AWK script, which no error quotes.
+
 ## Mono-Instance Attribute References
 
 Use `${attribute::<key>}` in mono-instance contexts: `monoInstance` collect jobs run once per discovered instance, and this reference injects that instance's attributes (as mapped during discovery) into the source. See [Monitors and Jobs](monitors-and-jobs.html).

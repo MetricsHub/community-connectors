@@ -31,6 +31,7 @@ sources:
 | `type` | Yes | None | `ipmi`. |
 | `computes` | No | `[]` | Post-processing pipeline, typically required for shaping. |
 | `forceSerialization` | No | `true` | Always on: the IPMI requests of a connector to a host are serialized whatever the value, since a BMC accepts few simultaneous sessions. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 | `executeForEachEntryOf` | No | None | Fan-out context when needed. |
 
 ## Recommended Pattern

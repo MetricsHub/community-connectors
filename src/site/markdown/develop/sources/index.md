@@ -121,8 +121,8 @@ Entries run one at a time by default. Set `maxParallel` when each entry is slow 
 
 With `list`, the result has the type of the source: a text for `http`, `commandLine` or `snmpGet` (the entries' texts joined with a line feed), a table for `snmpTable`, `wmi`, `sql`, an `snmpGet` with `output: table`, ... (the entries' rows). With `json_array`, `json_array_extended` and a custom object, the result is text: an entry that returns a table contributes its text as [toText](../computes/to-text.html) writes it (see [Serialization Details](#serialization-details-you-must-know)).
 
-> [!WARNING]
-> A failed entry adds nothing to the result: `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source looks answered, so when it feeds the mapping of a `discovery` or `simple` job, the run is trusted and the instances of the failed entity are removed (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Join the result back onto the inventory with a [`tableJoin`](./table-join.html) and a `defaultRightLine`, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) when no inventory exists.
+> [!NOTE]
+> With [`continueOnFailure: true`](#continueonfailure), a failed entry adds nothing to the result (without it, a failed entry makes the source fail): `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source then counts as not answered, so the jobs that read it do not remove the instances of the failed entity (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
 
 See [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml) for extensive real usage of `json_array` and `json_array_extended`.
 
@@ -130,7 +130,37 @@ See [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/m
 
 Every source (and detection criterion) accepts `forceSerialization: true`. It wraps the execution in a per-connector, per-host lock so that force-serialized operations of the same connector never run concurrently on the same host.
 
-Use it only when the target device or agent genuinely cannot handle concurrent requests (single-session management controllers, fragile SNMP/IPMI stacks). If the lock cannot be acquired in time, the source silently yields an **empty table** — overuse degrades both performance and reliability.
+Use it only when the target device or agent genuinely cannot handle concurrent requests (single-session management controllers, fragile SNMP/IPMI stacks). If the lock cannot be acquired in time, the source fails (see [`continueOnFailure`](#continueonfailure)) — overuse degrades both performance and reliability.
+
+## `continueOnFailure`
+
+Every source accepts `continueOnFailure: true|false`, `false` by default.
+
+A source **fails** when its request is not executed:
+
+- an exception or a timeout;
+- no configuration for its protocol on the host, or no extension for the source;
+- an error answer of the protocol: an HTTP error status, a WMI or WBEM error (invalid class or namespace), an SQL error, an SNMP error.
+
+An answer is not a failure, even an empty one: a command that prints nothing, an empty table, an `snmpGet` whose OID has no value, a command that exits with a non-zero code. A source that reads a failed source (a `copy`, a `tableJoin`, a `tableUnion`, a `${source::...}` reference) fails as well, until the failed source answers again: a collect source that reads a discovery source fails until the next discovery. The error says what failed and why, and is logged.
+
+An interrupted job (its timeout, a shutdown) is not a failure: its remaining sources and its mapping are skipped, whatever `continueOnFailure` says.
+
+Two sources that read each other across runs (a job reading a source of a later job, which reads it back) would keep failing once one of them failed. An `afterAll` that fails puts back its earlier tables, so a cycle through `afterAll` needs nothing. Any other such cycle needs `continueOnFailure: true` on one of its sources.
+
+- **`false` (default):** a failure interrupts the processing.
+  - In a monitor job (`discovery`, `collect`, `simple`), the computes of the source, the next sources of the job and the mapping are skipped. Discovery keeps the existing instances; collect leaves their metrics unset for this cycle.
+  - In a [tool](../tools.html), the tool stops, and its result is the error, which the LLM receives.
+  - With `executeForEachEntryOf`, a failed entry makes the source fail.
+- **`true`:** the source gives the empty result of its type (an empty text for a text source, an empty table otherwise), its computes run (an `awk` runs its `BEGIN` and `END` blocks), and the job goes on. With `executeForEachEntryOf`, a failed entry adds nothing to the result. Either way, the source counts as not answered: the jobs that read it do not remove instances.
+
+Set `continueOnFailure: true` on a source whose failure is part of the design, and on the sources of its job that it reads (their failure stops the job before it runs):
+
+- the source feeds the right side of a [`tableJoin`](./table-join.html) with a `defaultRightLine`, or a [`tableUnion`](./table-union.html) of a monitor job: a missing part leaves the rest. Only with a blank `defaultRightLine` (the values of the missing rows stay unset): not the right side of a join whose `defaultRightLine` holds a value (`0`, `ok`, a label: "absent means none"), since a failure would publish that value for every row. Not the inputs of a union in a [tool](../tools.html): a failed input should give the LLM its error, not a partial or empty result. Not a source that the mapping (or the tool's result) also needs through anything else, such as the left side of a join, a login in `beforeAll`, or the only source of a union completed by hard-coded rows: its failure leaves nothing to map and must stop the job;
+- the source has `executeForEachEntryOf`, and an entry may fail while the others answer. Not in a tool, unless it is an optional right side as above: a failed entry should give the LLM its error;
+- the source only feeds other jobs (a source of the `enclosure` discovery that the other monitors read): the mapping of its job does not read it, directly or through other sources of the job, and its failure would skip that mapping for nothing.
+
+Never set it on a source read, directly or through other sources, by an `awk` that prints a row on an empty input (a total of `0`, an `ok` status, a fallback instance from its `BEGIN` or `END` block): that row is right for an empty answer (no LUN: 0 bytes subscribed), not for a failure. Without the flag, a failure stops the job before the `awk` runs.
 
 ## Minimal End-To-End Example
 

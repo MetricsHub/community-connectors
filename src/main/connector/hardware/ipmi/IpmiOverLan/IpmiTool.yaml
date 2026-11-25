@@ -110,6 +110,7 @@ monitors:
           # Source(1) = copy of Enclosure.Discovery.Source(1)
           # SensorType;SensorID;SensorName;Location;FanSpeed;WarningThreshold;AlarmThreshold
           type: copy
+          continueOnFailure: true
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
             # Keep only fans
@@ -126,6 +127,7 @@ monitors:
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
+          continueOnFailure: true
           from: ${source::monitors.enclosure.discovery.sources.source(1)}
           computes:
             # Keep only "Fan Device" lines
@@ -170,6 +172,7 @@ monitors:
           # Source(1) = copy of Enclosure.Collect.Source(1)
           # SensorType;SensorID;SensorName;Location;Value;WarningThreshold;AlarmThreshold
           type: copy
+          continueOnFailure: true
           from: ${source::monitors.enclosure.collect.sources.source(1)}
           computes:
             # Keep only fans
@@ -186,6 +189,7 @@ monitors:
         source(2):
           # Source(2) = copy of Enclosure.Discovery.Source(1)
           type: copy
+          continueOnFailure: true
           from: ${source::monitors.enclosure.collect.sources.source(1)}
           computes:
             # Keep only "Fan Device" lines

@@ -30,12 +30,13 @@ sources:
 | `executeForEachEntryOf` | No | None | Fan-out execution context. |
 | `computes` | No | `[]` | Post-processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 ## Result
 
-By default, `snmpGet` returns the value of the OID as a **text**, its line breaks as LF, which a `${source::...}` reference (in a mapping value, the `value` of a compute, a `static` cell) and an `awk` read (see [Serialization Details](./index.html#serialization-details-you-must-know)). When the request fails (no answer, an error, no SNMP configuration for the host), the text is empty.
+By default, `snmpGet` returns the value of the OID as a **text**, its line breaks as LF, which a `${source::...}` reference (in a mapping value, the `value` of a compute, a `static` cell) and an `awk` read (see [Serialization Details](./index.html#serialization-details-you-must-know)). An OID without a value gives an empty text. When the request fails (no answer, an error, no SNMP configuration for the host), the source fails and stops its job or tool; with [`continueOnFailure: true`](./index.html#continueonfailure), its result is an empty text.
 
-With `output: table`, it returns a **table** of one row and one cell that holds the value whole: a `;` or a line break in the value stays in the cell, and an empty value gives one row with an empty cell. When the request fails, the table has no row, so a mapping that reads it creates no instance and collects nothing.
+With `output: table`, it returns a **table** of one row and one cell that holds the value whole: a `;` or a line break in the value stays in the cell, and an empty value gives one row with an empty cell. An OID without a value gives no row, so a mapping that reads it creates no instance and collects nothing. A failed request fails the source, or gives no row with `continueOnFailure: true`.
 
 Declare `output: table` when the result is read as a table: by the `mapping` source, a `tableJoin`, a `tableUnion` or a table compute (`translate`, `insertColumn`, `multiply`, ...). A text there is rejected when the connector loads (`TEXT_FEEDS_TABLE`, see [Strict Content Types](../design-principles.html#strict-content-types)). Unlike a [toTable](../computes/to-table.html), `output: table` never splits the value.
 

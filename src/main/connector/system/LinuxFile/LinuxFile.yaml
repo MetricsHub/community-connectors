@@ -43,6 +43,7 @@ monitors:
         # file.path;file.name;file.size;file.atime;file.mtime;file.ctime
         source(1):
           type: commandLine
+          continueOnFailure: true
           commandLine: file="$1"; basename_result=$(basename "$file"); stat_result=$(stat -c '%s;%X;%Y;%Z' "$file"); echo "$file;$basename_result;$stat_result"
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
@@ -52,6 +53,7 @@ monitors:
         # file.path;file.lines
         source(2):
           type: commandLine
+          continueOnFailure: true
           commandLine: file="$1"; echo "$file;$(wc -l < "$file")"
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"
@@ -86,6 +88,7 @@ monitors:
         #file.path;file.name;keyword;keyword.count
         patternMatchingSource:
           type: commandLine
+          continueOnFailure: true
           commandLine: file="$1"; keywords="${var::contentPattern}"; if [ -n "$keywords" ] && [ -f "$file" ]; then for keyword in $(echo "$keywords" | tr '|' '\n' | sort); do count=$(grep -Eoi "$keyword" "$file" 2>/dev/null | wc -l); echo "$file;$(basename "$file");$keyword;$count"; done; fi
           executeForEachEntryOf:
             source: "${source::beforeAll.files}"

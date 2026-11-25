@@ -243,7 +243,7 @@ Other monitors find a parent by its `id` attribute: a child's `hw.parent.id` mus
 
 ### A Text That Fails
 
-A referenced text source that fails or returns nothing gives an empty attribute value, and the metric that reads it is not collected at that run. The instance still exists and is the same one, also when the source answered at a previous run and now fails after its retry.
+A referenced text source that returns nothing, or that fails with [`continueOnFailure: true`](sources/index.html#continueonfailure), gives an empty attribute value, and the metric that reads it is not collected at that run. The instance still exists and is the same one. So does a text of another job or of `beforeAll` that failed. Without `continueOnFailure`, a failed source of the job stops it before the mapping: at the first run, the instance is not created; later, it stays without new values for that run.
 
 ### Load Errors
 
@@ -293,7 +293,7 @@ A `discovery` or `simple` job removes the instances it no longer returns. At the
 
 A run is trusted only when all of these hold:
 
-- **Every source answered.** A source that had data and comes back empty (most failures return an empty result too) is retried once; if it is still empty, it has not answered for this run. This only covers the run in which the source first comes back empty: the next run finds no previous data, does not retry, and counts the empty result as answered. Sources read through `${source::...}` references (from `beforeAll` or another job) count too: one that did not answer the last time it ran makes the job untrusted.
+- **Every source answered.** A source that [fails](sources/index.html#continueonfailure) has not answered, even with `continueOnFailure: true`, nor has an `executeForEachEntryOf` that skipped a failed entry. A source that had data and comes back empty is retried once; if it is still empty, it has not answered for this run. This only covers the run in which the source first comes back empty: the next run finds no previous data, does not retry, and counts the empty result as answered. Sources read through `${source::...}` references (from `beforeAll` or another job) count too: one that did not answer the last time it ran makes the job untrusted.
 - **At least one instance was mapped.** A job whose table is empty, or whose rows all lack the `keys` attributes, removes nothing.
 - **The connector status is OK.**
 - **The run finished in time**: no job timeout (`jobTimeout`), no interruption, and every job of the parallel pool completed.
@@ -301,7 +301,7 @@ A run is trusted only when all of these hold:
 
 Otherwise the run only creates and refreshes instances, as before: a source that has just stopped answering, a job that maps nothing, a failing or stopped connector, or a timed-out run never removes anything. Neither does a monitor type excluded from the resource's monitors, since its job does not run.
 
-A source that stays empty or keeps failing is only covered for one run. From the next run, it counts as answered: if the job still maps other rows (from another source of a [`tableUnion`](sources/table-union.html), for example), the instances built from the rows of that source are removed. When a source can stay empty for long, keep the rows of the instances with a [`defaultRightLine`](sources/table-join.html#writing-defaultrightline), or set [`removalDelay`](#removaldelay).
+A source that keeps failing is covered at every run, but one that stays empty is only covered for one run. From the next run, it counts as answered: if the job still maps other rows (from another source of a [`tableUnion`](sources/table-union.html), for example), the instances built from the rows of that source are removed. When a source can stay empty for long, keep the rows of the instances with a [`defaultRightLine`](sources/table-join.html#writing-defaultrightline), or set [`removalDelay`](#removaldelay).
 
 These instances are never removed:
 
@@ -311,7 +311,7 @@ These instances are never removed:
 
 What this means for connector authors:
 
-- The rules above only catch whole failures. A row dropped for any other reason looks exactly like an entity that disappeared, and its instance is removed: a filter on a state or a value, an inner `tableJoin` against a source that misses some entities, a failed fan-out entry. Build the rows that create the instances from an inventory: see [Build Instances from an Inventory](design-principles.html#9-build-instances-from-an-inventory).
+- The rules above only catch whole failures. A row dropped for any other reason looks exactly like an entity that disappeared, and its instance is removed: a filter on a state or a value, an inner `tableJoin` against a source that misses some entities, a fan-out entry that answered without the entity. Build the rows that create the instances from an inventory: see [Build Instances from an Inventory](design-principles.html#9-build-instances-from-an-inventory).
 - An unstable `id` no longer only duplicates instances: the old instance is removed and a new one is created at every run, which restarts its counters and `rate()` state.
 - A removed instance is no longer exported; its series ends without a final data point. If the entity comes back, it is created again with fresh counters.
 
@@ -397,7 +397,6 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 - Putting heavy inventory work in `collect` instead of `discovery` — collect runs on every cycle.
 - Filtering on a state or a value (`Enabled` only, `up` only, non-zero readings only, `virsh list` without `--all`) in a `discovery` or `simple` job. The instance is removed as soon as its state changes, which hides the very failure the state should report. Keep every row and map the state.
 - Joining the inventory with an inner `tableJoin` (no `defaultRightLine`) against a per-entity or optional source: an entity missing from the right table is removed. Keep the inventory on the left and add a `defaultRightLine`.
-- Building the instances from a fan-out (`executeForEachEntryOf`) whose failed entry drops the row: the source still answers, the run is trusted, and the instances of that entity are removed. Join the result back onto the inventory.
 
 ## Community Examples
 
