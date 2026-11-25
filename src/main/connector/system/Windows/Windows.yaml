@@ -1213,7 +1213,6 @@ tools:
         - type: toTable
       offset:
         type: commandLine
-        continueOnFailure: true
         # Waits for a time server that does not answer
         timeout: 120
         commandLine: w32tm /stripchart /computer:$1 /samples:3 /dataonly
@@ -1282,7 +1281,6 @@ tools:
             }
       events:
         type: wmi
-        continueOnFailure: true
         namespace: root\CIMv2
         query: SELECT TimeGenerated, EventCode, SourceName, Message FROM Win32_NTLogEvent WHERE LogFile = 'System' AND TimeGenerated >= '$1' AND (EventCode = 41 OR EventCode = 1074 OR EventCode = 1076 OR EventCode = 6005 OR EventCode = 6006 OR EventCode = 6008)
         executeForEachEntryOf:

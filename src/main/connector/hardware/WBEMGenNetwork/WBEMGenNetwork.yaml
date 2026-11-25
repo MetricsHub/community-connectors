@@ -146,14 +146,12 @@ monitors:
           # Transmitted errors
           # DeviceID;TransmitError
           type: wmi
-          continueOnFailure: true
           namespace: root\wmi
           query: SELECT InstanceName,NdisTransmitsError FROM MSNdis_TransmitsError
         source(4):
           # Received errors
           # DeviceID;ReceiveError
           type: wmi
-          continueOnFailure: true
           namespace: root\wmi
           query: SELECT InstanceName,NdisReceiveError FROM MSNdis_ReceiveError
         source(5):
@@ -174,7 +172,6 @@ monitors:
           # Source(7) = Source(3) + Source(4)
           # DeviceID;TransmitError;DeviceID;ReceiveError
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 1

@@ -49,28 +49,24 @@ monitors:
           # Source (2) = Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;
           type: wmi
-          continueOnFailure: true
           namespace: root\cimv2
           query: SELECT __PATH,Name,VolumeName FROM Win32_LogicalDisk
         source(3):
           # Source (3) = Win32_LogicalDiskToPartition
           # Win32_DiskPartition;Win32_LogicalDisk;
           type: wmi
-          continueOnFailure: true
           namespace: root\cimv2
           query: SELECT Antecedent,Dependent FROM Win32_LogicalDiskToPartition
         source(4):
           # Source (4) = Win32_LogicalDiskToPartition
           # Win32_DiskDrive;Win32_DiskPartition;
           type: wmi
-          continueOnFailure: true
           namespace: root\cimv2
           query: SELECT Antecedent,Dependent FROM Win32_DiskDriveToDiskPartition
         source(5):
           # Source 5 = Win32_DiskDrive
           # Win32_DiskDrive;PhysicalDiskName;PnPAddress;
           type: wmi
-          continueOnFailure: true
           namespace: root\cimv2
           query: SELECT __PATH,Name,PNPDeviceID FROM Win32_DiskDrive
           computes:
@@ -83,7 +79,6 @@ monitors:
           # Source 6 = MPIO_GET_DESCRIPTOR
           # LunId(WithDevice);PnPAddress;
           type: wmi
-          continueOnFailure: true
           namespace: root\wmi
           query: SELECT DeviceName,InstanceName FROM MPIO_GET_DESCRIPTOR
           computes:
@@ -96,7 +91,6 @@ monitors:
           # Source 7 = 2 Joined to 3 with Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(2)}
           rightTable: ${source::source(3)}
           leftKeyColumn: 1
@@ -107,7 +101,6 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(7)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 4
@@ -118,7 +111,6 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7          #         8          #      9          10
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;Win32_DiskDrive;PhysicalDiskName;PnPAddress;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(8)}
           rightTable: ${source::source(5)}
           leftKeyColumn: 6
@@ -129,7 +121,6 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7          #         8          #      9          10           11          #  12
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;Win32_DiskDrive;PhysicalDiskName;PnPAddress;LunId(WithDevice);PnPAddress;
           type: tableJoin
-          continueOnFailure: true
           leftTable: ${source::source(9)}
           rightTable: ${source::source(6)}
           leftKeyColumn: 10
