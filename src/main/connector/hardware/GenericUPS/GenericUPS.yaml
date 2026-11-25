@@ -58,7 +58,7 @@ monitors:
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
           computes:
           - type: translate
             column: 2
@@ -79,7 +79,7 @@ monitors:
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
       mapping:
         source: ${source::source(5)}
         metrics:
@@ -127,7 +127,7 @@ monitors:
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
           computes:
           - type: duplicateColumn
             column: 2
@@ -152,7 +152,7 @@ monitors:
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
       mapping:
         source: ${source::source(5)}
         attributes:

@@ -243,7 +243,7 @@ Other monitors find a parent by its `id` attribute: a child's `hw.parent.id` mus
 
 ### A Text That Fails
 
-A referenced text source that fails or returns nothing gives an empty attribute value, and the metric that reads it is not collected at that run. The instance still exists and is the same one, also when the source answered at a previous run and now fails after its retry.
+A referenced text source that returns nothing, or that fails with [`continueOnFailure: true`](sources/index.html#continueonfailure), gives an empty attribute value, and the metric that reads it is not collected at that run. The instance still exists and is the same one. So does a text of another job or of `beforeAll` that failed. Without `continueOnFailure`, a failed source of the job stops it before the mapping: at the first run, the instance is not created; later, it stays without new values for that run.
 
 ### Load Errors
 

@@ -317,8 +317,8 @@ monitors:
           system.uptime: $5
 
 # Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md).
-# The commands run through cmd.exe, which fails the whole source when a command exits with a code other than 0: the
-# PowerShell commands end with "exit 0", and print their errors (2>&1), so that the assistant sees them.
+# The output of a command is its answer whatever its exit code. The PowerShell commands print their errors (2>&1), so
+# that the assistant sees them, and end with "exit 0" for the agents before v3.9.09, where WinRM failed a non-zero exit.
 tools:
 
   processes:

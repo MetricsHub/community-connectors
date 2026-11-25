@@ -76,8 +76,9 @@ translations:
     Running: "on"
     Suspended: suspended
 
-# Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md). The commands run through
-# cmd.exe, which fails the whole source when a command exits with a code other than 0: they end with "exit 0".
+# Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md). The output of a command is
+# its answer whatever its exit code: the commands end with "exit 0" for the agents before v3.9.09, where WinRM failed
+# a non-zero exit.
 tools:
 
   vms:
