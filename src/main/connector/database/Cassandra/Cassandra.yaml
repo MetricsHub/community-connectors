@@ -492,7 +492,7 @@ monitors:
 tools:
 
   threadPools:
-    description: Lists the thread pools of the node (ReadStage, MutationStage, CompactionExecutor, MemtableFlushWriter, Native-Transport-Requests...), the largest backlog first, with their path (request, internal, transport), active tasks, maximum threads, pending tasks, currently blocked tasks, blocked tasks since start and completed tasks. Use it when requests are slow or time out. Pending tasks on ReadStage or MutationStage point to Cassandra_tableStats (sortBy readLatency or writeLatency); on CompactionExecutor to Cassandra_compactions; blocked tasks on MemtableFlushWriter mean slow flushes (disk). Then check Cassandra_droppedMessages. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials).
+    description: Lists the thread pools of the node (ReadStage, MutationStage, CompactionExecutor, MemtableFlushWriter, Native-Transport-Requests...), the largest backlog first, with their path (request, internal, transport), active tasks, maximum threads, pending tasks, currently blocked tasks, blocked tasks since start and completed tasks. Use it when requests are slow or time out. Pending tasks on ReadStage or MutationStage point to Cassandra_tableStats (sortBy readLatency or writeLatency); on CompactionExecutor to Cassandra_compactions; blocked tasks on MemtableFlushWriter mean slow flushes (disk). Then check Cassandra_droppedMessages. A row "No thread pool MBean on this node" means that JMX answered without it. When JMX does not answer (node down, wrong port or credentials), the tool returns that error.
     sources:
       # scope;path;name;Value or Count
       active:
@@ -546,7 +546,7 @@ tools:
                 if (v[k, "CompletedTasks"] == "") print pool[k], path[k], v[k, "ActiveTasks"], v[k, "MaxPoolSize"], v[k, "PendingTasks"], v[k, "CurrentlyBlockedTasks"], v[k, "TotalBlockedTasks"]
                 else print pool[k], path[k], v[k, "ActiveTasks"], v[k, "MaxPoolSize"], v[k, "PendingTasks"], v[k, "CurrentlyBlockedTasks"], v[k, "TotalBlockedTasks"], v[k, "CompletedTasks"]
               }
-              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", ""
+              if (!answered) print "No thread pool MBean on this node", "", "", "", "", "", ""
             }
         - type: sort
           column: 5
@@ -557,7 +557,7 @@ tools:
       columns: [ pool, path, active, maxThreads, pending, currentlyBlocked, totalBlocked, completed ]
 
   droppedMessages:
-    description: Lists the message types (MUTATION, READ, HINT, RANGE_SLICE, COUNTER_MUTATION, READ_REPAIR...) the node dropped since it started, the most dropped first, with the count and the rate per second over the last minute and the last 15 minutes. Since Cassandra 4.0, a type is listed under its old name and its new one too (READ and READ_REQ), with the same counts. A message is dropped when it waited longer than its timeout, so the client got a timeout and, for a mutation, the replica misses the write until hints or a repair deliver it. An empty table means that the node dropped no message. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials). Use it after timeouts; then Cassandra_threadPools for the saturated stage.
+    description: Lists the message types (MUTATION, READ, HINT, RANGE_SLICE, COUNTER_MUTATION, READ_REPAIR...) the node dropped since it started, the most dropped first, with the count and the rate per second over the last minute and the last 15 minutes. Since Cassandra 4.0, a type is listed under its old name and its new one too (READ and READ_REQ), with the same counts. A message is dropped when it waited longer than its timeout, so the client got a timeout and, for a mutation, the replica misses the write until hints or a repair deliver it. An empty table means that the node dropped no message. A row "No DroppedMessage MBean on this node" means that JMX answered without that MBean. When JMX does not answer (node down, wrong port or credentials), the tool returns that error. Use it after timeouts; then Cassandra_threadPools for the saturated stage.
     sources:
       dropped:
         type: jmx
@@ -580,7 +580,7 @@ tools:
       columns: [ messageType, dropped, perSecondLastMinute, perSecondLast15Minutes ]
 
   compactions:
-    description: Lists the compactions running on the node (and the other operations of the compaction manager, such as validation for a repair, cleanup, index build or anticompaction), with their keyspace, table, operation, bytes completed and total, unit, progress percentage and compaction ID. An empty table means that none is running. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials). Use it when CompactionExecutor has pending tasks or disk I/O is high; for the compactions waiting per table, call Cassandra_tableStats with sortBy pendingCompactions.
+    description: Lists the compactions running on the node (and the other operations of the compaction manager, such as validation for a repair, cleanup, index build or anticompaction), with their keyspace, table, operation, bytes completed and total, unit, progress percentage and compaction ID. An empty table means that none is running. A row "No CompactionManager MBean on this node" means that JMX answered without that MBean. When JMX does not answer (node down, wrong port or credentials), the tool returns that error. Use it when CompactionExecutor has pending tasks or disk I/O is high; for the compactions waiting per table, call Cassandra_tableStats with sortBy pendingCompactions.
     sources:
       running:
         type: jmx
@@ -616,7 +616,7 @@ tools:
       columns: [ keyspace, table, operation, completed, total, unit, progressPercent, compactionId ]
 
   tableStats:
-    description: Returns the statistics of the tables of the node, like nodetool tablestats, one row per table, sorted on sortBy, the largest first. Columns are keyspace, table, local reads and writes since start with their 99th percentile latency in microseconds (over the last minutes), live SSTables, SSTables read per query (99th percentile), tombstones scanned per query (99th percentile and maximum), tombstone warnings and failures (queries aborted), the largest and mean partition sizes in bytes, the estimated partition count, the live disk space in bytes and the pending compactions. Use it to find the table behind slow reads (many SSTables per read, tombstones, a large partition), a compaction backlog or a full disk. With every keyspace, the system tables are listed too. An empty table means that no table matches. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials).
+    description: Returns the statistics of the tables of the node, like nodetool tablestats, one row per table, sorted on sortBy, the largest first. Columns are keyspace, table, local reads and writes since start with their 99th percentile latency in microseconds (over the last minutes), live SSTables, SSTables read per query (99th percentile), tombstones scanned per query (99th percentile and maximum), tombstone warnings and failures (queries aborted), the largest and mean partition sizes in bytes, the estimated partition count, the live disk space in bytes and the pending compactions. Use it to find the table behind slow reads (many SSTables per read, tombstones, a large partition), a compaction backlog or a full disk. With every keyspace, the system tables are listed too. An empty table means that no table matches. A row "No table MBean on this node" means that JMX answered without it. When JMX does not answer (node down, wrong port or credentials), the tool returns that error.
     parameters:
       keyspace:
         description: The keyspace, e.g. my_app, or a pattern where * matches any characters, e.g. app_* (* for all the keyspaces)
@@ -733,7 +733,7 @@ tools:
             NF > 0 && NF < 3 { answered = 1 }
             NF >= 3 { k = $1 ";" $2; keyspace[k] = $1; table[k] = $2; v[k, $3 ":1"] = $4; v[k, $3 ":2"] = $5 }
             END {
-              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 0
+              if (!answered) print "No table MBean on this node", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 0
               for (k in keyspace) {
                 f[1] = keyspace[k]
                 f[2] = table[k]
@@ -752,7 +752,7 @@ tools:
       columns: [ keyspace, table, readCount, readP99Micros, writeCount, writeP99Micros, sstables, sstablesPerReadP99, tombstonesPerReadP99, tombstonesPerReadMax, tombstoneWarnings, tombstoneFailures, maxPartitionBytes, meanPartitionBytes, partitions, liveDiskBytes, pendingCompactions ]
 
   clusterStatus:
-    description: Lists the nodes of the cluster as seen by this node, like nodetool status, with their address, status (UP, or DOWN when unreachable), state (NORMAL, JOINING, LEAVING, MOVING), data load, host ID and schema version, plus the operation mode of this node (NORMAL, STARTING, JOINING, LEAVING, DECOMMISSIONED, MOVING, DRAINING, DRAINED) on its own row. Use it when requests fail with Unavailable errors or a node seems down; nodes with different schema versions have a schema disagreement. Then Cassandra_droppedMessages and Cassandra_threadPools on the nodes that are UP. A row with an ERROR message means that JMX did not answer (node down, wrong port or credentials).
+    description: Lists the nodes of the cluster as seen by this node, like nodetool status, with their address, status (UP, or DOWN when unreachable), state (NORMAL, JOINING, LEAVING, MOVING), data load, host ID and schema version, plus the operation mode of this node (NORMAL, STARTING, JOINING, LEAVING, DECOMMISSIONED, MOVING, DRAINING, DRAINED) on its own row. Use it when requests fail with Unavailable errors or a node seems down; nodes with different schema versions have a schema disagreement. Then Cassandra_droppedMessages and Cassandra_threadPools on the nodes that are UP. A row "No cluster MBean on this node" means that JMX answered without it. When JMX does not answer (node down, wrong port or credentials), the tool returns that error.
     sources:
       storageService:
         type: jmx
@@ -815,7 +815,7 @@ tools:
                 if (hostId[node] == localHostId && mode != "") print node, status, state, load[node], hostId[node], schema[node], mode
                 else print node, status, state, load[node], hostId[node], schema[node]
               }
-              if (!answered) print "ERROR: no answer from JMX (node down, wrong port or credentials, or MBean missing)", "", "", "", "", ""
+              if (!answered) print "No cluster MBean on this node", "", "", "", "", ""
             }
     result:
       source: ${source::nodes}
