@@ -45,7 +45,6 @@ monitors:
             # MSHW;AlarmsPresent;
         source(2):
           type: snmpTable
-          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: 4
           computes:

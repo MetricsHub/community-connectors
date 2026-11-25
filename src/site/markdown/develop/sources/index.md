@@ -152,12 +152,11 @@ An answer is not a failure, even an empty one: a command that prints nothing, an
 
 Set `continueOnFailure: true` on a source whose failure is part of the design, and on the sources of its job that it reads (their failure stops the job before it runs):
 
-- in a `discovery`, an `awk` compute of the source prints a fallback instance from its `BEGIN` or `END` block on an empty input. Not in `collect` or `simple`: a default value (a `0` counter) would be published as a metric, where a failure should leave it unset;
 - the source feeds the right side of a [`tableJoin`](./table-join.html) with a `defaultRightLine`, or a [`tableUnion`](./table-union.html) of a monitor job: a missing part leaves the rest. Only with a blank `defaultRightLine` (the values of the missing rows stay unset): not the right side of a join whose `defaultRightLine` holds a value (`0`, `ok`, a label: "absent means none"), since a failure would publish that value for every row. Not the inputs of a union in a [tool](../tools.html): a failed input should give the LLM its error, not a partial or empty result. Not a source that the mapping (or the tool's result) also needs through anything else, such as the left side of a join, a login in `beforeAll`, or the only source of a union completed by hard-coded rows: its failure leaves nothing to map and must stop the job;
 - the source has `executeForEachEntryOf`, and an entry may fail while the others answer. Not in a tool, unless it is an optional right side as above: a failed entry should give the LLM its error;
 - the source only feeds other jobs (a source of the `enclosure` discovery that the other monitors read): the mapping of its job does not read it, directly or through other sources of the job, and its failure would skip that mapping for nothing.
 
-An `awk` that runs on the empty result of a flagged source, in its own computes or in a source of the job that reads it, prints nothing on an empty input rather than a `0` or `ok` row (`END { if (NR == 0) exit; ... }`): a failure then leaves the metrics unset. A fallback instance of a `discovery` is the exception. An empty answer leaves them unset too.
+Never set it on a source read, directly or through other sources, by an `awk` that prints a row on an empty input (a total of `0`, an `ok` status, a fallback instance from its `BEGIN` or `END` block): that row is right for an empty answer (no LUN: 0 bytes subscribed), not for a failure. Without the flag, a failure stops the job before the `awk` runs.
 
 ## Minimal End-To-End Example
 

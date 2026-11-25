@@ -34,7 +34,6 @@ monitors:
         source(1):
           # Source(1) = IPMI source
           type: ipmi
-          continueOnFailure: true
           forceSerialization: true
           computes:
           # Process IPMI result througn an AWK script to interpret what can be interpreted

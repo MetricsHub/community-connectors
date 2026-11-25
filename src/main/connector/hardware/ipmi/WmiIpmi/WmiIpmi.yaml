@@ -30,7 +30,6 @@ monitors:
       sources:
         computerSystems:
           type: wmi
-          continueOnFailure: true
           query: SELECT IdentifyingNumber,Name,Vendor FROM Win32_ComputerSystemProduct
           namespace: root\cimv2
           computes:
@@ -44,7 +43,6 @@ monitors:
 
         numericSensors:
           type: wmi
-          continueOnFailure: true
           query: SELECT BaseUnits,CurrentReading,Description,LowerThresholdCritical,LowerThresholdNonCritical,SensorType,UnitModifier,UpperThresholdCritical,UpperThresholdNonCritical FROM NumericSensor
           namespace: root\hardware
           computes:
@@ -54,7 +52,6 @@ monitors:
 
         discreteSensors:
           type: wmi
-          continueOnFailure: true
           query: SELECT CurrentState,Description FROM Sensor
           namespace: root\hardware
           computes:
