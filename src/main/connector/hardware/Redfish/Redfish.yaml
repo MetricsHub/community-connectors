@@ -30,6 +30,42 @@ connector:
       errorMessage: Invalid credentials / not a redfish system
     # END SNIPPET: httpCriterion
     tags: [ hardware, network, storage, raid ]
+
+beforeAll:
+  source(1):
+    type: http
+    method: POST
+    path: /redfish/v1/SessionService/Sessions
+    header: "${file::authHttpHeader.txt}"
+    body: "${file::authHttpBody.txt}"
+    resultContent: all
+  login:
+    type: copy
+    from: ${source::beforeAll.source(1)}
+    computes:
+      # X-Auth-Token
+      - type: awk
+        script: "${file::extractAuthToken.awk}"
+  location:
+    type: copy
+    from: ${source::beforeAll.source(1)}
+    computes:
+      - type: awk
+        script: "${file::extractSessionLocation.awk}"
+      - type: toTable
+        separator: ";"
+afterAll:
+  source(1):
+    type: http
+    method: DELETE
+    executeForEachEntryOf:
+        source: "${source::beforeAll.location}"
+        concatMethod: json_array
+    path: $1
+    header: "${file::httpHeader.txt}"
+    authenticationToken: "${source::beforeAll.login}"
+    resultContent: body
+
 monitors:
   enclosure:
     keys:
@@ -41,7 +77,8 @@ monitors:
           type: http
           method: GET
           path: /redfish/v1/Systems
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           resultContent: body
           # START SNIPPET: json2CsvCompute
           computes:
@@ -56,7 +93,8 @@ monitors:
           # Enclosure.Discovery.Source(2).Column(2) = Systems
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(2)}"
             concatMethod: json_array
@@ -70,7 +108,8 @@ monitors:
           # For use in other Discoveries
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           path: /redfish/v1/Chassis
           resultContent: body
           computes:
@@ -80,7 +119,8 @@ monitors:
         source(5):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           path: $2
           executeForEachEntryOf:
             source: "${source::source(4)}"
@@ -94,7 +134,8 @@ monitors:
         source(6):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           path: $2
           executeForEachEntryOf:
             source: "${source::source(4)}"
@@ -123,7 +164,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           path: /redfish/v1/Systems
           resultContent: body
           computes:
@@ -136,7 +178,8 @@ monitors:
         source(3):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(2)}"
             concatMethod: json_array
@@ -156,7 +199,8 @@ monitors:
           # For use in other Collects
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           path: /redfish/v1/Chassis
           resultContent: body
           computes:
@@ -166,7 +210,8 @@ monitors:
         source(5):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           path: $2
           executeForEachEntryOf:
             source: "${source::source(4)}"
@@ -195,7 +240,8 @@ monitors:
           # Discovery
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(2)}"
             concatMethod: json_array_extended
@@ -209,7 +255,8 @@ monitors:
           # JsonID;<System>;@odata.id
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array_extended
@@ -239,7 +286,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(2)}"
             concatMethod: json_array
@@ -252,7 +300,8 @@ monitors:
         source(2):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array
@@ -286,7 +335,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(2)}"
             concatMethod: json_array_extended
@@ -299,7 +349,8 @@ monitors:
         source(2):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array_extended
@@ -331,7 +382,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(2)}"
             concatMethod: json_array
@@ -344,7 +396,8 @@ monitors:
         source(2):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array
@@ -378,7 +431,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(5)}"
             concatMethod: json_array_extended
@@ -414,7 +468,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(5)}"
             concatMethod: json_array
@@ -457,7 +512,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(1)}"
             concatMethod: json_array_extended
@@ -470,7 +526,8 @@ monitors:
         source(2):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array_extended
@@ -483,7 +540,8 @@ monitors:
         source(3):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(5)}"
             concatMethod: json_array_extended
@@ -496,7 +554,8 @@ monitors:
         source(4):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(3)}"
             concatMethod: json_array_extended
@@ -530,7 +589,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(1)}"
             concatMethod: json_array
@@ -543,7 +603,8 @@ monitors:
         source(2):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array
@@ -562,7 +623,8 @@ monitors:
         source(3):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.physical_disk.discovery.sources.source(3)}"
             concatMethod: json_array_extended
@@ -601,7 +663,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(5)}"
             concatMethod: json_array_extended
@@ -640,7 +703,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(5)}"
             concatMethod: json_array
@@ -674,7 +738,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(5)}"
             concatMethod: json_array_extended
@@ -709,7 +774,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(5)}"
             concatMethod: json_array
@@ -750,7 +816,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(5)}"
             concatMethod: json_array_extended
@@ -781,7 +848,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(5)}"
             concatMethod: json_array
@@ -824,7 +892,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.discovery.sources.source(2)}"
             concatMethod: json_array_extended
@@ -837,7 +906,8 @@ monitors:
         source(2):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array_extended
@@ -871,7 +941,8 @@ monitors:
         source(1):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::monitors.enclosure.collect.sources.source(1)}"
             concatMethod: json_array
@@ -884,7 +955,8 @@ monitors:
         source(2):
           type: http
           method: GET
-          header: "Authorization: Basic %{BASIC_AUTH_BASE64}"
+          header: "${file::httpHeader.txt}"
+          authenticationToken: ${source::beforeAll.login}
           executeForEachEntryOf:
             source: "${source::source(1)}"
             concatMethod: json_array
