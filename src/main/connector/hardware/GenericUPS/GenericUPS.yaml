@@ -37,6 +37,7 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.6.1.0
+          output: table
           computes:
           - type: insertColumn
             column: 1
@@ -92,6 +93,7 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.1.0
+          output: table
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -105,6 +107,7 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.1.0
+          output: table
           computes:
           - type: insertColumn
             column: 1
@@ -113,6 +116,7 @@ monitors:
         source(2):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.4.0
+          output: table
           computes:
           - type: insertColumn
             column: 1
@@ -137,6 +141,7 @@ monitors:
         source(4):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.3.0
+          output: table
           computes:
           - type: insertColumn
             column: 1
@@ -168,11 +173,8 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.9.1.0
           computes:
-          - type: multiply
-            column: 1
-            value: 1000
           - type: awk
-            script: "{ print $1 }"
+            script: "{ print $1 * 1000 }"
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.3.3.1
@@ -195,11 +197,8 @@ monitors:
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.9.3.0
           computes:
-          - type: multiply
-            column: 1
-            value: 1000
           - type: awk
-            script: "{ print $1 }"
+            script: "{ print $1 * 1000 }"
         source(4):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
@@ -221,6 +220,7 @@ monitors:
         source(5):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
+          output: table
           computes:
           - type: insertColumn
             column: 1
@@ -262,52 +262,49 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.5.0
+          output: table
           computes:
-          - type: insertColumn
-            column: 1
-            value: Battery Voltage
-            # UPSBatteryVoltage is in 0.1v, so multiply by 100 to get mv (1000 mv = 1 v)
-            # ID;UPSBatteryVoltage;
-          - type: multiply
-            column: 2
-            value: 100
+          # UPSBatteryVoltage is in 0.1v, so multiply by 100 to get mv (1000 mv = 1 v)
+          # ID;UPSBatteryVoltage;
+          - type: awk
+            output: table
+            script: |
+              { print "Battery Voltage", $1 * 100 }
         source(2):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.3.3.1
           selectColumns: "ID,3"
           computes:
-          - type: prepend
-            column: 1
-            value: 'Input '
-            # ID;UPSInputVoltage;
-          - type: multiply
-            column: 2
-            value: 1000
+          # A voltage the UPS does not report stays empty: 0 V would cross the low.critical limit of the discovery
+          # ID;UPSInputVoltage;
+          - type: awk
+            output: table
+            script: |
+              $2 != "" { $2 = $2 * 1000 }
+              { print "Input " $1, $2 }
         source(3):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: ID,2
           computes:
-          - type: prepend
-            column: 1
-            value: 'Output '
-            # ID;UPSOutputVoltage;
-          - type: multiply
-            column: 2
-            value: 1000
+          # A voltage the UPS does not report stays empty: 0 V would cross the low.critical limit of the discovery
+          # ID;UPSOutputVoltage;
+          - type: awk
+            output: table
+            script: |
+              $2 != "" { $2 = $2 * 1000 }
+              { print "Output " $1, $2 }
         source(4):
           type: snmpTable
           oid: 1.3.6.1.2.1.33.1.5.3.1
           selectColumns: ID,2
           computes:
-          - type: prepend
-            column: 1
-            value: 'Bypass '
-            # upsBypassVoltage is in Volts, so multiply by 1000 to get mv.
-            # ID;UPSBypassVoltage;
-          - type: multiply
-            column: 2
-            value: 1000
+          # upsBypassVoltage is in Volts, so multiply by 1000 to get mv.
+          # ID;UPSBypassVoltage;
+          - type: awk
+            output: table
+            script: |
+              { print "Bypass " $1, $2 * 1000 }
         source(5):
           type: tableUnion
           tables:
@@ -331,6 +328,7 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
+          output: table
       mapping:
         source: ${source::source(1)}
         attributes:
@@ -349,6 +347,7 @@ monitors:
         source(1):
           type: snmpGet
           oid: 1.3.6.1.2.1.33.1.2.7.0
+          output: table
       mapping:
         source: ${source::source(1)}
         attributes:

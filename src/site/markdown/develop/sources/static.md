@@ -29,25 +29,30 @@ sources:
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | Yes | None | `static`. |
-| `value` | Yes | None | The row of the table as a list of cells (recommended), or a string: a source reference, or legacy `;` CSV text. See [Writing `value`](#writing-value). |
+| `value` | Yes | None | The table as a YAML list: a list of cells (one row), a list of rows, or an empty list. See [Writing `value`](#writing-value). |
 | `computes` | No | `[]` | Post-processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
 
 ## Writing `value`
 
-Write `value` as a YAML list: the source produces one row holding exactly these cells, `;` included, `[ "", "" ]` being two empty cells:
+Write `value` as a YAML list. A list of cells is one row holding exactly these cells, `;` included, `[ "", "" ]` being two empty cells:
 
 ```yaml
 value: [ "DDN", "Data Direct Networks", "Disk Array" ]
 ```
 
-A line break in a cell, from a reference that resolves to several lines, becomes a space.
+A list of lists is one row per list:
 
-A string `value` holding a source reference (`${source::...}`) copies that source's table. A source that ends in text gives no rows: end it with a `toTable`.
+```yaml
+value:
+- [ in, ac, AC Input ]
+- [ out, ac, AC Output ]
+```
 
-### Legacy string form
-
-Older connectors write the table as a string: lines are rows, each line is split on `;`, and a trailing `;` may be left out only when the last cell is not empty (`a;;` is 2 cells, `;;;` is 3 empty cells). A cell cannot hold a `;` in this form, and the multi-line string is the only way to produce several rows. Prefer the list form in new connectors.
+- A list holds either cells or rows, not both, and a row has one cell at least. An empty list (`value: []`) is an empty table.
+- A cell is a YAML scalar other than null (`~`), and may hold a line break.
+- A cell may hold a reference, such as `${attribute::id}`, or `${source::...}` of a source that ends in text: the cell holds that text, line breaks included. A source that ends in a table cannot be referenced in a cell (`TABLE_INTERPOLATED`): read a table with a [copy](./copy.html).
+- A string `value` (`value: "a;b"`, or `value: ${source::...}`) does not load: write a list.
 
 ## Recommended Pattern
 
@@ -58,7 +63,7 @@ Older connectors write the table as a string: lines are rows, each line is split
 ## Common Mistakes
 
 - Encoding large datasets in `static` instead of external files/translations.
-- Writing a string `value` holding `;` and expecting one cell: the string form is parsed as table text.
+- Writing a cell list and a row in the same `value` (`[ a, [ b, c ] ]`): the connector does not load. Write either cells or rows.
 - Mixing static defaults with dynamic data without clear join keys.
 
 ## Community Examples

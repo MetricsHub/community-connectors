@@ -7,7 +7,7 @@ description: The toTable compute turns a text result into a table, one row per l
 
 ## When To Use
 
-A source result is either **text** (lines, as produced by `http`, `file`, `ipmi`, `commandLine` and the `awk` source or compute with the default `output: text`) or a **table** (rows of cells, as produced by every other source and by every other compute). Use `toTable` to turn a text result into a table before a table compute (`keepColumns`, `translate`, `append`, ...) or before `mapping`.
+A source result is either **text** (lines, as produced by `http`, `file`, `ipmi`, `commandLine`, the `snmpGet` source and the `awk` source or compute with the default `output: text`) or a **table** (rows of cells, as produced by every other source and by every other compute). Use `toTable` to turn a text result into a table before a table compute (`keepColumns`, `translate`, `append`, ...) or before `mapping`. On an `snmpGet` source, declare `output: table` instead, which keeps the value in one cell (see [snmpGet](../sources/snmp-get.html#result)).
 
 Each line of the text becomes a row and is split on `separator`, taken literally (a multi-character separator is one separator). Lines can be filtered with `keep` and `exclude` as on the [`commandLine` source](../sources/command-line.html), and the columns selected with `selectColumns`.
 
@@ -41,7 +41,7 @@ sources:
 | `exclude` | No | None | Regular expression; the lines that match are dropped. |
 | `selectColumns` | No | None | Comma-separated **1-based** column numbers or ranges to keep after the split, in that order, e.g. `"2,4-6,8-"` (`8-` means from column 8 to the last one). A selected column absent from a row gives an empty cell, so the row is kept. `0` selects nothing. |
 
-Blank lines never become rows, and CRLF line endings are read as LF.
+Blank lines never become rows.
 
 ## Table Transformation Example
 

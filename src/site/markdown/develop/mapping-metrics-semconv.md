@@ -11,7 +11,7 @@ This page explains how raw source columns become structured telemetry exported a
 
 ```yaml
 mapping:
-  source: ${source::monitors.fan.simple.sources.sensors}
+  source: ${source::sensors}
   attributes:
     id: $1
     name: $2
@@ -23,6 +23,8 @@ mapping:
   conditionalCollection:
     hw.fan.speed: $4
 ```
+
+This is a table mapping, the default `type`: it requires a `source`. A `type: simple` mapping has no `source`: it reads no table and maps the single instance of its monitor type, whose values read no column: constants, `${source::...}` references to sources that end in a text, and functions on them. See [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping).
 
 ## From Table Rows to OpenTelemetry Resources
 
@@ -37,7 +39,7 @@ For a `multiInstance` monitor, each row of that table is treated as one instance
 ## One Row = One Monitor Instance
 
 `mapping.source` must resolve to a source table.
-For multi-instance jobs, **each row creates one instance** of the monitor, and that instance is exported as one OpenTelemetry Resource.
+For multi-instance jobs, **each row creates one instance** of the monitor, and that instance is exported as one OpenTelemetry Resource. A `type: simple` mapping has no row: it maps a single instance (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)).
 
 Example input table:
 
@@ -51,13 +53,6 @@ Here, `$1` through `$5` refer to the first through fifth columns of each row.
 >   | --- | --- | --- | --- | --- |
 >   | fan01 | Fan A | ok | 10200 | Nominal |
 >   | fan02 | Fan B | failed | 0 | Not spinning |
->
-> - <span class="fa-regular fa-file-lines"></span> Serialized Text
->
->   ```text
->   fan01;Fan A;ok;10200;Nominal
->   fan02;Fan B;failed;0;Not spinning
->   ```
 
 With mapping:
 
@@ -75,13 +70,14 @@ two monitor instances are produced, one for `fan01`, one for `fan02`. In practic
 - Resource 1: attributes such as `id=fan01` and `name=Fan A`, with metrics attached from `$3` and `$4`
 - Resource 2: attributes such as `id=fan02` and `name=Fan B`, with metrics attached from `$3` and `$4`
 
-The converse also holds from MetricsHub Community 3.9.08: when a trusted run of a `discovery` or `simple` job no longer returns the row of an instance, the instance is removed, at the next collect for a `simple` job and at the next discovery cycle for a `discovery` job. See [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed).
+The converse also holds: when a trusted run of a `discovery` or `simple` job no longer returns the row of an instance, the instance is removed, at the next collect for a `simple` job and at the next discovery cycle for a `discovery` job. See [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed).
 
 ## Property Semantics
 
 | Property | Purpose |
 | --- | --- |
-| `source` | Table used as mapping input. |
+| `type` | `table` (the default): one instance per row of `source`. `simple`: no `source`, the single instance of the monitor type (see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping)). |
+| `source` | Table used as mapping input, one instance per row. Required by a `table` mapping, refused in a `simple` one. |
 | `attributes` | Resource attributes exported on the OpenTelemetry Resource. |
 | `metrics` | Metric expressions and values attached to that Resource. |
 | `conditionalCollection` | Gate collection when key value is empty/invalid. |
@@ -185,3 +181,4 @@ The full naming rules — domains, attribute-driven dimensions, vendor handling 
 - using mutable display names as identifiers
 - introducing new metric names where existing semconv names already apply
 - forgetting that column positions change when computes alter table shape
+- reading a column (`$1`) in a `type: simple` mapping: it has no row, and the connector does not load (`COLUMN_IN_SIMPLE_MAPPING`)

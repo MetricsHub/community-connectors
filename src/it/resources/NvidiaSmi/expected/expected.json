@@ -46,7 +46,7 @@
         "attributes" : { },
         "resetMetricTime" : false,
         "metricType" : "Gauge",
-        "value" : 0.004326320000000001,
+        "value" : 0.0043263245021596805,
         "previousValue" : null,
         "rate" : null,
         "type" : "NumberMetric",

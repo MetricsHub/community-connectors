@@ -7,11 +7,11 @@ description: How source execution works in MetricsHub connectors and full source
 
 ## What A Source Produces
 
-In MetricsHub connectors, a source produces a **table**, or a text that its computes turn into a table (`commandLine`, `http`, `file`, `ipmi`, `awk`, `textUnion`, see the [content types](../computes/index.html#content-types)). Internally, a table is a list of rows, where each row is a list of strings.
+In MetricsHub connectors, a source produces a **table** or a text (`commandLine`, `http`, `file`, `ipmi`, `textUnion`, and `snmpGet` and `awk` without `output: table`, see the [content types](../computes/index.html#content-types)). A text is turned into a table by its computes where a table is read; a `${source::...}` reference in a string field (a value of a simple mapping, for instance) is replaced by the text. Internally, a table is a list of rows, where each row is a list of strings.
 
 Most compute operations modify one table column at a time, which is why they usually require `column:`.
 
-`mapping.source` also expects a table, and **each row creates one monitor instance** exported as one OpenTelemetry Resource:
+`mapping.source` is a reference to a source that ends in a table (anything else does not load, `NOT_A_REFERENCE`: a hard-coded table belongs in a [static](./static.html) source), and **each row creates one monitor instance** exported as one OpenTelemetry Resource (a `type: simple` mapping has no `source`, reads no table and maps a single instance, see [The Simple Mapping](../monitors-and-jobs.html#the-simple-mapping)):
 
 - Row cells are mapped to attributes and metrics with `$1`, `$2`, `$3`, and so on.
 - If your table has 20 rows, you get 20 instances for a `multiInstance` monitor.
@@ -23,21 +23,22 @@ Example logical table:
 | psu01 | PSU 1 | ok |
 | psu02 | PSU 2 | failed |
 
-Equivalent serialized form:
-
-```text
-psu01;PSU 1;ok
-psu02;PSU 2;failed
-```
-
 ## Serialization Details You Must Know
 
-A source result is either text or a table (see the [content types](../computes/index.html#content-types)). A table is written in the serialized form above where it is used as text, with two variations:
+A source result is either text or a table (see the [content types](../computes/index.html#content-types)). A text has LF line endings, whatever produced it: a CRLF becomes LF. A table stays a table from one step to the next: it becomes a text only where a text is expected, and is then written one line per row, the cells joined with `;`:
 
-- in a `${source::...}` reference, each line ends with `;`, except a line whose only `;` is that trailing one (typically a row of a single cell), and a `;` inside a cell is kept; the lines of a text are taken as they are, with the same exception;
-- in a [toText](../computes/to-text.html) (written before an `awk` script that parses the `;` lines; an `awk` reads a table structured otherwise), each line ends with `;` and a `;` inside a cell becomes `,`.
+```text
+psu01;PSU 1;ok;
+psu02;PSU 2;failed;
+```
 
-Only a conversion (`toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` with `output: table`) turns text back into a table: if a compute appends `;42` to column 2, the cell holds `;42` at its end and the table keeps its columns. Add a column with [insertColumn](../computes/insert-column.html) or [duplicateColumn](../computes/duplicate-column.html).
+- A [toText](../computes/to-text.html) ends each line with `;`, turns a `;` inside a cell into `,`, and a line break inside a cell into a space: each row is one line.
+- The `execute...` functions of an [awk](./awk.html#in-the-awk-source) source end each line with `;`, and keep a `;` and a line break inside a cell.
+- A source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` reads the table of an entry as `toText` writes it.
+
+A table referenced in a string field (`${source::...}`) is rejected (`TABLE_INTERPOLATED`); a referenced text is taken as it is, without its final line feeds. An [awk](./awk.html) source whose `input` is a reference to a table reads it structured, as the `awk` compute does: `$0` is the cells joined with `FS`.
+
+Only a conversion (`toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` with `output: table`) or a source with `output: table` (`awk`, `snmpGet`) turns text back into a table: if a compute appends `;42` to column 2, the cell holds `;42` at its end and the table keeps its columns. Add a column with [insertColumn](../computes/insert-column.html) or [duplicateColumn](../computes/duplicate-column.html).
 
 ## Where Sources Run in the Connector Lifecycle
 
@@ -60,7 +61,7 @@ Within each source, source-level options are applied and then `computes` run in 
 
 ## Source Ordering Within a Job
 
-Sources inside one job run **sequentially, never in parallel**. Their order is derived automatically from the `${source::...}` references between them: a source always runs after the sources it references. The same applies within `beforeAll` and `afterAll`.
+Sources inside one job run **sequentially, never in parallel**. Their order is derived automatically from the `${source::...}` references between them: a source always runs after the sources it references. The sources that reference no other source of the job run first, then those that reference only these, and so on; within each of these levels, the sources run in the order in which they are declared. The same applies within `beforeAll` and `afterAll`.
 
 When the reference graph cannot express a required order (e.g. an implicit dependency on device state), force it with `executionOrder` on the job:
 
@@ -104,10 +105,10 @@ For each row of the referenced table, the engine clones the enclosing source, re
 
 | Property | Required | Default | Description |
 | --- | --- | --- | --- |
-| `source` | Yes | None | Reference to the source whose table drives the loop. It must be a table: a text there is rejected (`TEXT_FEEDS_TABLE`). |
+| `source` | Yes | None | Reference to the source whose table drives the loop. It must be a source reference (`NOT_A_REFERENCE`: a hard-coded table belongs in a [static](./static.html) source) and a table: a text there is rejected (`TEXT_FEEDS_TABLE`). |
 | `concatMethod` | No | `list` | How per-entry results are combined (see below). |
 | `sleep` | No | None | Milliseconds to pause after each entry — throttles chatty APIs. |
-| `maxParallel` | No | None (one entry at a time) | Maximum number of entries executed concurrently (capped at 50). Results are still concatenated in the row order. MetricsHub Community 3.9.09 or later. |
+| `maxParallel` | No | None (one entry at a time) | Maximum number of entries executed concurrently (capped at 50). Results are still concatenated in the row order. |
 
 Entries run one at a time by default. Set `maxParallel` when each entry is slow and the target handles concurrent requests well, for example a WMI query that takes seconds per disk: with `maxParallel: 8`, 8 disks cost the time of one query instead of 8. `maxParallel` is ignored, and the entries run one at a time, when `sleep` is set, when the source has [`forceSerialization: true`](#forceserialization), or when the host is configured with `sequential: true`. Don't set it for devices that dislike bursts of requests.
 
@@ -118,10 +119,10 @@ Entries run one at a time by default. Set `maxParallel` when each entry is slow 
 - `json_array_extended` — like `json_array`, but merges the driving row's own columns into each JSON entry, so downstream computes can correlate result and origin.
 - custom object `{ concatStart: "...", concatEnd: "..." }` — wrap each entry's raw result; both wrappers may themselves use `$n`.
 
-With `list`, the result has the type of the source: a text for `http` or `commandLine` (the entries' texts joined with a line feed), a table for `snmpGet`, `wmi`, `sql`, ... (the entries' rows). With `json_array`, `json_array_extended` and a custom object, the result is text: an entry that returns a table contributes its text as [toText](../computes/to-text.html) writes it (each row ending with `;`, a `;` inside a cell becoming `,`).
+With `list`, the result has the type of the source: a text for `http`, `commandLine` or `snmpGet` (the entries' texts joined with a line feed), a table for `snmpTable`, `wmi`, `sql`, an `snmpGet` with `output: table`, ... (the entries' rows). With `json_array`, `json_array_extended` and a custom object, the result is text: an entry that returns a table contributes its text as [toText](../computes/to-text.html) writes it (see [Serialization Details](#serialization-details-you-must-know)).
 
 > [!WARNING]
-> A failed entry adds nothing to the result: `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source looks answered, so when it feeds the mapping of a `discovery` or `simple` job, the run is trusted and the instances of the failed entity are removed (MetricsHub Community 3.9.08 or later, see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Join the result back onto the inventory with a [`tableJoin`](./table-join.html) and a `defaultRightLine`, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) when no inventory exists.
+> A failed entry adds nothing to the result: `list` keeps the rows of the other entries, and `json_array` / `json_array_extended` still wrap the other results in `[ ... ]`. The source looks answered, so when it feeds the mapping of a `discovery` or `simple` job, the run is trusted and the instances of the failed entity are removed (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)). Join the result back onto the inventory with a [`tableJoin`](./table-join.html) and a `defaultRightLine`, or set [`removalDelay`](../monitors-and-jobs.html#removaldelay) when no inventory exists.
 
 See [Redfish](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/Redfish/Redfish.yaml) for extensive real usage of `json_array` and `json_array_extended`.
 

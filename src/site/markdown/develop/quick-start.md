@@ -66,10 +66,10 @@ Most connector logic is table-oriented:
 
 - most sources output a **table**
 - most computes transform a **table**
-- mapping consumes a **table**
-- each mapped row becomes one monitor instance exported as one OpenTelemetry Resource
+- a table mapping consumes a **table**
+- each mapped row becomes one monitor instance exported as one OpenTelemetry Resource (a `type: simple` mapping has no `source`, reads no table and maps a single instance, see [The Simple Mapping](monitors-and-jobs.html#the-simple-mapping))
 
-Internally, tables are represented as a **list of lists of strings**. The example below shows the same data in its internal form, as a table, and as serialized text:
+Internally, tables are represented as a **list of lists of strings**. The example below shows the same data in its internal form and as a table:
 
 > [!TABS]
 >
@@ -87,15 +87,6 @@ Internally, tables are represented as a **list of lists of strings**. The exampl
 >     ["fan01", "Fan 1", "ok", "12500"],
 >     ["fan02", "Fan 2", "failed", "0"]
 >   ]
->   ```
->
-> - <span class="fa-regular fa-file-lines"></span> Serialized Text
->
->   When serialization is needed, the engine uses one row per line and semicolon-separated columns:
->
->   ```text
->   fan01;Fan 1;ok;12500
->   fan02;Fan 2;failed;0
 >   ```
 
 This is why many compute operations are column-based (`column: N`).
@@ -212,7 +203,7 @@ This keeps mapping declarative and easier to review.
 
 ## Step 5 - Validate the Table You Expect
 
-Your `mapping.source` is a table. For each row, MetricsHub creates one monitor instance, and that instance is exported as one OpenTelemetry Resource.
+Your `mapping.source` references a table. For each row, MetricsHub creates one monitor instance, and that instance is exported as one OpenTelemetry Resource.
 
 Within that row, columns are referenced by position:
 
@@ -221,7 +212,7 @@ Within that row, columns are referenced by position:
 - `$3` = third column
 - `$4` = fourth column
 
-The example below shows the same source output as a table and as serialized text:
+The example below shows a source output as a table:
 
 > [!TABS]
 >
@@ -233,15 +224,6 @@ The example below shows the same source output as a table and as serialized text
 >   | fan02 | Fan B | failed | 0 |
 >
 >   In this table, `$1` is the fan identifier, `$2` the display name, `$3` the status, and `$4` the RPM.
->
-> - <span class="fa-regular fa-file-lines"></span> Serialized Text
->
->   When serialization is needed, the engine uses one row per line and semicolon-separated columns:
->
->   ```text
->   fan01;Fan A;ok;10200
->   fan02;Fan B;failed;0
->   ```
 
 Then mapping like:
 
@@ -288,7 +270,7 @@ See [Integration Testing](integration-testing.html) for the full recording and g
 
 - building a very large connector before first passing test
 - using unstable display strings as resource `id`
-- overusing custom AWK when built-in computes are enough
+- a run of computes that one `awk` compute writes, or an `awk` compute for what one compute does (see [Awk Or Computes](computes/index.html#awk-or-computes))
 - adding legacy aliases in new connector code
 
 ## Where to Go Next

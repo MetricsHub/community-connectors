@@ -15,7 +15,7 @@ A tool is:
 
 - **Sources and computes**, exactly like a monitor job's: the same source types, the same computes, the same `${source::...}` references.
 - **Parameters** the assistant fills in, substituted with `${param::<name>}` in the sources and computes.
-- **A result**: the table of one of the sources, optionally with column names.
+- **A result**: the table or the text of one of the sources, a table optionally with column names.
 
 ## Syntax
 
@@ -54,7 +54,7 @@ tools:
 | `<toolName>.destructive` | No | `false` | `true` when the tool changes the state of the host: a reboot, a command, a write. See the Destructive Tools section below. |
 | `<toolName>.sources` | Yes | None | Named sources with their computes, like a monitor job's `sources`. |
 | `<toolName>.executionOrder` | No | Dependency order | Explicit source order, like a monitor job's. |
-| `<toolName>.result.source` | Yes | None | Reference of the source whose result is returned, e.g. `${source::processes}`. |
+| `<toolName>.result.source` | Yes | None | Reference of the source whose result is returned, e.g. `${source::processes}`. Anything else does not load (`NOT_A_REFERENCE`): a hard-coded table belongs in a [static](sources/static.html) source. |
 | `<toolName>.result.columns` | No | None | Names of the table columns, in order, so that the rows read as records. Without `columns`, a result source that ends in text (a command output, a free-form `awk`, or a [`textUnion`](sources/text-union.html) of such outputs) is returned as text; one that ends in a table is returned as rows. With `columns`, the result source must end in a table (a `toTable`, an `awk` with `output: table`, ...): a text there is rejected when the connector loads (`TEXT_FEEDS_TABLE`, see [Strict Content Types](design-principles.html#strict-content-types)). |
 
 ### Parameters
@@ -144,36 +144,29 @@ A tool creates no monitor and its tables do not reach the monitor jobs: `mapping
 
 ## How the Assistant Calls It
 
-The agent adds two parameters to every tool: `hostname`, a list of configured hosts to run it on (**required**), and `poolSize`, the number of hosts run concurrently. The result lists one entry per host, holding the `columns` declared in `result` and the `rows` of the result source, its `text` when the tool declares no columns and the source ends in text, or an `error`.
+The agent adds two parameters to every tool: `hostname`, a list of configured hosts to run it on (**required**), and `poolSize`, the number of hosts run concurrently. For each host, the tool returns a table (the `columns` declared in `result` and the rows of the result source), a text (when the tool declares no columns and the result source ends in text), or an error.
 
-```json
-{
-  "hosts": [
-    {
-      "hostname": "win-01",
-      "response": {
-        "columns": [ "pid", "name", "workingSetBytes", "kernelTime" ],
-        "rows": [ [ "4212", "java.exe", "734003200", "12.5" ] ]
-      }
-    }
-  ]
-}
+The agent's MCP server answers with one text per host, in the order of `hostname`. Each starts with `## <hostname>`, followed by the table in Markdown, the text as it is, or `Error: <message>`. In the Markdown table, a column without a name is headed `Column N`, and in a cell a `|` is written `\|` and a line break `<br>`:
+
+```markdown
+## win-01
+
+| pid | name | workingSetBytes | kernelTime |
+| --- | --- | --- | --- |
+| 4212 | java.exe | 734003200 | 12.5 |
 ```
 
 A tool that returns a command output as it is, such as `ping`, declares no `columns` and no `toTable`: the assistant reads the output itself.
 
-```json
-{
-  "hosts": [
-    {
-      "hostname": "srv-01",
-      "response": {
-        "text": "PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.\n64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=0.31 ms\n..."
-      }
-    }
-  ]
-}
+```text
+## srv-01
+
+PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=0.31 ms
+...
 ```
+
+MetricsHub Central receives the same results as JSON. The response of each host has a `type`: `table`, with the `columns` and `rows` of the table, or `text`, with the `text` itself.
 
 ## Destructive Tools
 

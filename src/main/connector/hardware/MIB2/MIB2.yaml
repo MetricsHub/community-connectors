@@ -22,28 +22,13 @@ monitors:
       sources:
         source(3):
           computes:
-            # Now add MSHW to the Left and Right of the ifMIBObjects SpeedMBS
-            # PortID;Description;PortType;MacAddress;AdminStatus;ID;Name;Alias;
-          - type: prepend
-            column: 7
-            value: MSHW
-          - type: append
-            column: 7
-            value: MSHW
-          # START SNIPPET: replaceBlankColumnCompute
-            # Replace "MSHWMSHW", i.e. a blank column with the ifTable value.
-            # PortID;Description;PortType;MacAddress;AdminStatus;ID;Name;Alias;
-          - type: replace
-            column: 7
-            existingValue: MSHWMSHW
-            newValue: $2
-          # END SNIPPET: replaceBlankColumnCompute
-            # Now get rid of any remaining MSHWs
-            # PortID;Description;PortType;MacAddress;AdminStatus;ID;Name;Alias;
-          - type: replace
-            column: 7
-            existingValue: MSHW
-            newValue: ""
+            # When the port has no ifXTable row (blank ifXTable index in column 7), use the ifTable Description
+            # PortID;Description;PortType;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;
+          - type: awk
+            output: table
+            script: |
+              $7 == "" { $7 = $2 }
+              { print }
       mapping:
         # InstanceTable = Source(1)
         # PortID;Description;PortType;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;

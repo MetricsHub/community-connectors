@@ -1,4 +1,4 @@
-keywords: awk, compute, JAWK, script, parsing, variables, arrays, keep, selectColumns
+keywords: awk, compute, JAWK, script, parsing, variables, arrays, output
 description: Runs an AWK script over the source result with optional scalar, list, map and source-table variables, and gives what the script prints as a text or as a table.
 
 # awk (Compute)
@@ -37,12 +37,9 @@ sources:
 | `type` | Yes | None | `awk`. |
 | `script` | Yes | None | The AWK script: an embedded-file reference `${file::script.awk}` (a file next to the connector), or the script text itself, typically as a YAML block scalar (`script: \|`). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
-| `keep` | No | None | Regular expression; only **output** lines of the script that match are kept. |
-| `exclude` | No | None | Regular expression; matching **output** lines are discarded. |
-| `separators` | No | None | Character(s) splitting each remaining output line into columns. Required for `selectColumns` to have any effect. |
-| `selectColumns` | No | None | Comma-separated **1-based** column numbers to keep after splitting with `separators`, e.g. `"2,3,4"`. |
-| `input` | No | None | Rejected from MetricsHub Community 3.9.09 (`DEPRECATED_SYNTAX`): a connector that sets it does not load. Remove it: the script reads the source result as it is (a text the traditional way, a table structured). To read a table as `;`-separated lines, write a [toText](./to-text.html) before the `awk`. |
-| `output` | No | `text` | What the script produces: `text` (the printed lines, filtered with `keep`, `exclude`, `separators` and `selectColumns`, each ending with `;`) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`; the filtering properties do not apply). |
+| `output` | No | `text` | What the script produces: `text` (the printed lines, exactly as the script prints them) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`). |
+
+The script selects its lines and its columns itself: the `awk` compute has no `keep`, `exclude`, `separators`, `selectColumns` or `input` property, and a connector that sets one does not load (`DEPRECATED_SYNTAX`, see [Legacy and Compatibility](../legacy-and-compatibility.html)).
 
 ## Table Input And Output
 
@@ -52,7 +49,7 @@ To parse a table as text (the `;`-joined line, for instance with `split($0, a, "
 
 By default the script prints text. To read the result as a table (by a table compute, the `mapping`, ...), write a `toTable` after the `awk`, or declare `output: table`: MetricsHub inserts no conversion, and a text read as a table is rejected when the connector loads (`TEXT_FEEDS_TABLE`, see [Strict Content Types](../design-principles.html#strict-content-types)). The `toTable` splits the printed lines on `;`: a `;` inside a printed value therefore moves the following columns.
 
-With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (and a pattern without action) writes the record's fields `$1..$NF` as the cells, as the script left them: assigned fields and a changed `NF` included, a record without fields giving one empty cell. `$2 != "" { print }` keeps the rows whose second cell is not empty, and `{ $3 = toupper($3); print }` rewrites a column. `print $0` is one row with a single cell holding the whole record.
+With `output: table`, each `print` call is one row and its arguments are the cells (`print $1, $2 * 2, "ok"` gives three cells), whatever they contain: `OFS` and `ORS` play no part, and a `;` is a plain character. `print` without argument (and a pattern without action) writes the record's fields `$1..$NF` as the cells, as the script left them: assigned fields and a changed `NF` included, a record without fields giving one empty cell. `$2 != "" { print }` keeps the rows whose second cell is not empty, and `{ $3 = toupper($3); print }` rewrites a column. `print $0` is one row with a single cell holding the whole record. A number that is not a whole number prints with 15 significant digits (`OFMT` starts as `%.15g`, and a script that sets `OFMT` keeps its own), where a text output prints 6 (`%.6g`, standard AWK); a number concatenated into a string still uses `CONVFMT` (`%.6g`).
 
 The text written by `printf` is split into rows on `ORS` and into cells on `OFS` (the `OFS` in effect when the row began), so a value that holds the `OFS` is split too. Use `printf` for a row built piece by piece, with `OFS = SUBSEP` (a character that never appears in data): each value stays one cell, even when it holds a `;`. To write the record's fields, a `print` without argument is simpler.
 
@@ -77,7 +74,7 @@ sources:
 `output: table` does not depend on the input: a script reading a text can produce a table, and the reverse.
 
 > [!NOTE]
-> An `awk` compute that follows a table reads the rows, not `;`-separated lines: `NF` is the number of cells (no trailing empty field), a `;` inside a cell stays in its field, and `$0` is the cells joined with `FS` (a space by default). A script written for the `;` lines (`FS = ";"`, `split($0, a, ";")`, `print $0`) needs an explicit `toText` before it. `input: table` is no longer needed, and is rejected (`DEPRECATED_SYNTAX`).
+> An `awk` compute that follows a table reads the rows, not `;`-separated lines: `NF` is the number of cells (no trailing empty field), a `;` inside a cell stays in its field, and `$0` is the cells joined with `FS` (a space by default). A script written for the `;` lines (`FS = ";"`, `split($0, a, ";")`, `print $0`) needs an explicit `toText` before it.
 
 ## Variables
 
@@ -120,13 +117,13 @@ Besides the POSIX AWK functions (`length`, `substr`, `split`, `sprintf`, `tolowe
 | `typeof(x)`, `isarray(x)`, `mkbool(x)` | The type of a value, whether it is an array, and a boolean value. |
 | `bindtextdomain`, `dcgettext`, `dcngettext` | gawk's message translation functions. With no message catalog, they return the text untranslated. |
 
-The gawk functions are available from MetricsHub Community 3.9.09. Earlier versions have only the MetricsHub functions, and `asorti(source, dest)` since 3.9.01. The names of the gawk functions are reserved: a script cannot name a variable or a function `asort`, `asorti`, `gensub`, `patsplit`, `strtonum`, `systime`, `mktime`, `strftime`, `typeof`, `isarray`, `mkbool`, `bindtextdomain`, `dcgettext` or `dcngettext`.
+The names of the gawk functions are reserved: a script cannot name a variable or a function `asort`, `asorti`, `gensub`, `patsplit`, `strtonum`, `systime`, `mktime`, `strftime`, `typeof`, `isarray`, `mkbool`, `bindtextdomain`, `dcgettext` or `dcngettext`.
 
 An [`awk` source](../sources/awk.html) can also run sources and convert JSON: `executeHttpRequest`, `json2Table(json, entryKey, properties, rows)`, `getVariable`...
 
 ## Table Transformation Example
 
-The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of DiskPart and, for each volume, calls `print volumeID, displayID, letter, type, fs, size, status, info`:
+The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of DiskPart and, for each volume, calls `print volumeID, displayID, letter, type, "File System: " fs, size, status, info`:
 
 > [!TABS]
 >
@@ -143,10 +140,10 @@ The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of D
 >
 >   | ID | Label | Letter | VolumeType | FileSystem | Size | Status | MoreInformation |
 >   | --- | --- | --- | --- | --- | --- | --- | --- |
->   | 0 | C: - System | C: | | NTFS | 254476812288 | Healthy | Volume Information: Boot |
->   | 1 | D: - Data | D: | | NTFS | 999653638144 | Healthy | |
+>   | 0 | C: - System | C: | | File System: NTFS | 254476812288 | Healthy | Volume Information: Boot |
+>   | 1 | D: - Data | D: | | File System: NTFS | 999653638144 | Healthy | |
 
-With `output: table`, each `print` is one row and each of its arguments one cell, an empty one included. The script prints nothing for the other lines (the header, the dashes): the result needs no marker column, no `keep`, no `selectColumns` and no `toTable`.
+With `output: table`, each `print` is one row and each of its arguments one cell, an empty one included. The script prints nothing for the other lines (the header, the dashes): the result needs no marker column, no `toTable`, and no `prepend` after the script. An `excludeMatchingLines` compute after the script removes the `CD-ROM`, `DVD-ROM` and `Removable` volumes. The collect of DiskPart runs the same script with the variable `collect` set to `1`, and the script then prints `volumeID, status, status` for every volume.
 
 ## Functions And Sandbox
 
@@ -154,26 +151,24 @@ A compute script can call the MetricsHub functions available [in every script](.
 
 A script runs in a [sandbox](../sources/awk.html#sandbox): it cannot run a command (`system()`, `"command" | getline`), nor read or write a file (`getline < "file"`, `print > "file"`).
 
-MetricsHub [compiles the script the first time it runs](../sources/awk.html#compilation), and logs a script that does not compile then. It replaces no reference in a script: pass a `${param::...}`, an `${attribute::...}` or a `${source::...}` through [`variables`](#variables).
+MetricsHub [compiles the script the first time it runs](../sources/awk.html#compilation), and logs a script that does not compile then. It replaces no `${param::...}`, `${attribute::...}` or `${source::...}` written in a script. A `${file::...}` written in a script does not give the text of the file: inside a script that is an embedded file, it stays as text; anywhere in an inline script, it makes MetricsHub run that file as the whole script instead of the inline text. Pass each of these values through [`variables`](#variables).
 
 ## Recommended Pattern
 
 - Declare `output: table` when the result is read as a table, and print one argument per cell (`print id, name, status`): this is what the community connectors do (DiskPart, lmsensors, SmartMonLinux).
 - Print the same number of cells in every row, so mapping stays predictable.
 - Keep long scripts in dedicated `.awk` embedded files referenced with `${file::...}`; reserve inline block scalars for short scripts.
-- Put the `awk` compute first in the pipeline, then refine with cheaper computes (`translate`, `keepOnlyMatchingLines`...).
+- Write the column edits and the arithmetic that the source needs before or after the script in the script itself, and keep the line filters (`keepOnlyMatchingLines`, `excludeMatchingLines`), `translate`, `arrayTranslate` and `perBitTranslation` as computes (see [Awk Or Computes](./index.html#awk-or-computes)). A script shared by several sources tells them apart with a variable, as `diskPart.awk` does with `collect`.
 
 ## Common Mistakes
 
-- Naming a variable or a function after a gawk function (`gensub`, `asort`, `strftime`...): these names are reserved since MetricsHub Community 3.9.09, and the script no longer compiles.
+- Naming a variable or a function after a gawk function (`gensub`, `asort`, `strftime`...): these names are reserved, and the script does not compile.
 - Relying on a gawk feature or function that [Functions](#functions) does not list: JAWK implements only part of gawk.
 - Using `split($0, a, ";")` or `print $0` in a script that follows a table: the fields are the cells already, and `$0` is the cells joined with `FS` (a space by default), with no trailing `;`. Read `$1..$NF`, or write a `toText` before the `awk` to parse the `;` lines.
 - Printing a `;`-joined string with `output: table`: `print $1 ";" $2` gives one cell holding `a;b`, not two cells. Print the values as separate arguments.
 - Writing a row with `printf` and `OFS = ";"` with `output: table`: a value holding a `;` becomes two cells. Use `print` with one argument per cell, a `print` without argument for the record's fields, or set `OFS = SUBSEP` for a `printf` row.
-- Setting `selectColumns` without `separators`: the lines are never split, so the selection does nothing.
-- Expecting `keep`/`exclude` to filter the script's *input* — they filter its *output*. Filter input inside the script itself.
 - A script that prints nothing empties the table, and every downstream compute and mapping silently gets no rows.
-- Confusing zero-based source-table array indexes (`aTable[0][0]`) with one-based AWK record fields (`$1`) or `selectColumns` numbers.
+- Confusing zero-based source-table array indexes (`aTable[0][0]`) with one-based AWK record fields (`$1`).
 
 ## Community Examples
 

@@ -58,8 +58,6 @@ With `column: 5`, `subColumn: 1`, `subSeparators: '|'`:
 >   | disk0 | Seagate | ZC11ABC | ok | ST4000NM |
 >   | disk1 | WDC | WX21DEF | ok | WD40EFRX |
 
-Serialized, `disk0;Seagate;ZC11ABC;ok;ST4000NM|4000` becomes `disk0;Seagate;ZC11ABC;ok;ST4000NM`.
-
 ## Recommended Pattern
 
 - Chain two `extract` computes to unpack a two-in-one column: first `duplicateColumn`, then extract sub-column 1 from the original and sub-column 2 from the copy (see `IpmiTool`, which splits `Model|Size` this way).

@@ -47,15 +47,10 @@ monitors:
             subSeparators: ","
             subColumn: 2
           # Convert 100ns to s
-          - type: divide
-            column: 2
-            value: 10000000
-          - type: divide
-            column: 3
-            value: 10000000
-          - type: divide
-            column: 4
-            value: 10000000
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2 / 10000000, $3 / 10000000, $4 / 10000000 }
       mapping:
         source: ${source::processorInformation}
         attributes:
@@ -94,32 +89,16 @@ monitors:
           - type: append
             column: 5
             value: ${source::totalMemory}
-          # Converting total to bytes and making a copy for used memory
-          - type: multiply
-            column: 5
-            value: 1024
-          - type: duplicateColumn
-            column: 5
-          # START SNIPPET: subtractUsedMemoryCompute
-          # Finding used memory and making a copy for utilization
-          - type: subtract
-            column: 5
-            value: $1
-          # END SNIPPET: subtractUsedMemoryCompute
-          - type: duplicateColumn
-            column: 5
-          # START SNIPPET: divideByTotalMemoryCompute
-          # Calculate utilization by dividing usage by total memory
-          - type: divide
-            column: 2
-            value: $7
-          - type: divide
-            column: 4
-            value: $7
-          - type: divide
-            column: 6
-            value: $7
-          # END SNIPPET: divideByTotalMemoryCompute
+          # Total into bytes, Used = Total - Free, and the utilizations. Without the total, Used stays empty (not -Free)
+          # Free;Free%;Cached;Cached%;Used;Used%;Total
+          - type: awk
+            output: table
+            script: |
+              {
+                total = $5 * 1024
+                used = $5 != "" ? total - $1 : ""
+                print $1, $2 / total, $3, $4 / total, used, used / total, total
+              }
       mapping:
         source: ${source::calculatedMemoryInformation}
         attributes:
@@ -143,17 +122,11 @@ monitors:
           namespace: root\CIMv2
           query: SELECT DeviceID,FreeSpace,FreeSpace,Size,Size,VolumeName,FileSystem FROM Win32_LogicalDisk WHERE DriveType = 3
           computes:
-          - type: subtract
-            column: 4
-            value: $2
-          - type: duplicateColumn
-            column: 4
-          - type: divide
-            column: 3
-            value: $6
-          - type: divide
-            column: 5
-            value: $6
+          # UsedSpace = Size - FreeSpace (empty without the Size, never negative), and the utilizations
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3 / $5, ($4 != "" ? $4 - $2 : ""), ($4 - $2) / $5, $5, $6, $7 }
       mapping:
         source: ${source::fileSystemInformation}
         attributes:
@@ -178,47 +151,15 @@ monitors:
           namespace: root\CIMv2
           query: SELECT Name,AllocatedBaseSize,CurrentUsage FROM Win32_PageFileUsage
           computes:
-
-          # START SNIPPET: duplicatePagefileColumnCompute
-          # Duplicate AllocatedBaseSize to calculate free space
-          # PageFileName;AllocatedBaseSizeMB;AllocatedBaseSizeMB;UsedMB
-          - type: duplicateColumn
-            column: 2
-          # END SNIPPET: duplicatePagefileColumnCompute
-
-          # Subtracting current usage from allocated base size to get free space
-          # PageFileName;AllocatedBaseSizeMB;FreeMB;UsedMB
-          - type: subtract
-            column: 3
-            value: $4
-
-          # Duplicate Free and Used columns for utilization calculations
-          # PageFileName;AllocatedBaseSizeMB;FreeMB;FreeMB;UsedMB;UsedMB
-          - type: duplicateColumn
-            column: 3
-          - type: duplicateColumn
-            column: 5
-
-          # Calculate utilization by dividing free and used space by allocated base size
-          # PageFileName;AllocatedBaseSizeMB;FreeMB;FreeUtilization;UsedMB;UsedUtilization
-          - type: divide
-            column: 4
-            value: $2
-          - type: divide
-            column: 6
-            value: $2
-
-          # Convert MB values to bytes
+          # Free = AllocatedBaseSize - Used, the utilizations, and the sizes from MB into bytes
           # PageFileName;AllocatedBaseSize;Free;FreeUtilization;Used;UsedUtilization
-          - type: multiply
-            column: 2
-            value: 1048576
-          - type: multiply
-            column: 3
-            value: 1048576
-          - type: multiply
-            column: 5
-            value: 1048576
+          - type: awk
+            output: table
+            script: |
+              {
+                free = $2 - $3
+                print $1, $2 * 1048576, free * 1048576, free / $2, $3 * 1048576, $3 / $2
+              }
 
       mapping:
         source: ${source::Win32_PageFileUsage}
@@ -241,10 +182,12 @@ monitors:
           namespace: root\CIMv2
           query: SELECT PagesInputPersec,PagesOutputPersec,PageFaultsPersec,PageReadsPersec FROM Win32_PerfRawData_PerfOS_Memory
           computes:
+          # START SNIPPET: subtractMinorPageFaultsCompute
           # Subtracting PageReads from totalPageFaults to get minor page faults
           - type: subtract
             column: 3
             value: $4
+          # END SNIPPET: subtractMinorPageFaultsCompute
 
       mapping:
         source: ${source::pagingActivity}
@@ -321,16 +264,12 @@ monitors:
           computes:
           # *DiskTime values in Win32_PerfRawData_PerfDisk_PhysicalDisk are expressed in fraction of seconds
           # Fraction is defined in Frequency_PerfTime
-          # We need to divide the values by Frequency_PerfTime to convert to seconds
-          - type: divide
-            column: 6 # PercentDiskTime
-            value: $9 # Frequency_PerfTime
-          - type: divide
-            column: 7 # PercentDiskReadTime
-            value: $9 # Frequency_PerfTime
-          - type: divide
-            column: 8 # PercentDiskWriteTime
-            value: $9 # Frequency_PerfTime
+          # We need to divide the values (PercentDiskTime, PercentDiskReadTime, PercentDiskWriteTime) by Frequency_PerfTime
+          # to convert to seconds
+          - type: awk
+            output: table
+            script: |
+              { print $1, $2, $3, $4, $5, $6 / $9, $7 / $9, $8 / $9, $9 }
       mapping:
         source: ${source::physicalDiskInformation}
         attributes:
@@ -486,10 +425,13 @@ tools:
           column: 11
           numeric: true
           descending: true
-        - type: head
-          lines: ${param::count}
-        - type: keepColumns
-          columnNumbers: 1,2,3,4,5,6,7,8,9,10
+        # The first count processes, without their sortKey
+        - type: awk
+          variables:
+            count: ${param::count}
+          script: |
+            NR <= count + 0 { print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10 }
+          output: table
     result:
       source: ${source::processes}
       columns: [ pid, ppid, cpuPercent, memoryPercent, workingSetKiB, privateKiB, handles, threads, started, command ]
@@ -633,11 +575,10 @@ tools:
         namespace: root\CIMv2
         query: SELECT StartMode, DelayedAutoStart FROM Win32_Service WHERE Name = '${esc(wql)::param::service}'
         computes:
-        - type: keepColumns
-          columnNumbers: 2
-        - type: insertColumn
-          column: 1
-          value: Y
+        - type: awk
+          output: table
+          script: |
+            { print "Y", $2 }
       # Every dependency: ASSOCIATORS OF returns nothing through WinRM
       dependencies:
         type: wmi
@@ -944,53 +885,39 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
         computes:
-        - type: insertColumn
-          column: 1
-          value: "1"
-        - type: insertColumn
-          column: 2
-          value: PerfOS_Processor
+        - type: awk
+          output: table
+          script: |
+            { print "1", "PerfOS_Processor", $1, $2, $3, $4, $5, $6, $7 }
       system1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
         computes:
-        - type: insertColumn
-          column: 1
-          value: "1"
-        - type: insertColumn
-          column: 2
-          value: PerfOS_System
         # No instance
-        - type: insertColumn
-          column: 3
-          value: ""
+        - type: awk
+          output: table
+          script: |
+            { print "1", "PerfOS_System", "", $1, $2, $3, $4, $5, $6 }
       memory1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
         computes:
-        - type: insertColumn
-          column: 1
-          value: "1"
-        - type: insertColumn
-          column: 2
-          value: PerfOS_Memory
         # No instance
-        - type: insertColumn
-          column: 3
-          value: ""
+        - type: awk
+          output: table
+          script: |
+            { print "1", "PerfOS_Memory", "", $1, $2, $3, $4, $5, $6, $7, $8 }
       disk1:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
         computes:
-        - type: insertColumn
-          column: 1
-          value: "1"
-        - type: insertColumn
-          column: 2
-          value: PerfDisk_PhysicalDisk
+        - type: awk
+          output: table
+          script: |
+            { print "1", "PerfDisk_PhysicalDisk", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21 }
       pause:
         type: commandLine
         # ping waits a second between two echoes: 1 + (seconds - 1) seconds
@@ -1002,64 +929,48 @@ tools:
         namespace: root\CIMv2
         query: SELECT Name, PercentProcessorTime, PercentUserTime, PercentPrivilegedTime, PercentInterruptTime, PercentDPCTime, Timestamp_Sys100NS FROM Win32_PerfRawData_PerfOS_Processor
         computes:
-        - type: insertColumn
-          column: 1
-          value: "2"
-        - type: insertColumn
-          column: 2
-          value: PerfOS_Processor
+        - type: awk
+          output: table
+          script: |
+            { print "2", "PerfOS_Processor", $1, $2, $3, $4, $5, $6, $7 }
       system2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT ProcessorQueueLength, ContextSwitchesPersec, Processes, Threads, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_System
         computes:
-        - type: insertColumn
-          column: 1
-          value: "2"
-        - type: insertColumn
-          column: 2
-          value: PerfOS_System
         # No instance
-        - type: insertColumn
-          column: 3
-          value: ""
+        - type: awk
+          output: table
+          script: |
+            { print "2", "PerfOS_System", "", $1, $2, $3, $4, $5, $6 }
       memory2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT AvailableMBytes, CommittedBytes, CommitLimit, PagesPersec, PageFaultsPersec, PoolNonpagedBytes, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfOS_Memory
         computes:
-        - type: insertColumn
-          column: 1
-          value: "2"
-        - type: insertColumn
-          column: 2
-          value: PerfOS_Memory
         # No instance
-        - type: insertColumn
-          column: 3
-          value: ""
+        - type: awk
+          output: table
+          script: |
+            { print "2", "PerfOS_Memory", "", $1, $2, $3, $4, $5, $6, $7, $8 }
       disk2:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentIdleTime, PercentIdleTime_Base, PercentDiskReadTime, PercentDiskWriteTime, AvgDiskQueueLength, AvgDiskReadQueueLength, AvgDiskWriteQueueLength, CurrentDiskQueueLength, DiskTransfersPersec, DiskReadsPersec, DiskWritesPersec, DiskReadBytesPersec, DiskWriteBytesPersec, AvgDisksecPerRead, AvgDisksecPerRead_Base, AvgDisksecPerWrite, AvgDisksecPerWrite_Base, Timestamp_Sys100NS, Timestamp_PerfTime, Frequency_PerfTime FROM Win32_PerfRawData_PerfDisk_PhysicalDisk
         computes:
-        - type: insertColumn
-          column: 1
-          value: "2"
-        - type: insertColumn
-          column: 2
-          value: PerfDisk_PhysicalDisk
+        - type: awk
+          output: table
+          script: |
+            { print "2", "PerfDisk_PhysicalDisk", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21 }
       pagingFile:
         type: wmi
         namespace: root\CIMv2
         query: SELECT Name, PercentUsage, PercentUsage_Base, PercentUsagePeak, PercentUsagePeak_Base FROM Win32_PerfRawData_PerfOS_PagingFile
         computes:
-        - type: insertColumn
-          column: 1
-          value: "2"
-        - type: insertColumn
-          column: 2
-          value: PerfOS_PagingFile
+        - type: awk
+          output: table
+          script: |
+            { print "2", "PerfOS_PagingFile", $1, $2, $3, $4, $5 }
       snapshot:
         type: tableUnion
         tables:
@@ -1191,12 +1102,9 @@ tools:
         - type: awk
           output: table
           script: |
-            $2 < 49152 { print; next }
+            $2 < 49152 { print "udp", $1, $2, $3; next }
             { count[$3]++ }
-            END { for (pid in count) print count[pid] " endpoints", "49152-65535", pid }
-        - type: insertColumn
-          column: 1
-          value: udp
+            END { for (pid in count) print "udp", count[pid] " endpoints", "49152-65535", pid }
       endpoints:
         type: tableUnion
         tables:

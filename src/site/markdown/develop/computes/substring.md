@@ -81,7 +81,7 @@ sources:
 
 ## Recommended Pattern
 
-- Use `duplicateColumn` first when you need both the full value and its fragment (duplicate, then `substring` one of the copies).
+- When you need both the full value and its fragment, write one [awk](./awk.html) compute that prints both (`print $1, $2, substr($2, 1, 5)`): a `duplicateColumn` followed by a `substring` is a run of two computes, see [Awk Or Computes](./index.html#awk-or-computes).
 - Comment the resulting column layout (`# DeviceID;controllerID;`) so the intent of the truncation stays visible.
 - Prefer `extract` over `substring` when the interesting part is delimited by a separator rather than located at a fixed position.
 

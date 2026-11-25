@@ -61,11 +61,14 @@ monitors:
           - type: translate
             column: 3
             translationTable: ${translation::entPhySensorPrecisionTranslationTable}
-          - type: divide
-            column: 4
-            value: $3
-          - type: duplicateColumn
-            column: 5
+            # Divide the value by the precision, and duplicate the state. A value the sensor does not report stays empty:
+            # a fan speed of 0 would be a failed fan
+            # ID;type;precision;Value;State;State;
+          - type: awk
+            output: table
+            script: |
+              $4 != "" { $4 = $4 / $3 }
+              { print $1, $2, $3, $4, $5, $5 }
         source(2):
           # For use in all other classes
           type: copy
@@ -198,9 +201,6 @@ monitors:
           rightKeyColumn: 1
           defaultRightLine: [ "", "", "", "", "", "", "", "", "", "", "", "", "" ]
           computes:
-          - type: keepColumns
-            # Keep: PhysicalDescription; Serial/Manufacturer/Model (primary); OriginalID; Serial/Manufacturer/Model (fallback)
-            columnNumbers: 2,7,8,9,14,21,22,23
           - type: awk
             script: ${file::fan-info.awk}
             output: table

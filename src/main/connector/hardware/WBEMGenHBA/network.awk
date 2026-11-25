@@ -3,6 +3,10 @@ BEGIN {
 }
 
 {
+	# Convert Speed from Gbps to Mbps: a speed the port does not report stays empty, as it is the bandwidth attribute
+	if ($4 != "") $4 = $4 * 1000
+	# Remove the array pipes from the port WWN
+	gsub(/[|]/, ".", $5)
 	n = split($Column, PortWWN, "|")
 	hex = ""
 	# Skip empty elements: older WMI clients add a trailing "|" to arrays
