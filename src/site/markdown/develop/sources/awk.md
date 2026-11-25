@@ -81,7 +81,7 @@ sources:
 
 For a row `disk0`, `SSD`, `100` and hostname `server01`, the script writes the row `disk0`, `100`, `server01`, `730.5`. No `input` is needed here: the `BEGIN` block reads the table variable directly. By contrast, `input: ${source::...}` feeds that source to the script's normal record processing: its rows as records for a table, its lines for a text.
 
-A referenced source must produce a table: a source that ends in text is rejected (`TEXT_FEEDS_TABLE`). End it with a [toTable](../computes/to-table.html), or an `awk` with `output: table`. An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
+A referenced source must produce a table: a source that ends in text is rejected (`TEXT_FEEDS_TABLE`). End it with a [toTable](../computes/to-table.html), or declare `output: table` on an `awk` or an [snmpGet](./snmp-get.html). An empty or unavailable source becomes an empty array (`length(aTable) == 0`); an unavailable source also logs an error. A variable declared without a value is exposed as an empty scalar.
 
 ### Lists And Maps
 
@@ -141,7 +141,7 @@ A source script can also query the monitored resource. Each `execute...` functio
 | --- | --- |
 | `executeHttpRequest(args)` | An [http](./http.html) source: `args["method"]`, `args["path"]`, `args["header"]`, `args["body"]`, `args["resultContent"]`, ... The body may be an array: see [Send JSON](#send-json). |
 | `executeHttpJsonRequest(args, response)` | The same request, with the body of its response parsed as JSON into the `response` array. Returns the HTTP status code. See [Read JSON](#read-json). |
-| `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. |
+| `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. Returns the value, its line breaks as LF, or an empty string when the request fails. |
 | `executeSnmpTable(args)` | An [snmpTable](./snmp-table.html) source: `args["oid"]`, `args["selectColumns"]`. |
 | `executeWbemRequest(args)` | A [wbem](./wbem.html) source: `args["query"]`, `args["namespace"]`. |
 | `executeWmiRequest(args)` | A [wmi](./wmi.html) source: `args["query"]`, `args["namespace"]`. |

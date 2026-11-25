@@ -110,14 +110,14 @@ What a source produces is the type at the end of its chain, as written:
 
 | Text | Table |
 | --- | --- |
-| `commandLine`, `http`, `file`, `ipmi`, the `awk` source with the default `output: text`, [`textUnion`](sources/text-union.html), a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` | every other source: `snmpTable`, `wmi`, `sql`, `static`, `tableJoin`, `tableUnion`, `internalDbQuery`, the `awk` source with `output: table`, ... |
+| `commandLine`, `http`, `file`, `ipmi`, the `snmpGet` and `awk` sources with the default `output: text`, [`textUnion`](sources/text-union.html), a source with `executeForEachEntryOf` and a `json_array`, `json_array_extended` or custom `concatMethod` | every other source: `snmpTable`, `wmi`, `sql`, `static`, `tableJoin`, `tableUnion`, `internalDbQuery`, the `snmpGet` and `awk` sources with `output: table`, ... |
 | a chain ending in `toText` or in an `awk` compute with the default `output: text` | a chain ending in `toTable`, `json2Table`, `json2List`, `xml2Csv`, an `awk` compute with `output: table` or any other compute (but `append`, `prepend`, `replace` and `substring` without a `column`, which keep the text they read, see [Text Or Table](#text-or-table)) |
 
 A `copy` produces what the chain of the source it copies ends in, also when that source comes back empty, or fails with [`continueOnFailure: true`](sources/index.html#continueonfailure): an empty text for a text, an empty table for a table. A `tableUnion` is always a table: a union whose members are texts is rejected (see [Texts in a Union](sources/table-union.html#texts-in-a-union)).
 
 ### Table Consumers
 
-These read a table. A text there is rejected (`TEXT_FEEDS_TABLE`): end its source with a `toTable`, or an `awk` with `output: table`, a `json2Table` or an `xml2Csv`.
+These read a table. A text there is rejected (`TEXT_FEEDS_TABLE`): end its source with a `toTable`, or an `awk` with `output: table`, a `json2Table` or an `xml2Csv`, or declare `output: table` on an `awk` or `snmpGet` source.
 
 - `leftTable` and `rightTable` of a [`tableJoin`](sources/table-join.html);
 - the members of a [`tableUnion`](sources/table-union.html), with their own rules: a union of texts only is rejected once (`TABLE_UNION_OF_TEXTS`), a union of texts and tables is rejected `MIXED_UNION` plus `TEXT_FEEDS_TABLE` for each text member;
@@ -172,7 +172,7 @@ A `${source::...}` reference to a source the connector does not have is rejected
 
 | Rule | Hint | Rejected for |
 | --- | --- | --- |
-| `TEXT_FEEDS_TABLE` | write a toTable | A text read by a table consumer. |
+| `TEXT_FEEDS_TABLE` | write a toTable, or output: table on an awk or snmpGet source (for a mapping: write a toTable, output: table on an awk or snmpGet source, or type: simple) | A text read by a table consumer. |
 | `TABLE_FEEDS_TEXT` | write a toText | A table read by a text consumer. |
 | `TABLE_UNION_OF_TEXTS` | use textUnion | A `tableUnion` whose members are all texts, once per union. |
 | `MIXED_UNION` | convert the members to one type | A `tableUnion` of texts and tables, once per union, plus a `TEXT_FEEDS_TABLE` for each text member. |
@@ -190,7 +190,7 @@ A `${source::...}` reference to a source the connector does not have is rejected
 Each finding is logged at ERROR when the connector loads, and the load error lists every finding. The message names the rule, the source, the location, the expected and actual types, and the hint:
 
 ```text
-Connector MyConnector - Content type check: TEXT_FEEDS_TABLE in ${source::monitors.disk.discovery.sources.disks} at keepColumns #0: expected TABLE, actual TEXT (write a toTable)
+Connector MyConnector - Content type check: TEXT_FEEDS_TABLE in ${source::monitors.disk.discovery.sources.disks} at keepColumns #0: expected TABLE, actual TEXT (write a toTable, or output: table on an awk or snmpGet source)
 ```
 
 The location is a compute with its position among the written computes, counted from 0 (`keepColumns #0`, `append #1 value`), a field (`tables[1]`, `leftTable`, `header`, `authenticationToken`, `variables.rows`), a mapping (`monitors.disk.discovery.mapping`, `monitors.disk.discovery.mapping.attributes.name`) or a tool result (`tools.listDisks.result`), followed by `-> ${source::...}` when a reference is at fault. For a mapping or a tool, the source named is the one the mapping or the tool reads.
