@@ -77,8 +77,7 @@ translations:
     Suspended: suspended
 
 # Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md). The output of a command is
-# its answer whatever its exit code: the commands end with "exit 0" for the agents before v3.9.09, where WinRM failed
-# a non-zero exit.
+# its answer whatever its exit code.
 tools:
 
   vms:
@@ -87,8 +86,7 @@ tools:
       vms:
         type: commandLine
         commandLine: >-
-          PowerShell.exe -NoProfile -NonInteractive -Command "Get-VM | ForEach-Object { '{0};{1};{2};{3};{4};{5};{6};{7};{8};{9}' -f ($_.Name -replace '[;\r\n]', '?'), $_.VMId, $_.State, ($_.Status -replace '[;\r\n]', '?'), $_.CPUUsage, [math]::Round($_.MemoryAssigned / 1MB), [math]::Round($_.MemoryDemand / 1MB), $_.Uptime.ToString(), $_.Heartbeat, $_.ReplicationHealth };
-          exit 0" 2>&1
+          PowerShell.exe -NoProfile -NonInteractive -Command "Get-VM | ForEach-Object { '{0};{1};{2};{3};{4};{5};{6};{7};{8};{9}' -f ($_.Name -replace '[;\r\n]', '?'), $_.VMId, $_.State, ($_.Status -replace '[;\r\n]', '?'), $_.CPUUsage, [math]::Round($_.MemoryAssigned / 1MB), [math]::Round($_.MemoryDemand / 1MB), $_.Uptime.ToString(), $_.Heartbeat, $_.ReplicationHealth }" 2>&1
         computes:
         - type: toTable
     result:
@@ -114,8 +112,7 @@ tools:
           'Network adapters:'; Get-VMNetworkAdapter -VM $v | Format-Table -AutoSize Name, SwitchName, Status, MacAddress, IPAddresses | Out-String -Width 512;
           'Virtual disks:'; Get-VMHardDiskDrive -VM $v | ForEach-Object { $_ | Format-List ControllerType, ControllerNumber, ControllerLocation, Path; Get-VHD -Path $_.Path | Format-List VhdType, Size, FileSize, FragmentationPercentage, ParentPath };
           'Checkpoints:'; Get-VMSnapshot -VM $v | Format-Table -AutoSize Name, SnapshotType, CreationTime, ParentSnapshotName | Out-String -Width 512;
-          'Integration services:'; Get-VMIntegrationService -VM $v | Format-Table -AutoSize Name, Enabled, PrimaryStatusDescription | Out-String -Width 512;
-          exit 0" 2>&1
+          'Integration services:'; Get-VMIntegrationService -VM $v | Format-Table -AutoSize Name, Enabled, PrimaryStatusDescription | Out-String -Width 512" 2>&1
     result:
       source: ${source::vm}
 
@@ -141,7 +138,6 @@ tools:
           $v = @(Get-VM | Where-Object { $_.Name -eq $n -or $_.VMId.Guid -eq $n });
           if ($v.Count -ne 1) { 'Refused: ' + $v.Count + ' virtual machines have the name or VMId ' + $n + ' (VMIds: ' + ($v.VMId -join ', ') + ')'; exit 0 };
           try { switch ('${param::action}') { 'start' { Start-VM -VM $v -ErrorAction Stop } 'shutdown' { Stop-VM -VM $v -ErrorAction Stop } 'turnOff' { Stop-VM -VM $v -TurnOff -Force -ErrorAction Stop } 'restart' { if ((Get-Command Restart-VM).Parameters.ContainsKey('Type')) { Restart-VM -VM $v -Type Reboot -Force -ErrorAction Stop } elseif ($v[0].State -ne 'Running') { throw 'The VM is ' + $v[0].State + ', not Running: start it instead' } else { Stop-VM -VM $v -ErrorAction Stop; Start-VM -VM $v -ErrorAction Stop } } 'reset' { Restart-VM -VM $v -Force -ErrorAction Stop } 'save' { Save-VM -VM $v -ErrorAction Stop } 'suspend' { Suspend-VM -VM $v -ErrorAction Stop } 'resume' { Resume-VM -VM $v -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
-          Get-VM -Id $v[0].VMId | Format-List Name, VMId, State, Status, Uptime, Heartbeat;
-          exit 0" 2>&1
+          Get-VM -Id $v[0].VMId | Format-List Name, VMId, State, Status, Uptime, Heartbeat" 2>&1
     result:
       source: ${source::control}

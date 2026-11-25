@@ -318,7 +318,7 @@ monitors:
 
 # Tools that an AI assistant runs through the MetricsHub MCP server (see develop/tools.md).
 # The output of a command is its answer whatever its exit code. The PowerShell commands print their errors (2>&1), so
-# that the assistant sees them, and end with "exit 0" for the agents before v3.9.09, where WinRM failed a non-zero exit.
+# that the assistant sees them.
 tools:
 
   processes:
@@ -533,8 +533,7 @@ tools:
           PowerShell.exe -NoProfile -NonInteractive -Command "$p = Get-Process -Id ${param::pid} -ErrorAction SilentlyContinue;
           if (-not $p) { 'No process ${param::pid}' }
           elseif ($p.ProcessName -in 'System', 'Idle', 'Registry', 'smss', 'csrss', 'wininit', 'winlogon', 'services', 'lsass', 'lsaiso', 'svchost', 'Memory Compression') { 'Refused: process ${param::pid} is ' + $p.ProcessName + ', which Windows needs' }
-          else { try { Stop-Process -Id ${param::pid} -Force -ErrorAction Stop; 'Process ${param::pid} (' + $p.ProcessName + ') terminated' } catch { 'Failed: ' + $_.Exception.Message } };
-          exit 0" 2>&1
+          else { try { Stop-Process -Id ${param::pid} -Force -ErrorAction Stop; 'Process ${param::pid} (' + $p.ProcessName + ') terminated' } catch { 'Failed: ' + $_.Exception.Message } }" 2>&1
     result:
       source: ${source::kill}
 
@@ -679,8 +678,7 @@ tools:
         commandLine: >-
           PowerShell.exe -NoProfile -NonInteractive -Command "$n = '${esc(powershell)::param::service}'; $f = '${param::withDependents}' -eq 'true';
           try { switch ('${param::action}') { 'start' { Start-Service -Name $n -ErrorAction Stop } 'stop' { Stop-Service -Name $n -Force:$f -ErrorAction Stop } 'restart' { Restart-Service -Name $n -Force:$f -ErrorAction Stop } } } catch { 'Failed: ' + $_.Exception.Message };
-          Get-Service -Name $n | Format-List Name, DisplayName, Status, StartType;
-          exit 0" 2>&1
+          Get-Service -Name $n | Format-List Name, DisplayName, Status, StartType" 2>&1
     result:
       source: ${source::control}
 
@@ -728,8 +726,7 @@ tools:
           if ('${esc(powershell)::param::provider}') { $f.ProviderName = '${esc(powershell)::param::provider}' };
           $names = 'information', 'critical', 'error', 'warning', 'information', 'verbose';
           try { Get-WinEvent -FilterHashtable $f -MaxEvents ${param::count} -ErrorAction Stop | ForEach-Object { '{0:o};{1};{2};{3};{4}' -f $_.TimeCreated, $names[$_.Level], $_.Id, $_.ProviderName, (($_.Message -replace '\s+', ' ') -replace ';', ',') } }
-          catch { if ($_.FullyQualifiedErrorId -like 'NoMatchingEventsFound*') { ';;;;No events match' } else { ';;;;Failed: ' + $_.Exception.Message } };
-          exit 0" 2>&1
+          catch { if ($_.FullyQualifiedErrorId -like 'NoMatchingEventsFound*') { ';;;;No events match' } else { ';;;;Failed: ' + $_.Exception.Message } }" 2>&1
         # The matching events, and the messages, whatever the expression (an empty one matches all)
         keep: '${param::match}\|^;;;;'
         computes:
@@ -766,8 +763,7 @@ tools:
           $link = $null; $p = $i.FullName; while ($p -and -not $link) { if ((Get-Item -LiteralPath $p -Force -ErrorAction Stop).Attributes -band [IO.FileAttributes]::ReparsePoint) { $link = $p }; $p = [IO.Path]::GetDirectoryName($p) };
           if ($i.PSIsContainer -or $i.Extension -ne '.log') { 'Refused: ' + $i.FullName + ' is not a .log file' }
           elseif ($link) { 'Refused: ' + $link + ' is a link' }
-          else { Get-Content -LiteralPath $i.FullName -Tail ${param::lines} -ErrorAction Stop } } catch { 'Failed: ' + $_.Exception.Message };
-          exit 0" 2>&1
+          else { Get-Content -LiteralPath $i.FullName -Tail ${param::lines} -ErrorAction Stop } } catch { 'Failed: ' + $_.Exception.Message }" 2>&1
         # The matching lines, and the refusals and failures whatever the expression (an empty one matches all)
         keep: '${param::match}\|^Refused: \|^Failed: '
     result:
@@ -831,8 +827,7 @@ tools:
           foreach ($i in $items) { if ($i -is [IO.DirectoryInfo]) { if (-not ($i.Attributes -band [IO.FileAttributes]::ReparsePoint)) { $stack.Push($i) } }
           else { $own += $i.Length; if ($i.Length -ge $m) { '{0}|{1}' -f [math]::Floor($i.Length / 1048576), $i.FullName } } };
           $p = $c.FullName; while ($p -and $p.Length -ge $r.FullName.Length) { $d[$p] += $own; $p = [IO.Path]::GetDirectoryName($p) } };
-          foreach ($k in $d.Keys) { if ($d[$k] -ge $m) { '{0}|{1}\' -f [math]::Floor($d[$k] / 1048576), $k.TrimEnd('\') } };
-          exit 0" 2>&1
+          foreach ($k in $d.Keys) { if ($d[$k] -ge $m) { '{0}|{1}\' -f [math]::Floor($d[$k] / 1048576), $k.TrimEnd('\') } }" 2>&1
         # megabytes|path, or an error in the first column: a path may hold a ";" (shown as "," by the engine), never a "|"
         separators: "|"
         selectColumns: 1,2
@@ -1383,8 +1378,7 @@ tools:
         # A planned reboot, reason "Other"
         commandLine: >-
           PowerShell.exe -NoProfile -NonInteractive -Command "shutdown.exe /r /t (New-TimeSpan -Minutes ${param::minutes}).TotalSeconds /d p:0:0 /c 'Reboot requested through MetricsHub';
-          if ($LASTEXITCODE -eq 0) { 'A reboot is scheduled in ${param::minutes} minutes' } else { 'Failed: exit code ' + $LASTEXITCODE };
-          exit 0" 2>&1
+          if ($LASTEXITCODE -eq 0) { 'A reboot is scheduled in ${param::minutes} minutes' } else { 'Failed: exit code ' + $LASTEXITCODE }" 2>&1
     result:
       source: ${source::shutdown}
 
