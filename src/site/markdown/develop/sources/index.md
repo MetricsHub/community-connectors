@@ -142,6 +142,8 @@ A source **fails** when its request is not executed:
 - no configuration for its protocol on the host, or no extension for the source;
 - an error answer of the protocol: an HTTP error status, a WMI or WBEM error (invalid class or namespace), an SQL error, an SNMP error.
 
+A source also fails when the script of an [`awk` source](./awk.html#exit-codes), or of one of its [`awk` computes](../computes/awk.html#exit-codes), ends with `exit` and a code other than 0, or when a request of an `awk` source [fails](./awk.html#when-a-request-fails).
+
 An answer is not a failure, even an empty one: a command that prints nothing, an empty table, an `snmpGet` whose OID has no value, a command that exits with a non-zero code. A source that reads a failed source (a `copy`, a `tableJoin`, a `tableUnion`, a `${source::...}` reference) fails as well, until the failed source answers again: a collect source that reads a discovery source fails until the next discovery. The error says what failed and why, and is logged.
 
 An interrupted job (its timeout, a shutdown) is not a failure: its remaining sources and its mapping are skipped, whatever `continueOnFailure` says.

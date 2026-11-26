@@ -37,6 +37,7 @@ Here `inventoryRaw` is a table: each of its rows is a record whose cells are `$1
 | `input` | No | Empty | Input text, or a single source reference such as `${source::beforeAll.inventoryRaw}`: the script reads that source as it is at run time, a table structured (each row is a record whose cells are `$1..$NF`, and `$0`, synthesized only when the script reads it, is the cells joined with `FS`, as in the [`awk` compute](../computes/awk.html#table-input-and-output)), a text the traditional way (lines split on `FS`). A reference inside a longer text (a template such as `MODE;${source::raw}`) is replaced by the source's text: it must reference a text, a table there is rejected (`TABLE_INTERPOLATED`, see [Strict Content Types](../design-principles.html#strict-content-types)). |
 | `output` | No | `text` | What the script produces: `text` (the printed lines as they are: write a `toTable` in `computes` to split them on `;` where they are read as a table, see the [content types](../computes/index.html#content-types)) or `table` (each `print a, b, c` is one row; a `print` without argument is one row of the record's fields `$1..$NF`, while `print $0` writes `$0` in one cell; `printf` text is split into rows on `ORS` and into cells on `OFS`, so a `printf` row sets `OFS = SUBSEP`). See the [`awk` compute](../computes/awk.html#table-input-and-output). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
+| `exitCodes` | No | `{}` | Map of exit codes to error messages: the error of the source when the script ends with `exit` and that code. See [Exit Codes](#exit-codes). |
 | `executeForEachEntryOf` | No | None | Run once per row from another source table. |
 | `computes` | No | `[]` | Optional post-processing computes. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
@@ -135,13 +136,13 @@ These functions are available to the `awk` source, to the [`awk` compute](../com
 
 ### In The awk Source
 
-A source script can also query the monitored resource. Each `execute...` function takes an array holding the properties of the corresponding source (`executeIpmiRequest` takes no argument), and returns its result as text: the body of the response, or the rows of a table joined with `;`. `executeHttpJsonRequest` is the exception: it fills an array and returns the HTTP status code.
+A source script can also query the monitored resource. Each `execute...` function takes an array holding the properties of the corresponding source (`executeIpmiRequest` takes no argument), and returns its result as text: the body of the response, or the rows of a table joined with `;`. `executeHttpJsonRequest` is the exception: it fills an array and returns the HTTP status code. A request that fails stops the script: see [When A Request Fails](#when-a-request-fails).
 
 | Function | Runs |
 | --- | --- |
 | `executeHttpRequest(args)` | An [http](./http.html) source: `args["method"]`, `args["path"]`, `args["header"]`, `args["body"]`, `args["resultContent"]`, ... The body may be an array: see [Send JSON](#send-json). |
 | `executeHttpJsonRequest(args, response)` | The same request, with the body of its response parsed as JSON into the `response` array. Returns the HTTP status code. See [Read JSON](#read-json). |
-| `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. Returns the value, its line breaks as LF, or an empty string when the request fails. |
+| `executeSnmpGet(args)` | An [snmpGet](./snmp-get.html) source: `args["oid"]`. Returns the value, its line breaks as LF, or an empty string when the OID has no value. |
 | `executeSnmpTable(args)` | An [snmpTable](./snmp-table.html) source: `args["oid"]`, `args["selectColumns"]`. |
 | `executeWbemRequest(args)` | A [wbem](./wbem.html) source: `args["query"]`, `args["namespace"]`. |
 | `executeWmiRequest(args)` | A [wmi](./wmi.html) source: `args["query"]`, `args["namespace"]`. |
@@ -149,6 +150,34 @@ A source script can also query the monitored resource. Each `execute...` functio
 | `getVariable(name)` | The value of a connector variable. |
 | `json2Table(json, entryKey, properties, rows)` | Fills `rows` with the entries of a JSON document, and returns their number. See [Read JSON](#read-json). |
 | `json2List(json, list)` | Fills `list` with every value of a JSON document, indexed by its path, and returns their number. See [Read JSON](#read-json). |
+
+### When A Request Fails
+
+A request fails as the corresponding source does (see [continueOnFailure](./index.html#continueonfailure)): the host does not answer, the request times out, the protocol is not configured on the host, or the protocol answers with an error, such as an HTTP error status or an invalid WMI class. An answer is not a failure: an empty body, an empty table or an OID without a value is an empty string, and the script goes on.
+
+A failed request stops the script. The `awk` source fails with the error of the request, what the script printed is dropped, and the source follows its own `continueOnFailure`, as any other source: by default, the job or the tool stops.
+
+To skip a failed item and go on with the others, set `continueOnFailure` in the arguments of that request: the function then returns an empty string when the request fails.
+
+```awk
+{
+  args["method"] = "get"
+  args["path"] = "/redfish/v1/Chassis/" $1 "/Sensors"
+  args["continueOnFailure"] = "true"
+  sensors = executeHttpRequest(args)
+  if (sensors == "") next
+  n = json2Table(sensors, "/Members", "Id;Reading", rows)
+  for (i = 0; i < n; i++) {
+    print $1, rows[i][1], rows[i][2]
+  }
+}
+```
+
+Set it only on a request whose failure is part of the design, such as the details of one item among others. A script that skips every failed request prints nothing when the host does not answer, and an empty result is an answer: the job reads it as no instance.
+
+`executeHttpJsonRequest` never stops the script: it returns the HTTP status code, 0 when the request got no response, and the script decides what to do.
+
+A script can also fail its source itself, with `exit` and a code other than 0: see [Exit Codes](#exit-codes).
 
 ### Read JSON
 
@@ -162,14 +191,14 @@ A JSON object is an array indexed by its keys, a JSON array is an array indexed 
 BEGIN {
   args["method"] = "get"
   args["path"] = "/api/v1/systems"
-  if (executeHttpJsonRequest(args, response) != 200) exit
+  if (executeHttpJsonRequest(args, response) != 200) exit 1
   for (i = 0; i < length(response["items"]); i++) {
     print response["items"][i]["id"], response["items"][i]["status"]["health"]
   }
 }
 ```
 
-The source of this script declares `output: table`: each `print` is one row, and its two arguments are the cells.
+The source of this script declares `output: table`: each `print` is one row, and its two arguments are the cells. On any other status than 200, `exit 1` fails the source (see [Exit Codes](#exit-codes)), where a bare `exit` would give an empty table, read as no system.
 
 **`json2Table(json, entryKey, properties, rows)`** extracts rows from a JSON text, as the [json2Table](../computes/json2table.html) compute does. `properties` is a `;`-separated list. `rows[i][0]` is the path of the entry and `rows[i][1]` its first property: both indexes start at 0. A cell holds its value whole, even when the value holds a `;` or a line feed.
 
@@ -238,6 +267,42 @@ An array is written the way a response is read, the other way round:
 - A value cannot refer to an embedded file: `${file::...}` in a value is not replaced by the content of the file.
 - The script keeps its array: `args["body"]` is the same after the call.
 
+## Exit Codes
+
+A script fails its source with `exit` and a code other than 0. What the script printed is dropped, and the source follows its `continueOnFailure`, as when a [request fails](#when-a-request-fails): by default, the job or the tool stops. A bare `exit`, or `exit 0`, ends the script with what it printed: it is not a failure.
+
+Declare what each code means in `exitCodes`. The message is the error of the source: it is logged, and it is what the LLM receives when the source belongs to a [tool](../tools.html).
+
+```yaml
+sources:
+  systems:
+    type: awk
+    output: table
+    script: ${file::systems.awk}
+    exitCodes:
+      2: The API refused the credentials
+      3: The API answered without a list of systems
+```
+
+```awk
+BEGIN {
+  args["method"] = "get"
+  args["path"] = "/api/v1/systems"
+  status = executeHttpJsonRequest(args, response)
+  if (status == 401 || status == 403) exit 2
+  if (status != 200 || !("items" in response)) exit 3
+  for (i = 0; i < length(response["items"]); i++) {
+    print response["items"][i]["id"], response["items"][i]["status"]["health"]
+  }
+}
+```
+
+When the API answers 401, the error of the source is `Awk script: The API refused the credentials (exit code 2)`. A code that `exitCodes` does not list gives `Unspecified error`, followed by the code.
+
+A script cannot write a message of its own: the [sandbox](#sandbox) has no `/dev/stderr`. Use one code per reason.
+
+The `awk` compute has the same [`exitCodes`](../computes/awk.html#exit-codes).
+
 ## Sandbox
 
 A script runs in a sandbox, in the `awk` source, in the `awk` compute and in `${awk::...}` expressions. It cannot:
@@ -295,6 +360,7 @@ sources:
 - Mixing source acquisition and heavy parsing into one unreadable AWK script.
 - Returning irregular row widths that break mapping.
 - Using source-level `awk` where a simple `commandLine` + compute `awk` would be clearer.
+- Ending the script with a bare `exit`, or printing nothing, when a request it cannot do without was refused: the empty result reads as no instance. Use `exit 1`, see [Exit Codes](#exit-codes).
 - Treating a source-table variable as CSV text or using one-based indexes: the first cell is `aTable[0][0]`, unlike AWK record fields `$1`, `$2`, etc.
 
 ## Community Examples
