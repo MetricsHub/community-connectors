@@ -143,6 +143,7 @@ monitors:
           # Source(10) = ASSOCIATORS of each MSFT_PhysicalDisk, from the MSFT_StorageReliabilityCounter table
           # DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
           type: wmi
+          continueOnFailure: true
           executeForEachEntryOf:
             source: ${source::source(7)}
             concatMethod: list
@@ -154,6 +155,7 @@ monitors:
           # Source(11) = Table join of DiskController.Discovery.Source(7) and DiskController.Discovery.Source(8)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
           type: tableJoin
+          continueOnFailure: true
           leftTable: ${source::source(7)}
           rightTable: ${source::source(8)}
           leftKeyColumn: 8
@@ -258,6 +260,7 @@ monitors:
           # because non real physical disks have been filtered out from it, thus preventing unnecessary WMI queries
           # DeviceId;ReadErrors;Wear;WriteErrors;
           type: wmi
+          continueOnFailure: true
           executeForEachEntryOf:
             source: ${source::monitors.disk_controller.discovery.sources.source(7)}
             concatMethod: list
@@ -422,6 +425,7 @@ monitors:
           # Source(1) = ASSOCIATORS of each MSFT_PhysicalDisk, from the MSFT_StorageReliabilityCounter table
           # DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
           type: wmi
+          continueOnFailure: true
           executeForEachEntryOf:
             source: ${source::monitors.disk_controller.discovery.sources.source(11)}
             concatMethod: list
@@ -673,6 +677,7 @@ tools:
         # MSFT_StorageReliabilityCounter cannot be enumerated: one ASSOCIATORS OF query per disk
         # DeviceId;Temperature;Wear;ReadErrorsTotal;WriteErrorsTotal;PowerOnHours
         type: wmi
+        continueOnFailure: true
         executeForEachEntryOf:
           source: ${source::disks}
           concatMethod: list
@@ -754,6 +759,7 @@ tools:
         # ObjectId;ElapsedTime, in a query of its own: over WMI, MetricsHub 3.9.08 and older (wmi-java 1.0.06 and older)
         # fail the whole query on a CIM interval value, which leaves the jobs without their elapsed time only
         type: wmi
+        continueOnFailure: true
         namespace: root\Microsoft\Windows\Storage
         query: SELECT ObjectId,ElapsedTime FROM MSFT_StorageJob
       jobsElapsed:

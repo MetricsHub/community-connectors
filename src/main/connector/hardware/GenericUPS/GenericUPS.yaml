@@ -58,13 +58,14 @@ monitors:
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
           computes:
           - type: translate
             column: 2
             translationTable: ${translation::enclosureStatusTranslationTable}
         source(4):
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.6.2.1
           selectColumns: 2
           computes:
@@ -78,7 +79,7 @@ monitors:
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
       mapping:
         source: ${source::source(5)}
         metrics:
@@ -115,6 +116,7 @@ monitors:
             # MSHW;BatteryStatus;
         source(2):
           type: snmpGet
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.2.4.0
           output: table
           computes:
@@ -128,7 +130,7 @@ monitors:
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
           computes:
           - type: duplicateColumn
             column: 2
@@ -140,6 +142,7 @@ monitors:
             translationTable: ${translation::BatteryStatusInformationTranslationTable}
         source(4):
           type: snmpGet
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.2.3.0
           output: table
           computes:
@@ -153,7 +156,7 @@ monitors:
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "" ]
+          defaultRightLine: [ "", "" ]
       mapping:
         source: ${source::source(5)}
         attributes:
@@ -171,12 +174,14 @@ monitors:
       sources:
         source(1):
           type: snmpGet
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.9.1.0
           computes:
           - type: awk
             script: "{ print $1 * 1000 }"
         source(2):
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.3.3.1
           selectColumns: ID
           computes:
@@ -195,12 +200,14 @@ monitors:
             # ID;UPSConfigInputVoltage;UpperThreshold;LowerThreshold;
         source(3):
           type: snmpGet
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.9.3.0
           computes:
           - type: awk
             script: "{ print $1 * 1000 }"
         source(4):
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: ID
           computes:
@@ -219,6 +226,7 @@ monitors:
             # ID;UPSConfigOutputVoltage;UpperThreshold;LowerThreshold;
         source(5):
           type: snmpGet
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.2.5.0
           output: table
           computes:
@@ -228,6 +236,7 @@ monitors:
             # ID;UPSBatteryVoltage;
         source(6):
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.5.3.1
           selectColumns: ID
           computes:
@@ -261,6 +270,7 @@ monitors:
       sources:
         source(1):
           type: snmpGet
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.2.5.0
           output: table
           computes:
@@ -272,6 +282,7 @@ monitors:
               { print "Battery Voltage", $1 * 100 }
         source(2):
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.3.3.1
           selectColumns: "ID,3"
           computes:
@@ -284,6 +295,7 @@ monitors:
               { print "Input " $1, $2 }
         source(3):
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.4.4.1
           selectColumns: ID,2
           computes:
@@ -296,6 +308,7 @@ monitors:
               { print "Output " $1, $2 }
         source(4):
           type: snmpTable
+          continueOnFailure: true
           oid: 1.3.6.1.2.1.33.1.5.3.1
           selectColumns: ID,2
           computes:

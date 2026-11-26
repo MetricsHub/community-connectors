@@ -37,6 +37,7 @@ sources:
 | `type` | Yes | None | `awk`. |
 | `script` | Yes | None | The AWK script: an embedded-file reference `${file::script.awk}` (a file next to the connector), or the script text itself, typically as a YAML block scalar (`script: \|`). |
 | `variables` | No | `{}` | Map of AWK variable names to values. Source references become arrays of rows, lists and maps become arrays, other values become scalars. See [Variables](#variables). |
+| `exitCodes` | No | `{}` | Map of exit codes to error messages: the error of the source when the script ends with `exit` and that code. See [Exit Codes](#exit-codes). |
 | `output` | No | `text` | What the script produces: `text` (the printed lines, exactly as the script prints them) or `table` (each `print a, b, c` is one row `[a, b, c]`; a `print` without argument is one row of the record's fields `$1..$NF`; `printf` text is split into rows on `ORS` and into cells on `OFS`). |
 
 The script selects its lines and its columns itself: the `awk` compute has no `keep`, `exclude`, `separators`, `selectColumns` or `input` property, and a connector that sets one does not load (`DEPRECATED_SYNTAX`, see [Legacy and Compatibility](../legacy-and-compatibility.html)).
@@ -144,6 +145,31 @@ The `diskPart.awk` script of the [Syntax](#syntax) example reads the output of D
 >   | 1 | D: - Data | D: | | File System: NTFS | 999653638144 | Healthy | |
 
 With `output: table`, each `print` is one row and each of its arguments one cell, an empty one included. The script prints nothing for the other lines (the header, the dashes): the result needs no marker column, no `toTable`, and no `prepend` after the script. An `excludeMatchingLines` compute after the script removes the `CD-ROM`, `DVD-ROM` and `Removable` volumes. The collect of DiskPart runs the same script with the variable `collect` set to `1`, and the script then prints `volumeID, status, status` for every volume.
+
+## Exit Codes
+
+A script that reads an error where it expects data fails its source with `exit` and a code other than 0: the result of the source is dropped, and the source follows its [`continueOnFailure`](../sources/index.html#continueonfailure), as when its request fails. By default, the next computes, the next sources and the mapping are skipped, or the tool stops. A bare `exit`, or `exit 0`, ends the script with what it printed: it is not a failure.
+
+Declare what each code means in `exitCodes`. The message is the error of the source: it is logged, and it is what the LLM receives when the source belongs to a [tool](../tools.html).
+
+```yaml
+sources:
+  volumes:
+    type: commandLine
+    commandLine: /opt/acme/bin/acmecli volume list
+    computes:
+    - type: awk
+      output: table
+      exitCodes:
+        2: acmecli requires root privileges
+      script: |
+        /[Pp]ermission denied/ { exit 2 }
+        $1 ~ /^[0-9]+$/ { print $1, $2, $5 }
+```
+
+When the command prints `Permission denied`, the error of the source is `Awk compute: acmecli requires root privileges (exit code 2)`, where a script that prints nothing would give an empty table, read as no volume. A code that `exitCodes` does not list gives `Unspecified error`, followed by the code.
+
+A script cannot write a message of its own: the sandbox has no `/dev/stderr`. Use one code per reason.
 
 ## Functions And Sandbox
 

@@ -37,9 +37,9 @@ sources:
 | `rightKeyColumn` | Yes | None | Join key column in right table (1-based). |
 | `defaultRightLine` | No | None | Fallback right-side row when no match is found: a list of cells. Without it, unmatched left rows are dropped (inner join). See [Writing `defaultRightLine`](#writing-defaultrightline). |
 | `keyType` | No | None | Key comparison mode. Use `Wbem` for WBEM/WMI path keys. |
-| `isWbemKey` | No | None | Legacy compatibility flag in older connectors. Prefer `keyType: Wbem`. |
 | `computes` | No | `[]` | Post-join compute pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 ## Table Shape Example
 
@@ -109,6 +109,7 @@ A list that is not a list of rows is rejected when the connector loads, and so i
 - Omitting `defaultRightLine` and silently losing unmatched rows. When the join feeds the mapping of a `discovery` or `simple` job, the instances of these rows are removed (see [When Instances Are Removed](../monitors-and-jobs.html#when-instances-are-removed)).
 - Writing fewer cells in `defaultRightLine` than the right table has columns: the unmatched rows are shorter than the matched ones. An all-empty line for a 4-column right table is `[ "", "", "", "" ]`.
 - Joining on transformed strings that are not unique.
+- Chaining joins on a column that a `defaultRightLine` leaves empty: a left row with an empty key is dropped, `defaultRightLine` or not. Give that cell a value, such as `[ "", "none" ]`, as `WindowsProcess` does.
 
 ## Community Examples
 
@@ -117,4 +118,4 @@ A list that is not a list of rows is rejected when the connector loads, and so i
 - [WinStorageSpaces](https://github.com/metricshub/community-connectors/blob/main/src/main/connector/hardware/WinStorageSpaces/WinStorageSpaces.yaml)
 
 > [!NOTE]
-> Prefer `keyType: Wbem`. Legacy connectors may still show `isWbemKey`, which should be considered compatibility syntax and avoided in new connectors.
+> Use `keyType: Wbem`. The engine does not read `isWbemKey: true`, found in older connectors: such a join compares the keys as plain strings.

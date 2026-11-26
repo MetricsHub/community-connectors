@@ -32,6 +32,7 @@ sources:
 | `value` | Yes | None | The table as a YAML list: a list of cells (one row), a list of rows, or an empty list. See [Writing `value`](#writing-value). |
 | `computes` | No | `[]` | Post-processing pipeline. |
 | `forceSerialization` | No | `false` | Serialize execution via a per-connector, per-host lock (see the Sources overview). Default `false`. |
+| `continueOnFailure` | No | `false` | `true` to go on with the empty result of the source when it fails, instead of stopping the job or the tool (see [continueOnFailure](./index.html#continueonfailure)). |
 
 ## Writing `value`
 
