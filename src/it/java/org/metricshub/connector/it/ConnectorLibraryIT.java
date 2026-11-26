@@ -3,6 +3,7 @@ package org.metricshub.connector.it;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.jawk.Awk;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -104,6 +105,34 @@ class ConnectorLibraryIT {
 			return RawConnectorLibraryParser.OBJECT_MAPPER.readTree(file.toFile()).path("connector").hasNonNull("displayName");
 		} catch (IOException e) {
 			return true;
+		}
+	}
+
+	@Test
+	void everyTableJoinWritesItsJoinType() throws IOException {
+		// The engine fills in the default join type: only the YAML as written tells whether the connector chose one
+		final List<String> withoutJoinType = new ArrayList<>();
+		try (Stream<Path> files = Files.walk(CONNECTOR_DIRECTORY)) {
+			for (final Path file : files.filter(file -> file.toString().toLowerCase().endsWith(".yaml")).sorted().toList()) {
+				tableJoinsWithoutJoinType(
+					RawConnectorLibraryParser.OBJECT_MAPPER.readTree(file.toFile()),
+					file.toString(),
+					withoutJoinType
+				);
+			}
+		}
+		assertEquals(List.of(), withoutJoinType, "These tableJoin sources write neither joinType: inner nor joinType: left");
+	}
+
+	/** Adds to <code>found</code> the path of each tableJoin source of the node that does not write its joinType. */
+	private static void tableJoinsWithoutJoinType(final JsonNode node, final String where, final List<String> found) {
+		if ("tableJoin".equalsIgnoreCase(node.path("type").asText()) && !node.has("joinType")) {
+			found.add(where);
+		}
+		if (node.isArray()) {
+			node.forEach(item -> tableJoinsWithoutJoinType(item, where, found));
+		} else {
+			node.properties().forEach(entry -> tableJoinsWithoutJoinType(entry.getValue(), where + "." + entry.getKey(), found));
 		}
 	}
 

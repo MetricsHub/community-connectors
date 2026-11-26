@@ -104,6 +104,7 @@ monitors:
           # Source(3) = Table joint of Source(1) and Source(2)
           # 1;PredictedFailure;1;Status;StatusInformation
           type: tableJoin
+          joinType: inner
           leftTable: "${source::source(1)}"
           rightTable: "${source::source(2)}"
           leftKeyColumn: 1
@@ -125,6 +126,7 @@ monitors:
               output: table
         source(5):
           type: tableJoin
+          joinType: left
           leftTable: "${source::source(3)}"
           rightTable: "${source::source(4)}"
           leftKeyColumn: 6

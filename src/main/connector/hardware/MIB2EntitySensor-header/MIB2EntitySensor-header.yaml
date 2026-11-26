@@ -18,11 +18,12 @@ monitors:
         source(3):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "" ]
+          rightColumns: 3
           computes:
           # Exclude sensors with status "No Longer Present
           - type: excludeMatchingLines
@@ -196,11 +197,12 @@ monitors:
         source(2):
           # ID;PhysicalDescription;Parent;Class;HardwareRev;FirmwareRev;SerialNumber;Manufacturer;Model;FRU;SensorID;type;value;
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(3)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "", "", "", "", "", "", "", "", "", "", "" ]
+          rightColumns: 13
           computes:
           - type: awk
             script: ${file::fan-info.awk}

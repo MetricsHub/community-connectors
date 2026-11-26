@@ -87,6 +87,7 @@ monitors:
           # Source(3) = Table joint of Source(1) and Source(2)
           # MACAddress;Name;PNPDeviceID;MSNdisID;PNPDeviceID;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 3
@@ -172,6 +173,7 @@ monitors:
           # Source(7) = Source(3) + Source(4)
           # DeviceID;TransmitError;DeviceID;ReceiveError
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
@@ -180,6 +182,7 @@ monitors:
           # Source(8) = Source(5) + Source(6)
           # DeviceID;TransmitsOK;DeviceID;ReceivesOK
           type: tableJoin
+          joinType: inner
           continueOnFailure: true
           leftTable: ${source::source(5)}
           rightTable: ${source::source(6)}
@@ -189,6 +192,7 @@ monitors:
           # Source(9) = Source(8) + Source(7)
           # DeviceID;TransmitsOK;DeviceID;ReceivesOK;DeviceID;TransmitError;DeviceID;ReceiveError;
           type: tableJoin
+          joinType: left
           continueOnFailure: true
           leftTable: ${source::source(8)}
           rightTable: ${source::source(7)}
@@ -207,11 +211,12 @@ monitors:
           # Join LinkStatus and Status tables
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(2)}
           rightTable: ${source::source(1)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "" ]
+          rightColumns: 3
         source(11):
           # Link Speed
           # DeviceID;LinkSpeed
@@ -228,6 +233,7 @@ monitors:
           # Join Status/LinkStatus with LinkSpeed
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation;DeviceID;LinkSpeed;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(10)}
           rightTable: ${source::source(11)}
           leftKeyColumn: 1
@@ -236,11 +242,12 @@ monitors:
           # Join Source(12) + Source(9)
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation;DeviceID;LinkSpeed;DeviceID;TransmittedPackets;DeviceID;ReceivedPackets;DeviceID;TotalError;DeviceID;ReceiveError;
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(12)}
           rightTable: ${source::source(9)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "", "", "", "", "", "" ]
+          rightColumns: 8
           computes:
             # Now replace some "special" chars in one of the DeviceID columns with underscores
             # as it looks like the perfmon instances can't have '#' or '/'
@@ -266,11 +273,12 @@ monitors:
           # Final Join: Source(13) + Source(14)
           # DeviceID;LinkStatus;DeviceID;PATROLStatus;StatusInformation;DeviceID;LinkSpeed;DeviceID;TransmittedPackets;DeviceID;ReceivedPackets;DeviceID;TotalError;DeviceID;ReceiveError;Name;BytesReceived;BytesTransmitted
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(13)}
           rightTable: ${source::source(14)}
           leftKeyColumn: 8
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "" ]
+          rightColumns: 3
       mapping:
         # And here is the ValueTable (at last!)
         source: ${source::source(15)}

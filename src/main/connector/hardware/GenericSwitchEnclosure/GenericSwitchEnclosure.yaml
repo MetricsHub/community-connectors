@@ -52,6 +52,7 @@ monitors:
         source(5):
           # PortID;OperationalStatus;PortID;Description;TypeCode;MacAddress;AdminStatus;Bandwidth;ID;Name;Alias;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(4)}
           rightTable: ${source::source(3)}
           leftKeyColumn: 1

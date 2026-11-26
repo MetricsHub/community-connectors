@@ -84,6 +84,7 @@ monitors:
         joinedProcessAndSessionProcess:
           # 1-17 processQuery; 18 Dependent (process); 19 Antecedent (logon session)
           type: tableJoin
+          joinType: left
           leftTable: ${source::processQuery}
           rightTable: ${source::sessionProcessQuery}
           leftKeyColumn: 17
@@ -104,12 +105,13 @@ monitors:
           # 1-19 joinedProcessAndSessionProcess; 20 Antecedent (account); 21 Dependent (logon session)
           # After the computes: 20 Domain; 21 Name; 22 Dependent (logon session)
           type: tableJoin
+          joinType: left
           leftTable: ${source::joinedProcessAndSessionProcess}
           rightTable: ${source::loggedOnUserQuery}
           leftKeyColumn: 19
           rightKeyColumn: 2
           keyType: Wbem
-          defaultRightLine: [ "", "" ]
+          rightColumns: 2
           computes:
           # START SNIPPET: extractWbemProperty
           - type: duplicateColumn

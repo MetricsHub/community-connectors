@@ -91,6 +91,7 @@ monitors:
           # Source 7 = 2 Joined to 3 with Win32_LogicalDisk
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(2)}
           rightTable: ${source::source(3)}
           leftKeyColumn: 1
@@ -101,6 +102,7 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(7)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 4
@@ -111,6 +113,7 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7          #         8          #      9          10
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;Win32_DiskDrive;PhysicalDiskName;PnPAddress;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(8)}
           rightTable: ${source::source(5)}
           leftKeyColumn: 6
@@ -121,6 +124,7 @@ monitors:
           #          1          #     2          # 3          #           4          #   5          #     6          #   7          #         8          #      9          10           11          #  12
           # Win32_LogicalDisk;PartitionLetter;PartitionName;Win32_DiskPartition;Win32_LogicalDisk;Win32_DiskDrive;Win32_DiskPartition;Win32_DiskDrive;PhysicalDiskName;PnPAddress;LunId(WithDevice);PnPAddress;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(9)}
           rightTable: ${source::source(6)}
           leftKeyColumn: 10
@@ -135,6 +139,7 @@ monitors:
           # Join the MPIO Discovered list with the Volume List
           # MPIOID;LunPathCount;NAAID;MPIOID;VolumeList;
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(10)}
           leftKeyColumn: 1

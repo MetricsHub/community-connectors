@@ -63,6 +63,7 @@ monitors:
         # file.path;file.name;file.size;file.atime;file.mtime;file.ctime;file.lines
         filedetails:
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1

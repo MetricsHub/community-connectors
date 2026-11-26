@@ -50,11 +50,12 @@ monitors:
           # Join the 32bit MIB2 table with the 64 bit IfXTable
           # PortID;Description;TypeCode;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "" ]
+          rightColumns: 3
       mapping:
         # InstanceTable = Source(3)
         # PortID;Description;TypeCode;MacAddress;AdminStatus;bandwidth;ID;Name;Alias;
@@ -123,12 +124,13 @@ monitors:
           # Source(3) = Table Joint of (1) and (2)
           # PortID;Description;Speed;PATROLStatus;StatusInformation;LinkStatus;ReceivedBytes;ReceivedPackets;ReceivedNonUnicastPackets;TotalErrors;TransmittedBytes;TransmittedPackets;TransmittedNonUnicastPackets;TransmittedErrors;IfInDiscards;IfOutDiscards;PortID;SpeedMBs;ReceivedBytes64;ReceivedPackets64;TransmittedBytes64;TransmittedPackets64;
           type: tableJoin
+          joinType: left
           continueOnFailure: true
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "", "", "", "" ]
+          rightColumns: 6
         source(4):
           # Make a copy of Source(3)
           type: copy

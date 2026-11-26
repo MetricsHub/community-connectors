@@ -301,7 +301,7 @@ A run is trusted only when all of these hold:
 
 Otherwise the run only creates and refreshes instances, as before: a source that has just stopped answering, a job that maps nothing, a failing or stopped connector, or a timed-out run never removes anything. Neither does a monitor type excluded from the resource's monitors, since its job does not run.
 
-A source that keeps failing is covered at every run, but one that stays empty is only covered for one run. From the next run, it counts as answered: if the job still maps other rows (from another source of a [`tableUnion`](sources/table-union.html), for example), the instances built from the rows of that source are removed. When a source can stay empty for long, keep the rows of the instances with a [`defaultRightLine`](sources/table-join.html#writing-defaultrightline), or set [`removalDelay`](#removaldelay).
+A source that keeps failing is covered at every run, but one that stays empty is only covered for one run. From the next run, it counts as answered: if the job still maps other rows (from another source of a [`tableUnion`](sources/table-union.html), for example), the instances built from the rows of that source are removed. When a source can stay empty for long, keep the rows of the instances with a left join ([`joinType: left`](sources/table-join.html#choosing-the-join-type)), or set [`removalDelay`](#removaldelay).
 
 These instances are never removed:
 
@@ -396,7 +396,7 @@ Use it for status detail text only; anything numeric or enumerable belongs in `m
 - Using `monoInstance` with expensive sources on monitors that can have dozens of instances.
 - Putting heavy inventory work in `collect` instead of `discovery` — collect runs on every cycle.
 - Filtering on a state or a value (`Enabled` only, `up` only, non-zero readings only, `virsh list` without `--all`) in a `discovery` or `simple` job. The instance is removed as soon as its state changes, which hides the very failure the state should report. Keep every row and map the state.
-- Joining the inventory with an inner `tableJoin` (no `defaultRightLine`) against a per-entity or optional source: an entity missing from the right table is removed. Keep the inventory on the left and add a `defaultRightLine`.
+- Joining the inventory with an inner `tableJoin` (`joinType: inner`) against a per-entity or optional source: an entity missing from the right table is removed. Keep the inventory on the left of a `joinType: left` join, with `rightColumns`.
 
 ## Community Examples
 
