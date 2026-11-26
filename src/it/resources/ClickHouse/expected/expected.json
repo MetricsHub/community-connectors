@@ -18,12 +18,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.operation_time{db.operation.type=\"SELECT\"}" : {
-        "name" : "db.server.operation_time{db.operation.type=\"SELECT\"}",
+      "db.server.operation_time{db.operation.type=\"select\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"select\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "SELECT"
+          "db.operation.type" : "select"
         },
         "resetMetricTime" : false,
         "metricType" : "Counter",
@@ -33,13 +33,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.queries{db.operation.type=\"INSERT\",db.query.state=\"success\"}" : {
-        "name" : "db.server.queries{db.operation.type=\"INSERT\",db.query.state=\"success\"}",
+      "db.server.queries{db.operation.type=\"insert\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"insert\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "INSERT",
-          "db.query.state" : "success"
+          "db.operation.type" : "insert"
         },
         "resetMetricTime" : false,
         "metricType" : "Counter",
@@ -95,12 +94,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.clickhouse.delay_time{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"local\"}" : {
-        "name" : "db.server.clickhouse.delay_time{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"local\"}",
+      "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}" : {
+        "name" : "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "INSERT",
+          "db.operation.type" : "insert",
           "db.clickhouse.insert.scope" : "local"
         },
         "resetMetricTime" : false,
@@ -141,12 +140,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.clickhouse.delay_time{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"distributed\"}" : {
-        "name" : "db.server.clickhouse.delay_time{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"distributed\"}",
+      "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}" : {
+        "name" : "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "INSERT",
+          "db.operation.type" : "insert",
           "db.clickhouse.insert.scope" : "distributed"
         },
         "resetMetricTime" : false,
@@ -201,12 +200,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.clickhouse.delayed_operations{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"local\"}" : {
-        "name" : "db.server.clickhouse.delayed_operations{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"local\"}",
+      "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}" : {
+        "name" : "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "INSERT",
+          "db.operation.type" : "insert",
           "db.clickhouse.insert.scope" : "local"
         },
         "resetMetricTime" : false,
@@ -291,12 +290,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.queries{db.operation.type=\"INSERT\",db.query.state=\"failed\"}" : {
-        "name" : "db.server.queries{db.operation.type=\"INSERT\",db.query.state=\"failed\"}",
+      "db.server.queries{db.operation.type=\"insert\",db.query.state=\"failed\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"insert\",db.query.state=\"failed\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "INSERT",
+          "db.operation.type" : "insert",
           "db.query.state" : "failed"
         },
         "resetMetricTime" : false,
@@ -320,13 +319,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.queries{db.operation.type=\"OTHER\",db.query.state=\"success\"}" : {
-        "name" : "db.server.queries{db.operation.type=\"OTHER\",db.query.state=\"success\"}",
+      "db.server.queries{db.operation.type=\"other\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"other\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "OTHER",
-          "db.query.state" : "success"
+          "db.operation.type" : "other"
         },
         "resetMetricTime" : false,
         "metricType" : "Counter",
@@ -349,13 +347,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.queries{db.operation.type=\"SELECT\",db.query.state=\"success\"}" : {
-        "name" : "db.server.queries{db.operation.type=\"SELECT\",db.query.state=\"success\"}",
+      "db.server.queries{db.operation.type=\"select\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"select\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "SELECT",
-          "db.query.state" : "success"
+          "db.operation.type" : "select"
         },
         "resetMetricTime" : false,
         "metricType" : "Counter",
@@ -452,12 +449,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.errors{error.type=\"insert_rejected\",db.clickhouse.insert.scope=\"local\"}" : {
-        "name" : "db.server.errors{error.type=\"insert_rejected\",db.clickhouse.insert.scope=\"local\"}",
+      "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}" : {
+        "name" : "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "error.type" : "insert_rejected",
+          "db.operation.type" : "insert",
           "db.clickhouse.insert.scope" : "local"
         },
         "resetMetricTime" : false,
@@ -567,18 +564,18 @@
         "attributes" : { },
         "resetMetricTime" : false,
         "metricType" : "UpDownCounter",
-        "value" : 2.0,
-        "previousValue" : 2.0,
+        "value" : 3.0,
+        "previousValue" : 3.0,
         "rate" : null,
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.operation_time{db.operation.type=\"OTHER\"}" : {
-        "name" : "db.server.operation_time{db.operation.type=\"OTHER\"}",
+      "db.server.operation_time{db.operation.type=\"other\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"other\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "OTHER"
+          "db.operation.type" : "other"
         },
         "resetMetricTime" : false,
         "metricType" : "Counter",
@@ -604,12 +601,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.operation_time{db.operation.type=\"INSERT\"}" : {
-        "name" : "db.server.operation_time{db.operation.type=\"INSERT\"}",
+      "db.server.operation_time{db.operation.type=\"insert\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"insert\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "INSERT"
+          "db.operation.type" : "insert"
         },
         "resetMetricTime" : false,
         "metricType" : "Counter",
@@ -634,12 +631,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.queries{db.operation.type=\"OTHER\",db.query.state=\"failed\"}" : {
-        "name" : "db.server.queries{db.operation.type=\"OTHER\",db.query.state=\"failed\"}",
+      "db.server.queries{db.operation.type=\"other\",db.query.state=\"failed\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"other\",db.query.state=\"failed\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "OTHER",
+          "db.operation.type" : "other",
           "db.query.state" : "failed"
         },
         "resetMetricTime" : false,
@@ -796,12 +793,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.clickhouse.delayed_operations{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"distributed\"}" : {
-        "name" : "db.server.clickhouse.delayed_operations{db.operation.type=\"INSERT\",db.clickhouse.insert.scope=\"distributed\"}",
+      "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}" : {
+        "name" : "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "INSERT",
+          "db.operation.type" : "insert",
           "db.clickhouse.insert.scope" : "distributed"
         },
         "resetMetricTime" : false,
@@ -855,12 +852,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.queries{db.operation.type=\"SELECT\",db.query.state=\"failed\"}" : {
-        "name" : "db.server.queries{db.operation.type=\"SELECT\",db.query.state=\"failed\"}",
+      "db.server.queries{db.operation.type=\"select\",db.query.state=\"failed\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"select\",db.query.state=\"failed\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "SELECT",
+          "db.operation.type" : "select",
           "db.query.state" : "failed"
         },
         "resetMetricTime" : false,
@@ -886,12 +883,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.errors{error.type=\"insert_rejected\",db.clickhouse.insert.scope=\"distributed\"}" : {
-        "name" : "db.server.errors{error.type=\"insert_rejected\",db.clickhouse.insert.scope=\"distributed\"}",
+      "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}" : {
+        "name" : "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "error.type" : "insert_rejected",
+          "db.operation.type" : "insert",
           "db.clickhouse.insert.scope" : "distributed"
         },
         "resetMetricTime" : false,
@@ -960,12 +957,12 @@
         "type" : "NumberMetric",
         "updated" : true
       },
-      "db.server.operation_time{db.operation.type=\"MERGE\"}" : {
-        "name" : "db.server.operation_time{db.operation.type=\"MERGE\"}",
+      "db.server.operation_time{db.operation.type=\"merge\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"merge\"}",
         "collectTime" : 1793875501376,
         "previousCollectTime" : 1793875501019,
         "attributes" : {
-          "db.operation.type" : "MERGE"
+          "db.operation.type" : "merge"
         },
         "resetMetricTime" : false,
         "metricType" : "Counter",
@@ -2408,6 +2405,7 @@
     "attributes" : {
       "db.collection.name" : "replicated_events",
       "db.clickhouse.table.engine" : "ReplicatedMergeTree",
+      "db.clickhouse.replica.zookeeper_path" : "/clickhouse/tables/lab/replicated_events",
       "connector_id" : "ClickHouse",
       "db.system.name" : "clickhouse",
       "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",

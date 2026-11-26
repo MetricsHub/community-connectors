@@ -73,6 +73,10 @@ metrics:
     description: The number of operations delayed by an internal resource threshold.
     type: Counter
     unit: "{operation}"
+  db.server.clickhouse.rejected_operations:
+    description: The number of operations rejected by an internal resource threshold.
+    type: Counter
+    unit: "{operation}"
   db.server.clickhouse.delay_time:
     description: The total time operations spent delayed by an internal resource threshold.
     type: Counter
@@ -153,7 +157,7 @@ metrics:
     type: Gauge
     unit: s
   db.server.clickhouse.replication.queue.retries:
-    description: Failed execution attempts for queued operations, excluding attempts still running.
+    description: Failed execution attempts for queued operations.
     type: Gauge
     unit: "{attempt}"
   db.server.clickhouse.replication.queue.last_attempt_age:
@@ -231,11 +235,11 @@ monitors:
               version(), hostName(), uptime(), -- $2-$4
               (SELECT count() FROM system.databases WHERE name NOT IN ('system', 'information_schema', 'INFORMATION_SCHEMA')), -- $5
               (SELECT maxIf(value, metric = 'TotalBytesOfMergeTreeTables') FROM system.asynchronous_metrics), -- $6
-              m.current_queries, m.tcp_connections, m.memory_usage, m.current_merges, m.readonly_replicas, m.replicated_fetches, m.replicated_sends, -- $7-$13
-              greatest(toInt64(e.queries) - toInt64(e.select_queries) - toInt64(e.insert_queries) - greatest(toInt64(e.failed_queries) - toInt64(e.failed_select_queries) - toInt64(e.failed_insert_queries), 0), 0), -- $14 other success
+              m.current_queries, m.current_connections, m.memory_usage, m.current_merges, m.readonly_replicas, m.replicated_fetches, m.replicated_sends, -- $7-$13
+              greatest(toInt64(e.queries) - toInt64(e.select_queries) - toInt64(e.insert_queries), 0), -- $14 other accepted
               greatest(toInt64(e.failed_queries) - toInt64(e.failed_select_queries) - toInt64(e.failed_insert_queries), 0), -- $15 other failed
-              greatest(toInt64(e.select_queries) - toInt64(e.failed_select_queries), 0), e.failed_select_queries, -- $16-$17
-              greatest(toInt64(e.insert_queries) - toInt64(e.failed_insert_queries), 0), e.failed_insert_queries, -- $18-$19
+              e.select_queries, e.failed_select_queries, -- $16-$17 accepted, failed
+              e.insert_queries, e.failed_insert_queries, -- $18-$19 accepted, failed
               e.selected_rows, e.inserted_rows, e.selected_bytes, e.inserted_bytes, e.network_receive_bytes, e.network_send_bytes, -- $20-$25
               e.select_query_time_microseconds / 1000000.0, e.insert_query_time_microseconds / 1000000.0, e.other_query_time_microseconds / 1000000.0, -- $26-$28
               s.memory_limit, greatest(toInt64(s.memory_limit) - toInt64(m.memory_usage), 0), m.merge_mutation_memory, -- $29-$31
@@ -252,7 +256,7 @@ monitors:
             FROM (
               SELECT
                 maxIf(value, metric = 'Query') AS current_queries,
-                maxIf(value, metric = 'TCPConnection') AS tcp_connections,
+                maxIf(value, metric = 'TCPConnection') + maxIf(value, metric = 'HTTPConnection') AS current_connections,
                 maxIf(value, metric = 'MemoryTracking') AS memory_usage,
                 maxIf(value, metric = 'Merge') AS current_merges,
                 maxIf(value, metric = 'ReadonlyReplica') AS readonly_replicas,
@@ -274,7 +278,7 @@ monitors:
                 maxIf(value, metric = 'AsynchronousInsertQueueBytes') AS async_insert_queue_bytes,
                 maxIf(value, metric = 'OpenFileForRead') + maxIf(value, metric = 'OpenFileForWrite') AS open_files
               FROM system.metrics
-              WHERE metric IN ('Query','TCPConnection','MemoryTracking','Merge','ReadonlyReplica','ReplicatedFetch','ReplicatedSend','MergesMutationsMemoryTracking','BackgroundMergesAndMutationsPoolTask','BackgroundMergesAndMutationsPoolSize','BackgroundFetchesPoolTask','BackgroundFetchesPoolSize','BackgroundDistributedSchedulePoolTask','BackgroundDistributedSchedulePoolSize','ZooKeeperSession','ZooKeeperRequest','MarkCacheBytes','UncompressedCacheBytes','QueryCacheBytes','AsynchronousInsertQueueSize','AsynchronousInsertQueueBytes','OpenFileForRead','OpenFileForWrite')
+              WHERE metric IN ('Query','TCPConnection','HTTPConnection','MemoryTracking','Merge','ReadonlyReplica','ReplicatedFetch','ReplicatedSend','MergesMutationsMemoryTracking','BackgroundMergesAndMutationsPoolTask','BackgroundMergesAndMutationsPoolSize','BackgroundFetchesPoolTask','BackgroundFetchesPoolSize','BackgroundDistributedSchedulePoolTask','BackgroundDistributedSchedulePoolSize','ZooKeeperSession','ZooKeeperRequest','MarkCacheBytes','UncompressedCacheBytes','QueryCacheBytes','AsynchronousInsertQueueSize','AsynchronousInsertQueueBytes','OpenFileForRead','OpenFileForWrite')
             ) AS m
             CROSS JOIN (
               SELECT
@@ -333,21 +337,21 @@ monitors:
           db.server.clickhouse.readonly_replicas: $11
           db.server.clickhouse.current_operations{db.operation.type="replication_fetch"}: $12
           db.server.clickhouse.current_operations{db.operation.type="replication_send"}: $13
-          db.server.queries{db.operation.type="OTHER",db.query.state="success"}: $14
-          db.server.queries{db.operation.type="OTHER",db.query.state="failed"}: $15
-          db.server.queries{db.operation.type="SELECT",db.query.state="success"}: $16
-          db.server.queries{db.operation.type="SELECT",db.query.state="failed"}: $17
-          db.server.queries{db.operation.type="INSERT",db.query.state="success"}: $18
-          db.server.queries{db.operation.type="INSERT",db.query.state="failed"}: $19
+          db.server.queries{db.operation.type="other"}: $14
+          db.server.queries{db.operation.type="other",db.query.state="failed"}: $15
+          db.server.queries{db.operation.type="select"}: $16
+          db.server.queries{db.operation.type="select",db.query.state="failed"}: $17
+          db.server.queries{db.operation.type="insert"}: $18
+          db.server.queries{db.operation.type="insert",db.query.state="failed"}: $19
           db.server.row_operations{db.row_operation.type="read"}: $20
           db.server.row_operations{db.row_operation.type="insert"}: $21
           db.server.clickhouse.query.io{db.io.direction="read"}: $22
           db.server.clickhouse.query.io{db.io.direction="write"}: $23
           db.server.io{db.io.direction="receive"}: $24
           db.server.io{db.io.direction="transmit"}: $25
-          db.server.operation_time{db.operation.type="SELECT"}: $26
-          db.server.operation_time{db.operation.type="INSERT"}: $27
-          db.server.operation_time{db.operation.type="OTHER"}: $28
+          db.server.operation_time{db.operation.type="select"}: $26
+          db.server.operation_time{db.operation.type="insert"}: $27
+          db.server.operation_time{db.operation.type="other"}: $28
           db.server.clickhouse.memory.limit: $29
           db.server.clickhouse.memory.usage{db.memory.state="free"}: $30
           db.server.clickhouse.merges_mutations.memory.usage: $31
@@ -359,17 +363,17 @@ monitors:
           db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name="distributed_send"}: $37
           db.server.clickhouse.keeper.sessions: $38
           db.server.clickhouse.keeper.requests: $39
-          db.server.clickhouse.delayed_operations{db.operation.type="INSERT",db.clickhouse.insert.scope="local"}: $40
-          db.server.errors{error.type="insert_rejected",db.clickhouse.insert.scope="local"}: $41
-          db.server.clickhouse.delay_time{db.operation.type="INSERT",db.clickhouse.insert.scope="local"}: $42
-          db.server.clickhouse.delayed_operations{db.operation.type="INSERT",db.clickhouse.insert.scope="distributed"}: $43
-          db.server.errors{error.type="insert_rejected",db.clickhouse.insert.scope="distributed"}: $44
-          db.server.clickhouse.delay_time{db.operation.type="INSERT",db.clickhouse.insert.scope="distributed"}: $45
+          db.server.clickhouse.delayed_operations{db.operation.type="insert",db.clickhouse.insert.scope="local"}: $40
+          db.server.clickhouse.rejected_operations{db.operation.type="insert",db.clickhouse.insert.scope="local"}: $41
+          db.server.clickhouse.delay_time{db.operation.type="insert",db.clickhouse.insert.scope="local"}: $42
+          db.server.clickhouse.delayed_operations{db.operation.type="insert",db.clickhouse.insert.scope="distributed"}: $43
+          db.server.clickhouse.rejected_operations{db.operation.type="insert",db.clickhouse.insert.scope="distributed"}: $44
+          db.server.clickhouse.delay_time{db.operation.type="insert",db.clickhouse.insert.scope="distributed"}: $45
           db.server.cpu.time{cpu.mode="user"}: $46
           db.server.cpu.time{cpu.mode="system"}: $47
           db.server.clickhouse.wait_time{db.clickhouse.wait.type="cpu"}: $48
           db.server.clickhouse.wait_time{db.clickhouse.wait.type="io"}: $49
-          db.server.operation_time{db.operation.type="MERGE"}: $50
+          db.server.operation_time{db.operation.type="merge"}: $50
           db.server.errors{error.type="keeper_hardware"}: $51
           db.server.errors{error.type="keeper_other"}: $52
           db.server.clickhouse.wait_time{db.clickhouse.wait.type="keeper"}: $53
@@ -397,6 +401,8 @@ monitors:
       sources:
         databases:
           type: sql
+          # PostgreSQL-engine database tests on ClickHouse 25.8 and 26.9 showed that this exclusion
+          # avoids remote column metadata discovery, although remote table listing may still occur.
           query: |
             SELECT d.name, d.engine, ifNull(t.table_count,0), ifNull(t.uncompressed_bytes,0), hostName(), toString(serverUUID())
             FROM system.databases AS d
@@ -405,6 +411,7 @@ monitors:
                 sumIf(total_bytes_uncompressed,engine LIKE '%MergeTree') AS uncompressed_bytes
               FROM system.tables
               WHERE database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+                AND database NOT IN (SELECT name FROM system.databases WHERE engine IN ('MySQL','PostgreSQL'))
               GROUP BY database
             ) AS t ON t.database=d.name
             WHERE d.name NOT IN ('system','information_schema','INFORMATION_SCHEMA')
@@ -431,7 +438,7 @@ monitors:
           query: |
             SELECT
               r.database, r.table, r.replica_name,
-              multiIf(r.is_session_expired=1,'failed',r.is_readonly=1 OR r.last_queue_update_exception!='' OR r.parts_to_check>0 OR ifNull(q.persistent_failures,0)>0,'degraded','ok'),
+              multiIf(r.is_session_expired=1,'failed',r.is_readonly=1 OR (r.last_queue_update_exception!='' AND (r.queue_size>0 OR r.log_pointer<r.log_max_index)) OR r.parts_to_check>0 OR ifNull(q.persistent_failures,0)>0,'degraded','ok'),
               r.inserts_in_queue, r.merges_in_queue, r.part_mutations_in_queue,
               greatest(toInt64(r.queue_size)-toInt64(r.inserts_in_queue)-toInt64(r.merges_in_queue)-toInt64(r.part_mutations_in_queue),0),
               r.absolute_delay, r.future_parts, r.parts_to_check,
@@ -444,7 +451,7 @@ monitors:
                 maxIfOrNull(dateDiff('second',create_time,now()),is_currently_executing=0) AS oldest_age,
                 countIf(last_exception!='' AND is_currently_executing=0) AS failed_operations,
                 countIf(last_exception!='' AND is_currently_executing=0 AND num_tries>5) AS persistent_failures,
-                sum(num_tries)-countIf(is_currently_executing=1) AS retry_count,
+                sum(num_tries) AS retry_count,
                 countIf(num_postponed>0 AND is_currently_executing=0) AS postponed_operations,
                 countIf(is_currently_executing=0) AS waiting_operations,
                 countIf(is_currently_executing=1) AS executing_operations,
@@ -492,10 +499,10 @@ monitors:
           type: sql
           query: |
             SELECT name,path,type,
-              if(is_broken OR is_read_only,NULL,nullIf(total_space,toUInt64(-1))),
-              if(is_broken OR is_read_only,NULL,nullIf(free_space,toUInt64(-1))),
-              if(is_broken OR is_read_only,NULL,nullIf(total_space,toUInt64(-1))-nullIf(free_space,toUInt64(-1))),
-              if(is_broken OR is_read_only,NULL,nullIf(unreserved_space,toUInt64(-1))),
+              if(is_broken,NULL,nullIf(total_space,toUInt64(-1))),
+              if(is_broken,NULL,nullIf(free_space,toUInt64(-1))),
+              if(is_broken,NULL,nullIf(total_space,toUInt64(-1))-nullIf(free_space,toUInt64(-1))),
+              if(is_broken,NULL,nullIf(unreserved_space,toUInt64(-1))),
               keep_free_space, if(is_broken=1,'failed','ok'), is_read_only, is_write_once, is_remote, is_encrypted,
               hostName(), toString(serverUUID())
             FROM system.disks;
@@ -527,6 +534,8 @@ monitors:
       sources:
         tables:
           type: sql
+          # PostgreSQL-engine database tests on ClickHouse 25.8 and 26.9 showed that this exclusion
+          # avoids remote column metadata discovery, although remote table listing may still occur.
           query: |
             SELECT t.database,t.name,t.engine,
               if(t.engine LIKE '%MergeTree',ifNull(t.total_rows,0),NULL),
@@ -546,7 +555,7 @@ monitors:
               if(t.engine='Distributed',ifNull(dq.blocked_destinations,0),NULL),
               if(t.engine='Distributed',ifNull(dq.unblocked_destinations,0),NULL),
               if(t.engine='Distributed',dq.last_exception_age,NULL),
-              hostName(),toString(serverUUID())
+              r.zookeeper_path,hostName(),toString(serverUUID())
             FROM system.tables AS t
             LEFT JOIN (
               SELECT database,table,max(parts) AS max_parts_per_partition
@@ -557,7 +566,7 @@ monitors:
             ) AS p ON p.database=t.database AND p.table=t.name
             LEFT JOIN (
               SELECT database,table,count() AS pending_mutations,
-                countIf(latest_fail_reason!='' AND has(parts_to_do_names,latest_failed_part)) AS failing_mutations,
+                countIf(latest_fail_reason!='' AND (latest_failed_part='all_parts' OR has(parts_to_do_names,latest_failed_part))) AS failing_mutations,
                 sum(parts_to_do) AS mutation_parts_to_do,max(dateDiff('second',create_time,now())) AS oldest_mutation_age
               FROM system.mutations WHERE is_done=0 GROUP BY database,table
             ) AS mu ON mu.database=t.database AND mu.table=t.name
@@ -569,18 +578,22 @@ monitors:
                 if(max(last_exception_time)=toDateTime(0),NULL,dateDiff('second',max(last_exception_time),now())) AS last_exception_age
               FROM system.distribution_queue GROUP BY database,table
             ) AS dq ON dq.database=t.database AND dq.table=t.name
+            LEFT JOIN (SELECT database,table,zookeeper_path FROM system.replicas) AS r
+              ON r.database=t.database AND r.table=t.name
             WHERE t.database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+              AND t.database NOT IN (SELECT name FROM system.databases WHERE engine IN ('MySQL','PostgreSQL'))
               AND (t.engine LIKE '%MergeTree' OR t.engine='Distributed')
             SETTINGS join_use_nulls = 1;
       mapping:
         source: ${source::tables}
         attributes:
           db.system.name: clickhouse
-          db.server.name: $21
-          db.clickhouse.server.uuid: $22
+          db.server.name: $22
+          db.clickhouse.server.uuid: $23
           db.namespace: $1
           db.collection.name: $2
           db.clickhouse.table.engine: $3
+          db.clickhouse.replica.zookeeper_path: $21
         # Empty SQL cells deactivate only the engine-specific StateSet metric.
         # Numeric metrics already omit empty values through normal metric parsing.
         conditionalCollection:
