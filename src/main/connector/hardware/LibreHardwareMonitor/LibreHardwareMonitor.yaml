@@ -70,6 +70,7 @@ monitors:
           # Source 2 = Merge source 1 (voltage) and enclosure Hardware source
           # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 3
@@ -125,6 +126,7 @@ monitors:
           # Source 3 = Merge Source 1 and 2 Together
           # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 3
@@ -192,6 +194,7 @@ monitors:
           # Source 3 = Table join to keep only disks that do have an Endurance Remaining sensor
           # Identifier, Name, HardwareType, Identifier
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
@@ -223,6 +226,7 @@ monitors:
           # Match SensorParent with HardwareIdentifier
           # TableJoint = SensorIdentifier, SensorParent, SensorValue, SensorName, HardwareIdentifier,  HardwareName, HardwareType
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 2
@@ -257,6 +261,7 @@ monitors:
           # Source 3 = Merge Source 1 and 2 Together
           # SensorIdentifier, SensorName, SensorParent, SensorValue, HardwareIdentifier, HardwareName, HardwareType
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::monitors.enclosure.discovery.sources.source(1)}
           leftKeyColumn: 3
@@ -323,11 +328,12 @@ monitors:
           # Source 2 : CPUPowerConsumption
           # HardwareIdentifier, HardwareName, HardwareType, Name, Parent, CPUPowerConsumption
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 2
-          defaultRightLine: [ "", "", "", "" ]
+          rightColumns: 4
           computes:
           # If CPUPowerConsumption < 1 then disable PowerConsumption parameter
           - type: extract
@@ -379,11 +385,12 @@ monitors:
           # Source 2 : CPUPowerConsumption
           # CpuDeviceID;AverageClock;SensorName;CpuDeviceID;CPUPowerConsumption
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 2
-          defaultRightLine: [ "", "", "", "" ]
+          rightColumns: 4
       mapping:
         # The Collect Table
         # CpuDeviceID;AverageClock;SensorName;CpuDeviceID;CPUPowerConsumption
@@ -437,6 +444,7 @@ monitors:
           # Source 3 : MemoryUsed
           # Name, Parent, MemoryAvailable, Name, Parent, MemoryUsed
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 2
@@ -453,6 +461,7 @@ monitors:
           # Source 6 : MemorySize
           # Identifier, Name, HardwareType, Parent, MemorySize; MemoryUsed
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(5)}
           leftKeyColumn: 1
@@ -505,11 +514,12 @@ monitors:
           # Source 2 : Get the Memory Size
           # Identifier, Name, HardwareType, ParentSensor, SensorName, MemorySize
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "" ]
+          rightColumns: 3
       mapping:
         # Instance table
         # Identifier, Name, HardwareType, ParentSensor, SensorName, MemorySize

@@ -54,11 +54,12 @@ monitors:
             # MSHW;PowerConsumption;
         source(3):
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "" ]
+          rightColumns: 2
           computes:
           - type: translate
             column: 2
@@ -75,11 +76,12 @@ monitors:
             # MSHW;AlarmDescription;
         source(5):
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "" ]
+          rightColumns: 2
       mapping:
         source: ${source::source(5)}
         metrics:
@@ -126,11 +128,12 @@ monitors:
             # MSHW;EstimatedChargeRemaining;
         source(3):
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "" ]
+          rightColumns: 2
           computes:
           - type: duplicateColumn
             column: 2
@@ -152,11 +155,12 @@ monitors:
             # MSHW;EstimatedMinutesRemaining;
         source(5):
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "" ]
+          rightColumns: 2
       mapping:
         source: ${source::source(5)}
         attributes:

@@ -285,6 +285,7 @@ monitors:
         networkTempJoin:
           # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns;Interface;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::ipLink}
           rightTable: ${source::sysClassNet}
           leftKeyColumn: 1
@@ -292,6 +293,7 @@ monitors:
         networkAll:
           # Interface;MTU;State;RX_bytes;RX_packets;RX_errors;RX_dropped;RX_missed;RX_mcast;TX_bytes;TX_packets;TX_errors;TX_dropped;TX_carrier;TX_collsns;Interface;Interface;SpeedBytesPerSecond
           type: tableJoin
+          joinType: inner
           leftTable: ${source::networkTempJoin}
           rightTable: ${source::linkSpeed}
           leftKeyColumn: 1

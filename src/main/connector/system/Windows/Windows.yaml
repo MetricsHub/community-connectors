@@ -1112,11 +1112,12 @@ tools:
         query: SELECT ProcessId, Name FROM Win32_Process
       listening:
         type: tableJoin
+        joinType: left
         leftTable: ${source::endpoints}
         rightTable: ${source::processes}
         leftKeyColumn: 4
         rightKeyColumn: 1
-        defaultRightLine: [ "", "" ]
+        rightColumns: 2
         computes:
         - type: keepColumns
           columnNumbers: 1,2,3,4,6

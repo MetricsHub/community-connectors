@@ -334,6 +334,7 @@ monitors:
         # scope;Size;scope;Hits
         table1:
           type: tableJoin
+          joinType: inner
           leftTable: ${source::cacheSize}
           rightTable: ${source::cacheHits}
           leftKeyColumn: 1
@@ -343,6 +344,7 @@ monitors:
         # scope;Size;scope;Hits;scope;Misses
         table2:
           type: tableJoin
+          joinType: inner
           leftTable: ${source::table1}
           rightTable: ${source::cacheMisses}
           leftKeyColumn: 1
@@ -354,6 +356,7 @@ monitors:
         # scope;Size;Hits;Misses;Requests
         cacheMetrics:
           type: tableJoin
+          joinType: inner
           leftTable: ${source::table2}
           rightTable: ${source::cacheRequests}
           leftKeyColumn: 1
@@ -419,6 +422,7 @@ monitors:
         # scope;path;PendingTasks;scope;path;ActiveTasks
         table1:
           type: tableJoin
+          joinType: inner
           leftTable: ${source::pendingTasks}
           rightTable: ${source::activeTasks}
           leftKeyColumn: 1
@@ -428,6 +432,7 @@ monitors:
         # scope;path;PendingTasks;ActiveTasks;CurrentlyBlockedTasks
         threadMetrics:
           type: tableJoin
+          joinType: inner
           leftTable: ${source::table1}
           rightTable: ${source::currentlyBlockedTasks}
           leftKeyColumn: 1

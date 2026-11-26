@@ -84,6 +84,7 @@ monitors:
           # have the PnPDeviceID of the disk instances from MSFT_PhysicalDisk
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 5
@@ -98,6 +99,7 @@ monitors:
           # Source(5) = Join Source(3) and Source(4)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;__PATH_Win32_DiskDrive;__PATH_PnP;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 7
@@ -113,6 +115,7 @@ monitors:
           # Source(7) = jointure of PnPDeviceID  source(3) with Dependant source(4)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Win32_DiskDrive;SerialNumber;PnPDeviceID;__PATH_Win32_DiskDrive;__PATH_PnP;__PATH_Controller;__PATH_DiskPnPDeviceID;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(5)}
           rightTable: ${source::source(6)}
           leftKeyColumn: 11
@@ -134,6 +137,7 @@ monitors:
           # This filters out controllers that don't have disks attached to them)
           # __PATH_Controller;ControllerName;__PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(8)}
           rightTable: ${source::source(7)}
           leftKeyColumn: 1
@@ -155,6 +159,7 @@ monitors:
           # Source(11) = Table join of DiskController.Discovery.Source(7) and DiskController.Discovery.Source(8)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
           type: tableJoin
+          joinType: inner
           continueOnFailure: true
           leftTable: ${source::source(7)}
           rightTable: ${source::source(8)}
@@ -184,11 +189,12 @@ monitors:
           # Source(1) = Table join of DiskController.Discovery.Source(11) with DiskController.Discovery.Source(10)
           # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Controller;DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
           type: tableJoin
+          joinType: left
           leftTable: ${source::monitors.disk_controller.discovery.sources.source(11)}
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(10)}
           leftKeyColumn: 2
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "", "", "", "" ]
+          rightColumns: 6
       mapping:
         # The instance table = Source(1)
         # __PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;__PATH_Controller;DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;
@@ -281,11 +287,12 @@ monitors:
           # Source(3) = Table join of Source(1) and Source(2)
           # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 2
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "", "" ]
+          rightColumns: 4
       mapping:
         # ValueTable = Source(3)
         # __PATH;DeviceId;Status;StatusInformation;OperationalStatus;DeviceId;TotalErrors;EnduranceRemaining;WriteErrors;
@@ -394,6 +401,7 @@ monitors:
           # Source(2) = Table join of Source(1) with PhysicalDisk.Discovery.Source(1)
           # DeviceId;ReadErrors;Wear;WriteErrors;Temperature;TemperatureMax;__PATH_MSFT_DiskDrive;DeviceID;Model;FirmwareVersion;SerialNumber;Size;PnPDeviceID;__PATH_Controller;__PATH_Controller;ControllerName;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(11)}
           leftKeyColumn: 1
@@ -690,11 +698,12 @@ tools:
       table:
         # ObjectId;DeviceId;FriendlyName;SerialNumber;MediaType;BusType;Size;Usage;HealthStatus;OperationalStatus;DeviceId;Temperature;Wear;ReadErrorsTotal;WriteErrorsTotal;PowerOnHours
         type: tableJoin
+        joinType: left
         leftTable: ${source::disks}
         rightTable: ${source::counters}
         leftKeyColumn: 2
         rightKeyColumn: 1
-        defaultRightLine: [ "", "", "", "", "", "" ]
+        rightColumns: 6
         computes:
         # DeviceId without its prefix, size in GB
         - type: awk
@@ -765,11 +774,12 @@ tools:
       jobsElapsed:
         # ObjectId;Name;JobState;PercentComplete;BytesProcessed;BytesTotal;ObjectId;ElapsedTime
         type: tableJoin
+        joinType: left
         leftTable: ${source::jobs}
         rightTable: ${source::elapsed}
         leftKeyColumn: 1
         rightKeyColumn: 1
-        defaultRightLine: [ "", "" ]
+        rightColumns: 2
         computes:
         # The elapsed time comes as seconds over WMI, as an ISO 8601 duration (P1DT2H3M4.5S) over WinRM
         - type: awk
