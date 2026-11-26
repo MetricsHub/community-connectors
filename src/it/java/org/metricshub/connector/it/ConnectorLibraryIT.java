@@ -126,7 +126,8 @@ class ConnectorLibraryIT {
 
 	/** Adds to <code>found</code> the path of each tableJoin source of the node that does not write its joinType. */
 	private static void tableJoinsWithoutJoinType(final JsonNode node, final String where, final List<String> found) {
-		if ("tableJoin".equalsIgnoreCase(node.path("type").asText()) && !node.has("joinType")) {
+		// joinType: with no value is null, and the engine reads null as inner
+		if ("tableJoin".equalsIgnoreCase(node.path("type").asText()) && !node.path("joinType").isTextual()) {
 			found.add(where);
 		}
 		if (node.isArray()) {

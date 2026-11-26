@@ -108,7 +108,7 @@ Write `rightColumns` (or `defaultRightLine`) on every left join, with the number
 
 - `rightColumns` and `defaultRightLine` are for left joins: on an inner join (`joinType: inner` or no `joinType`), the connector does not load. A connector written before `joinType` existed, where a `defaultRightLine` alone meant a left join, fails to load instead of silently running an inner join: add `joinType: left`.
 - Write one of them, not both: the connector does not load.
-- `rightColumns` is an integer, 1 or more; anything else does not load.
+- `rightColumns` is a number, 1 or more: 0, a negative number, a decimal, a text that is not a number, a list or a map does not load. `rightColumns:` with no value is the same as not writing it.
 - A `defaultRightLine` made only of empty cells loads, with a warning in the log that recommends `rightColumns`: `rightColumns: 4` says what `[ "", "", "", "" ]` makes the reader count.
 
 ## Writing `defaultRightLine`
