@@ -331,12 +331,15 @@ monitors:
           db.server.clickhouse.databases: $5
           db.server.storage.size: $6
           db.server.clickhouse.current_operations{db.operation.type="query"}: $7
+          # Native TCP connections remain counted while open; HTTP clients are counted only while a request is running.
+          # The MetricsHub JDBC collection request is therefore included in this total.
           db.server.current_connections: $8
           db.server.clickhouse.memory.usage{db.memory.state="used"}: $9
           db.server.clickhouse.current_operations{db.operation.type="merge"}: $10
           db.server.clickhouse.readonly_replicas: $11
           db.server.clickhouse.current_operations{db.operation.type="replication_fetch"}: $12
           db.server.clickhouse.current_operations{db.operation.type="replication_send"}: $13
+          # Unlabelled series count started queries; state="failed" overlaps them, so dashboards must not sum across db.query.state.
           db.server.queries{db.operation.type="other"}: $14
           db.server.queries{db.operation.type="other",db.query.state="failed"}: $15
           db.server.queries{db.operation.type="select"}: $16
@@ -438,7 +441,7 @@ monitors:
           query: |
             SELECT
               r.database, r.table, r.replica_name,
-              multiIf(r.is_session_expired=1,'failed',r.is_readonly=1 OR (r.last_queue_update_exception!='' AND (r.queue_size>0 OR r.log_pointer<r.log_max_index)) OR r.parts_to_check>0 OR ifNull(q.persistent_failures,0)>0,'degraded','ok'),
+              multiIf(r.is_session_expired=1,'failed',r.is_readonly=1 OR (r.last_queue_update_exception!='' AND r.queue_size>0) OR r.parts_to_check>0 OR ifNull(q.persistent_failures,0)>0,'degraded','ok'),
               r.inserts_in_queue, r.merges_in_queue, r.part_mutations_in_queue,
               greatest(toInt64(r.queue_size)-toInt64(r.inserts_in_queue)-toInt64(r.merges_in_queue)-toInt64(r.part_mutations_in_queue),0),
               r.absolute_delay, r.future_parts, r.parts_to_check,
@@ -451,7 +454,7 @@ monitors:
                 maxIfOrNull(dateDiff('second',create_time,now()),is_currently_executing=0) AS oldest_age,
                 countIf(last_exception!='' AND is_currently_executing=0) AS failed_operations,
                 countIf(last_exception!='' AND is_currently_executing=0 AND num_tries>5) AS persistent_failures,
-                sum(num_tries) AS retry_count,
+                sum(num_tries) - countIf(is_currently_executing=1) AS retry_count,
                 countIf(num_postponed>0 AND is_currently_executing=0) AS postponed_operations,
                 countIf(is_currently_executing=0) AS waiting_operations,
                 countIf(is_currently_executing=1) AS executing_operations,
@@ -499,10 +502,10 @@ monitors:
           type: sql
           query: |
             SELECT name,path,type,
-              if(is_broken,NULL,nullIf(total_space,toUInt64(-1))),
-              if(is_broken,NULL,nullIf(free_space,toUInt64(-1))),
-              if(is_broken,NULL,nullIf(total_space,toUInt64(-1))-nullIf(free_space,toUInt64(-1))),
-              if(is_broken,NULL,nullIf(unreserved_space,toUInt64(-1))),
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(total_space,toUInt64(-1))),
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(free_space,toUInt64(-1))),
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(total_space,toUInt64(-1))-nullIf(free_space,toUInt64(-1))),
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(unreserved_space,toUInt64(-1))),
               keep_free_space, if(is_broken=1,'failed','ok'), is_read_only, is_write_once, is_remote, is_encrypted,
               hostName(), toString(serverUUID())
             FROM system.disks;
