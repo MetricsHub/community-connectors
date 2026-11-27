@@ -1,0 +1,3599 @@
+{
+  "total" : 21,
+  "monitors" : [
+    {
+    "metrics" : {
+      "db.server.io{db.io.direction=\"receive\"}" : {
+        "name" : "db.server.io{db.io.direction=\"receive\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.io.direction" : "receive"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 1018239.0,
+        "previousValue" : 1018239.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"select\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"select\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "select"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 48.110906,
+        "previousValue" : 48.110906,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.operation.type=\"insert\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"insert\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name=\"merges_mutations\"}" : {
+        "name" : "db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name=\"merges_mutations\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.pool.name" : "merges_mutations"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\",db.clickhouse.cache.type=\"uncompressed\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\",db.clickhouse.cache.type=\"uncompressed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "uncompressed",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name=\"replication_fetch\"}" : {
+        "name" : "db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name=\"replication_fetch\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.pool.name" : "replication_fetch"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}" : {
+        "name" : "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert",
+          "db.clickhouse.insert.scope" : "local"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.current_operations{db.operation.type=\"replication_send\"}" : {
+        "name" : "db.server.clickhouse.current_operations{db.operation.type=\"replication_send\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "replication_send"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"replication_fetch_failed\"}" : {
+        "name" : "db.server.errors{error.type=\"replication_fetch_failed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "error.type" : "replication_fetch_failed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}" : {
+        "name" : "db.server.clickhouse.delay_time{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert",
+          "db.clickhouse.insert.scope" : "distributed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\",db.clickhouse.cache.type=\"query_result\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\",db.clickhouse.cache.type=\"query_result\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "query_result",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.connections.limit" : {
+        "name" : "db.server.connections.limit",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 4096.0,
+        "previousValue" : 4096.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.wait_time{db.clickhouse.wait.type=\"io\"}" : {
+        "name" : "db.server.clickhouse.wait_time{db.clickhouse.wait.type=\"io\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.wait.type" : "io"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}" : {
+        "name" : "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert",
+          "db.clickhouse.insert.scope" : "local"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"hit\",db.clickhouse.cache.type=\"uncompressed\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"hit\",db.clickhouse.cache.type=\"uncompressed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "uncompressed",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.uptime" : {
+        "name" : "db.server.uptime",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 569.0,
+        "previousValue" : 569.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.memory.usage{db.memory.state=\"free\"}" : {
+        "name" : "db.server.clickhouse.memory.usage{db.memory.state=\"free\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.memory.state" : "free"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.298256511E9,
+        "previousValue" : 1.298256511E9,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"keeper_hardware\"}" : {
+        "name" : "db.server.errors{error.type=\"keeper_hardware\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "error.type" : "keeper_hardware"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.query.io{db.io.direction=\"write\"}" : {
+        "name" : "db.server.clickhouse.query.io{db.io.direction=\"write\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.io.direction" : "write"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 3.3205575E7,
+        "previousValue" : 3.3205575E7,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.operation.type=\"insert\",db.query.state=\"failed\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"insert\",db.query.state=\"failed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert",
+          "db.query.state" : "failed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.databases" : {
+        "name" : "db.server.clickhouse.databases",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.operation.type=\"other\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"other\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "other"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.keeper.sessions" : {
+        "name" : "db.server.clickhouse.keeper.sessions",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.operation.type=\"select\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"select\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "select"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 366.0,
+        "previousValue" : 366.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.current_operations.limit{db.operation.type=\"query\"}" : {
+        "name" : "db.server.clickhouse.current_operations.limit{db.operation.type=\"query\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "query"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1000.0,
+        "previousValue" : 1000.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.keeper.requests" : {
+        "name" : "db.server.clickhouse.keeper.requests",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cpu.time{cpu.mode=\"user\"}" : {
+        "name" : "db.server.cpu.time{cpu.mode=\"user\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "cpu.mode" : "user"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 137.811929,
+        "previousValue" : 137.811929,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.merges_mutations.memory.usage" : {
+        "name" : "db.server.clickhouse.merges_mutations.memory.usage",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 3.3367216E7,
+        "previousValue" : 3.3367216E7,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.current_operations{db.operation.type=\"merge\"}" : {
+        "name" : "db.server.clickhouse.current_operations{db.operation.type=\"merge\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "merge"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"used\",db.clickhouse.cache.type=\"uncompressed\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"used\",db.clickhouse.cache.type=\"uncompressed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "uncompressed",
+          "db.cache.state" : "used"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}" : {
+        "name" : "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"local\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert",
+          "db.clickhouse.insert.scope" : "local"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"insert\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"insert\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.row_operation.type" : "insert"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 402158.0,
+        "previousValue" : 402158.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"used\",db.clickhouse.cache.type=\"mark\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"used\",db.clickhouse.cache.type=\"mark\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "mark",
+          "db.cache.state" : "used"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"hit\",db.clickhouse.cache.type=\"query_result\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"hit\",db.clickhouse.cache.type=\"query_result\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "query_result",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.row_operations{db.row_operation.type=\"read\"}" : {
+        "name" : "db.server.row_operations{db.row_operation.type=\"read\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.row_operation.type" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 505216.0,
+        "previousValue" : 505216.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.query.io{db.io.direction=\"read\"}" : {
+        "name" : "db.server.clickhouse.query.io{db.io.direction=\"read\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.io.direction" : "read"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 5.1146077E7,
+        "previousValue" : 5.1146077E7,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name=\"merges_mutations\"}" : {
+        "name" : "db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name=\"merges_mutations\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.pool.name" : "merges_mutations"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 8.0,
+        "previousValue" : 8.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.current_connections" : {
+        "name" : "db.server.current_connections",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 3.0,
+        "previousValue" : 3.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"other\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"other\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "other"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"hit\",db.clickhouse.cache.type=\"mark\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"hit\",db.clickhouse.cache.type=\"mark\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "mark",
+          "db.cache.state" : "hit"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"insert\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"insert\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 2.018913,
+        "previousValue" : 2.018913,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.wait_time{db.clickhouse.wait.type=\"keeper\"}" : {
+        "name" : "db.server.clickhouse.wait_time{db.clickhouse.wait.type=\"keeper\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.wait.type" : "keeper"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 3.532901,
+        "previousValue" : 3.532901,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.operation.type=\"other\",db.query.state=\"failed\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"other\",db.query.state=\"failed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "other",
+          "db.query.state" : "failed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.usage{db.cache.state=\"used\",db.clickhouse.cache.type=\"query_result\"}" : {
+        "name" : "db.server.cache.usage{db.cache.state=\"used\",db.clickhouse.cache.type=\"query_result\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "query_result",
+          "db.cache.state" : "used"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name=\"distributed_send\"}" : {
+        "name" : "db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name=\"distributed_send\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.pool.name" : "distributed_send"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 16.0,
+        "previousValue" : 16.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.async_insert.queue.tasks" : {
+        "name" : "db.server.clickhouse.async_insert.queue.tasks",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cpu.time{cpu.mode=\"system\"}" : {
+        "name" : "db.server.cpu.time{cpu.mode=\"system\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "cpu.mode" : "system"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 62.370492,
+        "previousValue" : 62.370492,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.cache.operations{db.cache.state=\"miss\",db.clickhouse.cache.type=\"mark\"}" : {
+        "name" : "db.server.cache.operations{db.cache.state=\"miss\",db.clickhouse.cache.type=\"mark\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.cache.type" : "mark",
+          "db.cache.state" : "miss"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.async_insert.queue.bytes" : {
+        "name" : "db.server.clickhouse.async_insert.queue.bytes",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name=\"distributed_send\"}" : {
+        "name" : "db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name=\"distributed_send\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.pool.name" : "distributed_send"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"keeper_other\"}" : {
+        "name" : "db.server.errors{error.type=\"keeper_other\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "error.type" : "keeper_other"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.memory.limit" : {
+        "name" : "db.server.clickhouse.memory.limit",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.610612736E9,
+        "previousValue" : 1.610612736E9,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name=\"replication_fetch\"}" : {
+        "name" : "db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name=\"replication_fetch\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.pool.name" : "replication_fetch"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 16.0,
+        "previousValue" : 16.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}" : {
+        "name" : "db.server.clickhouse.delayed_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert",
+          "db.clickhouse.insert.scope" : "distributed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.wait_time{db.clickhouse.wait.type=\"cpu\"}" : {
+        "name" : "db.server.clickhouse.wait_time{db.clickhouse.wait.type=\"cpu\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.wait.type" : "cpu"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 157.112546,
+        "previousValue" : 157.112546,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.size" : {
+        "name" : "db.server.storage.size",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 9.6962329E7,
+        "previousValue" : 9.6962329E7,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"distributed_connection_failed\"}" : {
+        "name" : "db.server.errors{error.type=\"distributed_connection_failed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "error.type" : "distributed_connection_failed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.queries{db.operation.type=\"select\",db.query.state=\"failed\"}" : {
+        "name" : "db.server.queries{db.operation.type=\"select\",db.query.state=\"failed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "select",
+          "db.query.state" : "failed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.current_operations{db.operation.type=\"query\"}" : {
+        "name" : "db.server.clickhouse.current_operations{db.operation.type=\"query\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "query"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}" : {
+        "name" : "db.server.clickhouse.rejected_operations{db.operation.type=\"insert\",db.clickhouse.insert.scope=\"distributed\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "insert",
+          "db.clickhouse.insert.scope" : "distributed"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.readonly_replicas" : {
+        "name" : "db.server.clickhouse.readonly_replicas",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.errors{error.type=\"replication_data_loss\"}" : {
+        "name" : "db.server.errors{error.type=\"replication_data_loss\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "error.type" : "replication_data_loss"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.memory.usage{db.memory.state=\"used\"}" : {
+        "name" : "db.server.clickhouse.memory.usage{db.memory.state=\"used\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.memory.state" : "used"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 3.12356225E8,
+        "previousValue" : 3.12356225E8,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.files{db.file.state=\"open\"}" : {
+        "name" : "db.server.storage.files{db.file.state=\"open\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.file.state" : "open"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 47.0,
+        "previousValue" : 47.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.operation_time{db.operation.type=\"merge\"}" : {
+        "name" : "db.server.operation_time{db.operation.type=\"merge\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "merge"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 6515.881,
+        "previousValue" : 6515.881,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.current_operations{db.operation.type=\"replication_fetch\"}" : {
+        "name" : "db.server.clickhouse.current_operations{db.operation.type=\"replication_fetch\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "replication_fetch"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.io{db.io.direction=\"transmit\"}" : {
+        "name" : "db.server.io{db.io.direction=\"transmit\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.io.direction" : "transmit"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Counter",
+        "value" : 982303.0,
+        "previousValue" : 982303.0,
+        "rate" : 0.0,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.version" : "26.9.27.3",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse",
+    "id" : "ClickHouse_clickhouse_clickhouse",
+    "identifyingAttributeKeys" : [ "db.system.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.cluster.replica.recovery_time" : {
+        "name" : "db.server.clickhouse.cluster.replica.recovery_time",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.cluster.replica.status" : {
+        "name" : "db.server.clickhouse.cluster.replica.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.cluster.replica.slowdown_score" : {
+        "name" : "db.server.clickhouse.cluster.replica.slowdown_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.cluster.replica.error_score" : {
+        "name" : "db.server.clickhouse.cluster.replica.error_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "server.address" : "clickhouse-02",
+      "network.peer.address" : "172.20.0.2",
+      "db.clickhouse.cluster.shard.number" : "1",
+      "server.port" : "9000",
+      "connector_id" : "ClickHouse",
+      "db.clickhouse.cluster.name" : "replication_lab",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.cluster.replica.number" : "2",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.clickhouse.cluster.internal_replication" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_cluster_replica",
+    "id" : "ClickHouse_clickhouse_cluster_replica_replication_lab_1_clickhouse-02_9000",
+    "identifyingAttributeKeys" : [ "db.clickhouse.cluster.name", "db.clickhouse.cluster.shard.number", "server.address", "server.port" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.cluster.replica.recovery_time" : {
+        "name" : "db.server.clickhouse.cluster.replica.recovery_time",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 30.0,
+        "previousValue" : 30.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.cluster.replica.status" : {
+        "name" : "db.server.clickhouse.cluster.replica.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "degraded",
+        "previousValue" : "degraded",
+        "stateSet" : [ "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.cluster.replica.slowdown_score" : {
+        "name" : "db.server.clickhouse.cluster.replica.slowdown_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.cluster.replica.error_score" : {
+        "name" : "db.server.clickhouse.cluster.replica.error_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "server.address" : "clickhouse-02",
+      "network.peer.address" : "172.20.0.2",
+      "db.clickhouse.cluster.shard.number" : "2",
+      "server.port" : "9000",
+      "connector_id" : "ClickHouse",
+      "db.clickhouse.cluster.name" : "sharding_lab",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.cluster.replica.number" : "1",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.clickhouse.cluster.internal_replication" : "0"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_cluster_replica",
+    "id" : "ClickHouse_clickhouse_cluster_replica_sharding_lab_2_clickhouse-02_9000",
+    "identifyingAttributeKeys" : [ "db.clickhouse.cluster.name", "db.clickhouse.cluster.shard.number", "server.address", "server.port" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.data.size" : {
+        "name" : "db.server.clickhouse.data.size",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.tables" : {
+        "name" : "db.server.tables",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.clickhouse.database.engine" : "Atomic",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "default"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_database",
+    "id" : "ClickHouse_clickhouse_database_default",
+    "identifyingAttributeKeys" : [ "db.namespace" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.data.size" : {
+        "name" : "db.server.clickhouse.data.size",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 3961.0,
+        "previousValue" : 3961.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.tables" : {
+        "name" : "db.server.tables",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 9.0,
+        "previousValue" : 9.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.clickhouse.database.engine" : "Atomic",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_database",
+    "id" : "ClickHouse_clickhouse_database_lab",
+    "identifyingAttributeKeys" : [ "db.namespace" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.disk.keep_free" : {
+        "name" : "db.server.clickhouse.disk.keep_free",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.encrypted" : {
+        "name" : "db.server.storage.encrypted",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.status" : {
+        "name" : "db.server.storage.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.clickhouse.disk.read_only" : "1",
+      "db.clickhouse.disk.path" : "/var/lib/clickhouse/broken/",
+      "db.server.storage.id" : "broken",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.server.storage.type" : "Local",
+      "db.clickhouse.disk.remote" : "0",
+      "db.clickhouse.disk.write_once" : "0"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_disk",
+    "id" : "ClickHouse_clickhouse_disk_broken",
+    "identifyingAttributeKeys" : [ "db.server.storage.id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.disk.keep_free" : {
+        "name" : "db.server.clickhouse.disk.keep_free",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.encrypted" : {
+        "name" : "db.server.storage.encrypted",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.limit" : {
+        "name" : "db.server.storage.limit",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.081101176832E12,
+        "previousValue" : 1.081101176832E12,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.status" : {
+        "name" : "db.server.storage.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.storage.usage{db.storage.state=\"used\"}" : {
+        "name" : "db.server.storage.usage{db.storage.state=\"used\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.storage.state" : "used"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 6.4678146048E10,
+        "previousValue" : 6.4678146048E10,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.disk.unreserved" : {
+        "name" : "db.server.clickhouse.disk.unreserved",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.016422157758E12,
+        "previousValue" : 1.016422157758E12,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.storage.usage{db.storage.state=\"free\"}" : {
+        "name" : "db.server.storage.usage{db.storage.state=\"free\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.storage.state" : "free"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.016423030784E12,
+        "previousValue" : 1.016423030784E12,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.clickhouse.disk.read_only" : "0",
+      "db.clickhouse.disk.path" : "/var/lib/clickhouse/",
+      "db.server.storage.id" : "default",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.server.storage.type" : "Local",
+      "db.clickhouse.disk.remote" : "0",
+      "db.clickhouse.disk.write_once" : "0"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_disk",
+    "id" : "ClickHouse_clickhouse_disk_default",
+    "identifyingAttributeKeys" : [ "db.server.storage.id" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.parts.per_partition.max" : {
+        "name" : "db.server.clickhouse.parts.per_partition.max",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.pending_operations{db.operation.type=\"mutation\"}" : {
+        "name" : "db.server.pending_operations{db.operation.type=\"mutation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "mutation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.parts" : {
+        "name" : "db.server.clickhouse.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.rows" : {
+        "name" : "db.server.clickhouse.rows",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 100.0,
+        "previousValue" : 100.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.parts" : {
+        "name" : "db.server.clickhouse.mutation.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.status" : {
+        "name" : "db.server.clickhouse.mutation.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.storage.size" : {
+        "name" : "db.server.storage.size",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1972.0,
+        "previousValue" : 1972.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.age" : {
+        "name" : "db.server.clickhouse.mutation.age",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 240.0,
+        "previousValue" : 240.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "mh_mutation_test",
+      "db.clickhouse.table.engine" : "MergeTree",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "failed",
+      "db.server.clickhouse.distributed.queue.status" : ""
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_mh_mutation_test_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "blocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.error_score" : {
+        "name" : "db.server.clickhouse.distributed.queue.error_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.status" : {
+        "name" : "db.server.clickhouse.distributed.queue.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "unblocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "mh_queue_all",
+      "db.clickhouse.table.engine" : "Distributed",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "",
+      "db.server.clickhouse.distributed.queue.status" : "ok"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_mh_queue_all_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "blocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.error_score" : {
+        "name" : "db.server.clickhouse.distributed.queue.error_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 128.0,
+        "previousValue" : 128.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.status" : {
+        "name" : "db.server.clickhouse.distributed.queue.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "degraded",
+        "previousValue" : "degraded",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "unblocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "mh_queue_blocked",
+      "db.clickhouse.table.engine" : "Distributed",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "",
+      "db.server.clickhouse.distributed.queue.status" : "degraded"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_mh_queue_blocked_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "blocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 128.0,
+        "previousValue" : 128.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.error_score" : {
+        "name" : "db.server.clickhouse.distributed.queue.error_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.status" : {
+        "name" : "db.server.clickhouse.distributed.queue.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "unblocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "mh_queue_broken",
+      "db.clickhouse.table.engine" : "Distributed",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "",
+      "db.server.clickhouse.distributed.queue.status" : "failed"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_mh_queue_broken_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "blocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.error_score" : {
+        "name" : "db.server.clickhouse.distributed.queue.error_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 128.0,
+        "previousValue" : 128.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.status" : {
+        "name" : "db.server.clickhouse.distributed.queue.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "degraded",
+        "previousValue" : "degraded",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "unblocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.last_exception_age" : {
+        "name" : "db.server.clickhouse.distributed.queue.last_exception_age",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 30.0,
+        "previousValue" : 30.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "mh_queue_error",
+      "db.clickhouse.table.engine" : "Distributed",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "",
+      "db.server.clickhouse.distributed.queue.status" : "degraded"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_mh_queue_error_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.parts.per_partition.max" : {
+        "name" : "db.server.clickhouse.parts.per_partition.max",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.pending_operations{db.operation.type=\"mutation\"}" : {
+        "name" : "db.server.pending_operations{db.operation.type=\"mutation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "mutation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.parts" : {
+        "name" : "db.server.clickhouse.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.rows" : {
+        "name" : "db.server.clickhouse.rows",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 50.0,
+        "previousValue" : 50.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.parts" : {
+        "name" : "db.server.clickhouse.mutation.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.status" : {
+        "name" : "db.server.clickhouse.mutation.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.storage.size" : {
+        "name" : "db.server.storage.size",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1335.0,
+        "previousValue" : 1335.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "mh_queue_local",
+      "db.clickhouse.table.engine" : "MergeTree",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "ok",
+      "db.server.clickhouse.distributed.queue.status" : ""
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_mh_queue_local_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.parts.per_partition.max" : {
+        "name" : "db.server.clickhouse.parts.per_partition.max",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.pending_operations{db.operation.type=\"mutation\"}" : {
+        "name" : "db.server.pending_operations{db.operation.type=\"mutation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "mutation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.parts" : {
+        "name" : "db.server.clickhouse.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.rows" : {
+        "name" : "db.server.clickhouse.rows",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 2.0,
+        "previousValue" : 2.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.parts" : {
+        "name" : "db.server.clickhouse.mutation.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.status" : {
+        "name" : "db.server.clickhouse.mutation.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.storage.size" : {
+        "name" : "db.server.storage.size",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 765.0,
+        "previousValue" : 765.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "replicated_events",
+      "db.clickhouse.table.engine" : "ReplicatedMergeTree",
+      "db.clickhouse.replica.zookeeper_path" : "/clickhouse/tables/lab/replicated_events",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "ok",
+      "db.server.clickhouse.distributed.queue.status" : ""
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_replicated_events_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"blocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "blocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.error_score" : {
+        "name" : "db.server.clickhouse.distributed.queue.error_score",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state=\"broken\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "broken"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state=\"pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.status" : {
+        "name" : "db.server.clickhouse.distributed.queue.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}" : {
+        "name" : "db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state=\"unblocked\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.distributed.queue.state" : "unblocked"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "shard_events_all",
+      "db.clickhouse.table.engine" : "Distributed",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "",
+      "db.server.clickhouse.distributed.queue.status" : "ok"
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_shard_events_all_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.parts.per_partition.max" : {
+        "name" : "db.server.clickhouse.parts.per_partition.max",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.pending_operations{db.operation.type=\"mutation\"}" : {
+        "name" : "db.server.pending_operations{db.operation.type=\"mutation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.operation.type" : "mutation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.parts" : {
+        "name" : "db.server.clickhouse.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.rows" : {
+        "name" : "db.server.clickhouse.rows",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 10.0,
+        "previousValue" : 10.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.parts" : {
+        "name" : "db.server.clickhouse.mutation.parts",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.mutation.status" : {
+        "name" : "db.server.clickhouse.mutation.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.storage.size" : {
+        "name" : "db.server.storage.size",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 964.0,
+        "previousValue" : 964.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "shard_events_local",
+      "db.clickhouse.table.engine" : "MergeTree",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.namespace" : "lab"
+    },
+    "conditionalCollection" : {
+      "db.server.clickhouse.mutation.status" : "ok",
+      "db.server.clickhouse.distributed.queue.status" : ""
+    },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table",
+    "id" : "ClickHouse_clickhouse_table_shard_events_local_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"verification_pending\"}" : {
+        "name" : "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"verification_pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.part.state" : "verification_pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.retries" : {
+        "name" : "db.server.clickhouse.replication.queue.retries",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"executing\"}" : {
+        "name" : "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"executing\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.queue.state" : "executing"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"other\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"other\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "other"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replica.leader" : {
+        "name" : "db.server.clickhouse.replica.leader",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"fetch\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"fetch\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "fetch"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.failed" : {
+        "name" : "db.server.clickhouse.replication.queue.failed",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.lag.time" : {
+        "name" : "db.server.clickhouse.replication.lag.time",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.postponed" : {
+        "name" : "db.server.clickhouse.replication.queue.postponed",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"waiting\"}" : {
+        "name" : "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"waiting\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.queue.state" : "waiting"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replica.status" : {
+        "name" : "db.server.clickhouse.replica.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "degraded",
+        "previousValue" : "degraded",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"future\"}" : {
+        "name" : "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"future\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.part.state" : "future"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"merge\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"merge\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "merge"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"mutation\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"mutation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "mutation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "metrics_local",
+      "db.clickhouse.replica.zookeeper_path" : "/clickhouse/tables/lab/metrics_local",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.clickhouse.replica.name" : "clickhouse-01",
+      "db.namespace" : "lab",
+      "db.clickhouse.replica.can_become_leader" : "0"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table_replica",
+    "id" : "ClickHouse_clickhouse_table_replica_metrics_local_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"verification_pending\"}" : {
+        "name" : "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"verification_pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.part.state" : "verification_pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.retries" : {
+        "name" : "db.server.clickhouse.replication.queue.retries",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"executing\"}" : {
+        "name" : "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"executing\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.queue.state" : "executing"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"other\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"other\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "other"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replica.leader" : {
+        "name" : "db.server.clickhouse.replica.leader",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"fetch\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"fetch\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "fetch"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.failed" : {
+        "name" : "db.server.clickhouse.replication.queue.failed",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.lag.time" : {
+        "name" : "db.server.clickhouse.replication.lag.time",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.postponed" : {
+        "name" : "db.server.clickhouse.replication.queue.postponed",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"waiting\"}" : {
+        "name" : "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"waiting\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.queue.state" : "waiting"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replica.status" : {
+        "name" : "db.server.clickhouse.replica.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "failed",
+        "previousValue" : "failed",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"future\"}" : {
+        "name" : "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"future\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.part.state" : "future"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"merge\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"merge\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "merge"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"mutation\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"mutation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "mutation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "orders_local",
+      "db.clickhouse.replica.zookeeper_path" : "/clickhouse/tables/lab/orders_local",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.clickhouse.replica.name" : "clickhouse-01",
+      "db.namespace" : "lab",
+      "db.clickhouse.replica.can_become_leader" : "0"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table_replica",
+    "id" : "ClickHouse_clickhouse_table_replica_orders_local_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"verification_pending\"}" : {
+        "name" : "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"verification_pending\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.part.state" : "verification_pending"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.retries" : {
+        "name" : "db.server.clickhouse.replication.queue.retries",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"executing\"}" : {
+        "name" : "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"executing\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.queue.state" : "executing"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"other\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"other\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "other"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replica.leader" : {
+        "name" : "db.server.clickhouse.replica.leader",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"fetch\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"fetch\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "fetch"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.failed" : {
+        "name" : "db.server.clickhouse.replication.queue.failed",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.lag.time" : {
+        "name" : "db.server.clickhouse.replication.lag.time",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.postponed" : {
+        "name" : "db.server.clickhouse.replication.queue.postponed",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"waiting\"}" : {
+        "name" : "db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state=\"waiting\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.queue.state" : "waiting"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replica.status" : {
+        "name" : "db.server.clickhouse.replica.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "failed", "ok", "degraded" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"future\"}" : {
+        "name" : "db.server.clickhouse.replication.parts{db.clickhouse.part.state=\"future\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.part.state" : "future"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"merge\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"merge\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "merge"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"mutation\"}" : {
+        "name" : "db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation=\"mutation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "db.clickhouse.replication.operation" : "mutation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.0,
+        "previousValue" : 0.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "db.collection.name" : "replicated_events",
+      "db.clickhouse.replica.zookeeper_path" : "/clickhouse/tables/lab/replicated_events",
+      "connector_id" : "ClickHouse",
+      "db.system.name" : "clickhouse",
+      "db.clickhouse.server.uuid" : "d1965f14-b794-4177-beb8-3f5822d8e91b",
+      "db.server.name" : "clickhouse-01",
+      "db.clickhouse.replica.name" : "clickhouse-01",
+      "db.namespace" : "lab",
+      "db.clickhouse.replica.can_become_leader" : "1"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "clickhouse_table_replica",
+    "id" : "ClickHouse_clickhouse_table_replica_replicated_events_lab",
+    "identifyingAttributeKeys" : [ "db.namespace", "db.collection.name" ],
+    "connector" : false,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "metricshub.connector.status" : {
+        "name" : "metricshub.connector.status",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : null,
+        "value" : "ok",
+        "previousValue" : "ok",
+        "stateSet" : [ "ok", "failed" ],
+        "type" : "StateSetMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "filename" : "ClickHouse.yaml",
+      "name" : "ClickHouse",
+      "connector_id" : "ClickHouse",
+      "applies_to_os" : "linux,windows",
+      "parent.id" : "localhost",
+      "id" : "ClickHouse"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : {
+      "StatusInformation" : "Executed SqlCriterion Criterion:\n- Query SELECT count() AS is_clickhouse FROM system.build_options WHERE name = 'VERSION_FULL' AND value LIKE 'ClickHouse %';\n- ExpectedResult: 1\n- ErrorMessage: Not a ClickHouse Server.\n\nResult:\n1;\n\nMessage:\n====================================\nHostname localhost - SQL test succeeded. Returned result: 1;.\n====================================\n\nConclusion:\nTest on localhost SUCCEEDED"
+    },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501019,
+    "type" : "connector",
+    "id" : "connector_ClickHouse",
+    "identifyingAttributeKeys" : [ "id" ],
+    "connector" : true,
+    "endpointHost" : false,
+    "endpoint" : false,
+    "is_endpoint" : false
+  },
+    {
+    "metrics" : {
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_database\", connector_id=\"ClickHouse\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_database\", connector_id=\"ClickHouse\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "ClickHouse",
+          "monitor.type" : "clickhouse_database"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : 0.024,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse\", connector_id=\"ClickHouse\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse\", connector_id=\"ClickHouse\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "ClickHouse",
+          "monitor.type" : "clickhouse"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.005,
+        "previousValue" : 0.026,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_cluster_replica\", connector_id=\"ClickHouse\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_cluster_replica\", connector_id=\"ClickHouse\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "ClickHouse",
+          "monitor.type" : "clickhouse_cluster_replica"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.002,
+        "previousValue" : 0.024,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_disk\", connector_id=\"ClickHouse\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_disk\", connector_id=\"ClickHouse\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "ClickHouse",
+          "monitor.type" : "clickhouse_disk"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : 0.024,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.up{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.up{protocol=\"emulation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.configured" : {
+        "name" : "metricshub.host.configured",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : 1.0,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.response_time{protocol=\"emulation\"}" : {
+        "name" : "metricshub.host.response_time{protocol=\"emulation\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : null,
+        "attributes" : {
+          "protocol" : "emulation"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.host.observed" : {
+        "name" : "metricshub.host.observed",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : null,
+        "attributes" : { },
+        "resetMetricTime" : false,
+        "metricType" : "UpDownCounter",
+        "value" : 1.0,
+        "previousValue" : null,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"ClickHouse\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"connector\", connector_id=\"ClickHouse\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "ClickHouse",
+          "monitor.type" : "connector"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.003,
+        "previousValue" : 0.002,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_table_replica\", connector_id=\"ClickHouse\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_table_replica\", connector_id=\"ClickHouse\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "ClickHouse",
+          "monitor.type" : "clickhouse_table_replica"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.005,
+        "previousValue" : 0.026,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      },
+      "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_table\", connector_id=\"ClickHouse\"}" : {
+        "name" : "metricshub.job.duration{job.type=\"simple\", monitor.type=\"clickhouse_table\", connector_id=\"ClickHouse\"}",
+        "collectTime" : 1793875501376,
+        "previousCollectTime" : 1793875501019,
+        "attributes" : {
+          "job.type" : "simple",
+          "connector_id" : "ClickHouse",
+          "monitor.type" : "clickhouse_table"
+        },
+        "resetMetricTime" : false,
+        "metricType" : "Gauge",
+        "value" : 0.009,
+        "previousValue" : 0.031,
+        "rate" : null,
+        "type" : "NumberMetric",
+        "updated" : true
+      }
+    },
+    "attributes" : {
+      "os.type" : "linux",
+      "host.name" : "localhost",
+      "host.type" : "compute"
+    },
+    "conditionalCollection" : { },
+    "legacyTextParameters" : { },
+    "alertRules" : { },
+    "discoveryTime" : 1793875501376,
+    "type" : "host",
+    "id" : "endpoint_host_localhost",
+    "identifyingAttributeKeys" : [ "host.name" ],
+    "connector" : false,
+    "endpointHost" : true,
+    "endpoint" : true,
+    "is_endpoint" : true
+  }
+  ]
+}

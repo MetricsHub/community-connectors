@@ -1,0 +1,655 @@
+extends:
+- ../../semconv/Database
+
+# Required privileges:
+# GRANT SELECT ON system.build_options, SELECT ON system.metrics, SELECT ON system.events,
+#   SELECT ON system.asynchronous_metrics, SELECT ON system.server_settings, SELECT ON system.databases,
+#   SELECT ON system.tables, SELECT ON system.parts, SELECT ON system.replicas,
+#   SELECT ON system.replication_queue, SELECT ON system.disks, SELECT ON system.mutations,
+#   SELECT ON system.distribution_queue, SELECT ON system.clusters TO metricshub;
+# GRANT SHOW DATABASES, SHOW TABLES ON *.* TO metricshub;
+# Use readonly=2 rather than readonly=1 if the JDBC connection is configured read-only: the driver may send settings.
+connector:
+  displayName: ClickHouse
+  platforms: ClickHouse
+  reliesOn: ClickHouse Server version 25.8 or higher
+  information: Monitors performance and operational metrics for a ClickHouse database. Configure one resource per directly addressed ClickHouse node, not a load balancer or ClickHouse Cloud service endpoint. For HTTPS, set the JDBC URL explicitly (for example, jdbc:clickhouse:https://host:8443/default).
+  detection:
+    connectionTypes: [ remote, local ]
+    appliesTo: [ windows, linux ]
+    criteria:
+    - type: sql
+      query: SELECT count() AS is_clickhouse FROM system.build_options WHERE name = 'VERSION_FULL' AND value LIKE 'ClickHouse %';
+      expectedResult: 1
+      errorMessage: Not a ClickHouse Server.
+    tags: [ windows, linux, database ]
+
+metrics:
+  db.server.clickhouse.databases:
+    description: The number of non-system databases on the ClickHouse server.
+    type: Gauge
+    unit: "{database}"
+  db.server.clickhouse.current_operations:
+    description: The number of operations currently executing on the ClickHouse server, by operation type.
+    type: UpDownCounter
+    unit: "{operation}"
+  db.server.clickhouse.current_operations.limit:
+    description: The configured maximum number of concurrently executing queries. No value is exported when queries are unlimited.
+    type: Gauge
+    unit: "{operation}"
+  db.server.clickhouse.memory.usage:
+    description: The memory tracked by the ClickHouse server, by state (used or free up to the effective limit).
+    type: Gauge
+    unit: By
+  db.server.clickhouse.memory.limit:
+    description: The effective memory hard limit, capped by max_server_memory_usage_to_ram_ratio times available memory and dynamically adjustable by ClickHouse.
+    type: Gauge
+    unit: By
+  db.server.clickhouse.merges_mutations.memory.usage:
+    description: The tracked memory used by background merges and mutations. This is a subset of server used memory.
+    type: Gauge
+    unit: By
+  db.server.clickhouse.readonly_replicas:
+    description: The number of replicated tables currently in read-only state.
+    type: Gauge
+    unit: "{replica}"
+  db.server.clickhouse.query.io:
+    description: The amount of uncompressed data read from or written to tables by queries.
+    type: Counter
+    unit: By
+  db.server.clickhouse.data.size:
+    description: The logical uncompressed size of active ClickHouse data parts.
+    type: Gauge
+    unit: By
+  db.server.clickhouse.rows:
+    description: The number of rows in active ClickHouse data parts.
+    type: Gauge
+    unit: "{row}"
+  db.server.clickhouse.parts:
+    description: The number of active ClickHouse data parts.
+    type: Gauge
+    unit: "{part}"
+  db.server.clickhouse.delayed_operations:
+    description: The number of operations delayed by an internal resource threshold.
+    type: Counter
+    unit: "{operation}"
+  db.server.clickhouse.rejected_operations:
+    description: The number of operations rejected by an internal resource threshold.
+    type: Counter
+    unit: "{operation}"
+  db.server.clickhouse.delay_time:
+    description: The total time operations spent delayed by an internal resource threshold.
+    type: Counter
+    unit: s
+  db.server.clickhouse.wait_time:
+    description: The total time processing threads spent waiting for an operating-system resource or Keeper response.
+    type: Counter
+    unit: s
+  db.server.clickhouse.background_pool.tasks:
+    description: The number of active tasks in a ClickHouse background pool.
+    type: Gauge
+    unit: "{task}"
+  db.server.clickhouse.background_pool.tasks.limit:
+    description: The maximum number of simultaneous tasks in a ClickHouse background pool.
+    type: Gauge
+    unit: "{task}"
+  db.server.clickhouse.async_insert.queue.tasks:
+    description: The number of pending asynchronous-insert tasks.
+    type: Gauge
+    unit: "{task}"
+  db.server.clickhouse.async_insert.queue.bytes:
+    description: The amount of data pending in the asynchronous-insert queue.
+    type: Gauge
+    unit: By
+  db.server.clickhouse.keeper.sessions:
+    description: The number of client sessions connected to Keeper or ZooKeeper.
+    type: Gauge
+    unit: "{session}"
+  db.server.clickhouse.keeper.requests:
+    description: The number of requests currently in flight to Keeper or ZooKeeper.
+    type: Gauge
+    unit: "{request}"
+  db.server.clickhouse.parts.per_partition.max:
+    description: The largest number of active parts in any partition of a table.
+    type: Gauge
+    unit: "{part}"
+  db.server.clickhouse.disk.unreserved:
+    description: The disk capacity available after accounting for reservations.
+    type: Gauge
+    unit: By
+  db.server.clickhouse.disk.keep_free:
+    description: The configured amount of disk space ClickHouse must keep free.
+    type: Gauge
+    unit: By
+  db.server.clickhouse.replica.status:
+    description: The local health state of a replicated table. Peer availability is not folded into this status.
+    type:
+      stateSet: [ ok, degraded, failed ]
+  db.server.clickhouse.replica.leader:
+    description: Whether the replica is currently a leader (1) or not (0). Several replicas can be leaders.
+    type: Gauge
+  db.server.clickhouse.replication.queue:
+    description: The number of replication-queue operations, partitioned by execution state.
+    type: Gauge
+    unit: "{operation}"
+  db.server.clickhouse.replication.queue.entries:
+    description: The number of replication-queue operations, partitioned by operation type.
+    type: Gauge
+    unit: "{operation}"
+  db.server.clickhouse.replication.queue.failed:
+    description: The number of waiting operations whose most recent attempt failed.
+    type: Gauge
+    unit: "{operation}"
+  db.server.clickhouse.replication.queue.postponed:
+    description: The number of waiting operations postponed at least once.
+    type: Gauge
+    unit: "{operation}"
+  db.server.clickhouse.replication.lag.time:
+    description: The replication lag of a replicated table, in seconds.
+    type: Gauge
+    unit: s
+  db.server.clickhouse.replication.parts:
+    description: The number of parts associated with pending replication work, by state.
+    type: Gauge
+    unit: "{part}"
+  db.server.clickhouse.replication.queue.oldest_age:
+    description: The age of the oldest waiting replication operation.
+    type: Gauge
+    unit: s
+  db.server.clickhouse.replication.queue.retries:
+    description: Failed execution attempts for queued operations.
+    type: Gauge
+    unit: "{attempt}"
+  db.server.clickhouse.replication.queue.last_attempt_age:
+    description: The longest time since any waiting operation was last attempted.
+    type: Gauge
+    unit: s
+  db.server.clickhouse.replication.queue.last_postpone_age:
+    description: The longest time since any waiting operation was last postponed.
+    type: Gauge
+    unit: s
+  db.server.clickhouse.mutation.status:
+    description: The aggregate health state of unfinished mutations for a table.
+    type:
+      stateSet: [ ok, failed ]
+  db.server.clickhouse.mutation.parts:
+    description: The data parts remaining across unfinished mutations for a table.
+    type: Gauge
+    unit: "{part}"
+  db.server.clickhouse.mutation.age:
+    description: The age of the oldest unfinished mutation for a table.
+    type: Gauge
+    unit: s
+  db.server.clickhouse.distributed.queue.status:
+    description: The Distributed-table insert queue state. Failure due to broken files remains until the queue is recreated.
+    type:
+      stateSet: [ ok, degraded, failed ]
+  db.server.clickhouse.distributed.queue.files:
+    description: The number of files in Distributed-table insert queues.
+    type: Gauge
+    unit: "{file}"
+  db.server.clickhouse.distributed.queue.bytes:
+    description: The compressed data size in Distributed-table insert queues.
+    type: Gauge
+    unit: By
+  db.server.clickhouse.distributed.queue.error_score:
+    description: The retry back-off error score, incremented on failed sends and halved periodically after recovery.
+    type: Gauge
+    unit: "{error}"
+  db.server.clickhouse.distributed.queue.destinations:
+    description: The destination queues for a Distributed table, partitioned by blocked state.
+    type: Gauge
+    unit: "{destination}"
+  db.server.clickhouse.distributed.queue.last_exception_age:
+    description: The time since the most recent Distributed-table queue exception.
+    type: Gauge
+    unit: s
+  db.server.clickhouse.cluster.replica.status:
+    description: The remote replica connection-pool health. Ok means no recent errors or slowdowns, not that it was probed.
+    type:
+      stateSet: [ ok, degraded ]
+  db.server.clickhouse.cluster.replica.error_score:
+    description: The decaying connection-pool error score for a configured remote replica.
+    type: Gauge
+    unit: "{error}"
+  db.server.clickhouse.cluster.replica.slowdown_score:
+    description: The decaying connection-pool slowdown score for a configured remote replica.
+    type: Gauge
+    unit: "{slowdown}"
+  db.server.clickhouse.cluster.replica.recovery_time:
+    description: The estimated time until a configured remote replica is retried.
+    type: Gauge
+    unit: s
+
+monitors:
+  # One server monitor per resource. Storage includes all MergeTree databases, including system logs.
+  clickhouse:
+    keys: [ db.system.name ]
+    simple:
+      sources:
+        clickhouseInfo:
+          type: sql
+          query: |
+            SELECT
+              currentDatabase() AS db_namespace, -- $1 retained to keep the leading column stable; deliberately not mapped
+              version(), hostName(), uptime(), -- $2-$4
+              (SELECT count() FROM system.databases WHERE name NOT IN ('system', 'information_schema', 'INFORMATION_SCHEMA')), -- $5
+              (SELECT maxIf(value, metric = 'TotalBytesOfMergeTreeTables') FROM system.asynchronous_metrics), -- $6
+              m.current_queries, m.current_connections, m.memory_usage, m.current_merges, m.readonly_replicas, m.replicated_fetches, m.replicated_sends, -- $7-$13
+              greatest(toInt64(e.queries) - toInt64(e.select_queries) - toInt64(e.insert_queries), 0), -- $14 other accepted
+              greatest(toInt64(e.failed_queries) - toInt64(e.failed_select_queries) - toInt64(e.failed_insert_queries), 0), -- $15 other failed
+              e.select_queries, e.failed_select_queries, -- $16-$17 accepted, failed
+              e.insert_queries, e.failed_insert_queries, -- $18-$19 accepted, failed
+              e.selected_rows, e.inserted_rows, e.selected_bytes, e.inserted_bytes, e.network_receive_bytes, e.network_send_bytes, -- $20-$25
+              e.select_query_time_microseconds / 1000000.0, e.insert_query_time_microseconds / 1000000.0, e.other_query_time_microseconds / 1000000.0, -- $26-$28
+              s.memory_limit, greatest(toInt64(s.memory_limit) - toInt64(m.memory_usage), 0), m.merge_mutation_memory, -- $29-$31
+              m.background_merge_tasks, m.background_merge_size, m.background_fetch_tasks, m.background_fetch_size, m.background_distributed_tasks, m.background_distributed_size, -- $32-$37
+              m.keeper_sessions, m.keeper_requests, -- $38-$39
+              e.delayed_inserts, e.rejected_inserts, e.delayed_insert_milliseconds / 1000.0, -- $40-$42
+              e.distributed_delayed_inserts, e.distributed_rejected_inserts, e.distributed_delayed_insert_milliseconds / 1000.0, -- $43-$45
+              e.user_time_microseconds / 1000000.0, e.system_time_microseconds / 1000000.0, e.cpu_wait_microseconds / 1000000.0, e.io_wait_microseconds / 1000000.0, -- $46-$49
+              e.merge_time_milliseconds / 1000.0, e.keeper_hardware_exceptions, e.keeper_other_exceptions, e.keeper_wait_microseconds / 1000000.0, -- $50-$53
+              e.replicated_failed_fetches, e.replicated_data_loss, e.distributed_connection_failures, -- $54-$56
+              m.mark_cache_bytes, m.uncompressed_cache_bytes, m.query_cache_bytes, m.async_insert_queue_tasks, m.async_insert_queue_bytes, -- $57-$61
+              e.mark_cache_hits, e.mark_cache_misses, e.uncompressed_cache_hits, e.uncompressed_cache_misses, e.query_cache_hits, e.query_cache_misses, -- $62-$67
+              s.concurrent_queries_limit, s.connections_limit, toString(serverUUID()), m.open_files -- $68-$71
+            FROM (
+              SELECT
+                maxIf(value, metric = 'Query') AS current_queries,
+                maxIf(value, metric = 'TCPConnection') + maxIf(value, metric = 'HTTPConnection') AS current_connections,
+                maxIf(value, metric = 'MemoryTracking') AS memory_usage,
+                maxIf(value, metric = 'Merge') AS current_merges,
+                maxIf(value, metric = 'ReadonlyReplica') AS readonly_replicas,
+                maxIf(value, metric = 'ReplicatedFetch') AS replicated_fetches,
+                maxIf(value, metric = 'ReplicatedSend') AS replicated_sends,
+                maxIf(value, metric = 'MergesMutationsMemoryTracking') AS merge_mutation_memory,
+                maxIf(value, metric = 'BackgroundMergesAndMutationsPoolTask') AS background_merge_tasks,
+                maxIf(value, metric = 'BackgroundMergesAndMutationsPoolSize') AS background_merge_size,
+                maxIf(value, metric = 'BackgroundFetchesPoolTask') AS background_fetch_tasks,
+                maxIf(value, metric = 'BackgroundFetchesPoolSize') AS background_fetch_size,
+                maxIf(value, metric = 'BackgroundDistributedSchedulePoolTask') AS background_distributed_tasks,
+                maxIf(value, metric = 'BackgroundDistributedSchedulePoolSize') AS background_distributed_size,
+                maxIf(value, metric = 'ZooKeeperSession') AS keeper_sessions,
+                maxIf(value, metric = 'ZooKeeperRequest') AS keeper_requests,
+                maxIf(value, metric = 'MarkCacheBytes') AS mark_cache_bytes,
+                maxIf(value, metric = 'UncompressedCacheBytes') AS uncompressed_cache_bytes,
+                maxIf(value, metric = 'QueryCacheBytes') AS query_cache_bytes,
+                maxIf(value, metric = 'AsynchronousInsertQueueSize') AS async_insert_queue_tasks,
+                maxIf(value, metric = 'AsynchronousInsertQueueBytes') AS async_insert_queue_bytes,
+                maxIf(value, metric = 'OpenFileForRead') + maxIf(value, metric = 'OpenFileForWrite') AS open_files
+              FROM system.metrics
+              WHERE metric IN ('Query','TCPConnection','HTTPConnection','MemoryTracking','Merge','ReadonlyReplica','ReplicatedFetch','ReplicatedSend','MergesMutationsMemoryTracking','BackgroundMergesAndMutationsPoolTask','BackgroundMergesAndMutationsPoolSize','BackgroundFetchesPoolTask','BackgroundFetchesPoolSize','BackgroundDistributedSchedulePoolTask','BackgroundDistributedSchedulePoolSize','ZooKeeperSession','ZooKeeperRequest','MarkCacheBytes','UncompressedCacheBytes','QueryCacheBytes','AsynchronousInsertQueueSize','AsynchronousInsertQueueBytes','OpenFileForRead','OpenFileForWrite')
+            ) AS m
+            CROSS JOIN (
+              SELECT
+                maxIf(value,event='Query') AS queries, maxIf(value,event='FailedQuery') AS failed_queries,
+                maxIf(value,event='SelectQuery') AS select_queries, maxIf(value,event='InsertQuery') AS insert_queries,
+                maxIf(value,event='FailedSelectQuery') AS failed_select_queries, maxIf(value,event='FailedInsertQuery') AS failed_insert_queries,
+                maxIf(value,event='SelectedRows') AS selected_rows, maxIf(value,event='InsertedRows') AS inserted_rows,
+                maxIf(value,event='SelectedBytes') AS selected_bytes, maxIf(value,event='InsertedBytes') AS inserted_bytes,
+                maxIf(value,event='NetworkReceiveBytes') AS network_receive_bytes, maxIf(value,event='NetworkSendBytes') AS network_send_bytes,
+                maxIf(value,event='SelectQueryTimeMicroseconds') AS select_query_time_microseconds,
+                maxIf(value,event='InsertQueryTimeMicroseconds') AS insert_query_time_microseconds,
+                maxIf(value,event='OtherQueryTimeMicroseconds') AS other_query_time_microseconds,
+                maxIf(value,event='DelayedInserts') AS delayed_inserts, maxIf(value,event='RejectedInserts') AS rejected_inserts,
+                maxIf(value,event='DelayedInsertsMilliseconds') AS delayed_insert_milliseconds,
+                maxIf(value,event='DistributedDelayedInserts') AS distributed_delayed_inserts,
+                maxIf(value,event='DistributedRejectedInserts') AS distributed_rejected_inserts,
+                maxIf(value,event='DistributedDelayedInsertsMilliseconds') AS distributed_delayed_insert_milliseconds,
+                maxIf(value,event='UserTimeMicroseconds') AS user_time_microseconds, maxIf(value,event='SystemTimeMicroseconds') AS system_time_microseconds,
+                maxIf(value,event='OSCPUWaitMicroseconds') AS cpu_wait_microseconds, maxIf(value,event='OSIOWaitMicroseconds') AS io_wait_microseconds,
+                maxIf(value,event='MergeTotalMilliseconds') AS merge_time_milliseconds,
+                maxIf(value,event='ZooKeeperHardwareExceptions') AS keeper_hardware_exceptions,
+                maxIf(value,event='ZooKeeperOtherExceptions') AS keeper_other_exceptions,
+                maxIf(value,event='ZooKeeperWaitMicroseconds') AS keeper_wait_microseconds,
+                maxIf(value,event='ReplicatedPartFailedFetches') AS replicated_failed_fetches,
+                maxIf(value,event='ReplicatedDataLoss') AS replicated_data_loss,
+                maxIf(value,event='DistributedConnectionFailAtAll') AS distributed_connection_failures,
+                maxIf(value,event='MarkCacheHits') AS mark_cache_hits, maxIf(value,event='MarkCacheMisses') AS mark_cache_misses,
+                maxIf(value,event='UncompressedCacheHits') AS uncompressed_cache_hits, maxIf(value,event='UncompressedCacheMisses') AS uncompressed_cache_misses,
+                maxIf(value,event='QueryCacheHits') AS query_cache_hits, maxIf(value,event='QueryCacheMisses') AS query_cache_misses
+              FROM system.events
+              WHERE event IN ('Query','FailedQuery','SelectQuery','InsertQuery','FailedSelectQuery','FailedInsertQuery','SelectedRows','InsertedRows','SelectedBytes','InsertedBytes','NetworkReceiveBytes','NetworkSendBytes','SelectQueryTimeMicroseconds','InsertQueryTimeMicroseconds','OtherQueryTimeMicroseconds','DelayedInserts','RejectedInserts','DelayedInsertsMilliseconds','DistributedDelayedInserts','DistributedRejectedInserts','DistributedDelayedInsertsMilliseconds','UserTimeMicroseconds','SystemTimeMicroseconds','OSCPUWaitMicroseconds','OSIOWaitMicroseconds','MergeTotalMilliseconds','ZooKeeperHardwareExceptions','ZooKeeperOtherExceptions','ZooKeeperWaitMicroseconds','ReplicatedPartFailedFetches','ReplicatedDataLoss','DistributedConnectionFailAtAll','MarkCacheHits','MarkCacheMisses','UncompressedCacheHits','UncompressedCacheMisses','QueryCacheHits','QueryCacheMisses')
+            ) AS e
+            CROSS JOIN (
+              SELECT
+                maxIf(toUInt64OrZero(value),name='max_server_memory_usage') AS memory_limit,
+                nullIf(maxIf(toUInt64OrZero(value),name='max_concurrent_queries'),0) AS concurrent_queries_limit,
+                maxIf(toUInt64OrZero(value),name='max_connections') AS connections_limit
+              FROM system.server_settings
+              WHERE name IN ('max_server_memory_usage','max_concurrent_queries','max_connections')
+            ) AS s;
+      mapping:
+        source: ${source::clickhouseInfo}
+        attributes:
+          db.system.name: clickhouse
+          db.server.name: $3
+          db.clickhouse.server.uuid: $70
+          db.version: $2
+        metrics:
+          db.server.uptime: $4
+          db.server.clickhouse.databases: $5
+          db.server.storage.size: $6
+          db.server.clickhouse.current_operations{db.operation.type="query"}: $7
+          # Native TCP connections remain counted while open; HTTP clients are counted only while a request is running.
+          # The MetricsHub JDBC collection request is therefore included in this total.
+          db.server.current_connections: $8
+          db.server.clickhouse.memory.usage{db.memory.state="used"}: $9
+          db.server.clickhouse.current_operations{db.operation.type="merge"}: $10
+          db.server.clickhouse.readonly_replicas: $11
+          db.server.clickhouse.current_operations{db.operation.type="replication_fetch"}: $12
+          db.server.clickhouse.current_operations{db.operation.type="replication_send"}: $13
+          # Unlabelled series count started queries; state="failed" overlaps them, so dashboards must not sum across db.query.state.
+          db.server.queries{db.operation.type="other"}: $14
+          db.server.queries{db.operation.type="other",db.query.state="failed"}: $15
+          db.server.queries{db.operation.type="select"}: $16
+          db.server.queries{db.operation.type="select",db.query.state="failed"}: $17
+          db.server.queries{db.operation.type="insert"}: $18
+          db.server.queries{db.operation.type="insert",db.query.state="failed"}: $19
+          db.server.row_operations{db.row_operation.type="read"}: $20
+          db.server.row_operations{db.row_operation.type="insert"}: $21
+          db.server.clickhouse.query.io{db.io.direction="read"}: $22
+          db.server.clickhouse.query.io{db.io.direction="write"}: $23
+          db.server.io{db.io.direction="receive"}: $24
+          db.server.io{db.io.direction="transmit"}: $25
+          db.server.operation_time{db.operation.type="select"}: $26
+          db.server.operation_time{db.operation.type="insert"}: $27
+          db.server.operation_time{db.operation.type="other"}: $28
+          db.server.clickhouse.memory.limit: $29
+          db.server.clickhouse.memory.usage{db.memory.state="free"}: $30
+          db.server.clickhouse.merges_mutations.memory.usage: $31
+          db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name="merges_mutations"}: $32
+          db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name="merges_mutations"}: $33
+          db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name="replication_fetch"}: $34
+          db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name="replication_fetch"}: $35
+          db.server.clickhouse.background_pool.tasks{db.clickhouse.pool.name="distributed_send"}: $36
+          db.server.clickhouse.background_pool.tasks.limit{db.clickhouse.pool.name="distributed_send"}: $37
+          db.server.clickhouse.keeper.sessions: $38
+          db.server.clickhouse.keeper.requests: $39
+          db.server.clickhouse.delayed_operations{db.operation.type="insert",db.clickhouse.insert.scope="local"}: $40
+          db.server.clickhouse.rejected_operations{db.operation.type="insert",db.clickhouse.insert.scope="local"}: $41
+          db.server.clickhouse.delay_time{db.operation.type="insert",db.clickhouse.insert.scope="local"}: $42
+          db.server.clickhouse.delayed_operations{db.operation.type="insert",db.clickhouse.insert.scope="distributed"}: $43
+          db.server.clickhouse.rejected_operations{db.operation.type="insert",db.clickhouse.insert.scope="distributed"}: $44
+          db.server.clickhouse.delay_time{db.operation.type="insert",db.clickhouse.insert.scope="distributed"}: $45
+          db.server.cpu.time{cpu.mode="user"}: $46
+          db.server.cpu.time{cpu.mode="system"}: $47
+          db.server.clickhouse.wait_time{db.clickhouse.wait.type="cpu"}: $48
+          db.server.clickhouse.wait_time{db.clickhouse.wait.type="io"}: $49
+          db.server.operation_time{db.operation.type="merge"}: $50
+          db.server.errors{error.type="keeper_hardware"}: $51
+          db.server.errors{error.type="keeper_other"}: $52
+          db.server.clickhouse.wait_time{db.clickhouse.wait.type="keeper"}: $53
+          db.server.errors{error.type="replication_fetch_failed"}: $54
+          db.server.errors{error.type="replication_data_loss"}: $55
+          db.server.errors{error.type="distributed_connection_failed"}: $56
+          db.server.cache.usage{db.cache.state="used",db.clickhouse.cache.type="mark"}: $57
+          db.server.cache.usage{db.cache.state="used",db.clickhouse.cache.type="uncompressed"}: $58
+          db.server.cache.usage{db.cache.state="used",db.clickhouse.cache.type="query_result"}: $59
+          db.server.clickhouse.async_insert.queue.tasks: $60
+          db.server.clickhouse.async_insert.queue.bytes: $61
+          db.server.cache.operations{db.cache.state="hit",db.clickhouse.cache.type="mark"}: $62
+          db.server.cache.operations{db.cache.state="miss",db.clickhouse.cache.type="mark"}: $63
+          db.server.cache.operations{db.cache.state="hit",db.clickhouse.cache.type="uncompressed"}: $64
+          db.server.cache.operations{db.cache.state="miss",db.clickhouse.cache.type="uncompressed"}: $65
+          db.server.cache.operations{db.cache.state="hit",db.clickhouse.cache.type="query_result"}: $66
+          db.server.cache.operations{db.cache.state="miss",db.clickhouse.cache.type="query_result"}: $67
+          db.server.clickhouse.current_operations.limit{db.operation.type="query"}: $68
+          db.server.connections.limit: $69
+          db.server.storage.files{db.file.state="open"}: $71
+
+  clickhouse_database:
+    keys: [ db.namespace ]
+    simple:
+      sources:
+        databases:
+          type: sql
+          # PostgreSQL-engine database tests on ClickHouse 25.8 and 26.9 showed that this exclusion
+          # avoids remote column metadata discovery, although remote table listing may still occur.
+          query: |
+            SELECT d.name, d.engine, ifNull(t.table_count,0), ifNull(t.uncompressed_bytes,0), hostName(), toString(serverUUID())
+            FROM system.databases AS d
+            LEFT JOIN (
+              SELECT database, count() AS table_count,
+                sumIf(total_bytes_uncompressed,engine LIKE '%MergeTree') AS uncompressed_bytes
+              FROM system.tables
+              WHERE database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+                AND database NOT IN (SELECT name FROM system.databases WHERE engine IN ('MySQL','PostgreSQL'))
+              GROUP BY database
+            ) AS t ON t.database=d.name
+            WHERE d.name NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+              AND d.engine NOT IN ('MySQL','PostgreSQL');
+      mapping:
+        source: ${source::databases}
+        attributes:
+          db.system.name: clickhouse
+          db.server.name: $5
+          db.clickhouse.server.uuid: $6
+          db.namespace: $1
+          db.clickhouse.database.engine: $2
+        metrics:
+          db.server.tables: $3
+          db.server.clickhouse.data.size: $4
+
+  # Local replica health only; Keeper-backed peer totals are omitted from the polling query.
+  clickhouse_table_replica:
+    keys: [ db.namespace, db.collection.name ]
+    simple:
+      sources:
+        replicas:
+          type: sql
+          query: |
+            SELECT
+              r.database, r.table, r.replica_name,
+              multiIf(r.is_session_expired=1,'failed',r.is_readonly=1 OR (r.last_queue_update_exception!='' AND r.queue_size>0) OR r.parts_to_check>0 OR ifNull(q.persistent_failures,0)>0,'degraded','ok'),
+              r.inserts_in_queue, r.merges_in_queue, r.part_mutations_in_queue,
+              greatest(toInt64(r.queue_size)-toInt64(r.inserts_in_queue)-toInt64(r.merges_in_queue)-toInt64(r.part_mutations_in_queue),0),
+              r.absolute_delay, r.future_parts, r.parts_to_check,
+              q.oldest_age, ifNull(q.failed_operations,0), ifNull(q.retry_count,0), ifNull(q.postponed_operations,0),
+              ifNull(q.waiting_operations,0), ifNull(q.executing_operations,0), q.last_attempt_age, q.last_postpone_age,
+              r.is_leader, r.can_become_leader, r.zookeeper_path, hostName(), toString(serverUUID())
+            FROM system.replicas AS r
+            LEFT JOIN (
+              SELECT database, table, replica_name,
+                maxIfOrNull(dateDiff('second',create_time,now()),is_currently_executing=0) AS oldest_age,
+                countIf(last_exception!='' AND is_currently_executing=0) AS failed_operations,
+                countIf(last_exception!='' AND is_currently_executing=0 AND num_tries>5) AS persistent_failures,
+                sum(num_tries) - countIf(is_currently_executing=1) AS retry_count,
+                countIf(num_postponed>0 AND is_currently_executing=0) AS postponed_operations,
+                countIf(is_currently_executing=0) AS waiting_operations,
+                countIf(is_currently_executing=1) AS executing_operations,
+                maxIfOrNull(dateDiff('second',last_attempt_time,now()),is_currently_executing=0 AND last_attempt_time>toDateTime(0)) AS last_attempt_age,
+                maxIfOrNull(dateDiff('second',last_postpone_time,now()),is_currently_executing=0 AND last_postpone_time>toDateTime(0)) AS last_postpone_age
+              FROM system.replication_queue
+              GROUP BY database,table,replica_name
+            ) AS q ON q.database=r.database AND q.table=r.table AND q.replica_name=r.replica_name
+            SETTINGS join_use_nulls = 1;
+      mapping:
+        source: ${source::replicas}
+        attributes:
+          db.system.name: clickhouse
+          db.server.name: $23
+          db.clickhouse.server.uuid: $24
+          db.namespace: $1
+          db.collection.name: $2
+          db.clickhouse.replica.name: $3
+          db.clickhouse.replica.can_become_leader: $21
+          db.clickhouse.replica.zookeeper_path: $22
+        metrics:
+          db.server.clickhouse.replica.status: $4
+          db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation="fetch"}: $5
+          db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation="merge"}: $6
+          db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation="mutation"}: $7
+          db.server.clickhouse.replication.queue.entries{db.clickhouse.replication.operation="other"}: $8
+          db.server.clickhouse.replication.lag.time: $9
+          db.server.clickhouse.replication.parts{db.clickhouse.part.state="future"}: $10
+          db.server.clickhouse.replication.parts{db.clickhouse.part.state="verification_pending"}: $11
+          db.server.clickhouse.replication.queue.oldest_age: $12
+          db.server.clickhouse.replication.queue.failed: $13
+          db.server.clickhouse.replication.queue.retries: $14
+          db.server.clickhouse.replication.queue.postponed: $15
+          db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state="waiting"}: $16
+          db.server.clickhouse.replication.queue{db.clickhouse.replication.queue.state="executing"}: $17
+          db.server.clickhouse.replication.queue.last_attempt_age: $18
+          db.server.clickhouse.replication.queue.last_postpone_age: $19
+          db.server.clickhouse.replica.leader: $20
+
+  clickhouse_disk:
+    keys: [ db.server.storage.id ]
+    simple:
+      sources:
+        disks:
+          type: sql
+          query: |
+            SELECT name,path,type,
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(total_space,toUInt64(-1))),
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(free_space,toUInt64(-1))),
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(total_space,toUInt64(-1))-nullIf(free_space,toUInt64(-1))),
+              if(is_broken OR (is_read_only AND type = 'Local'),NULL,nullIf(unreserved_space,toUInt64(-1))),
+              keep_free_space, if(is_broken=1,'failed','ok'), is_read_only, is_write_once, is_remote, is_encrypted,
+              hostName(), toString(serverUUID())
+            FROM system.disks;
+      mapping:
+        source: ${source::disks}
+        attributes:
+          db.system.name: clickhouse
+          db.server.name: $14
+          db.clickhouse.server.uuid: $15
+          db.server.storage.id: $1
+          db.server.storage.type: $3
+          db.clickhouse.disk.path: $2
+          db.clickhouse.disk.read_only: $10
+          db.clickhouse.disk.write_once: $11
+          db.clickhouse.disk.remote: $12
+        metrics:
+          db.server.storage.limit: $4
+          db.server.storage.usage{db.storage.state="free"}: $5
+          db.server.storage.usage{db.storage.state="used"}: $6
+          db.server.clickhouse.disk.unreserved: $7
+          db.server.clickhouse.disk.keep_free: $8
+          db.server.storage.status: $9
+          db.server.storage.encrypted: $13
+
+  # Stable inventory; mutation and Distributed-queue activity is aggregated onto its table.
+  clickhouse_table:
+    keys: [ db.namespace, db.collection.name ]
+    simple:
+      sources:
+        tables:
+          type: sql
+          # PostgreSQL-engine database tests on ClickHouse 25.8 and 26.9 showed that this exclusion
+          # avoids remote column metadata discovery, although remote table listing may still occur.
+          query: |
+            SELECT t.database,t.name,t.engine,
+              if(t.engine LIKE '%MergeTree',ifNull(t.total_rows,0),NULL),
+              if(t.engine LIKE '%MergeTree',ifNull(t.total_bytes,0),NULL),
+              if(t.engine LIKE '%MergeTree',ifNull(t.active_parts,0),NULL),
+              if(t.engine LIKE '%MergeTree',ifNull(p.max_parts_per_partition,0),NULL),
+              if(t.engine LIKE '%MergeTree',if(ifNull(mu.failing_mutations,0)>0,'failed','ok'),NULL),
+              if(t.engine LIKE '%MergeTree',ifNull(mu.pending_mutations,0),NULL),
+              if(t.engine LIKE '%MergeTree',ifNull(mu.mutation_parts_to_do,0),NULL),
+              if(t.engine LIKE '%MergeTree',mu.oldest_mutation_age,NULL),
+              if(t.engine='Distributed',multiIf(ifNull(dq.broken_files,0)>0,'failed',ifNull(dq.blocked_destinations,0)>0 OR ifNull(dq.error_score,0)>0,'degraded','ok'),NULL),
+              if(t.engine='Distributed',ifNull(dq.pending_files,0),NULL),
+              if(t.engine='Distributed',ifNull(dq.pending_bytes,0),NULL),
+              if(t.engine='Distributed',ifNull(dq.broken_files,0),NULL),
+              if(t.engine='Distributed',ifNull(dq.broken_bytes,0),NULL),
+              if(t.engine='Distributed',ifNull(dq.error_score,0),NULL),
+              if(t.engine='Distributed',ifNull(dq.blocked_destinations,0),NULL),
+              if(t.engine='Distributed',ifNull(dq.unblocked_destinations,0),NULL),
+              if(t.engine='Distributed',dq.last_exception_age,NULL),
+              r.zookeeper_path,hostName(),toString(serverUUID())
+            FROM system.tables AS t
+            LEFT JOIN (
+              SELECT database,table,max(parts) AS max_parts_per_partition
+              FROM (SELECT database,table,partition_id,count() AS parts FROM system.parts
+                    WHERE active AND database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+                    GROUP BY database,table,partition_id)
+              GROUP BY database,table
+            ) AS p ON p.database=t.database AND p.table=t.name
+            LEFT JOIN (
+              SELECT database,table,count() AS pending_mutations,
+                countIf(latest_fail_reason!='' AND (latest_failed_part='all_parts' OR has(parts_to_do_names,latest_failed_part))) AS failing_mutations,
+                sum(parts_to_do) AS mutation_parts_to_do,max(dateDiff('second',create_time,now())) AS oldest_mutation_age
+              FROM system.mutations WHERE is_done=0 GROUP BY database,table
+            ) AS mu ON mu.database=t.database AND mu.table=t.name
+            LEFT JOIN (
+              SELECT database,table,sum(data_files) AS pending_files,sum(data_compressed_bytes) AS pending_bytes,
+                sum(broken_data_files) AS broken_files,sum(broken_data_compressed_bytes) AS broken_bytes,
+                sum(error_count) AS error_score,countIf(is_blocked=1) AS blocked_destinations,
+                countIf(is_blocked=0) AS unblocked_destinations,
+                if(max(last_exception_time)=toDateTime(0),NULL,dateDiff('second',max(last_exception_time),now())) AS last_exception_age
+              FROM system.distribution_queue GROUP BY database,table
+            ) AS dq ON dq.database=t.database AND dq.table=t.name
+            LEFT JOIN (SELECT database,table,zookeeper_path FROM system.replicas) AS r
+              ON r.database=t.database AND r.table=t.name
+            WHERE t.database NOT IN ('system','information_schema','INFORMATION_SCHEMA')
+              AND t.database NOT IN (SELECT name FROM system.databases WHERE engine IN ('MySQL','PostgreSQL'))
+              AND (t.engine LIKE '%MergeTree' OR t.engine='Distributed')
+            SETTINGS join_use_nulls = 1;
+      mapping:
+        source: ${source::tables}
+        attributes:
+          db.system.name: clickhouse
+          db.server.name: $22
+          db.clickhouse.server.uuid: $23
+          db.namespace: $1
+          db.collection.name: $2
+          db.clickhouse.table.engine: $3
+          db.clickhouse.replica.zookeeper_path: $21
+        # Empty SQL cells deactivate only the engine-specific StateSet metric.
+        # Numeric metrics already omit empty values through normal metric parsing.
+        conditionalCollection:
+          db.server.clickhouse.mutation.status: $8
+          db.server.clickhouse.distributed.queue.status: $12
+        metrics:
+          db.server.clickhouse.rows: $4
+          db.server.storage.size: $5
+          db.server.clickhouse.parts: $6
+          db.server.clickhouse.parts.per_partition.max: $7
+          db.server.clickhouse.mutation.status: $8
+          db.server.pending_operations{db.operation.type="mutation"}: $9
+          db.server.clickhouse.mutation.parts: $10
+          db.server.clickhouse.mutation.age: $11
+          db.server.clickhouse.distributed.queue.status: $12
+          db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state="pending"}: $13
+          db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state="pending"}: $14
+          db.server.clickhouse.distributed.queue.files{db.clickhouse.distributed.queue.state="broken"}: $15
+          db.server.clickhouse.distributed.queue.bytes{db.clickhouse.distributed.queue.state="broken"}: $16
+          db.server.clickhouse.distributed.queue.error_score: $17
+          db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state="blocked"}: $18
+          db.server.clickhouse.distributed.queue.destinations{db.clickhouse.distributed.queue.state="unblocked"}: $19
+          db.server.clickhouse.distributed.queue.last_exception_age: $20
+
+  # Pool state as seen from this node; every monitored node reports its own view of configured remote replicas.
+  clickhouse_cluster_replica:
+    keys: [ db.clickhouse.cluster.name, db.clickhouse.cluster.shard.number, server.address, server.port ]
+    simple:
+      sources:
+        clusterReplicas:
+          type: sql
+          query: |
+            SELECT cluster,shard_num,replica_num,host_name,host_address,port,
+              if(errors_count>0 OR slowdowns_count>0,'degraded','ok'),
+              errors_count,slowdowns_count,estimated_recovery_time,internal_replication,default_database, -- $12 retained for stable columns; not a metric namespace
+              hostName(),toString(serverUUID())
+            FROM system.clusters
+            WHERE is_local=0 AND cluster NOT LIKE 'all_groups.%';
+      mapping:
+        source: ${source::clusterReplicas}
+        attributes:
+          db.system.name: clickhouse
+          db.server.name: $13
+          db.clickhouse.server.uuid: $14
+          db.clickhouse.cluster.name: $1
+          db.clickhouse.cluster.shard.number: $2
+          db.clickhouse.cluster.replica.number: $3
+          server.address: $4
+          network.peer.address: $5
+          server.port: $6
+          db.clickhouse.cluster.internal_replication: $11
+        metrics:
+          db.server.clickhouse.cluster.replica.status: $7
+          db.server.clickhouse.cluster.replica.error_score: $8
+          db.server.clickhouse.cluster.replica.slowdown_score: $9
+          db.server.clickhouse.cluster.replica.recovery_time: $10
