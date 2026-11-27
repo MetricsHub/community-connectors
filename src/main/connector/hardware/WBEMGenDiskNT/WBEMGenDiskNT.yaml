@@ -53,6 +53,7 @@ monitors:
           # of the disks that supports S.M.A.R.T.
           # InstanceName;PnPDeviceID;InstanceName
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
@@ -80,6 +81,7 @@ monitors:
           # Source(5) = jointure of source(4) with source(3)
           # ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskPnPDeviceID;DiskInstanceName
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(4)}
           rightTable: ${source::source(3)}
           leftKeyColumn: 2
@@ -105,6 +107,7 @@ monitors:
           # Source(7) = jointure of source(6) and source(5) (will contain only one line per disk controller)
           # ControllerName;ControllerPnPDeviceID;ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskInstanceName;DiskPnPDeviceID
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(6)}
           rightTable: ${source::source(5)}
           leftKeyColumn: 2
@@ -131,6 +134,7 @@ monitors:
           # Source(2) = jointure of DiskController.Discovery.Source(5) with Source(1)
           # ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskPnPDeviceID;DiskInstanceName;DiskIndex;DiskManufacturer;DiskModel;DiskPNPDeviceID;DiskSize;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::monitors.disk_controller.discovery.sources.source(5)}
           rightTable: ${source::source(1)}
           leftKeyColumn: 2
@@ -140,6 +144,7 @@ monitors:
           # disks attached to actual disk controllers that are not HBAs
           # ControllerPnPDeviceID;DiskPnPDeviceID;DiskInstanceName;DiskPnPDeviceID;DiskInstanceName;DiskIndex;DiskManufacturer;DiskModel;DiskPNPDeviceID;DiskSize;ControllerName;ControllerPnPDeviceID;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(2)}
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(6)}
           leftKeyColumn: 1
@@ -170,6 +175,7 @@ monitors:
           # in order to link PnPDeviceID with InstanceName in the WMI namespace
           # PnPDeviceID;Status;PnPDeviceID;InstanceName
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::monitors.disk_controller.discovery.sources.source(2)}
           leftKeyColumn: 1
@@ -186,6 +192,7 @@ monitors:
           # in the same table
           # PnPDeviceID;Status;PnPDeviceID;InstanceName;InstanceName;PredictFailure
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(2)}
           rightTable: ${source::source(3)}
           leftKeyColumn: 4

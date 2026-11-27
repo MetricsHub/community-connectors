@@ -91,11 +91,18 @@ No connector change is complete until replay test behavior is understood.
 An instance that a trusted `discovery` or `simple` run no longer returns is removed (see [When Instances Are Removed](monitors-and-jobs.html#when-instances-are-removed)). The rows that create the instances must list every entity that **exists**, not only the ones that are active, healthy, or reporting a value.
 
 - Take the mapping source from an inventory, and attach the statistics to it:
-  - keep the inventory as the **left** table of a [`tableJoin`](sources/table-join.html) and set a `defaultRightLine`, so an entity without statistics keeps its row with empty cells (or look the statistics up from the inventory in an `awk` compute);
+  - keep the inventory as the **left** table of a [`tableJoin`](sources/table-join.html) with `joinType: left` and `rightColumns`, so an entity without statistics keeps its row with empty cells (or look the statistics up from the inventory in an `awk` compute);
   - or split the monitor: `discovery` maps the inventory, `collect` maps the statistics. A row missing from a `collect` job never removes anything.
 - Do not filter on a state or a value in a job that creates monitors: `Enabled` sensors only, interfaces `up` only, non-zero readings only, sensors that have a reading, `virsh list` without `--all`, `systemctl list-units` (only the units loaded in memory). Filter on a type or a class, and map the state as a metric.
-- In a fan-out, a failed request must not drop the entity's row. Join the `executeForEachEntryOf` result back onto the inventory (left table, `defaultRightLine`); in an `awk` script calling `executeHttpRequest`, print the row with empty cells instead of skipping it with `next`.
+- In a fan-out, a failed request must not drop the entity's row. Join the `executeForEachEntryOf` result back onto the inventory (left table, `joinType: left`); in an `awk` script calling `executeHttpRequest`, print the row with empty cells instead of skipping it with `next`.
 - Entities defined by their activity (sessions, connected replicas, running queries) have no inventory: set [`removalDelay`](monitors-and-jobs.html#removaldelay) on the monitor, and prefer gauges to `rate()` / `fakeCounter()`, whose state restarts each time the instance is recreated.
+
+### Why There Is No `right` or `full` Join
+
+A `tableJoin` writes its `joinType`, `inner` or `left`, even though the engine defaults to `inner`: whether the rows of an entity can disappear is the first question a reviewer asks of a join, and the answer is on the join itself.
+
+- No `right` join: a right join is a left join with the tables swapped. It keeps the same rows, only the order of the columns differs, and it is not faster: the join reads each table once either way. Offering both would give two ways to write every join, chosen arbitrarily, and make the reader check which side is the inventory. With left joins only, the table kept whole is always the left one, the inventory.
+- No `full` join, which keeps the unmatched rows of both tables: no connector needs one, since the rows that create instances come from one inventory. It will be added when a connector needs it.
 
 ## Strict Content Types
 

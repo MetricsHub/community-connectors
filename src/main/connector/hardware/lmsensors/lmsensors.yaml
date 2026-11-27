@@ -50,6 +50,7 @@ monitors:
         source(3):
           # "MSHW";"Manufacturer";"Type";"SN";"MSHW";"Bios Info"
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1

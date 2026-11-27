@@ -76,6 +76,7 @@ monitors:
           # Source(3) = Table joint of Source(1) and Source(2)
           # Active;AdapterID;UniquePortId;PortSpeed;PortWWN-Decimal;PortWWN-Hex;PortType;AdapterID;Manufacturer;Model;Serial
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 2
@@ -97,6 +98,7 @@ monitors:
           # Source(5) = Table joint of Source(3) and Source(4)
           # Active;AdapterID;UniquePortId;PortSpeed;PortWWN-Decimal;PortWWN-Hex;PortType;AdapterID;Manufacturer;Model;Serial;InstanceName;TxFrames;RxFrames;ErrorCount;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(3)}
           rightTable: ${source::source(4)}
           leftKeyColumn: 2
@@ -171,6 +173,7 @@ monitors:
           # Source (3) = Table Joint of 1 & 2
           # AdapterID;Status;StatusInformation;LinkStatus;PortSpeed;PortWWN-Decimal;InstanceName;TxFrames;RxFrames;ErrorCount;
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1

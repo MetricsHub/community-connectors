@@ -35,6 +35,7 @@ monitors:
           - type: toTable
         source(3):
           type: tableJoin
+          joinType: inner
           leftTable: ${source::source(2)}
           rightTable: ${source::source(1)}
           leftKeyColumn: 1
@@ -80,11 +81,12 @@ monitors:
           # Source(3) = table joint of Source(1) and Source(2)
           # DeviceID;ReceivedPackets;TransmittedPackets;Errors;ReceivedBytes;TransmittedBytes;IPState;DeviceID;LinkStatus;LinkSpeed;DuplexMode;
           type: tableJoin
+          joinType: left
           leftTable: ${source::source(1)}
           rightTable: ${source::source(2)}
           leftKeyColumn: 1
           rightKeyColumn: 1
-          defaultRightLine: [ "", "", "", "" ]
+          rightColumns: 4
           computes:
           - type: translate
             column: 7
